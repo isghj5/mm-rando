@@ -176,13 +176,13 @@ namespace MMR.Randomizer.Utils
 
                 Actor a = new Actor();
                 ushort an = ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16));
-                a.ActorIDFlags = an & 0xF000; // unused
-                a.ActorID = an & 0x0FFF;
-                a.ActorEnum = (GameObjects.Actor)a.ActorID;
+                a.ActorIdFlags = an & 0xF000; // unused
+                a.ActorId = an & 0x0FFF;
+                a.ActorEnum = (GameObjects.Actor)a.ActorId;
                 a.OldActorEnum = a.ActorEnum;
                 a.OldName = a.ActorEnum.ToString();
-                a.ObjectID = a.ActorEnum.ObjectIndex();
-                a.OldObjectID = a.ObjectID;
+                a.ObjectId = a.ActorEnum.ObjectIndex();
+                a.OldObjectId = a.ObjectId;
                 //a.ObjectSize = ObjUtils.GetObjSize(a.ObjectIndex());
                 a.Position.x = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 2);
                 a.Position.y = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 4);
@@ -248,7 +248,7 @@ namespace MMR.Randomizer.Utils
         {
             for (int i = 0; i < Actors.Count; i++)
             {
-                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16), (ushort)(Actors[i].ActorIDFlags | Actors[i].ActorID));
+                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16), (ushort)(Actors[i].ActorIdFlags | Actors[i].ActorId));
                 ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 2, (ushort)Actors[i].Position.x);
                 ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 4, (ushort)Actors[i].Position.y);
                 ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 6, (ushort)Actors[i].Position.z);

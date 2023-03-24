@@ -11,7 +11,7 @@ using System;
 
 namespace MMR.Randomizer.Models.Rom
 {
-    [System.Diagnostics.DebuggerDisplay("[{Name}][{ActorID}]")]
+    [System.Diagnostics.DebuggerDisplay("[{Name}][{ActorId}]")]
     public class Actor
     {
         // this is instance data, per actor, per scene.
@@ -20,14 +20,14 @@ namespace MMR.Randomizer.Models.Rom
 
         public string Name = ""; // for debug mostly, got real sick of looking up each and every actor index
         public string OldName = ""; // for debug mostly, got real sick of looking up each and every actor index
-        [System.Diagnostics.DebuggerDisplay("{ActorID.ToString(\"X3\")}")]
-        public int ActorID; // in-game actor list index
+        [System.Diagnostics.DebuggerDisplay("{ActorId.ToString(\"X3\")}")]
+        public int ActorId; // in-game actor list index
         public GameObjects.Actor ActorEnum; // enumerator with metadata about the actor and actor extensions
         public GameObjects.Actor OldActorEnum; // enumerator with metadata about the actor and actor extensions
-        [System.Diagnostics.DebuggerDisplay("{ObjectID.ToString(\"X3\")}")]
-        public int ObjectID; // in-game object list index
-        public int OldObjectID; // in-game object list index
-        public int ActorIDFlags; // we just want to keep them when re-writing, but I'm not sure they even matter
+        [System.Diagnostics.DebuggerDisplay("{ObjectId.ToString(\"X3\")}")]
+        public int ObjectId; // in-game object list index
+        public int OldObjectId; // in-game object list index
+        public int ActorIdFlags; // we just want to keep them when re-writing, but I'm not sure they even matter
         public List<int> Variants = new List<int> { 0 };
         public List<List<int>> AllVariants = null;
         public int OldVariant;
@@ -66,10 +66,10 @@ namespace MMR.Randomizer.Models.Rom
         {
             // converted from enum, used for building replacement candidate actors
 
-            this.Name = actor.ToString();
-            this.ActorID = (int)actor;
-            this.ActorEnum = actor;
-            this.ObjectID = this.OldObjectID = actor.ObjectIndex();
+            this.Name = this.OldName = actor.ToString();
+            this.ActorId =  (int)actor;
+            this.ActorEnum = this.OldActorEnum = actor;
+            this.ObjectId = this.OldObjectId = actor.ObjectIndex();
             this.ObjectSize = ObjUtils.GetObjSize(actor.ObjectIndex());
             this.Rotation = new vec16();
 
@@ -88,11 +88,11 @@ namespace MMR.Randomizer.Models.Rom
             // create actor from injected actor, for brand new actors
 
             this.Name = this.OldName = name;
-            this.ActorID = injected.actorID;
-            this.ObjectID = injected.objID;
+            this.ActorId = injected.ActorId;
+            this.ObjectId = injected.ObjectId;
 
             // this might break things, but required for actor placement blocking
-            this.ActorEnum = (GameObjects.Actor) injected.actorID;
+            this.ActorEnum = this.OldActorEnum = (GameObjects.Actor) injected.ActorId;
 
             // for now injected actors can only be of type ground
             this.AllVariants = new List<List<int>>()
@@ -144,10 +144,12 @@ namespace MMR.Randomizer.Models.Rom
             Actor newActor = new Actor();
 
             newActor.Name = this.Name;
-            newActor.ActorID = this.ActorID;
+            newActor.ActorId = this.ActorId;
             newActor.ActorEnum = this.ActorEnum;
-            newActor.ObjectID = this.ObjectID;
-            newActor.ObjectSize = this.ObjectID;
+            newActor.OldActorEnum = this.OldActorEnum;
+            newActor.ObjectId = this.ObjectId;
+            newActor.OldObjectId = this.OldObjectId;
+            newActor.ObjectSize = this.ObjectSize;
             newActor.Rotation = this.Rotation;
 
             newActor.SceneExclude = this.SceneExclude;
@@ -208,15 +210,15 @@ namespace MMR.Randomizer.Models.Rom
 
             this.ActorEnum   = newActorType;
             this.Name        = newActorType.ToString();
-            this.ActorID     = (int)newActorType;
-            this.ObjectID    = newActorType.ObjectIndex();
+            this.ActorId     = (int)newActorType;
+            this.ObjectId    = newActorType.ObjectIndex();
 
             if (modifyOld)
             {
                 this.OldVariant     = vars;
                 this.OldActorEnum   = newActorType;
                 this.OldName        = newActorType.ToString();
-                this.OldObjectID    = this.ObjectID;
+                this.OldObjectId    = this.ObjectId;
 
                 this.AllVariants = BuildVariantList(newActorType);
                 this.Variants = AllVariants.SelectMany(u => u).ToList();
@@ -241,8 +243,8 @@ namespace MMR.Randomizer.Models.Rom
 
             this.ActorEnum      = otherActor.ActorEnum;
             this.Name           = otherActor.Name;
-            this.ActorID        = otherActor.ActorID;
-            this.ObjectID       = otherActor.ObjectID;
+            this.ActorId        = otherActor.ActorId;
+            this.ObjectId       = otherActor.ObjectId;
             //this.AllVariants    = otherActor.AllVariants; // other parts of the rando assume this is static
 
             if (vars != -1)

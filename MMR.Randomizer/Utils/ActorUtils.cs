@@ -106,7 +106,7 @@ namespace MMR.Randomizer.Utils
             }
 
             // if its an injected actor, we get from the actor not the vanilla rom
-            InjectedActor injectedActor = injectedActors.Find(u => u.actorID == actorOvlTblIndex);
+            InjectedActor injectedActor = injectedActors.Find(u => u.ActorId == actorOvlTblIndex);
             if (injectedActor != null )
             {
                 // E/F are the actor's instance size
