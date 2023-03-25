@@ -2955,30 +2955,12 @@ namespace MMR.Randomizer
                 var clockTownFairyItem = _randomized.ItemList[Item.CollectibleStrayFairyClockTown];
                 if (clockTownFairyItem.NewLocation != Item.CollectibleStrayFairyClockTown)
                 {
-                    var newLocation = clockTownFairyItem.NewLocation.Value;
-                    string regionName;
-                    string regionPreposition;
-                    RegionArea? regionArea;
-                    Item[] multiRegionLocations;
-                    if ((regionArea = newLocation.GetAttribute<RegionAreaAttribute>()?.RegionArea).HasValue)
+                    var region = clockTownFairyItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
+                    var regionPreposition = region.Preposition();
+                    var regionName = regionPreposition == null ? null : region.Name();
+                    if (!string.IsNullOrWhiteSpace(regionPreposition))
                     {
-                        regionName = regionArea.Value.Name();
-                        regionPreposition = regionArea.Value.Preposition();
-                    }
-                    else
-                    {
-                        if ((multiRegionLocations = newLocation.GetAttribute<MultiLocationAttribute>()?.Locations) != null)
-                        {
-                            newLocation = multiRegionLocations[0];
-                        }
-
-                        var region = newLocation.Region(_randomized.ItemList);
-                        regionPreposition = region?.Preposition();
-                        regionName = regionPreposition == null ? null : region?.Name();
-                        if (!string.IsNullOrWhiteSpace(regionPreposition))
-                        {
-                            regionPreposition += " ";
-                        }
+                        regionPreposition += " ";
                     }
 
                     newMessages.Add(new MessageEntryBuilder()
@@ -2993,7 +2975,7 @@ namespace MMR.Randomizer
                             .CompileTimeWrap((wrapped) =>
                             {
                                 wrapped.Text("Please, find the").Red(" one ").Text("Stray Fairy lost ")
-                                .Text(regionPreposition ?? "").Red(regionName ?? "somewhere").Text(", and bring her ")
+                                .Text(regionPreposition ?? "").Red(regionName).Text(", and bring her ")
                                 .Text("to this ").Red("Fairy Fountain").Text(".")
                                 ;
                             })
@@ -3254,7 +3236,7 @@ namespace MMR.Randomizer
                     var random = new Random(_randomized.Seed);
                     var remainRegions = remains
                         .OrderBy(_ => random.Next())
-                        .Select(remain => _randomized.ItemList[remain].NewLocation.Value.Region(_randomized.ItemList)?.Name() ?? "Termina")
+                        .Select(remain => _randomized.ItemList[remain].NewLocation.Value.RegionForDirectHint(_randomized.ItemList).Name())
                         .Distinct()
                         .ToList();
                     var remainsCount = MessageUtils.NumberToWords(remains.Count());
@@ -3378,7 +3360,7 @@ namespace MMR.Randomizer
                             it.StartLightBlueText()
                             .PauseText(10)
                             .Text("\"");
-                            var oathRegion = oathItem.NewLocation.Value.Region(_randomized.ItemList).Value.Name();
+                            var oathRegion = oathItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList).Name();
                             for (var i = 0; i < oathRegion.Length; i++)
                             {
                                 var c = oathRegion[i];
