@@ -2466,9 +2466,9 @@ namespace MMR.Randomizer
             {
                 return ((DateTime.Now).Subtract(log).TotalMilliseconds).ToString();
             }
-
             #endregion
 
+            WriteOutput($" starting timestamp : [{DateTime.Now.ToString("hh:mm:ss.fff tt")}]");
             thisSceneData.Actors = GetSceneEnemyActors(scene);
             if (thisSceneData.Actors.Count == 0)
             {
@@ -2532,7 +2532,7 @@ namespace MMR.Randomizer
             {
                 #region loopCounting
                 /// preventing inf looping, and re-adjustments due to poor looping results not finding a solution
-                bogoLog.Clear();
+                //bogoLog.Clear();
                 bogoStartTime = DateTime.Now;
 
                 // if we've tried 5 seeds and no results, re-shuffle the candidate lists, maybe the rng was bad
@@ -2541,7 +2541,7 @@ namespace MMR.Randomizer
                 {
                     // reinit actorCandidatesLists because this RNG is bad
                     GenerateActorCandidates(thisSceneData, fairyDroppingActors);
-                    WriteOutput(" re-generate candidates time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+                    WriteOutput($" re-generate candidates time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
                 }
 
                 if (loopsCount >= 900) // inf loop catch
@@ -2568,13 +2568,13 @@ namespace MMR.Randomizer
                 #endregion
 
                 ShuffleObjects(thisSceneData);
-                WriteOutput(" objects pick time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
+                WriteOutput($" objects pick time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                 // enemizer is not smart enough if the new chosen objects are copies, and the game allows objects to load twice
                 // for now remove them here after objects are chosen, to reduce object size
                 StringBuilder objectReplacementLog = new StringBuilder();
                 TrimObjectList(thisSceneData, objectReplacementLog);
-                WriteOutput(" object trim time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
+                WriteOutput($" object trim time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                 // for each object, attempt to change actors 
                 for (int objectIndex = 0; objectIndex < thisSceneData.ChosenReplacementObjects.Count; objectIndex++)
@@ -2586,16 +2586,19 @@ namespace MMR.Randomizer
                     List<Actor> subMatches = thisSceneData.CandidatesPerObject[objectIndex].FindAll(act => act.ObjectId == thisSceneData.ChosenReplacementObjects[objectIndex].ChosenV);
 
                     AddCompanionsToCandidates(thisSceneData, objectIndex, subMatches);
-                    WriteOutput("  companions adding time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
+                    //WriteOutput($"  companions adding time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                     ShuffleActors(thisSceneData, objectIndex, subMatches, previousyAssignedCandidate, temporaryMatchEnemyList);
-                    WriteOutput("  match time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
+                    //WriteOutput($"  match time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                     TrimAllActors(thisSceneData, previousyAssignedCandidate, temporaryMatchEnemyList);
-                    WriteOutput("  trim/free time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
+                   // WriteOutput($"  trim/free time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                     previousyAssignedCandidate.Clear();
                 } // end for actors per object
+
+                WriteOutput($" exit per-object: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
+
 
                 // todo after all object enemies placed, do another TrimAllActors Pass to catch free actors being added above max
                 // todo we need a list of actors that are NOT randomized, left alone, they still exist, and we can ignore new duplicates
@@ -2604,19 +2607,19 @@ namespace MMR.Randomizer
                 // for now, disable this and test without. I dont think it is needed anymore, now that we shuffle the available candidiates every x cycles
                 //if (loopsCount >= 100)
                 //{
-                    // if we are taking a really long time to find replacements, remove a couple optional actors/objects
-                    //CullOptionalActors(scene, thisSceneData.ChosenReplacementObjects, loopsCount);
-                    //WriteOutput(" cull optionals: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
+                // if we are taking a really long time to find replacements, remove a couple optional actors/objects
+                //CullOptionalActors(scene, thisSceneData.ChosenReplacementObjects, loopsCount);
+                //WriteOutput(" cull optionals: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
                 //}
 
                 // set objects and actors for isSizeAcceptable to use, and our debugging output
                 thisSceneData.ActorCollection.SetNewActors(scene, thisSceneData.ChosenReplacementObjects);
 
-                WriteOutput(" set for size check: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
+                WriteOutput($" set for size check: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
-                if (thisSceneData.ActorCollection.isSizeAcceptable()) // SUCCESS
+                if (thisSceneData.ActorCollection.isSizeAcceptable(bogoLog)) // SUCCESS
                 {
-                    WriteOutput(" after issizeacceptable: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
+                    WriteOutput($" after issizeacceptable: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                     thisSceneData.Log.Append(objectReplacementLog);
                     thisSceneData.Log.Append(bogoLog);
@@ -2627,6 +2630,7 @@ namespace MMR.Randomizer
 
             } // end while searching for compatible object/actors
 
+            WriteOutput(" time to find matching candidates: " + GET_TIME(thisSceneData.StartTime) + "ms");
             WriteOutput(" Loops used for match candidate: " + loopsCount);
 
             #region Debugging: Actor Forcing
@@ -2669,7 +2673,8 @@ namespace MMR.Randomizer
 
             SetSceneEnemyObjects(scene, thisSceneData.ChosenReplacementObjectsPerMap);
             SceneUtils.UpdateScene(scene); // writes scene actors back to binary
-            WriteOutput( " time to complete randomizing scene: " + GET_TIME(thisSceneData.StartTime) + "ms");
+            WriteOutput(" time to complete randomizing scene: " + GET_TIME(thisSceneData.StartTime) + "ms");
+            WriteOutput($" ending timestamp : [{DateTime.Now.ToString("hh:mm:ss.fff tt")}]");
             FlushLog();
         }
 
@@ -3269,6 +3274,11 @@ namespace MMR.Randomizer
 
     }
 
+
+    /// <summary>
+    ///  keeping track of enemizer ram size limits
+    /// </summary>
+
     public class BaseEnemiesCollection
     {
         // sum of overlay code per actortype in this collection
@@ -3401,13 +3411,16 @@ namespace MMR.Randomizer
             }
         }
 
-        public bool isSizeAcceptable()
+        public bool isSizeAcceptable(StringBuilder log)
         {
             // is the overall size for all maps of night and day equal
 
             var objectTest = isObjectSizeAcceptable();
-            if (objectTest == false)
+            if (objectTest > 0)
             {
+                log.AppendLine($" ---- bogo REJECTED: objects are too big (by {objectTest})" +
+                    $"\n [{string.Join(",", this.newMapList[0].day.ObjectList)}]" +
+                    $"\n [{string.Join(",", this.newMapList[0].day.objectSizes)}");
                 return false;
             }
 
@@ -3416,11 +3429,13 @@ namespace MMR.Randomizer
                 // pos diff is smaller
                 var sizeTest = CompareRamRequirements(this.Scene, oldMapList[map].day, newMapList[map].day);
                 if (sizeTest == false) {
+                    log.AppendLine($" ---- bogo REJECTED: map {map} does not meed RAM requirements for DAY");
                     return false;
                 }
 
                 sizeTest = CompareRamRequirements(this.Scene, oldMapList[map].night, newMapList[map].night);
                 if (sizeTest == false) {
+                    log.AppendLine($" ---- bogo REJECTED: map {map} does not meed RAM requirements for NIGHT");
                     return false;
                 }
 
@@ -3451,7 +3466,7 @@ namespace MMR.Randomizer
             return true;
         }
 
-        public bool isObjectSizeAcceptable(List<int> objects = null)
+        public int isObjectSizeAcceptable(List<int> objects = null)
         {
             /// checks if the object load of the current object list will blow out the object space
 
@@ -3474,10 +3489,11 @@ namespace MMR.Randomizer
 
                 if (newObjectSize > this.sceneObjectLimit)
                 {
-                     return false;
+                     return (newObjectSize - this.sceneObjectLimit);
                 }
             }
-            return true;
+
+            return 0;
         }
 
         // print to log function
