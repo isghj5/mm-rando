@@ -1962,7 +1962,7 @@ namespace MMR.Randomizer
                     var roomActors = temporaryMatchEnemyList.FindAll(act => act.Room == roomIndex && act.ActorId == problemActor.ActorId);
                     if (roomActors.Count == 0) continue; // nothing to trim: no actors in this room
                     var roomIsClearPuzzleRoom = thisSceneData.Scene.SceneEnum.IsClearEnemyPuzzleRoom(roomIndex);
-                    var roomFreeActors = GetRoomFreeActors(thisSceneData.Scene, thisSceneData.ChosenReplacementObjectsPerMap[roomIndex], thisSceneData.SceneFreeActors);
+                    var roomFreeActors = GetRoomFreeActors(thisSceneData, roomIndex);
 
                     if (problemActor.OnlyOnePerRoom != null)
                     {
@@ -2017,7 +2017,6 @@ namespace MMR.Randomizer
                 }
 
                 // remove random enemies until max for variant is reached
-                // TODO: test this
                 int extraCullCapacity = (trimCandidates.Count >= 1) ? (trimCandidates.Count - 1) : (0);
                 var extraCullChosen = thisSceneData.RNG.Next(0, extraCullCapacity);
                 for (int i = removedCount; (i + extraCullChosen < variantMax) && (i < trimCandidates.Count); ++i)
@@ -2122,24 +2121,22 @@ namespace MMR.Randomizer
             return SceneFreeActors;
         }
 
-        //todo change this so it takes thisScene
-        public static List<Actor> GetRoomFreeActors(Scene scene, List<int> objectList, List<Actor> SceneFreeActors = null)
+        //public static List<Actor> GetRoomFreeActors(Scene scene, List<int> objectList, List<Actor> SceneFreeActors = null)
+        public static List<Actor> GetRoomFreeActors(SceneEnemizerData thisScene, int thisRoomIndex)
         {
-            if (SceneFreeActors == null)
-            {
-                SceneFreeActors = GetSceneEnemyActors(scene); // should never get this far
-            }
+            var sceneFreeActors = thisScene.SceneFreeActors;
+            var objectsInThisRoom = thisScene.ChosenReplacementObjectsPerMap[thisRoomIndex];
 
             var roomFreeActors = ReplacementCandidateList.Where(act => act.ObjectId >= 3
-                                       && objectList.Contains(act.ObjectId)
-                                       && !(act.BlockedScenes != null && act.BlockedScenes.Contains(scene.SceneEnum))
+                                       && objectsInThisRoom.Contains(act.ObjectId)
+                                       && !(act.BlockedScenes != null && act.BlockedScenes.Contains(thisScene.Scene.SceneEnum))
                                      ).ToList();
 
-            var freeOnlyActors = FreeOnlyCandidateList.Where(act => objectList.Contains(act.ObjectId)
-                                       && !(act.BlockedScenes != null && act.BlockedScenes.Contains(scene.SceneEnum))
+            var freeOnlyActors = FreeOnlyCandidateList.Where(act => objectsInThisRoom.Contains(act.ObjectId)
+                                       && !(act.BlockedScenes != null && act.BlockedScenes.Contains(thisScene.Scene.SceneEnum))
                                      ).ToList();
 
-            return SceneFreeActors.Union(roomFreeActors).Union(freeOnlyActors).ToList();
+            return sceneFreeActors.Union(roomFreeActors).Union(freeOnlyActors).ToList();
         }
 
         public static void EmptyOrFreeActor(SceneEnemizerData thisSceneData,  Actor oldActor, List<Actor> currentRoomActorList,
