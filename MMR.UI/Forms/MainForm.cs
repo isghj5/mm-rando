@@ -132,6 +132,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cNoDowngrades, "Downgrading items will be prevented.");
             TooltipBuilder.SetTooltip(cShopAppearance, "Shops models and text will be updated to match the item they give.");
             TooltipBuilder.SetTooltip(cUpdateChests, "Chest appearance will be updated to match the item they contain.");
+            TooltipBuilder.SetTooltip(cUpdateNpcText, "NPC text that refers to items and their locations will be updated.");
             TooltipBuilder.SetTooltip(cEponaSword, "Change Epona's B button behavior to prevent you from losing your sword if you don't have a bow.\nMay affect vanilla glitches that use Epona's B button.");
             TooltipBuilder.SetTooltip(cDrawHash, "Draw hash icons on the File Select screen.");
             TooltipBuilder.SetTooltip(cQuestItemStorage, "Enable Quest Item Storage, which allows for storing multiple quest items in their dedicated inventory slot. Quest items will also always be consumed when used.");
@@ -1122,6 +1123,7 @@ namespace MMR.UI.Forms
             cStartingItems.SelectedIndex = (int)_configuration.GameplaySettings.StartingItemMode;
             cEponaSword.Checked = _configuration.GameplaySettings.FixEponaSword;
             cUpdateChests.Checked = _configuration.GameplaySettings.UpdateChests;
+            cUpdateNpcText.Checked = _configuration.GameplaySettings.UpdateNPCText;
             cSkipBeaver.Checked = _configuration.GameplaySettings.SpeedupBeavers;
             cGoodDampeRNG.Checked = _configuration.GameplaySettings.SpeedupDampe;
             cGoodDogRaceRNG.Checked = _configuration.GameplaySettings.SpeedupDogRace;
@@ -1403,6 +1405,11 @@ namespace MMR.UI.Forms
         private void cUpdateChests_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.UpdateChests = cUpdateChests.Checked);
+        }
+
+        private void cUpdateNpcText_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.UpdateNPCText = cUpdateNpcText.Checked);
         }
 
         private void cEponaSword_CheckedChanged(object sender, EventArgs e)
@@ -1967,6 +1974,7 @@ namespace MMR.UI.Forms
             cFastPush.Enabled = v;
             cShopAppearance.Enabled = v;
             cUpdateChests.Enabled = v;
+            cUpdateNpcText.Enabled = v;
             cNoDowngrades.Enabled = v;
             cEponaSword.Enabled = v;
             cQuestItemStorage.Enabled = v;

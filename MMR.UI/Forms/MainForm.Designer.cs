@@ -78,6 +78,7 @@ namespace MMR.UI.Forms
             this.pLocationCategories = new System.Windows.Forms.Panel();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.cBombArrows = new System.Windows.Forms.CheckBox();
             this.cInstantTransformations = new System.Windows.Forms.CheckBox();
             this.cFreeScarecrow = new System.Windows.Forms.CheckBox();
             this.cFDAnywhere = new System.Windows.Forms.CheckBox();
@@ -158,6 +159,7 @@ namespace MMR.UI.Forms
             this.lLink = new System.Windows.Forms.Label();
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cUpdateNpcText = new System.Windows.Forms.CheckBox();
             this.cAddBombchuDrops = new System.Windows.Forms.CheckBox();
             this.lChestGame = new System.Windows.Forms.Label();
             this.cChestGameMinimap = new System.Windows.Forms.ComboBox();
@@ -249,7 +251,6 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cBombArrows = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -801,6 +802,20 @@ namespace MMR.UI.Forms
             this.groupBox12.TabIndex = 34;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Other";
+            // 
+            // cBombArrows
+            // 
+            this.cBombArrows.AutoSize = true;
+            this.cBombArrows.BackColor = System.Drawing.Color.Transparent;
+            this.cBombArrows.ForeColor = System.Drawing.Color.Black;
+            this.cBombArrows.Location = new System.Drawing.Point(148, 150);
+            this.cBombArrows.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cBombArrows.Name = "cBombArrows";
+            this.cBombArrows.Size = new System.Drawing.Size(98, 19);
+            this.cBombArrows.TabIndex = 29;
+            this.cBombArrows.Text = "Bomb Arrows";
+            this.cBombArrows.UseVisualStyleBackColor = false;
+            this.cBombArrows.CheckedChanged += new System.EventHandler(this.cBombArrows_CheckedChanged);
             // 
             // cInstantTransformations
             // 
@@ -1896,6 +1911,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cUpdateNpcText);
             this.groupBox7.Controls.Add(this.cAddBombchuDrops);
             this.groupBox7.Controls.Add(this.lChestGame);
             this.groupBox7.Controls.Add(this.cChestGameMinimap);
@@ -1926,10 +1942,22 @@ namespace MMR.UI.Forms
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
             // 
+            // cUpdateNpcText
+            // 
+            this.cUpdateNpcText.AutoSize = true;
+            this.cUpdateNpcText.Location = new System.Drawing.Point(172, 103);
+            this.cUpdateNpcText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cUpdateNpcText.Name = "cUpdateNpcText";
+            this.cUpdateNpcText.Size = new System.Drawing.Size(115, 19);
+            this.cUpdateNpcText.TabIndex = 47;
+            this.cUpdateNpcText.Text = "Update NPC Text";
+            this.cUpdateNpcText.UseVisualStyleBackColor = true;
+            this.cUpdateNpcText.CheckedChanged += new System.EventHandler(this.cUpdateNpcText_CheckedChanged);
+            // 
             // cAddBombchuDrops
             // 
             this.cAddBombchuDrops.AutoSize = true;
-            this.cAddBombchuDrops.Location = new System.Drawing.Point(172, 233);
+            this.cAddBombchuDrops.Location = new System.Drawing.Point(172, 259);
             this.cAddBombchuDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cAddBombchuDrops.Name = "cAddBombchuDrops";
             this.cAddBombchuDrops.Size = new System.Drawing.Size(137, 19);
@@ -2041,7 +2069,7 @@ namespace MMR.UI.Forms
             // cElegySpeedups
             // 
             this.cElegySpeedups.AutoSize = true;
-            this.cElegySpeedups.Location = new System.Drawing.Point(172, 207);
+            this.cElegySpeedups.Location = new System.Drawing.Point(172, 233);
             this.cElegySpeedups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cElegySpeedups.Name = "cElegySpeedups";
             this.cElegySpeedups.Size = new System.Drawing.Size(107, 19);
@@ -2065,7 +2093,7 @@ namespace MMR.UI.Forms
             // cArrowCycling
             // 
             this.cArrowCycling.AutoSize = true;
-            this.cArrowCycling.Location = new System.Drawing.Point(172, 181);
+            this.cArrowCycling.Location = new System.Drawing.Point(172, 207);
             this.cArrowCycling.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cArrowCycling.Name = "cArrowCycling";
             this.cArrowCycling.Size = new System.Drawing.Size(99, 19);
@@ -2131,7 +2159,7 @@ namespace MMR.UI.Forms
             this.cEponaSword.AutoSize = true;
             this.cEponaSword.BackColor = System.Drawing.Color.Transparent;
             this.cEponaSword.ForeColor = System.Drawing.Color.Black;
-            this.cEponaSword.Location = new System.Drawing.Point(172, 129);
+            this.cEponaSword.Location = new System.Drawing.Point(172, 155);
             this.cEponaSword.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cEponaSword.Name = "cEponaSword";
             this.cEponaSword.Size = new System.Drawing.Size(112, 19);
@@ -2171,7 +2199,7 @@ namespace MMR.UI.Forms
             // 
             this.cQuestItemStorage.AutoSize = true;
             this.cQuestItemStorage.BackColor = System.Drawing.Color.Transparent;
-            this.cQuestItemStorage.Location = new System.Drawing.Point(172, 155);
+            this.cQuestItemStorage.Location = new System.Drawing.Point(172, 181);
             this.cQuestItemStorage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cQuestItemStorage.Name = "cQuestItemStorage";
             this.cQuestItemStorage.Size = new System.Drawing.Size(155, 19);
@@ -2185,7 +2213,7 @@ namespace MMR.UI.Forms
             this.cNoDowngrades.AutoSize = true;
             this.cNoDowngrades.BackColor = System.Drawing.Color.Transparent;
             this.cNoDowngrades.ForeColor = System.Drawing.Color.Black;
-            this.cNoDowngrades.Location = new System.Drawing.Point(172, 103);
+            this.cNoDowngrades.Location = new System.Drawing.Point(172, 129);
             this.cNoDowngrades.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cNoDowngrades.Name = "cNoDowngrades";
             this.cNoDowngrades.Size = new System.Drawing.Size(110, 19);
@@ -2971,20 +2999,6 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // cBombArrows
-            // 
-            this.cBombArrows.AutoSize = true;
-            this.cBombArrows.BackColor = System.Drawing.Color.Transparent;
-            this.cBombArrows.ForeColor = System.Drawing.Color.Black;
-            this.cBombArrows.Location = new System.Drawing.Point(148, 150);
-            this.cBombArrows.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cBombArrows.Name = "cBombArrows";
-            this.cBombArrows.Size = new System.Drawing.Size(98, 19);
-            this.cBombArrows.TabIndex = 29;
-            this.cBombArrows.Text = "Bomb Arrows";
-            this.cBombArrows.UseVisualStyleBackColor = false;
-            this.cBombArrows.CheckedChanged += new System.EventHandler(this.cBombArrows_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3297,6 +3311,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cBombTrapTunicColors;
         private System.Windows.Forms.CheckBox cInstantTransformations;
         private System.Windows.Forms.CheckBox cBombArrows;
+        private System.Windows.Forms.CheckBox cUpdateNpcText;
     }
 }
 

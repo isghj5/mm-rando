@@ -3265,7 +3265,7 @@ namespace MMR.Randomizer
                 ResourceUtils.ApplyHack(Resources.mods.fix_fairies);
             }
 
-            //if (_randomized.Settings.NPCTextHints)
+            if (_randomized.Settings.UpdateNPCText)
             {
                 var clockTownFairyItem = _randomized.ItemList[Item.CollectibleStrayFairyClockTown];
                 if (clockTownFairyItem.NewLocation != Item.CollectibleStrayFairyClockTown)

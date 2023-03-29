@@ -465,6 +465,11 @@ namespace MMR.Randomizer.Models.Settings
         public bool UpdateChests { get; set; }
 
         /// <summary>
+        /// Updates NPC Text when referring to items and locations
+        /// </summary>
+        public bool UpdateNPCText { get; set; }
+
+        /// <summary>
         /// Change epona B button behavior to prevent player losing sword if they don't have a bow.
         /// </summary>
         public bool FixEponaSword { get; set; } = true;
