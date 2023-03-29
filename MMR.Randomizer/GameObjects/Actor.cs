@@ -3842,6 +3842,7 @@ namespace MMR.Randomizer.GameObjects
             0x00FF)] // bottom 0xFF is unknown, not used in code?
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
+        [VariantsWithRoomMax(max:0, 0, 0x40FF, 0x00FF)]
         Cremia = 0x220, // En_Ma_Yto
 
         [FileID(504)]
