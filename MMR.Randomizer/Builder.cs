@@ -3800,7 +3800,7 @@ namespace MMR.Randomizer
                             it.ThreeChoices()
                             .StartGreenText()
                             .Text(romaniGameItem.DisplayName()).NewLine()
-                            .Text("Song of Feelings").NewLine()
+                            .Text("Song of Feelings").NewLine() // purposely changed from "Song of Healing" to avoid conflicting answers
                             .Text("Song of the Field")
                             .EndFinalTextBox();
                         })

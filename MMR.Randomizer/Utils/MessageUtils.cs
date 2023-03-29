@@ -66,7 +66,7 @@ namespace MMR.Randomizer.Utils
                     continue;
                 }
 
-                if (ItemUtils.IsHinted(randomizedResult.Settings, item.Item))
+                if (ItemUtils.IsHinted(randomizedResult.Settings, item.Item, item.NewLocation.Value))
                 {
                     continue;
                 }

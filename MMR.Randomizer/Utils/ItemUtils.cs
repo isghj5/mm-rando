@@ -85,21 +85,40 @@ namespace MMR.Randomizer.Utils
             return false;
         }
 
-        public static bool IsHinted(GameplaySettings settings, Item item)
+        public static bool IsHinted(GameplaySettings settings, Item item, Item location)
         {
-            //if (settings.NPCTextHints)
+            if (settings.UpdateNPCText)
             {
-                if (BossRemains().Contains(item))
+                var npcTextHintedLocations = new List<Item>
                 {
-                    return true;
+                    Item.SongEpona, // Hinted by the Keaton Quiz. TODO Keaton Quiz might be locked by this check
+                    Item.ShopItemMilkBarChateau, // Hinted by the Keaton Quiz and by the Mr. Barten.
+                    Item.UpgradeBigBombBag, // Hinted by the Bomb Shop and by the Old Lady
+                    Item.ItemBottleBeavers, // Hinted by the Beavers and the Zora next to the jar game
+                    Item.HeartPieceBeaverRace, // Hinted by the Beavers
+                    Item.SongStorms, // Hinted by the grave
+                    Item.ItemBottleDampe, // Hinted by the grave
+                    Item.HeartPieceKnuckle, // Hinted by the grave
+                };
+
+                if (!settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FasterBankText))
+                {
+                    npcTextHintedLocations.Add(Item.UpgradeAdultWallet); // Hinted by the Banker. TODO maybe make this work regardless of FasterBankText.
                 }
 
-                if (item == Item.CollectibleStrayFairyClockTown)
+                var npcTextHintedItems = new List<Item>
                 {
-                    return true;
-                }
+                    Item.CollectibleStrayFairyClockTown, // Hinted by the Town Fairy Fountain
+                    Item.SongOath, // Hinted by the Giants
+                    Item.ItemPowderKeg, // Hinted by the Bomb Shop Goron
+                    Item.ItemBottleGoronRace, // Hinted by the Smithy
+                    Item.ItemBottleBeavers, // Hinted by Evan
+                    Item.MaskGaro, // Hinted by the Road to Ikana ghost
+                    Item.SongTime, // Hinted by the Scarecrow
+                };
+                npcTextHintedItems.AddRange(BossRemains()); // Hinted by Tatl and Tael
 
-                if (item == Item.SongOath)
+                if (npcTextHintedItems.Contains(item) || npcTextHintedLocations.Contains(location))
                 {
                     return true;
                 }
