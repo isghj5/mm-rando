@@ -661,7 +661,8 @@ namespace MMR.Randomizer
             // can we remove an object from ikana to increase object budget to have more stuff?
             var ikanaScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaCanyon.FileID());
             ikanaScene.Maps[0].Objects[10] = SMALLEST_OBJ; // kafei
-            ikanaScene.Maps[0].Objects[18] = SMALLEST_OBJ; // flying scrub
+            ikanaScene.Maps[0].Objects[13] = SMALLEST_OBJ; // piece of heart, used in the east side but not here, we dont need here
+            ikanaScene.Maps[0].Objects[18] = SMALLEST_OBJ; // flying scrub ( dont think it matters remove it from this area for most people)
 
             // if we remove the woodfall object, we have more space for noticible actors and not a static backdrop woodfall
             // so far this has been here over a month and nobody has noticed I removed woodfall
@@ -2463,6 +2464,9 @@ namespace MMR.Randomizer
             {
                 return ((DateTime.Now).Subtract(log).TotalMilliseconds).ToString();
             }
+
+            if (scene.SceneEnum == GameObjects.Scene.TerminaField || scene.SceneEnum == GameObjects.Scene.IkanaCanyon)
+                Thread.CurrentThread.Priority = ThreadPriority.AboveNormal; // more time than the other small scenes
             #endregion
 
             WriteOutput($" starting timestamp : [{DateTime.Now.ToString("hh:mm:ss.fff tt")}]");
@@ -2515,6 +2519,7 @@ namespace MMR.Randomizer
             WriteOutput(" time to generate candidate list: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
             int loopsCount = 0;
+            int objectTooLargeCount = 0;
             var previousyAssignedCandidate = new List<Actor>();
             thisSceneData.SceneFreeActors = GetSceneFreeActors(scene);
 
@@ -2534,8 +2539,27 @@ namespace MMR.Randomizer
 
                 // if we've tried 5 seeds and no results, re-shuffle the candidate lists, maybe the rng was bad
                 loopsCount++;
-                if (loopsCount % 5 == 0)
+                if (loopsCount % 4 == 0)
                 {
+                    if (objectTooLargeCount > 0 )
+                    {
+                        // get list of largest object actors
+                        List<Actor> bigObjectActors = thisSceneData.AcceptableCandidates.FindAll(o => o.ObjectSize >= 0x6000); // 0x6000 is roughly the median
+                        // remove one randomly
+                        if (bigObjectActors.Count > 0)
+                        {
+                            var randomObject = bigObjectActors[thisSceneData.RNG.Next() % bigObjectActors.Count].ObjectId;
+                            var actorsPerObject = thisSceneData.AcceptableCandidates.FindAll(a => a.ObjectId == randomObject);
+                            foreach (var a in actorsPerObject)
+                            {
+                                thisSceneData.AcceptableCandidates.Remove(a);
+                                WriteOutput($" removing: [{a.Name}]]", bogoLog);
+                            }
+                            objectTooLargeCount = 0;
+
+                        }
+                    }
+
                     // reinit actorCandidatesLists because this RNG is bad
                     GenerateActorCandidates(thisSceneData, fairyDroppingActors);
                     WriteOutput($" re-generate candidates time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
@@ -2560,7 +2584,7 @@ namespace MMR.Randomizer
                 }
                 if (loopsCount > 50 && thisSceneData.FreeActorRate > 0) // reduce free enemy rate 1 percentage per loop over 50
                 {
-                    thisSceneData.FreeActorRate--; 
+                    thisSceneData.FreeActorRate--;
                 }
                 #endregion
 
@@ -2572,6 +2596,17 @@ namespace MMR.Randomizer
                 StringBuilder objectReplacementLog = new StringBuilder();
                 TrimObjectList(thisSceneData, objectReplacementLog);
                 WriteOutput($" object trim time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
+
+                // check if objects fits now, because the rest can take awhile and at least for termina field we can check this waaaaay earlier
+                thisSceneData.ActorCollection.SetNewActors(scene, thisSceneData.ChosenReplacementObjects);
+                var objectOverflowCheck = thisSceneData.ActorCollection.isObjectSizeAcceptable();
+                if (objectOverflowCheck > 0){
+                    WriteOutput($"---- bogo REJECTED: obj pre-check failed (size:{objectOverflowCheck}): [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
+                    objectTooLargeCount++;
+                    continue; // not enough space, continue
+                } else {
+                    WriteOutput($" pre-checking object size: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
+                }
 
                 // for each object, attempt to change actors 
                 for (int objectIndex = 0; objectIndex < thisSceneData.ChosenReplacementObjects.Count; objectIndex++)
@@ -3448,13 +3483,20 @@ namespace MMR.Randomizer
             // if the new size is smaller than the old size we should be dandy, if not...
             if (dayOvlDiff + dayInstDiff <= -0x100)
             {
+                if (scene.SceneEnum == GameObjects.Scene.IkanaCanyon
+                    && (newCollection.OverlayRamSize + newCollection.ActorInstanceSum > 0x5FFFF)) // trying a bit higher for ikana canyon
+                {
+                    return false;
+                }
+
                 // SCT is 0x4FF90
-                if (newCollection.OverlayRamSize + newCollection.ActorInstanceSum > 0x4FFFF) // need to find new safe values
+                else if (newCollection.OverlayRamSize + newCollection.ActorInstanceSum > 0x4FFFF) // need to find new safe values
                 {
                     return false;
                 }
                 // I can't rule out halucination scrubs are or are not the issue, their skeleton->action is broken, that sounds like corrupted heap
-                if (scene.SceneEnum == GameObjects.Scene.DekuPalace && (newCollection.OverlayRamSize + newCollection.ActorInstanceSum > 0x22000)) // need to find new safe values
+                if (scene.SceneEnum == GameObjects.Scene.DekuPalace
+                    && (newCollection.OverlayRamSize + newCollection.ActorInstanceSum > 0x22000)) // need to find new safe values
                 {
                     return false;
                 }

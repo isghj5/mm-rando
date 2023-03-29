@@ -2301,7 +2301,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x16B)]
         [WaterVariants(0x0F00, 0x0300)]
         [OnlyOneActorPerRoom]
-        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.ZoraCape)] // massive lag
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.ZoraCape, Scene.GreatBayCoast)] // massive lag
         Desbreko = 0x14B, // En_Pr (Pirana?)
 
         [FileID(298)]
@@ -2714,6 +2714,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingTypeVarsPlacement(mask: 0x3F, shift: 0)]
         [OnlyOneActorPerRoom]
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
+        [EnemizerScenesPlacementBlock(Scene.TerminaField)] // nothing wrong, just no place to put and huge object slows generation down
         [SwitchFlagsPlacement(mask: 0x7F, shift: 6)]
         Eyegore = 0x184, // En_Egol
 
@@ -3011,6 +3012,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0x2)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
+        [EnemizerScenesPlacementBlock(Scene.TerminaField)] // TF has object size issues, this is the largest object, this is here just to speed up
         HappyMaskSalesman = 0x1B5, // En_Osn
 
         //[ActorizerEnabled] // issue: cannot place organ because its waiting for the cutscene part to appear, also no hitbox
@@ -3169,6 +3171,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 0, variant: 0xFFF3, 0x814)] // dont put the digg spots without a digger its just weird, thats weird
         [SwitchFlagsPlacement(mask: 0x7F, shift: 4)]
         [UnkillableAllVariants]
+        [VariantsWithRoomMax(max: 0, variant: 0x1, 0x10, 0xFFF3, 0x12, 0x814)] // too hard coded right now to work correct
         Dampe = 0x1CA, // En_Tk
 
         Empty1CB = 0x1CB,
@@ -3751,7 +3754,8 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
-        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard)] // too much dyna
+        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, // too much dyna
+                                      Scene.TerminaField)] // no place to put, just wastes generation time
         StoneTowerMirror = 0x219, // Bg_Ikana_Mirror
 
         [FileID(497)]
