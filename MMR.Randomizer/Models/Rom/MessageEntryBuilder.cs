@@ -371,6 +371,12 @@ namespace MMR.Randomizer.Models.Rom
                 Append(0xE0);
 
             /// <summary>
+            /// Appends the disable text skip control character (0x15) to the message.
+            /// </summary>
+            /// <returns></returns>
+            public MessageBuilder DisableTextSkip() => Append(0x15);
+
+            /// <summary>
             /// Appends the disable text skip II control character (0x19) to the message.
             /// </summary>
             /// <returns></returns>
