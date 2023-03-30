@@ -410,6 +410,7 @@ namespace MMR.Randomizer
             //goronVillageWinter.Maps[0].Objects[7] = GameObjects.Actor.GoGoron.ObjectIndex(); // square signpost
             //goronVillageWinter.Maps[0].Objects[7] = GameObjects.Actor.GoGoron.ObjectIndex(); // square signpost
 
+            FixKafeiPlacements();
 
         }
 
@@ -610,13 +611,23 @@ namespace MMR.Randomizer
                 // */
                 // RecreateFishing();
 
-
                 // can we just boost the dynapoly memory size?
                 // data locations:
                 // default 23000 is an ORI at 3da8, a4 for tope byte
                 // IsSmallMemScene is F000 at 3d58
                 // termina field is in data at sSceneMemList, not sure exact space
                 //ReadWriteUtils.Arr_WriteU32(codeFile, 0x3DA8, 0x2);
+                /*
+                List<Actor> sorted = new List<Actor>();
+                foreach (var actor in Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>())
+                {
+                    sorted.Add(new Actor(actor));
+                }
+                foreach ( var a in sorted.OrderBy(u => u.ObjectSize))
+                {
+                    Debug.WriteLine($"Actor {a.Name} has object size: {a.ObjectSize.ToString("X6")}");
+                }
+                int i = 4; */
             }
 
             // testing why zrotation can be so broken for grottos
@@ -1016,6 +1027,51 @@ namespace MMR.Randomizer
             dekuPalaceScene.Maps[0].Objects[7] = frontGuardOID;
             dekuPalaceScene.Maps[1].Objects[7] = frontGuardOID;
             dekuPalaceScene.Maps[2].Objects[7] = frontGuardOID;
+        }
+
+        public static void FixKafeiPlacements()
+        {
+            if ( ! VanillaEnemyList.Contains(GameObjects.Actor.Kafei)) return;
+
+            /// if Kafei is randomized, his default placements are silly, move them to be more natural
+            var southClockTown = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.SouthClockTown);
+            var sctKafei = southClockTown.Maps[0].Actors[2];
+            if (sctKafei.ActorEnum != GameObjects.Actor.Kafei) // changed
+            {
+                // move to the bench so hes not lurking out of sight behind the laundry room area
+                sctKafei.Position = new vec16(-615, 16, 425);
+                sctKafei.Rotation.y = ActorUtils.MergeRotationAndFlags(90, flags: sctKafei.Rotation.y);
+                SceneUtils.UpdateScene(southClockTown);
+            }
+
+            var eastClockTown = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.EastClockTown);
+            var ectKafei = eastClockTown.Maps[0].Actors[2];
+            if (ectKafei.ActorEnum != GameObjects.Actor.Kafei) // changed
+            {
+                // sitting just outside of town door, move inwards a bit
+                ectKafei.Position = new vec16(1475, 60, -747);
+                sctKafei.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: sctKafei.Rotation.y);
+                SceneUtils.UpdateScene(eastClockTown);
+            }
+
+            var laundryPool = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.LaundryPool);
+            var lpKafei = laundryPool.Maps[0].Actors[9];
+            if (lpKafei.ActorEnum != GameObjects.Actor.Kafei) // changed
+            {
+                // sitting beyond the path back to SCT, move to bridge
+                lpKafei.Position = new vec16(-2080, -95, 582);
+                SceneUtils.UpdateScene(laundryPool);
+            }
+
+            var ikanaCanyon = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.IkanaCanyon);
+            var ikanaKafei = ikanaCanyon.Maps[4].Actors[9];
+            if (ikanaKafei.ActorEnum != GameObjects.Actor.Kafei) // changed
+            {
+                // move to his favorite rock
+                ikanaKafei.Position = new vec16(2523, -160, 5080);
+                SceneUtils.UpdateScene(ikanaCanyon);
+            }
+
         }
 
         public static void FixWoodfallTempleGekkoMiniboss()
@@ -1552,7 +1608,7 @@ namespace MMR.Randomizer
             }
         }
 
-        public static void FixGroundToFlyingActorHeights(SceneEnemizerData thisSceneData)
+        public static void FixGroundToFlyingActorHeights(SceneEnemizerData thisSceneData, StringBuilder log)
         {
             /// For variety, I wanted to be able to put flying enemies where ground enemies used to be.
             /// (the inverse is also interesting in idea, but harder to apply without micro-types)
@@ -1560,7 +1616,7 @@ namespace MMR.Randomizer
             /// So, for some flying types, they will have values to specify they should be automatically raised
             ///   a bit higher than their ground spawn which is almost always the floor
 
-            thisSceneData.Log.AppendLine(" ---------- ");
+            log.AppendLine(" Height adjustments: ");
 
             for (int actorIndex = 0; actorIndex < thisSceneData.Actors.Count(); actorIndex++)
             {
@@ -1582,15 +1638,15 @@ namespace MMR.Randomizer
                     {
                         testActor.Position.y += (short) attr.Height;
 
-                        thisSceneData.Log.AppendLine($" + adjusted height of actor [{testActor.Name}] by [{attr.Height}]");
+                        log.AppendLine($" + adjusted height of actor [{testActor.Name}] by [{attr.Height}]");
                     }
                 }
             }
-            thisSceneData.Log.AppendLine(" ---------- ");
+            //thisSceneData.Log.AppendLine(" ---------- ");
         }
 
         // TODO: change these so they only print out the "== MAP" stuff if themap actually has something we changed
-        public static void FixSwitchFlagVars(SceneEnemizerData thisSceneData)
+        public static void FixSwitchFlagVars(SceneEnemizerData thisSceneData, StringBuilder log)
         {
             /// New actors can have switch flags, these are normally tailored to the scene so one actor could step on another
 
@@ -1636,12 +1692,12 @@ namespace MMR.Randomizer
                     var newSwitch = usableSwitches[0];
                     ActorUtils.SetActorSwitchFlags(actor, (short)newSwitch);
                     usableSwitches.Remove(newSwitch);
-                    thisSceneData.Log.AppendLine($" +++ [{actorIndex}][{actor.ActorEnum}] had switch flags modified to [{newSwitch}] +++");
+                    log.AppendLine($" +++ [{actorIndex}][{actor.ActorEnum}] had switch flags modified to [{newSwitch}] +++");
                 }
             }
         }
 
-        public static void FixTreasureFlagVars(SceneEnemizerData thisSceneData)
+        public static void FixTreasureFlagVars(SceneEnemizerData thisSceneData, StringBuilder log)
         {
             /// Like switch flags, we want to avoid stepping on previously existing treasure flags
 
@@ -1692,7 +1748,7 @@ namespace MMR.Randomizer
                     var newSwitch = usableTreasureFlags[0];
                     ActorUtils.SetActorTreasureFlags(actor, (short) newSwitch);
                     usableTreasureFlags.Remove(newSwitch);
-                    thisSceneData.Log.AppendLine($" +++ [{actorIndex}][{actor.ActorEnum}] had treasure flags modified to [{newSwitch}] +++");
+                    log.AppendLine($" +++ [{actorIndex}][{actor.ActorEnum}] had treasure flags modified to [{newSwitch}] +++");
                 }
             }
         }
@@ -2481,7 +2537,9 @@ namespace MMR.Randomizer
             var sceneObjectLimit = SceneUtils.GetSceneObjectBankSize(scene.SceneEnum);
             WriteOutput(" time to get scene objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
-            WriteOutput("For Scene: [" + scene.ToString() + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
+            WriteOutput("=========================================================================");
+            WriteOutput("For Scene: [" + scene.ToString() + "] with fid: " + scene.File + ", with sid: 0x" + scene.Number.ToString("X2"));
+            WriteOutput("=========================================================================");
             // WriteOutput(" time to find scene name: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
             // if actor does NOT exist, but object does, probably spawned by something else; remove from actors to randomize
@@ -2653,9 +2711,7 @@ namespace MMR.Randomizer
                 {
                     WriteOutput($" after issizeacceptable: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
-                    thisSceneData.Log.Append(objectReplacementLog);
-                    thisSceneData.Log.Append(bogoLog);
-                    thisSceneData.ActorCollection.PrintAllMapRamObjectOutput(thisSceneData.Log);
+                    //thisSceneData.Log.Append(objectReplacementLog);
                     break; // done, break loop
                 }
                 // else: not small enough; reset loop and try again
@@ -2680,13 +2736,15 @@ namespace MMR.Randomizer
             /////////////////////////////
             #endregion
 
+            var flagLog = new StringBuilder();
+
             FixPathingVars(thisSceneData); // any patrolling types need their vars fixed
             FixKickoutEnemyVars(thisSceneData); // and same with the two actors that have kickout addresses
-            FixSwitchFlagVars(thisSceneData);
-            FixTreasureFlagVars(thisSceneData);
+            FixSwitchFlagVars(thisSceneData, flagLog);
+            FixTreasureFlagVars(thisSceneData, flagLog);
             FixRedeadSpawnScew(thisSceneData); // redeads don't like x/z rotation
             FixBrokenActorSpawnCutscenes(thisSceneData); // some actors dont like having bad cutscenes
-            FixGroundToFlyingActorHeights(thisSceneData); // putting flying actors on ground spawns can be weird
+            FixGroundToFlyingActorHeights(thisSceneData, flagLog); // putting flying actors on ground spawns can be weird
 
             // print debug actor locations
             WriteOutput("####################################################### ");
@@ -2698,6 +2756,13 @@ namespace MMR.Randomizer
                     $"was replaced by new enemy: [{actor.Variants[0].ToString("X4")}]" +
                     $"[{actor.Name}]");
             }
+
+            WriteOutput("---------------------------------------------------------");
+            thisSceneData.Log.Append(flagLog);
+            WriteOutput("---------------------------------------------------------");
+            thisSceneData.ActorCollection.PrintAllMapRamObjectOutput(thisSceneData.Log);
+            WriteOutput("---------------------------------------------------------");
+            thisSceneData.Log.Append(bogoLog);
             WriteOutput("####################################################### ");
 
             // realign all scene companion actors
@@ -2705,7 +2770,7 @@ namespace MMR.Randomizer
 
             SetSceneEnemyObjects(scene, thisSceneData.ChosenReplacementObjectsPerMap);
             SceneUtils.UpdateScene(scene); // writes scene actors back to binary
-            WriteOutput(" time to complete randomizing scene: " + GET_TIME(thisSceneData.StartTime) + "ms");
+            WriteOutput($" time to complete randomizing [{scene.SceneEnum}]: " + GET_TIME(thisSceneData.StartTime) + "ms");
             WriteOutput($" ending timestamp : [{DateTime.Now.ToString("hh:mm:ss.fff tt")}]");
             FlushLog();
         }
@@ -3293,7 +3358,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 45.7\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 46.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
@@ -3484,7 +3549,7 @@ namespace MMR.Randomizer
             if (dayOvlDiff + dayInstDiff <= -0x100)
             {
                 if (scene.SceneEnum == GameObjects.Scene.IkanaCanyon
-                    && (newCollection.OverlayRamSize + newCollection.ActorInstanceSum > 0x5FFFF)) // trying a bit higher for ikana canyon
+                    && (newCollection.OverlayRamSize + newCollection.ActorInstanceSum > 0x64FFF)) // trying a bit higher for ikana canyon
                 {
                     return false;
                 }

@@ -247,6 +247,19 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1308)]
         [SceneInternalId(0x2C)]
+        // these actors are only seen in the credits, we should block all large object actors from these spots to save generation time
+        [EnemizerSceneEnemyReplacementBlock(Actor.ViscenMoonLeaveCutscene, 
+            Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
+        ///*
+        [EnemizerSceneEnemyReplacementBlock(Actor.MutoMoonLeaveCutscene,
+                        Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.AnjusGrandmaCredits,
+                        Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.AnjuMotherWedding,
+                        Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.CuriosityShopMan,
+                        Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
+        //*/
         MountainSmithy = 0x29,
 
         [FileID(1310)]

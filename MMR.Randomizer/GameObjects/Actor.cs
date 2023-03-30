@@ -2382,8 +2382,19 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         En_Test2 = 0x158, // En_Test2
 
+        [ActorizerEnabled]
         [FileID(311)]
         [ObjectListIndex(0x1C)]
+        [CheckRestricted(Scene.IkanaCanyon, variant: -1, check: Item.MaskCouple)]
+        [CheckRestricted(Scene.EastClockTown, variant: -1, check: Item.MaskCouple)]
+        [CheckRestricted(Scene.SouthClockTown, variant: 0x1E3, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
+        [CheckRestricted(Scene.LaundryPool, variant: -1, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
+        // E2 is hidden in ikana somewhere?? since its path its prob running after final hours or something
+        [PathingVariants(0x100, 0x1E2, 0x1E3, 0x1E4)]
+        [PathingTypeVarsPlacement(mask:0x1F, shift:0)]
+        // assumed all are hardcoded to hell
+        [VariantsWithRoomMax(max:0, variant: 0x100, 0x1E2, 0x1E3, 0x1E4)]
+        [UnkillableAllVariants]
         Kafei = 0x159, // En_Test3
 
         [FileID(312)]
@@ -4016,10 +4027,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2CA0)]  // combat music disable does not work
         [FileID(524)]
         [ObjectListIndex(0x75)]
+        [CheckRestricted(Item.MaskGibdo)]
         [PathingVariants(0, 0x81, 0x82, 0x83, 0x84, 0x85)]
         [PathingTypeVarsPlacement(mask:0xFF00, shift:8)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.IkanaCanyon)] // dont replace the train
+        //[EnemizerScenesExcluded(Scene.IkanaCanyon)] // dont replace the train
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         GibdoIkana = 0x235, // En_Railgibud
 
@@ -4037,15 +4049,17 @@ namespace MMR.Randomizer.GameObjects
         // both of his vars are paths, sooo I'm guessing his behavior is hard coded
         [ObjectListIndex(0xE3)]
         [FileID(526)]
-        [CheckRestricted(Item.MaskBlast, Item.MaskAllNight)]
-        // dont replace any: for one, this object is used by multiple actors
+        [CheckRestricted(Scene.NorthClockTown, variant: 0x83FF, Item.MaskBlast, Item.MaskAllNight)]
+        [CheckRestricted(Scene.IkanaCanyon, variant: 0x85FF, Item.MaskCouple)]
+        // cannot remove because he shares objects with the bank
+        //[CheckRestricted(Scene.WestClockTown, variant: 0x83FF, Item.MaskBlast, Item.MaskAllNight)]
         // can't replace the one in west clocktown without killing bank
         // can't replace the one in ikana without killing the kafei quest (even if they are different rooms)
-        [PathingVariants(0x85FF)]
+        [PathingVariants(0x85FF, 0x83FF)]
         [PathingTypeVarsPlacement(mask:0x7E00, shift:9)]
-        [VariantsWithRoomMax(max:0, variant: 0x85FF)]
+        [VariantsWithRoomMax(max:0, variant: 0x85FF, 0x83FF)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(/* Scene.NorthClockTown, */ Scene.WestClockTown, Scene.IkanaCanyon)]
+        [EnemizerScenesExcluded(/* Scene.NorthClockTown, */ Scene.WestClockTown/* , Scene.IkanaCanyon*/)]
         Sakon = 0x237, // En_Suttari
 
         [ActorizerEnabled]
