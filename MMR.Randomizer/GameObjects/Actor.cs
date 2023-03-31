@@ -3935,7 +3935,9 @@ namespace MMR.Randomizer.GameObjects
         // both 0 and 0xFF on oposite sides
         [CheckRestricted(Scene.NorthClockTown, variant: 0, Item.HeartPieceNorthClockTown)]
         [GroundVariants(0x0, 0xFF, 0x80FF)]
-        [VariantsWithRoomMax(max: 2, variant: 0x0, 0xFF, 0x80FF)]
+        [VariantsWithRoomMax(max: 1, variant: 0x0, 0xFF, 0x80FF)]
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear,// known dyna issues
+            Scene.StoneTower, Scene.StoneTowerTemple, Scene.SouthernSwamp)] // assumed issues
         [UnkillableAllVariants]
         UglyTree = 0x229, // Obj_Tree
 
