@@ -91,6 +91,7 @@ namespace MMR.Randomizer.Utils
             {
                 var npcTextHintedLocations = new List<Item>
                 {
+                    Item.UpgradeAdultWallet, // Hinted by the Banker
                     Item.SongEpona, // Hinted by the Keaton Quiz. TODO Keaton Quiz might be locked by this check
                     Item.ShopItemMilkBarChateau, // Hinted by the Keaton Quiz and by the Mr. Barten.
                     Item.UpgradeBigBombBag, // Hinted by the Bomb Shop and by the Old Lady
@@ -100,11 +101,6 @@ namespace MMR.Randomizer.Utils
                     Item.ItemBottleDampe, // Hinted by the grave
                     Item.HeartPieceKnuckle, // Hinted by the grave
                 };
-
-                if (!settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FasterBankText))
-                {
-                    npcTextHintedLocations.Add(Item.UpgradeAdultWallet); // Hinted by the Banker. TODO maybe make this work regardless of FasterBankText.
-                }
 
                 var npcTextHintedItems = new List<Item>
                 {

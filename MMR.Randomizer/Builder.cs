@@ -835,6 +835,11 @@ namespace MMR.Randomizer
                 }
             }
 
+            if (_randomized.Settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FasterBankText) && _randomized.Settings.UpdateNPCText)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.faster_bank_text_restore_intro);
+            }
+
             if (_randomized.Settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.AutomaticCredits))
             {
                 for (ushort i = 0x1F5F; i <= 0x1F75; i++)
