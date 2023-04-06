@@ -295,6 +295,8 @@ typedef struct {
     /* 0x00 */ u32 maskDListEntry[24];
 } PlayerMaskDList; // size = 0x60
 
+struct ActorPlayer;
+
 typedef void (*PlayerActionFunc)(struct ActorPlayer* this, struct GlobalContext* ctxt);
 
 #define PLAYER_LIMB_BUF_SIZE 159 // TODO (ALIGN16(sizeof(PlayerAnimationFrame)) + 0xF)
