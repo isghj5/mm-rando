@@ -303,7 +303,7 @@ namespace MMR.Randomizer.Utils
                     var cap = settings.OverrideHintItemCaps.ElementAtOrDefault(i);
                     if (cap > 0)
                     {
-                        var groupedLocations = tier.GroupBy(location => location.GetAttribute<GossipCombineAttribute>()?.CombinedName ?? location.ToString())
+                        var groupedLocations = tier.GroupBy(location => ItemCombinableHints.GetValueOrDefault(location).name ?? location.ToString())
                             .ToList();
                         var numberOfLocationsToJunk = groupedLocations.Count - cap;
                         return groupedLocations
@@ -344,6 +344,121 @@ namespace MMR.Randomizer.Utils
                 && item != Item.IceTrap
                 && randomizedResult.ImportantLocations?.Contains(locationForImportance) == true;
         }
+
+        public static readonly ReadOnlyDictionary<string, ReadOnlyCollection<Item>> CombinableHints = new ReadOnlyDictionary<string, ReadOnlyCollection<Item>>(new Dictionary<string, ReadOnlyCollection<Item>>
+        {
+            {
+                "Ranch Sisters Defense", new List<Item>
+                {
+                    Item.ItemBottleAliens,
+                    Item.NotebookSaveTheCows,
+                    Item.MaskRomani,
+                    Item.NotebookProtectMilkDelivery
+                }.AsReadOnly()
+            },
+            {
+                "Beaver Races", new List<Item>
+                {
+                    Item.ItemBottleBeavers,
+                    Item.HeartPieceBeaverRace
+                }.AsReadOnly()
+            },
+            {
+                "Bombers' Hide and Seek", new List<Item>
+                {
+                    Item.ItemNotebook,
+                    Item.NotebookMeetBombers,
+                    Item.NotebookLearnBombersCode,
+                }.AsReadOnly()
+            },
+            {
+                "Town Archery", new List<Item>
+                {
+                    Item.UpgradeBigQuiver,
+                    Item.HeartPieceTownArchery
+                }.AsReadOnly()
+            },
+            {
+                "Swamp Archery", new List<Item>
+                {
+                    Item.UpgradeBiggestQuiver,
+                    Item.HeartPieceSwampArchery
+                }.AsReadOnly()
+            },
+            {
+                "Ocean Spider House", new List<Item>
+                {
+                    Item.UpgradeGiantWallet,
+                    Item.MundaneItemOceanSpiderHouseDay2PurpleRupee,
+                    Item.MundaneItemOceanSpiderHouseDay3RedRupee
+                }.AsReadOnly()
+            },
+            {
+                "Midnight Meeting", new List<Item>
+                {
+                    Item.TradeItemKafeiLetter,
+                    Item.NotebookPromiseAnjuDelivery
+                }.AsReadOnly()
+            },
+            {
+                "Letter to Kafei Delivery", new List<Item>
+                {
+                    Item.NotebookDepositLetterToKafei,
+                    Item.TradeItemPendant,
+                    Item.NotebookMeetKafei,
+                    Item.NotebookPromiseKafei,
+                    Item.MaskKeaton,
+                    Item.TradeItemMamaLetter,
+                    Item.NotebookCuriosityShopManSGift,
+                    Item.NotebookPromiseCuriosityShopMan
+                }.AsReadOnly()
+            },
+            {
+                "Deku Playground", new List<Item>
+                {
+                    Item.HeartPieceDekuPlayground,
+                    Item.MundaneItemDekuPlaygroundPurpleRupee
+                }.AsReadOnly()
+            },
+            {
+                "Honey and Darling", new List<Item>
+                {
+                    Item.HeartPieceHoneyAndDarling,
+                    Item.MundaneItemHoneyAndDarlingPurpleRupee
+                }.AsReadOnly()
+            },
+            {
+                "Invisible Soldier", new List<Item>
+                {
+                    Item.MaskStone,
+                    Item.NotebookMeetShiro,
+                    Item.NotebookSaveInvisibleSoldier
+                }.AsReadOnly()
+            },
+            {
+                "Romani's Game", new List<Item>
+                {
+                    Item.SongEpona,
+                    Item.NotebookPromiseRomani
+                }.AsReadOnly()
+            },
+            {
+                "Letter to Mama Delivery", new List<Item>
+                {
+                    Item.ItemBottleMadameAroma,
+                    Item.NotebookDeliverLetterToMama
+                }.AsReadOnly()
+            },
+            {
+                "All-Night Mask Purchase", new List<Item>
+                {
+                    Item.MaskAllNight,
+                    Item.NotebookPurchaseCuriosityShopItem
+                }.AsReadOnly()
+            },
+        });
+
+        public static readonly ReadOnlyDictionary<Item, (string name, ReadOnlyCollection<Item> locations)> ItemCombinableHints = new ReadOnlyDictionary<Item, (string, ReadOnlyCollection<Item>)>(CombinableHints.SelectMany(kvp => kvp.Value.Select(x => new { Name = kvp.Key, Locations = kvp.Value, Location = x })).ToDictionary(x => x.Location, x => (x.Name, x.Locations)));
 
         public static readonly ReadOnlyCollection<ReadOnlyCollection<Item>> ForbiddenStartTogether = new List<List<Item>>()
         {

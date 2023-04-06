@@ -142,7 +142,7 @@ namespace MMR.Randomizer.Utils
                     ? (io) => randomizedResult.Settings.OverrideHintPriorities.FindIndex(locations => locations.Contains(io.NewLocation.Value))
                     : (io) => -io.NewLocation.Value.GetAttribute<GossipCompetitiveHintAttribute>().Priority;
 
-                unusedItems = hintableItems.GroupBy(io => io.NewLocation.Value.GetAttribute<GossipCombineAttribute>()?.CombinedName ?? io.NewLocation.Value.ToString())
+                unusedItems = hintableItems.GroupBy(io => ItemUtils.ItemCombinableHints.GetValueOrDefault(io.NewLocation.Value).name ?? io.NewLocation.Value.ToString())
                                         .Select(g => g.OrderBy(getPriority).First())
                                         .GroupBy(getPriority)
                                         .OrderBy(g => g.Key)
@@ -151,7 +151,7 @@ namespace MMR.Randomizer.Utils
                                         .Take(numberOfLocationHints)
                                         .ToList();
                 var combinedItems = unusedItems
-                    .SelectMany(io => io.NewLocation.Value.GetAttributes<GossipCombineAttribute>().SelectMany(gca => gca.OtherItems))
+                    .SelectMany(io => ItemUtils.ItemCombinableHints.GetValueOrDefault(io.NewLocation.Value).locations ?? Enumerable.Empty<Item>())
                     .Where(item => randomizedItems.Any(io => io.NewLocation == item))
                     .Select(item => randomizedItems.Single(io => io.NewLocation == item))
                     .Where(io => !unusedItems.Contains(io) && hintableItems.Contains(io))
@@ -435,13 +435,17 @@ namespace MMR.Randomizer.Utils
             return finalHints;
         }
 
-        private static (string message, string clearMessage, List<ItemObject> combined) BuildItemHint(ItemObject item, RandomizedResult randomizedResult,
-            GossipHintStyle hintStyle, List<ItemObject> itemsToCombineWith, List<ItemObject> hintableItems, Func<ItemObject, bool> shouldIndicateImportance, Random random)
+        private static (string message, string clearMessage, List<ItemObject> combined) BuildItemHint(
+            ItemObject item,
+            RandomizedResult randomizedResult,
+            GossipHintStyle hintStyle,
+            List<ItemObject> itemsToCombineWith,
+            List<ItemObject> hintableItems,
+            Func<ItemObject, bool> shouldIndicateImportance,
+            Random random)
         {
             ushort soundEffectId = 0x690C; // grandma curious
             var itemNames = new List<string>();
-            var locationNames = new List<string>();
-            bool hasOrder = item.NewLocation.Value.HasAttribute<GossipCombineOrderAttribute>();
             var combined = new List<ItemObject>();
             combined.Add(item);
 
@@ -459,26 +463,18 @@ namespace MMR.Randomizer.Utils
                 color = isRequired ? TextCommands.ColorYellow : TextCommands.ColorSilver;
             }
             itemNames.Add(article + color + item.Item.ProgressiveUpgradeName(randomizedResult.Settings.ProgressiveUpgrades) + TextCommands.ColorWhite + importance);
-            locationNames.Add(item.NewLocation.Value.Location(randomizedResult.ItemList));
+            var locationName = item.NewLocation.Value.Location(randomizedResult.ItemList);
             if (hintStyle != GossipHintStyle.Relevant)
             {
-                var gossipCombineAttribute = item.NewLocation.Value.GetAttribute<GossipCombineAttribute>();
-                combined = itemsToCombineWith.Where(io => gossipCombineAttribute?.OtherItems.Contains(io.NewLocation.Value) == true).ToList();
+                var combineInfo = ItemUtils.ItemCombinableHints.GetValueOrDefault(item.NewLocation.Value);
+                var otherItems = combineInfo.locations ?? Enumerable.Empty<Item>();
+                combined = itemsToCombineWith.Where(io => otherItems.Contains(io.NewLocation.Value) == true).ToList();
                 if (combined.Any())
                 {
                     combined.Add(item);
-                    combined = combined.OrderBy(io => io.NewLocation.Value.GetAttribute<GossipCombineOrderAttribute>()?.Order ?? random.Next()).ToList();
-                    locationNames.Clear();
+                    combined = combined.OrderBy(io => combineInfo.locations.IndexOf(io.NewLocation.Value)).ToList();
+                    locationName = combineInfo.name;
                     itemNames.Clear();
-                    var combinedName = gossipCombineAttribute.CombinedName;
-                    if (!string.IsNullOrWhiteSpace(combinedName))
-                    {
-                        locationNames.Add(combinedName);
-                    }
-                    else
-                    {
-                        locationNames.AddRange(combined.Select(io => io.NewLocation.Value.Location(randomizedResult.ItemList)));
-                    }
                     itemNames.AddRange(combined.Select(io =>
                     {
                         article = randomizedResult.Settings.ProgressiveUpgrades && io.Item.HasAttribute<ProgressiveAttribute>() ? "a " : GetArticle(io.Item);
@@ -503,24 +499,24 @@ namespace MMR.Randomizer.Utils
                 }
             }
             string clearMessage = null;
-            if (itemNames.Any() && locationNames.Any())
+            if (itemNames.Any())
             {
-                clearMessage = BuildGossipQuote(soundEffectId, locationNames, itemNames, hasOrder, random);
+                clearMessage = BuildGossipQuote(soundEffectId, locationName, itemNames, random);
             }
 
             itemNames.Clear();
-            locationNames.Clear();
+            locationName = null;
             if (item.Mimic != null)
             {
                 // If item has a mimic and not using clear hints, always use a fake hint.
                 soundEffectId = 0x690A; // grandma laugh
                 itemNames.Add(item.Mimic.Item.ItemHints().Random(random));
-                locationNames.Add(item.NewLocation.Value.LocationHints().Random(random));
+                locationName = item.NewLocation.Value.LocationHints().Random(random);
             }
             else if (hintStyle != GossipHintStyle.Random || random.Next(100) >= 5) // 5% chance of fake/junk hint if it's not a moon gossip stone or competitive style
             {
                 itemNames.Add(item.Item.ItemHints().Random(random));
-                locationNames.Add(item.NewLocation.Value.LocationHints().Random(random));
+                locationName = item.NewLocation.Value.LocationHints().Random(random);
             }
             else
             {
@@ -528,7 +524,7 @@ namespace MMR.Randomizer.Utils
                 {
                     soundEffectId = 0x690A; // grandma laugh
                     itemNames.Add(item.Item.ItemHints().Random(random));
-                    locationNames.Add(hintableItems.Random(random).NewLocation.Value.LocationHints().Random(random));
+                    locationName = hintableItems.Random(random).NewLocation.Value.LocationHints().Random(random);
                 }
             }
             if (itemNames.Any())
@@ -537,10 +533,9 @@ namespace MMR.Randomizer.Utils
             }
 
             string message = null;
-            if (itemNames.Any() && locationNames.Any())
+            if (itemNames.Any() && locationName != null)
             {
-                message = BuildGossipQuote(soundEffectId, locationNames, itemNames, hasOrder, random);
-                //return (BuildGossipQuote(soundEffectId, locationNames, itemNames, hasOrder, random), combined);
+                message = BuildGossipQuote(soundEffectId, locationName, itemNames, random);
             }
 
             if (message != null || clearMessage != null)
@@ -583,14 +578,14 @@ namespace MMR.Randomizer.Utils
             //return $"\x1E{sfx}{start} {TextCommands.ColorRed}{locationMessage}{TextCommands.ColorWhite} {mid} {color}{NumberToWords(numberOfImportantItems)} important item{(numberOfImportantItems == 1 ? "" : "s")}{TextCommands.ColorWhite}...\xBF".Wrap(35, "\x11");
         }
 
-        private static string BuildGossipQuote(ushort soundEffectId, IEnumerable<string> locationMessages, IEnumerable<string> itemMessages, bool hasOrder, Random random)
+        private static string BuildGossipQuote(ushort soundEffectId, string locationName, IEnumerable<string> itemMessages, Random random)
         {
             string start = Gossip.MessageStartSentences.Random(random);
             string mid = Gossip.MessageMidSentences.Random(random);
 
             string sfx = $"{(char)((soundEffectId >> 8) & 0xFF)}{(char)(soundEffectId & 0xFF)}";
 
-            return $"\x1E{sfx}{start} {string.Join(" and ", locationMessages.Select(locationName => $"\x01{locationName}\x00"))} {mid} {string.Join(hasOrder ? " then " : " and ", itemMessages)}...\xBF".Wrap(35, "\x11", "\x10");
+            return $"\x1E{sfx}{start} {locationName} {mid} {string.Join(" then ", itemMessages)}...\xBF".Wrap(35, "\x11", "\x10");
         }
 
         public static string GetArticle(Item item, string indefiniteArticle = null)
