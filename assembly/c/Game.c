@@ -78,6 +78,8 @@ void Game_AfterUpdate(GlobalContext* ctxt) {
         MMR_ProcessItemQueue(ctxt);
         WorldColors_CycleTunic(ctxt);
     } else {
-        CheckRespawn(ctxt);
+        // TODO Properly prevent inputs during respawn combo
+        // TODO Fix HUD visibility settings after respawning
+        // CheckRespawn(ctxt);
     }
 }
