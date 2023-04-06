@@ -85,9 +85,10 @@ bool Icetrap_Give(ActorPlayer* player, GlobalContext* ctxt) {
         z2_LinkDamage(ctxt, player, damageEffectType, 4.0, 4.0, player->base.shape.rot.y);
         return true;
     } else if (trapBomb) {
-        Actor* bomb = z2_SpawnActor(&ctxt->actorCtx, ctxt, ACTOR_EN_BOM, player->base.currPosRot.pos.x, player->base.currPosRot.pos.y, player->base.currPosRot.pos.z, 0, 0, 0, 0);
+        ActorEnBom* bomb = (ActorEnBom*) z2_SpawnActor(&ctxt->actorCtx, ctxt, ACTOR_EN_BOM, player->base.currPosRot.pos.x, player->base.currPosRot.pos.y, player->base.currPosRot.pos.z, 0, 0, 0, 0);
         if (bomb) {
-            ((ActorEnBom*)bomb)->timer = 0;
+            // bomb->collider1.base.flagsAT &= ~8; // AT_TYPE_PLAYER Disable player-aligned damage
+            bomb->timer = 0;
             z2_PlaySfx(0x3A76);
             if (WORLD_COLOR_CONFIG.flags.bombTrapTunicColor) {
                 WorldColors_RandomizeTunic(player);
