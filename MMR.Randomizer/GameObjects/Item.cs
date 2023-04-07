@@ -9986,7 +9986,7 @@ namespace MMR.Randomizer.GameObjects
 
 
 
-        [ItemName("Notebook: Bombers"), LocationName("Notebook: Meeting the Bombers"), MultiLocation(NotebookMeetBombersInNCT, NotebookMeetBombersInECT), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Bombers"), LocationName("Notebook Meeting: The Bombers"), MultiLocation(NotebookMeetBombersInNCT, NotebookMeetBombersInECT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a group of children", "a town game"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Bombers.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -9994,7 +9994,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetBombers,
 
 
-        [ItemName("Notebook: Anju"), LocationName("Notebook: Meeting Anju"), MultiLocation(NotebookMeetAnjuInInn, NotebookMeetAnjuInLaundryPool, NotebookMeetAnjuInRanch)]
+        [ItemName("Notebook: Anju"), LocationName("Notebook Meeting: Anju"), MultiLocation(NotebookMeetAnjuInInn, NotebookMeetAnjuInLaundryPool, NotebookMeetAnjuInRanch)]
         [GossipLocationHint("a lady in town"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Anju.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10002,7 +10002,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetAnju,
 
 
-        [ItemName("Notebook: Kafei"), LocationName("Notebook: Meeting Kafei"), MultiLocation(NotebookMeetKafeiInLaundryPool, NotebookMeetKafeiInIkanaCanyon, NotebookMeetKafeiInInn)]
+        [ItemName("Notebook: Kafei"), LocationName("Notebook Meeting: Kafei"), MultiLocation(NotebookMeetKafeiInLaundryPool, NotebookMeetKafeiInIkanaCanyon, NotebookMeetKafeiInInn)]
         [GossipLocationHint("a cursed man"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Kafei.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10010,7 +10010,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetKafei,
 
 
-        [ItemName("Notebook: Man from Curiosity Shop"), LocationName("Notebook: Meeting the Curiosity Shop Man"), MultiLocation(NotebookMeetCuriosityShopManInWCT, NotebookMeetCuriosityShopManInLaundryPool), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Man from Curiosity Shop"), LocationName("Notebook Meeting: The Curiosity Shop Man"), MultiLocation(NotebookMeetCuriosityShopManInWCT, NotebookMeetCuriosityShopManInLaundryPool), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Man from Curiosity Shop.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10018,7 +10018,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetCuriosityShopMan,
 
 
-        [ItemName("Notebook: Old Lady from Bomb Shop"), LocationName("Notebook: Meeting the Old Lady"), MultiLocation(NotebookMeetOldLadyInNCT, NotebookMeetOldLadyInWCT), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Old Lady from Bomb Shop"), LocationName("Notebook Meeting: The Old Lady"), MultiLocation(NotebookMeetOldLadyInNCT, NotebookMeetOldLadyInWCT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("an old lady"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Old Lady from Bomb Shop.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10026,7 +10026,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetOldLady,
 
 
-        [ItemName("Notebook: Romani"), LocationName("Notebook: Meeting Romani"), Region(Region.RomaniRanch)]
+        [ItemName("Notebook: Romani"), LocationName("Notebook Meeting: Romani"), Region(Region.RomaniRanch)]
         [GossipLocationHint("the ranch girl"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Romani.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10034,7 +10034,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetRomani,
 
 
-        [ItemName("Notebook: Cremia"), LocationName("Notebook: Meeting Cremia"), Region(Region.RomaniRanch)]
+        [ItemName("Notebook: Cremia"), LocationName("Notebook Meeting: Cremia"), Region(Region.RomaniRanch)]
         [GossipLocationHint("the ranch lady"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Cremia.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10042,7 +10042,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetCremia,
 
 
-        [ItemName("Notebook: Mr. Dotour"), LocationName("Notebook: Meeting Mayor Dotour"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Mr. Dotour"), LocationName("Notebook Meeting: Mayor Dotour"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town leader", "an upstanding figure"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Mayor Dotour.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10050,7 +10050,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetMayorDotour,
 
 
-        [ItemName("Notebook: Madame Aroma"), LocationName("Notebook: Meeting Madame Aroma"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Madame Aroma"), LocationName("Notebook Meeting: Madame Aroma"), Region(Region.EastClockTown)]
         [GossipLocationHint("an important lady", "an esteemed woman"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Madame Aroma.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10058,7 +10058,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetMadameAroma,
 
 
-        [ItemName("Notebook: Toto"), LocationName("Notebook: Meeting Toto"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Toto"), LocationName("Notebook Meeting: Toto"), Region(Region.EastClockTown)]
         [GossipLocationHint("a band manager"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Toto.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10066,7 +10066,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetToto,
 
 
-        [ItemName("Notebook: Gorman"), LocationName("Notebook: Meeting Gorman"), MultiLocation(NotebookMeetGormanInECT, NotebookMeetGormanInInn), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Gorman"), LocationName("Notebook Meeting: Gorman"), MultiLocation(NotebookMeetGormanInECT, NotebookMeetGormanInInn), RegionArea(RegionArea.Town)]
         [GossipLocationHint("an entertainer", "a miserable leader"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Gorman.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10074,7 +10074,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetGorman,
 
 
-        [ItemName("Notebook: Postman"), LocationName("Notebook: Meeting the Postman"), MultiLocation(NotebookMeetPostmanInWCT, NotebookMeetPostmanInSCT, NotebookMeetPostmanInNCT, NotebookMeetPostmanInECT, NotebookMeetPostmanInInn, NotebookMeetPostmanInLaundryPool), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Postman"), LocationName("Notebook Meeting: The Postman"), MultiLocation(NotebookMeetPostmanInWCT, NotebookMeetPostmanInSCT, NotebookMeetPostmanInNCT, NotebookMeetPostmanInECT, NotebookMeetPostmanInInn, NotebookMeetPostmanInLaundryPool), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a hard worker", "a delivery person"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Postman.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10082,7 +10082,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetPostman,
 
 
-        [ItemName("Notebook: Rosa Sisters"), LocationName("Notebook: Meeting the Rosa Sisters"), MultiLocation(NotebookMeetRosaSistersInWCT, NotebookMeetRosaSistersInInn), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Rosa Sisters"), LocationName("Notebook Meeting: The Rosa Sisters"), MultiLocation(NotebookMeetRosaSistersInWCT, NotebookMeetRosaSistersInInn), RegionArea(RegionArea.Town)]
         [GossipLocationHint("traveling sisters", "twin entertainers"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Rosa Sisters.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10090,7 +10090,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetRosaSisters,
 
 
-        [ItemName("Notebook: ???"), LocationName("Notebook: Meeting the Toilet Hand"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: ???"), LocationName("Notebook Meeting: The Toilet Hand"), Region(Region.StockPotInn)]
         [GossipLocationHint("a mystery appearance", "a strange palm"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Toilet Hand.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10098,7 +10098,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetToiletHand,
 
 
-        [ItemName("Notebook: Anju's Grandmother"), LocationName("Notebook: Meeting Anju's Grandmother"), MultiLocation(NotebookMeetAnjusGrandmotherInInn, NotebookMeetAnjusGrandmotherInRanch)]
+        [ItemName("Notebook: Anju's Grandmother"), LocationName("Notebook Meeting: Anju's Grandmother"), MultiLocation(NotebookMeetAnjusGrandmotherInInn, NotebookMeetAnjusGrandmotherInRanch)]
         [GossipLocationHint("an old lady"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Anju's Grandmother.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10106,7 +10106,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetAnjusGrandmother,
 
 
-        [ItemName("Notebook: Kamaro"), LocationName("Notebook: Meeting Kamaro"), Region(Region.TerminaField)]
+        [ItemName("Notebook: Kamaro"), LocationName("Notebook Meeting: Kamaro"), Region(Region.TerminaField)]
         [GossipLocationHint("a ghostly dancer", "a dancer"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Kamaro.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10114,7 +10114,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetKamaro,
 
 
-        [ItemName("Notebook: Grog"), LocationName("Notebook: Meeting Grog"), Region(Region.RomaniRanch)]
+        [ItemName("Notebook: Grog"), LocationName("Notebook Meeting: Grog"), Region(Region.RomaniRanch)]
         [GossipLocationHint("an ugly but kind heart", "a lover of chickens"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Grog.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10122,7 +10122,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetGrog,
 
 
-        [ItemName("Notebook: Gorman Brothers"), LocationName("Notebook: Meeting the Gorman Brothers"), Region(Region.MilkRoad)]
+        [ItemName("Notebook: Gorman Brothers"), LocationName("Notebook Meeting: The Gorman Brothers"), Region(Region.MilkRoad)]
         [GossipLocationHint("shady brothers"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Gorman Brothers.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10130,7 +10130,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetGormanBrothers,
 
 
-        [ItemName("Notebook: Shiro"), LocationName("Notebook: Meeting Shiro"), Region(Region.RoadToIkana)]
+        [ItemName("Notebook: Shiro"), LocationName("Notebook Meeting: Shiro"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a hidden soldier", "a stone circle"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Shiro.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10138,7 +10138,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetShiro,
 
 
-        [ItemName("Notebook: Guru-Guru"), LocationName("Notebook: Meeting Guru-Guru"), MultiLocation(NotebookMeetGuruGuruInInn, NotebookMeetGuruGuruInLaundryPool), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Guru-Guru"), LocationName("Notebook Meeting: Guru-Guru"), MultiLocation(NotebookMeetGuruGuruInInn, NotebookMeetGuruGuruInLaundryPool), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a musician", "an entertainer"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Guru-Guru.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10146,7 +10146,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetGuruGuru,
 
 
-        [ItemName("Notebook: Received Room Key"), LocationName("Notebook: Inn Reservation"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Received Room Key"), LocationName("Inn Reservation"), Region(Region.StockPotInn)]
         [GossipLocationHint("checking in", "check-in"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for the Inn Reservation.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10154,7 +10154,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookInnReservation,
 
 
-        [ItemName("Notebook: Secret Night Meeting"), LocationName("Notebook: Promise Anju Meeting"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Secret Night Meeting"), LocationName("Setting up Midnight Meeting"), Region(Region.StockPotInn)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for promising to meet Anju.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10162,7 +10162,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseAnjuMeeting,
 
 
-        [ItemName("Notebook: Promised to meet Kafei"), LocationName("Notebook: Promise Anju Delivery"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Promised to meet Kafei"), LocationName("Midnight Meeting"), Region(Region.StockPotInn)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for promising Anju that you'll meet Kafei.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10173,7 +10173,7 @@ namespace MMR.Randomizer.GameObjects
         //GetItemIndex(0x466)
 
 
-        [ItemName("Notebook: Deposit Letter to Kafei"), LocationName("Notebook: Deposit Letter to Kafei"), MultiLocation(NotebookDepositLetterToKafeiInSCT, NotebookDepositLetterToKafeiInNCT, NotebookDepositLetterToKafeiInECT), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Deposit Letter to Kafei"), LocationName("Depositing the Letter to Kafei"), MultiLocation(NotebookDepositLetterToKafeiInSCT, NotebookDepositLetterToKafeiInNCT, NotebookDepositLetterToKafeiInECT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for depositing the Letter to Kafei.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10181,7 +10181,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookDepositLetterToKafei,
 
 
-        [ItemName("Notebook: Pendant of Memories"), LocationName("Notebook: Promise Kafei"), Region(Region.LaundryPool)]
+        [ItemName("Notebook: Pendant of Memories"), LocationName("Kafei"), Region(Region.LaundryPool)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for promising Kafei that you'll return to Anju.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10189,7 +10189,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseKafei,
 
 
-        [ItemName("Notebook: Delivered Pendant"), LocationName("Notebook: Deliver Pendant"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Delivered Pendant"), LocationName("Deliver the Pendant of Memories"), Region(Region.StockPotInn)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for delivering the Pendant of Memories.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10197,7 +10197,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookDeliverPendant,
 
 
-        [ItemName("Notebook: Escaped from Sakon's Hideout"), LocationName("Notebook: Escape from Sakon's Hideout"), Region(Region.IkanaCanyon)]
+        [ItemName("Notebook: Escaped from Sakon's Hideout"), LocationName("Escaping from Sakon's Hideout"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for escaping Sakon's Hideout.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10205,7 +10205,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookEscapeFromSakonSHideout,
 
 
-        [ItemName("Notebook: Became ranch hand"), LocationName("Notebook: Promise Romani"), Region(Region.RomaniRanch)]
+        [ItemName("Notebook: Became ranch hand"), LocationName("Romani's Game"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for promising Romani that you'll help defend against the 'them'.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10213,7 +10213,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseRomani,
 
 
-        [ItemName("Notebook: Saved cows from \"them\""), LocationName("Notebook: Save the Cows"), Region(Region.RomaniRanch)]
+        [ItemName("Notebook: Saved cows from \"them\""), LocationName("Aliens"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry"), GossipCompetitiveHint(-2)]
         [ShopText("The Bombers' Notebook entry for saving the cows.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10224,7 +10224,7 @@ namespace MMR.Randomizer.GameObjects
         //GetItemIndex(0x46D)
 
 
-        [ItemName("Notebook: Protected milk delivery"), LocationName("Notebook: Protect milk delivery"), Region(Region.RomaniRanch)]
+        [ItemName("Notebook: Protected milk delivery"), LocationName("Cremia"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry"), GossipCompetitiveHint]
         [ShopText("The Bombers' Notebook entry for protecting Cremia.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10235,7 +10235,7 @@ namespace MMR.Randomizer.GameObjects
         //GetItemIndex(0x46F)
 
 
-        [ItemName("Notebook: Keaton Mask"), LocationName("Notebook: Curiosity Shop Man's Gift"), Region(Region.LaundryPool)]
+        [ItemName("Notebook: Keaton Mask"), LocationName("Curiosity Shop Man #1"), Region(Region.LaundryPool)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for speaking with the Curiosity Shop man about Kafei.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10243,7 +10243,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookCuriosityShopManSGift,
 
 
-        [ItemName("Notebook: Letter to Mama"), LocationName("Notebook: Promise Curiosity Shop Man"), Region(Region.LaundryPool)]
+        [ItemName("Notebook: Letter to Mama"), LocationName("Curiosity Shop Man #2"), Region(Region.LaundryPool)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for promising to deliver the Express Mail.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10251,7 +10251,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseCuriosityShopMan,
 
 
-        [ItemName("Notebook: Chateau Romani"), LocationName("Notebook: Deliver Letter to Mama"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Chateau Romani"), LocationName("Madame Aroma in Bar"), Region(Region.EastClockTown)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for delivering the Letter to Mama.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10262,7 +10262,7 @@ namespace MMR.Randomizer.GameObjects
         //GetItemIndex(0x473)
 
 
-        [ItemName("Notebook: Bombers' Notebook"), LocationName("Notebook: Learn Bombers' Code"), MultiLocation(NotebookLearnBombersCodeInNCT, NotebookLearnBombersCodeInECT), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Bombers' Notebook"), LocationName("Bombers' Hide and Seek"), MultiLocation(NotebookLearnBombersCodeInNCT, NotebookLearnBombersCodeInECT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a group of children", "a town game"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for the Bombers' Hideout code.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10270,7 +10270,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookLearnBombersCode,
 
 
-        [ItemName("Notebook: Dotour's Thanks"), LocationName("Notebook: Dotour's Thanks"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Dotour's Thanks"), LocationName("Mayor"), Region(Region.EastClockTown)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for ending the Mayor's meeting.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10278,7 +10278,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookDotoursThanks,
 
 
-        [ItemName("Notebook: Rosa Sisters' Thanks"), LocationName("Notebook: Rosa Sisters' Thanks"), Region(Region.WestClockTown)]
+        [ItemName("Notebook: Rosa Sisters' Thanks"), LocationName("Rosa Sisters"), Region(Region.WestClockTown)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for teaching the Rosa Sisters to dance.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10286,7 +10286,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookRosaSistersThanks,
 
 
-        [ItemName("Notebook: Thanks for the paper"), LocationName("Notebook: Toilet Hand's Thanks"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Thanks for the paper"), LocationName("Toilet Hand"), Region(Region.StockPotInn)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for giving paper to the hand.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10294,7 +10294,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookToiletHandSThanks,
 
 
-        [ItemName("Notebook: Reading Prize 1"), LocationName("Notebook: Grandma Short Story"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Reading Prize 1"), LocationName("Grandma Short Story"), Region(Region.StockPotInn)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for staying awake for 2 hours.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10302,7 +10302,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookGrandmaShortStory,
 
 
-        [ItemName("Notebook: Reading Prize 2"), LocationName("Notebook: Grandma Long Story"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Reading Prize 2"), LocationName("Grandma Long Story"), Region(Region.StockPotInn)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for staying awake until morning.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10310,7 +10310,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookGrandmaLongStory,
 
 
-        [ItemName("Notebook: Training Award"), LocationName("Notebook: Postman's Game"), Region(Region.WestClockTown)]
+        [ItemName("Notebook: Training Award"), LocationName("Postman's Game"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town game"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for counting to 10 seconds.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10318,7 +10318,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookPostmansGame,
 
 
-        [ItemName("Notebook: Kafei's Mask"), LocationName("Notebook: Promise Madame Aroma"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Kafei's Mask"), LocationName("Madame Aroma in Office"), Region(Region.EastClockTown)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for promising to find Kafei.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10327,15 +10327,15 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseMadameAroma,
 
 
-        [ItemName("Notebook: All-Night Mask"), LocationName("Notebook: Purchase Curiosity Shop Item"), Region(Region.WestClockTown)]
-        [GossipLocationHint("a shady deal"), GossipItemHint("a diary entry")]
+        [ItemName("Notebook: All-Night Mask"), LocationName("All-Night Mask Purchase"), Region(Region.WestClockTown)]
+        [GossipLocationHint("a shady deal"), GossipItemHint("a diary entry"), GossipCompetitiveHint(0, nameof(GameplaySettings.UpdateShopAppearance), false)]
         [ShopText("The Bombers' Notebook entry for buying the item from the Curiosity Shop on the final night.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x47C), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPurchaseCuriosityShopItem,
 
 
-        [ItemName("Notebook: Bunny Hood"), LocationName("Notebook: Grog's Thanks"), Region(Region.RomaniRanch)]
+        [ItemName("Notebook: Bunny Hood"), LocationName("Grog"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for growing the baby cuccos.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10343,7 +10343,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookGrogsThanks,
 
 
-        [ItemName("Notebook: Garo's Mask"), LocationName("Notebook: Defeat Gorman Brothers"), Region(Region.MilkRoad)]
+        [ItemName("Notebook: Garo's Mask"), LocationName("Gorman Bros Race"), Region(Region.MilkRoad)]
         [GossipLocationHint("a sporting event"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for defeating the Gorman Brothers.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10351,7 +10351,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookDefeatGormanBrothers,
 
 
-        [ItemName("Notebook: Circus Leader's Mask"), LocationName("Notebook: Moving Gorman"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Circus Leader's Mask"), LocationName("Gorman"), Region(Region.EastClockTown)]
         [GossipLocationHint("a moving performance"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for moving Gorman with a performance.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10359,7 +10359,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMovingGorman,
 
 
-        [ItemName("Notebook: Postman's Hat"), LocationName("Notebook: Postman's Freedom"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Postman's Hat"), LocationName("Postman's Freedom"), Region(Region.EastClockTown)]
         [GossipLocationHint("a special delivery", "one last job"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for allowing the Postman to flee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10367,15 +10367,15 @@ namespace MMR.Randomizer.GameObjects
         NotebookPostmansFreedom,
 
 
-        [ItemName("Notebook: Couple's Mask"), LocationName("Notebook: Unite Anju and Kafei"), Region(Region.StockPotInn)]
-        [GossipLocationHint("a reunion", "a lovers' reunion"), GossipItemHint("a diary entry")]
+        [ItemName("Notebook: Couple's Mask"), LocationName("Anju and Kafei"), Region(Region.StockPotInn)]
+        [GossipLocationHint("a reunion", "a lovers' reunion"), GossipItemHint("a diary entry"), GossipCompetitiveHint(3)]
         [ShopText("The Bombers' Notebook entry for reuniting Anju and Kafei.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x481), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookUniteAnjuAndKafei,
 
 
-        [ItemName("Notebook: Blast Mask"), LocationName("Notebook: Save Old Lady"), Region(Region.NorthClockTown)]
+        [ItemName("Notebook: Blast Mask"), LocationName("Old Lady"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for saving the Old Lady.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10383,7 +10383,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookSaveOldLady,
 
 
-        [ItemName("Notebook: Kamaro's Mask"), LocationName("Notebook: Promise Kamaro"), Region(Region.TerminaField)]
+        [ItemName("Notebook: Kamaro's Mask"), LocationName("Kamaro"), Region(Region.TerminaField)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Bombers.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10391,7 +10391,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseKamaro,
 
 
-        [ItemName("Notebook: Stone Mask"), LocationName("Notebook: Save Invisible Soldier"), Region(Region.RoadToIkana)]
+        [ItemName("Notebook: Stone Mask"), LocationName("Invisible Soldier"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Bombers.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10399,7 +10399,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookSaveInvisibleSoldier,
 
 
-        [ItemName("Notebook: Bremen Mask"), LocationName("Notebook: Guru-Guru"), Region(Region.LaundryPool)]
+        [ItemName("Notebook: Bremen Mask"), LocationName("Guru-Guru"), Region(Region.LaundryPool)]
         [GossipLocationHint("a musician", "an entertainer"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Bombers.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]

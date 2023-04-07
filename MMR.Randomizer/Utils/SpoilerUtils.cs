@@ -97,7 +97,7 @@ namespace MMR.Randomizer.Utils
                         // junk
                         message = "JUNK - " + message;
                     }
-                    return plainTextRegex.Replace(message.Replace("\x11", " "), "");
+                    return plainTextRegex.Replace(message.Replace("\x11", " ").Replace("\x10", " "), "");
                 }),
                 MessageCosts = randomized.MessageCosts.Select((mc, i) =>
                 {

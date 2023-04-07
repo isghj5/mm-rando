@@ -71,7 +71,10 @@ namespace MMR.Randomizer.Utils
                     continue;
                 }
 
-                randomizedItems.Add(item);
+                if (!randomizedItems.Contains(item))
+                {
+                    randomizedItems.Add(item);
+                }
 
                 if (hintStyle == GossipHintStyle.Competitive)
                 {

@@ -353,36 +353,28 @@ namespace MMR.Randomizer.Utils
                     Item.ItemBottleAliens,
                     Item.NotebookSaveTheCows,
                     Item.MaskRomani,
-                    Item.NotebookProtectMilkDelivery
+                    Item.NotebookProtectMilkDelivery,
                 }.AsReadOnly()
             },
             {
                 "Beaver Races", new List<Item>
                 {
                     Item.ItemBottleBeavers,
-                    Item.HeartPieceBeaverRace
-                }.AsReadOnly()
-            },
-            {
-                "Bombers' Hide and Seek", new List<Item>
-                {
-                    Item.ItemNotebook,
-                    Item.NotebookMeetBombers,
-                    Item.NotebookLearnBombersCode,
+                    Item.HeartPieceBeaverRace,
                 }.AsReadOnly()
             },
             {
                 "Town Archery", new List<Item>
                 {
                     Item.UpgradeBigQuiver,
-                    Item.HeartPieceTownArchery
+                    Item.HeartPieceTownArchery,
                 }.AsReadOnly()
             },
             {
                 "Swamp Archery", new List<Item>
                 {
                     Item.UpgradeBiggestQuiver,
-                    Item.HeartPieceSwampArchery
+                    Item.HeartPieceSwampArchery,
                 }.AsReadOnly()
             },
             {
@@ -390,14 +382,21 @@ namespace MMR.Randomizer.Utils
                 {
                     Item.UpgradeGiantWallet,
                     Item.MundaneItemOceanSpiderHouseDay2PurpleRupee,
-                    Item.MundaneItemOceanSpiderHouseDay3RedRupee
+                    Item.MundaneItemOceanSpiderHouseDay3RedRupee,
+                }.AsReadOnly()
+            },
+            {
+                "Inn Reservation", new List<Item>
+                {
+                    Item.TradeItemRoomKey,
+                    Item.NotebookInnReservation,
                 }.AsReadOnly()
             },
             {
                 "Midnight Meeting", new List<Item>
                 {
                     Item.TradeItemKafeiLetter,
-                    Item.NotebookPromiseAnjuDelivery
+                    Item.NotebookPromiseAnjuDelivery,
                 }.AsReadOnly()
             },
             {
@@ -410,21 +409,143 @@ namespace MMR.Randomizer.Utils
                     Item.MaskKeaton,
                     Item.TradeItemMamaLetter,
                     Item.NotebookCuriosityShopManSGift,
-                    Item.NotebookPromiseCuriosityShopMan
+                    Item.NotebookPromiseCuriosityShopMan,
                 }.AsReadOnly()
             },
             {
                 "Deku Playground", new List<Item>
                 {
                     Item.HeartPieceDekuPlayground,
-                    Item.MundaneItemDekuPlaygroundPurpleRupee
+                    Item.MundaneItemDekuPlaygroundPurpleRupee,
                 }.AsReadOnly()
             },
             {
                 "Honey and Darling", new List<Item>
                 {
                     Item.HeartPieceHoneyAndDarling,
-                    Item.MundaneItemHoneyAndDarlingPurpleRupee
+                    Item.MundaneItemHoneyAndDarlingPurpleRupee,
+                }.AsReadOnly()
+            },
+            {
+                "Romani's Game", new List<Item>
+                {
+                    Item.SongEpona,
+                    Item.NotebookPromiseRomani,
+                }.AsReadOnly()
+            },
+            {
+                "Madame Aroma in Bar", new List<Item>
+                {
+                    Item.ItemBottleMadameAroma,
+                    Item.NotebookDeliverLetterToMama,
+                }.AsReadOnly()
+            },
+            {
+                "Bombers' Hide and Seek", new List<Item>
+                {
+                    Item.ItemNotebook,
+                    Item.NotebookMeetBombers,
+                    Item.NotebookLearnBombersCode,
+                }.AsReadOnly()
+            },
+            {
+                "Mayor", new List<Item>
+                {
+                    Item.HeartPieceNotebookMayor,
+                    Item.NotebookDotoursThanks,
+                }.AsReadOnly()
+            },
+            {
+                "Rosa Sisters", new List<Item>
+                {
+                    Item.HeartPieceNotebookRosa,
+                    Item.NotebookRosaSistersThanks,
+                }.AsReadOnly()
+            },
+            {
+                "Toilet Hand", new List<Item>
+                {
+                    Item.HeartPieceNotebookHand,
+                    Item.NotebookToiletHandSThanks,
+                }.AsReadOnly()
+            },
+            {
+                "Grandma Stories", new List<Item>
+                {
+                    Item.HeartPieceNotebookGran1,
+                    Item.NotebookGrandmaShortStory,
+                    Item.HeartPieceNotebookGran2,
+                    Item.NotebookGrandmaLongStory,
+                }.AsReadOnly()
+            },
+            {
+                "Postman's Game", new List<Item>
+                {
+                    Item.HeartPieceNotebookPostman,
+                    Item.NotebookPostmansGame,
+                }.AsReadOnly()
+            },
+            {
+                "Madame Aroma in Office", new List<Item>
+                {
+                    Item.MaskKafei,
+                    Item.NotebookPromiseMadameAroma,
+                }.AsReadOnly()
+            },
+            {
+                "All-Night Mask Purchase", new List<Item>
+                {
+                    Item.MaskAllNight,
+                    Item.NotebookPurchaseCuriosityShopItem,
+                }.AsReadOnly()
+            },
+            {
+                "Grog", new List<Item>
+                {
+                    Item.MaskBunnyHood,
+                    Item.NotebookGrogsThanks,
+                }.AsReadOnly()
+            },
+            {
+                "Gorman Bros Race", new List<Item>
+                {
+                    Item.MaskGaro,
+                    Item.NotebookDefeatGormanBrothers,
+                }.AsReadOnly()
+            },
+            {
+                "Gorman", new List<Item>
+                {
+                    Item.MaskCircusLeader,
+                    Item.NotebookMovingGorman,
+                }.AsReadOnly()
+            },
+            {
+                "Postman's Freedom", new List<Item>
+                {
+                    Item.MaskPostmanHat,
+                    Item.NotebookPostmansFreedom,
+                }.AsReadOnly()
+            },
+            {
+                "Anju and Kafei", new List<Item>
+                {
+                    Item.MaskCouple,
+                    Item.NotebookUniteAnjuAndKafei,
+                }.AsReadOnly()
+            },
+            {
+                "Old Lady", new List<Item>
+                {
+                    Item.MaskBlast,
+                    Item.NotebookSaveOldLady,
+                }.AsReadOnly()
+            },
+            {
+                "Kamaro", new List<Item>
+                {
+                    Item.MaskKamaro,
+                    Item.NotebookPromiseKamaro,
                 }.AsReadOnly()
             },
             {
@@ -432,28 +553,14 @@ namespace MMR.Randomizer.Utils
                 {
                     Item.MaskStone,
                     Item.NotebookMeetShiro,
-                    Item.NotebookSaveInvisibleSoldier
+                    Item.NotebookSaveInvisibleSoldier,
                 }.AsReadOnly()
             },
             {
-                "Romani's Game", new List<Item>
+                "Guru-Guru", new List<Item>
                 {
-                    Item.SongEpona,
-                    Item.NotebookPromiseRomani
-                }.AsReadOnly()
-            },
-            {
-                "Letter to Mama Delivery", new List<Item>
-                {
-                    Item.ItemBottleMadameAroma,
-                    Item.NotebookDeliverLetterToMama
-                }.AsReadOnly()
-            },
-            {
-                "All-Night Mask Purchase", new List<Item>
-                {
-                    Item.MaskAllNight,
-                    Item.NotebookPurchaseCuriosityShopItem
+                    Item.MaskBremen,
+                    Item.NotebookGuruGuru,
                 }.AsReadOnly()
             },
         });
