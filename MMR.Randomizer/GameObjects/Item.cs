@@ -2834,6 +2834,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyClockTown,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Lower Right Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2842,6 +2843,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall1,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Entrance Fairy"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2850,6 +2852,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall2,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Upper Left Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2858,6 +2861,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall3,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Pillar Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2866,6 +2870,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall4,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Deku Baba"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2874,6 +2879,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall5,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Poison Water Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2882,6 +2888,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall6,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Main Room Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2890,6 +2897,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall7,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Skulltula"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2898,6 +2906,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall8,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Upper Right Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2906,6 +2915,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall9,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Main Room Switch"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2914,6 +2924,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall10,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Entrance Platform"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2922,6 +2933,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall11,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Dark Room"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2930,6 +2942,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall12,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Jar Fairy"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2938,6 +2951,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall13,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Bridge Room Hive"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2946,6 +2960,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall14,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Platform Room Hive"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2954,6 +2969,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall15,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Snow Room Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -2962,6 +2978,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead1,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Ceiling Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -2970,6 +2987,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead2,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Dinolfos 1"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -2978,6 +2996,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead3,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Bridge Room Ledge Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -2986,6 +3005,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead4,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Bridge Room Pillar Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -2994,6 +3014,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead5,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Dinolfos 2"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3002,6 +3023,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead6,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Map Room Fairy"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3010,6 +3032,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead7,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Map Room Ledge"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3018,6 +3041,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead8,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Basement"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3026,6 +3050,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead9,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Twin Block"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3034,6 +3059,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead10,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Icicle Room Wall"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3042,6 +3068,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead11,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Main Room Wall"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3050,6 +3077,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead12,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Pillar Freezards"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3058,6 +3086,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead13,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Ice Puzzle"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3066,6 +3095,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead14,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Crate"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3074,6 +3104,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead15,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Skulltula"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3082,6 +3113,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay1,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Pre-Boss Room Underwater Bubble"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3090,6 +3122,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay2,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Water Control Room Underwater Bubble"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3098,6 +3131,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay3,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Pre-Boss Room Bubble"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3108,6 +3142,7 @@ namespace MMR.Randomizer.GameObjects
         // A8 empty
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Waterwheel Room Upper"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3116,6 +3151,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay5,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Green Valve"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3124,6 +3160,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay6,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Seesaw Room"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3132,6 +3169,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay7,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Waterwheel Room Lower"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3140,6 +3178,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay8,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Entrance Torches"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3148,6 +3187,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay9,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Bio Babas"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3156,6 +3196,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay10,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Underwater Barrel"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3164,6 +3205,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay11,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Whirlpool Jar"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3172,6 +3214,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay12,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Whirlpool Barrel"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3180,6 +3223,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay13,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Dexihands Jar"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3188,6 +3232,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay14,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Ledge Jar"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3196,6 +3241,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay15,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Mirror Sun Block"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3204,6 +3250,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower1,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Eyegore"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3212,6 +3259,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower2,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Lava Room Fire Ring"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3220,6 +3268,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower3,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Updraft Fire Ring"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3228,6 +3277,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower4,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Mirror Sun Switch"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3236,6 +3286,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower5,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Entrance Sun Switch"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3244,6 +3295,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower6,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Wizzrobe"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3252,6 +3304,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower7,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Death Armos"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3260,6 +3313,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower8,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Updraft Frozen Eye"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3268,6 +3322,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower9,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Thin Bridge"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3276,6 +3331,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower10,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Basement Ledge"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3284,6 +3340,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower11,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Statue Eye"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3292,6 +3349,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower12,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Underwater"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3300,6 +3358,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower13,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Bridge Crystal"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3308,6 +3367,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower14,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Lava Room Ledge"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -10213,7 +10273,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseRomani,
 
 
-        [ItemName("Notebook: Saved cows from \"them\""), LocationName("Aliens"), Region(Region.RomaniRanch)]
+        [ItemName("Notebook: Saved cows from \"them\""), LocationName("Aliens Defense"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry"), GossipCompetitiveHint(-2)]
         [ShopText("The Bombers' Notebook entry for saving the cows.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10359,7 +10419,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMovingGorman,
 
 
-        [ItemName("Notebook: Postman's Hat"), LocationName("Postman's Freedom"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Postman's Hat"), LocationName("Postman's Freedom Reward"), Region(Region.EastClockTown)]
         [GossipLocationHint("a special delivery", "one last job"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for allowing the Postman to flee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]

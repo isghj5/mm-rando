@@ -13,7 +13,7 @@ namespace MMR.UI.Forms
     {
         private readonly List<Item> _junkLocations;
         private bool updating = false;
-        private const int ItemGroupCount = 33;
+        private const int ItemGroupCount = 35;
 
         public string ExternalLabel { get; private set; }
         public List<Item> CustomJunkLocations { get; private set; } = new List<Item>();
