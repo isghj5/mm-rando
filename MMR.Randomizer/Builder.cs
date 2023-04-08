@@ -5672,6 +5672,8 @@ namespace MMR.Randomizer
                 RomUtils.ReadFileTable(OldROM);
             }
 
+            RomData.SceneList = null;
+
             var originalMMFileList = RomData.MMFileList.Select(file => file.Clone()).ToList();
 
             byte[] hash;
