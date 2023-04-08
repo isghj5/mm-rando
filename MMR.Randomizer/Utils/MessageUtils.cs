@@ -583,7 +583,7 @@ namespace MMR.Randomizer.Utils
 
             string sfx = $"{(char)((soundEffectId >> 8) & 0xFF)}{(char)(soundEffectId & 0xFF)}";
 
-            return $"\x1E{sfx}{start} {locationName} {mid} {string.Join(" then ", itemMessages)}...\xBF".Wrap(35, "\x11", "\x10");
+            return $"\x1E{sfx}{start} \x01{locationName}\x00 {mid} {string.Join(" then ", itemMessages)}...\xBF".Wrap(35, "\x11", "\x10");
         }
 
         public static string GetArticle(Item item, string indefiniteArticle = null)
