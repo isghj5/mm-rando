@@ -10388,7 +10388,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [ItemName("Notebook: All-Night Mask"), LocationName("All-Night Mask Purchase"), Region(Region.WestClockTown)]
-        [GossipLocationHint("a shady deal"), GossipItemHint("a diary entry"), GossipCompetitiveHint(0, nameof(GameplaySettings.UpdateShopAppearance), false)]
+        [GossipLocationHint("a shady deal"), GossipItemHint("a diary entry"), GossipCompetitiveHint]
         [ShopText("The Bombers' Notebook entry for buying the item from the Curiosity Shop on the final night.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x47C), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
