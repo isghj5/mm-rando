@@ -3325,6 +3325,7 @@ namespace MMR.Randomizer
                 }
 
                 var strayFairyRegionLocations = ItemUtils.DungeonStrayFairies()
+                    .Where(item => _randomized.ItemList[item].Item == item)
                     .GroupBy(fairy => fairy.Region(_randomized.ItemList).Value)
                     .ToDictionary(g => g.Key, g =>
                         g.SelectMany(fairy =>
