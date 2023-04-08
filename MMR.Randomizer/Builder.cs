@@ -4781,12 +4781,13 @@ namespace MMR.Randomizer
                         {
                             it.RuntimeWrap(() =>
                             {
-                                it.RuntimeArticle(stormsTabletItem.DisplayItem, stormsTabletItem.NewLocation.Value)
+                                it.Text("Here lies ")
+                                .RuntimeArticle(stormsTabletItem.DisplayItem, stormsTabletItem.NewLocation.Value)
                                 .Red(() =>
                                 {
                                     it.RuntimeItemName(stormsTabletItem.DisplayName(), stormsTabletItem.NewLocation.Value);
                                 })
-                                .Text(" rests here.") // TODO singular
+                                .Text(".")
                                 ;
                             })
                             .EndFinalTextBox();
@@ -4804,12 +4805,13 @@ namespace MMR.Randomizer
                         {
                             it.RuntimeWrap(() =>
                             {
-                                it.RuntimeArticle(dampeDiggingItem.DisplayItem, dampeDiggingItem.NewLocation.Value)
+                                it.Text("Here lies ")
+                                .RuntimeArticle(dampeDiggingItem.DisplayItem, dampeDiggingItem.NewLocation.Value)
                                 .Red(() =>
                                 {
                                     it.RuntimeItemName(dampeDiggingItem.DisplayName(), dampeDiggingItem.NewLocation.Value);
                                 })
-                                .Text(" rests here.") // TODO singular
+                                .Text(".")
                                 ;
                             })
                             .EndFinalTextBox();
@@ -4827,12 +4829,13 @@ namespace MMR.Randomizer
                         {
                             it.RuntimeWrap(() =>
                             {
-                                it.RuntimeArticle(graveyardNight2Item.DisplayItem, graveyardNight2Item.NewLocation.Value)
+                                it.Text("Here lies ")
+                                .RuntimeArticle(graveyardNight2Item.DisplayItem, graveyardNight2Item.NewLocation.Value)
                                 .Red(() =>
                                 {
                                     it.RuntimeItemName(graveyardNight2Item.DisplayName(), graveyardNight2Item.NewLocation.Value);
                                 })
-                                .Text(" rests here.") // TODO singular
+                                .Text(".")
                                 ;
                             })
                             .EndTextBox()
