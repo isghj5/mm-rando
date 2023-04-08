@@ -335,7 +335,7 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult, bool anythingCanBeRequired = false)
         {
-            return (anythingCanBeRequired || CanBeRequired(item)) && randomizedResult.LocationsRequiredForMoonAccess?.Contains(locationForImportance) == true;
+            return (anythingCanBeRequired || (CanBeRequired(item) && !IsHinted(randomizedResult.Settings, item, locationForImportance))) && randomizedResult.LocationsRequiredForMoonAccess?.Contains(locationForImportance) == true;
         }
 
         public static bool IsImportant(Item item, Item locationForImportance, RandomizedResult randomizedResult)
