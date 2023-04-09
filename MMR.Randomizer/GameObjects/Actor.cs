@@ -4034,9 +4034,9 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         GibdoIkana = 0x235, // En_Railgibud
 
-        [EnemizerEnabled] // does not spawn outside of ikana
+        [ActorizerEnabled] // does not spawn outside of ikana
         [FileID(525)]
-        [CheckRestricted(Item.MaskBlast)]
+        [CheckRestricted(Item.MaskBlast, Item.MaskAllNight)]
         [ObjectListIndex(0xDF)]
         [PathingVariants(0x2FF)]
         [PathingTypeVarsPlacement(mask: 0x3F00, shift: 8)]
