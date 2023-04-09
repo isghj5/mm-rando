@@ -14,6 +14,19 @@ bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
     return Icetrap_Give(player, ctxt);
 }
 
+void Player_PreventDangerousStates(ActorPlayer* player) {
+    if (!MISC_CONFIG.flags.saferGlitches) {
+        return;
+    }
+
+    if (player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP_3) {
+        if ((player->stateFlags.state1 & PLAYER_STATE1_AIR)
+            || (player->stateFlags.state3 & PLAYER_STATE3_JUMP_ATTACK)) {
+            player->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
+        }
+    }
+}
+
 void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
     Dpad_BeforePlayerActorUpdate(player, ctxt);
     ExternalEffects_Handle(player, ctxt);
@@ -228,17 +241,4 @@ void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 ac
     // Displaced code:
     player->heldItemId = item;
     player->stateFlags.state3 |= PLAYER_STATE3_PULL_ITEM;
-}
-
-void Player_PreventDangerousStates(ActorPlayer* player) {
-    if (!MISC_CONFIG.flags.saferGlitches) {
-        return;
-    }
-
-    if (player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP_3) {
-        if ((player->stateFlags.state1 & PLAYER_STATE1_AIR)
-            || (player->stateFlags.state3 & PLAYER_STATE3_JUMP_ATTACK)) {
-            player->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
-        }
-    }
 }
