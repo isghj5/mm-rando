@@ -3,7 +3,9 @@
 
 #include <z64.h>
 
-#define Util_ArraySize(Arr) (sizeof(Arr) / sizeof(Arr[0]))
+#define ARRAY_COUNT(Arr) (sizeof(Arr) / sizeof(Arr[0]))
+#define CHECK_BTN_ALL(state, combo) (~((state) | ~(combo)) == 0)
+#define CHECK_BTN_ANY(state, combo) (((state) & (combo)) != 0)
 
 typedef struct {
     u8* buf;

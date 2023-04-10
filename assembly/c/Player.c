@@ -9,6 +9,7 @@
 #include "Reloc.h"
 #include "Misc.h"
 #include "enums.h"
+#include "Util.h"
 
 bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
     return Icetrap_Give(player, ctxt);
@@ -246,4 +247,16 @@ void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 ac
     // Displaced code:
     player->heldItemId = item;
     player->stateFlags.state3 |= PLAYER_STATE3_PULL_ITEM;
+}
+
+void Player_CheckHeldItem(ActorPlayer* this, GlobalContext* ctxt, u16 curButtons, u16* checkButtons) {
+    for (s32 i = 0; i < 4; i++) {
+        if (CHECK_BTN_ALL(curButtons, checkButtons[i])) {
+            s32 item = z2_Inventory_GetBtnItem(ctxt, this, i);
+            if ((item < 0xFD) && (z2_Player_ItemToActionParam(this, item) == this->itemActionParam)) {
+                *z2_D_80862B4C = 1;
+                break;
+            }
+        }
+    }
 }

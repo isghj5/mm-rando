@@ -49,6 +49,7 @@
 // Function Prototypes.
 extern int z2_CanInteract(GlobalContext* ctxt);
 extern int z2_CanInteract2(GlobalContext* ctxt, ActorPlayer* player);
+extern int z2_Inventory_GetBtnItem(GlobalContext* ctxt, ActorPlayer* player, s32 buttonIndex);
 extern void z2_DrawButtonAmounts(GlobalContext* ctxt, u32 arg1, u16 alpha);
 extern void z2_DrawBButtonIcon(GlobalContext* ctxt);
 extern void z2_DrawCButtonIcons(GlobalContext* ctxt);
@@ -261,6 +262,7 @@ extern void z2_MessageClose(GlobalContext* ctxt);
 #define z2_PerformEnterWaterEffects_VRAM 0x8083B8D0
 #define z2_PlayerHandleBuoyancy_VRAM     0x808475B4
 #define z2_UseItem_VRAM                  0x80831990
+#define z2_Player_ItemToActionParam_VRAM 0x8082F524
 #define z2_Player_func_80849FE0_VRAM     0x80849FE0
 
 // Relocatable Data (player_actor).
@@ -278,6 +280,7 @@ typedef void (*z2_LinkInvincibility_Func)(ActorPlayer* player, u8 frames);
 typedef void (*z2_PerformEnterWaterEffects_Func)(GlobalContext* ctxt, ActorPlayer* player);
 typedef void (*z2_PlayerHandleBuoyancy_Func)(ActorPlayer* player);
 typedef void (*z2_UseItem_Func)(GlobalContext* ctxt, ActorPlayer* player, u8 item);
+typedef s32 (*z2_Player_ItemToActionParam_Func)(ActorPlayer* player, s32 itemId);
 typedef void (*z2_Player_func_80849FE0_Func)(ActorPlayer* player, GlobalContext* ctxt);
 
 #endif

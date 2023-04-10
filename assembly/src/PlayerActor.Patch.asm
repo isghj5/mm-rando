@@ -229,3 +229,29 @@
     b       0x80831F20
 ;   OR      A0, S0, R0
 
+;==================================================================================================
+; Fix C-Button priority when holding bow and bomb buttons
+;==================================================================================================
+
+; Replaces:
+;   LUI     T8, 0x8086
+;   LW      T8, 0x2B44 (T8)
+;   LUI     V0, 0x8086
+;   ADDIU   V0, V0, 0xCFA8
+;   OR      A3, R0, R0
+;   LHU     V1, 0x0000 (T8)
+;   LHU     T9, 0x0000 (V0)
+;   NOR     T2, T9, R0
+;   NOR     T3, T2, V1
+;   BEQZL   T3, 0x8083016C
+.org 0x806ED5C0 + 0x142B70
+    lui     a2, 0x8086
+    lw      a2, 0x2B44 (a2)
+    lui     a3, 0x8086
+    addiu   a3, a3, 0xCFA8
+    lhu     a2, 0x0000 (a2)
+    lw      a1, 0x0054 (sp)
+    jal     Player_CheckHeldItem
+    or      a0, s0, r0
+    b       0x808302BC
+    lw      ra, 0x0034 (sp)
