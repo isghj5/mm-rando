@@ -13,7 +13,7 @@ void DoorWarp_GiveItem(ActorDoorWarp1* actor, GlobalContext* ctxt) {
 
         // TODO check if oath hint is enabled?
         if (MISC_CONFIG.speedups.skipGiantsCutscene) {
-            count = ((gSaveContext.perm.inv.questStatus.value & 0x40F) == 0xF) ? 4 : 0;
+            count = MISC_CONFIG.speedups.oathHint && ((gSaveContext.perm.inv.questStatus.value & 0x40F) == 0xF) ? 4 : 0;
         } else {
             if (gSaveContext.perm.inv.questStatus.odolwasRemains) {
                 count++;
