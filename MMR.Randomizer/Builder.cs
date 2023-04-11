@@ -4496,12 +4496,16 @@ namespace MMR.Randomizer
                             it.PlaySoundEffect(0x2919)
                             .Text("What?").NewLine()
                             .PauseText(20)
-                            .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                            .Red(() =>
+                            .RuntimeWrap(() =>
                             {
-                                it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                                it.Text("He wants ")
+                                .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                                })
+                                .Text("?");
                             })
-                            .Text("?")
                             .DisableTextSkip()
                             .EndFinalTextBox();
                         })
@@ -4513,13 +4517,17 @@ namespace MMR.Randomizer
                         .Message(it =>
                         {
                             it.PlaySoundEffect(0x291A)
-                            .Text("Yeah...").NewLine()
-                            .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                            .Red(() =>
+                            .RuntimeWrap(() =>
                             {
-                                it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                                it.Text("Yeah... ")
+                                .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                                })
+                                .Text(".")
+                                ;
                             })
-                            .Text(".")
                             .DisableTextSkip()
                             .EndFinalTextBox();
                         })
@@ -4602,7 +4610,7 @@ namespace MMR.Randomizer
                                 {
                                     it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
                                 })
-                                .Text("from the beavers on top of the ").Red("waterfall").Text("?");
+                                .Text(" from the beavers on top of the ").Red("waterfall").Text("?");
                             })
                             .DisableTextSkip2()
                             .EndFinalTextBox();
@@ -4622,7 +4630,7 @@ namespace MMR.Randomizer
                                 {
                                     it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
                                 })
-                                .Text("for, Mikau?");
+                                .Text(" for, Mikau?");
                             })
                             .EndConversation()
                             .EndFinalTextBox();
@@ -4642,12 +4650,12 @@ namespace MMR.Randomizer
                             .RuntimeWrap(() =>
                             {
                                 it.Text("But all we have left ")
-                                .RuntimeVerb(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                                .RuntimeVerb(beaverRace2Item.DisplayItem, beaverRace2Item.NewLocation.Value)
                                 .Text(" ")
-                                .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                                .RuntimeArticle(beaverRace2Item.DisplayItem, beaverRace2Item.NewLocation.Value)
                                 .Red(() =>
                                 {
-                                    it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                                    it.RuntimeItemName(beaverRace2Item.DisplayName(), beaverRace2Item.NewLocation.Value);
                                 })
                                 .Text("...right, little brother?")
                                 ;
@@ -4685,10 +4693,10 @@ namespace MMR.Randomizer
                             .RuntimeWrap(() =>
                             {
                                 it.Text("I could have given you ")
-                                .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                                .RuntimeArticle(oceanSpiderHouseDay1Item.DisplayItem, oceanSpiderHouseDay1Item.NewLocation.Value)
                                 .Red(() =>
                                 {
-                                    it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                                    it.RuntimeItemName(oceanSpiderHouseDay1Item.DisplayName(), oceanSpiderHouseDay1Item.NewLocation.Value);
                                 })
                                 .Text("...")
                                 ;
@@ -4708,10 +4716,10 @@ namespace MMR.Randomizer
                             .RuntimeWrap(() =>
                             {
                                 it.Text("I could have given you ")
-                                .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                                .RuntimeArticle(oceanSpiderHouseDay1Item.DisplayItem, oceanSpiderHouseDay1Item.NewLocation.Value)
                                 .Red(() =>
                                 {
-                                    it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                                    it.RuntimeItemName(oceanSpiderHouseDay1Item.DisplayName(), oceanSpiderHouseDay1Item.NewLocation.Value);
                                 })
                                 .Text("...")
                                 ;
