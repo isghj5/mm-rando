@@ -190,11 +190,11 @@ namespace MMR.Randomizer.Utils
         }
 
         // todo cache
-        public static IEnumerable<Item> OverwritableItems()
+        public static IEnumerable<Item> OverwritableItems(GameplaySettings settings)
         {
             return Enum.GetValues(typeof(Item))
                 .Cast<Item>()
-                .Where(item => item.IsOverwritable());
+                .Where(item => item.IsOverwritable(settings));
         }
 
         // todo cache

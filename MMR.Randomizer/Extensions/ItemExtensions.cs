@@ -221,9 +221,9 @@ namespace MMR.Randomizer.Extensions
             return result;
         }
 
-        public static bool IsOverwritable(this Item item)
+        public static bool IsOverwritable(this Item item, GameplaySettings settings)
         {
-            return item.HasAttribute<OverwritableAttribute>();
+            return item.GetAttribute<OverwritableAttribute>()?.Condition(settings) ?? false;
         }
 
         public static bool IsSong(this Item item)

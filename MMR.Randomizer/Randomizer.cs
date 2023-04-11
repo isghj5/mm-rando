@@ -57,11 +57,6 @@ namespace MMR.Randomizer
 
         private readonly Dictionary<Item, List<Item>> ForbiddenReplacedBy = new Dictionary<Item, List<Item>>
         {
-            // Keaton_Mask and Mama_Letter are obtained one directly after another
-            // Keaton_Mask cannot be replaced by items that may be overwritten by item obtained at Mama_Letter
-            {
-                Item.MaskKeaton, ItemUtils.OverwritableItems().ToList()
-            },
         };
 
         private readonly Dictionary<Item, List<Item>> ForbiddenPlacedAt = new Dictionary<Item, List<Item>>
@@ -78,6 +73,11 @@ namespace MMR.Randomizer
         {
             _settings = settings;
             _seed = seed;
+
+            // Keaton_Mask and Mama_Letter are obtained one directly after another
+            // Keaton_Mask cannot be replaced by items that may be overwritten by item obtained at Mama_Letter
+            ForbiddenReplacedBy[Item.MaskKeaton].AddRange(ItemUtils.OverwritableItems(settings));
+
             if (!_settings.PreventDowngrades)
             {
                 ForbiddenReplacedBy[Item.MaskKeaton].AddRange(ItemUtils.DowngradableItems());
