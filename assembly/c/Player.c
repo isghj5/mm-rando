@@ -220,9 +220,12 @@ bool Player_AfterTransformInit(ActorPlayer* this) {
         this->stateFlags.state2 |= PLAYER_STATE2_DIVING_2;
         sSwimmingTransformation = false;
     }
-    this->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
-    this->animTimer = 0;
-    return MISC_CONFIG.flags.instantTransform && !(this->stateFlags.state2 & PLAYER_STATE2_CLIMBING);
+    if (MISC_CONFIG.flags.instantTransform && !(this->stateFlags.state2 & PLAYER_STATE2_CLIMBING)) {
+        this->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
+        this->animTimer = 0;
+        return true;
+    }
+    return false;
 }
 
 void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 actionParam) {
