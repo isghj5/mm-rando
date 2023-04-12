@@ -185,6 +185,7 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
         || actionParam < PLAYER_IA_MASK_FIERCE_DEITY
         || actionParam > PLAYER_IA_MASK_DEKU
         || this->animTimer != 0
+        || this->talkActor != NULL
         || (this->stateFlags.state1 & PLAYER_STATE1_TIME_STOP)
         || (this->stateFlags.state2 & PLAYER_STATE2_DIVING)
         || (this->currentBoots == 4 && this->prevBoots == 5)) {

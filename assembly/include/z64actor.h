@@ -349,11 +349,14 @@ typedef struct ActorPlayer {
     /* 0x9C8 */ u8 unk_9C8[PLAYER_LIMB_BUF_SIZE];
     /* 0xA68 */ f32 *tableA68; // Transformation-dependant f32 array, [11] used for distance to begin swimming.
     /* 0xA6C */ PlayerStateFlags stateFlags;
-    /* 0xA78 */ UNK_TYPE1 padA78[0x8];
-    /* 0xA80 */ Actor* unkA80;
-    /* 0xA84 */ UNK_TYPE1 padA84[0x4];
-    /* 0xA88 */ Actor* unkA88;
-    /* 0xA8C */ f32 unkA8C;
+    /* 0xA78 */ Actor* unk_A78;
+    /* 0xA7C */ Actor* boomerangActor;
+    /* 0xA80 */ Actor* tatlActor;
+    /* 0xA84 */ s16 tatlTextId;
+    /* 0xA86 */ s8 currentActorCsIndex;
+    /* 0xA87 */ s8 exchangeItemId; // PlayerItemAction enum
+    /* 0xA88 */ Actor* talkActor;
+    /* 0xA8C */ f32 talkActorDistance;
     /* 0xA90 */ Actor* ocarinaCutsceneActor;
     /* 0xA94 */ UNK_TYPE1 padA94[0x11];
     /* 0xAA5 */ u8 unkAA5;
