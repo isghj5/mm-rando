@@ -4761,7 +4761,7 @@ namespace MMR.Randomizer
                     );
 
                     newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x1244)
+                        .Id(0x1242)
                         .Message(it =>
                         {
                             it.CompileTimeWrap((it) =>
