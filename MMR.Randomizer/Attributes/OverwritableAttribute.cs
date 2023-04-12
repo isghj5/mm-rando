@@ -4,14 +4,32 @@ namespace MMR.Randomizer.Attributes
 {
     public class OverwritableAttribute : BaseSettingsConditionAttribute
     {
-        public OverwritableAttribute()
+        public ItemSlot Slot { get; }
+
+        public OverwritableAttribute(ItemSlot slot)
         {
+            Slot = slot;
             Condition = (setting) => true;
         }
 
-        public OverwritableAttribute(string settingProperty, object settingValue)
+        public OverwritableAttribute(ItemSlot slot, string settingProperty, object settingValue)
         {
+            Slot = slot;
             Condition = CreateConditionFunction(settingProperty, settingValue);
+        }
+
+        public enum ItemSlot
+        {
+            None,
+            Trade,
+            KeyExpress,
+            PendantKafei,
+            Bottle,
+            Sword,
+            Shield,
+            Quiver,
+            BombBag,
+            Wallet,
         }
     }
 }

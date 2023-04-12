@@ -190,11 +190,12 @@ namespace MMR.Randomizer.Utils
         }
 
         // todo cache
-        public static IEnumerable<Item> OverwritableItems(GameplaySettings settings)
+        public static Dictionary<OverwritableAttribute.ItemSlot, ReadOnlyCollection<Item>> OverwriteableSlotItems(GameplaySettings settings)
         {
-            return Enum.GetValues(typeof(Item))
-                .Cast<Item>()
-                .Where(item => item.IsOverwritable(settings));
+            return Enum.GetValues<Item>()
+                .GroupBy(item => item.OverwriteableSlot(settings))
+                .Where(g => g.Key != OverwritableAttribute.ItemSlot.None)
+                .ToDictionary(g => g.Key, g => g.ToList().AsReadOnly());
         }
 
         // todo cache

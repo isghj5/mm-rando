@@ -55,8 +55,159 @@ namespace MMR.Randomizer
         // Starting items should not be replaced by trade items, or items that can be downgraded.
         private readonly List<Item> ForbiddenStartingItems = new List<Item>();
 
-        private readonly Dictionary<Item, List<Item>> ForbiddenReplacedBy = new Dictionary<Item, List<Item>>
+        private readonly List<List<Item>> ForcedCheckGroups = new List<List<Item>>
         {
+            new List<Item>
+            {
+                Item.MaskKeaton,
+                Item.TradeItemMamaLetter,
+            },
+            new List<Item>
+            {
+                Item.ItemBottleAliens,
+                Item.NotebookSaveTheCows,
+            },
+            new List<Item>
+            {
+                Item.MaskRomani,
+                Item.NotebookProtectMilkDelivery,
+            },
+            // TODO only if double archery rewards are enabled
+            new List<Item>
+            {
+                Item.UpgradeBigQuiver,
+                Item.HeartPieceTownArchery,
+            },
+            // TODO only if double archery rewards are enabled
+            new List<Item>
+            {
+                Item.UpgradeBiggestQuiver,
+                Item.HeartPieceSwampArchery,
+            },
+            new List<Item>
+            {
+                Item.TradeItemRoomKey,
+                Item.NotebookInnReservation,
+            },
+            new List<Item>
+            {
+                Item.TradeItemKafeiLetter,
+                Item.NotebookPromiseAnjuDelivery,
+            },
+            new List<Item>
+            {
+                Item.TradeItemPendant,
+                Item.NotebookMeetKafei,
+                Item.NotebookPromiseKafei,
+            },
+            new List<Item>
+            {
+                Item.MaskKeaton,
+                Item.TradeItemMamaLetter,
+                Item.NotebookCuriosityShopManSGift,
+                Item.NotebookPromiseCuriosityShopMan,
+            },
+            new List<Item>
+            {
+                Item.SongEpona,
+                Item.NotebookPromiseRomani,
+            },
+            new List<Item>
+            {
+                Item.ItemBottleMadameAroma,
+                Item.NotebookDeliverLetterToMama,
+            },
+            new List<Item>
+            {
+                Item.ItemNotebook,
+                Item.NotebookMeetBombers,
+                Item.NotebookLearnBombersCode,
+            },
+            new List<Item>
+            {
+                Item.HeartPieceNotebookMayor,
+                Item.NotebookDotoursThanks,
+            },
+            new List<Item>
+            {
+                Item.HeartPieceNotebookRosa,
+                Item.NotebookRosaSistersThanks,
+            },
+            new List<Item>
+            {
+                Item.HeartPieceNotebookHand,
+                Item.NotebookToiletHandSThanks,
+            },
+            new List<Item>
+            {
+                Item.HeartPieceNotebookGran1,
+                Item.NotebookGrandmaShortStory,
+            },
+            new List<Item>
+            {
+                Item.HeartPieceNotebookGran2,
+                Item.NotebookGrandmaLongStory,
+            },
+            new List<Item>
+            {
+                Item.HeartPieceNotebookPostman,
+                Item.NotebookPostmansGame,
+            },
+            new List<Item>
+            {
+                Item.MaskKafei,
+                Item.NotebookPromiseMadameAroma,
+            },
+            new List<Item>
+            {
+                Item.MaskAllNight,
+                Item.NotebookPurchaseCuriosityShopItem,
+            },
+            new List<Item>
+            {
+                Item.MaskBunnyHood,
+                Item.NotebookGrogsThanks,
+            },
+            new List<Item>
+            {
+                Item.MaskGaro,
+                Item.NotebookDefeatGormanBrothers,
+            },
+            new List<Item>
+            {
+                Item.MaskCircusLeader,
+                Item.NotebookMovingGorman,
+            },
+            new List<Item>
+            {
+                Item.MaskPostmanHat,
+                Item.NotebookPostmansFreedom,
+            },
+            new List<Item>
+            {
+                Item.MaskCouple,
+                Item.NotebookUniteAnjuAndKafei,
+            },
+            new List<Item>
+            {
+                Item.MaskBlast,
+                Item.NotebookSaveOldLady,
+            },
+            new List<Item>
+            {
+                Item.MaskKamaro,
+                Item.NotebookPromiseKamaro,
+            },
+            new List<Item>
+            {
+                Item.MaskStone,
+                Item.NotebookSaveInvisibleSoldier,
+            },
+            new List<Item>
+            {
+                Item.MaskBremen,
+                Item.NotebookGuruGuru,
+            },
         };
 
         private readonly Dictionary<Item, List<Item>> ForbiddenPlacedAt = new Dictionary<Item, List<Item>>
@@ -74,13 +225,8 @@ namespace MMR.Randomizer
             _settings = settings;
             _seed = seed;
 
-            // Keaton_Mask and Mama_Letter are obtained one directly after another
-            // Keaton_Mask cannot be replaced by items that may be overwritten by item obtained at Mama_Letter
-            ForbiddenReplacedBy[Item.MaskKeaton].AddRange(ItemUtils.OverwritableItems(settings));
-
             if (!_settings.PreventDowngrades)
             {
-                ForbiddenReplacedBy[Item.MaskKeaton].AddRange(ItemUtils.DowngradableItems());
                 ForbiddenStartingItems.AddRange(ItemUtils.DowngradableItems());
             }
         }
@@ -1229,10 +1375,23 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            if (ForbiddenReplacedBy.ContainsKey(target) && ForbiddenReplacedBy[target].Contains(currentItem))
+            var overwritableSlot = currentItem.OverwriteableSlot(_settings);
+
+            if (overwritableSlot != OverwritableAttribute.ItemSlot.None)
             {
-                Debug.WriteLine($"{target} forbids being replaced by {currentItem}");
-                return false;
+                var forcedCheckGroup = ForcedCheckGroups.FirstOrDefault(locations => locations.Contains(target));
+                if (forcedCheckGroup != default)
+                {
+                    var slotItems = ItemUtils.OverwriteableSlotItems(_settings)[overwritableSlot];
+
+                    foreach (var slotItem in slotItems)
+                    {
+                        if (ItemList[slotItem].NewLocation.HasValue && forcedCheckGroup.Contains(ItemList[slotItem].NewLocation.Value))
+                        {
+                            return false;
+                        }
+                    }
+                }
             }
 
             if (!_timeTravelPlaced || currentItem.IsTemporary(_settings))

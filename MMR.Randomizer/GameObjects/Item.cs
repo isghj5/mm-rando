@@ -20,6 +20,7 @@ namespace MMR.Randomizer.GameObjects
         [Progressive]
         [StartingItem(0xC5CE25, 0x01)]
         [StartingItem(0xC5CE6F, 0x01)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Quiver, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Hero's Bow"), LocationName("Hero's Bow Chest"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("a projectile", "a ranged weapon")]
         [ShopText("Use it to shoot arrows.", isDefinite: true)]
@@ -55,6 +56,7 @@ namespace MMR.Randomizer.GameObjects
         [Purchaseable, Visible]
         [StartingItem(0xC5CE2A, 0x06)]
         [StartingItem(0xC5CE6F, 0x08)]
+        [Overwritable(OverwritableAttribute.ItemSlot.BombBag, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Bomb Bag"), LocationName("Bomb Bag Purchase"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town shop"), GossipItemHint("an item carrier", "a vessel of explosives")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.BombShop, 0)]
@@ -153,7 +155,7 @@ namespace MMR.Randomizer.GameObjects
         ItemFairySword,
 
         [StartingItemId(0x11)]
-        [Repeatable, Temporary, Overwritable] // specially handled to turn into Red Potion on subsequent times
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)] // specially handled to turn into Red Potion on subsequent times
         [ItemName("Bottle of Red Potion"), LocationName("Kotake"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("the sleeping witch"), GossipItemHint("a vessel of health", "bottled fortitude")]
         [ShopText("Replenishes your life energy.\u0009\u0001\u0000\u0000 Comes with an Empty Bottle.\u0009\u0002")]
@@ -162,7 +164,7 @@ namespace MMR.Randomizer.GameObjects
         ItemBottleWitch,
 
         [StartingItemId(0x18)]
-        [Repeatable, Temporary, Overwritable] // specially handled to turn into Milk on subsequent times
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)] // specially handled to turn into Milk on subsequent times
         [ItemName("Milk Bottle"), LocationName("Aliens Defense"), Region(Region.RomaniRanch)]
         [GossipLocationHint("the ranch girl", "a good deed"), GossipItemHint("a dairy product", "the produce of cows"), GossipCompetitiveHint(-2)]
         [ShopText("Recover five hearts with one drink. Contains two helpings.\u0009\u0001\u0000\u0000 Comes with an Empty Bottle.\u0009\u0002")]
@@ -172,7 +174,7 @@ namespace MMR.Randomizer.GameObjects
 
         [RupeeRepeatable]
         [StartingItemId(0x22)]
-        [Repeatable, Temporary, Overwritable] // specially handled to turn into Gold Dust on subsequent times
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)] // specially handled to turn into Gold Dust on subsequent times
         [ItemName("Bottle of Gold Dust"), LocationName("Goron Race"), Region(Region.TwinIslands)]
         [GossipLocationHint("a sporting event"), GossipItemHint("a gleaming powder"), GossipCompetitiveHint(-2)]
         [ShopText("It's very high quality.\u0009\u0001\u0000\u0000 Comes with an Empty Bottle.\u0009\u0002")]
@@ -197,7 +199,7 @@ namespace MMR.Randomizer.GameObjects
         ItemBottleDampe,
 
         [StartingItemId(0x25)]
-        [Repeatable, Temporary, Overwritable] // specially handled to turn into Chateau Romani on subsequent times
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)] // specially handled to turn into Chateau Romani on subsequent times
         [ItemName("Bottle of Chateau Romani"), LocationName("Madame Aroma in Bar"), Region(Region.EastClockTown)]
         [GossipLocationHint("an important lady"), GossipItemHint("a dairy product", "an adult beverage")]
         [ShopText("Drink it to get lasting stamina for your magic power.\u0009\u0001\u0000\u0000 Comes with an Empty Bottle.\u0009\u0002")]
@@ -219,6 +221,7 @@ namespace MMR.Randomizer.GameObjects
         [Visible]
         [StartingItem(0xC5CE21, 0x02)]
         [StartingItem(0xC5CE00, 0x4E)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Sword, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Razor Sword"), LocationName("Mountain Smithy Day 1"), Region(Region.MountainVillage)]
         [GossipLocationHint("the mountain smith"), GossipItemHint("a sharp blade")]
         [ShopText("A sharp sword forged at the smithy.")]
@@ -231,6 +234,7 @@ namespace MMR.Randomizer.GameObjects
         [Visible]
         [StartingItem(0xC5CE21, 0x03)]
         [StartingItem(0xC5CE00, 0x4F)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Sword, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Gilded Sword"), LocationName("Mountain Smithy Day 2"), Region(Region.MountainVillage)]
         [GossipLocationHint("the mountain smith"), GossipItemHint("a sharp blade")]
         [ShopText("A very sharp sword forged from gold dust.")]
@@ -240,6 +244,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Downgradable]
         [StartingItem(0xC5CE21, 0x20)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Shield, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Mirror Shield"), LocationName("Mirror Shield Chest"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a hollow ground"), GossipItemHint("a reflective guard", "echoing protection")]
         [ShopText("It can reflect certain rays of light.")]
@@ -252,6 +257,7 @@ namespace MMR.Randomizer.GameObjects
         [Downgradable]
         [StartingItem(0xC5CE25, 0x01)]
         [StartingItem(0xC5CE6F, 0x02)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Quiver, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Large Quiver"), LocationName("Town Archery #1"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town activity"), GossipItemHint("a projectile", "a ranged weapon"), GossipCompetitiveHint(-3)]
         [ShopText("This can hold up to a maximum of 40 arrows.")]
@@ -264,6 +270,7 @@ namespace MMR.Randomizer.GameObjects
         [Downgradable]
         [StartingItem(0xC5CE25, 0x01)]
         [StartingItem(0xC5CE6F, 0x03)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Quiver, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Largest Quiver"), LocationName("Swamp Archery #1"), Region(Region.RoadToSouthernSwamp)]
         [GossipLocationHint("a swamp game"), GossipItemHint("a projectile", "a ranged weapon"), GossipCompetitiveHint(-3)]
         [ShopText("This can hold up to a maximum of 50 arrows.", isDefinite: true)]
@@ -276,6 +283,7 @@ namespace MMR.Randomizer.GameObjects
         [Purchaseable, Visible]
         [StartingItem(0xC5CE2A, 0x06)]
         [StartingItem(0xC5CE6F, 0x10)]
+        [Overwritable(OverwritableAttribute.ItemSlot.BombBag, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Big Bomb Bag"), LocationName("Big Bomb Bag Purchase"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town shop"), GossipItemHint("an item carrier", "a vessel of explosives")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.BombShop, 1)]
@@ -289,6 +297,7 @@ namespace MMR.Randomizer.GameObjects
         [Downgradable, Purchaseable]
         [StartingItem(0xC5CE2A, 0x06)]
         [StartingItem(0xC5CE6F, 0x18)]
+        [Overwritable(OverwritableAttribute.ItemSlot.BombBag, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Biggest Bomb Bag"), LocationName("Biggest Bomb Bag Purchase"), MultiLocation(UpgradeBiggestBombBagInMountain, UpgradeBiggestBombBagInSwamp)]
         [GossipLocationHint("a northern merchant"), GossipItemHint("an item carrier", "a vessel of explosives")]
         [ShopText("This can hold up to a maximum of 40 bombs.", isDefinite: true)]
@@ -298,6 +307,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Progressive]
         [StartingItem(0xC5CE6E, 0x10)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Wallet, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Adult Wallet"), LocationName("Bank Reward #1"), Region(Region.WestClockTown)]
         [GossipLocationHint("a keeper of wealth"), GossipItemHint("a coin case", "great wealth")]
         [ShopText("This can hold up to a maximum of 200 rupees.")]
@@ -308,6 +318,7 @@ namespace MMR.Randomizer.GameObjects
         [Progressive]
         [Downgradable]
         [StartingItem(0xC5CE6E, 0x20)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Wallet, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Giant Wallet"), LocationName("Ocean Spider House Day 1 Reward"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a gold spider"), GossipItemHint("a coin case", "great wealth"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false)]
         [ShopText("This can hold up to a maximum of 500 rupees.")]
@@ -318,6 +329,7 @@ namespace MMR.Randomizer.GameObjects
         [Progressive]
         [Downgradable]
         [StartingItem(0xC5CE6E, 0x30)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Wallet, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Royal Wallet"), LocationName("Removed by Royal Wallet"), Region(Region.Misc)]
         [GossipItemHint("a coin case", "great wealth")]
         [ShopText("This can hold up to a maximum of 999 rupees.")]
@@ -327,7 +339,7 @@ namespace MMR.Randomizer.GameObjects
 
         //trades
         [Visible]
-        [Repeatable, Temporary, Overwritable(nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
         [ItemName("Moon's Tear"), LocationName("Astronomy Telescope"), Region(Region.TerminaField)]
         [GossipLocationHint("a falling star"), GossipItemHint("a lunar teardrop", "celestial sadness")]
         [ShopText("A shining stone from the moon.")]
@@ -335,7 +347,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x96), ItemPool(ItemCategory.TradeItems, LocationCategory.Events, ClassicCategory.BaseItemPool)]
         TradeItemMoonTear,
 
-        [Repeatable, Temporary, Overwritable(nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
         [ItemName("Land Title Deed"), LocationName("Clock Town Scrub Trade"), Region(Region.SouthClockTown)]
         [GossipLocationHint("a town merchant"), GossipItemHint("a property deal")]
         [ShopText("The title deed to the Deku Flower in Clock Town.")]
@@ -343,7 +355,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x97), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemLandDeed,
 
-        [Repeatable, Temporary, Overwritable(nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
         [ItemName("Swamp Title Deed"), LocationName("Swamp Scrub Trade"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a southern merchant"), GossipItemHint("a property deal")]
         [ShopText("The title deed to the Deku Flower in Southern Swamp.")]
@@ -351,7 +363,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x98), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemSwampDeed,
 
-        [Repeatable, Temporary, Overwritable(nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
         [ItemName("Mountain Title Deed"), LocationName("Mountain Scrub Trade"), Region(Region.GoronVillage)]
         [GossipLocationHint("a northern merchant"), GossipItemHint("a property deal")]
         [ShopText("The title deed to the Deku Flower near Goron Village.")]
@@ -359,7 +371,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x99), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemMountainDeed,
 
-        [Repeatable, Temporary, Overwritable(nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
         [ItemName("Ocean Title Deed"), LocationName("Ocean Scrub Trade"), Region(Region.ZoraHall)]
         [GossipLocationHint("a western merchant"), GossipItemHint("a property deal")]
         [ShopText("The title deed to the Deku Flower in Zora Hall.")]
@@ -367,7 +379,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x9A), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemOceanDeed,
 
-        [Repeatable, Temporary, Overwritable(nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.KeyExpress, nameof(GameplaySettings.QuestItemStorage), false)]
         [ItemName("Room Key"), LocationName("Inn Reservation"), Region(Region.StockPotInn)]
         [GossipLocationHint("checking in", "check-in"), GossipItemHint("a door opener", "a lock opener")]
         [ShopText("With this, you can go in and out of the Stock Pot Inn at night.")]
@@ -375,7 +387,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xA0), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemRoomKey,
 
-        [Repeatable, Temporary, Overwritable(nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.PendantKafei, nameof(GameplaySettings.QuestItemStorage), false)]
         [ItemName("Letter to Kafei"), LocationName("Midnight Meeting"), Region(Region.StockPotInn)]
         [GossipLocationHint("a late meeting"), GossipItemHint("a lover's plight", "a lover's letter")]
         [ShopText("A love letter from Anju to Kafei.")]
@@ -384,7 +396,7 @@ namespace MMR.Randomizer.GameObjects
         TradeItemKafeiLetter,
 
         [Visible]
-        [Repeatable, Temporary, Overwritable(nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.PendantKafei, nameof(GameplaySettings.QuestItemStorage), false)]
         [ItemName("Pendant of Memories"), LocationName("Kafei"), Region(Region.LaundryPool)]
         [GossipLocationHint("a posted letter"), GossipItemHint("a cherished necklace", "a symbol of trust")]
         [ShopText("Kafei's symbol of trust for Anju.")]
@@ -392,7 +404,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xAB), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemPendant,
 
-        [Repeatable, Temporary, Overwritable(nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.KeyExpress, nameof(GameplaySettings.QuestItemStorage), false)]
         [ItemName("Letter to Mama"), LocationName("Curiosity Shop Man #2"), Region(Region.LaundryPool)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("an important note", "a special delivery")]
         [ShopText("It's a parcel for Kafei's mother.")]
@@ -1180,7 +1192,7 @@ namespace MMR.Randomizer.GameObjects
 
         //shop items
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Red Potion"), LocationName("Trading Post Red Potion"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 7)]
@@ -1191,7 +1203,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemTradingPostRedPotion,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Green Potion"), LocationName("Trading Post Green Potion"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a magic potion", "a green drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 2)]
@@ -1203,6 +1215,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable, Visible]
         [Repeatable]
+        [Overwritable(OverwritableAttribute.ItemSlot.Shield, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Hero's Shield"), LocationName("Trading Post Hero's Shield"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a basic guard", "protection")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 3)]
@@ -1213,7 +1226,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemTradingPostShield,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Fairy"), LocationName("Trading Post Fairy"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a winged friend", "a healer")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 0)]
@@ -1268,7 +1281,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemTradingPostArrow50,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Blue Potion"), LocationName("Witch Shop Blue Potion"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a sleeping witch", "a southern merchant"), GossipItemHint("consumable strength", "a magic potion", "a blue drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.WitchShop, 2)]
@@ -1279,7 +1292,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemWitchBluePotion,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Red Potion"), LocationName("Witch Shop Red Potion"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a sleeping witch", "a southern merchant"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.WitchShop, 0)]
@@ -1289,7 +1302,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemWitchRedPotion,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Green Potion"), LocationName("Witch Shop Green Potion"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a sleeping witch", "a southern merchant"), GossipItemHint("a magic potion", "a green drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.WitchShop, 1)]
@@ -1341,7 +1354,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemGoronArrow10,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Red Potion"), LocationName("Goron Shop Red Potion"), MultiLocation(ShopItemGoronRedPotionInWinter, ShopItemGoronRedPotionInSpring), RegionArea(RegionArea.Mountain)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShop, 2)]
@@ -1353,6 +1366,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable, Visible]
         [Repeatable]
+        [Overwritable(OverwritableAttribute.ItemSlot.Shield, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Hero's Shield"), LocationName("Zora Shop Hero's Shield"), Region(Region.ZoraHall)]
         [GossipLocationHint("a western merchant", "an aquatic shop"), GossipItemHint("a basic guard", "protection")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.ZoraShop, 0)]
@@ -1372,7 +1386,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemZoraArrow10,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Red Potion"), LocationName("Zora Shop Red Potion"), Region(Region.ZoraHall)]
         [GossipLocationHint("a western merchant", "an aquatic shop"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.ZoraShop, 2)]
@@ -2238,6 +2252,7 @@ namespace MMR.Randomizer.GameObjects
         [Progressive]
         [StartingItem(0xC5CE21, 0x01)]
         [StartingItem(0xC5CE00, 0x4D)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Sword, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Kokiri Sword"), LocationName("Starting Sword"), Region(Region.Misc)]
         [GossipLocationHint("a new file", "a quest's inception"), GossipItemHint("a forest blade")]
         [ShopText("A sword created by forest folk.")]
@@ -2248,6 +2263,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Repeatable]
         [StartingItem(0xC5CE21, 0x10)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Shield, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Hero's Shield"), LocationName("Starting Shield"), Region(Region.Misc)]
         [GossipLocationHint("a new file", "a quest's inception"), GossipItemHint("a basic guard", "protection")]
         [ShopText("Use it to defend yourself.")]
@@ -2279,7 +2295,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x12B), ItemPool(ItemCategory.HeartContainers, LocationCategory.StartingItems, ClassicCategory.CrazyStartingItems)]
         StartingHeartContainer2,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Ranch Cow #1"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2287,7 +2303,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x132), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemRanchBarnMainCowMilk,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Ranch Cow #2"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2295,7 +2311,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x182), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemRanchBarnOtherCowMilk1,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Ranch Cow #3"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2303,7 +2319,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1A2), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemRanchBarnOtherCowMilk2,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Cow Beneath the Well"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2311,7 +2327,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x135), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemWellCowMilk,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Termina Grotto Cow #1"), Region(Region.TerminaField)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2319,7 +2335,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x136), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemTerminaGrottoCowMilk1,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Termina Grotto Cow #2"), Region(Region.TerminaField)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2327,7 +2343,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x137), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemTerminaGrottoCowMilk2,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Great Bay Coast Grotto Cow #1"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2335,7 +2351,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x138), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemCoastGrottoCowMilk1,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Great Bay Coast Grotto Cow #2"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -3393,7 +3409,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x13D), ItemPool(ItemCategory.BlueRupees, LocationCategory.NpcRewards, ClassicCategory.MundaneRewards)]
         MundaneItemBankBlueRupee,
 
-        [Repeatable, Temporary, Overwritable, Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
         [ItemName("Chateau Romani"), LocationName("Milk Bar Chateau"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town shop"), GossipItemHint("a dairy product", "an adult beverage")]
         [ShopText("Drink it to get lasting stamina for your magic power.", isMultiple: true)]
@@ -3402,7 +3418,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x180), ItemPool(ItemCategory.Chateau, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemMilkBarChateau,
 
-        [Repeatable, Temporary, Overwritable, Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
         [ItemName("Milk"), LocationName("Milk Bar Milk"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town shop"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -3466,7 +3482,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x19B), ItemPool(ItemCategory.MainInventory, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemBusinessScrubMagicBean,
 
-        [Repeatable, Temporary, Overwritable, Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
         [ItemName("Green Potion"), LocationName("Ocean Scrub Purchase"), MultiLocation(ShopItemBusinessScrubGreenPotionInOcean, ShopItemBusinessScrubGreenPotionInMountain)]
         [GossipLocationHint("a western merchant"), GossipItemHint("a magic potion", "a green drink")]
         [ShopText("Replenishes your magic power.")]
@@ -3475,7 +3491,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x19C), ItemPool(ItemCategory.GreenPotions, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemBusinessScrubGreenPotion,
 
-        [Repeatable, Temporary, Overwritable, Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
         [ItemName("Blue Potion"), LocationName("Canyon Scrub Purchase"), MultiLocation(ShopItemBusinessScrubBluePotionInCanyon, ShopItemBusinessScrubBluePotionInOcean)]
         [GossipLocationHint("an eastern merchant"), GossipItemHint("consumable strength", "a magic potion", "a blue drink")]
         [ShopText("Replenishes both life energy and magic power.")]
@@ -3492,7 +3508,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x19E), ItemPool(ItemCategory.BlueRupees, LocationCategory.NpcRewards, ClassicCategory.MundaneRewards)]
         MundaneItemZoraStageLightsBlueRupee,
 
-        [Repeatable, Temporary, Overwritable, Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
         [ItemName("Milk"), LocationName("Gorman Bros Milk Purchase"), Region(Region.MilkRoad)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -3599,7 +3615,7 @@ namespace MMR.Randomizer.GameObjects
         MundaneItemCuriosityShopGoldRupee,
 
         [Visible, Purchaseable]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Seahorse"), LocationName("Fisherman Pictograph"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a fisherman"), GossipItemHint("a sea creature")]
         [ShopText("It wants to go back home to Pinnacle Rock.")]

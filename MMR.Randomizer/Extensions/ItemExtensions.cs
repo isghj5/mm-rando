@@ -221,9 +221,14 @@ namespace MMR.Randomizer.Extensions
             return result;
         }
 
-        public static bool IsOverwritable(this Item item, GameplaySettings settings)
+        public static OverwritableAttribute.ItemSlot OverwriteableSlot(this Item item, GameplaySettings settings)
         {
-            return item.GetAttribute<OverwritableAttribute>()?.Condition(settings) ?? false;
+            var overwriteableAttribute = item.GetAttribute<OverwritableAttribute>();
+            if (overwriteableAttribute?.Condition(settings) == true)
+            {
+                return overwriteableAttribute.Slot;
+            }
+            return OverwritableAttribute.ItemSlot.None;
         }
 
         public static bool IsSong(this Item item)
