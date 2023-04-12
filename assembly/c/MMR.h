@@ -75,9 +75,9 @@ typedef struct {
 } ExtraStartingItems; // size = 0x12
 
 typedef struct {
-    /* 0x00 */ u16 ids[0x10];
-    /* 0x20 */ u16 length;
-} ItemsToReturn; // size = 0x22
+    /* 0x00 */ u16 ids[0x1F];
+    /* 0x3E */ u16 length;
+} ItemsToReturn; // size = 0x40
 
 typedef union {
     struct {

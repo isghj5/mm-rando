@@ -251,6 +251,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
+            this.cQuestItemKeep = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1911,6 +1912,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cQuestItemKeep);
             this.groupBox7.Controls.Add(this.cUpdateNpcText);
             this.groupBox7.Controls.Add(this.cAddBombchuDrops);
             this.groupBox7.Controls.Add(this.lChestGame);
@@ -1957,7 +1959,7 @@ namespace MMR.UI.Forms
             // cAddBombchuDrops
             // 
             this.cAddBombchuDrops.AutoSize = true;
-            this.cAddBombchuDrops.Location = new System.Drawing.Point(172, 259);
+            this.cAddBombchuDrops.Location = new System.Drawing.Point(172, 285);
             this.cAddBombchuDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cAddBombchuDrops.Name = "cAddBombchuDrops";
             this.cAddBombchuDrops.Size = new System.Drawing.Size(137, 19);
@@ -2069,7 +2071,7 @@ namespace MMR.UI.Forms
             // cElegySpeedups
             // 
             this.cElegySpeedups.AutoSize = true;
-            this.cElegySpeedups.Location = new System.Drawing.Point(172, 233);
+            this.cElegySpeedups.Location = new System.Drawing.Point(172, 259);
             this.cElegySpeedups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cElegySpeedups.Name = "cElegySpeedups";
             this.cElegySpeedups.Size = new System.Drawing.Size(107, 19);
@@ -2093,7 +2095,7 @@ namespace MMR.UI.Forms
             // cArrowCycling
             // 
             this.cArrowCycling.AutoSize = true;
-            this.cArrowCycling.Location = new System.Drawing.Point(172, 207);
+            this.cArrowCycling.Location = new System.Drawing.Point(172, 233);
             this.cArrowCycling.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cArrowCycling.Name = "cArrowCycling";
             this.cArrowCycling.Size = new System.Drawing.Size(99, 19);
@@ -2999,6 +3001,19 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
+            // cQuestItemKeep
+            // 
+            this.cQuestItemKeep.AutoSize = true;
+            this.cQuestItemKeep.BackColor = System.Drawing.Color.Transparent;
+            this.cQuestItemKeep.Location = new System.Drawing.Point(172, 207);
+            this.cQuestItemKeep.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cQuestItemKeep.Name = "cQuestItemKeep";
+            this.cQuestItemKeep.Size = new System.Drawing.Size(162, 19);
+            this.cQuestItemKeep.TabIndex = 48;
+            this.cQuestItemKeep.Text = "Quest items through time";
+            this.cQuestItemKeep.UseVisualStyleBackColor = false;
+            this.cQuestItemKeep.CheckedChanged += new System.EventHandler(this.cQuestItemKeep_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3312,6 +3327,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cInstantTransformations;
         private System.Windows.Forms.CheckBox cBombArrows;
         private System.Windows.Forms.CheckBox cUpdateNpcText;
+        private System.Windows.Forms.CheckBox cQuestItemKeep;
     }
 }
 

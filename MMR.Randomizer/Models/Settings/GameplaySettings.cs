@@ -481,6 +481,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public bool LenientGoronSpikes { get; set; }
 
+        public bool KeepQuestTradeThroughTime { get; set; }
+
         #endregion
 
         #region Speedups
@@ -541,6 +543,10 @@ namespace MMR.Randomizer.Models.Settings
             if (CustomJunkLocations == null)
             {
                 return "Invalid junk locations list.";
+            }
+            if (KeepQuestTradeThroughTime && !QuestItemStorage)
+            {
+                return $"Must enable '{nameof(QuestItemStorage)}' if '{nameof(KeepQuestTradeThroughTime)}' is enabled.";
             }
             return null;
         }

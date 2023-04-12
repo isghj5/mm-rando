@@ -339,7 +339,8 @@ namespace MMR.Randomizer.GameObjects
 
         //trades
         [Visible]
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Moon's Tear"), LocationName("Astronomy Telescope"), Region(Region.TerminaField)]
         [GossipLocationHint("a falling star"), GossipItemHint("a lunar teardrop", "celestial sadness")]
         [ShopText("A shining stone from the moon.")]
@@ -347,7 +348,8 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x96), ItemPool(ItemCategory.TradeItems, LocationCategory.Events, ClassicCategory.BaseItemPool)]
         TradeItemMoonTear,
 
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Land Title Deed"), LocationName("Clock Town Scrub Trade"), Region(Region.SouthClockTown)]
         [GossipLocationHint("a town merchant"), GossipItemHint("a property deal")]
         [ShopText("The title deed to the Deku Flower in Clock Town.")]
@@ -355,7 +357,8 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x97), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemLandDeed,
 
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Swamp Title Deed"), LocationName("Swamp Scrub Trade"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a southern merchant"), GossipItemHint("a property deal")]
         [ShopText("The title deed to the Deku Flower in Southern Swamp.")]
@@ -363,7 +366,8 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x98), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemSwampDeed,
 
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Mountain Title Deed"), LocationName("Mountain Scrub Trade"), Region(Region.GoronVillage)]
         [GossipLocationHint("a northern merchant"), GossipItemHint("a property deal")]
         [ShopText("The title deed to the Deku Flower near Goron Village.")]
@@ -371,7 +375,8 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x99), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemMountainDeed,
 
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Ocean Title Deed"), LocationName("Ocean Scrub Trade"), Region(Region.ZoraHall)]
         [GossipLocationHint("a western merchant"), GossipItemHint("a property deal")]
         [ShopText("The title deed to the Deku Flower in Zora Hall.")]
@@ -379,7 +384,8 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x9A), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemOceanDeed,
 
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.KeyExpress, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.KeyExpress, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Room Key"), LocationName("Inn Reservation"), Region(Region.StockPotInn)]
         [GossipLocationHint("checking in", "check-in"), GossipItemHint("a door opener", "a lock opener")]
         [ShopText("With this, you can go in and out of the Stock Pot Inn at night.")]
@@ -387,7 +393,8 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xA0), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemRoomKey,
 
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.PendantKafei, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.PendantKafei, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Letter to Kafei"), LocationName("Midnight Meeting"), Region(Region.StockPotInn)]
         [GossipLocationHint("a late meeting"), GossipItemHint("a lover's plight", "a lover's letter")]
         [ShopText("A love letter from Anju to Kafei.")]
@@ -396,7 +403,8 @@ namespace MMR.Randomizer.GameObjects
         TradeItemKafeiLetter,
 
         [Visible]
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.PendantKafei, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.PendantKafei, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Pendant of Memories"), LocationName("Kafei"), Region(Region.LaundryPool)]
         [GossipLocationHint("a posted letter"), GossipItemHint("a cherished necklace", "a symbol of trust")]
         [ShopText("Kafei's symbol of trust for Anju.")]
@@ -404,7 +412,8 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xAB), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemPendant,
 
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.KeyExpress, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.KeyExpress, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Letter to Mama"), LocationName("Curiosity Shop Man #2"), Region(Region.LaundryPool)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("an important note", "a special delivery")]
         [ShopText("It's a parcel for Kafei's mother.")]

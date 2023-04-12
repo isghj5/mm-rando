@@ -136,6 +136,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cEponaSword, "Change Epona's B button behavior to prevent you from losing your sword if you don't have a bow.\nMay affect vanilla glitches that use Epona's B button.");
             TooltipBuilder.SetTooltip(cDrawHash, "Draw hash icons on the File Select screen.");
             TooltipBuilder.SetTooltip(cQuestItemStorage, "Enable Quest Item Storage, which allows for storing multiple quest items in their dedicated inventory slot. Quest items will also always be consumed when used.");
+            TooltipBuilder.SetTooltip(cQuestItemKeep, "Quest items will return to your inventory after Song of Time.");
             TooltipBuilder.SetTooltip(cDisableCritWiggle, "Disable crit wiggle movement modification when 1 heart of health or less.");
             TooltipBuilder.SetTooltip(cLink, "Select a character model to replace Link's default model.");
             TooltipBuilder.SetTooltip(cTatl, "Select a color scheme to replace Tatl's default color scheme.");
@@ -1203,6 +1204,7 @@ namespace MMR.UI.Forms
             cDrawHash.Checked = _configuration.OutputSettings.GeneratePatch || (_drawHashChecked && (_configuration.OutputSettings.GenerateROM || _configuration.OutputSettings.OutputVC));
             cFastPush.Checked = _configuration.GameplaySettings.FastPush;
             cQuestItemStorage.Checked = _configuration.GameplaySettings.QuestItemStorage;
+            cQuestItemKeep.Checked = _configuration.GameplaySettings.KeepQuestTradeThroughTime;
             cContinuousDekuHopping.Checked = _configuration.GameplaySettings.ContinuousDekuHopping;
             cHookshotAnySurface.Checked = _configuration.GameplaySettings.HookshotAnySurface;
             cClimbMostSurfaces.Checked = _configuration.GameplaySettings.ClimbMostSurfaces;
@@ -1501,6 +1503,11 @@ namespace MMR.UI.Forms
         private void cQuestItemStorage_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.QuestItemStorage = cQuestItemStorage.Checked);
+        }
+
+        private void cQuestItemKeep_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.KeepQuestTradeThroughTime = cQuestItemKeep.Checked);
         }
 
         private void cContinuousDekuHopping_CheckedChanged(object sender, EventArgs e)
@@ -1904,6 +1911,13 @@ namespace MMR.UI.Forms
             bCustomizeHintPriorities.Enabled = cHintImportance.Enabled;
 
             tLuckRollPercentage.Enabled = _configuration.CosmeticSettings.Music == Music.Random;
+
+            cQuestItemKeep.Enabled = _configuration.GameplaySettings.QuestItemStorage;
+            if (!cQuestItemKeep.Enabled)
+            {
+                _configuration.GameplaySettings.KeepQuestTradeThroughTime = false;
+                cQuestItemKeep.Checked = false;
+            }
         }
 
         /// <summary>
@@ -1978,6 +1992,7 @@ namespace MMR.UI.Forms
             cNoDowngrades.Enabled = v;
             cEponaSword.Enabled = v;
             cQuestItemStorage.Enabled = v;
+            cQuestItemKeep.Enabled = v;
             cFreestanding.Enabled = v;
             cArrowCycling.Enabled = v;
             cCloseCows.Enabled = v;
