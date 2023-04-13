@@ -243,6 +243,7 @@ extern void z2_SetBGM2(u16 bgmId);
 
 // Function Prototypes (Text).
 extern void z2_ShowMessage(GlobalContext* ctxt, u16 messageId, Actor* actor);
+extern void z2_Message_ContinueTextbox(GlobalContext* ctxt, u16 textId);
 extern bool z2_IsMessageClosing(Actor* actor, GlobalContext *ctxt);
 extern u8 z2_GetMessageState(MessageContext* msgCtx);
 

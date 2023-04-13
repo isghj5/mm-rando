@@ -29,8 +29,21 @@ s8 BombersNotebook_Grant(GlobalContext* ctxt) {
     u8 notebookEntryIndex = msgCtx->unk120B2[msgCtx->unk120B1];
     u16 giIndex = baseGiIndex + notebookEntryIndex;
     u16* sBombersNotebookEventMessages = (u16*)0x801C6AB8;
-    if (sBombersNotebookEventMessages[notebookEntryIndex] != 0 && !MMR_GetGiFlag(giIndex)) {
-        MMR_ProcessItem(ctxt, giIndex);
+    u16 textId = sBombersNotebookEventMessages[notebookEntryIndex];
+    if (textId != 0 && !MMR_GetGiFlag(giIndex)) {
+        if (MMR_GetGiEntry(giIndex)->message == 0) { // if this entry is not randomized
+            giIndex = MMR_GetNewGiIndex(ctxt, NULL, giIndex, true);
+            GetItemEntry* entry = MMR_GetGiEntry(giIndex);
+            *MMR_GetItemEntryContext = *entry;
+            z2_GiveItem(ctxt, entry->item);
+            if (gSaveContext.perm.inv.questStatus.bombersNotebook) {
+                z2_Message_ContinueTextbox(ctxt, textId);
+                z2_PlaySfx(0x4855); // NA_SE_SY_SCHEDULE_WRITE
+                return 1;
+            }
+            return -1;
+        }
+        MMR_ProcessItem(ctxt, giIndex, true);
         z2_PlaySfx(0x4855); // NA_SE_SY_SCHEDULE_WRITE
         return 1;
     }

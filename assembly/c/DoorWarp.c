@@ -6,7 +6,7 @@ void DoorWarp_GiveItem(ActorDoorWarp1* actor, GlobalContext* ctxt) {
     actor->warpTimer--;
     if (actor->warpTimer == 0) {
         if (!MISC_CONFIG.internal.vanillaLayout && !MMR_GetGiFlag(0x77)) {
-            MMR_ProcessItem(ctxt, 0x77);
+            MMR_ProcessItem(ctxt, 0x77, false);
         }
 
         u8 count = 0;
@@ -41,7 +41,7 @@ void DoorWarp_GiveItem(ActorDoorWarp1* actor, GlobalContext* ctxt) {
 
 void DoorWarp_GiveItem2(ActorDoorWarp1* actor, GlobalContext* ctxt) {
     if (ctxt->interfaceCtx.restrictionFlags[4] && actor->warpTimer2 == 0x90 && !MISC_CONFIG.internal.vanillaLayout && !MMR_GetGiFlag(0x77)) {
-        MMR_ProcessItem(ctxt, 0x77);
+        MMR_ProcessItem(ctxt, 0x77, false);
     }
 }
 

@@ -281,11 +281,15 @@ static u16 itemQueue[ITEM_QUEUE_LENGTH] = { 0, 0, 0, 0 };
 static s16 forceProcessIndex = -1;
 static u16 lastProcessedGiIndex = 0;
 
-void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex) {
+void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex, bool continueTextbox) {
     giIndex = MMR_GetNewGiIndex(ctxt, NULL, giIndex, true);
     GetItemEntry* entry = MMR_GetGiEntry(giIndex);
     *MMR_GetItemEntryContext = *entry;
-    z2_ShowMessage(ctxt, entry->message, 0);
+    if (continueTextbox) {
+        z2_Message_ContinueTextbox(ctxt, entry->message);
+    } else {
+        z2_ShowMessage(ctxt, entry->message, NULL);
+    }
     u8 soundType = entry->type & 0x0F;
     u16 fanfare = gFanfares[soundType];
     if (soundType < 2) {
@@ -321,7 +325,7 @@ void MMR_ProcessItemQueue(GlobalContext* ctxt) {
     if (giIndex) {
         u8 messageState = z2_GetMessageState(&ctxt->msgCtx);
         if (!messageState) {
-            MMR_ProcessItem(ctxt, giIndex);
+            MMR_ProcessItem(ctxt, giIndex, false);
             lastProcessedGiIndex = giIndex;
         } else if (messageState == 0x02 && giIndex == lastProcessedGiIndex) {
             // Closing

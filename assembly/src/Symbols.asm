@@ -135,6 +135,7 @@
 .definelabel z2_MessageShouldAdvance, 0x80147624
 .definelabel z2_MessageClose, 0x801477B4
 .definelabel z2_ShowMessage, 0x801518B0
+.definelabel z2_Message_ContinueTextbox, 0x80151938
 .definelabel z2_GetMessageState, 0x80152498
 .definelabel z2_801660B8, 0x801660B8
 .definelabel z2_load_scene, 0x801693D4
