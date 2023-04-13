@@ -85,7 +85,32 @@ namespace MMR.Randomizer.Utils
             return false;
         }
 
-        public static bool IsHinted(GameplaySettings settings, Item item, Item location)
+        public static bool IsItemHinted(Item item, GameplaySettings settings)
+        {
+            if (settings.UpdateNPCText)
+            {
+                var npcTextHintedItems = new List<Item>
+                {
+                    Item.CollectibleStrayFairyClockTown, // Hinted by the Town Fairy Fountain
+                    Item.SongOath, // Hinted by the Giants
+                    Item.ItemPowderKeg, // Hinted by the Bomb Shop Goron
+                    Item.ItemBottleGoronRace, // Hinted by the Smithy
+                    Item.ItemBottleBeavers, // Hinted by Evan
+                    Item.MaskGaro, // Hinted by the Road to Ikana ghost
+                    Item.SongTime, // Hinted by the Scarecrow
+                };
+                npcTextHintedItems.AddRange(BossRemains()); // Hinted by Tatl and Tael
+
+                if (npcTextHintedItems.Contains(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool IsLocationHinted(Item location, GameplaySettings settings)
         {
             if (settings.UpdateNPCText)
             {
@@ -102,19 +127,7 @@ namespace MMR.Randomizer.Utils
                     Item.HeartPieceKnuckle, // Hinted by the grave
                 };
 
-                var npcTextHintedItems = new List<Item>
-                {
-                    Item.CollectibleStrayFairyClockTown, // Hinted by the Town Fairy Fountain
-                    Item.SongOath, // Hinted by the Giants
-                    Item.ItemPowderKeg, // Hinted by the Bomb Shop Goron
-                    Item.ItemBottleGoronRace, // Hinted by the Smithy
-                    Item.ItemBottleBeavers, // Hinted by Evan
-                    Item.MaskGaro, // Hinted by the Road to Ikana ghost
-                    Item.SongTime, // Hinted by the Scarecrow
-                };
-                npcTextHintedItems.AddRange(BossRemains()); // Hinted by Tatl and Tael
-
-                if (npcTextHintedItems.Contains(item) || npcTextHintedLocations.Contains(location))
+                if (npcTextHintedLocations.Contains(location))
                 {
                     return true;
                 }
@@ -336,7 +349,7 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult, bool anythingCanBeRequired = false)
         {
-            return (anythingCanBeRequired || (CanBeRequired(item) && !IsHinted(randomizedResult.Settings, item, locationForImportance))) && randomizedResult.LocationsRequiredForMoonAccess?.Contains(locationForImportance) == true;
+            return (anythingCanBeRequired || (CanBeRequired(item) && !IsItemHinted(item, randomizedResult.Settings) && !IsLocationHinted(locationForImportance, randomizedResult.Settings))) && randomizedResult.LocationsRequiredForMoonAccess?.Contains(locationForImportance) == true;
         }
 
         public static bool IsImportant(Item item, Item locationForImportance, RandomizedResult randomizedResult)

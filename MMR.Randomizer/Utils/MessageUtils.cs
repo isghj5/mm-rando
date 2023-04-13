@@ -29,7 +29,6 @@ namespace MMR.Randomizer.Utils
 
             var random = new Random(randomizedResult.Seed);
 
-            var randomizedItems = new List<ItemObject>();
             var hintableItems = new List<ItemObject>();
             var itemsInRegions = new Dictionary<Region, List<(ItemObject io, Item locationForImportance)>>();
             foreach (var io in randomizedResult.ItemList)
@@ -64,11 +63,6 @@ namespace MMR.Randomizer.Utils
                 if (ItemUtils.IsRegionRestricted(randomizedResult.Settings, item.Item))
                 {
                     continue;
-                }
-
-                if (!randomizedItems.Contains(item))
-                {
-                    randomizedItems.Add(item);
                 }
 
                 if (hintStyle == GossipHintStyle.Competitive)
@@ -109,14 +103,17 @@ namespace MMR.Randomizer.Utils
 
                         if (competitiveHintInfo.Condition != null && !competitiveHintInfo.Condition(randomizedResult.Settings))
                         {
-                            randomizedItems.Remove(item);
                             continue;
                         }
                     }
 
+                    if (ItemUtils.IsLocationHinted(item.NewLocation.Value, randomizedResult.Settings))
+                    {
+                        continue;
+                    }
+
                     if (ItemUtils.IsLocationJunk(item.NewLocation.Value, randomizedResult.Settings))
                     {
-                        randomizedItems.Remove(item);
                         continue;
                     }
                 }
@@ -150,9 +147,9 @@ namespace MMR.Randomizer.Utils
                                         .ToList();
                 var combinedItems = unusedItems
                     .SelectMany(io => ItemUtils.ItemCombinableHints.GetValueOrDefault(io.NewLocation.Value).locations ?? Enumerable.Empty<Item>())
-                    .Where(item => randomizedItems.Any(io => io.NewLocation == item))
-                    .Select(item => randomizedItems.Single(io => io.NewLocation == item))
-                    .Where(io => !unusedItems.Contains(io) && hintableItems.Contains(io))
+                    .Where(item => hintableItems.Any(io => io.NewLocation == item))
+                    .Select(item => hintableItems.Single(io => io.NewLocation == item))
+                    .Where(io => !unusedItems.Contains(io))
                     ;
                 itemsToCombineWith.AddRange(combinedItems);
 
