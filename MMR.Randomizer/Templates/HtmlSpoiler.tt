@@ -61,6 +61,14 @@
 <br/>
 <br/>
 <label><b>Spoiler Log State: </b></label><input id="spoilerLogState" type="text"/><br/>
+<# if (spoiler.BlitzRemains.Any()) { 
+#>
+<h2>Starting Remains</h2>
+<#         foreach (var remains in spoiler.BlitzRemains) {
+#>
+<div><#= remains.Name() #></div>
+<# } #>
+<# } #>
 <# if (spoiler.DungeonEntrances.Any()) { 
 #>
 <h2>Dungeon Entrance Replacements</h2>

@@ -334,9 +334,92 @@ namespace MMR.Randomizer.Utils
             }
         }
 
+        private static List<Item> BlitzJunkLocations;
+
+        public static ReadOnlyCollection<Item> PrepareBlitz(GameplaySettings settings, ItemList itemList, Random random)
+        {
+            BlitzJunkLocations = new List<Item>();
+            var remainsAmountPool = new List<int>();
+            if (settings.BossRemainsMode.HasFlag(BossRemainsMode.Blitz1))
+            {
+                remainsAmountPool.Add(1);
+            }
+            if (settings.BossRemainsMode.HasFlag(BossRemainsMode.Blitz2))
+            {
+                remainsAmountPool.Add(2);
+            }
+            if (settings.BossRemainsMode.HasFlag(BossRemainsMode.Blitz3))
+            {
+                remainsAmountPool.Add(3);
+            }
+            if (settings.BossRemainsMode.HasFlag(BossRemainsMode.Blitz4))
+            {
+                remainsAmountPool.Add(4);
+            }
+            if (remainsAmountPool.Count == 0)
+            {
+                return new List<Item>().AsReadOnly();
+            }
+            var remainsAmount = remainsAmountPool.Random(random, (amount) => 1.0f / amount);
+            var result = BossRemains().ToList().Random(remainsAmount, random).ToList().AsReadOnly();
+            var debugItemObjects = new List<ItemObject>();
+            var remainsInLairs = new Dictionary<Item, Item>
+            {
+                { Item.RemainsOdolwa, Item.AreaOdolwasLair },
+                { Item.RemainsGoht, Item.AreaGohtsLair },
+                { Item.RemainsGyorg, Item.AreaGyorgsLair },
+                { Item.RemainsTwinmold, Item.AreaTwinmoldsLair },
+            };
+            var lairsInDungeons = new Dictionary<Item, Item[]>
+            {
+                { Item.AreaOdolwasLair, new Item[] { Item.AreaWoodFallTempleAccess } },
+                { Item.AreaGohtsLair, new Item[] { Item.AreaSnowheadTempleAccess } },
+                { Item.AreaGyorgsLair, new Item[] { Item.AreaGreatBayTempleAccess } },
+                { Item.AreaTwinmoldsLair, new Item[] { Item.AreaInvertedStoneTowerTempleAccess, Item.AreaStoneTowerTempleAccess } },
+            };
+            foreach (var bossRemain in result)
+            {
+                var lairAccess = remainsInLairs[bossRemain];
+                var newLairAccess = itemList[lairAccess].NewLocation ?? lairAccess;
+                var dungeonAccesses = lairsInDungeons[newLairAccess];
+                foreach (var dungeonAccess in dungeonAccesses)
+                {
+                    var newDungeonAccess = itemList[dungeonAccess].NewLocation ?? dungeonAccess;
+                    BlitzJunkLocations.Add(newDungeonAccess);
+                    bool updated;
+                    do
+                    {
+                        updated = false;
+                        foreach (var io in itemList.Where(io => !BlitzJunkLocations.Contains(io.Item)))
+                        {
+                            var dependsOnItems = io.DependsOnItems
+                                .Where(item => item.IsFake())
+                                .Select(item => itemList[item].NewLocation ?? item);
+                            var conditionals = io.Conditionals
+                                .Select(c => c.Where(item => item.IsFake()).Select(item => itemList[item].NewLocation ?? item));
+                            if (dependsOnItems.Intersect(BlitzJunkLocations).Any() || (conditionals.Any() && conditionals.All(c => c.Intersect(BlitzJunkLocations).Any())))
+                            {
+                                BlitzJunkLocations.Add(io.Item);
+                                debugItemObjects.Add(io);
+                                updated = true;
+                            }
+                            else
+                            {
+                                io.Conditionals.RemoveAll(c => c.Where(item => item.IsFake()).Select(item => itemList[item].NewLocation ?? item).Intersect(BlitzJunkLocations).Any());
+                            }
+                        }
+                    } while (updated);
+                }
+            }
+            BlitzJunkLocations.RemoveAll(location => !location.Region(itemList).HasValue || location.Entrance() != null);
+            return result;
+        }
+
         public static bool IsLocationJunk(Item location, GameplaySettings settings)
         {
-            return settings.CustomJunkLocations.Contains(location) || (HintedJunkLocations?.Contains(location) ?? false);
+            return settings.CustomJunkLocations.Contains(location)
+                || (HintedJunkLocations?.Contains(location) ?? false)
+                || BlitzJunkLocations.Contains(location);
         }
 
         public static bool CanBeRequired(Item item)

@@ -1975,16 +1975,11 @@
       "Id": "SongLullaby",
       "RequiredItems": [
         "AreaNorthAccess",
-        "MaskGoron"
+        "MaskGoron",
+        "ItemOcarina",
+        "Any Goron Lullaby"
       ],
-      "ConditionalItems": [
-        [
-          "Play Goron Lullaby"
-        ],
-        [
-          "Play Goron Lullaby Intro"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -58364,12 +58359,16 @@
       "IsTrick": false
     },
     {
-      "Id": "Play Goron Lullaby Intro",
-      "RequiredItems": [
-        "ItemOcarina",
-        "SongLullabyIntro"
+      "Id": "Any Goron Lullaby",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "SongLullabyIntro"
+        ],
+        [
+          "SongLullaby"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",

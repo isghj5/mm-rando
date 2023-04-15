@@ -443,11 +443,8 @@ namespace MMR.Randomizer
         {
             foreach (var itemObject in ItemList)
             {
-                if (_settings.CustomStartingItemList != null)
-                {
-                    itemObject.DependsOnItems?.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
-                    itemObject.Conditionals?.ForEach(c => c.RemoveAll(item => _settings.CustomStartingItemList.Contains(item)));
-                }
+                itemObject.DependsOnItems?.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
+                itemObject.Conditionals?.ForEach(c => c.RemoveAll(item => _settings.CustomStartingItemList.Contains(item)));
 
                 if (itemObject.Conditionals != null)
                 {
@@ -969,14 +966,18 @@ namespace MMR.Randomizer
             {
                 ItemList = LogicUtils.PopulateItemListWithoutLogic();
             }
+        }
 
+        private void PrepareAdditionalItemData()
+        {
             RandomizePrices();
 
             UpdateLogicForSettings();
 
             ItemUtils.PrepareHintedJunkLocations(_settings, Random);
+            _randomized.BlitzRemains = ItemUtils.PrepareBlitz(_settings, ItemList, Random);
             ItemUtils.PrepareJunkItems(ItemList);
-            if (_settings.CustomJunkLocations.Count > ItemUtils.JunkItems.Count)
+            if (_settings.CustomJunkLocations.Count > ItemUtils.JunkItems.Count) // TODO also account for HintedJunkLocations and BlitzJunkLocations
             {
                 throw new Exception($"Too many Enforced Junk Locations. Select up to {ItemUtils.JunkItems.Count}.");
             }
@@ -1352,6 +1353,11 @@ namespace MMR.Randomizer
                 return true;
             }
 
+            if (_randomized.BlitzRemains.Contains(currentItem))
+            {
+                return true;
+            }
+
             if (ItemUtils.IsStartingLocation(target) && ForbiddenStartingItems.Contains(currentItem))
             {
                 Debug.WriteLine($"{currentItem} cannot be a starting item.");
@@ -1634,6 +1640,11 @@ namespace MMR.Randomizer
                 ItemList[item].ItemOverride = Item.RecoveryHeart;
             }
 
+            foreach (var item in _randomized.BlitzRemains)
+            {
+                ItemList[item].ItemOverride = Item.RecoveryHeart;
+            }
+
             if (_settings.SmallKeyMode.HasFlag(SmallKeyMode.DoorsOpen))
             {
                 foreach (var item in ItemUtils.SmallKeys())
@@ -1844,6 +1855,7 @@ namespace MMR.Randomizer
         private void RemoveFreeRequirements()
         {
             var freeItems = _settings.CustomStartingItemList
+                .Union(_randomized.BlitzRemains)
                 .Union(ItemList.Where(io => io.NewLocation.HasValue && ItemUtils.IsStartingLocation(io.NewLocation.Value)).Select(io => io.Item))
                 .ToList();
 
@@ -2013,6 +2025,7 @@ namespace MMR.Randomizer
             }
 
             itemList.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
+            itemList.RemoveAll(item => _randomized.BlitzRemains.Contains(item));
 
             if (!_settings.AddSongs)
             {
@@ -2423,21 +2436,21 @@ namespace MMR.Randomizer
                 return null;
             }
 
-            void PlaceRestricted<TMode>(IEnumerable<Item> items, TMode mode) where TMode : struct, Enum
+            void PlaceRestricted<TMode>(IEnumerable<Item> items, TMode mode, bool placeJunk = false) where TMode : struct, Enum
             {
                 var restrictions = GetRestriction(mode);
                 if (restrictions != null)
                 {
                     foreach (var item in items)
                     {
-                        PlaceItem(item, itemPool, restrictions);
+                        PlaceItem(item, itemPool, restrictions, placeJunk);
                     }
                 }
             }
 
             if (_settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
             {
-                PlaceRestricted(ItemUtils.BossRemains(), _settings.BossRemainsMode);
+                PlaceRestricted(ItemUtils.BossRemains(), _settings.BossRemainsMode, true);
             }
 
             if (_settings.BossKeyMode.HasFlag(BossKeyMode.GreatFairyRewards))
@@ -2534,10 +2547,11 @@ namespace MMR.Randomizer
                     StartingItemMode.AllowTemporaryItems => ItemUtils.StartingItems(),
                     _ => Enumerable.Empty<Item>(),
                 })
-                .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item))
+                .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item) && !_randomized.BlitzRemains.Contains(item))
                 .Cast<Item?>()
                 .ToList();
             var itemHearts = _settings.CustomStartingItemList
+                .Union(_randomized.BlitzRemains)
                 .Where(item => !ItemList[item].NewLocation.HasValue && (_settings.AddSongs || !item.IsSong()))
                 .Cast<Item?>()
                 .ToList();
@@ -2815,6 +2829,8 @@ namespace MMR.Randomizer
                     EntranceShuffle();
                 }
 
+                PrepareAdditionalItemData();
+
                 _randomized.Logic = ItemList.Select(io => new ItemLogic(io)).ToList();
 
                 progressReporter.ReportProgress(30, "Shuffling items...");
@@ -2826,6 +2842,7 @@ namespace MMR.Randomizer
                 AddIceTraps(_settings.IceTraps, _settings.BombTraps, _settings.IceTrapAppearance);
                 
                 var freeItemIds = _settings.CustomStartingItemList
+                    .Union(_randomized.BlitzRemains)
                     .Cast<int>()
                     .Union(ItemList.Where(io => io.NewLocation.HasValue && ItemUtils.IsStartingLocation(io.NewLocation.Value)).Select(io => io.ID))
                     .ToList();

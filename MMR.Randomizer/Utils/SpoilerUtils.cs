@@ -78,6 +78,7 @@ namespace MMR.Randomizer.Utils
                 DungeonEntrances = dungeonEntrances,
                 ItemList = itemList.ToList(),
                 Logic = randomized.Logic,
+                BlitzRemains = randomized.BlitzRemains,
                 GossipHints = randomized.GossipQuotes?.ToDictionary(me => (GossipQuote) me.Id, (me) =>
                 {
                     var message = me.Message.Substring(1);
@@ -154,6 +155,16 @@ namespace MMR.Randomizer.Utils
             log.AppendLine($"{"Settings:",-17} {spoiler.SettingsString}");
             log.AppendLine($"{"Seed:",-17} {spoiler.Seed}");
             log.AppendLine();
+
+            if (spoiler.BlitzRemains.Any())
+            {
+                log.AppendLine(" Starting Remains");
+                foreach (var remain in spoiler.BlitzRemains)
+                {
+                    log.AppendLine(remain.Name());
+                }
+                log.AppendLine("");
+            }
 
             if (spoiler.DungeonEntrances.Any())
             {

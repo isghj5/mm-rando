@@ -72,7 +72,8 @@ namespace MMR.Randomizer.Utils
                     var itemRegion = locationForImportance.Region(randomizedResult.ItemList);
                     if (itemRegion.HasValue
                         && !preventRegions.Contains(itemRegion.Value)
-                        && !ItemUtils.IsLocationJunk(item.NewLocation.Value, randomizedResult.Settings))
+                        && !ItemUtils.IsLocationJunk(item.NewLocation.Value, randomizedResult.Settings)
+                        && !ItemUtils.IsLocationJunk(locationForImportance, randomizedResult.Settings))
                     {
                         if (!itemsInRegions.ContainsKey(itemRegion.Value))
                         {

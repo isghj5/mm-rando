@@ -28,5 +28,17 @@ namespace MMR.Randomizer.Models
         [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinOverworld)]
         [Description("Randomization algorithm will place any randomized Boss Remains into an overworld location.")]
         KeepWithinOverworld = 1 << 4,
+
+        [Description("Start with 1 random boss remains. Locations in and after the temple with that boss will be forced to be junk.")]
+        Blitz1 = 1 << 5,
+
+        [Description("Start with 2 random boss remains. Locations in and after the temples with those bosses will be forced to be junk.")]
+        Blitz2 = 1 << 6,
+
+        [Description("Start with 3 random boss remains. Locations in and after the temples with those bosses will be forced to be junk.")]
+        Blitz3 = 1 << 7,
+
+        [Description("Start with all boss remains. Locations in and after temples will be forced to be junk.")]
+        Blitz4 = 1 << 8,
     }
 }
