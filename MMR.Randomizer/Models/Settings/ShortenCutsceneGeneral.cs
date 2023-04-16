@@ -47,6 +47,10 @@ namespace MMR.Randomizer.Models.Settings
         [Description("All chests will open using the short animation.")]
         ShortChestOpening = 1 << 10,
 
+        [Description("Shorten various aspects of recovering the Sun Mask.")]
+        [HackContent(nameof(Resources.mods.shorten_cutscene_sun_mask))]
+        SunMask = 1 << 11,
+
         [Description("Various cutscenes are skipped or otherwise shortened.")]
         [HackContent(nameof(Resources.mods.short_cutscenes))]
         EverythingElse = 1 << 31,
