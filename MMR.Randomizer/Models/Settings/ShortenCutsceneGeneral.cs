@@ -59,6 +59,10 @@ namespace MMR.Randomizer.Models.Settings
         [HackContent(nameof(Resources.mods.shorten_cutscene_tingle))]
         JimRunning = 1 << 13,
 
+        [Description("You don't have to watch Kotake fly into the woods, and don't have to watch her fly away after giving you an item.")]
+        [HackContent(nameof(Resources.mods.shorten_cutscene_kotake))]
+        Kotake = 1 << 14,
+
         [Description("Various cutscenes are skipped or otherwise shortened.")]
         [HackContent(nameof(Resources.mods.short_cutscenes))]
         EverythingElse = 1 << 31,

@@ -1073,6 +1073,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] shorten_cutscene_kotake {
+            get {
+                object obj = ResourceManager.GetObject("shorten_cutscene_kotake", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] shorten_cutscene_majora_intro {
             get {
                 object obj = ResourceManager.GetObject("shorten_cutscene_majora_intro", resourceCulture);

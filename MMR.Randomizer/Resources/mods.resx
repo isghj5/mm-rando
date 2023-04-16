@@ -418,6 +418,9 @@
   <data name="shorten_cutscene_jim_running" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\shorten-cutscene-jim-running.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="shorten_cutscene_kotake" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-kotake.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="shorten_cutscene_majora_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\shorten-cutscene-majora-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
