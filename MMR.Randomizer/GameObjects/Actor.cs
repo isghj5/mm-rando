@@ -4628,7 +4628,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(600)]
         [ObjectListIndex(0x110)]
-        [CheckRestricted(Item.ItemNotebook)]
+        [CheckRestricted(Item.ItemNotebook,
+            Item.TradeItemMoonTear,
+            Item.CollectableTerminaFieldTelescopeGuay1,
+            Item.HeartPieceTerminaBusinessScrub,
+            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2
+            )]
         [GroundVariants(0x0)]
         [UnkillableAllVariants]
         BomberHideoutGuard = 0x281, // En_Bombers2
