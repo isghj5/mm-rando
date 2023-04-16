@@ -1794,12 +1794,12 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GoGoron)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.RedBubble)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.En_Stream)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DragonFly, GameObjects.Actor.WarpDoor)) continue;
-                if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.DeathArmos)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.DeathArmos)) continue;
                 if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.Keese)) continue;
                 if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.Tektite, GameObjects.Actor.BetaVampireGirl)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.WarpDoor)) continue;
