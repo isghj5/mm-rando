@@ -51,6 +51,10 @@ namespace MMR.Randomizer.Models.Settings
         [HackContent(nameof(Resources.mods.shorten_cutscene_sun_mask))]
         SunMask = 1 << 11,
 
+        [Description("You don't have to watch Tingle fall, and his text is shortened.")]
+        [HackContent(nameof(Resources.mods.shorten_cutscene_tingle))]
+        Tingle = 1 << 12,
+
         [Description("Various cutscenes are skipped or otherwise shortened.")]
         [HackContent(nameof(Resources.mods.short_cutscenes))]
         EverythingElse = 1 << 31,
