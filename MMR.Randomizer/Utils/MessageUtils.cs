@@ -119,7 +119,10 @@ namespace MMR.Randomizer.Utils
                     }
                 }
 
-                hintableItems.Add(item);
+                if (!hintableItems.Contains(item))
+                {
+                    hintableItems.Add(item);
+                }
             }
 
             var unusedItems = hintableItems.ToList();
