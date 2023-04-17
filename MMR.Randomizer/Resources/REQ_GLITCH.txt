@@ -1,5 +1,5 @@
 {
-  "Version": 12,
+  "Version": 15,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -1770,7 +1770,6 @@
       "RequiredItems": [
         "TradeItemPendant",
         "MaskKafei",
-        "TradeItemKafeiLetter",
         "AreaEastAccess",
         "Night Inn Access"
       ],
@@ -2830,11 +2829,9 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaWoodfallNew",
+      "Id": "AreaOdolwasLair",
       "RequiredItems": [
-        "AreaWoodFallTempleAccess",
-        "MaskDeku",
-        "OtherArrow"
+        "Access Odolwa"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2843,14 +2840,9 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaSnowheadNew",
+      "Id": "AreaGohtsLair",
       "RequiredItems": [
-        "AreaSnowheadTempleAccess",
-        "MaskGoron",
-        "OtherExplosive",
-        "OtherArrow",
-        "ItemFireArrow",
-        "Magic Meter"
+        "Access Goht"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2859,15 +2851,9 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaGreatBayNew",
+      "Id": "AreaGyorgsLair",
       "RequiredItems": [
-        "AreaGreatBayTempleAccess",
-        "MaskZora",
-        "ItemHookshot",
-        "OtherArrow",
-        "ItemIceArrow",
-        "ItemFireArrow",
-        "Magic Meter"
+        "Access Gyorg"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2876,16 +2862,9 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaLANew",
+      "Id": "AreaTwinmoldsLair",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
-        "MaskGoron",
-        "MaskZora",
-        "Play Elegy of Emptiness",
-        "UpgradeMirrorShield",
-        "OtherExplosive",
-        "OtherArrow",
-        "MaskDeku"
+        "Access Twinmold"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2894,18 +2873,42 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaInvertedStoneTowerNew",
+      "Id": "OtherKillOdolwa",
       "RequiredItems": [
-        "AreaInvertedStoneTowerTempleAccess",
-        "OtherExplosive",
-        "OtherArrow",
-        "ItemLightArrow",
-        "MaskDeku",
-        "MaskGoron",
-        "MaskZora",
-        "Play Elegy of Emptiness",
-        "ItemHookshot",
-        "Magic Meter"
+        "Kill Odolwa"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherKillGoht",
+      "RequiredItems": [
+        "Kill Goht"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherKillGyorg",
+      "RequiredItems": [
+        "Kill Gyorg"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherKillTwinmold",
+      "RequiredItems": [
+        "Kill Twinmold"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -55519,6 +55522,820 @@
       "IsTrick": false
     },
     {
+      "Id": "SongLullabyIntro",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "SongLullabyIntroInMountainVillage"
+        ],
+        [
+          "SongLullabyIntroInTwinIslands"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetBombers",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetBombersInNCT"
+        ],
+        [
+          "NotebookMeetBombersInECT"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnju",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetAnjuInInn"
+        ],
+        [
+          "NotebookMeetAnjuInLaundryPool"
+        ],
+        [
+          "NotebookMeetAnjuInRanch"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetKafei",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetKafeiInLaundryPool"
+        ],
+        [
+          "NotebookMeetKafeiInIkanaCanyon"
+        ],
+        [
+          "NotebookMeetKafeiInInn"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetCuriosityShopMan",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetCuriosityShopManInWCT"
+        ],
+        [
+          "NotebookMeetCuriosityShopManInLaundryPool"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetOldLady",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetOldLadyInNCT"
+        ],
+        [
+          "NotebookMeetOldLadyInWCT"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetRomani",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetCremia",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetMayorDotour",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2, Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetMadameAroma",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Night1, Day2, Night2",
+      "TimeSetup": "Day1, Night1, Day2, Night2",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetToto",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Night1, Day2, Night2",
+      "TimeSetup": "Day1, Night1, Day2, Night2",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGorman",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetGormanInECT"
+        ],
+        [
+          "NotebookMeetGormanInInn"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostman",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetPostmanInWCT"
+        ],
+        [
+          "NotebookMeetPostmanInSCT"
+        ],
+        [
+          "NotebookMeetPostmanInNCT"
+        ],
+        [
+          "NotebookMeetPostmanInECT"
+        ],
+        [
+          "NotebookMeetPostmanInInn"
+        ],
+        [
+          "NotebookMeetPostmanInLaundryPool"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetRosaSisters",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetRosaSistersInWCT"
+        ],
+        [
+          "NotebookMeetRosaSistersInInn"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetToiletHand",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2, Night3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjusGrandmother",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetAnjusGrandmotherInInn"
+        ],
+        [
+          "NotebookMeetAnjusGrandmotherInRanch"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetKamaro",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGrog",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGormanBrothers",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2, Day3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetShiro",
+      "RequiredItems": [
+        "ItemLens",
+        "Magic Meter",
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [
+        [
+          "Play Epona's Song"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Bomb Hovering"
+        ],
+        [
+          "Index Warp"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGuruGuru",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetGuruGuruInInn"
+        ],
+        [
+          "NotebookMeetGuruGuruInLaundryPool"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookInnReservation",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "Night1",
+      "TimeAvailable": "Day1",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseAnjuMeeting",
+      "RequiredItems": [
+        "MaskKafei"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Night1",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseAnjuDelivery",
+      "RequiredItems": [
+        "MaskKafei",
+        "Night Inn Access"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDepositLetterToKafei",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookDepositLetterToKafeiInSCT"
+        ],
+        [
+          "NotebookDepositLetterToKafeiInNCT"
+        ],
+        [
+          "NotebookDepositLetterToKafeiInECT"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseKafei",
+      "RequiredItems": [
+        "TradeItemKafeiLetter"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2, Night2",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDeliverPendant",
+      "RequiredItems": [
+        "MaskKafei",
+        "Night Inn Access",
+        "TradeItemPendant"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2, Night2, Day3, Night3",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookEscapeFromSakonSHideout",
+      "RequiredItems": [
+        "AreaEastAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseRomani",
+      "RequiredItems": [
+        "OtherEpona"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookSaveTheCows",
+      "RequiredItems": [
+        "OtherEpona"
+      ],
+      "ConditionalItems": [
+        [
+          "Bowless Aliens"
+        ],
+        [
+          "OtherArrow"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookProtectMilkDelivery",
+      "RequiredItems": [
+        "OtherEpona"
+      ],
+      "ConditionalItems": [
+        [
+          "OtherArrow"
+        ],
+        [
+          "Bowless Aliens"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night2",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookCuriosityShopManSGift",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "TradeItemKafeiLetter"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Out of Bounds"
+        ],
+        [
+          "Zora Clips",
+          "Out of Bounds"
+        ],
+        [
+          "Bomb Hovering",
+          "Out of Bounds"
+        ],
+        [
+          "Deku Recoil",
+          "Any Bomb Bag"
+        ],
+        [
+          "Deku Recoil",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseCuriosityShopMan",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "TradeItemKafeiLetter"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Out of Bounds"
+        ],
+        [
+          "Zora Clips",
+          "Out of Bounds"
+        ],
+        [
+          "Bomb Hovering",
+          "Out of Bounds"
+        ],
+        [
+          "Deku Recoil",
+          "Any Bomb Bag"
+        ],
+        [
+          "Deku Recoil",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDeliverLetterToMama",
+      "RequiredItems": [
+        "TradeItemMamaLetter",
+        "MaskKafei"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookLearnBombersCode",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookLearnBombersCodeInNCT"
+        ],
+        [
+          "NotebookLearnBombersCodeInECT"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDotoursThanks",
+      "RequiredItems": [
+        "MaskCouple"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2, Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookRosaSistersThanks",
+      "RequiredItems": [
+        "MaskKamaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2",
+      "TimeSetup": "Day1, Night1, Day2, Night2",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookToiletHandSThanks",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "TradeItemLandDeed"
+        ],
+        [
+          "TradeItemSwampDeed"
+        ],
+        [
+          "TradeItemMountainDeed"
+        ],
+        [
+          "TradeItemOceanDeed"
+        ],
+        [
+          "TradeItemKafeiLetter"
+        ],
+        [
+          "TradeItemMamaLetter"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookGrandmaShortStory",
+      "RequiredItems": [
+        "MaskAllNight"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2",
+      "TimeSetup": "Day1, Night1, Day2",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookGrandmaLongStory",
+      "RequiredItems": [
+        "MaskAllNight"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2, Day3",
+      "TimeSetup": "Day1, Night1, Day2",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPostmansGame",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskBunnyHood"
+        ],
+        [
+          "Postman without Bunny Hood"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseMadameAroma",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Night1, Day2, Night2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPurchaseCuriosityShopItem",
+      "RequiredItems": [
+        "Wallet (500)"
+      ],
+      "ConditionalItems": [
+        [
+          "OtherArrow"
+        ],
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Any Sword"
+        ],
+        [
+          "MaskGoron"
+        ],
+        [
+          "MaskZora"
+        ],
+        [
+          "OtherExplosive"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookGrogsThanks",
+      "RequiredItems": [
+        "MaskBremen"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDefeatGormanBrothers",
+      "RequiredItems": [
+        "Play Epona's Song"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2, Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMovingGorman",
+      "RequiredItems": [
+        "MaskDeku",
+        "MaskGoron",
+        "MaskZora",
+        "MaskRomani"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2",
+      "TimeSetup": "Day1, Night1, Day2, Night2",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPostmansFreedom",
+      "RequiredItems": [
+        "TradeItemMamaLetter"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookUniteAnjuAndKafei",
+      "RequiredItems": [
+        "TradeItemPendant",
+        "MaskKafei",
+        "AreaEastAccess",
+        "Night Inn Access"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookSaveOldLady",
+      "RequiredItems": [
+        "TradeItemKafeiLetter",
+        "TradeItemPendant"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskGoron"
+        ],
+        [
+          "MaskZora"
+        ],
+        [
+          "Any Sword"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseKamaro",
+      "RequiredItems": [
+        "Play Song of Healing"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookSaveInvisibleSoldier",
+      "RequiredItems": [
+        "ItemLens",
+        "Magic Meter",
+        "Any Healing Potion"
+      ],
+      "ConditionalItems": [
+        [
+          "Play Epona's Song"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Bomb Hovering"
+        ],
+        [
+          "Index Warp"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookGuruGuru",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
       "Id": "ItemTingleMapTownInTown",
       "RequiredItems": [],
       "ConditionalItems": [
@@ -56189,6 +57006,454 @@
       ],
       "TimeNeeded": "None",
       "TimeAvailable": "Night1, Night2, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SongLullabyIntroInMountainVillage",
+      "RequiredItems": [
+        "AreaNorthAccess",
+        "MaskGoron"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchHotSpringWater",
+          "Play Song of Soaring"
+        ],
+        [
+          "BottleCatchHotSpringWater",
+          "Unrandomized Bottled Contents",
+          "Hot Spring Water in Mountains"
+        ],
+        [
+          "Use Fire Arrow"
+        ],
+        [
+          "Action Swap",
+          "OtherArrow",
+          "Any Shield"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SongLullabyIntroInTwinIslands",
+      "RequiredItems": [
+        "AreaNorthAccess",
+        "MaskGoron"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchHotSpringWater",
+          "Play Song of Soaring"
+        ],
+        [
+          "BottleCatchHotSpringWater",
+          "Unrandomized Bottled Contents",
+          "Hot Spring Water in Mountains"
+        ],
+        [
+          "Use Fire Arrow"
+        ],
+        [
+          "Action Swap",
+          "OtherArrow",
+          "Any Shield"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetBombersInNCT",
+      "RequiredItems": [
+        "Short Ranged Weapon",
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetBombersInECT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [
+        [
+          "Guess Bomber Code"
+        ],
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "ItemNotebook",
+          "NotebookMeetBombers",
+          "NotebookLearnBombersCode"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjuInInn",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Night1, Day2, Night2, Day3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjuInLaundryPool",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjuInRanch",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetKafeiInLaundryPool",
+      "RequiredItems": [
+        "TradeItemKafeiLetter",
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2, Night2",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetKafeiInIkanaCanyon",
+      "RequiredItems": [
+        "ItemNotebook",
+        "AreaEastAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetKafeiInInn",
+      "RequiredItems": [
+        "ItemNotebook",
+        "AreaEastAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetCuriosityShopManInWCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetCuriosityShopManInLaundryPool",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "TradeItemKafeiLetter"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Out of Bounds"
+        ],
+        [
+          "Zora Clips",
+          "Out of Bounds"
+        ],
+        [
+          "Bomb Hovering",
+          "Out of Bounds"
+        ],
+        [
+          "Deku Recoil",
+          "Any Bomb Bag"
+        ],
+        [
+          "Deku Recoil",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetOldLadyInNCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetOldLadyInWCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2, Night2, Day3, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGormanInECT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGormanInInn",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostmanInWCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostmanInSCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostmanInNCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostmanInECT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostmanInInn",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostmanInLaundryPool",
+      "RequiredItems": [
+        "TradeItemKafeiLetter",
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetRosaSistersInWCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetRosaSistersInInn",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjusGrandmotherInInn",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Night1, Day2, Night2, Day3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjusGrandmotherInRanch",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGuruGuruInInn",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGuruGuruInLaundryPool",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDepositLetterToKafeiInSCT",
+      "RequiredItems": [
+        "TradeItemKafeiLetter"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDepositLetterToKafeiInNCT",
+      "RequiredItems": [
+        "TradeItemKafeiLetter"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDepositLetterToKafeiInECT",
+      "RequiredItems": [
+        "TradeItemKafeiLetter"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookLearnBombersCodeInNCT",
+      "RequiredItems": [
+        "Short Ranged Weapon"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookLearnBombersCodeInECT",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Guess Bomber Code"
+        ],
+        [
+          "ItemNotebook",
+          "NotebookMeetBombers",
+          "NotebookLearnBombersCode"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false
     },
