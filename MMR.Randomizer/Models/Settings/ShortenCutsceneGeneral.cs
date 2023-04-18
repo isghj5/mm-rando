@@ -56,7 +56,7 @@ namespace MMR.Randomizer.Models.Settings
         Tingle = 1 << 12,
 
         [Description("You don't have to watch Jim run away after using the Bombers' code.")]
-        [HackContent(nameof(Resources.mods.shorten_cutscene_tingle))]
+        [HackContent(nameof(Resources.mods.shorten_cutscene_jim_running))]
         JimRunning = 1 << 13,
 
         [Description("You don't have to watch Kotake fly into the woods, and don't have to watch her fly away after giving you an item.")]
