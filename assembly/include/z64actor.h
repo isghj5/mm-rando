@@ -298,6 +298,8 @@ typedef struct {
 struct ActorPlayer;
 
 typedef void (*PlayerActionFunc)(struct ActorPlayer* this, struct GlobalContext* ctxt);
+typedef s32 (*PlayerFuncAC4)(struct ActorPlayer* this, struct GlobalContext* ctxt);
+typedef void (*PlayerFuncD58)(struct GlobalContext* ctxt, struct ActorPlayer* this);
 
 #define PLAYER_LIMB_BUF_SIZE 159 // TODO (ALIGN16(sizeof(PlayerAnimationFrame)) + 0xF)
 
@@ -360,7 +362,19 @@ typedef struct ActorPlayer {
     /* 0xA90 */ Actor* ocarinaCutsceneActor;
     /* 0xA94 */ UNK_TYPE1 padA94[0x11];
     /* 0xAA5 */ u8 unkAA5;
-    /* 0xAA6 */ UNK_TYPE1 padAA6[0x2A];
+    /* 0xAA6 */ u16 unk_AA6; // flags of some kind
+    /* 0xAA8 */ s16 unk_AA8;
+    /* 0xAAA */ s16 unk_AAA;
+    /* 0xAAC */ Vec3s unk_AAC;
+    /* 0xAB2 */ Vec3s unk_AB2;
+    /* 0xAB8 */ f32 unk_AB8;
+    /* 0xABC */ f32 unk_ABC;
+    /* 0xAC0 */ f32 unk_AC0;
+    /* 0xAC4 */ PlayerFuncAC4 unk_AC4;
+    /* 0xAC8 */ f32 unk_AC8;
+    /* 0xACC */ s16 unk_ACC;
+    /* 0xACE */ s8 unk_ACE;
+    /* 0xACF */ u8 putAwayCountdown; // Frames to wait before showing "Put Away" on A
     /* 0xAD0 */ f32 linearVelocity;
     /* 0xAD4 */ u16 movementAngle;
     /* 0xAD6 */ UNK_TYPE1 padAD6[0x5];
