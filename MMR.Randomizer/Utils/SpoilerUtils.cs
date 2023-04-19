@@ -28,6 +28,7 @@ namespace MMR.Randomizer.Utils
                     u.Region,
                     ItemUtils.IsRequired(u.ItemObject.Item, u.LocationForImportance, randomized),
                     ItemUtils.IsImportant(u.ItemObject.Item, u.LocationForImportance, randomized),
+                    ItemUtils.IsLocationJunk(u.LocationForImportance, randomized.Settings),
                     randomized.ImportantSongLocations?.Contains(u.LocationForImportance) == true,
                     settings.ProgressiveUpgrades,
                     randomized.ItemList
@@ -184,6 +185,10 @@ namespace MMR.Randomizer.Utils
                 log.AppendLine($" {region.Key.Name()}");
                 foreach (var item in region.OrderBy(item => item.NewLocationName))
                 {
+                    if (item.IsLocationJunked)
+                    {
+                        log.Append("- ");
+                    }
                     log.AppendLine($"{item.NewLocationName,-50} -> {item.Name}" + (item.IsImportant ? "*" : "") + (item.IsRequired ? "*" : item.IsImportantSong ? "^" : ""));
                 }
             }
