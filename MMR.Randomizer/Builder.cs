@@ -1798,13 +1798,28 @@ namespace MMR.Randomizer
                         .Id(messageId)
                         .Message(it =>
                         {
+                            var item1Cost = $"{cost1} Rupee{(cost1 != 1 ? "s" : "")}";
+                            var item2Cost = $"{cost2} Rupee{(cost2 != 1 ? "s" : "")}";
+                            var maxLineLength = 35;
+                            var maxItem1NameLength = maxLineLength - $": {item1Cost}".Length;
+                            var maxItem2NameLength = maxLineLength - $": {item2Cost}".Length;
+                            var item1Name = item1.DisplayName();
+                            var item2Name = item2.DisplayName();
+                            if (item1Name.Length > maxItem1NameLength)
+                            {
+                                item1Name = item1Name.Substring(0, maxItem1NameLength - 3) + "...";
+                            }
+                            if (item2Name.Length > maxItem2NameLength)
+                            {
+                                item2Name = item2Name.Substring(0, maxItem2NameLength - 3) + "...";
+                            }
                             switch (messageShop.MessageShopStyle)
                             {
                                 case MessageShopStyle.Tingle:
                                     it.StartGreenText()
                                     .ThreeChoices()
-                                    .RuntimeItemName(item1.DisplayName(), item1.NewLocation.Value).Text(": ").Red($"{cost1} Rupees").NewLine()
-                                    .RuntimeItemName(item2.DisplayName(), item2.NewLocation.Value).Text(": ").Red($"{cost2} Rupees").NewLine()
+                                    .RuntimeItemName(item1Name, item1.NewLocation.Value).Text(": ").Red(item1Cost).NewLine()
+                                    .RuntimeItemName(item2Name, item2.NewLocation.Value).Text(": ").Red(item2Cost).NewLine()
                                     .Text("No Thanks")
                                     .EndFinalTextBox();
                                     break;
@@ -1813,8 +1828,8 @@ namespace MMR.Randomizer
                                     .EndTextBox()
                                     .StartGreenText()
                                     .ThreeChoices()
-                                    .RuntimeItemName(item1.DisplayName(), item1.NewLocation.Value).Text(": ").Pink($"{cost1} Rupees").NewLine()
-                                    .RuntimeItemName(item2.DisplayName(), item2.NewLocation.Value).Text(": ").Pink($"{cost2} Rupees").NewLine()
+                                    .RuntimeItemName(item1Name, item1.NewLocation.Value).Text(": ").Pink(item1Cost).NewLine()
+                                    .RuntimeItemName(item2Name, item2.NewLocation.Value).Text(": ").Pink(item2Cost).NewLine()
                                     .Text("Nothing")
                                     .EndFinalTextBox();
                                     break;
