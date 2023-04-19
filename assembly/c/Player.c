@@ -268,3 +268,10 @@ void Player_CheckHeldItem(ActorPlayer* this, GlobalContext* ctxt, u16 curButtons
         }
     }
 }
+
+void Player_UseExplosiveAmmo(s16 item, s16 ammoChange, GlobalContext* ctxt) {
+    if (item == ITEM_POWDER_KEG && GET_PLAYER(ctxt)->base.init) {
+        return;
+    }
+    z2_Inventory_ChangeAmmo(item, ammoChange);
+}

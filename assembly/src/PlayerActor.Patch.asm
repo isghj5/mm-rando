@@ -255,3 +255,12 @@
     or      a0, s0, r0
     b       0x808302BC
     lw      ra, 0x0034 (sp)
+
+;==================================================================================================
+; Prevent Keg ammo being depleted when going through a loading zone while holding a keg
+;==================================================================================================
+
+; Replaces:
+;   JAL     Inventory_ChangeAmmo
+.org 0x806ECC44 + 0x142B70
+    jal     Player_UseExplosiveAmmo
