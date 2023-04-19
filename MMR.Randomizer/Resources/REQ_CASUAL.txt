@@ -2395,28 +2395,9 @@
     {
       "Id": "AreaStoneTowerTempleAccess",
       "RequiredItems": [
-        "AreaIkanaCanyonAccess",
-        "ItemHookshot",
-        "Play Elegy of Emptiness"
+        "Climb Stone Tower"
       ],
-      "ConditionalItems": [
-        [
-          "MaskGoron",
-          "MaskZora"
-        ],
-        [
-          "MaskGoron",
-          "Climb Stone Tower with One Transformation"
-        ],
-        [
-          "MaskZora",
-          "Climb Stone Tower with One Transformation"
-        ],
-        [
-          "FD Jumps",
-          "Climb Stone Tower with One Transformation"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -2425,7 +2406,7 @@
     {
       "Id": "AreaInvertedStoneTowerTempleAccess",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "Use Light Arrow"
       ],
       "ConditionalItems": [],
@@ -4482,7 +4463,7 @@
     {
       "Id": "ChestInvertedStoneTowerSilverRupee",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
@@ -4496,7 +4477,7 @@
     {
       "Id": "ChestInvertedStoneTowerBombchu10",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
@@ -4510,7 +4491,7 @@
     {
       "Id": "ChestInvertedStoneTowerBean",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
@@ -44950,7 +44931,7 @@
     {
       "Id": "CollectableStoneTowerPot1",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -44961,7 +44942,7 @@
     {
       "Id": "CollectableStoneTowerPot2",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -45135,7 +45116,7 @@
     {
       "Id": "CollectableStoneTowerPot3",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -46950,7 +46931,7 @@
     {
       "Id": "CollectableStoneTowerPot4",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -46961,7 +46942,7 @@
     {
       "Id": "CollectableStoneTowerInvertedStoneTowerFlippedPot1",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
@@ -48952,7 +48933,7 @@
     {
       "Id": "CollectableStoneTowerPot5",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -48963,7 +48944,7 @@
     {
       "Id": "CollectableStoneTowerInvertedStoneTowerFlippedPot2",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
@@ -50751,7 +50732,7 @@
     {
       "Id": "CollectableStoneTowerPot6",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -50762,7 +50743,7 @@
     {
       "Id": "CollectableStoneTowerPot7",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -50773,7 +50754,7 @@
     {
       "Id": "CollectableStoneTowerPot8",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -50784,7 +50765,7 @@
     {
       "Id": "CollectableStoneTowerPot9",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -50795,7 +50776,7 @@
     {
       "Id": "CollectableStoneTowerPot10",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51218,7 +51199,7 @@
     {
       "Id": "CollectableStoneTowerSoftSoil1",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "Use Light Arrow",
         "BottleCatchBug"
       ],
@@ -51231,7 +51212,7 @@
     {
       "Id": "CollectableStoneTowerSoftSoil2",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow",
@@ -57248,6 +57229,36 @@
       "IsTrick": true,
       "TrickTooltip": "Removes Captain's Hat as requirement for Ocean Spider House mask code.",
       "TrickCategory": "Easy"
+    },
+    {
+      "Id": "Climb Stone Tower",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "ItemHookshot",
+        "Play Elegy of Emptiness"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskGoron",
+          "MaskZora"
+        ],
+        [
+          "MaskGoron",
+          "Climb Stone Tower with One Transformation"
+        ],
+        [
+          "MaskZora",
+          "Climb Stone Tower with One Transformation"
+        ],
+        [
+          "FD Jumps",
+          "Climb Stone Tower with One Transformation"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
     },
     {
       "Id": "Climb Stone Tower with One Transformation",
