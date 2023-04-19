@@ -3566,12 +3566,27 @@ namespace MMR.Randomizer
                 }
 
                 var remains = ItemUtils.BossRemains().Where(r => _randomized.ItemList[r].Item == r);
-                if (remains.Any(r => _randomized.ItemList[r].IsRandomized))
+                var remainsAreRandomized = remains.Any(r => _randomized.ItemList[r].IsRandomized)
+                    && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards)
+                    && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.ShuffleOnly)
+                    && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinTemples);
+                if (remainsAreRandomized || (remains.Count() > 0 && remains.Count() < 4))
                 {
                     var random = new Random(_randomized.Seed);
                     var remainRegions = remains
                         .OrderBy(_ => random.Next())
-                        .Select(remain => _randomized.ItemList[remain].NewLocation.Value.RegionForDirectHint(_randomized.ItemList).Name())
+                        .Select(remain =>
+                        {
+                            var remainLocation = _randomized.ItemList[remain].NewLocation.Value;
+                            if (remainsAreRandomized)
+                            {
+                                return remainLocation.RegionForDirectHint(_randomized.ItemList).Name();
+                            }
+                            else
+                            {
+                                return remainLocation.RegionArea(_randomized.ItemList).Value.ToString();
+                            }
+                        })
                         .Distinct()
                         .ToList();
                     var remainsCount = MessageUtils.NumberToWords(remains.Count());
@@ -3613,6 +3628,10 @@ namespace MMR.Randomizer
                                 for (var i = 0; i < remainRegions.Count; i++)
                                 {
                                     var remainRegion = remainRegions[i];
+                                    if (!remainsAreRandomized)
+                                    {
+                                        remainRegion = remainRegion.ToLower();
+                                    }
                                     wrapped.Red(remainRegion);
                                     if (i < remainRegions.Count - 2)
                                     {
