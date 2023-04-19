@@ -3358,200 +3358,212 @@ namespace MMR.Randomizer
                         .ToDictionary(g2 => g2.Key, g2 => g2.Select(x => x.Location).ToArray())
                     );
 
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x582)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x6938).StartLightBlueText()
-                        .Text("Kind young one! Please hear my").NewLine()
-                        .Text("plea! Please find the fairies").NewLine()
-                        .Text("who match our ").Red("color").Text(".")
-                        .EndTextBox()
-                        .Text("Please bring them back to us!")
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x583)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x6938).StartLightBlueText()
-                        .Text("Please fine a way to save the").NewLine()
-                        .Text("fairies, and bring them back").NewLine()
-                        .Text("here!")
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x584)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x6938).StartLightBlueText()
-                        .Text("There should still be...")
-                        .EndTextBox();
-
-                        foreach (var kvp in strayFairyRegionLocations[Region.WoodfallTemple])
+                if (strayFairyRegionLocations.ContainsKey(Region.WoodfallTemple))
+                {
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x582)
+                        .Message(it =>
                         {
-                            it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            it.PlaySoundEffect(0x6938).StartLightBlueText()
+                            .Text("Kind young one! Please hear my").NewLine()
+                            .Text("plea! Please find the fairies").NewLine()
+                            .Text("who match our ").Red("color").Text(".")
+                            .EndTextBox()
+                            .Text("Please bring them back to us!")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x583)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x6938).StartLightBlueText()
+                            .Text("Please fine a way to save the").NewLine()
+                            .Text("fairies, and bring them back").NewLine()
+                            .Text("here!")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x584)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x6938).StartLightBlueText()
+                            .Text("There should still be...")
+                            .EndTextBox();
+
+                            foreach (var kvp in strayFairyRegionLocations[Region.WoodfallTemple])
+                            {
+                                it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
                         }
 
-                        it.Text("Please save the fairies so I can").NewLine()
-                        .Text("be returned to my former shape!")
-                        .EndFinalTextBox();
-                    })
-                    .ExcludeFromQuickText()
-                    .Build()
-                );
+                            it.Text("Please save the fairies so I can").NewLine()
+                            .Text("be returned to my former shape!")
+                            .EndFinalTextBox();
+                        })
+                        .ExcludeFromQuickText()
+                        .Build()
+                    );
+                }
 
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x585)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x6938).StartLightBlueText()
-                        .Text("Oh, kind, young one!").NewLine()
-                        .Text("Please hear our plea! Please save").NewLine()
-                        .Text("the ").Green("fairies ").Text("who match our ").Green("color").Text(" and").NewLine()
-                        .Text("bring them back to us!")
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x586)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x6938).StartLightBlueText()
-                        .Text("Please find a way to save the").NewLine()
-                        .Text("fairies and bring them back").NewLine()
-                        .Text("here!")
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x587)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x6938).StartLightBlueText()
-                        .Text("There should still be...")
-                        .EndTextBox();
-
-                        foreach (var kvp in strayFairyRegionLocations[Region.SnowheadTemple])
+                if (strayFairyRegionLocations.ContainsKey(Region.SnowheadTemple))
+                {
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x585)
+                        .Message(it =>
                         {
-                            it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            it.PlaySoundEffect(0x6938).StartLightBlueText()
+                            .Text("Oh, kind, young one!").NewLine()
+                            .Text("Please hear our plea! Please save").NewLine()
+                            .Text("the ").Green("fairies ").Text("who match our ").Green("color").Text(" and").NewLine()
+                            .Text("bring them back to us!")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x586)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x6938).StartLightBlueText()
+                            .Text("Please find a way to save the").NewLine()
+                            .Text("fairies and bring them back").NewLine()
+                            .Text("here!")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x587)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x6938).StartLightBlueText()
+                            .Text("There should still be...")
+                            .EndTextBox();
+
+                            foreach (var kvp in strayFairyRegionLocations[Region.SnowheadTemple])
+                            {
+                                it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
                         }
 
-                        it.Text("Please bring them back here so").NewLine()
-                        .Text("I can be returned to my former").NewLine()
-                        .Text("shape!")
-                        .EndFinalTextBox();
-                    })
-                    .ExcludeFromQuickText()
-                    .Build()
-                );
+                            it.Text("Please bring them back here so").NewLine()
+                            .Text("I can be returned to my former").NewLine()
+                            .Text("shape!")
+                            .EndFinalTextBox();
+                        })
+                        .ExcludeFromQuickText()
+                        .Build()
+                    );
+                }
 
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x588)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x6938).StartLightBlueText()
-                        .Text("Oh, kind young one!").NewLine()
-                        .Text("Please find the fairies who are").NewLine()
-                        .Text("the same ").DarkBlue("color").Text(" as we are and")
-                        .Text("bring them back to us!")
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x589)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x6938).StartLightBlueText()
-                        .Text("Please find a way to save the").NewLine()
-                        .Text("fairies, and bring them back").NewLine()
-                        .Text("here!")
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x58A)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x6938).StartLightBlueText()
-                        .Text("There should still be...")
-                        .EndTextBox();
-
-                        foreach (var kvp in strayFairyRegionLocations[Region.GreatBayTemple])
+                if (strayFairyRegionLocations.ContainsKey(Region.GreatBayTemple))
+                {
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x588)
+                        .Message(it =>
                         {
-                            it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            it.PlaySoundEffect(0x6938).StartLightBlueText()
+                            .Text("Oh, kind young one!").NewLine()
+                            .Text("Please find the fairies who are").NewLine()
+                            .Text("the same ").DarkBlue("color").Text(" as we are and")
+                            .Text("bring them back to us!")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x589)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x6938).StartLightBlueText()
+                            .Text("Please find a way to save the").NewLine()
+                            .Text("fairies, and bring them back").NewLine()
+                            .Text("here!")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x58A)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x6938).StartLightBlueText()
+                            .Text("There should still be...")
+                            .EndTextBox();
+
+                            foreach (var kvp in strayFairyRegionLocations[Region.GreatBayTemple])
+                            {
+                                it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
                         }
 
-                        it.Text("Please save them and bring them").NewLine()
-                        .Text("back here!")
-                        .EndFinalTextBox();
-                    })
-                    .ExcludeFromQuickText()
-                    .Build()
-                );
+                            it.Text("Please save them and bring them").NewLine()
+                            .Text("back here!")
+                            .EndFinalTextBox();
+                        })
+                        .ExcludeFromQuickText()
+                        .Build()
+                    );
+                }
 
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x58B)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x6938).StartLightBlueText()
-                        .Text("Oh, kind young one!").NewLine()
-                        .Text("Please hear our plea! Please find").NewLine()
-                        .Text("the fairies who are the same").NewLine()
-                        .Yellow("color").Text(" as we are and bring them").NewLine()
-                        .Text("back to us!")
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x58C)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x6938).StartLightBlueText()
-                        .Text("Please save the the fairies and").NewLine()
-                        .Text("bring them back here!")
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x58D)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x6938).StartLightBlueText()
-                        .Text("There should still be...")
-                        .EndTextBox();
-
-                        foreach (var kvp in strayFairyRegionLocations[Region.StoneTowerTemple])
+                if (strayFairyRegionLocations.ContainsKey(Region.StoneTowerTemple))
+                {
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x58B)
+                        .Message(it =>
                         {
-                            it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            it.PlaySoundEffect(0x6938).StartLightBlueText()
+                            .Text("Oh, kind young one!").NewLine()
+                            .Text("Please hear our plea! Please find").NewLine()
+                            .Text("the fairies who are the same").NewLine()
+                            .Yellow("color").Text(" as we are and bring them").NewLine()
+                            .Text("back to us!")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x58C)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x6938).StartLightBlueText()
+                            .Text("Please save the the fairies and").NewLine()
+                            .Text("bring them back here!")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x58D)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x6938).StartLightBlueText()
+                            .Text("There should still be...")
+                            .EndTextBox();
+
+                            foreach (var kvp in strayFairyRegionLocations[Region.StoneTowerTemple])
+                            {
+                                it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
                         }
 
-                        it.Text("Please save them and bring them").NewLine()
-                        .Text("back here so I can be returned").NewLine()
-                        .Text("to my former shape!")
-                        .EndFinalTextBox();
-                    })
-                    .ExcludeFromQuickText()
-                    .Build()
-                );
+                            it.Text("Please save them and bring them").NewLine()
+                            .Text("back here so I can be returned").NewLine()
+                            .Text("to my former shape!")
+                            .EndFinalTextBox();
+                        })
+                        .ExcludeFromQuickText()
+                        .Build()
+                    );
+                }
 
                 var remains = ItemUtils.BossRemains().Where(r => _randomized.ItemList[r].Item == r);
                 if (remains.Any(r => _randomized.ItemList[r].IsRandomized))
