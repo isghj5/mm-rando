@@ -365,8 +365,10 @@ namespace MMR.Randomizer
 
         private static void EnemizerEarlyFixes()
         {
-            // changes before randomization
+            /// Changes before randomization
+            
             FixSpecificLikeLikeTypes();
+            FixSpecificTektiteTypes();
             EnableDampeHouseWallMaster();
             EnableTwinIslandsSpringSkullfish();
             FixSouthernSwampDekuBaba();
@@ -831,6 +833,12 @@ namespace MMR.Randomizer
             coastScene.Maps[1].Actors[43].Variants[0] = 2;
             coastScene.Maps[1].Actors[44].Variants[0] = 2;
             coastScene.Maps[1].Actors[46].Variants[0] = 2;
+        }
+
+        private static void FixSpecificTektiteTypes()
+        {
+            var twinIslandsSpring = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TwinIslandsSpring.FileID());
+            twinIslandsSpring.Maps[0].Actors[2].Variants[0] = 0xFFFD;
         }
 
         private static void EnableDampeHouseWallMaster()

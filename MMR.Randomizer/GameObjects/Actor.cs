@@ -202,7 +202,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x12)]
         // FE are road to mountain village type AND greatbay type
         // FD is underground, FE can be both but now, for detection, FD is water only
-        [GroundVariants(0xFFFD, 0xFFFF)] // FF does not exist in MM vanilla, red variety
+        // FF does not exist in MM vanilla, red variety
+        [GroundVariants(0xFFFD, 0xFFFF)] 
         [WaterVariants(0xFFFE)]
         Tektite = 0x12,
 
