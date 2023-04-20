@@ -209,7 +209,10 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
     this->animTimer = 1;
 
     this->stateFlags.state1 |= PLAYER_STATE1_TIME_STOP_3;
-    this->unkAA5 = 5; // really hacky, but necessary to prevent certain softlocks. gets reset back to 0 after transformation.
+
+    // really hacky, but necessary to prevent certain softlocks. unkAA5 gets reset back to 0 after transformation.
+    this->heldItemActionParam = 0;
+    this->unkAA5 = 5;
 
     if (this->stateFlags.state2 & PLAYER_STATE2_DIVING_2) {
         sSwimmingTransformation = true;
