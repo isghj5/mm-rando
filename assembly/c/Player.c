@@ -21,7 +21,7 @@ void Player_PreventDangerousStates(ActorPlayer* player) {
     }
 
     if (player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP_3) {
-        if ((player->stateFlags.state1 & PLAYER_STATE1_AIR)
+        if (((player->stateFlags.state1 & PLAYER_STATE1_AIR) && !(player->stateFlags.state1 & PLAYER_STATE1_LEDGE_CLIMB))
             || (player->stateFlags.state3 & PLAYER_STATE3_JUMP_ATTACK)) {
             player->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
         }
