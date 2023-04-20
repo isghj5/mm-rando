@@ -702,6 +702,11 @@ namespace MMR.Randomizer.Utils
                 Item.FairyMagic,
                 Item.FairyDoubleMagic,
             },
+            new List<Item>
+            {
+                Item.SongLullabyIntro,
+                Item.SongLullaby,
+            },
         }.Select(list => list.AsReadOnly()).ToList().AsReadOnly();
 
         public static List<Item> ConvertStringToItemList(List<Item> baseItemList, string c)
