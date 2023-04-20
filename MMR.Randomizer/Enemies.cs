@@ -516,8 +516,11 @@ namespace MMR.Randomizer
 
                 // Jim the bomber actually spawns within the tree to the north... move is spawn over a bit
                 var northClockTown = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.NorthClockTown.FileID());
-                northClockTown.Maps[0].Actors[26].Position.x = -740;
-                northClockTown.Maps[0].Actors[26].Position.z = -1790;
+                var jimDuringTheGame = northClockTown.Maps[0].Actors[26];
+                jimDuringTheGame.Position.x = -740;
+                jimDuringTheGame.Position.z = -1790;
+                // and rotate to face outwards not toward the wall
+                jimDuringTheGame.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: (180 - 20), flags: jimDuringTheGame.Rotation.y);
 
                 // the tree itself needs to be rotated as its facing the wall
                 northClockTown.Maps[0].Actors[21].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 135, northClockTown.Maps[0].Actors[21].Rotation.y);
@@ -1811,7 +1814,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DragonFly, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.DeathArmos)) continue;
                 if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.Keese)) continue;
-                if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.Tektite, GameObjects.Actor.BetaVampireGirl)) continue;
+                if (TestHardSetObject(GameObjects.Scene.NorthClockTown, GameObjects.Actor.BombersBlueHat, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.WarpDoor)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
@@ -3375,7 +3378,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 46.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 46.1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

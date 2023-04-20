@@ -30,22 +30,24 @@ namespace MMR.Randomizer.GameObjects
         // like, goron punch crator, or moon tear
         En_Test = 0x1, // En_Test
 
+        // invididual shop items
         [FileID(40)]
         [ObjectListIndex(0x1)]
-        En_GirlA = 0x2,
+        En_GirlA = 0x2, // En_GirlA
 
+        // enemy body parts spawned during death?
         [FileID(41)]
         [ObjectListIndex(0x1)]
-        En_Part = 0x3,
+        En_Part = 0x3, // En_Part
 
         //[EnemizerEnabled] // we dont want as an actual actor, we want as a companion
         [FileID(42)]
         [ObjectListIndex(1)] // gameplay_keep obj 1
-                             // 0x83F0 is tiny candle light
-                             //[GroundVariants(0x83F0, 0x27F5)] // TODO finish checking the rest of possible variations
-                             // 0x7F4 is the bright yellow light of the graveyard smash
-                             // 0x7FF is cyan/blue flames of road to ikana, FE is goron graveyard blue,
-                             // 83F0 is dampe house candle
+        // 0x83F0 is tiny candle light
+        //[GroundVariants(0x83F0, 0x27F5)] // TODO finish checking the rest of possible variations
+        // 0x7F4 is the bright yellow light of the graveyard smash
+        // 0x7FF is cyan/blue flames of road to ikana, FE is goron graveyard blue,
+        // 83F0 is dampe house candle
         [GroundVariants(0x7F4, 0x7FE)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.Woodfall)]
@@ -205,7 +207,7 @@ namespace MMR.Randomizer.GameObjects
         // FF does not exist in MM vanilla, red variety
         [GroundVariants(0xFFFD, 0xFFFF)] 
         [WaterVariants(0xFFFE)]
-        Tektite = 0x12,
+        Tektite = 0x12, // En_Tite
 
         Empty13 = 0x13,
 
@@ -254,7 +256,7 @@ namespace MMR.Randomizer.GameObjects
         // these are no longer problem spawns because we now dynamically remove the cutscene from new dino spawns
         //[EnemizerScenesPlacementBlock(Scene.BeneathGraveyard, Scene.DekuShrine, Scene.ClockTowerInterior)] // crash in graveyard
         //[EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)]
-        Dinofos = 0x19,
+        Dinofos = 0x19, // En_Dinofos
 
         [FileID(59)]
         [ObjectListIndex(0x5F)]
