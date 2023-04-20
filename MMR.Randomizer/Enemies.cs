@@ -1580,7 +1580,7 @@ namespace MMR.Randomizer
         public static void FixBrokenActorSpawnCutscenes(SceneEnemizerData thisSceneData)
         {
             /// Each Actor spawn gets one cutscene in the scene/room data
-            /// if a dinofos is spanwed, and has a cutscene from the room spawn data, it plays the cutscene
+            /// if a dinofos is spawned, and has a cutscene from the room spawn data, it plays the cutscene
             /// (supposed to be the drop from ceiling cutscene) but it breaks the game
             /// so we have to disable it for any new dinofos spawns to avoid
             /// also other trouble actors that can take that cutscene and do things we dont want
@@ -1588,7 +1588,8 @@ namespace MMR.Randomizer
             var listTroubleActorsObj = new List<int> {
                 GameObjects.Actor.Dinofos.ObjectIndex(),
                 GameObjects.Actor.Scarecrow.ObjectIndex(),
-                GameObjects.Actor.PatrollingPirate.ObjectIndex()
+                GameObjects.Actor.PatrollingPirate.ObjectIndex(),
+                GameObjects.Actor.GossipStone.ObjectIndex()
             };
 
             var actorObjectsDetected = thisSceneData.ChosenReplacementObjects.Find(v => listTroubleActorsObj.Contains(v.ChosenV)) != null;
@@ -1601,10 +1602,11 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Scarecrow,
                 GameObjects.Actor.PatrollingPirate,
                 GameObjects.Actor.Tingle,
-                GameObjects.Actor.GrottoHole
+                GameObjects.Actor.GrottoHole,
+                GameObjects.Actor.GossipStone
             };
 
-            for (int i = 0; i < thisSceneData.Actors.Count(); i++)
+            for (int i = 0; i < thisSceneData.Actors.Count(); i++) // thisSceneData.Actors is only the actors we change
             {
                 var testActor = thisSceneData.Actors[i];
                 if (listTroubleActors.Contains(testActor.ActorEnum))
