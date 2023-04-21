@@ -143,7 +143,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula, // weak enemies are kinda lame here
             Actor.BigPoe)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo,
-            Actor.GibdoWell, Actor.DeathArmos)] // Rarely Killable
+            Actor.GibdoWell, Actor.DeathArmos, // Rarely Killable
+            Actor.IceBlock, Actor.Bombiwa, Actor.ClocktowerGearsAndOrgan)] // blocking
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper,
             Actor.WarpDoor, Actor.ClocktowerGearsAndOrgan)] // Snapper spawns just on top of its chest, its possible a non-killable actor is placed int he wya
         WoodfallTemple = 0x18,
@@ -549,8 +550,11 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1506)]
         [SceneInternalId(0x6A)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee,
-            Actor.PoeBalloon, Actor.BigPoe, Actor.CircleOfFire, Actor.FloorMaster, Actor.LightBlock,
-            Actor.GibdoIkana, Actor.ReDead, Actor.GibdoWell, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
+            Actor.PoeBalloon, Actor.BigPoe,  Actor.FloorMaster,
+            Actor.SleepingScrub, // too much dyna, spawns too many flowers and flower companions
+            Actor.GrassRockCluster, // can spawn too many rocks
+            Actor.GibdoIkana, Actor.ReDead, Actor.GibdoWell,
+            Actor.CircleOfFire, Actor.LightBlock, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
         GormanTrack = 0x67,
 
         [FileID(1508)]
