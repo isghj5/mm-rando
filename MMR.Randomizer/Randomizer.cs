@@ -2095,6 +2095,11 @@ namespace MMR.Randomizer
                 }
             }
 
+            if (Random.NextDouble() < 0.3)
+            {
+                PlaceBespokeItem(Item.ItemNotebook);
+            }
+
             PlaceBespokeItem(Item.UpgradeBiggestBombBag);
             PlaceBespokeItem(Item.UpgradeBigBombBag);
             PlaceBespokeItem(Item.UpgradeBiggestQuiver);
@@ -2250,6 +2255,7 @@ namespace MMR.Randomizer
                 PlaceBespokeItemGroup(blastBomb);
             }
 
+            PlaceBespokeItem(Item.ItemNotebook);
             PlaceBespokeItem(Item.ItemPictobox);
             PlaceBespokeItem(Item.ItemLens);
             PlaceBespokeItemGroup(captainKeg);
