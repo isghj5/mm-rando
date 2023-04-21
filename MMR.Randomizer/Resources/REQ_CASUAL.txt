@@ -5282,6 +5282,9 @@
           "FD Difficult Jumps",
           "Fewer Item Requirements",
           "OtherExplosive"
+        ],
+        [
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -41382,6 +41385,18 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "OtherMagicBean",
+          "Water for Magic Bean",
+          "Short Ranged Weapon",
+          "Fewer Item Requirements"
+        ],
+        [
+          "OtherMagicBean",
+          "Water for Magic Bean",
+          "Clever Bombchu Usage",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -41526,6 +41541,14 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "Short Ranged Weapon",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Clever Bombchu Usage",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -50423,6 +50446,9 @@
         [
           "FD Difficult Jumps",
           "Fewer Item Requirements"
+        ],
+        [
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -57145,9 +57171,7 @@
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Using Scarecrow's Song where not normally required.",
-      "TrickCategory": "Easy"
+      "IsTrick": false
     },
     {
       "Id": "Lensless Chests",
@@ -57648,7 +57672,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Shoot the Eyegore with Light Arrows from below, then hookshot to the chest.",
-      "TrickCategory": "Moderate"
+      "TrickCategory": "Hard"
     },
     {
       "Id": "Postman without Bunny Hood",
@@ -57847,7 +57871,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Backflip away from a wall, then re-target the wall 1 frame later.",
-      "TrickCategory": "Hard"
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Milk Multiple Cows",
@@ -58889,7 +58913,7 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Use 10 packs of Bombchu for destroying beehives, Stray Fairy bubbles, and crystal switches in STT.",
+      "TrickTooltip": "Use 10 packs of Bombchu for destroying beehives and popping Stray Fairy bubbles.",
       "TrickCategory": "Moderate"
     },
     {
@@ -58981,7 +59005,15 @@
         "Kill Snapper",
         "Kill Gekko"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskDeku",
+          "OtherArrow"
+        ],
+        [
+          "FD Jumps"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -60485,7 +60517,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Solve puzzles and overcome challenging obstacles with the lowest possible amount of items. Not compatible with randomized enemies!",
-      "TrickCategory": "Hard"
+      "TrickCategory": "Very Hard"
     },
     {
       "Id": "Harder Long Jumps",
@@ -60581,7 +60613,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Use precise movement with Goron Spikes to get to hard-to-reach areas.",
-      "TrickCategory": "Hard"
+      "TrickCategory": "Very Hard"
     },
     {
       "Id": "SHT Elevator Room Platforming",
