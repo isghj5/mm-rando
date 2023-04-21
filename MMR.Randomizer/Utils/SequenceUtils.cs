@@ -979,7 +979,7 @@ namespace MMR.Randomizer.Utils
                 log.AppendLine(" * [" + RemainingSong.Name + "] with categories [" + String.Join(",", RemainingSong.Type) + "]");
             }
             WriteSongLog(log, settings);
-            throw new Exception("Cannot randomize music on this seed with available music: " + targetSlot.PreviousSlot.ToString("X"));
+            throw new Exception($"Cannot randomize music on this seed with available music: \nSlot Name:[{targetSlot.Name}] PreviousSlot: [{targetSlot.Replaces.ToString("X")}]");
         }
 
         public static void WriteSongLog(StringBuilder log, OutputSettings settings)
