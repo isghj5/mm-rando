@@ -1495,7 +1495,7 @@ namespace MMR.Randomizer
                 itemList.AddRange(_randomized.Settings.CustomStartingItemList);
             }
 
-            itemList.AddRange(_randomized.BlitzRemains);
+            itemList.AddRange(_randomized.BlitzExtraItems);
 
             itemList = itemList.Distinct().ToList();
 

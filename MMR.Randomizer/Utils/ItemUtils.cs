@@ -194,6 +194,11 @@ namespace MMR.Randomizer.Utils
             return Enumerable.Range((int)Item.RemainsOdolwa, 4).Cast<Item>();
         }
 
+        public static IEnumerable<Item> GreatFairyRewards()
+        {
+            return new List<Item> { Item.FairySpinAttack, Item.FairyDoubleMagic, Item.FairyDoubleDefense, Item.ItemFairySword };
+        }
+
         // todo cache
         public static IEnumerable<Item> DowngradableItems()
         {
@@ -336,7 +341,7 @@ namespace MMR.Randomizer.Utils
 
         private static List<Item> BlitzJunkLocations;
 
-        public static ReadOnlyCollection<Item> PrepareBlitz(GameplaySettings settings, ItemList itemList, Random random)
+        public static List<Item> PrepareBlitz(GameplaySettings settings, ItemList itemList, Random random)
         {
             BlitzJunkLocations = new List<Item>();
             var remainsAmountPool = new List<int>();
@@ -358,10 +363,10 @@ namespace MMR.Randomizer.Utils
             }
             if (remainsAmountPool.Count == 0)
             {
-                return new List<Item>().AsReadOnly();
+                return new List<Item>();
             }
             var remainsAmount = remainsAmountPool.Random(random, (amount) => 1.0f / amount);
-            var result = BossRemains().ToList().Random(remainsAmount, random).ToList().AsReadOnly();
+            var startingRemains = BossRemains().ToList().Random(remainsAmount, random);
             var debugItemObjects = new List<ItemObject>();
             var remainsInLairs = new Dictionary<Item, Item>
             {
@@ -377,7 +382,7 @@ namespace MMR.Randomizer.Utils
                 { Item.AreaGyorgsLair, new Item[] { Item.AreaGreatBayTempleAccess } },
                 { Item.AreaTwinmoldsLair, new Item[] { Item.AreaInvertedStoneTowerTempleAccess, Item.AreaStoneTowerTempleAccess } },
             };
-            foreach (var bossRemain in result)
+            foreach (var bossRemain in startingRemains)
             {
                 var lairAccess = remainsInLairs[bossRemain];
                 var newLairAccess = itemList[lairAccess].NewLocation ?? lairAccess;
@@ -412,6 +417,9 @@ namespace MMR.Randomizer.Utils
                 }
             }
             BlitzJunkLocations.RemoveAll(location => !location.Region(itemList).HasValue || location.Entrance() != null);
+
+            var result = new List<Item>();
+            result.AddRange(startingRemains);
             return result;
         }
 

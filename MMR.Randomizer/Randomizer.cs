@@ -975,7 +975,7 @@ namespace MMR.Randomizer
             UpdateLogicForSettings();
 
             ItemUtils.PrepareHintedJunkLocations(_settings, Random);
-            _randomized.BlitzRemains = ItemUtils.PrepareBlitz(_settings, ItemList, Random);
+            _randomized.BlitzExtraItems = ItemUtils.PrepareBlitz(_settings, ItemList, Random);
             ItemUtils.PrepareJunkItems(ItemList);
             if (_settings.CustomJunkLocations.Count > ItemUtils.JunkItems.Count) // TODO also account for HintedJunkLocations and BlitzJunkLocations
             {
@@ -1355,7 +1355,7 @@ namespace MMR.Randomizer
                 return true;
             }
 
-            if (_randomized.BlitzRemains.Contains(currentItem))
+            if (_randomized.BlitzExtraItems.Contains(currentItem))
             {
                 return true;
             }
@@ -1642,7 +1642,7 @@ namespace MMR.Randomizer
                 ItemList[item].ItemOverride = Item.RecoveryHeart;
             }
 
-            foreach (var item in _randomized.BlitzRemains)
+            foreach (var item in _randomized.BlitzExtraItems)
             {
                 ItemList[item].ItemOverride = Item.RecoveryHeart;
             }
@@ -1857,7 +1857,7 @@ namespace MMR.Randomizer
         private void RemoveFreeRequirements()
         {
             var freeItems = _settings.CustomStartingItemList
-                .Union(_randomized.BlitzRemains)
+                .Union(_randomized.BlitzExtraItems)
                 .Union(ItemList.Where(io => io.NewLocation.HasValue && ItemUtils.IsStartingLocation(io.NewLocation.Value)).Select(io => io.Item))
                 .ToList();
 
@@ -2027,7 +2027,7 @@ namespace MMR.Randomizer
             }
 
             itemList.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
-            itemList.RemoveAll(item => _randomized.BlitzRemains.Contains(item));
+            itemList.RemoveAll(item => _randomized.BlitzExtraItems.Contains(item));
 
             if (!_settings.AddSongs)
             {
@@ -2555,11 +2555,11 @@ namespace MMR.Randomizer
                     StartingItemMode.AllowTemporaryItems => ItemUtils.StartingItems(),
                     _ => Enumerable.Empty<Item>(),
                 })
-                .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item) && !_randomized.BlitzRemains.Contains(item))
+                .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item) && !_randomized.BlitzExtraItems.Contains(item))
                 .Cast<Item?>()
                 .ToList();
             var itemHearts = _settings.CustomStartingItemList
-                .Union(_randomized.BlitzRemains)
+                .Union(_randomized.BlitzExtraItems)
                 .Where(item => !ItemList[item].NewLocation.HasValue && (_settings.AddSongs || !item.IsSong()))
                 .Cast<Item?>()
                 .ToList();
@@ -2844,13 +2844,28 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(30, "Shuffling items...");
                 SetupItems();
                 RandomizeItems();
+                if (_settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
+                {
+                    foreach (var location in ItemUtils.GreatFairyRewards())
+                    {
+                        var itemObject = ItemList.Single(io => io.NewLocation == location);
+                        if (itemObject.Item == Item.RecoveryHeart)
+                        {
+                            foreach (var requiredFairy in ItemList[location].DependsOnItems.Where(item => !_settings.CustomStartingItemList.Contains(item) && ItemUtils.DungeonStrayFairies().Contains(item)))
+                            {
+                                _randomized.BlitzExtraItems.Add(requiredFairy);
+                                ItemList[requiredFairy].ItemOverride = Item.RecoveryHeart;
+                            }
+                        }
+                    }
+                }
                 ReplaceRecoveryHeartsWithJunk(); // TODO make this an option?
 
                 // Replace junk items with ice traps according to settings.
                 AddIceTraps(_settings.IceTraps, _settings.BombTraps, _settings.IceTrapAppearance);
                 
                 var freeItemIds = _settings.CustomStartingItemList
-                    .Union(_randomized.BlitzRemains)
+                    .Union(_randomized.BlitzExtraItems)
                     .Cast<int>()
                     .Union(ItemList.Where(io => io.NewLocation.HasValue && ItemUtils.IsStartingLocation(io.NewLocation.Value)).Select(io => io.ID))
                     .ToList();
