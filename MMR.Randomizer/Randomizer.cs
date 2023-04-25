@@ -1006,7 +1006,7 @@ namespace MMR.Randomizer
             }
 
             //check timing
-            if (currentItemObject.TimeNeeded != 0 && (!_timeTravelPlaced || dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary(_settings))))
+            if (currentItemObject.TimeNeeded != 0 && (!_timeTravelPlaced || (currentItem.IsTemporary(_settings) && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary(_settings)))))
             {
                 if ((currentItemObject.TimeNeeded & currentTargetObject.TimeAvailable) == 0)
                 {
@@ -1136,11 +1136,13 @@ namespace MMR.Randomizer
                 }
             }
 
+            var currentItemIsTemporary = !_timeTravelPlaced || currentItem.IsTemporary(_settings);
+
             //cycle through all things
             foreach (var dependency in currentTargetObject.DependsOnItems)
             {
-                if (!currentItem.IsTemporary(_settings)
-                    && (target == Item.MaskBlast || target == Item.NotebookSaveOldLady)
+                if (!currentItemIsTemporary
+                    && (target == Item.MaskBlast || target == Item.NotebookSaveOldLady || target == Item.UpgradeBigBombBag)
                     && (dependency == Item.TradeItemKafeiLetter || dependency == Item.TradeItemPendant))
                 {
                     // Permanent items ignore Kafei Letter and Pendant on Blast Mask check.
@@ -1293,9 +1295,9 @@ namespace MMR.Randomizer
         private void CheckConditionals(Item currentItem, Item target, List<Item> dependencyPath)
         {
             var targetItemObject = ItemList[target];
-            if (target == Item.MaskBlast || target == Item.NotebookSaveOldLady)
+            if (target == Item.MaskBlast || target == Item.NotebookSaveOldLady || target == Item.UpgradeBigBombBag)
             {
-                if (!currentItem.IsTemporary(_settings))
+                if (_timeTravelPlaced && !currentItem.IsTemporary(_settings))
                 {
                     targetItemObject.DependsOnItems?.Remove(Item.TradeItemKafeiLetter);
                     targetItemObject.DependsOnItems?.Remove(Item.TradeItemPendant);

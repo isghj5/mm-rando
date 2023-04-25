@@ -55,6 +55,7 @@ namespace MMR.Randomizer.Models
             {
                 case Item.UpgradeBigBombBag:
                 case Item.MaskBlast:
+                case Item.NotebookSaveOldLady:
                     RequiredItemIds?.Remove((int)Item.TradeItemKafeiLetter);
                     RequiredItemIds?.Remove((int)Item.TradeItemPendant);
                     break;
