@@ -26,6 +26,19 @@ void Player_PreventDangerousStates(ActorPlayer* player) {
             player->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
         }
     }
+
+    // assume parent is hookshot for now.
+    // "&& player->base.parent->id == ACTOR_ARMS_HOOK" doesn't work because parent might be stale reference
+    if (player->base.parent) {
+        if ((player->stateFlags.state1 & PLAYER_STATE1_AIR)
+            || (player->stateFlags.state3 & PLAYER_STATE3_JUMP_ATTACK)
+            || (player->frozenTimer != 0
+                && player->heldItemActionParam != PLAYER_IA_HOOKSHOT
+                && player->heldItemActionParam != PLAYER_IA_OCARINA
+                && !(player->stateFlags.state3 & PLAYER_STATE3_HOOK_ARV))) {
+            player->base.parent = NULL;
+        }
+    }
 }
 
 void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
