@@ -1746,7 +1746,16 @@ namespace MMR.Randomizer
                 else
                 {
                     ChestTypeAttribute.ChestType? overrideChestType = null;
-                    if ((item.Item.Name().Contains("Bombchu") || item.Item.Name().Contains("Shield")) && _randomized.Logic.Any(il => il.RequiredItemIds?.Contains((int)item.Item) == true || il.ConditionalItemIds?.Any(c => c.Contains((int)item.Item)) == true))
+                    bool itemIsUsed(int itemId)
+                    {
+                        var usedBy = _randomized.Logic.Where(il => il.RequiredItemIds?.Contains(itemId) == true || il.ConditionalItemIds?.Any(c => c.Contains(itemId)) == true);
+                        if (usedBy.Any(il => !il.IsFakeItem))
+                        {
+                            return true;
+                        }
+                        return usedBy.Any(il => itemIsUsed(il.ItemId));
+                    }
+                    if ((item.Item.Name().Contains("Bombchu") || item.Item.Name().Contains("Shield")) && itemIsUsed((int)item.Item))
                     {
                         overrideChestType = item.Item.IsTemporary(_randomized.Settings) ? ChestTypeAttribute.ChestType.SmallGold : ChestTypeAttribute.ChestType.LargeGold;
                     }
