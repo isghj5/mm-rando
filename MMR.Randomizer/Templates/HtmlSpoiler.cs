@@ -56,7 +56,7 @@ namespace MMR.Randomizer.Templates
                     " Log State: </b></label><input id=\"spoilerLogState\" type=\"text\"/><br/>\r\n");
  if (spoiler.BlitzExtraItems.Any()) { 
 
-            this.Write("<h2>Starting Remains</h2>\r\n");
+            this.Write("<h2>Blitz Starting Items</h2>\r\n");
          foreach (var remains in spoiler.BlitzExtraItems) {
 
             this.Write("<div>");

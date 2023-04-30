@@ -61,10 +61,10 @@
 <br/>
 <br/>
 <label><b>Spoiler Log State: </b></label><input id="spoilerLogState" type="text"/><br/>
-<# if (spoiler.BlitzRemains.Any()) { 
+<# if (spoiler.BlitzExtraItems.Any()) { 
 #>
-<h2>Starting Remains</h2>
-<#         foreach (var remains in spoiler.BlitzRemains) {
+<h2>Blitz Starting Items</h2>
+<#         foreach (var remains in spoiler.BlitzExtraItems) {
 #>
 <div><#= remains.Name() #></div>
 <# } #>
