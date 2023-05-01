@@ -484,7 +484,6 @@ namespace MMR.Randomizer.Utils
                 ConvertSequenceSlotToPointer(0x70, 0x0B); // point call the giants( cutscene confronting skullkid) at healed
                 ConvertSequenceSlotToPointer(0x7B, 0x0D); // point maskreveal, the song that plays when the mask shows its alive during moon cutscene, at aliens
                 ConvertSequenceSlotToPointer(0x7D, 0x05); // point reunion at clocktower
-                ConvertSequenceSlotToPointer(0x0B, 0x05); // point healing cutscene at clocktower
             }
 
             // if ocarina is NOT randomized, pointerize skullkid's seq since it gets used nowhere
