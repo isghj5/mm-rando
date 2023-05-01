@@ -2041,6 +2041,7 @@ namespace MMR.Randomizer
                     var roomIsClearPuzzleRoom = thisSceneData.Scene.SceneEnum.IsClearEnemyPuzzleRoom(roomIndex);
                     var roomFreeActors = GetRoomFreeActors(thisSceneData, roomIndex);
 
+
                     if (problemActor.OnlyOnePerRoom != null)
                     {
                         TrimSpecificActor(thisSceneData, problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom);
@@ -2069,7 +2070,8 @@ namespace MMR.Randomizer
             }
             else
             {
-                trimCandidates = roomActors.FindAll(act => act.Variants[0] == variant);
+                trimCandidates = roomActors.FindAll(act =>  act.ActorEnum == actorType.ActorEnum &&
+                                                            act.Variants[0] == variant);
             }
 
             if (trimCandidates != null && trimCandidates.Count > 1)
