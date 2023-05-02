@@ -491,483 +491,480 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (_settings.LogicMode != LogicMode.NoLogic)
+            var arrows40 = ItemList
+                .FirstOrDefault(io =>
+                    io.Item.IsFake()
+                    && io.DependsOnItems.Count == 0
+                    && io.Conditionals.Count == 2
+                    && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBigQuiver }))
+                    && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBiggestQuiver })));
+            if (arrows40 == null)
             {
-                var arrows40 = ItemList
-                    .FirstOrDefault(io =>
-                        io.Item.IsFake()
-                        && io.DependsOnItems.Count == 0
-                        && io.Conditionals.Count == 2
-                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBigQuiver }))
-                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBiggestQuiver })));
-                if (arrows40 == null)
+                arrows40 = new ItemObject
                 {
-                    arrows40 = new ItemObject
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    Conditionals = new List<List<Item>>
+                {
+                    new List<Item>
                     {
-                        ID = ItemList.Count,
-                        TimeAvailable = 63,
-                        Conditionals = new List<List<Item>>
-                    {
-                        new List<Item>
-                        {
-                            Item.UpgradeBigQuiver,
-                        },
-                        new List<Item>
-                        {
-                            Item.UpgradeBiggestQuiver,
-                        },
+                        Item.UpgradeBigQuiver,
                     },
-                    };
-                    ItemList.Add(arrows40);
-                }
-
-                var bombchu10 = ItemList
-                    .FirstOrDefault(io =>
-                        io.Item.IsFake()
-                        && io.DependsOnItems.Count == 0
-                        && io.Conditionals.Count == 3
-                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.ChestInvertedStoneTowerBombchu10 }))
-                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.ChestLinkTrialBombchu10 })
-                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.ShopItemBombsBombchu10 }))));
-                if (bombchu10 == null)
-                {
-                    bombchu10 = new ItemObject
+                    new List<Item>
                     {
-                        ID = ItemList.Count,
-                        TimeAvailable = 63,
-                        Conditionals = new List<List<Item>>
-                    {
-                        new List<Item>
-                        {
-                            Item.ChestInvertedStoneTowerBombchu10,
-                        },
-                        new List<Item>
-                        {
-                            Item.ChestLinkTrialBombchu10,
-                        },
-                        new List<Item>
-                        {
-                            Item.ShopItemBombsBombchu10,
-                        },
+                        Item.UpgradeBiggestQuiver,
                     },
-                    };
-                    ItemList.Add(bombchu10);
-                }
+                },
+                };
+                ItemList.Add(arrows40);
+            }
 
-                if (_settings.ByoAmmo)
+            var bombchu10 = ItemList
+                .FirstOrDefault(io =>
+                    io.Item.IsFake()
+                    && io.DependsOnItems.Count == 0
+                    && io.Conditionals.Count == 3
+                    && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.ChestInvertedStoneTowerBombchu10 }))
+                    && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.ChestLinkTrialBombchu10 })
+                    && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.ShopItemBombsBombchu10 }))));
+            if (bombchu10 == null)
+            {
+                bombchu10 = new ItemObject
                 {
-                    ItemList[Item.ChestInvertedStoneTowerBombchu10].TimeNeeded = 1;
-                    ItemList[Item.ChestLinkTrialBombchu10].TimeNeeded = 1;
-                    ItemList[Item.ShopItemBombsBombchu10].TimeNeeded = 1;
-
-                    ItemList[Item.UpgradeBigQuiver].DependsOnItems.Add(arrows40.Item);
-                    ItemList[Item.UpgradeBiggestQuiver].DependsOnItems.Add(arrows40.Item);
-                    ItemList[Item.HeartPieceSwampArchery].DependsOnItems.Add(arrows40.Item);
-                    ItemList[Item.HeartPieceTownArchery].DependsOnItems.Add(Item.UpgradeBiggestQuiver);
-                    ItemList[Item.HeartPieceHoneyAndDarling].DependsOnItems.Add(bombchu10.Item);
-
-                    var escortCremia = new ItemObject
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    Conditionals = new List<List<Item>>
+                {
+                    new List<Item>
                     {
-                        ID = ItemList.Count,
-                        TimeAvailable = 63,
-                        Conditionals = new List<List<Item>>
-                    {
-                        new List<Item>
-                        {
-                            Item.OtherArrow,
-                        },
-                        new List<Item>
-                        {
-                            Item.MaskCircusLeader,
-                        },
+                        Item.ChestInvertedStoneTowerBombchu10,
                     },
-                    };
-                    ItemList.Add(escortCremia);
-                    ItemList[Item.MaskRomani].DependsOnItems.Add(escortCremia.Item);
-                }
+                    new List<Item>
+                    {
+                        Item.ChestLinkTrialBombchu10,
+                    },
+                    new List<Item>
+                    {
+                        Item.ShopItemBombsBombchu10,
+                    },
+                },
+                };
+                ItemList.Add(bombchu10);
+            }
 
-                if (_settings.ProgressiveUpgrades)
+            if (_settings.ByoAmmo)
+            {
+                ItemList[Item.ChestInvertedStoneTowerBombchu10].TimeNeeded = 1;
+                ItemList[Item.ChestLinkTrialBombchu10].TimeNeeded = 1;
+                ItemList[Item.ShopItemBombsBombchu10].TimeNeeded = 1;
+
+                ItemList[Item.UpgradeBigQuiver].DependsOnItems.Add(arrows40.Item);
+                ItemList[Item.UpgradeBiggestQuiver].DependsOnItems.Add(arrows40.Item);
+                ItemList[Item.HeartPieceSwampArchery].DependsOnItems.Add(arrows40.Item);
+                ItemList[Item.HeartPieceTownArchery].DependsOnItems.Add(Item.UpgradeBiggestQuiver);
+                ItemList[Item.HeartPieceHoneyAndDarling].DependsOnItems.Add(bombchu10.Item);
+
+                var escortCremia = new ItemObject
                 {
-                    arrows40.Conditionals.Clear();
-                    arrows40.Conditionals.AddRange(new List<Item>
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    Conditionals = new List<List<Item>>
+                {
+                    new List<Item>
+                    {
+                        Item.OtherArrow,
+                    },
+                    new List<Item>
+                    {
+                        Item.MaskCircusLeader,
+                    },
+                },
+                };
+                ItemList.Add(escortCremia);
+                ItemList[Item.MaskRomani].DependsOnItems.Add(escortCremia.Item);
+            }
+
+            if (_settings.ProgressiveUpgrades)
+            {
+                arrows40.Conditionals.Clear();
+                arrows40.Conditionals.AddRange(new List<Item>
+            {
+                Item.ItemBow,
+                Item.UpgradeBigQuiver,
+                Item.UpgradeBiggestQuiver,
+            }.Combinations(2).Select(a => a.ToList()));
+
+                var arrows50 = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    DependsOnItems = new List<Item>
                 {
                     Item.ItemBow,
                     Item.UpgradeBigQuiver,
                     Item.UpgradeBiggestQuiver,
+                },
+                };
+                ItemList.Add(arrows50);
+
+                var bombs20 = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 3
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.ItemBombBag }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBigBombBag }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBiggestBombBag })));
+
+                var bombs30 = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBigBombBag }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBiggestBombBag })));
+                if (bombs30 == null)
+                {
+                    bombs30 = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        Conditionals = new List<Item>
+                    {
+                        Item.ItemBombBag,
+                        Item.UpgradeBigBombBag,
+                        Item.UpgradeBiggestBombBag,
+                    }.Combinations(2).Select(a => a.ToList()).ToList(),
+                    };
+                    ItemList.Add(bombs30);
+                }
+                else
+                {
+                    bombs30.Conditionals.Clear();
+                    bombs30.Conditionals.AddRange(new List<Item>
+                {
+                    Item.ItemBombBag,
+                    Item.UpgradeBigBombBag,
+                    Item.UpgradeBiggestBombBag,
                 }.Combinations(2).Select(a => a.ToList()));
+                }
 
-                    var arrows50 = new ItemObject
+                var bombs40 = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    DependsOnItems = new List<Item>
+                {
+                    Item.ItemBombBag,
+                    Item.UpgradeBigBombBag,
+                    Item.UpgradeBiggestBombBag,
+                },
+                };
+                ItemList.Add(bombs40);
+
+                var sword1 = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 3
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.StartingSword }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRazorSword }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGildedSword })));
+
+                var sword2 = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRazorSword }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGildedSword })));
+                if (sword2 == null)
+                {
+                    sword2 = new ItemObject
                     {
                         ID = ItemList.Count,
                         TimeAvailable = 63,
-                        DependsOnItems = new List<Item>
-                    {
-                        Item.ItemBow,
-                        Item.UpgradeBigQuiver,
-                        Item.UpgradeBiggestQuiver,
-                    },
-                    };
-                    ItemList.Add(arrows50);
-
-                    var bombs20 = ItemList
-                        .FirstOrDefault(io =>
-                            io.Item.IsFake()
-                            && io.DependsOnItems.Count == 0
-                            && io.Conditionals.Count == 3
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.ItemBombBag }))
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBigBombBag }))
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBiggestBombBag })));
-
-                    var bombs30 = ItemList
-                        .FirstOrDefault(io =>
-                            io.Item.IsFake()
-                            && io.DependsOnItems.Count == 0
-                            && io.Conditionals.Count == 2
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBigBombBag }))
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBiggestBombBag })));
-                    if (bombs30 == null)
-                    {
-                        bombs30 = new ItemObject
-                        {
-                            ID = ItemList.Count,
-                            TimeAvailable = 63,
-                            Conditionals = new List<Item>
-                        {
-                            Item.ItemBombBag,
-                            Item.UpgradeBigBombBag,
-                            Item.UpgradeBiggestBombBag,
-                        }.Combinations(2).Select(a => a.ToList()).ToList(),
-                        };
-                        ItemList.Add(bombs30);
-                    }
-                    else
-                    {
-                        bombs30.Conditionals.Clear();
-                        bombs30.Conditionals.AddRange(new List<Item>
-                    {
-                        Item.ItemBombBag,
-                        Item.UpgradeBigBombBag,
-                        Item.UpgradeBiggestBombBag,
-                    }.Combinations(2).Select(a => a.ToList()));
-                    }
-
-                    var bombs40 = new ItemObject
-                    {
-                        ID = ItemList.Count,
-                        TimeAvailable = 63,
-                        DependsOnItems = new List<Item>
-                    {
-                        Item.ItemBombBag,
-                        Item.UpgradeBigBombBag,
-                        Item.UpgradeBiggestBombBag,
-                    },
-                    };
-                    ItemList.Add(bombs40);
-
-                    var sword1 = ItemList
-                        .FirstOrDefault(io =>
-                            io.Item.IsFake()
-                            && io.DependsOnItems.Count == 0
-                            && io.Conditionals.Count == 3
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.StartingSword }))
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRazorSword }))
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGildedSword })));
-
-                    var sword2 = ItemList
-                        .FirstOrDefault(io =>
-                            io.Item.IsFake()
-                            && io.DependsOnItems.Count == 0
-                            && io.Conditionals.Count == 2
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRazorSword }))
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGildedSword })));
-                    if (sword2 == null)
-                    {
-                        sword2 = new ItemObject
-                        {
-                            ID = ItemList.Count,
-                            TimeAvailable = 63,
-                            Conditionals = new List<Item>
-                        {
-                            Item.StartingSword,
-                            Item.UpgradeRazorSword,
-                            Item.UpgradeGildedSword,
-                        }.Combinations(2).Select(a => a.ToList()).ToList(),
-                        };
-                        ItemList.Add(sword2);
-                    }
-                    else
-                    {
-                        sword2.Conditionals.Clear();
-                        sword2.Conditionals.AddRange(new List<Item>
+                        Conditionals = new List<Item>
                     {
                         Item.StartingSword,
                         Item.UpgradeRazorSword,
                         Item.UpgradeGildedSword,
-                    }.Combinations(2).Select(a => a.ToList()));
-                    }
+                    }.Combinations(2).Select(a => a.ToList()).ToList(),
+                    };
+                    ItemList.Add(sword2);
+                }
+                else
+                {
+                    sword2.Conditionals.Clear();
+                    sword2.Conditionals.AddRange(new List<Item>
+                {
+                    Item.StartingSword,
+                    Item.UpgradeRazorSword,
+                    Item.UpgradeGildedSword,
+                }.Combinations(2).Select(a => a.ToList()));
+                }
 
-                    var sword3 = new ItemObject
+                var sword3 = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    DependsOnItems = new List<Item>
+                {
+                    Item.StartingSword,
+                    Item.UpgradeRazorSword,
+                    Item.UpgradeGildedSword,
+                },
+                };
+                ItemList.Add(sword3);
+
+                var wallets200 = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 3
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeAdultWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRoyalWallet })));
+
+                var wallets500 = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRoyalWallet })));
+                if (wallets500 == null)
+                {
+                    wallets500 = new ItemObject
                     {
                         ID = ItemList.Count,
                         TimeAvailable = 63,
-                        DependsOnItems = new List<Item>
-                    {
-                        Item.StartingSword,
-                        Item.UpgradeRazorSword,
-                        Item.UpgradeGildedSword,
-                    },
-                    };
-                    ItemList.Add(sword3);
-
-                    var wallets200 = ItemList
-                        .FirstOrDefault(io =>
-                            io.Item.IsFake()
-                            && io.DependsOnItems.Count == 0
-                            && io.Conditionals.Count == 3
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeAdultWallet }))
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet }))
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRoyalWallet })));
-
-                    var wallets500 = ItemList
-                        .FirstOrDefault(io =>
-                            io.Item.IsFake()
-                            && io.DependsOnItems.Count == 0
-                            && io.Conditionals.Count == 2
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet }))
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRoyalWallet })));
-                    if (wallets500 == null)
-                    {
-                        wallets500 = new ItemObject
-                        {
-                            ID = ItemList.Count,
-                            TimeAvailable = 63,
-                            Conditionals = new List<Item>
-                        {
-                            Item.UpgradeAdultWallet,
-                            Item.UpgradeGiantWallet,
-                            Item.UpgradeRoyalWallet,
-                        }.Combinations(2).Select(a => a.ToList()).ToList(),
-                        };
-                        ItemList.Add(wallets500);
-                    }
-                    else
-                    {
-                        wallets500.Conditionals.Clear();
-                        wallets500.Conditionals.AddRange(new List<Item>
+                        Conditionals = new List<Item>
                     {
                         Item.UpgradeAdultWallet,
                         Item.UpgradeGiantWallet,
                         Item.UpgradeRoyalWallet,
-                    }.Combinations(2).Select(a => a.ToList()));
+                    }.Combinations(2).Select(a => a.ToList()).ToList(),
+                    };
+                    ItemList.Add(wallets500);
+                }
+                else
+                {
+                    wallets500.Conditionals.Clear();
+                    wallets500.Conditionals.AddRange(new List<Item>
+                {
+                    Item.UpgradeAdultWallet,
+                    Item.UpgradeGiantWallet,
+                    Item.UpgradeRoyalWallet,
+                }.Combinations(2).Select(a => a.ToList()));
+                }
+
+                var wallets999 = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    DependsOnItems = new List<Item>
+                {
+                    Item.UpgradeAdultWallet,
+                    Item.UpgradeGiantWallet,
+                    Item.UpgradeRoyalWallet,
+                },
+                };
+                ItemList.Add(wallets999);
+
+                var magicAny = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.FairyMagic }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.FairyDoubleMagic })));
+
+                var magicLarge = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    DependsOnItems = new List<Item>
+                {
+                    Item.FairyMagic,
+                    Item.FairyDoubleMagic,
+                },
+                };
+                ItemList.Add(magicLarge);
+
+                var lullabyAny = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.SongLullaby }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.SongLullabyIntro })));
+
+                var lullabyFull = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    DependsOnItems = new List<Item>
+                {
+                    Item.SongLullaby,
+                    Item.SongLullabyIntro,
+                },
+                };
+                ItemList.Add(lullabyFull);
+
+                foreach (var itemObject in ItemList)
+                {
+                    if (itemObject != lullabyFull && itemObject.DependsOnItems.Contains(Item.SongLullaby))
+                    {
+                        itemObject.DependsOnItems.Remove(Item.SongLullaby);
+                        itemObject.DependsOnItems.Add(lullabyFull.Item);
                     }
 
-                    var wallets999 = new ItemObject
+                    if (itemObject != lullabyAny)
                     {
-                        ID = ItemList.Count,
-                        TimeAvailable = 63,
-                        DependsOnItems = new List<Item>
-                    {
-                        Item.UpgradeAdultWallet,
-                        Item.UpgradeGiantWallet,
-                        Item.UpgradeRoyalWallet,
-                    },
-                    };
-                    ItemList.Add(wallets999);
-
-                    var magicAny = ItemList
-                        .FirstOrDefault(io =>
-                            io.Item.IsFake()
-                            && io.DependsOnItems.Count == 0
-                            && io.Conditionals.Count == 2
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.FairyMagic }))
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.FairyDoubleMagic })));
-
-                    var magicLarge = new ItemObject
-                    {
-                        ID = ItemList.Count,
-                        TimeAvailable = 63,
-                        DependsOnItems = new List<Item>
-                    {
-                        Item.FairyMagic,
-                        Item.FairyDoubleMagic,
-                    },
-                    };
-                    ItemList.Add(magicLarge);
-
-                    var lullabyAny = ItemList
-                        .FirstOrDefault(io =>
-                            io.Item.IsFake()
-                            && io.DependsOnItems.Count == 0
-                            && io.Conditionals.Count == 2
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.SongLullaby }))
-                            && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.SongLullabyIntro })));
-
-                    var lullabyFull = new ItemObject
-                    {
-                        ID = ItemList.Count,
-                        TimeAvailable = 63,
-                        DependsOnItems = new List<Item>
-                    {
-                        Item.SongLullaby,
-                        Item.SongLullabyIntro,
-                    },
-                    };
-                    ItemList.Add(lullabyFull);
-
-                    foreach (var itemObject in ItemList)
-                    {
-                        if (itemObject != lullabyFull && itemObject.DependsOnItems.Contains(Item.SongLullaby))
+                        foreach (var conditions in itemObject.Conditionals)
                         {
-                            itemObject.DependsOnItems.Remove(Item.SongLullaby);
-                            itemObject.DependsOnItems.Add(lullabyFull.Item);
-                        }
-
-                        if (itemObject != lullabyAny)
-                        {
-                            foreach (var conditions in itemObject.Conditionals)
+                            if (conditions.Contains(Item.SongLullaby))
                             {
-                                if (conditions.Contains(Item.SongLullaby))
-                                {
-                                    conditions.Remove(Item.SongLullaby);
-                                    conditions.Add(lullabyFull.Item);
-                                }
+                                conditions.Remove(Item.SongLullaby);
+                                conditions.Add(lullabyFull.Item);
                             }
                         }
+                    }
 
-                        if (itemObject != magicLarge && itemObject.DependsOnItems.Contains(Item.FairyDoubleMagic))
-                        {
-                            itemObject.DependsOnItems.Remove(Item.FairyDoubleMagic);
-                            itemObject.DependsOnItems.Add(magicLarge.Item);
-                        }
+                    if (itemObject != magicLarge && itemObject.DependsOnItems.Contains(Item.FairyDoubleMagic))
+                    {
+                        itemObject.DependsOnItems.Remove(Item.FairyDoubleMagic);
+                        itemObject.DependsOnItems.Add(magicLarge.Item);
+                    }
 
-                        if (itemObject != magicAny)
+                    if (itemObject != magicAny)
+                    {
+                        foreach (var conditions in itemObject.Conditionals)
                         {
-                            foreach (var conditions in itemObject.Conditionals)
+                            if (conditions.Contains(Item.FairyDoubleMagic))
                             {
-                                if (conditions.Contains(Item.FairyDoubleMagic))
-                                {
-                                    conditions.Remove(Item.FairyDoubleMagic);
-                                    conditions.Add(magicLarge.Item);
-                                }
+                                conditions.Remove(Item.FairyDoubleMagic);
+                                conditions.Add(magicLarge.Item);
                             }
                         }
+                    }
 
-                        if (itemObject != wallets999 && itemObject.DependsOnItems.Contains(Item.UpgradeRoyalWallet))
-                        {
-                            itemObject.DependsOnItems.Remove(Item.UpgradeRoyalWallet);
-                            itemObject.DependsOnItems.Add(wallets999.Item);
-                        }
+                    if (itemObject != wallets999 && itemObject.DependsOnItems.Contains(Item.UpgradeRoyalWallet))
+                    {
+                        itemObject.DependsOnItems.Remove(Item.UpgradeRoyalWallet);
+                        itemObject.DependsOnItems.Add(wallets999.Item);
+                    }
 
-                        if (itemObject != wallets200 && itemObject != wallets500)
+                    if (itemObject != wallets200 && itemObject != wallets500)
+                    {
+                        foreach (var conditions in itemObject.Conditionals)
                         {
-                            foreach (var conditions in itemObject.Conditionals)
+                            if (conditions.Contains(Item.UpgradeRoyalWallet))
                             {
-                                if (conditions.Contains(Item.UpgradeRoyalWallet))
-                                {
-                                    conditions.Remove(Item.UpgradeRoyalWallet);
-                                    conditions.Add(wallets999.Item);
-                                }
+                                conditions.Remove(Item.UpgradeRoyalWallet);
+                                conditions.Add(wallets999.Item);
+                            }
 
-                                if (conditions.Contains(Item.UpgradeGiantWallet))
-                                {
-                                    conditions.Remove(Item.UpgradeGiantWallet);
-                                    conditions.Add(wallets500.Item);
-                                }
+                            if (conditions.Contains(Item.UpgradeGiantWallet))
+                            {
+                                conditions.Remove(Item.UpgradeGiantWallet);
+                                conditions.Add(wallets500.Item);
                             }
                         }
+                    }
 
-                        if (itemObject != sword3 && itemObject.DependsOnItems.Contains(Item.UpgradeGildedSword))
-                        {
-                            itemObject.DependsOnItems.Remove(Item.UpgradeGildedSword);
-                            itemObject.DependsOnItems.Add(sword3.Item);
-                        }
+                    if (itemObject != sword3 && itemObject.DependsOnItems.Contains(Item.UpgradeGildedSword))
+                    {
+                        itemObject.DependsOnItems.Remove(Item.UpgradeGildedSword);
+                        itemObject.DependsOnItems.Add(sword3.Item);
+                    }
 
-                        if (itemObject != sword1 && itemObject != sword2)
+                    if (itemObject != sword1 && itemObject != sword2)
+                    {
+                        foreach (var conditions in itemObject.Conditionals)
                         {
-                            foreach (var conditions in itemObject.Conditionals)
+                            if (conditions.Contains(Item.UpgradeGildedSword))
                             {
-                                if (conditions.Contains(Item.UpgradeGildedSword))
-                                {
-                                    conditions.Remove(Item.UpgradeGildedSword);
-                                    conditions.Add(sword3.Item);
-                                }
+                                conditions.Remove(Item.UpgradeGildedSword);
+                                conditions.Add(sword3.Item);
+                            }
 
-                                if (conditions.Contains(Item.UpgradeRazorSword))
-                                {
-                                    conditions.Remove(Item.UpgradeRazorSword);
-                                    conditions.Add(sword2.Item);
-                                }
+                            if (conditions.Contains(Item.UpgradeRazorSword))
+                            {
+                                conditions.Remove(Item.UpgradeRazorSword);
+                                conditions.Add(sword2.Item);
                             }
                         }
+                    }
 
-                        if (itemObject != bombs40 && itemObject.DependsOnItems.Contains(Item.UpgradeBiggestBombBag))
-                        {
-                            itemObject.DependsOnItems.Remove(Item.UpgradeBiggestBombBag);
-                            itemObject.DependsOnItems.Add(bombs40.Item);
-                        }
+                    if (itemObject != bombs40 && itemObject.DependsOnItems.Contains(Item.UpgradeBiggestBombBag))
+                    {
+                        itemObject.DependsOnItems.Remove(Item.UpgradeBiggestBombBag);
+                        itemObject.DependsOnItems.Add(bombs40.Item);
+                    }
 
-                        if (itemObject != bombs20 && itemObject != bombs30 && itemObject.Item != Item.OtherExplosive)
+                    if (itemObject != bombs20 && itemObject != bombs30 && itemObject.Item != Item.OtherExplosive)
+                    {
+                        foreach (var conditions in itemObject.Conditionals)
                         {
-                            foreach (var conditions in itemObject.Conditionals)
+                            if (conditions.Contains(Item.UpgradeBiggestBombBag))
                             {
-                                if (conditions.Contains(Item.UpgradeBiggestBombBag))
-                                {
-                                    conditions.Remove(Item.UpgradeBiggestBombBag);
-                                    conditions.Add(bombs40.Item);
-                                }
+                                conditions.Remove(Item.UpgradeBiggestBombBag);
+                                conditions.Add(bombs40.Item);
+                            }
 
-                                if (conditions.Contains(Item.UpgradeBigBombBag))
-                                {
-                                    conditions.Remove(Item.UpgradeBigBombBag);
-                                    conditions.Add(bombs30.Item);
-                                }
+                            if (conditions.Contains(Item.UpgradeBigBombBag))
+                            {
+                                conditions.Remove(Item.UpgradeBigBombBag);
+                                conditions.Add(bombs30.Item);
                             }
                         }
+                    }
 
-                        if (itemObject != arrows50 && itemObject.DependsOnItems.Contains(Item.UpgradeBiggestQuiver))
-                        {
-                            itemObject.DependsOnItems.Remove(Item.UpgradeBiggestQuiver);
-                            itemObject.DependsOnItems.Add(arrows50.Item);
-                        }
+                    if (itemObject != arrows50 && itemObject.DependsOnItems.Contains(Item.UpgradeBiggestQuiver))
+                    {
+                        itemObject.DependsOnItems.Remove(Item.UpgradeBiggestQuiver);
+                        itemObject.DependsOnItems.Add(arrows50.Item);
+                    }
 
-                        if (itemObject != arrows40 && itemObject.Item != Item.OtherArrow)
+                    if (itemObject != arrows40 && itemObject.Item != Item.OtherArrow)
+                    {
+                        foreach (var conditions in itemObject.Conditionals)
                         {
-                            foreach (var conditions in itemObject.Conditionals)
+                            if (conditions.Contains(Item.UpgradeBiggestQuiver))
                             {
-                                if (conditions.Contains(Item.UpgradeBiggestQuiver))
-                                {
-                                    conditions.Remove(Item.UpgradeBiggestQuiver);
-                                    conditions.Add(arrows50.Item);
-                                }
+                                conditions.Remove(Item.UpgradeBiggestQuiver);
+                                conditions.Add(arrows50.Item);
+                            }
 
-                                if (conditions.Contains(Item.UpgradeBigQuiver))
-                                {
-                                    conditions.Remove(Item.UpgradeBigQuiver);
-                                    conditions.Add(arrows40.Item);
-                                }
+                            if (conditions.Contains(Item.UpgradeBigQuiver))
+                            {
+                                conditions.Remove(Item.UpgradeBigQuiver);
+                                conditions.Add(arrows40.Item);
                             }
                         }
                     }
                 }
+            }
 
-                if (_settings.BombchuDrops)
-                {
-                    bombchu10.Conditionals.Add(new List<Item> { Item.ChestIkanaSecretShrineGrotto });
-                    bombchu10.Conditionals.Add(new List<Item> { Item.ChestTerminaGrottoBombchu });
-                    bombchu10.Conditionals.Add(new List<Item> { Item.ChestGreatBayCapeGrotto });
-                    bombchu10.Conditionals.Add(new List<Item> { Item.ChestGraveyardGrotto });
-                    bombchu10.Conditionals.Add(new List<Item> { Item.ChestToIkanaGrotto });
-                    bombchu10.Conditionals.Add(new List<Item> { Item.ChestToGoronRaceGrotto });
-                }
+            if (_settings.BombchuDrops)
+            {
+                bombchu10.Conditionals.Add(new List<Item> { Item.ChestIkanaSecretShrineGrotto });
+                bombchu10.Conditionals.Add(new List<Item> { Item.ChestTerminaGrottoBombchu });
+                bombchu10.Conditionals.Add(new List<Item> { Item.ChestGreatBayCapeGrotto });
+                bombchu10.Conditionals.Add(new List<Item> { Item.ChestGraveyardGrotto });
+                bombchu10.Conditionals.Add(new List<Item> { Item.ChestToIkanaGrotto });
+                bombchu10.Conditionals.Add(new List<Item> { Item.ChestToGoronRaceGrotto });
+            }
 
-                if (!_settings.CustomItemList.Contains(Item.ChestLinkTrialBombchu10))
+            if (!_settings.CustomItemList.Contains(Item.ChestLinkTrialBombchu10))
+            {
+                ItemList[Item.HeartPieceLinkTrial].Conditionals.ForEach(c => c.Remove(bombchu10.Item));
+                var completeLinkTrial = ItemList.FirstOrDefault(io => io.Name == "Complete Link Trial");
+                if (completeLinkTrial != null)
                 {
-                    ItemList[Item.HeartPieceLinkTrial].Conditionals.ForEach(c => c.Remove(bombchu10.Item));
-                    var completeLinkTrial = ItemList.FirstOrDefault(io => io.Name == "Complete Link Trial");
-                    if (completeLinkTrial != null)
-                    {
-                        completeLinkTrial.Conditionals.ForEach(c => c.Remove(bombchu10.Item));
-                    }
+                    completeLinkTrial.Conditionals.ForEach(c => c.Remove(bombchu10.Item));
                 }
             }
         }
@@ -983,7 +980,11 @@ namespace MMR.Randomizer
             }
             else
             {
-                ItemList = LogicUtils.PopulateItemListWithoutLogic();
+                // TODO if failed to load glitched logic, let user decide to continue without any logic
+                //ItemList = LogicUtils.PopulateItemListWithoutLogic();
+                var data = LogicUtils.ReadRulesetFromResources(LogicMode.Glitched, null);
+                ItemList = LogicUtils.PopulateItemListFromLogicData(data);
+                ItemList.ForEach(io => io.IsTrick = false);
             }
         }
 
@@ -2932,118 +2933,121 @@ namespace MMR.Randomizer
                     }
                 }
 
-                progressReporter.ReportProgress(32, "Calculating item importance...");
-
-                var logicForImportance = _randomized.Logic.Select(il => new ItemLogic(il)).ToList();
-                freeItemIds.Clear();
-                do
+                if (_settings.LogicMode != LogicMode.NoLogic)
                 {
-                    updated = false;
-                    foreach (var itemLogic in logicForImportance.Where(il => !freeItemIds.Contains(il.ItemId)))
-                    {
-                        var item = (Item)itemLogic.ItemId;
-                        var isFake = item.IsFake() && (!item.Region(ItemList).HasValue || item.Entrance() != null);
-                        if (isFake && (!ItemList[itemLogic.ItemId].IsTrick || _settings.EnabledTricks.Contains(ItemList[itemLogic.ItemId].Name)) && !itemLogic.RequiredItemIds.Any() && !itemLogic.ConditionalItemIds.Any())
-                        {
-                            freeItemIds.Add(itemLogic.ItemId);
-                            updated = true;
-                            continue;
-                        }
+                    progressReporter.ReportProgress(32, "Calculating item importance...");
 
-                        if ((itemLogic.RequiredItemIds?.All(freeItemIds.Contains) != false)
-                            && (itemLogic.ConditionalItemIds?.Any(c => c.All(freeItemIds.Contains)) != false))
+                    var logicForImportance = _randomized.Logic.Select(il => new ItemLogic(il)).ToList();
+                    freeItemIds.Clear();
+                    do
+                    {
+                        updated = false;
+                        foreach (var itemLogic in logicForImportance.Where(il => !freeItemIds.Contains(il.ItemId)))
                         {
-                            itemLogic.RequiredItemIds.Clear();
-                            itemLogic.ConditionalItemIds.Clear();
-                            if (isFake)
+                            var item = (Item)itemLogic.ItemId;
+                            var isFake = item.IsFake() && (!item.Region(ItemList).HasValue || item.Entrance() != null);
+                            if (isFake && (!ItemList[itemLogic.ItemId].IsTrick || _settings.EnabledTricks.Contains(ItemList[itemLogic.ItemId].Name)) && !itemLogic.RequiredItemIds.Any() && !itemLogic.ConditionalItemIds.Any())
                             {
                                 freeItemIds.Add(itemLogic.ItemId);
                                 updated = true;
+                                continue;
+                            }
+
+                            if ((itemLogic.RequiredItemIds?.All(freeItemIds.Contains) != false)
+                                && (itemLogic.ConditionalItemIds?.Any(c => c.All(freeItemIds.Contains)) != false))
+                            {
+                                itemLogic.RequiredItemIds.Clear();
+                                itemLogic.ConditionalItemIds.Clear();
+                                if (isFake)
+                                {
+                                    freeItemIds.Add(itemLogic.ItemId);
+                                    updated = true;
+                                }
                             }
                         }
                     }
-                }
-                while (updated);
+                    while (updated);
 
-                var logicForRequiredItems = _settings.LogicMode == LogicMode.Casual && _settings.GossipHintStyle == GossipHintStyle.Competitive
-                    ? logicForImportance.Select(il =>
-                    {
-                        var itemLogic = new ItemLogic(il);
+                    var logicForRequiredItems = _settings.LogicMode == LogicMode.Casual && _settings.GossipHintStyle == GossipHintStyle.Competitive
+                        ? logicForImportance.Select(il =>
+                        {
+                            var itemLogic = new ItemLogic(il);
 
                         // prevent Giant's Mask from being Way of the Hero.
                         itemLogic.RequiredItemIds.Remove((int)Item.MaskGiant);
 
-                        return itemLogic;
-                    }).ToList()
-                    : logicForImportance;
+                            return itemLogic;
+                        }).ToList()
+                        : logicForImportance;
 
-                var checkedLocations = new Dictionary<Item, LogicUtils.LogicPaths>();
-                var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForImportance, checkedLocations: checkedLocations);
-                var importantLocations = logicPaths?.Important.Where(item => item.Region(ItemList).HasValue && item.Entrance() == null).Distinct().ToHashSet();
-                var importantSongLocations = logicPaths?.ImportantSongLocations.ToList();
-                if (importantLocations == null)
-                {
-                    throw new RandomizationException("Moon Access is unobtainable.");
-                }
-                _randomized.CheckedImportanceLocations = checkedLocations;
-                var locationsRequiredForMoonAccess = new ConcurrentDictionary<Item, bool>(logicPaths.Required.ToDictionary(item => item, item => true));
-
-                // dont see a way to convert hashset to ConcurrentDictionary and then back, so mutex it is
-                Mutex importantLocationsMutex = new Mutex();
-                Mutex importantSongLocationsMutex = new Mutex();
-                var cts = new CancellationTokenSource();
-                var po = new ParallelOptions();
-                po.CancellationToken = cts.Token;
-                progressReporter.ReportProgress(32, "Verifying item importance...", cts);
-                try
-                {
-                    Parallel.ForEach(importantLocations.ToList(), po, (location, state) =>
+                    var checkedLocations = new Dictionary<Item, LogicUtils.LogicPaths>();
+                    var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForImportance, checkedLocations: checkedLocations);
+                    var importantLocations = logicPaths?.Important.Where(item => item.Region(ItemList).HasValue && item.Entrance() == null).Distinct().ToHashSet();
+                    var importantSongLocations = logicPaths?.ImportantSongLocations.ToList();
+                    if (importantLocations == null)
                     {
-                        var item = ItemList.First(io => io.NewLocation == (location.MainLocation() ?? location)).Item;
-                        if (!ItemUtils.CanBeRequired(item))
-                        {
-                            return;
-                        }
-                        var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, cts: cts, exclude: location);
-                        if (checkPaths != null)
-                        {
-                            locationsRequiredForMoonAccess.Remove(location, out bool _);
-                            importantLocationsMutex.WaitOne();
-                            importantLocations.UnionWith(checkPaths.Important.Distinct().Where(item => item.Region(ItemList).HasValue && item.Entrance() == null));
-                            importantLocationsMutex.ReleaseMutex();
-
-                            importantSongLocationsMutex.WaitOne();
-                            importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
-                            importantSongLocationsMutex.ReleaseMutex();
-                        }
+                        throw new RandomizationException("Moon Access is unobtainable.");
                     }
-                    );
-                }
-                catch (OperationCanceledException)
-                {
+                    _randomized.CheckedImportanceLocations = checkedLocations;
+                    var locationsRequiredForMoonAccess = new ConcurrentDictionary<Item, bool>(logicPaths.Required.ToDictionary(item => item, item => true));
 
-                }
-                finally
-                {
-                    cts.Dispose();
-                }
+                    // dont see a way to convert hashset to ConcurrentDictionary and then back, so mutex it is
+                    Mutex importantLocationsMutex = new Mutex();
+                    Mutex importantSongLocationsMutex = new Mutex();
+                    var cts = new CancellationTokenSource();
+                    var po = new ParallelOptions();
+                    po.CancellationToken = cts.Token;
+                    progressReporter.ReportProgress(32, "Verifying item importance...", cts);
+                    try
+                    {
+                        Parallel.ForEach(importantLocations.ToList(), po, (location, state) =>
+                        {
+                            var item = ItemList.First(io => io.NewLocation == (location.MainLocation() ?? location)).Item;
+                            if (!ItemUtils.CanBeRequired(item))
+                            {
+                                return;
+                            }
+                            var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, cts: cts, exclude: location);
+                            if (checkPaths != null)
+                            {
+                                locationsRequiredForMoonAccess.Remove(location, out bool _);
+                                importantLocationsMutex.WaitOne();
+                                importantLocations.UnionWith(checkPaths.Important.Distinct().Where(item => item.Region(ItemList).HasValue && item.Entrance() == null));
+                                importantLocationsMutex.ReleaseMutex();
 
-                // TODO one day maybe check if song of time is actually required
-                var songOfTime = ItemList[Item.SongTime];
-                var songOfTimeImportantItems = Enumerable.Empty<Item>();
-                if (songOfTime.Item == Item.SongTime)
-                {
-                    progressReporter.ReportProgress(32, "Calculating song of time importance...");
+                                importantSongLocationsMutex.WaitOne();
+                                importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
+                                importantSongLocationsMutex.ReleaseMutex();
+                            }
+                        }
+                        );
+                    }
+                    catch (OperationCanceledException)
+                    {
 
-                    var songOfTimeLocation = ItemList[Item.SongTime].NewLocation.Value;
-                    importantLocations.Add(songOfTimeLocation);
-                    var songOfTimePaths = LogicUtils.GetImportantLocations(ItemList, _settings, songOfTimeLocation, logicForImportance);
-                    songOfTimeImportantItems = songOfTimePaths.Important;
+                    }
+                    finally
+                    {
+                        cts.Dispose();
+                    }
+
+                    // TODO one day maybe check if song of time is actually required
+                    var songOfTime = ItemList[Item.SongTime];
+                    var songOfTimeImportantItems = Enumerable.Empty<Item>();
+                    if (songOfTime.Item == Item.SongTime)
+                    {
+                        progressReporter.ReportProgress(32, "Calculating song of time importance...");
+
+                        var songOfTimeLocation = ItemList[Item.SongTime].NewLocation.Value;
+                        importantLocations.Add(songOfTimeLocation);
+                        var songOfTimePaths = LogicUtils.GetImportantLocations(ItemList, _settings, songOfTimeLocation, logicForImportance);
+                        songOfTimeImportantItems = songOfTimePaths.Important;
+                    }
+
+                    _randomized.ImportantLocations = importantLocations.Union(songOfTimeImportantItems).Distinct().ToList().AsReadOnly();
+                    _randomized.ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly();
+                    _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.Keys.ToList().AsReadOnly();
                 }
-
-                _randomized.ImportantLocations = importantLocations.Union(songOfTimeImportantItems).Distinct().ToList().AsReadOnly();
-                _randomized.ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly();
-                _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.Keys.ToList().AsReadOnly();
 
                 if (_settings.GossipHintStyle != GossipHintStyle.Default)
                 {
