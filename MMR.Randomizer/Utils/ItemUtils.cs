@@ -366,7 +366,16 @@ namespace MMR.Randomizer.Utils
                 return new List<Item>();
             }
             var remainsAmount = remainsAmountPool.Random(random, (amount) => 1.0f / amount);
-            var startingRemains = BossRemains().ToList().Random(remainsAmount, random);
+            var extraStartingRemains = BossRemains().Intersect(settings.CustomStartingItemList).ToList();
+            Item[] startingRemains;
+            if (remainsAmount <= extraStartingRemains.Count)
+            {
+                startingRemains = extraStartingRemains.Random(remainsAmount, random);
+            }
+            else
+            {
+                startingRemains = extraStartingRemains.Union(BossRemains().Except(extraStartingRemains).ToList().Random(remainsAmount - extraStartingRemains.Count, random)).ToArray();
+            }
             var debugItemObjects = new List<ItemObject>();
             var remainsInLairs = new Dictionary<Item, Item>
             {
