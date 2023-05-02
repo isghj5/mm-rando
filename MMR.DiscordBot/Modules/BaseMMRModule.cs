@@ -59,7 +59,7 @@ namespace MMR.DiscordBot.Modules
 
         protected async Task<Discord.Rest.RestUserMessage> ReplySendFileAsync(string filepath)
         {
-            var messageReference = new MessageReference(Context.Message.Id, Context.Channel.Id, Context.Guild.Id);
+            var messageReference = new MessageReference(Context.Message.Id, Context.Channel.Id, Context.Guild?.Id);
             return await Context.Channel.SendFileAsync(filepath, allowedMentions: AllowedMentions.None, messageReference: messageReference);
         }
 
@@ -273,6 +273,11 @@ namespace MMR.DiscordBot.Modules
             string settingPath = null;
             if (!string.IsNullOrWhiteSpace(settingName))
             {
+                if (Context.Guild == null)
+                {
+                    await ReplyNoTagAsync("Settings are unavailable in direct messages.");
+                    return;
+                }
                 settingPath = _mmrService.GetSettingsPath(Context.Guild.Id, settingName);
                 if (!File.Exists(settingPath))
                 {
@@ -546,6 +551,7 @@ namespace MMR.DiscordBot.Modules
         }
 
         [Command("mystery")]
+        [RequireContext(ContextType.Guild)]
         public async Task MysterySeed([Remainder] string categoryName)
         {
             if (!await VerifySeedFrequency())
