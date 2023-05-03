@@ -205,6 +205,13 @@ namespace MMR.Randomizer.Extensions
             return item.Name() == null;
         }
 
+        public static bool CanBeStartedWith(this Item item)
+        {
+            return item.HasAttribute<StartingTingleMapAttribute>()
+                || item.HasAttribute<StartingItemIdAttribute>()
+                || item.HasAttribute<StartingItemAttribute>();
+        }
+
         public static IList<DungeonEntrance> DungeonEntrances(this Item item)
         {
             if (!item.HasAttribute<DungeonEntranceAttribute>())

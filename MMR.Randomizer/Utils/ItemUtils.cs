@@ -289,6 +289,7 @@ namespace MMR.Randomizer.Utils
         public static ReadOnlyCollection<Item> LogicallyJunkItems { get; private set; }
         public static void PrepareJunkItems(List<ItemObject> itemList)
         {
+            BlitzJunkLocations = new List<Item>();
             LogicallyJunkItems = itemList
                 .Where(io => !itemList.Any(other => (other.DependsOnItems?.Contains(io.Item) ?? false) || (other.Conditionals?.Any(c => c.Contains(io.Item)) ?? false)))
                 .Select(io => io.Item)
@@ -343,7 +344,6 @@ namespace MMR.Randomizer.Utils
 
         public static List<Item> PrepareBlitz(GameplaySettings settings, ItemList itemList, Random random)
         {
-            BlitzJunkLocations = new List<Item>();
             var remainsAmountPool = new List<int>();
             if (settings.BossRemainsMode.HasFlag(BossRemainsMode.Blitz1))
             {
@@ -376,6 +376,8 @@ namespace MMR.Randomizer.Utils
             {
                 startingRemains = extraStartingRemains.Union(BossRemains().Except(extraStartingRemains).ToList().Random(remainsAmount - extraStartingRemains.Count, random)).ToArray();
             }
+            var result = new List<Item>();
+            result.AddRange(startingRemains);
             var debugItemObjects = new List<ItemObject>();
             var remainsInLairs = new Dictionary<Item, Item>
             {
@@ -391,6 +393,12 @@ namespace MMR.Randomizer.Utils
                 { Item.AreaGyorgsLair, new Item[] { Item.AreaGreatBayTempleAccess } },
                 { Item.AreaTwinmoldsLair, new Item[] { Item.AreaInvertedStoneTowerTempleAccess, Item.AreaStoneTowerTempleAccess } },
             };
+            IEnumerable<Item> filter(IEnumerable<Item> items)
+            {
+                return items
+                    .Where(item => item.IsFake() || item.IsBottleCatchContent())
+                    .Select(item => itemList[item].NewLocation ?? item);
+            }
             foreach (var bossRemain in startingRemains)
             {
                 var lairAccess = remainsInLairs[bossRemain];
@@ -404,39 +412,43 @@ namespace MMR.Randomizer.Utils
                     do
                     {
                         updated = false;
-                        foreach (var io in itemList.Where(io => !BlitzJunkLocations.Contains(io.Item)))
+                        foreach (var io in itemList)
                         {
-                            var dependsOnItems = io.DependsOnItems
-                                .Where(item => item.IsFake())
-                                .Select(item => itemList[item].NewLocation ?? item);
-                            var conditionals = io.Conditionals
-                                .Select(c => c.Where(item => item.IsFake()).Select(item => itemList[item].NewLocation ?? item));
+                            var location = (Item)io.ID;
+                            if (BlitzJunkLocations.Contains(location))
+                            {
+                                continue;
+                            }
+                            var dependsOnItems = filter(io.DependsOnItems);
+                            var conditionals = io.Conditionals.Select(c => filter(c));
                             if (dependsOnItems.Intersect(BlitzJunkLocations).Any() || (conditionals.Any() && conditionals.All(c => c.Intersect(BlitzJunkLocations).Any())))
                             {
-                                BlitzJunkLocations.Add(io.Item);
+                                BlitzJunkLocations.Add(location);
                                 debugItemObjects.Add(io);
                                 updated = true;
+                                if (!io.Item.IsFake() && !io.ItemOverride.HasValue && io.NewLocation == io.Item)
+                                {
+                                    result.Add(io.Item); // player starts with any non-randomized blitzed item
+                                }
                             }
                             else
                             {
-                                io.Conditionals.RemoveAll(c => c.Where(item => item.IsFake()).Select(item => itemList[item].NewLocation ?? item).Intersect(BlitzJunkLocations).Any());
+                                io.Conditionals.RemoveAll(c => filter(c).Intersect(BlitzJunkLocations).Any());
                             }
                         }
                     } while (updated);
                 }
             }
             BlitzJunkLocations.RemoveAll(location => !location.Region(itemList).HasValue || location.Entrance() != null);
-
-            var result = new List<Item>();
-            result.AddRange(startingRemains);
+            result.RemoveAll(item => !item.CanBeStartedWith());
             return result;
         }
 
         public static bool IsLocationJunk(Item location, GameplaySettings settings)
         {
             return settings.CustomJunkLocations.Contains(location)
-                || (HintedJunkLocations?.Contains(location) ?? false)
-                || BlitzJunkLocations.Contains(location);
+                || (HintedJunkLocations?.Contains(location) == true)
+                || (BlitzJunkLocations?.Contains(location) == true);
         }
 
         public static bool CanBeRequired(Item item)

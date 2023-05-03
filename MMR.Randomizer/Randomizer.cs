@@ -995,8 +995,8 @@ namespace MMR.Randomizer
             UpdateLogicForSettings();
 
             ItemUtils.PrepareHintedJunkLocations(_settings, Random);
-            _randomized.BlitzExtraItems = ItemUtils.PrepareBlitz(_settings, ItemList, Random);
             ItemUtils.PrepareJunkItems(ItemList);
+            _randomized.BlitzExtraItems = new List<Item>();
             if (_settings.CustomJunkLocations.Count > ItemUtils.JunkItems.Count) // TODO also account for HintedJunkLocations and BlitzJunkLocations
             {
                 throw new Exception($"Too many Enforced Junk Locations. Select up to {ItemUtils.JunkItems.Count}.");
@@ -1658,11 +1658,6 @@ namespace MMR.Randomizer
             }
 
             foreach (var item in _settings.CustomStartingItemList)
-            {
-                ItemList[item].ItemOverride = Item.RecoveryHeart;
-            }
-
-            foreach (var item in _randomized.BlitzExtraItems)
             {
                 ItemList[item].ItemOverride = Item.RecoveryHeart;
             }
@@ -2863,6 +2858,17 @@ namespace MMR.Randomizer
 
                 progressReporter.ReportProgress(30, "Shuffling items...");
                 SetupItems();
+
+                _randomized.BlitzExtraItems.AddRange(ItemUtils.PrepareBlitz(_settings, ItemList, Random));
+
+                foreach (var item in _randomized.BlitzExtraItems)
+                {
+                    ItemList[item].ItemOverride = Item.RecoveryHeart;
+                }
+
+                // TODO check junk location count against junk item count
+
+
                 RandomizeItems();
                 if (_settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
                 {
