@@ -3292,9 +3292,13 @@ namespace MMR.Randomizer
                 newMessages.Add(swampSkulltulaEntry);
             }
 
-            if (_randomized.Settings.CustomItemList.Any(item => item.ItemCategory() == ItemCategory.StrayFairies))
+            foreach (var fairy in ItemUtils.DungeonStrayFairies().Append(Item.CollectibleStrayFairyClockTown))
             {
-                ResourceUtils.ApplyHack(Resources.mods.fix_fairies);
+                if (_randomized.ItemList[fairy].Item != fairy) // maybe also check if any IsRandomized?
+                {
+                    ResourceUtils.ApplyHack(Resources.mods.fix_fairies);
+                    break;
+                }
             }
 
             if (_randomized.Settings.UpdateNPCText)
