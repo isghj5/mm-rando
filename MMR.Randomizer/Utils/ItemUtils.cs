@@ -396,7 +396,7 @@ namespace MMR.Randomizer.Utils
             IEnumerable<Item> filter(IEnumerable<Item> items)
             {
                 return items
-                    .Where(item => item.IsFake() || item.IsBottleCatchContent())
+                    .Where(item => item.IsFake() || item.IsBottleCatchContent() || (!itemList[item].ItemOverride.HasValue && itemList[item].Item == itemList[item].NewLocation && !item.CanBeStartedWith()))
                     .Select(item => itemList[item].NewLocation ?? item);
             }
             foreach (var bossRemain in startingRemains)
@@ -426,7 +426,7 @@ namespace MMR.Randomizer.Utils
                                 BlitzJunkLocations.Add(location);
                                 debugItemObjects.Add(io);
                                 updated = true;
-                                if (!io.Item.IsFake() && !io.ItemOverride.HasValue && io.NewLocation == io.Item)
+                                if (!io.ItemOverride.HasValue && io.NewLocation == io.Item && io.Item.CanBeStartedWith())
                                 {
                                     result.Add(io.Item); // player starts with any non-randomized blitzed item
                                 }
@@ -440,7 +440,6 @@ namespace MMR.Randomizer.Utils
                 }
             }
             BlitzJunkLocations.RemoveAll(location => !location.Region(itemList).HasValue || location.Entrance() != null);
-            result.RemoveAll(item => !item.CanBeStartedWith());
             return result;
         }
 
