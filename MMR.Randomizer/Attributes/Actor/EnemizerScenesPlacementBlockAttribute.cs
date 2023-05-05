@@ -43,4 +43,24 @@ namespace MMR.Randomizer.Attributes
             BlockedReplacements = blockedEnemies;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    class EnemizerSceneBlockSensitiveAttribute : Attribute
+    {
+        public GameObjects.Actor OriginalEnemy { get; private set; }
+        public List<int> SpecificVariants { get; private set; }
+
+        public EnemizerSceneBlockSensitiveAttribute(GameObjects.Actor originalEnemy, int blockedReplacement, params int[] blockedReplacements)
+        {
+            OriginalEnemy = originalEnemy;
+            var blockedEnemies = new List<int>() { blockedReplacement };
+            if (blockedReplacements.Length > 0)
+            {
+                blockedEnemies.AddRange(blockedReplacements);
+            }
+            SpecificVariants = blockedEnemies;
+        }
+    }
+
+
 }

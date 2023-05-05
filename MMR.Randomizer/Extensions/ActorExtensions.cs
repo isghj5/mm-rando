@@ -417,5 +417,35 @@ namespace MMR.Randomizer.Extensions
         {
             return actor.GetAttribute<ActorInitVarOffsetAttribute>()?.Offset ?? -1;
         }
+
+        public static bool IsBlockable(this Actor actor, Scene scene, int actorPos)
+        {
+            /// checks if a specific actor in a scene at scene read time is blockable
+
+            // quickly check if the scene cares
+            var sceneBlockingConditions = scene.GetAttributes<EnemizerSceneBlockSensitiveAttribute>();
+            if (sceneBlockingConditions == null) return true;
+
+            // does the scene have a case for this actor
+            EnemizerSceneBlockSensitiveAttribute searchResult = null;
+            foreach (var condition in sceneBlockingConditions)
+            {
+                if (condition.OriginalEnemy == actor)
+                {
+                    searchResult = condition;
+                }
+            }
+            if (searchResult == null) return true;
+
+            // if we want all block sensitive, we have what we need leave early
+            if (actorPos == -1) return false;
+
+            // else, check if this is one of the blocked positions
+            var sensitivePositions = searchResult.SpecificVariants;
+            if (sensitivePositions.Contains(actorPos)) return false;
+
+            return true;
+        }
+
     }
 }

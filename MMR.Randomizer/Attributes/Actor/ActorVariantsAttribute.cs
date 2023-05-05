@@ -79,12 +79,24 @@ namespace MMR.Randomizer.Attributes.Actor
         public PathingVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
     }
 
+    // blocking
+    public class BlockingVariantsAttribute : ActorVariantsAttribute
+    {
+        public BlockingVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
+    }
+
     // we often want to place restrictions on how many of an actor can possibly spawn
 
     public class OnlyOneActorPerRoom : Attribute
     {
         public bool OneMAX = true;
     }
+
+    public class BlockingVariantsAll : Attribute
+    {
+        public bool AllBlock = true;
+    }
+
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class VariantsWithRoomMax : Attribute

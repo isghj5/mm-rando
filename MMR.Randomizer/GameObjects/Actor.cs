@@ -115,6 +115,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(1)]
         // 81 is trapped in ice, floats back up to the ceiling after melting
         [GroundVariants(0x81)]
+        [BlockingVariants(0x81)]
         [VariantsWithRoomMax(max: 1, variant: 0x81)] // have to limit because it can block and I don't have variant blocking
         [RespawningVariants(variant: 0x81)] // if they fly away after melt they might not come down (bug), so not killable
         [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
@@ -477,6 +478,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0)] // the 101 and above are for warp TO bosses
         [VariantsWithRoomMax(max: 1, variant: 0x0)]
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         [EnemizerScenesExcluded(Scene.DekuTrial, Scene.GoronTrial, Scene.LinkTrial, Scene.ZoraTrial)]
         WarpDoor = 0x38, // Door_Warp1
 
@@ -568,6 +570,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0xA)] // UGLY
         //[GroundVariants(0xFF01, 0xFF1A)] //testing
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         //[EnemizerScenesExcluded(Scene.TerminaField, Scene.TwinIslandsSpring)] // need to keep in termina field for rupee rando
         Treee = 0x41, // En_Wood2
 
@@ -672,6 +675,7 @@ namespace MMR.Randomizer.GameObjects
         //[WaterVariants(0)]
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         [FlyingToGroundHeightAdjustment(200)]
         ///* 
         [EnemizerScenesPlacementBlock(
@@ -1071,6 +1075,7 @@ namespace MMR.Randomizer.GameObjects
         // ice block room has 0x64 and 0x96, 0xFF in goron block puzzle room
         // smithy uses size 0x78, 0x10 is smol
         [GroundVariants(0xFF10, 0xFF20, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
+        [BlockingVariants(0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         // all restricted because they add colliders which limits our BGcheck options for other things
         [VariantsWithRoomMax(max: 1, variant: 0xFF10, 0xFF20, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         //[VariantsWithRoomMax(max: 1, variant: 0xFFC8, 0xFF96, 0xFF78)]
@@ -1341,6 +1346,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x1F2 you get bugs if you pick it up, best version
         [GroundVariants(0x1F2, 0xFE01)]
         [VariantsWithRoomMax(max: 1, variant: 0xFE01)]
+        [BlockingVariants(1, 0xFE01)]
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
         [EnemizerScenesExcluded(Scene.TerminaField)] // dont replace them in TF
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
@@ -1403,6 +1409,7 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0)]
         [ObjectListIndex(0x106)]
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         En_Stream = 0xB8, // En_Stream
 
         //[ActorizerEnabled] // behavior is weird, hard to randomly place anywhere
@@ -1481,6 +1488,7 @@ namespace MMR.Randomizer.GameObjects
         //[WaterVariants(0)]
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         [FlyingToGroundHeightAdjustment(200)]
         ///*
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack,
@@ -1673,9 +1681,10 @@ namespace MMR.Randomizer.GameObjects
         // params: 0x1 is winter coat, 0x80 is with ice block
         // ice block versions are limited because they are complicated collision and really long draw distance
         [GroundVariants(0xFF01, 0xFF81, 0xFF00, 0xFF80)]
-        // they don't respawn, but if placed on a spawn next to a wall they can get pushed back out
+        // they don't respawn, but if placed on a spawn next to a wall they can get pushed through the wall and become unkillable
         // so we do not want to put them in rooms where you have to clear all enemies
         [RespawningVariants(0xFF80, 0xFF81)]
+        [BlockingVariants(0xFF80, 0xFF81)] // iceblock they spawn
         [VariantsWithRoomMax(max: 1, variant: 0xFF81)]
         [VariantsWithRoomMax(max: 1, variant: 0xFF80)]
         Wolfos = 0xEC, // En_Wf
@@ -1816,16 +1825,19 @@ namespace MMR.Randomizer.GameObjects
         EmptyFB = 0xFB,
 
         // todo randomize just so palace has more actors
+        [ActorizerEnabled]
         [FileID(233)]
         [ObjectListIndex(0x2)]
+        [WaterVariants(0)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        [BlockingVariantsAll]
         BronzeBoulder = 0xFC, // Obj_Hamishi
 
         // glitchy early version of skullkid
         [FileID(234)]
         [ObjectListIndex(0x192)]
         // cutscene actor of some sort, if it doesnt crash it loads a tpose skullkid with missing model parts
-        En_Zl4 = 0xFD, // En_Zl4
+        Unused_En_Zl4 = 0xFD, // En_Zl4
 
         //[ActorizerEnabled] // we dont want as an actual actor, we want as a companion
         // why is the letter of all things in gameplay_keep? maybe its the same texture of LTK?
@@ -1843,6 +1855,7 @@ namespace MMR.Randomizer.GameObjects
 
         Empty101 = 0x101,
 
+        // TODO
         // ... puzzle block? like what?
         [FileID(237)]
         [ObjectListIndex(0x1)]
@@ -1868,6 +1881,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x7E)]
         [VariantsWithRoomMax(max: 4, variant: 0x7E)] // 11 overloaded gorman race track
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard)] // too much dyna
         ArmosStatue = 0x105, // Obj_Armos
@@ -1879,6 +1893,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 5, variant: 0)] // culling distance is too long
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall)]
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         Bumper = 0x106, // Obj_Boyo
 
         Empty107 = 0x107,
@@ -1969,6 +1984,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x3C0)] // zero index, always safe
         [EnemizerScenesExcluded(Scene.GoronTrial)]
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         WarpToTrialEntrance = 0x116, // En_Warp_tag
 
         // dog race owner
@@ -2319,6 +2335,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 3, variant: 0)]
         //[EnemizerScenesExcluded(Scene.EastClockTown)]
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall, Scene.LaundryPool, Scene.PiratesFortress,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTower, // big blocking
             Scene.StoneTower)] // too much dyna, only one is allowed
@@ -2466,6 +2483,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0x3F5F)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall)] // hiploop only, bad spot for a fire
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         // possible second switch at 0x3F8
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 8)] // 0x3FC
@@ -2724,6 +2742,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingVariants(0x700, 0x940)]
         [PathingTypeVarsPlacement(mask: 0x3F, shift: 0)]
         [OnlyOneActorPerRoom]
+        [BlockingVariantsAll] // until we can fix his pathing, he will just sit there as a statue most of the time
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         [EnemizerScenesPlacementBlock(Scene.TerminaField)] // nothing wrong, just no place to put and huge object slows generation down
         [SwitchFlagsPlacement(mask: 0x7F, shift: 6)]
@@ -2804,6 +2823,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         [EnemizerScenesExcluded(Scene.LostWoods)]
         LostWoodsCutsceneTrees = 0x190, // Dm_Opstage
 
@@ -3030,6 +3050,7 @@ namespace MMR.Randomizer.GameObjects
         //  instead we modified it and inject changes to get it working
         [FileID(402)]
         [ObjectListIndex(0x88)]
+        [BlockingVariantsAll]
         [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, // dyna crash possible
             Scene.StoneTower, Scene.DekuPlayground)] // dyna crash possible
         ClocktowerGearsAndOrgan = 0x1B6, // Bg_Ctower_Gear
@@ -3168,7 +3189,8 @@ namespace MMR.Randomizer.GameObjects
         // 0x5AXX seems to be the blocking path ice walls from snowhead temple
         //[GroundVariants(0x5A00)] 
         [UnkillableAllVariants]
-        IceBlock = 0x1C8, // Obj_BigIcicle
+        [BlockingVariantsAll]
+        NorthTFIceBlock = 0x1C8, // Obj_BigIcicle
 
         [FileID(419)]
         [ObjectListIndex(0x1E5)]
@@ -3206,11 +3228,12 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         SoaringEffects = 0x1CE, // En_Test7
 
-        //[ActorizerEnabled]
+        [ActorizerEnabled]
         [FileID(424)]
         [ObjectListIndex(0x1B3)]
         [GroundVariants(0x101, 0x201)]
         [WaterVariants(0x01)] // non vanilla
+        [BlockingVariantsAll]
         [SwitchFlagsPlacement(mask: 0xF00, shift: 8)]
         LightBlock = 0x1CF, // Obj_Lightblock
 
@@ -3291,6 +3314,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Grottos,
             Scene.GoronRacetrack, Scene.GoronRacetrack)] // slows down player too much in a race setting
         [SwitchFlagsPlacement(mask: 0xFF, shift: 4)]
+        [BlockingVariantsAll]
         GibdoWell = 0x1DA, // En_Talk_Gibud
 
         [FileID(436)]
@@ -3349,6 +3373,7 @@ namespace MMR.Randomizer.GameObjects
         //[VariantsWithRoomMax(max:1, 0xFFFF, 0x600, 0x702, 0x801)]
         [OnlyOneActorPerRoom] // issue: three on redead in stonetower is crash, but not two, not worth issue
         [UnkillableAllVariants] // actually I'm not sure, it has health
+        [BlockingVariantsAll]
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall, // blocking enemies
             Scene.SouthernSwamp)] // 75% chance of crash, reason unk
@@ -3464,6 +3489,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0, 1, 2, 3)]
         [CompanionActor(LetterToPostman, ourVariant: -1, variant: 0)]
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         //[EnemizerScenesExcluded(Scene.WestClockTown, Scene.SouthClockTown, Scene.NorthClockTown, Scene.EastClockTown)]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
@@ -3683,6 +3709,7 @@ namespace MMR.Randomizer.GameObjects
             0xFE04, 0xFE05)] // ocean spiderhouse
         [VariantsWithRoomMax(max: 0, variant: 0xFF02, 0xFE04, 0xFE05)] // temp disable, as double object actor is broken
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
         // looking at moon, don't place him underground
@@ -3735,6 +3762,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [EnemizerScenesExcluded(Scene.GoronShrine)] // remove and it crashes, dont know why
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
         GoronElder = 0x213, // En_Jg
@@ -3880,6 +3908,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0, 1, 3, 2, 6, 5, 7, 8, 9, 0xF)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         [EnemizerScenesExcluded(Scene.SouthClockTown, Scene.MilkRoad, Scene.WestClockTown,
              Scene.Woodfall, Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.MountainVillage, Scene.MountainVillageSpring, Scene.Snowhead,
              Scene.GreatBayCoast, Scene.ZoraCape, Scene.IkanaCanyon, Scene.StoneTower, Scene.InvertedStoneTower)]
@@ -3944,6 +3973,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear,// known dyna issues
             Scene.StoneTower, Scene.StoneTowerTemple, Scene.SouthernSwamp)] // assumed issues
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         UglyTree = 0x229, // Obj_Tree
 
         // unused in vanilla, its just a mesh elevator like fire temple
@@ -3959,6 +3989,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.SouthernSwamp, Scene.SouthernSwampClear,
             Scene.GormanTrack, Scene.DekuTrial)] // blocking potentially
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         //[OnlyOneActorPerRoom] // probably dyna crash to be worried about
         UnusedPirateElevator = 0x22A, // Obj_Y2lift
         
@@ -4038,6 +4069,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingVariants(0, 0x81, 0x82, 0x83, 0x84, 0x85)]
         [PathingTypeVarsPlacement(mask:0xFF00, shift:8)]
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         //[EnemizerScenesExcluded(Scene.IkanaCanyon)] // dont replace the train
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         GibdoIkana = 0x235, // En_Railgibud
@@ -4075,6 +4107,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFE0F)]
         [WaterVariants(0xFE0F, 0xFE02, 0xFE01)]
         [OnlyOneActorPerRoom]
+        [BlockingVariantsAll]
         [UnkillableAllVariants]
         Tijo = 0x238, // En_Zod // drummer zora band member
 
@@ -4195,6 +4228,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(540)]
         [ObjectListIndex(0x5C)]
         [SwitchFlagsPlacement(mask: 0xFE, shift: 9)]
+        [BlockingVariantsAll]
         StoneTowerBlock = 0x245, // Bg_F40_Block
         
         [FileID(541)]
@@ -4217,6 +4251,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0, 0x1, 0x2)]
         [VariantsWithRoomMax(max:0, variant:1)]
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         [OnlyOneActorPerRoom] // if two of them are near to each other, and player appears near his nearby music can break
         //[EnemizerScenesExcluded(Scene.StockPotInn, Scene.LaundryPool, Scene.MilkBar)] // think him being in milkbar is a credits thing
         [EnemizerScenesPlacementBlock(Scene.MountainVillageSpring)] // his music can break Frog Choir
@@ -4360,6 +4395,7 @@ namespace MMR.Randomizer.GameObjects
         [CompanionActor(DekuFlower, ourVariant: -1, variant: 0x17F)]
         [CompanionActor(GrassRockCluster, ourVariant: -1, variant: 0x801)]
         [UnkillableAllVariants] // I think?
+        [BlockingVariantsAll]
         SleepingScrub = 0x25F, // En_Hidden_Nuts
 
         [ActorizerEnabled]
@@ -4644,6 +4680,7 @@ namespace MMR.Randomizer.GameObjects
             )]
         [GroundVariants(0x0)]
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         BomberHideoutGuard = 0x281, // En_Bombers2
 
         [ActorizerEnabled] // broken: if you pop it, it locks you in a never ending cutscene
@@ -4902,7 +4939,7 @@ namespace MMR.Randomizer.GameObjects
         // requires three objects: her own, OBJECT_AN4, OBJECT_MSMO,
         [FileID(644)]
         [ObjectListIndex(0xE2)]
-        Dm_Gm = 0x2AD, // Dm_Gm
+        Unused_Dm_Gm = 0x2AD, // Dm_Gm
         
         [FileID(645)]
         [ObjectListIndex(0x1)]

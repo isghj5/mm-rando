@@ -170,6 +170,7 @@ namespace MMR.Randomizer
                             // TODO: type lookup is not always accurate
                             mapActor.Type = matchingEnemy.GetType(mapActor.OldVariant);
                             mapActor.AllVariants = Actor.BuildVariantList(matchingEnemy);
+                            mapActor.Blockable = mapActor.ActorEnum.IsBlockable(scene.SceneEnum, actorNumber);
                             sceneEnemyList.Add(mapActor);
                         }
                     }
@@ -1918,11 +1919,13 @@ namespace MMR.Randomizer
             for (int objectIndex = 0; objectIndex < thisSceneData.Objects.Count; objectIndex++)
             {
                 // get a list of all enemies (in this room) that have the same OBJECT as our object that have an actor we also have
-                thisSceneData.ActorsPerObject.Add(thisSceneData.Actors.FindAll(act => act.OldObjectId == thisSceneData.Objects[objectIndex]));
+                var currentTargetActors = thisSceneData.Actors.FindAll(act => act.OldObjectId == thisSceneData.Objects[objectIndex]);
+                thisSceneData.ActorsPerObject.Add(currentTargetActors);
                 // we want to detect if this scene/actor combo can drop fairies early
                 var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(act => act.ObjectIndex() == thisSceneData.Objects[objectIndex]);
+                var objectHasBlockingSensitivity = currentTargetActors.Any(actor => actor.Blockable == false);
                 // get a list of matching actors that can fit in the place of the previous actor
-                var newCandiateList = GetMatchPool(thisSceneData, thisSceneData.ActorsPerObject[objectIndex], objectHasFairyDroppingEnemy);
+                var newCandiateList = GetMatchPool(thisSceneData, thisSceneData.ActorsPerObject[objectIndex], objectHasFairyDroppingEnemy, objectHasBlockingSensitivity);
                 if (newCandiateList.Find(act => act.Variants.Count == 0) != null) // haven't gotten this error in awhile, but leaving here in case I break something
                 {
                     throw new Exception("GenActorCandidatees: zero variants detected");
@@ -1956,7 +1959,7 @@ namespace MMR.Randomizer
             }
         }
 
-        public static List<Actor> GetMatchPool(SceneEnemizerData thisSceneData, List<Actor> oldActors, bool containsFairyDroppingEnemy)
+        public static List<Actor> GetMatchPool(SceneEnemizerData thisSceneData, List<Actor> oldActors, bool containsFairyDroppingEnemy, bool hasBlockingSensitivity)
         {
             var reducedCandidateList = Actor.CopyActorList(thisSceneData.AcceptableCandidates);
             var enemyMatchesPool = new List<Actor>();
@@ -1982,7 +1985,7 @@ namespace MMR.Randomizer
                 ReplacementListRemove(reducedCandidateList, blockedActor);
             }
 
-            // todo does this NEED to be a double loop? does anything change per enemy copy that we should worry about?
+            // TODO does this NEED to be a double loop? does anything change per enemy copy that we should worry about?
             for (var oldActorIndex = 0; oldActorIndex < oldActors.Count; oldActorIndex++) // this is all copies of an enemy in a scene, so all bo or all guay
             {
                 var oldActor = oldActors[oldActorIndex];
@@ -2009,11 +2012,23 @@ namespace MMR.Randomizer
                                 continue; // can't put this enemy here: it has no non-respawning variants
                             }
                         }
+                        else if (oldActor.Blockable == false)
+                        {
+                            if (newEnemy.ActorEnum.GetAttribute<BlockingVariantsAll>() != null)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                newEnemy.RemoveBlockingTypes();
+                            }
+                        }
                         else
                         {
                             newEnemy.Variants = compatibleVariants;
                         }
 
+                        // ACCEPTABLE
                         enemyMatchesPool.Add(newEnemy);
                     }
                 } // for each candidate end
@@ -2104,11 +2119,29 @@ namespace MMR.Randomizer
                 }
 
                 // if the actor being trimmed is a free actor, remove from possible replacements
+                // TODO this should really already happen before we get this far? can we assume we will never cross dip?
                 var freeActorSearch = roomFreeActors.Find(act => act.ActorId == actorType.ActorId);
                 if (freeActorSearch != null)
                 {
                     roomFreeActors.Remove(freeActorSearch);
                 }
+
+                if (actorType.Blockable == false)
+                {
+                    // if not blockable, we need to trim free room candidates that can be blocking type
+                    foreach(var candidate in roomFreeActors.ToArray())
+                    {
+                        if (candidate.ActorEnum.GetAttribute<BlockingVariantsAll>() != null)
+                        {
+                            roomFreeActors.Remove(candidate);
+                        }
+                        else
+                        {
+                            candidate.RemoveBlockingTypes();
+                        }
+                    }
+                }
+
 
                 // kill the rest since max is reached
                 // we want to limit replacements here above the per-actor function to save re-doing it
@@ -2704,7 +2737,7 @@ namespace MMR.Randomizer
                     //WriteOutput($"  match time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                     TrimAllActors(thisSceneData, previousyAssignedCandidate, temporaryMatchEnemyList);
-                   // WriteOutput($"  trim/free time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
+                    // WriteOutput($"  trim/free time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                     previousyAssignedCandidate.Clear();
                 } // end for actors per object

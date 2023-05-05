@@ -35,6 +35,7 @@ namespace MMR.Randomizer.Models.Rom
         public ActorType Type; 
         public bool IsCompanion = false;
         public bool previouslyMovedCompanion = false;
+        public bool Blockable = true;
 
         // used for vanilla actors (not for replacements)
         public int ActorSize; // todo
@@ -471,6 +472,16 @@ namespace MMR.Randomizer.Models.Rom
             groundVariantEntry.AddRange(injectedActor.groundVariants.Except(groundVariantEntry));
             var flyingVariantEntry = this.AllVariants[(int)ActorType.Ground - 1];
             flyingVariantEntry.AddRange(injectedActor.flyingVariants.Except(flyingVariantEntry));
+        }
+
+
+        public void RemoveBlockingTypes()
+        {
+            var blockingTypeVariants = this.ActorEnum.GetAttribute<BlockingVariantsAttribute>();
+            if (blockingTypeVariants != null)
+            {
+                this.Variants = this.Variants.Where(var => ! blockingTypeVariants.Variants.Contains(var)).ToList();
+            }
         }
     }
 }
