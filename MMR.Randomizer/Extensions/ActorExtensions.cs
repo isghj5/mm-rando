@@ -438,7 +438,7 @@ namespace MMR.Randomizer.Extensions
             if (searchResult == null) return true;
 
             // if we want all block sensitive, we have what we need leave early
-            if (actorPos == -1) return false;
+            if (searchResult.SpecificVariants.Count == 1 && searchResult.SpecificVariants[0] == -1) return false;
 
             // else, check if this is one of the blocked positions
             var sensitivePositions = searchResult.SpecificVariants;

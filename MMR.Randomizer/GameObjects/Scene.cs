@@ -68,8 +68,9 @@ namespace MMR.Randomizer.GameObjects
             //Actor.Nejiron, Actor.RedBubble, 
             Actor.RegularIceBlock)] // blocking actors
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // grottos are common, this can get silly
-            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard,
-            Actor.WarpDoor
+            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard//, Actor.BomberHideoutGuard // annoying
+
+
             //Actor.Bumper, Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, Actor.RegularIceBlock,
             /*Actor.ClocktowerGearsAndOrgan /*, Actor.PatrollingPirate */ )]
         [EnemizerSceneBlockSensitive(Actor.DekuBabaWithered, -1)]
@@ -263,6 +264,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1310)]
         [SceneInternalId(0x2D)]
+        // this actor is mostly ignored, player might not even notice, dont waste lots of object budget on this thing
+        [EnemizerSceneEnemyReplacementBlock(Actor.ClayPot,
+            Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
         // these actors are only seen in the credits, we should block all large object actors from these spots to save generation time
         [EnemizerSceneEnemyReplacementBlock(Actor.ViscenMoonLeaveCutscene,
             Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
@@ -449,6 +453,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1421)]
         [SceneInternalId(0x52)]
+        [EnemizerSceneBlockSensitive(Actor.MadShrub, -1)]
         DekuShrine = 0x4F,
 
         [FileID(1431)]
@@ -579,7 +584,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x6C)]
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Gorman,
         //    Actor.ClocktowerGearsAndOrgan, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // organ is huge, covers the mayor's door
-        [EnemizerSceneBlockSensitive(Actor.BombersYouChase, -1)] // was moved next to mayors door, large bodies can actually block this
+        [EnemizerSceneBlockSensitive(Actor.Gorman, -1)] // was moved next to mayors door, large bodies can actually block this
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
             Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BomberHideoutGuard,
@@ -592,24 +597,29 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1512)]
         [SceneInternalId(0x6D)]
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
-            Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
+        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+        //    Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
+        [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
         WestClockTown = 0x6A,
 
         [FileID(1514)]
         [SceneInternalId(0x6E)]
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
-            Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
+        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+        //    Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
+        [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
         NorthClockTown = 0x6B,
 
         [FileID(1516)]
         [SceneInternalId(0x6F)]
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Carpenter,
+        /*[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Carpenter,
             Actor.RegularIceBlock, Actor.Bumper, Actor.CircleOfFire, Actor.GoronElder, Actor.LightBlock, // can block day 3 chest, TODO move it so we can re-enable
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, // chest can raise to match height,putting it out of reach
             Actor.PatrollingPirate)] // could be annoying, hard to leave
+        */
+        [EnemizerSceneBlockSensitive(Actor.Carpenter, -1)] // TODO figure out which one is the issue one
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
-            Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
+            Actor.PatrollingPirate )] // could be annoying, hard to leave
+        [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
         SouthClockTown = 0x6C,
 
         [FileID(1518)]
