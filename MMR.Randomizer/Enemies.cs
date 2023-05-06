@@ -1601,7 +1601,9 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Dinofos.ObjectIndex(),
                 GameObjects.Actor.Scarecrow.ObjectIndex(),
                 GameObjects.Actor.PatrollingPirate.ObjectIndex(),
-                GameObjects.Actor.GossipStone.ObjectIndex()
+                GameObjects.Actor.GossipStone.ObjectIndex(),
+                GameObjects.Actor.LabFish.ObjectIndex(),
+                GameObjects.Actor.SkullKidPainting.ObjectIndex()
             };
 
             var actorObjectsDetected = thisSceneData.ChosenReplacementObjects.Find(v => listTroubleActorsObj.Contains(v.ChosenV)) != null;
@@ -1615,7 +1617,9 @@ namespace MMR.Randomizer
                 GameObjects.Actor.PatrollingPirate,
                 GameObjects.Actor.Tingle,
                 GameObjects.Actor.GrottoHole,
-                GameObjects.Actor.GossipStone
+                GameObjects.Actor.GossipStone,
+                GameObjects.Actor.LabFish,
+                GameObjects.Actor.SkullKidPainting
             };
 
             for (int i = 0; i < thisSceneData.Actors.Count(); i++) // thisSceneData.Actors is only the actors we change
@@ -1814,7 +1818,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DragonFly, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.DeathArmos)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.EastClockTown, GameObjects.Actor.Gorman, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
+                if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.LikeLike, GameObjects.Actor.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.GateSoldier, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.WarpDoor)) continue;
 
@@ -3413,7 +3417,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 46.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 47.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

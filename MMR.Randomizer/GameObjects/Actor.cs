@@ -3477,7 +3477,7 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0)]
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(Scene.MarineLab)]
-        [EnemizerScenesPlacementBlock(Scene.GreatBayCoast, Scene.ZoraCape)] // issue: if both fish and labfish spawn, they eat, and cutscene locks
+        //[EnemizerScenesPlacementBlock(Scene.GreatBayCoast, Scene.ZoraCape)] // issue: if both fish and labfish spawn, they eat, and cutscene locks
         LabFish = 0x1F1, // En_Fish2
 
         [ActorizerEnabled]
