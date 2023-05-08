@@ -242,8 +242,9 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x29)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Scarecrow, // can block the stairs
             Actor.ClocktowerGearsAndOrgan)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // can block the stairs
-            Actor.ClocktowerGearsAndOrgan)]
+        //[EnemizerSceneEnemyReplacementBlock(Actor.Torch, // can block the stairs
+        //    Actor.ClocktowerGearsAndOrgan)]
+        [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
         AstralObservatory = 0x26, // and sewer leading to it
 
         [FileID(1301)]
@@ -325,10 +326,11 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1332)]
         [SceneInternalId(0x38)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.LikeLike,
-            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo,
-            Actor.Bombiwa, Actor.BronzeBoulder, Actor.CircleOfFire,
-            Actor.RegularZora, Actor.SwimmingZora, Actor.WarpDoor)]
+        //[EnemizerSceneEnemyReplacementBlock(Actor.LikeLike,
+        //    Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo,
+        //    Actor.Bombiwa, Actor.BronzeBoulder, Actor.CircleOfFire,
+        //    Actor.RegularZora, Actor.SwimmingZora, Actor.WarpDoor)]
+        [EnemizerSceneBlockSensitive(Actor.LikeLike, -1)]
         ZoraCape = 0x35,
 
         [FileID(1334)]

@@ -4818,6 +4818,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(624)]
         [ObjectListIndex(0x15)]
         [GroundVariants(0)]
+        [VariantsWithRoomMax(max: 9, variant:0)] // too many will lag
         [UnkillableAllVariants]
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GoronRacetrack)]
