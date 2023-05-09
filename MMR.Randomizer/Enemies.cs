@@ -2276,13 +2276,25 @@ namespace MMR.Randomizer
                     var testEnemyCompatibleVariants = oldActor.CompatibleVariants(testEnemy, thisSceneData.RNG);
                     if (testEnemyCompatibleVariants == null) continue;  // no type compatibility, skip
 
+                    if (oldActor.Blockable == false)
+                    {
+                        if (testEnemy.ActorEnum.GetAttribute<BlockingVariantsAll>() != null)
+                        {
+                            continue; // test actor is always blocking, oldactor cannot be blocked, continue to next actor
+                        }
+                        else
+                        {
+                            testEnemyCompatibleVariants = testEnemy.RemoveBlockingTypes();
+                        }
+                    }
+
                     var respawningVariants = testEnemy.RespawningVariants;
                     if ((oldActor.MustNotRespawn || roomIsClearPuzzleRoom) && respawningVariants != null)
                     {
                         testEnemyCompatibleVariants.RemoveAll(variant => respawningVariants.Contains(variant));
                     }
 
-                    if (testEnemyCompatibleVariants.Count == 0) continue;  // cannot use respawning enemies here, skip
+                    if (testEnemyCompatibleVariants.Count == 0) continue;  // no variants remain, leave
 
                     var enemyHasMaximums = testEnemy.HasVariantsWithRoomLimits();
                     var acceptableVariants = new List<int>();

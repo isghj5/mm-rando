@@ -475,13 +475,15 @@ namespace MMR.Randomizer.Models.Rom
         }
 
 
-        public void RemoveBlockingTypes()
+        public List<int> RemoveBlockingTypes()
         {
             var blockingTypeVariants = this.ActorEnum.GetAttribute<BlockingVariantsAttribute>();
             if (blockingTypeVariants != null)
             {
                 this.Variants = this.Variants.Where(var => ! blockingTypeVariants.Variants.Contains(var)).ToList();
             }
+
+            return this.Variants;
         }
     }
 }
