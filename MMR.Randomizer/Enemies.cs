@@ -1603,6 +1603,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.PatrollingPirate.ObjectIndex(),
                 GameObjects.Actor.GossipStone.ObjectIndex(),
                 GameObjects.Actor.LabFish.ObjectIndex(),
+                GameObjects.Actor.Lightblock.ObjectIndex(),
                 GameObjects.Actor.SkullKidPainting.ObjectIndex()
             };
 
@@ -1619,6 +1620,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.GrottoHole,
                 GameObjects.Actor.GossipStone,
                 GameObjects.Actor.LabFish,
+                GameObjects.Actor.Lightblock,
                 GameObjects.Actor.SkullKidPainting
             };
 
@@ -1812,7 +1814,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.RedBubble)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Lightblock)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;

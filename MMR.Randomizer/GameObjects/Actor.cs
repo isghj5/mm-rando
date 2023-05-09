@@ -3228,14 +3228,17 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         SoaringEffects = 0x1CE, // En_Test7
 
-        [ActorizerEnabled]
+        //[ActorizerEnabled]
+        // this actor CRASHES if you hit it with a light arrow
+        // more specifically it spawns Demo_Effect which crashes trying to draw its curv skeleton, reason unknown
         [FileID(424)]
         [ObjectListIndex(0x1B3)]
         [GroundVariants(0x101, 0x201)]
-        [WaterVariants(0x01)] // non vanilla
-        [BlockingVariantsAll]
+        [WaterVariants(0x1)] // dont normally show up down there but its fine
         [SwitchFlagsPlacement(mask: 0xF00, shift: 8)]
-        LightBlock = 0x1CF, // Obj_Lightblock
+        [UnkillableAllVariants] // I think...?
+        [BlockingVariantsAll]
+        Lightblock = 0x1CF, // Obj_Lightblock
 
         //[EnemizerEnabled] // no spawn, probably requires ikana king as parent
         [FileID(425)]

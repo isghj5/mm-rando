@@ -194,6 +194,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.DragonFly, // if you kill it at long range or such that its dying body falls to first floor it wont count
             Actor.WarpDoor, // Cannot walk through them to get to the chest under
             Actor.Wolfos)] // wolfos: ice wolfos can push the regular actual dog backwards through the wall
+        [EnemizerSceneBlockSensitive(Actor.Freezard, 5)] // can block access to the elevator
         [FairyDroppingEnemies(11, 2, 3)] // dinofos 
         SnowheadTemple = 0x1E,
 
