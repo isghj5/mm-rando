@@ -2116,6 +2116,14 @@ namespace MMR.Randomizer
                     }
                 }
 
+                // for now until I can be sure the code after this is working, always reserve one
+                if (removedCount == 0)
+                {
+                    var randomChoice = thisSceneData.RNG.Next(trimCandidates.Count);
+                    trimCandidates.RemoveAt(randomChoice);
+                    removedCount += 1;
+                }
+
                 // remove random enemies until max for variant is reached
                 int extraCullCapacity = (trimCandidates.Count >= 1) ? (trimCandidates.Count - 1) : (0);
                 var extraCullChosen = thisSceneData.RNG.Next(0, extraCullCapacity);
@@ -2131,23 +2139,6 @@ namespace MMR.Randomizer
                 {
                     roomFreeActors.Remove(freeActorSearch);
                 }
-
-                if (actorType.Blockable == false)
-                {
-                    // if not blockable, we need to trim free room candidates that can be blocking type
-                    foreach(var candidate in roomFreeActors.ToArray())
-                    {
-                        if (candidate.ActorEnum.GetAttribute<BlockingVariantsAll>() != null)
-                        {
-                            roomFreeActors.Remove(candidate);
-                        }
-                        else
-                        {
-                            candidate.RemoveBlockingTypes();
-                        }
-                    }
-                }
-
 
                 // kill the rest since max is reached
                 // we want to limit replacements here above the per-actor function to save re-doing it
@@ -3431,7 +3422,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 47.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 47.2\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
