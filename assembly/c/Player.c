@@ -27,7 +27,7 @@ void Player_PreventDangerousStates(ActorPlayer* player) {
         }
     }
 
-    // assume parent is hookshot for now.
+    // parent can be hookshot or epona
     // "&& player->base.parent->id == ACTOR_ARMS_HOOK" doesn't work because parent might be stale reference
     if (player->base.parent) {
         if ((player->stateFlags.state1 & PLAYER_STATE1_AIR)
@@ -35,6 +35,7 @@ void Player_PreventDangerousStates(ActorPlayer* player) {
             || (player->frozenTimer != 0
                 && player->heldItemActionParam != PLAYER_IA_HOOKSHOT
                 && player->heldItemActionParam != PLAYER_IA_OCARINA
+                && !(player->stateFlags.state1 & PLAYER_STATE1_EPONA)
                 && !(player->stateFlags.state3 & PLAYER_STATE3_HOOK_ARV))) {
             player->base.parent = NULL;
         }
