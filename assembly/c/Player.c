@@ -253,7 +253,7 @@ bool Player_AfterTransformInit(ActorPlayer* this) {
 void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 actionParam) {
     if (MISC_CONFIG.flags.bombArrows && item == ITEM_BOMB) {
         ActorEnArrow* arrow = (ActorEnArrow*)ArrowCycle_FindArrow(player, ctxt);
-        if (arrow != NULL) {
+        if (arrow != NULL && arrow->base.params == 2) {
             if (arrow->base.child == NULL) {
                 ActorEnBom* bomb = (ActorEnBom*) z2_Actor_SpawnAsChild(&ctxt->actorCtx, &arrow->base, ctxt, ACTOR_EN_BOM,
                                     arrow->base.currPosRot.pos.x, arrow->base.currPosRot.pos.y, arrow->base.currPosRot.pos.z,
