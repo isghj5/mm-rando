@@ -128,6 +128,8 @@
 .definelabel z2_load_objects, 0x8012F4FC
 .definelabel z2_GetObjectIndex, 0x8012F608
 .definelabel z2_AnimatedMat_Draw, 0x80131758
+.definelabel z2_Entrance_GetSceneIdAbsolute, 0x80132338
+.definelabel z2_Entrance_GetTransitionFlags, 0x801323A0
 .definelabel z2_SkelAnime_DrawFlexLod, 0x80133710
 .definelabel z2_SkelAnime_DrawLimb, 0x80133B3C
 .definelabel z2_SkelAnime_DrawLimb2, 0x80133F28
@@ -161,4 +163,6 @@
 .definelabel z2_PlaySfx, 0x8019F0C8
 .definelabel z2_PlaySfxDecide, 0x8019F208
 .definelabel z2_PlaySfxCancel, 0x8019F230
+.definelabel z2_Audio_PlayObjSoundBgm, 0x801A153C
 .definelabel z2_SetBGM2, 0x801A3098
+.definelabel z2_AudioSeq_GetActiveSeqId, 0x801A8A50

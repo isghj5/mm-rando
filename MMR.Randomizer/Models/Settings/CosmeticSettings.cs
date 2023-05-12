@@ -147,6 +147,15 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.WorldColorsConfig.Flags.BombTrapsRandomizeTunicColor = value; }
         }
 
+        /// <summary>
+        /// Minor music such as indoors and grottos will not play. Background music that is already playing will instead continue.
+        /// </summary>
+        public bool RemoveMinorMusic
+        {
+            get { return this.AsmOptions.MusicConfig.Flags.RemoveMinorMusic; }
+            set { this.AsmOptions.MusicConfig.Flags.RemoveMinorMusic = value; }
+        }
+
         #endregion
     }
 }

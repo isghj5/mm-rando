@@ -1010,6 +1010,12 @@ typedef struct {
     /* 0x10 */ Vec3f unk10;
 } GlobalContext1F78; // size = 0x1C
 
+typedef struct {
+    /* 0x0 */ u8   seqId;
+    /* 0x1 */ u8   ambienceId;
+} SequenceContext2; // size = 0x2
+// TODO rename the other SequenceContext to something more appropriate
+
 struct GlobalContext {
     /* 0x00000 */ GameState state;
     /* 0x000A4 */ s16 sceneNum;
@@ -1022,9 +1028,7 @@ struct GlobalContext {
     /* 0x00800 */ Camera* cameraPtrs[4];
     /* 0x00810 */ s16 activeCamera;
     /* 0x00812 */ s16 unk812;
-    /* 0x00814 */ u8 unk814;
-    /* 0x00815 */ u8 unk815;
-    /* 0x00816 */ UNK_TYPE1 pad816[0x2];
+    /* 0x00814 */ SequenceContext2 sequenceCtx;
     /* 0x00818 */ LightingContext lightCtx;
     /* 0x00828 */ u32 unk828;
     /* 0x0082C */ UNK_TYPE1 pad82C[0x4];
@@ -1483,8 +1487,8 @@ typedef struct {
     /* 0x088 */ UNK_TYPE1 pad88[0xA8];
     /* 0x130 */ u8 timers[0x40];
     /* 0x170 */ UNK_TYPE1 pad170[0x106];
-    /* 0x276 */ u8 unk276;
-    /* 0x277 */ UNK_TYPE1 unk277;
+    /* 0x276 */ u8 seqId;
+    /* 0x277 */ u8 ambienceId;
     /* 0x278 */ u8 buttonsUsable[5];
     /* 0x27D */ UNK_TYPE1 pad27D[0x3];
     /* 0x280 */ ButtonsState buttonsState;

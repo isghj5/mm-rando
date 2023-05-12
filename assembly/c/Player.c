@@ -146,10 +146,10 @@ void Player_BeforeHandleVoidingState(ActorPlayer* player, GlobalContext* ctxt) {
  **/
 bool Player_ShouldIceVoidZora(ActorPlayer* player, GlobalContext* ctxt) {
     switch (ctxt->sceneNum) {
-        case 0x1F: // Odolwa Boss Room
-        case 0x44: // Goht Boss Room
-        case 0x5F: // Gyorg Boss Room
-        case 0x36: // Twinmold Boss Room
+        case SCENE_MITURIN_BS: // Odolwa Boss Room
+        case SCENE_HAKUGIN_BS: // Goht Boss Room
+        case SCENE_SEA_BS: // Gyorg Boss Room
+        case SCENE_INISIE_BS: // Twinmold Boss Room
             return false;
         default:
             return true;

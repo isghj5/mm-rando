@@ -283,7 +283,7 @@ void Models_DrawItem00Shield(GlobalContext* ctxt, s8 graphicIdMinus1) {
 static u16 GetSkulltulaTokenGiIndex(Actor* actor, GlobalContext* ctxt) {
     u16 chestFlag = (actor->params & 0xFC) >> 2;
     // Checks if Swamp Spider House scene
-    u16 baseIndex = ctxt->sceneNum == 0x27 ? 0x13A : 0x158;
+    u16 baseIndex = ctxt->sceneNum == SCENE_KINSTA1 ? 0x13A : 0x158;
     u16 giIndex = baseIndex + chestFlag;
     return giIndex;
 }
@@ -406,11 +406,11 @@ bool Models_DrawStrayFairy(Actor* actor, GlobalContext* ctxt) {
 static u16 GetHeartContainerGiIndex(GlobalContext* ctxt) {
     // This is a (somewhat) reimplementation of MMR function at: 0x801DC138
     // The original function returns in A2 and A3 to setup calling a different function.
-    if (ctxt->sceneNum == 0x1F) {
+    if (ctxt->sceneNum == SCENE_MITURIN_BS) {
         return 0x11A;
-    } else if (ctxt->sceneNum == 0x44) {
+    } else if (ctxt->sceneNum == SCENE_HAKUGIN_BS) {
         return 0x11B;
-    } else if (ctxt->sceneNum == 0x5F) {
+    } else if (ctxt->sceneNum == SCENE_SEA_BS) {
         return 0x11C;
     } else {
         return 0x11D;

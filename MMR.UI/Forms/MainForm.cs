@@ -152,6 +152,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFastPush, "Increase the speed of pushing and pulling blocks and faucets.");
             TooltipBuilder.SetTooltip(cFreestanding, "Show world models as their actual item instead of the original item. This includes Pieces of Heart, Heart Containers, Skulltula Tokens, Stray Fairies, Moon's Tear and the Seahorse.");
             TooltipBuilder.SetTooltip(cEnableNightMusic, "Enables playing daytime Background music during nighttime in the field.\n(Clocktown night music can be weird)");
+            TooltipBuilder.SetTooltip(cRemoveMinorMusic, "Minor music such as indoors and grottos will not play. Background music that is already playing will instead continue.");
             TooltipBuilder.SetTooltip(cArrowCycling, "Cycle through arrow types when pressing R while an arrow is out when using the bow.");
             TooltipBuilder.SetTooltip(cCloseCows, "When playing Epona's Song for a group of cows, the closest cow will respond, instead of the default behavior.");
             TooltipBuilder.SetTooltip(cCombatMusicDisable, "Disables combat music around all regular (non boss or miniboss) enemies in the game.");
@@ -1195,6 +1196,7 @@ namespace MMR.UI.Forms
             cTargettingStyle.Checked = _configuration.CosmeticSettings.EnableHoldZTargeting;
             cInstantPictobox.Checked = !_configuration.CosmeticSettings.KeepPictoboxAntialiasing;
             cEnableNightMusic.Checked = _configuration.CosmeticSettings.EnableNightBGM;
+            cRemoveMinorMusic.Checked = _configuration.CosmeticSettings.RemoveMinorMusic;
             cBombTrapTunicColors.Checked = _configuration.CosmeticSettings.BombTrapsRandomizeTunicColor;
             cRainbowTunic.Checked = _configuration.CosmeticSettings.RainbowTunic;
 
@@ -1298,11 +1300,15 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.CosmeticSettings.RandomizeSounds = cSFX.Checked);
         }
 
+        private void cRemoveMinorMusic_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.CosmeticSettings.RemoveMinorMusic = cRemoveMinorMusic.Checked);
+        }
+
         private void cEnableNightMusic_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.CosmeticSettings.EnableNightBGM = cEnableNightMusic.Checked);
         }
-
 
         private void cMusic_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1963,6 +1969,7 @@ namespace MMR.UI.Forms
             cTatl.Enabled = v;
             cMusic.Enabled = v;
             cEnableNightMusic.Enabled = v;
+            cRemoveMinorMusic.Enabled = v;
             cLink.Enabled = v;
 
             cHUDHeartsComboBox.Enabled = v;

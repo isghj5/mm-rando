@@ -159,6 +159,7 @@ namespace MMR.UI.Forms
             this.lLink = new System.Windows.Forms.Label();
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cQuestItemKeep = new System.Windows.Forms.CheckBox();
             this.cUpdateNpcText = new System.Windows.Forms.CheckBox();
             this.cAddBombchuDrops = new System.Windows.Forms.CheckBox();
             this.lChestGame = new System.Windows.Forms.Label();
@@ -251,7 +252,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cQuestItemKeep = new System.Windows.Forms.CheckBox();
+            this.cRemoveMinorMusic = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1944,6 +1945,19 @@ namespace MMR.UI.Forms
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
             // 
+            // cQuestItemKeep
+            // 
+            this.cQuestItemKeep.AutoSize = true;
+            this.cQuestItemKeep.BackColor = System.Drawing.Color.Transparent;
+            this.cQuestItemKeep.Location = new System.Drawing.Point(172, 207);
+            this.cQuestItemKeep.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cQuestItemKeep.Name = "cQuestItemKeep";
+            this.cQuestItemKeep.Size = new System.Drawing.Size(162, 19);
+            this.cQuestItemKeep.TabIndex = 48;
+            this.cQuestItemKeep.Text = "Quest items through time";
+            this.cQuestItemKeep.UseVisualStyleBackColor = false;
+            this.cQuestItemKeep.CheckedChanged += new System.EventHandler(this.cQuestItemKeep_CheckedChanged);
+            // 
             // cUpdateNpcText
             // 
             this.cUpdateNpcText.AutoSize = true;
@@ -2359,6 +2373,7 @@ namespace MMR.UI.Forms
             // 
             // gCosmeticMusicSound
             // 
+            this.gCosmeticMusicSound.Controls.Add(this.cRemoveMinorMusic);
             this.gCosmeticMusicSound.Controls.Add(this.lLuckRoll);
             this.gCosmeticMusicSound.Controls.Add(this.tLuckRollPercentage);
             this.gCosmeticMusicSound.Controls.Add(this.lMusic);
@@ -3001,18 +3016,19 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // cQuestItemKeep
+            // cRemoveMinorMusic
             // 
-            this.cQuestItemKeep.AutoSize = true;
-            this.cQuestItemKeep.BackColor = System.Drawing.Color.Transparent;
-            this.cQuestItemKeep.Location = new System.Drawing.Point(172, 207);
-            this.cQuestItemKeep.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cQuestItemKeep.Name = "cQuestItemKeep";
-            this.cQuestItemKeep.Size = new System.Drawing.Size(162, 19);
-            this.cQuestItemKeep.TabIndex = 48;
-            this.cQuestItemKeep.Text = "Quest items through time";
-            this.cQuestItemKeep.UseVisualStyleBackColor = false;
-            this.cQuestItemKeep.CheckedChanged += new System.EventHandler(this.cQuestItemKeep_CheckedChanged);
+            this.cRemoveMinorMusic.AutoSize = true;
+            this.cRemoveMinorMusic.BackColor = System.Drawing.Color.Transparent;
+            this.cRemoveMinorMusic.ForeColor = System.Drawing.Color.Black;
+            this.cRemoveMinorMusic.Location = new System.Drawing.Point(132, 23);
+            this.cRemoveMinorMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cRemoveMinorMusic.Name = "cRemoveMinorMusic";
+            this.cRemoveMinorMusic.Size = new System.Drawing.Size(139, 19);
+            this.cRemoveMinorMusic.TabIndex = 48;
+            this.cRemoveMinorMusic.Text = "Remove Minor Music";
+            this.cRemoveMinorMusic.UseVisualStyleBackColor = false;
+            this.cRemoveMinorMusic.CheckedChanged += new System.EventHandler(this.cRemoveMinorMusic_CheckedChanged);
             // 
             // MainForm
             // 
@@ -3328,6 +3344,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cBombArrows;
         private System.Windows.Forms.CheckBox cUpdateNpcText;
         private System.Windows.Forms.CheckBox cQuestItemKeep;
+        private System.Windows.Forms.CheckBox cRemoveMinorMusic;
     }
 }
 

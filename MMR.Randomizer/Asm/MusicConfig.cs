@@ -6,10 +6,48 @@ using System.IO;
 
 namespace MMR.Randomizer.Asm
 {
+    public class MusicFlags
+    {
+        /// <summary>
+        /// Minor music such as indoors and grottos will not play. Background music that is already playing will instead continue.
+        /// </summary>
+        public bool RemoveMinorMusic { get; set; }
+
+        public MusicFlags()
+        {
+        }
+
+        public MusicFlags(uint flags)
+        {
+            Load(flags);
+        }
+
+        /// <summary>
+        /// Load from a <see cref="uint"/> integer.
+        /// </summary>
+        /// <param name="flags">Flags integer</param>
+        void Load(uint flags)
+        {
+            this.RemoveMinorMusic = ((flags >> 31) & 1) == 1;
+        }
+
+        /// <summary>
+        /// Convert to a <see cref="uint"/> integer.
+        /// </summary>
+        /// <returns>Integer</returns>
+        public uint ToInt()
+        {
+            uint flags = 0;
+            flags |= (this.RemoveMinorMusic ? (uint)1 : 0) << 31;
+            return flags;
+        }
+    }
+
     public struct MusicConfigStruct : IAsmConfigStruct
     {
         public uint Version;
         public int? SequenceMaskFileIndex;
+        public uint Flags;
 
         /// <summary>
         /// Convert to bytes.
@@ -22,6 +60,7 @@ namespace MMR.Randomizer.Asm
             {
                 writer.WriteUInt32(this.Version);
                 writer.Write(this.SequenceMaskFileIndex ?? 0);
+                writer.WriteUInt32(this.Flags);
 
                 return memoryStream.ToArray();
             }
@@ -33,6 +72,17 @@ namespace MMR.Randomizer.Asm
         public int? SequenceMaskFileIndex { get; set; }
 
         public const byte SEQUENCE_DATA_SIZE = 0x20;
+
+        public MusicFlags Flags { get; set; }
+
+        public MusicConfig() : this(new MusicFlags())
+        {
+        }
+
+        public MusicConfig(MusicFlags flags)
+        {
+            Flags = flags;
+        }
 
         public void FinalizeSettings(CosmeticSettings settings)
         {
@@ -52,6 +102,7 @@ namespace MMR.Randomizer.Asm
             {
                 Version = version,
                 SequenceMaskFileIndex = this.SequenceMaskFileIndex,
+                Flags = this.Flags.ToInt()
             };
         }
     }

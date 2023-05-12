@@ -169,6 +169,15 @@ namespace MMR.Randomizer
 
             ReadWriteUtils.WriteToROM(0xCA7F00 + 0x16818, 0x1000);
         }
+
+        private void WriteRemoveMinorMusic()
+        {
+            if (_cosmeticSettings.RemoveMinorMusic)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.remove_minor_music);
+            }
+        }
+
         #endregion
 
         private void WritePlayerModel()
@@ -5890,6 +5899,7 @@ namespace MMR.Randomizer
             WriteAudioSeq(new Random(BitConverter.ToInt32(hash, 0)), outputSettings);
             WriteMuteMusic();
             WriteEnemyCombatMusicMute();
+            WriteRemoveMinorMusic();
 
             progressReporter.ReportProgress(74, "Writing sound effects...");
             WriteSoundEffects(new Random(BitConverter.ToInt32(hash, 0)));

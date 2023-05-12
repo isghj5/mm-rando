@@ -186,3 +186,193 @@ s8 Music_GetAudioLoadType(AudioInfo* audioInfo, u8 audioType) {
         return defaultLoadType;
     }
 }
+
+static u8 sLastSeqId = 0xFF;
+static u8 sLastAmbienceId = 0xFF;
+
+bool Music_ShouldFadeOut(GlobalContext* ctxt, s16 sceneLayer) {
+    // TODO handle alternate exit scenarios
+    // TODO handle taking a water void exit: z_player line 5760
+    if (MUSIC_CONFIG.flags.removeMinorMusic) {
+        if (z2_AudioSeq_GetActiveSeqId(3) != 0xFFFF) { // SEQ_PLAYER_BGM_SUB is playing
+            return true;
+        }
+        switch (z2_AudioSeq_GetActiveSeqId(0)) {
+            case 0x0D: // NA_BGM_ALIEN_INVASION
+            case 0x38: // NA_BGM_MINI_BOSS
+                return true;
+                break;
+        }
+
+        u16 entrance = ctxt->warpDestination + sceneLayer;
+        s16 currentScene = ctxt->sceneNum;
+        s32 nextScene = z2_Entrance_GetSceneIdAbsolute(entrance);
+        if (nextScene == currentScene) {
+            return false;
+        }
+        if (gSaveContext.extra.voidFlag != -2) { // after-minigame respawn
+            switch (currentScene) {
+                case SCENE_KAKUSIANA: // Grottos
+                case SCENE_WITCH_SHOP: // Potion Shop
+                case SCENE_AYASHIISHOP: // Curiosity Shop
+                case SCENE_OMOYA: // Ranch House and Barn
+                case SCENE_BOWLING: // Honey and Darling
+                case SCENE_SONCHONOIE: // Mayor's Residence
+                //case SCENE_MILK_BAR: // Milk Bar
+                case SCENE_TAKARAYA: // Treasure Chest Shop
+                case SCENE_DEKUTES: // Deku Scrub Playground
+                case SCENE_SYATEKI_MIZU: // Town Shooting Gallery
+                case SCENE_SYATEKI_MORI: // Swamp Shooting Gallery
+                case SCENE_SINKAI: // Pinnacle Rock
+                case SCENE_YOUSEI_IZUMI: // Fairy's Fountain
+                case SCENE_KAJIYA: // Mountain Smithy
+                case SCENE_POSTHOUSE: // Post Office
+                case SCENE_LABO: // Marine Research Lab
+                case SCENE_8ITEMSHOP: // Trading Post
+                case SCENE_TAKARAKUJI: // Lottery Shop
+                case SCENE_FISHERMAN: // Fisherman's Hut
+                case SCENE_GORONSHOP: // Goron Shop
+                //case SCENE_35TAKI: // Waterfall Rapids
+                case SCENE_BANDROOM: // Zora Hall Rooms
+                case SCENE_GORON_HAKA: // Goron Graveyard
+                case SCENE_TOUGITES: // Poe Hut
+                case SCENE_DOUJOU: // Swordsman's School
+                case SCENE_MAP_SHOP: // Tourist Information
+                case SCENE_YADOYA: // Stock Pot Inn
+                case SCENE_BOMYA: // Bomb Shop
+                    return false;
+            }
+            switch (nextScene) {
+                case SCENE_KAKUSIANA: // Grottos
+                case SCENE_WITCH_SHOP: // Potion Shop
+                case SCENE_AYASHIISHOP: // Curiosity Shop
+                case SCENE_OMOYA: // Ranch House and Barn
+                case SCENE_BOWLING: // Honey and Darling
+                case SCENE_SONCHONOIE: // Mayor's Residence
+                //case SCENE_MILK_BAR: // Milk Bar
+                case SCENE_TAKARAYA: // Treasure Chest Shop
+                case SCENE_DEKUTES: // Deku Scrub Playground
+                case SCENE_MITURIN_BS: // Odolwa's Lair
+                case SCENE_SYATEKI_MIZU: // Town Shooting Gallery
+                case SCENE_SYATEKI_MORI: // Swamp Shooting Gallery
+                case SCENE_SINKAI: // Pinnacle Rock
+                case SCENE_YOUSEI_IZUMI: // Fairy's Fountain
+                case SCENE_KAJIYA: // Mountain Smithy
+                case SCENE_POSTHOUSE: // Post Office
+                case SCENE_LABO: // Marine Research Lab
+                case SCENE_8ITEMSHOP: // Trading Post
+                case SCENE_INISIE_BS: // Twinmold's Lair
+                case SCENE_TAKARAKUJI: // Lottery Shop
+                case SCENE_FISHERMAN: // Fisherman's Hut
+                case SCENE_GORONSHOP: // Goron Shop
+                case SCENE_HAKUGIN_BS: // Goht's Lair
+                //case SCENE_35TAKI: // Waterfall Rapids
+                case SCENE_BANDROOM: // Zora Hall Rooms
+                case SCENE_GORON_HAKA: // Goron Graveyard
+                case SCENE_TOUGITES: // Poe Hut
+                case SCENE_DOUJOU: // Swordsman's School
+                case SCENE_MAP_SHOP: // Tourist Information
+                case SCENE_SEA_BS: // Gyorg's Lair
+                case SCENE_YADOYA: // Stock Pot Inn
+                case SCENE_BOMYA: // Bomb Shop
+                    return false;
+                case SCENE_INISIE_R: // Inverted Stone Tower Temple
+                    return currentScene != SCENE_F41; // Inverted Stone Tower
+                case SCENE_F41: // Inverted Stone Tower
+                    return currentScene != SCENE_INISIE_R; // Inverted Stone Tower Temple
+            }
+        }
+    }
+    return !(z2_Entrance_GetTransitionFlags(entrance) & 0x8000);
+}
+
+void Music_HandleCommandSoundSettings(GlobalContext* ctxt, SceneCmd* cmd) {
+    if (!MUSIC_CONFIG.flags.removeMinorMusic) {
+        ctxt->sequenceCtx.seqId = cmd->soundSettings.seqId;
+        ctxt->sequenceCtx.ambienceId = cmd->soundSettings.ambienceId;
+        return;
+    }
+    u8 seqId = gSaveContext.extra.seqId;
+    u8 ambienceId = gSaveContext.extra.ambienceId;
+    switch (ctxt->sceneNum) {
+        case SCENE_KAKUSIANA: // Grottos
+        case SCENE_WITCH_SHOP: // Potion Shop
+        case SCENE_AYASHIISHOP: // Curiosity Shop
+        case SCENE_OMOYA: // Ranch House and Barn
+        case SCENE_BOWLING: // Honey and Darling
+        case SCENE_SONCHONOIE: // Mayor's Residence
+        //case SCENE_MILK_BAR: // Milk Bar
+        case SCENE_TAKARAYA: // Treasure Chest Shop
+        case SCENE_DEKUTES: // Deku Scrub Playground
+        case SCENE_MITURIN_BS: // Odolwa's Lair
+        case SCENE_SYATEKI_MIZU: // Town Shooting Gallery
+        case SCENE_SYATEKI_MORI: // Swamp Shooting Gallery
+        case SCENE_SINKAI: // Pinnacle Rock
+        case SCENE_YOUSEI_IZUMI: // Fairy's Fountain
+        case SCENE_KAJIYA: // Mountain Smithy
+        case SCENE_POSTHOUSE: // Post Office
+        case SCENE_LABO: // Marine Research Lab
+        case SCENE_8ITEMSHOP: // Trading Post
+        case SCENE_INISIE_BS: // Twinmold's Lair
+        case SCENE_TAKARAKUJI: // Lottery Shop
+        case SCENE_FISHERMAN: // Fisherman's Hut
+        case SCENE_GORONSHOP: // Goron Shop
+        case SCENE_HAKUGIN_BS: // Goht's Lair
+        //case SCENE_35TAKI: // Waterfall Rapids
+        case SCENE_BANDROOM: // Zora Hall Rooms
+        case SCENE_GORON_HAKA: // Goron Graveyard
+        case SCENE_TOUGITES: // Poe Hut
+        case SCENE_DOUJOU: // Swordsman's School
+        case SCENE_MAP_SHOP: // Tourist Information
+        case SCENE_SEA_BS: // Gyorg's Lair
+        case SCENE_YADOYA: // Stock Pot Inn
+        case SCENE_BOMYA: // Bomb Shop
+            if (seqId != 0xFF && ambienceId != 0xFF) {
+                ctxt->sequenceCtx.seqId = sLastSeqId = seqId;
+                ctxt->sequenceCtx.ambienceId = sLastAmbienceId = ambienceId;
+            } else if (sLastSeqId != 0xFF && sLastAmbienceId != 0xFF) {
+                ctxt->sequenceCtx.seqId = sLastSeqId;
+                ctxt->sequenceCtx.ambienceId = sLastAmbienceId;
+            }
+            return;
+        default:
+            sLastSeqId = 0xFF;
+            sLastAmbienceId = 0xFF;
+    }
+    ctxt->sequenceCtx.seqId = sLastSeqId = cmd->soundSettings.seqId;
+    ctxt->sequenceCtx.ambienceId = sLastAmbienceId = cmd->soundSettings.ambienceId;
+}
+
+static bool ObjSound_ShouldSetBgm(Actor* objSound, GlobalContext* ctxt) {
+    if (MUSIC_CONFIG.flags.removeMinorMusic) {
+        switch (ctxt->sceneNum) {
+            case SCENE_BOWLING: // Honey and Darling
+            //case SCENE_MILK_BAR: // Milk Bar
+            case SCENE_TAKARAYA: // Treasure Chest Shop
+            case SCENE_SYATEKI_MIZU: // Town Shooting Gallery
+            case SCENE_SYATEKI_MORI: // Swamp Shooting Gallery
+            case SCENE_8ITEMSHOP: // Trading Post
+            case SCENE_TAKARAKUJI: // Lottery Shop
+            case SCENE_GORONSHOP: // Goron Shop
+            case SCENE_BANDROOM: // Zora Hall Rooms
+            case SCENE_MAP_SHOP: // Tourist Information
+            case SCENE_BOMYA: // Bomb Shop
+                return false;
+        }
+    }
+    return true;
+}
+
+void Music_ObjSound_PlayBgm(Actor* objSound, GlobalContext* ctxt) {
+    if (!ObjSound_ShouldSetBgm(objSound, ctxt)) {
+        z2_ActorUnload(objSound);
+        return;
+    }
+    z2_Audio_PlayObjSoundBgm(&objSound->projectedPos, objSound->params);
+}
+
+void Music_ObjSound_StopBgm(Actor* objSound, GlobalContext* ctxt) {
+    if (ObjSound_ShouldSetBgm(objSound, ctxt)) {
+        z2_Audio_PlayObjSoundBgm(NULL, 0);
+    }
+}

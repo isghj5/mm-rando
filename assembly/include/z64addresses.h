@@ -222,6 +222,9 @@ extern f32 z2_Math_Vec3f_DistXZ(Vec3f* p1, Vec3f* p2);
 // Function Prototypes (Objects).
 extern s8 z2_GetObjectIndex(const SceneContext* ctxt, u16 objectId);
 
+extern s32 z2_Entrance_GetSceneIdAbsolute(u16 entrance);
+extern s32 z2_Entrance_GetTransitionFlags(u16 entrance);
+
 extern void z2_AnimatedMat_Draw(GlobalContext* play, AnimatedTexture* matAnim);
 extern void z2_SkelAnime_DrawLimb(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, bool* overrideLimbDraw, void* postLimbDraw, Actor* actor);
 extern void z2_SkelAnime_DrawLimb2(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, Actor* actor);
@@ -241,7 +244,9 @@ extern void z2_LoadRoom(GlobalContext* ctxt, RoomContext* roomCtxt, u8 roomId);
 extern void z2_UnloadRoom(GlobalContext* ctxt, RoomContext* roomCtxt);
 
 // Function Prototypes (Sound).
+extern void z2_Audio_PlayObjSoundBgm(Vec3f* pos, s8 seqId);
 extern void z2_SetBGM2(u16 bgmId);
+extern u16 z2_AudioSeq_GetActiveSeqId(u8 seqPlayerIndex);
 
 // Function Prototypes (Text).
 extern void z2_ShowMessage(GlobalContext* ctxt, u16 messageId, Actor* actor);
