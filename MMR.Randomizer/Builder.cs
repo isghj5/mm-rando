@@ -5208,8 +5208,7 @@ namespace MMR.Randomizer
                             .EndTextBox()
                             .RuntimeWrap(() =>
                             {
-                                it.Text("All it took was one glance at ")
-                                .RuntimeArticle(curiosityShopMan1Item.DisplayItem, curiosityShopMan1Item.NewLocation.Value, "that ")
+                                it.Text("All it took was one glance at the ")
                                 .Red(() =>
                                 {
                                     it.RuntimeItemName(curiosityShopMan1Item.DisplayName(), curiosityShopMan1Item.NewLocation.Value);
