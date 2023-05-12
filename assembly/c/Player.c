@@ -260,6 +260,7 @@ void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 ac
                                     0, arrow->base.shape.rot.y, 0, 0);
                 if (bomb != NULL) {
                     bomb->collider1.base.flagsAC &= ~8; // AC_TYPE_PLAYER Disable player-aligned damage
+                    arrow->collider.body.toucher.collidesWith = 8; // make arrow do explosive damage
                     z2_SetActorSize(&bomb->base, 0.002);
                     z2_Inventory_ChangeAmmo(item, -1);
                 }

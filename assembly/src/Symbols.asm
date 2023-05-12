@@ -19,6 +19,7 @@
 .definelabel z2_rupee_drop_spawn, 0x800A7AD4
 .definelabel z2_random_drop_spawn, 0x800A7D28
 .definelabel z2_EffectSsKiraKira_SpawnSmall, 0x800B16B8
+.definelabel z2_EffectSsHitmark_SpawnCustomScale, 0x800B26A8
 .definelabel z2_SetShape, 0x800B3BA4
 .definelabel z2_get_generic_flag, 0x800B5BB0
 .definelabel z2_set_generic_flag, 0x800B5BF4
@@ -83,6 +84,7 @@
 .definelabel z2_Math_Sins, 0x800FED84
 .definelabel z2_HandleInputVelocity, 0x800FF2F8
 .definelabel z2_Math_Vec3f_Copy, 0x800FF50C
+.definelabel z2_Math_Vec3s_ToVec3f, 0x800FF54C
 .definelabel z2_Math_Vec3f_ToVec3s, 0x800FF584
 .definelabel z2_Math_Vec3f_Lerp, 0x800FF6F8
 .definelabel z2_Math_Vec3f_DistXZ, 0x800FF92C

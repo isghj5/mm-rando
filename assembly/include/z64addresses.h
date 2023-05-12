@@ -133,6 +133,7 @@ extern void z2_load_scene();
 
 extern void z2_EffectSsKiraKira_SpawnSmall(GlobalContext* globalCtx, Vec3f* pos, Vec3f* velocity, Vec3f* accel,
                                  ColorRGBA8* primColor, ColorRGBA8* envColor);
+extern void z2_EffectSsHitmark_SpawnCustomScale(GlobalContext* ctxt, s32 type, s16 scale, Vec3f* pos);
 
 // Function Prototypes (Actors).
 extern void z2_ActorProc(Actor* actor, GlobalContext* ctxt);
@@ -213,6 +214,7 @@ extern void z2_UpdateButtonsState(u32 state);
 extern f32 z2_Math_Sins(s16 angle);
 extern f32 z2_Math_CosS(s16 angle);
 extern void z2_Math_Vec3f_Copy(Vec3f* dest, Vec3f* src);
+extern void z2_Math_Vec3s_ToVec3f(Vec3f* dest, Vec3s* src);
 extern void z2_Math_Vec3f_ToVec3s(Vec3s* dest, Vec3f* src);
 extern void z2_Math_Vec3f_Lerp(Vec3f* a, Vec3f* b, f32 t, Vec3f* dest);
 extern f32 z2_Math_Vec3f_DistXZ(Vec3f* p1, Vec3f* p2);

@@ -18,6 +18,7 @@
 0x800A7AD4,z2_rupee_drop_spawn
 0x800A7D28,z2_random_drop_spawn
 0x800B16B8,z2_EffectSsKiraKira_SpawnSmall
+0x800B26A8,z2_EffectSsHitmark_SpawnCustomScale
 0x800B3BA4,z2_SetShape
 0x800B5BB0,z2_get_generic_flag
 0x800B5BF4,z2_set_generic_flag
@@ -81,6 +82,7 @@
 0x800FED84,z2_Math_Sins
 0x800FF2F8,z2_HandleInputVelocity
 0x800FF50C,z2_Math_Vec3f_Copy
+0x800FF54C,z2_Math_Vec3s_ToVec3f
 0x800FF584,z2_Math_Vec3f_ToVec3s
 0x800FF6F8,z2_Math_Vec3f_Lerp
 0x800FF92C,z2_Math_Vec3f_DistXZ
