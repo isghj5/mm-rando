@@ -193,22 +193,28 @@ static u8 sLastAmbienceId = 0xFF;
 bool Music_ShouldFadeOut(GlobalContext* ctxt, s16 sceneLayer) {
     // TODO handle alternate exit scenarios
     // TODO handle taking a water void exit: z_player line 5760
-    if (MUSIC_CONFIG.flags.removeMinorMusic) {
+    s16 currentScene = ctxt->sceneNum;
+    if (MUSIC_CONFIG.flags.removeMinorMusic && currentScene != SCENE_SPOT00) { // not cutscene
         if (z2_AudioSeq_GetActiveSeqId(3) != 0xFFFF) { // SEQ_PLAYER_BGM_SUB is playing
             return true;
         }
-        switch (z2_AudioSeq_GetActiveSeqId(0)) {
+        u16 activeBgm = z2_AudioSeq_GetActiveSeqId(0);
+        switch (activeBgm) {
             case 0x0D: // NA_BGM_ALIEN_INVASION
             case 0x38: // NA_BGM_MINI_BOSS
+            case 0xFFFF: // Nothing playing
                 return true;
-                break;
         }
 
         u16 entrance = ctxt->warpDestination + sceneLayer;
-        s16 currentScene = ctxt->sceneNum;
         s32 nextScene = z2_Entrance_GetSceneIdAbsolute(entrance);
         if (nextScene == currentScene) {
-            return false;
+            switch (activeBgm) {
+                case 0x1D: // NA_BGM_MARKET // Clock Town
+                    return gSaveContext.extra.voidFlag == -4; // Day transition
+                default:
+                    return false;
+            }
         }
         if (gSaveContext.extra.voidFlag != -2) { // after-minigame respawn
             switch (currentScene) {
