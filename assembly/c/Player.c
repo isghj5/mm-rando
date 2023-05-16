@@ -36,7 +36,7 @@ void Player_PreventDangerousStates(ActorPlayer* player) {
                 && player->heldItemActionParam != PLAYER_IA_HOOKSHOT
                 && player->heldItemActionParam != PLAYER_IA_OCARINA
                 && !(player->stateFlags.state1 & PLAYER_STATE1_EPONA)
-                && !(player->stateFlags.state3 & PLAYER_STATE3_HOOK_ARV))) {
+                && !(player->stateFlags.state3 & PLAYER_STATE3_HOOK_ARRIVE_2))) {
             player->base.parent = NULL;
         }
     }
