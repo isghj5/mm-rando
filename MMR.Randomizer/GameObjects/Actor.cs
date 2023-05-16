@@ -2776,7 +2776,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(354)]
         [ObjectListIndex(0x18F)]
-        [CheckRestricted(Item.ShopItemWitchBluePotion, Item.ShopItemWitchGreenPotion, Item.ShopItemWitchRedPotion, Item.ItemBottleWitch)]
+        [CheckRestricted(Item.ShopItemWitchBluePotion, Item.ShopItemWitchGreenPotion, Item.ShopItemWitchRedPotion, Item.ItemBottleWitch, Item.MundaneItemKotakeMushroomSaleRedRupee)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(0, 0)] // no collider no interaction
         [UnkillableAllVariants]
