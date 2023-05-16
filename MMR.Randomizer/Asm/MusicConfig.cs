@@ -71,7 +71,7 @@ namespace MMR.Randomizer.Asm
     {
         public int? SequenceMaskFileIndex { get; set; }
 
-        public const byte SEQUENCE_DATA_SIZE = 0x20;
+        public const byte SEQUENCE_DATA_SIZE = 0x30;
 
         public MusicFlags Flags { get; set; }
 

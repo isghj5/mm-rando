@@ -74,6 +74,7 @@ extern void z2_PlayLoopingSfxAtActor(Actor* actor, u32 id);
 extern Actor* z2_SpawnActor(ActorContext* actorCtxt, GlobalContext* ctxt, u16 id, f32 x, f32 y, f32 z, u16 rx, u16 ry, u16 rz, u16 params);
 extern void z2_UpdateButtonUsability(GlobalContext* ctxt);
 extern void z2_WriteHeartColors(GlobalContext* ctxt);
+extern bool z2_LifeMeter_IsCritical(void);
 extern void* z2_Lib_SegmentedToVirtual(void* ptr);
 extern u8 z2_CheckItemObtainability(u32 item);
 extern void z2_RemoveItem(u32 item, u8 slot);

@@ -13,7 +13,9 @@ static MusicState musicState = {
     .currentState = 0,
 };
 
-static u32 loadingSequenceId = 0;
+static u32 sLoadingSequenceId = 0;
+static bool sIsMusicIndoors = false;
+static bool sIsMusicCave = false;
 
 static void LoadMuteMask() {
     u8 sequenceId = gSequenceContext->sequenceId;
@@ -24,9 +26,9 @@ static void LoadMuteMask() {
         if (index) {
             DmaEntry entry = dmadata[index];
 
-            u32 start = entry.romStart + (sequenceId * 0x20);
+            u32 start = entry.romStart + (sequenceId * SEQUENCE_DATA_SIZE);
 
-            z2_RomToRam(start, &musicState.playMask, 0x20);
+            z2_RomToRam(start, &musicState.playMask, SEQUENCE_DATA_SIZE);
             musicState.hasSequenceMaskFile = 1;
         } else {
             musicState.hasSequenceMaskFile = 0;
@@ -34,55 +36,64 @@ static void LoadMuteMask() {
     }
 }
 
-static u8 CalculateCurrentState() {
-    u8 state;
+static u16 CalculateCurrentState() {
+    u16 state;
     ActorPlayer* player = GET_PLAYER(&gGlobalContext);
     if (player) {
-        state = 1 << (player->form & 3);
+        state = 1 << player->form;
 
+        if (sIsMusicIndoors) {
+            state = musicState.cumulativeStates.indoors ? state | SEQUENCE_PLAY_STATE_INDOORS : SEQUENCE_PLAY_STATE_INDOORS;
+        }
+        if (sIsMusicCave) {
+            state = musicState.cumulativeStates.cave ? state | SEQUENCE_PLAY_STATE_CAVE : SEQUENCE_PLAY_STATE_CAVE;
+        }
         if (player->stateFlags.state1 & PLAYER_STATE1_EPONA) {
-            state = musicState.cumulativeStates.epona ? state | 0x10 : 0x10;
+            state = musicState.cumulativeStates.epona ? state | SEQUENCE_PLAY_STATE_EPONA : SEQUENCE_PLAY_STATE_EPONA;
         }
         if (player->stateFlags.state1 & PLAYER_STATE1_SWIM || player->stateFlags.state3 & PLAYER_STATE3_ZORA_SWIM) {
-            state = musicState.cumulativeStates.swimming ? state | 0x20 : 0x20;
+            state = musicState.cumulativeStates.swimming ? state | SEQUENCE_PLAY_STATE_SWIM : SEQUENCE_PLAY_STATE_SWIM;
         }
         if (player->stateFlags.state3 & PLAYER_STATE3_GORON_SPIKE) {
-            state = musicState.cumulativeStates.spikeRolling ? state | 0x40 : 0x40;
+            state = musicState.cumulativeStates.spikeRolling ? state | SEQUENCE_PLAY_STATE_SPIKE_ROLLING : SEQUENCE_PLAY_STATE_SPIKE_ROLLING;
         }
         if (gGlobalContext.actorCtx.targetContext.nearbyEnemy) {
-            state = musicState.cumulativeStates.combat ? state | 0x80 : 0x80;
+            state = musicState.cumulativeStates.combat ? state | SEQUENCE_PLAY_STATE_COMBAT : SEQUENCE_PLAY_STATE_COMBAT;
+        }
+        if (z2_LifeMeter_IsCritical()) {
+            state = musicState.cumulativeStates.criticalHealth ? state | SEQUENCE_PLAY_STATE_CRITICAL_HEALTH : SEQUENCE_PLAY_STATE_CRITICAL_HEALTH;
         }
     } else if (gGameStateInfo.fileSelect.loadedRamAddr) {
-        u8 formMask = 0;
-        u8 cumulativeStates = musicState.cumulativeStates.value;
-        u8 nonCumulativeStates = ~cumulativeStates;
+        u16 formMask = 0;
+        u16 cumulativeStates = musicState.cumulativeStates.value;
+        u16 nonCumulativeStates = ~cumulativeStates;
         if (gGlobalContext.state.input[0].pressEdge.buttons.du || gGlobalContext.state.input[0].pressEdge.buttons.l) {
             u8 startIndex = musicState.fileSelectMusicFormIndex;
             do {
-                musicState.fileSelectMusicFormIndex = (musicState.fileSelectMusicFormIndex + 1) & 7;
+                musicState.fileSelectMusicFormIndex = (musicState.fileSelectMusicFormIndex + 1) & 0xF;
                 formMask = (1 << musicState.fileSelectMusicFormIndex) & nonCumulativeStates;
             } while (!formMask && musicState.fileSelectMusicFormIndex != startIndex);
         } else if (gGlobalContext.state.input[0].pressEdge.buttons.dd) {
             u8 startIndex = musicState.fileSelectMusicFormIndex;
             do {
-                musicState.fileSelectMusicFormIndex = (musicState.fileSelectMusicFormIndex - 1) & 7;
+                musicState.fileSelectMusicFormIndex = (musicState.fileSelectMusicFormIndex - 1) & 0xF;
                 formMask = (1 << musicState.fileSelectMusicFormIndex) & nonCumulativeStates;
             } while (!formMask && musicState.fileSelectMusicFormIndex != startIndex);
         } else {
             formMask = (1 << musicState.fileSelectMusicFormIndex) & nonCumulativeStates;
         }
 
-        u8 miscMask = 0;
+        u16 miscMask = 0;
         if (gGlobalContext.state.input[0].pressEdge.buttons.dr) {
             u8 startIndex = musicState.fileSelectMusicMiscIndex;
             do {
-                musicState.fileSelectMusicMiscIndex = (musicState.fileSelectMusicMiscIndex + 1) & 7;
+                musicState.fileSelectMusicMiscIndex = (musicState.fileSelectMusicMiscIndex + 1) & 0xF;
                 miscMask = (1 << musicState.fileSelectMusicMiscIndex) & cumulativeStates;
             } while (!miscMask && musicState.fileSelectMusicMiscIndex != startIndex && musicState.fileSelectMusicMiscIndex);
         } else if (gGlobalContext.state.input[0].pressEdge.buttons.dl) {
             u8 startIndex = musicState.fileSelectMusicMiscIndex;
             do {
-                musicState.fileSelectMusicMiscIndex = (musicState.fileSelectMusicMiscIndex - 1) & 7;
+                musicState.fileSelectMusicMiscIndex = (musicState.fileSelectMusicMiscIndex - 1) & 0xF;
                 miscMask = (1 << musicState.fileSelectMusicMiscIndex) & cumulativeStates;
             } while (!miscMask && musicState.fileSelectMusicMiscIndex != startIndex && musicState.fileSelectMusicMiscIndex);
         } else {
@@ -98,7 +109,7 @@ static u8 CalculateCurrentState() {
     return state;
 }
 
-static void ProcessChannel(u8 channelIndex, u8 stateMask) {
+static void ProcessChannel(u8 channelIndex, u16 stateMask) {
     SequenceChannelContext* channelContext = gSequenceContext->channels[channelIndex];
     if (channelContext->playState.playing) {
         bool shouldBeMuted = false;
@@ -108,11 +119,11 @@ static void ProcessChannel(u8 channelIndex, u8 stateMask) {
             shouldBeMuted = musicState.forceMute & (1 << channelIndex);
         }
         if (!shouldBeMuted) {
-            u8 playMask = musicState.playMask[channelIndex];
-            u8 formMask = playMask & ~musicState.cumulativeStates.value;
-            u8 miscMask = playMask & musicState.cumulativeStates.value;
-            u8 formState = stateMask & ~musicState.cumulativeStates.value;
-            u8 miscState = stateMask & musicState.cumulativeStates.value;
+            u16 playMask = musicState.playMask[channelIndex];
+            u16 formMask = playMask & ~musicState.cumulativeStates.value;
+            u16 miscMask = playMask & musicState.cumulativeStates.value;
+            u16 formState = stateMask & ~musicState.cumulativeStates.value;
+            u16 miscState = stateMask & musicState.cumulativeStates.value;
             bool shouldPlay = (!miscMask || (miscMask & miscState)) && (formMask & formState);
             shouldBeMuted = !shouldPlay;
         }
@@ -129,7 +140,7 @@ static void HandleFormChannels(GlobalContext* ctxt) {
     LoadMuteMask();
 
     if (musicState.hasSequenceMaskFile) {
-        u8 state = CalculateCurrentState();
+        u16 state = CalculateCurrentState();
         if (musicState.currentState != state) {
             musicState.currentState = state;
 
@@ -149,7 +160,7 @@ void Music_AfterChannelInit(SequenceContext* sequence, u8 channelIndex) {
         LoadMuteMask();
 
         if (musicState.hasSequenceMaskFile) {
-            u8 state = CalculateCurrentState();
+            u16 state = CalculateCurrentState();
             musicState.currentState = state;
             ProcessChannel(channelIndex, state);
         }
@@ -174,14 +185,14 @@ void Music_HandleChannelMute(SequenceChannelContext* channelContext, ChannelStat
 }
 
 void Music_SetLoadingSequenceId(u32 id) {
-    loadingSequenceId = id;
+    sLoadingSequenceId = id;
 }
 
 s8 Music_GetAudioLoadType(AudioInfo* audioInfo, u8 audioType) {
     s8 defaultLoadType = audioInfo[1].metadata[1];
-    if (audioType == 1 && defaultLoadType != 0 && loadingSequenceId != 0) {
+    if (audioType == 1 && defaultLoadType != 0 && sLoadingSequenceId != 0) {
         AudioInfo* sequenceInfoTable = z2_GetAudioTable(0);
-        return sequenceInfoTable[loadingSequenceId + 1].metadata[1];
+        return sequenceInfoTable[sLoadingSequenceId + 1].metadata[1];
     } else {
         return defaultLoadType;
     }
@@ -293,15 +304,15 @@ bool Music_ShouldFadeOut(GlobalContext* ctxt, s16 sceneLayer) {
 }
 
 void Music_HandleCommandSoundSettings(GlobalContext* ctxt, SceneCmd* cmd) {
-    if (!MUSIC_CONFIG.flags.removeMinorMusic) {
-        ctxt->sequenceCtx.seqId = cmd->soundSettings.seqId;
-        ctxt->sequenceCtx.ambienceId = cmd->soundSettings.ambienceId;
-        return;
-    }
-    u8 seqId = gSaveContext.extra.seqId;
-    u8 ambienceId = gSaveContext.extra.ambienceId;
+    sIsMusicCave = false;
+    sIsMusicIndoors = false;
     switch (ctxt->sceneNum) {
         case SCENE_KAKUSIANA: // Grottos
+        case SCENE_DEKUTES: // Deku Scrub Playground
+        case SCENE_YOUSEI_IZUMI: // Fairy's Fountain
+        case SCENE_GORON_HAKA: // Goron Graveyard
+            sIsMusicCave = true;
+            break;
         case SCENE_WITCH_SHOP: // Potion Shop
         case SCENE_AYASHIISHOP: // Curiosity Shop
         case SCENE_OMOYA: // Ranch House and Barn
@@ -309,44 +320,55 @@ void Music_HandleCommandSoundSettings(GlobalContext* ctxt, SceneCmd* cmd) {
         case SCENE_SONCHONOIE: // Mayor's Residence
         //case SCENE_MILK_BAR: // Milk Bar
         case SCENE_TAKARAYA: // Treasure Chest Shop
-        case SCENE_DEKUTES: // Deku Scrub Playground
-        case SCENE_MITURIN_BS: // Odolwa's Lair
         case SCENE_SYATEKI_MIZU: // Town Shooting Gallery
         case SCENE_SYATEKI_MORI: // Swamp Shooting Gallery
-        case SCENE_SINKAI: // Pinnacle Rock
-        case SCENE_YOUSEI_IZUMI: // Fairy's Fountain
         case SCENE_KAJIYA: // Mountain Smithy
         case SCENE_POSTHOUSE: // Post Office
         case SCENE_LABO: // Marine Research Lab
         case SCENE_8ITEMSHOP: // Trading Post
-        case SCENE_INISIE_BS: // Twinmold's Lair
         case SCENE_TAKARAKUJI: // Lottery Shop
         case SCENE_FISHERMAN: // Fisherman's Hut
         case SCENE_GORONSHOP: // Goron Shop
-        case SCENE_HAKUGIN_BS: // Goht's Lair
-        //case SCENE_35TAKI: // Waterfall Rapids
         case SCENE_BANDROOM: // Zora Hall Rooms
-        case SCENE_GORON_HAKA: // Goron Graveyard
         case SCENE_TOUGITES: // Poe Hut
         case SCENE_DOUJOU: // Swordsman's School
         case SCENE_MAP_SHOP: // Tourist Information
-        case SCENE_SEA_BS: // Gyorg's Lair
         case SCENE_YADOYA: // Stock Pot Inn
         case SCENE_BOMYA: // Bomb Shop
-            if (seqId != 0xFF && ambienceId != 0xFF) {
-                ctxt->sequenceCtx.seqId = sLastSeqId = seqId;
-                ctxt->sequenceCtx.ambienceId = sLastAmbienceId = ambienceId;
-            } else if (sLastSeqId != 0xFF && sLastAmbienceId != 0xFF) {
-                ctxt->sequenceCtx.seqId = sLastSeqId;
-                ctxt->sequenceCtx.ambienceId = sLastAmbienceId;
-            }
-            return;
-        default:
-            sLastSeqId = 0xFF;
-            sLastAmbienceId = 0xFF;
+            sIsMusicIndoors = true;
+            break;
     }
-    ctxt->sequenceCtx.seqId = sLastSeqId = cmd->soundSettings.seqId;
-    ctxt->sequenceCtx.ambienceId = sLastAmbienceId = cmd->soundSettings.ambienceId;
+
+    if (!MUSIC_CONFIG.flags.removeMinorMusic) {
+        ctxt->sequenceCtx.seqId = cmd->soundSettings.seqId;
+        ctxt->sequenceCtx.ambienceId = cmd->soundSettings.ambienceId;
+        return;
+    }
+    bool shouldContinueMusic = sIsMusicIndoors || sIsMusicCave;
+    if (!shouldContinueMusic) {
+        switch (ctxt->sceneNum) {
+            case SCENE_MITURIN_BS: // Odolwa's Lair
+            case SCENE_SINKAI: // Pinnacle Rock
+            case SCENE_INISIE_BS: // Twinmold's Lair
+            case SCENE_HAKUGIN_BS: // Goht's Lair
+            case SCENE_SEA_BS: // Gyorg's Lair
+                shouldContinueMusic = true;
+                break;
+        }
+    }
+
+    u8 seqId = gSaveContext.extra.seqId;
+    u8 ambienceId = gSaveContext.extra.ambienceId;
+
+    if (shouldContinueMusic && seqId != 0xFF && ambienceId != 0xFF) {
+        sLastSeqId = seqId;
+        sLastAmbienceId = ambienceId;
+    } else if (!shouldContinueMusic || sLastSeqId == 0xFF || sLastAmbienceId == 0xFF) {
+        sLastSeqId = cmd->soundSettings.seqId;
+        sLastAmbienceId = cmd->soundSettings.ambienceId;
+    }
+    ctxt->sequenceCtx.seqId = sLastSeqId;
+    ctxt->sequenceCtx.ambienceId = sLastAmbienceId;
 }
 
 static bool ObjSound_ShouldSetBgm(Actor* objSound, GlobalContext* ctxt) {

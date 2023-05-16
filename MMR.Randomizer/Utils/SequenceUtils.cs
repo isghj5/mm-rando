@@ -408,7 +408,29 @@ namespace MMR.Randomizer.Utils
                                     // playState is configured in the file as "play in these states", but in the code it's "mute in these states"
                                     // so we need to reverse it
                                     var playState = JsonSerializer.Deserialize<SequencePlayState[]>(formMaskJson);
-                                    zSeq.FormMask = playState.Cast<byte>().ToArray();
+
+                                    // ensure backwards compatibility with 1.15 sequences
+                                    if (!playState.Any(s => s.HasFlag(SequencePlayState.FierceDeity) && !s.HasFlag(SequencePlayState.Human)))
+                                    {
+                                        for (var i = 0; i < playState.Length; i++)
+                                        {
+                                            if (playState[i].HasFlag(SequencePlayState.Human))
+                                            {
+                                                playState[i] |= SequencePlayState.FierceDeity;
+                                            }
+                                        }
+                                    }
+
+                                    // ensure unused cumulative states don't cause music to get muted in those states
+                                    foreach (var cumulativeState in Enum.GetValues<SequencePlayState>().Where(s => s > SequencePlayState.All))
+                                    {
+                                        if (!playState.Any(s => s.HasFlag(cumulativeState)))
+                                        {
+                                            playState[0x10] |= cumulativeState;
+                                        }
+                                    }
+                                    
+                                    zSeq.FormMask = ConvertUtils.U16ArrayToBytes(playState.Cast<ushort>().ToArray());
                                 }
                                 catch (Exception e)
                                 {
@@ -746,7 +768,7 @@ namespace MMR.Randomizer.Utils
                 {
                     if (formMask == null)
                     {
-                        formMask = Enumerable.Repeat<byte>(0xFF, 16).ToArray();
+                        formMask = Enumerable.Repeat<byte>(0xFF, 0x20).ToArray();
                     }
                     Array.Resize(ref formMask, MusicConfig.SEQUENCE_DATA_SIZE);
                     ReadWriteUtils.Arr_Insert(formMask, 0, MusicConfig.SEQUENCE_DATA_SIZE, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * MusicConfig.SEQUENCE_DATA_SIZE);

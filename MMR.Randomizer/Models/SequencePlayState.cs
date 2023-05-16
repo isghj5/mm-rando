@@ -3,18 +3,22 @@
 namespace MMR.Randomizer.Models
 {
     [Flags]
-    public enum SequencePlayState : byte
+    public enum SequencePlayState : ushort
     {
         None = 0,
-        Human = 1,
+        FierceDeity = 1,
         Goron = 1 << 1,
         Zora = 1 << 2,
         Deku = 1 << 3,
-        All = Human | Goron | Zora | Deku,
+        Human = 1 << 4,
+        All = Human | Goron | Zora | Deku | FierceDeity,
 
-        Epona = 1 << 4,
-        Swim = 1 << 5,
-        SpikeRolling = 1 << 6,
-        Combat = 1 << 7,
+        Indoors = 1 << 5,
+        Cave = 1 << 6,
+        Epona = 1 << 7,
+        Swim = 1 << 8,
+        SpikeRolling = 1 << 9,
+        Combat = 1 << 10,
+        CriticalHealth = 1 << 11,
     }
 }
