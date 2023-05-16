@@ -194,6 +194,7 @@ bool Music_ShouldFadeOut(GlobalContext* ctxt, s16 sceneLayer) {
     // TODO handle alternate exit scenarios
     // TODO handle taking a water void exit: z_player line 5760
     s16 currentScene = ctxt->sceneNum;
+    u16 entrance = ctxt->warpDestination + sceneLayer;
     if (MUSIC_CONFIG.flags.removeMinorMusic && currentScene != SCENE_SPOT00) { // not cutscene
         if (z2_AudioSeq_GetActiveSeqId(3) != 0xFFFF) { // SEQ_PLAYER_BGM_SUB is playing
             return true;
@@ -206,7 +207,6 @@ bool Music_ShouldFadeOut(GlobalContext* ctxt, s16 sceneLayer) {
                 return true;
         }
 
-        u16 entrance = ctxt->warpDestination + sceneLayer;
         s32 nextScene = z2_Entrance_GetSceneIdAbsolute(entrance);
         if (nextScene == currentScene) {
             switch (activeBgm) {
