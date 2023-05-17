@@ -3303,7 +3303,8 @@ namespace MMR.Randomizer
 
             foreach (var fairy in ItemUtils.DungeonStrayFairies().Append(Item.CollectibleStrayFairyClockTown))
             {
-                if (_randomized.ItemList[fairy].Item != fairy) // maybe also check if any IsRandomized?
+                var io = _randomized.ItemList[fairy];
+                if (io.IsRandomized || io.Item != fairy)
                 {
                     ResourceUtils.ApplyHack(Resources.mods.fix_fairies);
                     break;
