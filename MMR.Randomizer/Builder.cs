@@ -5308,7 +5308,7 @@ namespace MMR.Randomizer
             }
 
             // TODO if costs randomized
-            var messageCostRegex = new Regex("\\b[0-9]{1,3} Rupees?");
+            var messageCostRegex = new Regex("\\b[0-9]{1,3}( |\u0011|\u0010)Rupees?");
             for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
             {
                 var messageCost = MessageCost.MessageCosts[i];
@@ -5343,7 +5343,7 @@ namespace MMR.Randomizer
                     var replacementIndex = 0;
                     newMessage.Message = messageCostRegex.Replace(newMessage.Message, match =>
                     {
-                        return replacementIndex++ == costIndex ? $"{cost} Rupee{(cost != 1 && messageId != 1143 ? "s" : "")}" : match.Value;
+                        return replacementIndex++ == costIndex ? $"{cost}{match.Groups[1].Value}Rupee{(cost != 1 && messageId != 1143 ? "s" : "")}" : match.Value;
                     });
                     if (messageId == 1143)
                     {
