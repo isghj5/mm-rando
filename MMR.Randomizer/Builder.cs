@@ -1658,6 +1658,13 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.add_bombchu_drops);
             }
 
+            if (_randomized.Settings.RequiredBossRemains < 4)
+            {
+                var hack = Resources.mods.update_remains_required.ToArray();
+                hack[0x33] = _randomized.Settings.RequiredBossRemains;
+                hacks.Add(hack);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);

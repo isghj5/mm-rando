@@ -10,23 +10,23 @@ void DoorWarp_GiveItem(ActorDoorWarp1* actor, GlobalContext* ctxt) {
         }
 
         u8 count = 0;
+        if (gSaveContext.perm.inv.questStatus.odolwasRemains) {
+            count++;
+        }
+        if (gSaveContext.perm.inv.questStatus.gohtsRemains) {
+            count++;
+        }
+        if (gSaveContext.perm.inv.questStatus.gyorgsRemains) {
+            count++;
+        }
+        if (gSaveContext.perm.inv.questStatus.twinmoldsRemains) {
+            count++;
+        }
 
-        // TODO check if oath hint is enabled?
         if (MISC_CONFIG.speedups.skipGiantsCutscene) {
-            count = MISC_CONFIG.speedups.oathHint && ((gSaveContext.perm.inv.questStatus.value & 0x40F) == 0xF) ? 4 : 0;
-        } else {
-            if (gSaveContext.perm.inv.questStatus.odolwasRemains) {
-                count++;
-            }
-            if (gSaveContext.perm.inv.questStatus.gohtsRemains) {
-                count++;
-            }
-            if (gSaveContext.perm.inv.questStatus.gyorgsRemains) {
-                count++;
-            }
-            if (gSaveContext.perm.inv.questStatus.twinmoldsRemains) {
-                count++;
-            }
+            count = MISC_CONFIG.speedups.oathHint && !gSaveContext.perm.inv.questStatus.oathToOrder && count >= MISC_CONFIG.MMRbytes.requiredBossRemains ? 4 : 0;
+        } else if (count >= MISC_CONFIG.MMRbytes.requiredBossRemains) {
+            count = 4;
         }
 
         u8 oldCount = gSaveContext.perm.unk_ECC[1] & 0xFF;

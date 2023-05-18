@@ -446,6 +446,8 @@ namespace MMR.Randomizer.Asm
     {
         public byte NpcKafeiReplaceMask { get; set; }
 
+        public byte RequiredBossRemains { get; set; } = 4;
+
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
@@ -455,6 +457,7 @@ namespace MMR.Randomizer.Asm
         {
             uint flags = 0;
             flags |= (uint)NpcKafeiReplaceMask << 24;
+            flags |= (uint)RequiredBossRemains << 16;
             return flags;
         }
 

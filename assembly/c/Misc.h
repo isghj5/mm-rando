@@ -99,7 +99,8 @@ typedef struct {
 
 typedef struct {
     u8 npcKafeiReplaceMask;
-    u8 pad[3];
+    u8 requiredBossRemains;
+    u8 pad[2];
 } MiscBytes;
 
 typedef struct {

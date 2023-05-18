@@ -458,6 +458,19 @@ namespace MMR.Randomizer
                 }
             }
 
+            if (_settings.RequiredBossRemains < 4)
+            {
+                ItemList[Item.AreaMoonAccess].DependsOnItems.RemoveAll(ItemUtils.BossRemains().Contains);
+                var requiredBossRemains = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    Conditionals = ItemUtils.BossRemains().Combinations(_settings.RequiredBossRemains).Select(a => a.ToList()).ToList(),
+                };
+                ItemList.Add(requiredBossRemains);
+                ItemList[Item.AreaMoonAccess].DependsOnItems.Add(requiredBossRemains.Item);
+            }
+
             if (_settings.FreeHints)
             {
                 for (var item = Item.GossipTerminaSouth; item <= Item.GossipTerminaGossipDrums; item++)

@@ -44,6 +44,8 @@ namespace MMR.UI.Forms
             this.tabMain = new System.Windows.Forms.TabPage();
             this.tOtherCustomizations = new System.Windows.Forms.TabControl();
             this.tOtherCustomization = new System.Windows.Forms.TabPage();
+            this.cRequiredBossRemains = new System.Windows.Forms.ComboBox();
+            this.lRequiredRemains = new System.Windows.Forms.Label();
             this.cShuffleBosses = new System.Windows.Forms.CheckBox();
             this.cStartingItems = new System.Windows.Forms.ComboBox();
             this.lStartingItems = new System.Windows.Forms.Label();
@@ -193,6 +195,7 @@ namespace MMR.UI.Forms
             this.lTatl = new System.Windows.Forms.Label();
             this.cTargettingStyle = new System.Windows.Forms.CheckBox();
             this.gCosmeticMusicSound = new System.Windows.Forms.GroupBox();
+            this.cRemoveMinorMusic = new System.Windows.Forms.CheckBox();
             this.lLuckRoll = new System.Windows.Forms.Label();
             this.tLuckRollPercentage = new System.Windows.Forms.NumericUpDown();
             this.lMusic = new System.Windows.Forms.Label();
@@ -252,7 +255,6 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cRemoveMinorMusic = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -363,6 +365,8 @@ namespace MMR.UI.Forms
             // 
             // tOtherCustomization
             // 
+            this.tOtherCustomization.Controls.Add(this.cRequiredBossRemains);
+            this.tOtherCustomization.Controls.Add(this.lRequiredRemains);
             this.tOtherCustomization.Controls.Add(this.cShuffleBosses);
             this.tOtherCustomization.Controls.Add(this.cStartingItems);
             this.tOtherCustomization.Controls.Add(this.lStartingItems);
@@ -377,6 +381,31 @@ namespace MMR.UI.Forms
             this.tOtherCustomization.TabIndex = 0;
             this.tOtherCustomization.Text = "Other";
             this.tOtherCustomization.UseVisualStyleBackColor = true;
+            // 
+            // cRequiredBossRemains
+            // 
+            this.cRequiredBossRemains.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cRequiredBossRemains.FormattingEnabled = true;
+            this.cRequiredBossRemains.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4 (Default)"});
+            this.cRequiredBossRemains.Location = new System.Drawing.Point(193, 76);
+            this.cRequiredBossRemains.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cRequiredBossRemains.Name = "cRequiredBossRemains";
+            this.cRequiredBossRemains.Size = new System.Drawing.Size(160, 23);
+            this.cRequiredBossRemains.TabIndex = 30;
+            this.cRequiredBossRemains.SelectedIndexChanged += new System.EventHandler(this.cRequiredBossRemains_SelectedIndexChanged);
+            // 
+            // lRequiredRemains
+            // 
+            this.lRequiredRemains.AutoSize = true;
+            this.lRequiredRemains.Location = new System.Drawing.Point(193, 61);
+            this.lRequiredRemains.Name = "lRequiredRemains";
+            this.lRequiredRemains.Size = new System.Drawing.Size(129, 15);
+            this.lRequiredRemains.TabIndex = 29;
+            this.lRequiredRemains.Text = "Required Boss Remains";
             // 
             // cShuffleBosses
             // 
@@ -400,7 +429,7 @@ namespace MMR.UI.Forms
             "None",
             "Random",
             "Allow Temporary Items"});
-            this.cStartingItems.Location = new System.Drawing.Point(6, 71);
+            this.cStartingItems.Location = new System.Drawing.Point(6, 76);
             this.cStartingItems.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cStartingItems.Name = "cStartingItems";
             this.cStartingItems.Size = new System.Drawing.Size(160, 23);
@@ -410,7 +439,7 @@ namespace MMR.UI.Forms
             // lStartingItems
             // 
             this.lStartingItems.AutoSize = true;
-            this.lStartingItems.Location = new System.Drawing.Point(6, 56);
+            this.lStartingItems.Location = new System.Drawing.Point(6, 61);
             this.lStartingItems.Name = "lStartingItems";
             this.lStartingItems.Size = new System.Drawing.Size(80, 15);
             this.lStartingItems.TabIndex = 22;
@@ -2392,6 +2421,20 @@ namespace MMR.UI.Forms
             this.gCosmeticMusicSound.TabStop = false;
             this.gCosmeticMusicSound.Text = "Music / Sound";
             // 
+            // cRemoveMinorMusic
+            // 
+            this.cRemoveMinorMusic.AutoSize = true;
+            this.cRemoveMinorMusic.BackColor = System.Drawing.Color.Transparent;
+            this.cRemoveMinorMusic.ForeColor = System.Drawing.Color.Black;
+            this.cRemoveMinorMusic.Location = new System.Drawing.Point(132, 23);
+            this.cRemoveMinorMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cRemoveMinorMusic.Name = "cRemoveMinorMusic";
+            this.cRemoveMinorMusic.Size = new System.Drawing.Size(139, 19);
+            this.cRemoveMinorMusic.TabIndex = 48;
+            this.cRemoveMinorMusic.Text = "Remove Minor Music";
+            this.cRemoveMinorMusic.UseVisualStyleBackColor = false;
+            this.cRemoveMinorMusic.CheckedChanged += new System.EventHandler(this.cRemoveMinorMusic_CheckedChanged);
+            // 
             // lLuckRoll
             // 
             this.lLuckRoll.AutoSize = true;
@@ -3016,20 +3059,6 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // cRemoveMinorMusic
-            // 
-            this.cRemoveMinorMusic.AutoSize = true;
-            this.cRemoveMinorMusic.BackColor = System.Drawing.Color.Transparent;
-            this.cRemoveMinorMusic.ForeColor = System.Drawing.Color.Black;
-            this.cRemoveMinorMusic.Location = new System.Drawing.Point(132, 23);
-            this.cRemoveMinorMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cRemoveMinorMusic.Name = "cRemoveMinorMusic";
-            this.cRemoveMinorMusic.Size = new System.Drawing.Size(139, 19);
-            this.cRemoveMinorMusic.TabIndex = 48;
-            this.cRemoveMinorMusic.Text = "Remove Minor Music";
-            this.cRemoveMinorMusic.UseVisualStyleBackColor = false;
-            this.cRemoveMinorMusic.CheckedChanged += new System.EventHandler(this.cRemoveMinorMusic_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3345,6 +3374,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cUpdateNpcText;
         private System.Windows.Forms.CheckBox cQuestItemKeep;
         private System.Windows.Forms.CheckBox cRemoveMinorMusic;
+        private System.Windows.Forms.ComboBox cRequiredBossRemains;
+        private System.Windows.Forms.Label lRequiredRemains;
     }
 }
 

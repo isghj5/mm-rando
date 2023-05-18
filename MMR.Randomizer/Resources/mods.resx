@@ -490,6 +490,9 @@
   <data name="update_kafei_mask_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\update-kafei-mask-icon;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="update_remains_required" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\update-remains-required.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="update_trade_scrubs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\update-trade-scrubs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

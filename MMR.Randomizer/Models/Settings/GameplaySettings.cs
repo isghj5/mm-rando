@@ -213,6 +213,15 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.BombArrows = value; }
         }
 
+        /// <summary>
+        /// How many boss remains are required to proceed through the final Giants cutscene.
+        /// </summary>
+        public byte RequiredBossRemains
+        {
+            get { return this.AsmOptions.MiscConfig.MMRBytes.RequiredBossRemains; }
+            set { this.AsmOptions.MiscConfig.MMRBytes.RequiredBossRemains = value; }
+        }
+
         #endregion
 
         #region Random Elements
@@ -547,6 +556,10 @@ namespace MMR.Randomizer.Models.Settings
             if (KeepQuestTradeThroughTime && !QuestItemStorage)
             {
                 return $"Must enable '{nameof(QuestItemStorage)}' if '{nameof(KeepQuestTradeThroughTime)}' is enabled.";
+            }
+            if (RequiredBossRemains < 1 || RequiredBossRemains > 4)
+            {
+                return $"{nameof(RequiredBossRemains)} must be between 1 and 4.";
             }
             return null;
         }

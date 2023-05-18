@@ -100,6 +100,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cAutoInvert, "Auto-invert time at the start of a cycle.");
             TooltipBuilder.SetTooltip(cHideClock, "Clock UI will be hidden.");
             TooltipBuilder.SetTooltip(cStartingItems, "Select a starting item mode:\n\nNone - You will not start with any randomized starting items.\nRandom - You will start with randomized starting items.\nAllow Temporary Items - You will start with randomized starting items including Keg, Magic Bean and Bottles with X.");
+            TooltipBuilder.SetTooltip(cRequiredBossRemains, "Set the number of Boss Remains required to proceed through the final Giants cutscene.");
             TooltipBuilder.SetTooltip(cBlastCooldown, "Adjust the cooldown timer after using the Blast Mask.");
             TooltipBuilder.SetTooltip(cIceTraps, "Amount of ice traps to be added to pool by replacing junk items.");
             TooltipBuilder.SetTooltip(cBombTraps, "Amount of bomb traps to mix in with ice traps.");
@@ -1123,6 +1124,7 @@ namespace MMR.UI.Forms
             cNoDowngrades.Checked = _configuration.GameplaySettings.PreventDowngrades;
             cShopAppearance.Checked = _configuration.GameplaySettings.UpdateShopAppearance;
             cStartingItems.SelectedIndex = (int)_configuration.GameplaySettings.StartingItemMode;
+            cRequiredBossRemains.SelectedIndex = _configuration.GameplaySettings.RequiredBossRemains - 1;
             cEponaSword.Checked = _configuration.GameplaySettings.FixEponaSword;
             cUpdateChests.Checked = _configuration.GameplaySettings.UpdateChests;
             cUpdateNpcText.Checked = _configuration.GameplaySettings.UpdateNPCText;
@@ -1458,6 +1460,11 @@ namespace MMR.UI.Forms
         private void cStartingItems_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.StartingItemMode = (StartingItemMode)cStartingItems.SelectedIndex);
+        }
+
+        private void cRequiredBossRemains_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.RequiredBossRemains = (byte)(cRequiredBossRemains.SelectedIndex + 1));
         }
 
         private void cQText_CheckedChanged(object sender, EventArgs e)
@@ -1866,6 +1873,7 @@ namespace MMR.UI.Forms
             cGossipHints.Enabled = !vanillaMode;
             cGaroHint.Enabled = !vanillaMode;
             cStartingItems.Enabled = !vanillaMode;
+            cRequiredBossRemains.Enabled = !vanillaMode;
             tJunkLocationsList.Enabled = !vanillaMode;
             bJunkLocationsEditor.Enabled = !vanillaMode;
             bToggleTricks.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
@@ -1959,6 +1967,7 @@ namespace MMR.UI.Forms
             cDEnt.Enabled = v;
             cShuffleBosses.Enabled = v;
             cStartingItems.Enabled = v;
+            cRequiredBossRemains.Enabled = v;
             cMixSongs.Enabled = v;
             cProgressiveUpgrades.Enabled = v;
             cEnemy.Enabled = v;
