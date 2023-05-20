@@ -4780,19 +4780,31 @@ namespace MMR.Randomizer
                                 {
                                     it.RuntimeItemName(oceanSpiderHouseDay1Item.DisplayName(), oceanSpiderHouseDay1Item.NewLocation.Value);
                                 })
-                                .Text(", ")
+                                .Text("...")
+                                ;
+                            })
+                            .EndTextBox()
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("Though maybe someone will be happy with ")
                                 .RuntimeArticle(oceanSpiderHouseDay2Item.DisplayItem, oceanSpiderHouseDay2Item.NewLocation.Value, "my ")
                                 .Red(() =>
                                 {
                                     it.RuntimeItemName(oceanSpiderHouseDay2Item.DisplayName(), oceanSpiderHouseDay2Item.NewLocation.Value);
                                 })
-                                .Text(" and ")
+                                .Text("...")
+                                ;
+                            })
+                            .EndTextBox()
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("Or I can try ")
                                 .RuntimeArticle(oceanSpiderHouseDay3Item.DisplayItem, oceanSpiderHouseDay3Item.NewLocation.Value, "my ")
                                 .Red(() =>
                                 {
                                     it.RuntimeItemName(oceanSpiderHouseDay3Item.DisplayName(), oceanSpiderHouseDay3Item.NewLocation.Value);
                                 })
-                                .Text("...")
+                                .Text(" as a last resort...")
                                 ;
                             })
                             .EndTextBox()
