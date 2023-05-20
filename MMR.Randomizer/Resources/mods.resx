@@ -346,6 +346,9 @@
   <data name="misc_changes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\misc-changes;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="misc_changes_restore_swamp_owl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\misc-changes-restore-swamp-owl.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="moveaudiostatebytes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\moveaudiostatebytes;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

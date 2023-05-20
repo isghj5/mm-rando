@@ -823,6 +823,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] misc_changes_restore_swamp_owl {
+            get {
+                object obj = ResourceManager.GetObject("misc_changes_restore_swamp_owl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] moveaudiostatebytes {
             get {
                 object obj = ResourceManager.GetObject("moveaudiostatebytes", resourceCulture);

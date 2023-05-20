@@ -5100,6 +5100,41 @@ namespace MMR.Randomizer
                     );
                 }
 
+                var songOfSoaringItem = _randomized.ItemList[Item.SongSoaring];
+                if (songOfSoaringItem.IsRandomized && songOfSoaringItem.Item == Item.SongSoaring)
+                {
+                    var region = songOfSoaringItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
+                    var regionPreposition = region.Preposition();
+                    var regionName = regionPreposition == null ? null : region.Name();
+                    if (!string.IsNullOrWhiteSpace(regionPreposition))
+                    {
+                        regionPreposition += " ";
+                    }
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xBFC)
+                        .Message(it =>
+                        {
+                            it.CompileTimeWrap((it) =>
+                            {
+                                it.Text("If you have left ").Red("proof ").Text("of our encounter on any of those ").Red("stone statues...");
+                            })
+                            .EndTextBox()
+                            .CompileTimeWrap((it) =>
+                            {
+                                it.Text("Then the ").Red("song").Text(" ")
+                                .Text(regionPreposition ?? "").Red(regionName)
+                                .Text(" will certainly be of some assistance...");
+                            })
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    ResourceUtils.ApplyHack(Resources.mods.misc_changes_restore_swamp_owl);
+                }
+
                 var songOfTimeItem = _randomized.ItemList[Item.SongTime];
                 if (songOfTimeItem.IsRandomized && songOfTimeItem.Item == Item.SongTime)
                 {
