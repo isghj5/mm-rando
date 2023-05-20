@@ -13,12 +13,13 @@ namespace MMR.Randomizer.Models
         Human = 1 << 4,
         All = Human | Goron | Zora | Deku | FierceDeity,
 
-        Indoors = 1 << 5,
-        Cave = 1 << 6,
-        Epona = 1 << 7,
-        Swim = 1 << 8,
-        SpikeRolling = 1 << 9,
-        Combat = 1 << 10,
-        CriticalHealth = 1 << 11,
+        Outdoors = 1 << 5,
+        Indoors = 1 << 6,
+        Cave = 1 << 7,
+        Epona = 1 << 8,
+        Swim = 1 << 9,
+        SpikeRolling = 1 << 10,
+        Combat = 1 << 11,
+        CriticalHealth = 1 << 12,
     }
 }

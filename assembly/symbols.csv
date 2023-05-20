@@ -88,6 +88,7 @@
 0x800FF92C,z2_Math_Vec3f_DistXZ
 0x80100504,z2_Lib_SegmentedToVirtual
 0x8010069C,z2_WriteHeartColors
+0x80101930,z2_LifeMeter_IsCritical
 0x8010CFBC,z2_8010CFBC
 0x8010D480,z2_8010D480
 0x8010EF68,z2_UpdateButtonsState

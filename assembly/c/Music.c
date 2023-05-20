@@ -42,6 +42,9 @@ static u16 CalculateCurrentState() {
     if (player) {
         state = 1 << player->form;
 
+        if (!sIsMusicIndoors && !sIsMusicCave) {
+            state = musicState.cumulativeStates.outdoors ? state | SEQUENCE_PLAY_STATE_OUTDOORS : SEQUENCE_PLAY_STATE_OUTDOORS;
+        }
         if (sIsMusicIndoors) {
             state = musicState.cumulativeStates.indoors ? state | SEQUENCE_PLAY_STATE_INDOORS : SEQUENCE_PLAY_STATE_INDOORS;
         }

@@ -90,6 +90,7 @@
 .definelabel z2_Math_Vec3f_DistXZ, 0x800FF92C
 .definelabel z2_Lib_SegmentedToVirtual, 0x80100504
 .definelabel z2_WriteHeartColors, 0x8010069C
+.definelabel z2_LifeMeter_IsCritical, 0x80101930
 .definelabel z2_8010CFBC, 0x8010CFBC
 .definelabel z2_8010D480, 0x8010D480
 .definelabel z2_UpdateButtonsState, 0x8010EF68
