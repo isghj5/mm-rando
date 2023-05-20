@@ -28,8 +28,8 @@ namespace MMR.Randomizer.Utils
                                                                    0x72, 0x0E, 0x29, 0x2D,
                                                                    0x2E, 0x7B, 0x73, 0x70, 0x7D, 0x50 };
 
-        public static int MAX_BGM_BUDGET            = 0x3800; // vanilla: 0x3800
-        public static int MAX_COMBAT_BUDGET         = 0x3800; // unk
+        public static int MAX_BGM_BUDGET            = 0x6000; // vanilla: 0x3800
+        public static int MAX_COMBAT_BUDGET         = 0x6000; // unk
         public static int MAX_TYPE2_MUSIC_BUDGET    = 0x6000; // vanilla: 0x4100
 
         public static int New_AudioBankTable = 0; // for mmfilelist
@@ -39,8 +39,8 @@ namespace MMR.Randomizer.Utils
 
         public static void ResetBudget()
         {
-            MAX_BGM_BUDGET          = 0x3800;
-            MAX_COMBAT_BUDGET       = 0x3800;
+            MAX_BGM_BUDGET          = 0x6000;
+            MAX_COMBAT_BUDGET       = 0x6000;
             MAX_TYPE2_MUSIC_BUDGET  = 0x6000;
         }
 
