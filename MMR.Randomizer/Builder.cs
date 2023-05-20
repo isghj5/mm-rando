@@ -4759,6 +4759,50 @@ namespace MMR.Randomizer
                 }
 
                 var oceanSpiderHouseDay1Item = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeGiantWallet);
+                var oceanSpiderHouseDay2Item = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemOceanSpiderHouseDay2PurpleRupee);
+                var oceanSpiderHouseDay3Item = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemOceanSpiderHouseDay3RedRupee);
+                if (oceanSpiderHouseDay1Item.IsRandomized || oceanSpiderHouseDay2Item.IsRandomized || oceanSpiderHouseDay3Item.IsRandomized)
+                {
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x1131)
+                        .Message(it =>
+                        {
+                            it.Text("It's gotten bigger again.").NewLine()
+                            .Text("Th-this is bad...")
+                            .EndTextBox()
+                            .CompileTimeWrap("I'll have to sell my life savings to find somewhere to hide!")
+                            .EndTextBox()
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("But all I have left is ")
+                                .RuntimeArticle(oceanSpiderHouseDay1Item.DisplayItem, oceanSpiderHouseDay1Item.NewLocation.Value, "my ")
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(oceanSpiderHouseDay1Item.DisplayName(), oceanSpiderHouseDay1Item.NewLocation.Value);
+                                })
+                                .Text(", ")
+                                .RuntimeArticle(oceanSpiderHouseDay2Item.DisplayItem, oceanSpiderHouseDay2Item.NewLocation.Value, "my ")
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(oceanSpiderHouseDay2Item.DisplayName(), oceanSpiderHouseDay2Item.NewLocation.Value);
+                                })
+                                .Text(" and ")
+                                .RuntimeArticle(oceanSpiderHouseDay3Item.DisplayItem, oceanSpiderHouseDay3Item.NewLocation.Value, "my ")
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(oceanSpiderHouseDay3Item.DisplayName(), oceanSpiderHouseDay3Item.NewLocation.Value);
+                                })
+                                .Text("...")
+                                ;
+                            })
+                            .EndTextBox()
+                            .CompileTimeWrap("Well... I'd better start searching.")
+                            .EndConversation()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                }
                 if (oceanSpiderHouseDay1Item.IsRandomized)
                 {
                     newMessages.Add(new MessageEntryBuilder()
