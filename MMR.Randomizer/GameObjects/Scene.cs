@@ -237,6 +237,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1291)]
         [SceneInternalId(0x28)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.SkulltulaDummy,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // Can block the ability to reach rafters to get a skulltoken
         OceanSpiderHouse = 0x25,
 
         [FileID(1298)]
