@@ -1394,16 +1394,6 @@ namespace MMR.Randomizer
             }
         }
 
-        /// <summary>
-        /// Update the gossip stone actor to not check mask of truth
-        /// </summary>
-        private void WriteFreeHints()
-        {
-            int address = 0x00E0A810 + 0x378;
-            uint val = 0x00;
-            ReadWriteUtils.WriteToROM(address, val);
-        }
-
         private void WriteSoundEffects(Random random)
         {
             if (!_cosmeticSettings.RandomizeSounds)
@@ -5473,7 +5463,7 @@ namespace MMR.Randomizer
 
             if (_randomized.Settings.FreeHints)
             {
-                WriteFreeHints();
+                ResourceUtils.ApplyHack(Resources.mods.gossip_hints_free);
             }
 
             if (_randomized.Settings.FreeGaroHints)
