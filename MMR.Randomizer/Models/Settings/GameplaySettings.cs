@@ -443,6 +443,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public bool ClearGaroHints { get; set; }
 
+        public bool TolerantGossipStones { get; set; } = true;
+
         public bool HintsIndicateImportance { get; set; }
 
         public int? OverrideNumberOfRequiredGossipHints { get; set; }

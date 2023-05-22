@@ -126,6 +126,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(tLuckRollPercentage, "Music Rando comes with a chance to accept a song from outside of its categories.\n - This controls the percentage chance of a Luck Roll allowing out-of-category music placement\n - This is per specific slot+song check\n - Only songs with their first category being a general category (0-16) are Luck Rollable.");
             TooltipBuilder.SetTooltip(cFreeHints, "Enable reading gossip stone hints without requiring the Mask of Truth.");
             TooltipBuilder.SetTooltip(cFreeGaroHints, "Enable fighting Garos by speaking to Tatl instead of wearing the Garo's Mask.");
+            TooltipBuilder.SetTooltip(cGossipsTolerant, "The angle at which Gossip Stones can be read will be more tolerant.");
             TooltipBuilder.SetTooltip(cMixGaroWithGossip, "Garo hints distribution and gossip hint distribution will be mixed together.");
             TooltipBuilder.SetTooltip(cClearHints, "Gossip stone hints will give clear item and location names.");
             TooltipBuilder.SetTooltip(cClearGaroHints, "Garo hints will give clear item and location names.");
@@ -1109,6 +1110,7 @@ namespace MMR.UI.Forms
             cQText.Checked = _configuration.GameplaySettings.QuickTextEnabled;
             cFreeHints.Checked = _configuration.GameplaySettings.FreeHints;
             cFreeGaroHints.Checked = _configuration.GameplaySettings.FreeGaroHints;
+            cGossipsTolerant.Checked = _configuration.GameplaySettings.TolerantGossipStones;
             cMixGaroWithGossip.Checked = _configuration.GameplaySettings.MixGossipAndGaroHints;
             cClearHints.Checked = _configuration.GameplaySettings.ClearHints;
             cClearGaroHints.Checked = _configuration.GameplaySettings.ClearGaroHints;
@@ -1380,6 +1382,11 @@ namespace MMR.UI.Forms
         private void cFreeGaroHints_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.FreeGaroHints = cFreeGaroHints.Checked);
+        }
+
+        private void cGossipsTolerant_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TolerantGossipStones = cGossipsTolerant.Checked);
         }
 
         private void cMixGaroWithGossip_CheckedChanged(object sender, EventArgs e)
@@ -1988,6 +1995,7 @@ namespace MMR.UI.Forms
             cGossipHints.Enabled = v;
             cFreeHints.Enabled = v;
             cFreeGaroHints.Enabled = v;
+            cGossipsTolerant.Enabled = v;
             cClearHints.Enabled = v;
             cGaroHint.Enabled = v;
             cClearGaroHints.Enabled = v;

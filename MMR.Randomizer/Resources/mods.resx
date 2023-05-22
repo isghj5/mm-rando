@@ -316,6 +316,9 @@
   <data name="gossip_hints_free" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\gossip-hints-free.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="gossip_hints_tolerant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\gossip-hints-tolerant.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="hookshot_any_surface" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\hookshot-any-surface.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

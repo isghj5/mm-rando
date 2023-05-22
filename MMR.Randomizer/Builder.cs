@@ -5466,6 +5466,11 @@ namespace MMR.Randomizer
                 ResourceUtils.ApplyHack(Resources.mods.gossip_hints_free);
             }
 
+            if (_randomized.Settings.TolerantGossipStones)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.gossip_hints_tolerant);
+            }
+
             if (_randomized.Settings.FreeGaroHints)
             {
                 ResourceUtils.ApplyHack(Resources.mods.free_garo_hints);

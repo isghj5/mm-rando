@@ -723,6 +723,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] gossip_hints_tolerant {
+            get {
+                object obj = ResourceManager.GetObject("gossip_hints_tolerant", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] hookshot_any_surface {
             get {
                 object obj = ResourceManager.GetObject("hookshot_any_surface", resourceCulture);
