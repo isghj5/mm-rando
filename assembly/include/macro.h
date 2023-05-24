@@ -13,6 +13,11 @@
 #define CHECK_WEEKEVENTREG(flag) (WEEKEVENTREG((flag) >> 8) & ((flag) & 0xFF))
 #define SET_WEEKEVENTREG(flag) (WEEKEVENTREG((flag) >> 8) = GET_WEEKEVENTREG((flag) >> 8) | ((flag) & 0xFF))
 
+#define CHECK_EVENTINF(flag) (gSaveContext.owl.eventInf[(flag) >> 4] & (1 << ((flag) & 0xF)))
+#define SET_EVENTINF(flag) (gSaveContext.owl.eventInf[(flag) >> 4] |= (1 << ((flag) & 0xF)))
+#define CLEAR_EVENTINF(flag) (gSaveContext.owl.eventInf[(flag) >> 4] &= (u8)~(1 << ((flag) & 0xF)))
+#define CLEAR_EVENTINF_ALT(flag) (gSaveContext.owl.eventInf[(flag) >> 4] &= ~(1 << ((flag) & 0xF)))
+
 #define SLOT(item) gItemSlots[item]
 #define AMMO(item) gSaveContext.perm.inv.quantities[SLOT(item)]
 #define INV_CONTENT(item) gSaveContext.perm.inv.items[SLOT(item)]

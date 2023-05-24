@@ -3,6 +3,7 @@
 #include <z64addresses.h>
 #include "Music.h"
 #include "enums.h"
+#include "macro.h"
 
 struct MusicConfig MUSIC_CONFIG = {
     .magic = MUSIC_CONFIG_MAGIC,
@@ -225,7 +226,8 @@ bool Music_ShouldFadeOut(GlobalContext* ctxt, s16 sceneLayer) {
         if (nextScene == currentScene) {
             switch (activeBgm) {
                 case 0x1D: // NA_BGM_MARKET // Clock Town
-                    return gSaveContext.extra.voidFlag == -4; // Day transition
+                    return gSaveContext.extra.voidFlag == -4 // Day transition
+                        || (CHECK_EVENTINF(0x43) && !CHECK_EVENTINF(0x42)); // grandma story and not grandma short story
                 default:
                     return false;
             }
