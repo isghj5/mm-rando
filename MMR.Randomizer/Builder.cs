@@ -1755,7 +1755,9 @@ namespace MMR.Randomizer
                     ChestTypeAttribute.ChestType? overrideChestType = null;
                     bool itemIsUsed(int itemId)
                     {
-                        var usedBy = _randomized.Logic.Where(il => il.RequiredItemIds?.Contains(itemId) == true || il.ConditionalItemIds?.Any(c => c.Contains(itemId)) == true);
+                        var usedBy = _randomized.Logic
+                            .Where(il => !ItemUtils.IsLocationJunk((Item)il.ItemId, _randomized.Settings))
+                            .Where(il => il.RequiredItemIds?.Contains(itemId) == true || il.ConditionalItemIds?.Any(c => c.Contains(itemId)) == true);
                         if (usedBy.Any(il => !il.IsFakeItem))
                         {
                             return true;
