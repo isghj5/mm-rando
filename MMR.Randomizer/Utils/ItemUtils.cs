@@ -430,7 +430,7 @@ namespace MMR.Randomizer.Utils
                                 BlitzJunkLocations.Add(location);
                                 debugItemObjects.Add(io);
                                 updated = true;
-                                if (!io.ItemOverride.HasValue && io.NewLocation == io.Item && io.Item.CanBeStartedWith())
+                                if (!io.ItemOverride.HasValue && io.NewLocation == io.Item && io.Item.CanBeStartedWith() && !result.Contains(io.Item))
                                 {
                                     result.Add(io.Item); // player starts with any non-randomized blitzed item
                                 }
