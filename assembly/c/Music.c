@@ -218,6 +218,7 @@ bool Music_ShouldFadeOut(GlobalContext* ctxt, s16 sceneLayer) {
         switch (activeBgm) {
             case 0x0D: // NA_BGM_ALIEN_INVASION
             case 0x38: // NA_BGM_MINI_BOSS
+            case 0x55: // NA_BGM_SONG_OF_SOARING
             case 0xFFFF: // Nothing playing
                 return true;
         }
