@@ -98,6 +98,7 @@ namespace MMR.Randomizer.Utils
                     Item.ItemBottleBeavers, // Hinted by Evan
                     Item.MaskGaro, // Hinted by the Road to Ikana ghost
                     Item.SongTime, // Hinted by the Scarecrow
+                    Item.SongSoaring, // Hinted by the southern swamp owl
                 };
                 npcTextHintedItems.AddRange(BossRemains()); // Hinted by Tatl and Tael
 
@@ -125,6 +126,9 @@ namespace MMR.Randomizer.Utils
                     Item.SongStorms, // Hinted by the grave
                     Item.ItemBottleDampe, // Hinted by the grave
                     Item.HeartPieceKnuckle, // Hinted by the grave
+                    Item.UpgradeGiantWallet, // Hinted by green shirt guy
+                    Item.MundaneItemOceanSpiderHouseDay2PurpleRupee, // Hinted by green shirt guy
+                    Item.MundaneItemOceanSpiderHouseDay3RedRupee, // Hinted by green shirt guy
                 };
 
                 if (npcTextHintedLocations.Contains(location))
