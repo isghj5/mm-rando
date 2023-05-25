@@ -84,6 +84,9 @@ void WorldColors_RandomizeTunic(ActorPlayer* actor) {
     WORLD_COLOR_CONFIG.formTunic[linkForm] = tunicColor;
 }
 
+static s16 sFormTunicHues[5] = {
+    -1, -1, -1, -1, -1
+};
 void WorldColors_CycleTunic(GlobalContext* ctxt) {
     if (!WORLD_COLOR_CONFIG.flags.rainbowTunic) {
         return;
@@ -92,9 +95,12 @@ void WorldColors_CycleTunic(GlobalContext* ctxt) {
     ActorPlayer* player = GET_PLAYER(ctxt);
     u8 linkForm = player->form;
 
-    u32 hue = (u32)Color_GetHue(WORLD_COLOR_CONFIG.formTunic[linkForm].rgb);
-    hue = (hue + 3) % 360;
-    WORLD_COLOR_CONFIG.formTunic[linkForm].rgb = Color_SetHue(WORLD_COLOR_CONFIG.formTunic[linkForm].rgb, (f64)hue);
+    if (sFormTunicHues[linkForm] < 0) {
+        sFormTunicHues[linkForm] = (s16)Color_GetHue(WORLD_COLOR_CONFIG.formTunic[linkForm].rgb);
+    } else {
+        sFormTunicHues[linkForm] = (sFormTunicHues[linkForm] + 1) % 360;
+    }
+    WORLD_COLOR_CONFIG.formTunic[linkForm].rgb = Color_SetHue(WORLD_COLOR_CONFIG.formTunic[linkForm].rgb, (f64)sFormTunicHues[linkForm]);
 }
 
 void WorldColors_Init(void) {
