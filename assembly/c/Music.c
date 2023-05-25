@@ -203,7 +203,6 @@ s8 Music_GetAudioLoadType(AudioInfo* audioInfo, u8 audioType) {
 }
 
 static u8 sLastSeqId = 0xFF;
-static u8 sLastAmbienceId = 0xFF;
 
 bool Music_ShouldFadeOut(GlobalContext* ctxt, s16 sceneLayer) {
     // TODO handle alternate exit scenarios
@@ -310,6 +309,8 @@ bool Music_ShouldFadeOut(GlobalContext* ctxt, s16 sceneLayer) {
 }
 
 void Music_HandleCommandSoundSettings(GlobalContext* ctxt, SceneCmd* cmd) {
+    ctxt->sequenceCtx.ambienceId = cmd->soundSettings.ambienceId;
+
     sIsMusicCave = false;
     sIsMusicIndoors = false;
     switch (ctxt->sceneNum) {
@@ -347,7 +348,6 @@ void Music_HandleCommandSoundSettings(GlobalContext* ctxt, SceneCmd* cmd) {
 
     if (!MUSIC_CONFIG.flags.removeMinorMusic) {
         ctxt->sequenceCtx.seqId = cmd->soundSettings.seqId;
-        ctxt->sequenceCtx.ambienceId = cmd->soundSettings.ambienceId;
         return;
     }
     bool shouldContinueMusic = sIsMusicIndoors || sIsMusicCave;
@@ -364,17 +364,13 @@ void Music_HandleCommandSoundSettings(GlobalContext* ctxt, SceneCmd* cmd) {
     }
 
     u8 seqId = gSaveContext.extra.seqId;
-    u8 ambienceId = gSaveContext.extra.ambienceId;
 
-    if (shouldContinueMusic && seqId != 0xFF && ambienceId != 0xFF) {
+    if (shouldContinueMusic && seqId != 0xFF) {
         sLastSeqId = seqId;
-        sLastAmbienceId = ambienceId;
-    } else if (!shouldContinueMusic || sLastSeqId == 0xFF || sLastAmbienceId == 0xFF) {
+    } else if (!shouldContinueMusic || sLastSeqId == 0xFF) {
         sLastSeqId = cmd->soundSettings.seqId;
-        sLastAmbienceId = cmd->soundSettings.ambienceId;
     }
     ctxt->sequenceCtx.seqId = sLastSeqId;
-    ctxt->sequenceCtx.ambienceId = sLastAmbienceId;
 }
 
 static bool ObjSound_ShouldSetBgm(Actor* objSound, GlobalContext* ctxt) {
