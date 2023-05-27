@@ -15,6 +15,8 @@ bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
     return Icetrap_Give(player, ctxt);
 }
 
+PlayerActionFunc sPlayer_Falling = NULL;
+
 void Player_PreventDangerousStates(ActorPlayer* player) {
     if (!MISC_CONFIG.flags.saferGlitches) {
         return;
@@ -27,15 +29,16 @@ void Player_PreventDangerousStates(ActorPlayer* player) {
         }
     }
 
+    if (sPlayer_Falling == NULL) {
+        sPlayer_Falling = z2_Player_func_8084C16C;
+    }
+
     // parent can be hookshot or epona
     // "&& player->base.parent->id == ACTOR_ARMS_HOOK" doesn't work because parent might be stale reference
     if (player->base.parent) {
-        if ((player->stateFlags.state1 & PLAYER_STATE1_AIR)
+        if ((player->stateFlags.state1 & PLAYER_STATE1_AIR) // might be redundant with the sPlayer_Falling check below
             || (player->stateFlags.state3 & PLAYER_STATE3_JUMP_ATTACK)
-            || (player->frozenTimer != 0
-                && player->heldItemActionParam != PLAYER_IA_HOOKSHOT
-                && player->heldItemActionParam != PLAYER_IA_OCARINA
-                && !(player->stateFlags.state1 & PLAYER_STATE1_EPONA)
+            || (player->actionFunc == sPlayer_Falling
                 && !(player->stateFlags.state3 & PLAYER_STATE3_HOOK_ARRIVE_2))) {
             player->base.parent = NULL;
         }

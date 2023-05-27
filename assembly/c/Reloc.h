@@ -23,6 +23,7 @@
 #define z2_Player_ItemToActionParam Reloc_ResolvePlayerActorFunc(z2_Player_ItemToActionParam)
 // might need to use this for Player_StartTransformation when checking boots:
 #define z2_Player_func_80849FE0     Reloc_ResolvePlayerActorFunc(z2_Player_func_80849FE0)
+#define z2_Player_func_8084C16C     Reloc_ResolvePlayerActorFunc(z2_Player_func_8084C16C)
 
 // Relocatable PlayerActor data
 #define z2_D_80862B4C               Reloc_ResolvePlayerActorData(z2_D_80862B4C, s32)
