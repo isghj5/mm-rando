@@ -5035,13 +5035,18 @@ namespace MMR.Randomizer
                             it.Text("Yee-hee-hee.").NewLine()
                             .Text("Do you have your own ").Red("horse").Text("?")
                             .EndTextBox()
-                            .RuntimeWrap(() =>
+                            .CompileTimeWrap(it =>
                             {
                                 it.Text("And if you are not wearing the ")
                                 .Red("mask")
                                 .Text(" that houses the ")
-                                .Red("wandering spirits")
-                                .Text(", which can be found ")
+                                .Red("wandering spirits...")
+                                ;
+                            })
+                            .EndTextBox()
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("Which can be found ")
                                 .Text(regionPreposition ?? "").Red(regionName)
                                 .Text("...")
                                 ;
@@ -5059,13 +5064,18 @@ namespace MMR.Randomizer
                         .Id(0x14F2)
                         .Message(it =>
                         {
-                            it.RuntimeWrap(() =>
+                            it.CompileTimeWrap(it =>
                             {
                                 it.Text("But if you must enter, then you must obtain the ")
                                 .Red("mask")
                                 .Text(" containing ")
-                                .Red("wandering spirits")
-                                .Text(", that can be found ")
+                                .Red("wandering spirits...")
+                                ;
+                            })
+                            .EndTextBox()
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("That can be found ")
                                 .Text(regionPreposition ?? "").Red(regionName)
                                 .Text("...")
                                 ;
@@ -5083,13 +5093,17 @@ namespace MMR.Randomizer
                             it.Text("Yee-hee-hee.").NewLine()
                             .Text("Do you have your own ").Red("horse").Text("?")
                             .EndTextBox()
-                            .RuntimeWrap(() =>
+                            .CompileTimeWrap(it =>
                             {
                                 it.Text("And if you are not wearing the ")
                                 .Red("mask")
                                 .Text(" containing ")
                                 .Red("wandering spirits")
-                                .Text(", which can be found ")
+                                ;
+                            })
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("Which can be found ")
                                 .Text(regionPreposition ?? "").Red(regionName)
                                 .Text("...")
                                 ;
