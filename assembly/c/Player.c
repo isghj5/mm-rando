@@ -253,6 +253,13 @@ bool Player_AfterTransformInit(ActorPlayer* this) {
     return false;
 }
 
+bool Player_HandleCutsceneItem(ActorPlayer* this, GlobalContext* ctxt) {
+    if (MISC_CONFIG.flags.instantTransform && this->base.draw == NULL) {
+        return true;
+    }
+    return z2_Player_func_80838A90(this, ctxt);
+}
+
 void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 actionParam) {
     if (MISC_CONFIG.flags.bombArrows && item == ITEM_BOMB) {
         ActorEnArrow* arrow = (ActorEnArrow*)ArrowCycle_FindArrow(player, ctxt);

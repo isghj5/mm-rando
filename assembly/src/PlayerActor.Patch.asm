@@ -264,3 +264,18 @@
 ;   JAL     Inventory_ChangeAmmo
 .org 0x806ECC44 + 0x142B70
     jal     Player_UseExplosiveAmmo
+
+;==================================================================================================
+; Stop player action chain if doing an instant transformation
+;==================================================================================================
+
+; Replaces:
+;   JAL     0x80838A90
+.org 0x806F69BC + 0x142B70
+    jal     Player_HandleCutsceneItem
+
+; Fix relocations.
+; Replaces:
+;   .dw 0x4400BA9C
+.org 0x8082DA90 + 0x31B24
+    .dw 0x00000000

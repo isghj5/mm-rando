@@ -274,6 +274,7 @@ extern void z2_MessageClose(GlobalContext* ctxt);
 #define z2_Player_ItemToActionParam_VRAM 0x8082F524
 #define z2_Player_func_80849FE0_VRAM     0x80849FE0
 #define z2_Player_func_8084C16C_VRAM     0x8084C16C
+#define z2_Player_func_80838A90_VRAM     0x80838A90
 
 // Relocatable Data (player_actor).
 #define z2_D_80862B4C_VRAM               0x80862B4C
@@ -293,5 +294,6 @@ typedef void (*z2_UseItem_Func)(GlobalContext* ctxt, ActorPlayer* player, u8 ite
 typedef s32 (*z2_Player_ItemToActionParam_Func)(ActorPlayer* player, s32 itemId);
 typedef void (*z2_Player_func_80849FE0_Func)(ActorPlayer* player, GlobalContext* ctxt);
 typedef void (*z2_Player_func_8084C16C_Func)(ActorPlayer* player, GlobalContext* ctxt);
+typedef bool (*z2_Player_func_80838A90_Func)(ActorPlayer* player, GlobalContext* ctxt);
 
 #endif
