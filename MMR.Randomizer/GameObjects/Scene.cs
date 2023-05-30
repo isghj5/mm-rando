@@ -491,6 +491,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1444)]
         [SceneInternalId(0x59)]
+        [EnemizerSceneBlockSensitive(Actor.BlueBubble, -1)]
         InvertedStoneTower = 0x56,
 
         [FileID(1446)]
