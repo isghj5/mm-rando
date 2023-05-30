@@ -11314,6 +11314,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x4D8), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
         CollectableTerminaFieldButterflyFairy1,
 
+        [Repeatable, Temporary]
         [ItemName("Cyan Frog"), LocationName("Frog in Woodfall Temple"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
         [ShopText("The cyan frog from Don Gero's frog choir.", isDefinite: true)]
@@ -11322,6 +11323,7 @@ namespace MMR.Randomizer.GameObjects
         [ExclusiveItemMessage(0x9003, "\u0017You found the \u0005Cyan Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
         FrogWoodfallTemple,
 
+        [Repeatable, Temporary]
         [ItemName("Pink Frog"), LocationName("Frog in Great Bay Temple"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
         [ShopText("The pink frog from Don Gero's frog choir.", isDefinite: true)]
@@ -11330,6 +11332,7 @@ namespace MMR.Randomizer.GameObjects
         [ExclusiveItemMessage(0x9004, "\u0017You found the \u0006Pink Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
         FrogGreatBayTemple,
 
+        [Repeatable, Temporary]
         [ItemName("Blue Frog"), LocationName("Frog in the Swamp"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
         [ShopText("The blue frog from Don Gero's frog choir.", isDefinite: true)]
@@ -11338,6 +11341,7 @@ namespace MMR.Randomizer.GameObjects
         [ExclusiveItemMessage(0x9005, "\u0017You found the \u0003Blue Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
         FrogSwamp,
 
+        [Repeatable, Temporary]
         [ItemName("White Frog"), LocationName("Frog in the Laundry Pool"), Region(Region.LaundryPool)]
         [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
         [ShopText("The white frog from Don Gero's frog choir.", isDefinite: true)]

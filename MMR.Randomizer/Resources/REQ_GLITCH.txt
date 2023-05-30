@@ -1178,77 +1178,14 @@
     {
       "Id": "HeartPieceChoir",
       "RequiredItems": [
-        "MaskDonGero",
         "AreaSnowheadTempleClear",
-        "AreaWoodFallTempleAccess",
-        "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple",
-        "Defeat WFT Gekko",
-        "Use Ice Arrow",
-        "GBT Yellow Valve",
-        "GBT Diving"
+        "MaskDonGero",
+        "FrogWoodfallTemple",
+        "FrogGreatBayTemple",
+        "FrogSwamp",
+        "FrogLaundryPool"
       ],
-      "ConditionalItems": [
-        [
-          "MaskZora",
-          "ItemFireArrow"
-        ],
-        [
-          "MaskZora",
-          "Clever Ice Platforms"
-        ],
-        [
-          "MaskZora",
-          "Long Jump",
-          "Take Damage",
-          "Any Bomb Bag"
-        ],
-        [
-          "MaskZora",
-          "Long Jump",
-          "Take Damage",
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg"
-        ],
-        [
-          "MaskZora",
-          "Harder Long Jumps",
-          "Take Damage"
-        ],
-        [
-          "GBT Reverse Water Direction",
-          "Use Fire Arrow"
-        ],
-        [
-          "GBT Reverse Water Direction",
-          "Unlimited Hot Spring Water"
-        ],
-        [
-          "GBT Reverse Water Direction",
-          "Icicle Clip"
-        ],
-        [
-          "Ocarina Dive",
-          "Take Damage",
-          "Use Fire Arrow"
-        ],
-        [
-          "Ocarina Dive",
-          "Take Damage",
-          "Unlimited Hot Spring Water"
-        ],
-        [
-          "Ocarina Dive",
-          "Take Damage",
-          "Icicle Clip"
-        ],
-        [
-          "Bomb Hovering"
-        ],
-        [
-          "FD Jumps"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -57985,6 +57922,117 @@
     {
       "Id": "CollectableTerminaFieldButterflyFairy1",
       "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "FrogWoodfallTemple",
+      "RequiredItems": [
+        "MaskDonGero",
+        "AreaWoodFallTempleAccess",
+        "Defeat WFT Gekko"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "FrogGreatBayTemple",
+      "RequiredItems": [
+        "MaskDonGero",
+        "AreaGreatBayTempleAccess",
+        "Exit Great Bay Temple",
+        "Use Ice Arrow",
+        "GBT Yellow Valve",
+        "GBT Diving"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskZora",
+          "ItemFireArrow"
+        ],
+        [
+          "MaskZora",
+          "Clever Ice Platforms"
+        ],
+        [
+          "MaskZora",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "MaskZora",
+          "Long Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ],
+        [
+          "MaskZora",
+          "Harder Long Jumps",
+          "Take Damage"
+        ],
+        [
+          "GBT Reverse Water Direction",
+          "Use Fire Arrow"
+        ],
+        [
+          "GBT Reverse Water Direction",
+          "Unlimited Hot Spring Water"
+        ],
+        [
+          "GBT Reverse Water Direction",
+          "Icicle Clip"
+        ],
+        [
+          "Ocarina Dive",
+          "Take Damage",
+          "Use Fire Arrow"
+        ],
+        [
+          "Ocarina Dive",
+          "Take Damage",
+          "Unlimited Hot Spring Water"
+        ],
+        [
+          "Ocarina Dive",
+          "Take Damage",
+          "Icicle Clip"
+        ],
+        [
+          "Bomb Hovering"
+        ],
+        [
+          "FD Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "FrogSwamp",
+      "RequiredItems": [
+        "MaskDonGero"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "FrogLaundryPool",
+      "RequiredItems": [
+        "MaskDonGero"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",

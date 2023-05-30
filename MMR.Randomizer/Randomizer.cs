@@ -1956,6 +1956,7 @@ namespace MMR.Randomizer
 
             PlaceQuestItems(itemPool);
             PlaceTradeItems(itemPool);
+            PlaceFrogs(itemPool);
             PlaceDungeonItems(itemPool);
             PlaceStartingItems(itemPool);
             PlaceUpgrades(itemPool);
@@ -2695,6 +2696,14 @@ namespace MMR.Randomizer
         private void PlaceTradeItems(List<Item> itemPool)
         {
             for (var i = Item.TradeItemMoonTear; i <= Item.TradeItemOceanDeed; i++)
+            {
+                PlaceItem(i, itemPool);
+            }
+        }
+
+        private void PlaceFrogs(List<Item> itemPool)
+        {
+            for (var i = Item.FrogWoodfallTemple; i <= Item.FrogLaundryPool; i++)
             {
                 PlaceItem(i, itemPool);
             }

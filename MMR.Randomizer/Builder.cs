@@ -3203,11 +3203,23 @@ namespace MMR.Randomizer
                     .Build()
                 );
             }
-            var messageAttribute = Item.CollectableIkanaGraveyardDay2Bats1.GetAttribute<ExclusiveItemMessageAttribute>();
-            var entry = new MessageEntry(
-                messageAttribute.Id,
-                messageAttribute.Message);
-            _extraMessages.Add(entry);
+
+            var itemsWithCustomMessage = new List<Item>
+            {
+                Item.CollectableIkanaGraveyardDay2Bats1,
+                Item.FrogWoodfallTemple,
+                Item.FrogGreatBayTemple,
+                Item.FrogSwamp,
+                Item.FrogLaundryPool,
+            };
+            foreach (var item in itemsWithCustomMessage)
+            {
+                var messageAttribute = item.GetAttribute<ExclusiveItemMessageAttribute>();
+                var entry = new MessageEntry(
+                    messageAttribute.Id,
+                    messageAttribute.Message);
+                _extraMessages.Add(entry);
+            }
 
             // replace "Razor Sword is now blunt" message with get-item message for Kokiri Sword.
             newMessages.Add(new MessageEntryBuilder()
@@ -5951,24 +5963,24 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(61, "Writing quick text...");
                 WriteQuickText();
 
-                progressReporter.ReportProgress(62, "Writing cutscenes...");
-                WriteCutscenes(messageTable);
-
-                progressReporter.ReportProgress(63, "Writing dungeons...");
+                progressReporter.ReportProgress(62, "Writing dungeons...");
                 WriteDungeons();
 
-                progressReporter.ReportProgress(64, "Writing gimmicks...");
+                progressReporter.ReportProgress(63, "Writing gimmicks...");
                 WriteGimmicks(messageTable);
 
-                progressReporter.ReportProgress(65, "Writing speedups...");
+                progressReporter.ReportProgress(64, "Writing speedups...");
                 WriteSpeedUps(messageTable);
 
-                progressReporter.ReportProgress(66, "Writing enemies...");
+                progressReporter.ReportProgress(65, "Writing enemies...");
                 WriteEnemies();
 
-                progressReporter.ReportProgress(67, "Writing items...");
+                progressReporter.ReportProgress(66, "Writing items...");
                 WriteItems(messageTable);
                 WriteMiscHacks();
+
+                progressReporter.ReportProgress(67, "Writing cutscenes...");
+                WriteCutscenes(messageTable);
 
                 progressReporter.ReportProgress(68, "Writing messages...");
                 WriteGossipQuotes(messageTable);

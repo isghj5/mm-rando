@@ -27,6 +27,7 @@ namespace MMR.Randomizer.Asm
         public short? Compasses;
         public short? DungeonMaps;
         public short? NotebookPage;
+        public short? Frogs;
     }
 
     /// <summary>
@@ -158,6 +159,13 @@ namespace MMR.Randomizer.Asm
                 return (Indexes.Rupees.Value, entry.Index);
             }
 
+            // Frogs
+            if (entry.ItemGained == 0xB4 && entry.Object == 0x266 && Indexes.Frogs.HasValue)
+            {
+                var index = entry.Type >> 4;
+                return ((short)(Indexes.Frogs.Value + index - 1), entry.Index);
+            }
+
             return null;
 
             // TODO: Move behavior for resolving others into here.
@@ -250,6 +258,10 @@ namespace MMR.Randomizer.Asm
             // Add Dungeon Maps
             AddDungeonMaps();
             this.Indexes.DungeonMaps = AdvanceIndex(4);
+
+            // Add Dungeon Maps
+            AddFrogs();
+            this.Indexes.Frogs = AdvanceIndex(4);
 
             // Include Spin Attack Energy model into Kokiri Sword
             ObjUtils.InsertObj(Resources.models.gi_spinattack, 0x148);
@@ -959,6 +971,29 @@ namespace MMR.Randomizer.Asm
             );
 
             return this.Bundle.Append(data);
+        }
+
+        #endregion
+
+        #region Frogs
+
+        (uint, uint) AddFrog(Color env, Color primAndEnv)
+        {
+            var data = CloneExistingData(1081);
+
+            WriteByte(data, 0x1064, env.ToBytesRGB());
+            WriteByte(data, 0x1114, primAndEnv.ToBytesRGB());
+            WriteByte(data, 0x111C, primAndEnv.ToBytesRGB());
+
+            return this.Bundle.Append(data);
+        }
+
+        void AddFrogs()
+        {
+            this.Offsets.Add(AddFrog(Color.FromArgb(0, 170, 200), Color.FromArgb(0, 115, 81))); // Woodfall Temple (Cyan)
+            this.Offsets.Add(AddFrog(Color.FromArgb(210, 120, 100), Color.FromArgb(126, 81, 40))); // Great Bay Temple (Pink)
+            this.Offsets.Add(AddFrog(Color.FromArgb(120, 130, 230), Color.FromArgb(72, 88, 93))); // Swamp (Blue)
+            this.Offsets.Add(AddFrog(Color.FromArgb(190, 190, 190), Color.FromArgb(114, 129, 77))); // Laundry Pool (White)
         }
 
         #endregion

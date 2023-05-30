@@ -10,7 +10,7 @@ static u16 isFrogReturnedFlags[] = {
 
 static u16 giIndices[] = {
     0, 0x466, 0x46D, 0x46F, 0x473
-}
+};
 
 void Minifrog_GiveReward(Actor* actor, GlobalContext* ctxt, s16 frogIndex) {
     if (MISC_CONFIG.internal.vanillaLayout) {

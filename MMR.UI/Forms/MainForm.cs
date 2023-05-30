@@ -333,7 +333,7 @@ namespace MMR.UI.Forms
             var locationCategoryLabel = new LocationCategoryLabel();
             locationCategoryLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             locationCategoryLabel.Location = new Point(locationCategoriesX + 24, 0);
-            locationCategoryLabel.Width = 688;
+            locationCategoryLabel.Width = 714;
             locationCategoryLabel.Height = 105;
             locationCategoryLabel.Lines = Enum.GetValues<LocationCategory>().Where(c => c > 0).Select(c => $"{addSpacesRegex.Replace(c.ToString(), " $1")}: +{itemsByLocationCategory[c].Count}").ToList();
 

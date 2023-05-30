@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 16;
+        public const int CurrentVersion = 17;
 
         public static string ApplyMigrations(string logic)
         {
@@ -202,6 +202,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 16)
             {
                 AddFairies(logicObject);
+            }
+
+            if (logicObject.Version < 17)
+            {
+                AddFrogs(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -4335,6 +4340,47 @@ namespace MMR.Randomizer.LogicMigrator
             });
 
             logicObject.Version = 16;
+        }
+
+        private static void AddFrogs(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1217;
+            var itemNames = new string[]
+            {
+                "FrogWoodfallTemple",
+                "FrogGreatBayTemple",
+                "FrogSwamp",
+                "FrogLaundryPool",
+            };
+
+            var frogChoirLogic = logicObject.Logic[59];
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Skip(2).Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string> { "MaskDonGero" },
+                ConditionalItems = new List<List<string>>(),
+            }));
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Take(2).Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = frogChoirLogic.RequiredItems,
+                ConditionalItems = frogChoirLogic.ConditionalItems,
+            }));
+
+            frogChoirLogic.RequiredItems = new List<string>
+            {
+                "AreaSnowheadTempleClear",
+                "MaskDonGero",
+                "FrogWoodfallTemple",
+                "FrogGreatBayTemple",
+                "FrogSwamp",
+                "FrogLaundryPool",
+            };
+            frogChoirLogic.ConditionalItems = new List<List<string>>();
+
+            logicObject.Version = 17;
         }
 
         private class MigrationItem
