@@ -327,7 +327,9 @@ namespace MMR.Randomizer.Utils
                     var cap = settings.OverrideHintItemCaps.ElementAtOrDefault(i);
                     if (cap > 0)
                     {
-                        var groupedLocations = tier.GroupBy(location => ItemCombinableHints.GetValueOrDefault(location).name ?? location.ToString())
+                        var groupedLocations = tier
+                            .Where(location => !IsLocationHinted(location, settings))
+                            .GroupBy(location => ItemCombinableHints.GetValueOrDefault(location).name ?? location.ToString())
                             .ToList();
                         var numberOfLocationsToJunk = groupedLocations.Count - cap;
                         return groupedLocations
