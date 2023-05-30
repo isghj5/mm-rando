@@ -10255,7 +10255,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseAnjuDelivery,
 
 
-        //GetItemIndex(0x466)
+        //GetItemIndex(0x466) // see frogs
 
 
         [ItemName("Notebook: Deposit Letter to Kafei"), LocationName("Depositing the Letter to Kafei"), MultiLocation(NotebookDepositLetterToKafeiInSCT, NotebookDepositLetterToKafeiInNCT, NotebookDepositLetterToKafeiInECT), RegionArea(RegionArea.Town)]
@@ -10306,7 +10306,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookSaveTheCows,
 
 
-        //GetItemIndex(0x46D)
+        //GetItemIndex(0x46D) // see frogs
 
 
         [ItemName("Notebook: Protected milk delivery"), LocationName("Cremia"), Region(Region.RomaniRanch)]
@@ -10317,7 +10317,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookProtectMilkDelivery,
 
 
-        //GetItemIndex(0x46F)
+        //GetItemIndex(0x46F) // see frogs
 
 
         [ItemName("Notebook: Keaton Mask"), LocationName("Curiosity Shop Man #1"), Region(Region.LaundryPool)]
@@ -10344,7 +10344,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookDeliverLetterToMama,
 
 
-        //GetItemIndex(0x473)
+        //GetItemIndex(0x473) // see frogs
 
 
         [ItemName("Notebook: Bombers' Notebook"), LocationName("Bombers' Hide and Seek"), MultiLocation(NotebookLearnBombersCodeInNCT, NotebookLearnBombersCodeInECT), RegionArea(RegionArea.Town)]
@@ -11313,6 +11313,39 @@ namespace MMR.Randomizer.GameObjects
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x4D8), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
         CollectableTerminaFieldButterflyFairy1,
+
+        [ItemName("Cyan Frog"), LocationName("Frog in Woodfall Temple"), Region(Region.WoodfallTemple)]
+        [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
+        [ShopText("The cyan frog from Don Gero's frog choir.", isDefinite: true)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x466), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs)]
+        [ExclusiveItemMessage(0x9003, "\u0017You found the \u0005Cyan Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
+        FrogWoodfallTemple,
+
+        [ItemName("Pink Frog"), LocationName("Frog in Great Bay Temple"), Region(Region.GreatBayTemple)]
+        [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
+        [ShopText("The pink frog from Don Gero's frog choir.", isDefinite: true)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x46D), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs)]
+        [ExclusiveItemMessage(0x9004, "\u0017You found the \u0006Pink Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
+        FrogGreatBayTemple,
+
+        [ItemName("Blue Frog"), LocationName("Frog in the Swamp"), Region(Region.SouthernSwamp)]
+        [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
+        [ShopText("The blue frog from Don Gero's frog choir.", isDefinite: true)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x46F), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs)]
+        [ExclusiveItemMessage(0x9005, "\u0017You found the \u0003Blue Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
+        FrogSwamp,
+
+        [ItemName("White Frog"), LocationName("Frog in the Laundry Pool"), Region(Region.LaundryPool)]
+        [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
+        [ShopText("The white frog from Don Gero's frog choir.", isDefinite: true)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x473), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs)]
+        [ExclusiveItemMessage(0x9006, "\u0017You found the \u0001White Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
+        FrogLaundryPool,
+
 
 
 

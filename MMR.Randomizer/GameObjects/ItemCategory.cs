@@ -115,6 +115,9 @@ namespace MMR.Randomizer.GameObjects
         [Description("Randomize Bombers' Notebook entries.")]
         NotebookEntries,
 
+        [Description("Randomize the frog choir members.")]
+        Frogs,
+
         [Description("Randomize Ocarina and Song of Time.")]
         TimeTravel,
 
@@ -202,6 +205,9 @@ namespace MMR.Randomizer.GameObjects
         [Description("Randomize fairies that transform from butterflies.")]
         Butterflies,
 
+        [Description("Randomize the frog choir members.")]
+        Frogs,
+
         [Description("Randomize items that require glitches to collect.")]
         GlitchesRequired,
     }
@@ -276,6 +282,9 @@ namespace MMR.Randomizer.GameObjects
 
         [Description("Randomize fairies that transform from butterflies.")]
         Butterflies,
+
+        [Description("Randomize the frog choir members.")]
+        Frogs,
 
         [Description("Add the Royal Wallet (999 capacity) to the item pool.")]
         RoyalWallet,

@@ -71,6 +71,7 @@
 .include "Message.Patch.asm"
 .include "MessageTable.Patch.asm"
 .include "Mikau.Patch.asm"
+.include "Minifrog.Patch.asm"
 .include "Misc.Patch.asm"
 .include "MMR.Patch.asm"
 .include "Models.Patch.asm"

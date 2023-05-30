@@ -865,7 +865,7 @@ namespace MMR.Randomizer
                                 var newMessage = messages[j];
                                 var lines = newMessage.Count(c => c == '\x11') + 1;
                                 newMessage = newMessage.Replace("\u00BF", "") + "\u001C\u0000" + (char)(lines * 0x20) + "\u00BF";
-                                var newMessageId = (ushort) ((_extraMessages.Max(me => (ushort?)me.Id) ?? 0x9002) + 1);
+                                var newMessageId = (ushort) ((_extraMessages.Max(me => (ushort?)me.Id) ?? 0x9006) + 1);
                                 var newHeader = message.Header.ToArray();
                                 if (nextMessageId.HasValue)
                                 {
