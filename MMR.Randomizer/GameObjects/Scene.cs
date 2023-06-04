@@ -600,6 +600,8 @@ namespace MMR.Randomizer.GameObjects
                 Actor.Wolfos)]
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BombersYouChase,
         //Actor.RegularIceBlock)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+            Actor.LikeLike)] // If you start with one heart this can be a softlock
         [EnemizerSceneBlockSensitive(Actor.BombersYouChase, -1)] // chicken holder leads to a chest
         EastClockTown = 0x69,
 
@@ -607,6 +609,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x6D)]
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
         //    Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+            Actor.LikeLike)] // If you start with one heart this can be a softlock
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
         WestClockTown = 0x6A,
 
@@ -615,6 +619,8 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
         //    Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+            Actor.LikeLike)] // If you start with one heart this can be a softlock
         NorthClockTown = 0x6B,
 
         [FileID(1516)]
@@ -626,7 +632,8 @@ namespace MMR.Randomizer.GameObjects
         */
         [EnemizerSceneBlockSensitive(Actor.Carpenter, -1)] // TODO figure out which one is the issue one
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
-            Actor.PatrollingPirate )] // could be annoying, hard to leave
+            Actor.PatrollingPirate, // could be annoying, hard to leave
+            Actor.LikeLike )] // If you start with one heart this can be a softlock
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
         SouthClockTown = 0x6C,
 
