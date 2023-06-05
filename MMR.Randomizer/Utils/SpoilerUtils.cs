@@ -80,6 +80,7 @@ namespace MMR.Randomizer.Utils
                 ItemList = itemList.ToList(),
                 Logic = randomized.Logic,
                 BlitzExtraItems = randomized.BlitzExtraItems.AsReadOnly(),
+                Spheres = randomized.Spheres,
                 GossipHints = randomized.GossipQuotes?.ToDictionary(me => (GossipQuote) me.Id, (me) =>
                 {
                     var message = me.Message.Substring(1);
@@ -213,6 +214,26 @@ namespace MMR.Randomizer.Utils
                 foreach (var hint in spoiler.GossipHints.OrderBy(h => h.Key.ToString()))
                 {
                     log.AppendLine($"{hint.Key,-25} -> {hint.Value}");
+                }
+            }
+
+
+            if (spoiler.Spheres != null && spoiler.Spheres.Any())
+            {
+                log.AppendLine();
+                log.AppendLine();
+                log.AppendLine(" Playthrough");
+
+                log.AppendLine($"{"Sphere", -10} {"Location",-50}    {"Item"}");
+                var i = 0;
+                foreach (var sphere in spoiler.Spheres)
+                {
+                    foreach (var (item, location) in sphere)
+                    {
+                        log.AppendLine($"{i,-10} {location,-50} -> {item}");
+                    }
+                    log.AppendLine();
+                    i++;
                 }
             }
 

@@ -3066,6 +3066,113 @@ namespace MMR.Randomizer
                     _randomized.ImportantLocations = importantLocations.Union(songOfTimeImportantItems).Distinct().ToList().AsReadOnly();
                     _randomized.ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly();
                     _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.Keys.ToList().AsReadOnly();
+
+                    var spheres = new List<List<(string item, string location)>>();
+                    var acquired = new List<Item>();
+                    acquired.AddRange(_settings.CustomStartingItemList);
+                    acquired.AddRange(_randomized.BlitzExtraItems);
+                    var ioAcquired = new List<ItemObject>();
+                    bool spheresUpdated;
+                    bool hasAcquired(ItemObject io)
+                    {
+                        return io.DependsOnItems.Where(item => ItemList[item].Item == item).All(acquired.Contains)
+                            && (
+                                !io.Conditionals.Any()
+                                || io.Conditionals.Any(c => c.Where(item => ItemList[item].Item == item).All(acquired.Contains))
+                            );
+                    }
+                    bool shouldAppearInPlaythrough(ItemObject io)
+                    {
+                        return io.IsRandomized && io.Item.DungeonEntrances() == null;
+                    }
+                    do
+                    {
+                        bool fakeItemsUpdated;
+                        do
+                        {
+                            fakeItemsUpdated = false;
+
+                            foreach (var io in ItemList.Where(io => !ioAcquired.Contains(io)))
+                            {
+                                var location = (Item)io.ID;
+                                var mainLocation = location.MainLocation();
+                                if (mainLocation.HasValue)
+                                {
+                                    if (shouldAppearInPlaythrough(ItemList[mainLocation.Value]))
+                                    {
+                                        continue;
+                                    }
+                                }
+                                else if (shouldAppearInPlaythrough(io))
+                                {
+                                    continue;
+                                }
+                                if (hasAcquired(io))
+                                {
+                                    if (mainLocation.HasValue)
+                                    {
+                                        ioAcquired.Add(ItemList[mainLocation.Value]);
+                                    }
+
+                                    var item = ItemList.Single(x => (x.NewLocation ?? x.Item) == (mainLocation ?? location)).Item;
+                                    acquired.Add(item);
+                                    ioAcquired.Add(io);
+                                    fakeItemsUpdated = true;
+                                }
+                            }
+
+                        } while (fakeItemsUpdated);
+
+                        spheresUpdated = false;
+                        var currentSphere = new List<(string item, string location)>();
+                        var currentSphereItems = new List<Item>();
+                        foreach (var io in ItemList.Where(io => !ioAcquired.Contains(io)))
+                        {
+                            var location = (Item)io.ID;
+                            var mainLocation = location.MainLocation();
+                            if (mainLocation.HasValue)
+                            {
+                                if (!shouldAppearInPlaythrough(ItemList[mainLocation.Value]))
+                                {
+                                    continue;
+                                }
+                            }
+                            else if (!shouldAppearInPlaythrough(io))
+                            {
+                                continue;
+                            }
+                            if (hasAcquired(io))
+                            {
+                                ioAcquired.Add(io);
+
+                                if (mainLocation.HasValue)
+                                {
+                                    ioAcquired.Add(ItemList[mainLocation.Value]);
+                                    currentSphereItems.Add(location);
+                                }
+
+                                var item = ItemList.Single(x => x.NewLocation == (mainLocation ?? location)).Item;
+                                currentSphereItems.Add(item);
+                                if (location.DungeonEntrances() != null)
+                                {
+                                    currentSphere.Add((item.Entrance() ?? item.ToString(), location.Entrance() ?? location.ToString()));
+                                }
+                                else if (_randomized.ImportantLocations.Contains(location))
+                                {
+                                    currentSphere.Add((item.ProgressiveUpgradeName(_settings.ProgressiveUpgrades), location.Location(ItemList) ?? location.ToString()));
+                                }
+                            }
+                        }
+                        acquired.AddRange(currentSphereItems);
+
+                        if (currentSphere.Any())
+                        {
+                            spheres.Add(currentSphere);
+                            spheresUpdated = true;
+                        }
+                    } while (spheresUpdated);
+
+                    _randomized.Spheres = spheres;
                 }
 
                 if (_settings.GossipHintStyle != GossipHintStyle.Default)
