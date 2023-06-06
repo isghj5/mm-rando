@@ -383,6 +383,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1353)]
         [SceneInternalId(0x43)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Dampe,
+            Actor.Treee)]// for some reason big poe in the first room can cause camera to lock, unknown reason
+        [EnemizerSceneBlockSensitive(Actor.Dampe, -1)]
         IkanaGraveyard = 0x40,
 
         [FileID(1356)]
