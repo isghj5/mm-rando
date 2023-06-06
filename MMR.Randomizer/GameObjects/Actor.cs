@@ -402,7 +402,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 10, variant: 0xFF)]
         [FlyingToGroundHeightAdjustment(100)]
         [RespawningAllVariants] // they do NOT respawn, this is temporary: light arrow req makes them difficult to kill early in the game
-        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)]
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)] // unknown crash reason
         DeathArmos = 0x2D, // En_Famos
 
         Empty2E = 0x2E,

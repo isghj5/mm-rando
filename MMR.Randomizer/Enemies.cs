@@ -2026,6 +2026,7 @@ namespace MMR.Randomizer
                             }
                             else
                             {
+                                newEnemy.Variants = compatibleVariants;
                                 newEnemy.RemoveBlockingTypes();
                             }
                         }

@@ -285,6 +285,9 @@ namespace MMR.Randomizer.Models.Rom
                 List<int> ourVariants   = this.AllVariants[(int)randomVariantType - 1].ToList();
                 List<int> theirVariants = otherActor.AllVariants[(int)randomVariantType - 1].ToList();
 
+                // TODO if both are zero, exit early
+                //if ()
+
                 // large chance of pathing enemies allowing ground or flying replacements
                 if (randomVariantType == ActorType.Pathing
                     && ourVariants.Contains(this.OldVariant) && theirVariants.Count == 0 && rng.Next(100) < 80)
