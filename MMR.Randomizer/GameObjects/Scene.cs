@@ -69,13 +69,13 @@ namespace MMR.Randomizer.GameObjects
             Actor.RegularIceBlock)] // blocking actors
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // grottos are common, this can get silly
             Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard//, Actor.BomberHideoutGuard // annoying
-
-
             //Actor.Bumper, Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, Actor.RegularIceBlock,
             /*Actor.ClocktowerGearsAndOrgan /*, Actor.PatrollingPirate */ )]
         [EnemizerSceneBlockSensitive(Actor.DekuBabaWithered, -1)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BioDekuBaba,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // they can extend so far they can block the door leading out
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GoldSkulltula,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can get the player locked behind them near the grotto stones
         Grottos = 0x0A,
 
         // Unused = 0x0B,

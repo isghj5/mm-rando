@@ -4597,7 +4597,6 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(592)]
         [ObjectListIndex(0x26A)] // double object actor
-        // uhhh code has no params, where did FE01 come from?
         [GroundVariants(0x0)]
         [VariantsWithRoomMax(max:3, variant:0x0)] // temp disable as double object actors are borken
         [UnkillableAllVariants]
