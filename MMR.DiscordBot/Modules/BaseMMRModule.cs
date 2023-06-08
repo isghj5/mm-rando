@@ -85,7 +85,7 @@ namespace MMR.DiscordBot.Modules
 
             if (await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
             {
-                commands.Add("seed (<@user>){2,}", "Generate a seed. The patch and hashIcons will be sent in a direct message to the tagged users. The spoiler log will be sent to you.");
+                commands.Add("seed (<settingName>)? (<@user>){2,}", "Generate a seed. Optionall provide a setting name. The patch and hashIcons will be sent in a direct message to the tagged users. The spoiler log will be sent to you.");
             }
             else
             {
@@ -96,7 +96,6 @@ namespace MMR.DiscordBot.Modules
                 else
                 {
                     commands.Add("seed (<settingName>)?", "Generate a seed. Optionally provide a setting name.");
-                    commands.Add("mystery <categoryName>", "Generate a seed using a random setting from the <categoryName> mystery category.");
                 }
                 commands.Add("spoiler", "Retrieve the spoiler log for your last generated seed.");
             }
