@@ -31,12 +31,6 @@ namespace MMR.DiscordBot.Modules
             _mmrService = mmrService;
         }
 
-        //private readonly IReadOnlyCollection<ulong> _tournamentChannels = new List<ulong>
-        //{
-        //    709731024375906316, // ZoeyZolotova - tournament-admin
-        //    871199781454757969, // MMR - Season 2 Brackets - #bracket-seeds
-        //}.AsReadOnly();
-
         protected virtual void AddHelp(Dictionary<string, string> commands)
         {
 
@@ -133,16 +127,15 @@ namespace MMR.DiscordBot.Modules
             await ReplyNoTagAsync("List of commands: (all commands begin with \"!mmr\")\n" + string.Join('\n', commands.Select(kvp => $"`{kvp.Key}` - {kvp.Value}")));
         }
 
-        private async Task TournamentSeed()
+        private async Task TournamentSeed(string settingPath, IUser[] users)
         {
             // Tournament seed
-            var mentionedUsers = Context.Message.MentionedUsers.DistinctBy(u => u.Id);
-            if (mentionedUsers.Any(u => u.Id == Context.User.Id))
+            if (users.Any(u => u.Id == Context.User.Id))
             {
                 await ReplyNoTagAsync("Cannot generate a seed for yourself.");
                 return;
             }
-            if (mentionedUsers.Count() < 2)
+            if (users.Count() < 2)
             {
                 await ReplyNoTagAsync("Must mention at least two users.");
                 return;
@@ -153,7 +146,7 @@ namespace MMR.DiscordBot.Modules
             {
                 try
                 {
-                    var (patchPath, hashIconPath, spoilerLogPath, _) = await _mmrService.GenerateSeed(DateTime.UtcNow, null, async (i) =>
+                    var (patchPath, hashIconPath, spoilerLogPath, _) = await _mmrService.GenerateSeed(DateTime.UtcNow, settingPath, async (i) =>
                     {
                         if (i < 0)
                         {
@@ -166,7 +159,7 @@ namespace MMR.DiscordBot.Modules
                     });
                     if (File.Exists(patchPath) && File.Exists(hashIconPath) && File.Exists(spoilerLogPath))
                     {
-                        foreach (var user in mentionedUsers)
+                        foreach (var user in users)
                         {
                             await user.SendFileAsync(patchPath, "Here is your tournament match seed! Please be sure your Hash matches and let an organizer know if you have any issues before you begin.");
                             await user.SendFileAsync(hashIconPath);
@@ -258,33 +251,65 @@ namespace MMR.DiscordBot.Modules
             }).Start();
         }
 
-        [Command("seed")]
-        public async Task Seed([Remainder] string settingName = null)
+        private async Task<(string settingPath, bool success)> GetSettingPath(string settingName)
         {
+            if (string.IsNullOrWhiteSpace(settingName))
+            {
+                return (null, true);
+            }
+
+            if (Context.Guild == null)
+            {
+                await ReplyNoTagAsync("Settings are unavailable in direct messages.");
+                return (null, false);
+            }
+
+            var settingPath = _mmrService.GetSettingsPath(Context.Guild.Id, settingName);
+            if (File.Exists(settingPath))
+            {
+                return (settingPath, true);
+            }
+
+            var mysteryPath = _mmrService.GetMysteryPath(Context.Guild.Id, settingName, false);
+            if (Directory.Exists(mysteryPath))
+            {
+                var settingFiles = Directory.EnumerateFiles(mysteryPath).ToList();
+                settingPath = settingFiles.RandomOrDefault(new Random());
+                if (settingPath != default)
+                {
+                    return (settingPath, true);
+                }
+            }
+
+            await ReplyNoTagAsync("Setting not found.");
+            return (null, false);
+        }
+
+        [Command("seed")]
+        public async Task Seed(params IUser[] users)
+        {
+            await Seed(null, users);
+        }
+
+        [Command("seed")]
+        public async Task Seed(string settingName = null, params IUser[] users)
+        {
+            var (settingPath, success) = await GetSettingPath(settingName);
+            if (!success)
+            {
+                return;
+            }
+
             if (await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
             {
-                await TournamentSeed();
+                await TournamentSeed(settingPath, users);
                 return;
             }
             if (!await VerifySeedFrequency())
             {
                 return;
             }
-            string settingPath = null;
-            if (!string.IsNullOrWhiteSpace(settingName))
-            {
-                if (Context.Guild == null)
-                {
-                    await ReplyNoTagAsync("Settings are unavailable in direct messages.");
-                    return;
-                }
-                settingPath = _mmrService.GetSettingsPath(Context.Guild.Id, settingName);
-                if (!File.Exists(settingPath))
-                {
-                    await ReplyNoTagAsync("Setting not found.");
-                    return;
-                }
-            }
+
             await GenerateSeed(settingPath);
         }
 
@@ -348,6 +373,13 @@ namespace MMR.DiscordBot.Modules
                 return;
             }
 
+            var mysteryPath = _mmrService.GetMysteryPath(Context.Guild.Id, settingName, false);
+            if (Directory.Exists(mysteryPath))
+            {
+                await ReplyNoTagAsync("A mystery category with that name already exists.");
+                return;
+            }
+
             var replacing = false;
             var settingsPath = _mmrService.GetSettingsPath(Context.Guild.Id, settingName);
             if (File.Exists(settingsPath))
@@ -393,15 +425,29 @@ namespace MMR.DiscordBot.Modules
         [RequireContext(ContextType.Guild)]
         public async Task ListSettings()
         {
-            var settingsPaths = _mmrService.GetSettingsPaths(Context.Guild.Id);
+            var settings = _mmrService.GetSettingsPaths(Context.Guild.Id)
+                .Select(p => Path.GetFileNameWithoutExtension(p))
+                .ToList();
 
-            if (!settingsPaths.Any())
+            var mysteryRoot = _mmrService.GetMysteryRoot(Context.Guild.Id);
+            if (Directory.Exists(mysteryRoot))
+            {
+                var mysteryCategories = Directory.EnumerateDirectories(mysteryRoot);
+
+                settings.AddRange(mysteryCategories.Select(categoryFolder =>
+                {
+                    var fileCount = Directory.EnumerateFiles(categoryFolder).Count();
+                    return $"{Path.GetFileNameWithoutExtension(categoryFolder)} ({fileCount} file{(fileCount != 1 ? "s" : "")})";
+                }));
+            }
+
+            if (!settings.Any())
             {
                 await ReplyNoTagAsync("No settings found.");
                 return;
             }
 
-            await ReplyNoTagAsync("List of settings:\n" + string.Join('\n', settingsPaths.Select(p => Path.GetFileNameWithoutExtension(p))));
+            await ReplyNoTagAsync("List of settings:\n" + string.Join('\n', settings));
         }
 
         [Command("get-settings")]
@@ -448,6 +494,13 @@ namespace MMR.DiscordBot.Modules
             if (Path.GetExtension(settingsFile.Filename) != ".json")
             {
                 await ReplyNoTagAsync("File must be a json file.");
+                return;
+            }
+
+            var settingsPath = _mmrService.GetSettingsPath(Context.Guild.Id, categoryName);
+            if (File.Exists(settingsPath))
+            {
+                await ReplyNoTagAsync("A non-mystery setting with that name already exists.");
                 return;
             }
 
@@ -499,6 +552,11 @@ namespace MMR.DiscordBot.Modules
             }
 
             File.Delete(settingPath);
+
+            if (Directory.EnumerateFiles(mysteryPath).Count() == 0)
+            {
+                Directory.Delete(mysteryPath);
+            }
 
             await ReplyNoTagAsync("Deleted mystery setting.");
         }
@@ -554,6 +612,7 @@ namespace MMR.DiscordBot.Modules
         [RequireContext(ContextType.Guild)]
         public async Task MysterySeed([Remainder] string categoryName)
         {
+            await ReplyNoTagAsync("Warning - this command is deprecated and will be removed in the future. Use the `seed` command instead.");
             if (!await VerifySeedFrequency())
             {
                 return;
