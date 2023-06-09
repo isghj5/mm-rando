@@ -1814,7 +1814,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Lightblock)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Seth2)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
@@ -1822,7 +1822,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.DeathArmos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.LikeLike, GameObjects.Actor.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.GateSoldier, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.DekuPatrolGuard, GameObjects.Actor.OOTPotionShopMan)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.DekuPatrolGuard, GameObjects.Actor.OOTPotionShopMan)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
                 #endif
@@ -1932,7 +1932,8 @@ namespace MMR.Randomizer
                 var objectHasBlockingSensitivity = currentTargetActors.Any(actor => actor.Blockable == false);
                 // get a list of matching actors that can fit in the place of the previous actor
                 var newCandiateList = GetMatchPool(thisSceneData, thisSceneData.ActorsPerObject[objectIndex], objectHasFairyDroppingEnemy, objectHasBlockingSensitivity);
-                if (newCandiateList.Find(act => act.Variants.Count == 0) != null) // haven't gotten this error in awhile, but leaving here in case I break something
+                var sanityCheck = newCandiateList.Find(act => act.Variants.Count == 0);
+                if ( sanityCheck != null) // haven't gotten this error in awhile, but leaving here in case I break something
                 {
                     throw new Exception("GenActorCandidatees: zero variants detected");
                 }
@@ -2028,6 +2029,10 @@ namespace MMR.Randomizer
                             {
                                 newEnemy.Variants = compatibleVariants;
                                 newEnemy.RemoveBlockingTypes();
+                                if (newEnemy.Variants.Count == 0) // TODO refactor this into the overall flow
+                                {
+                                    continue;
+                                }
                             }
                         }
                         else

@@ -4594,7 +4594,7 @@ namespace MMR.Randomizer.GameObjects
         // 0 1 2 are the heads
         IgosFloatingHead = 0x278, // En_Osk
 
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // fixed version that doesnt crash is a separate mmra now
         [FileID(592)]
         [ObjectListIndex(0x26A)] // double object actor
         [GroundVariants(0x0)]
