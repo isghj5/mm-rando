@@ -1753,18 +1753,31 @@ namespace MMR.Randomizer
                 else
                 {
                     ChestTypeAttribute.ChestType? overrideChestType = null;
-                    bool itemIsUsed(int itemId)
+                    bool itemIsUsed(int itemId, Stack<int> path)
                     {
-                        var usedBy = _randomized.Logic
-                            .Where(il => !ItemUtils.IsLocationJunk((Item)il.ItemId, _randomized.Settings))
-                            .Where(il => il.RequiredItemIds?.Contains(itemId) == true || il.ConditionalItemIds?.Any(c => c.Contains(itemId)) == true);
-                        if (usedBy.Any(il => !il.IsFakeItem))
+                        if (path.Contains(itemId))
                         {
-                            return true;
+                            return false;
                         }
-                        return usedBy.Any(il => itemIsUsed(il.ItemId));
+                        try
+                        {
+                            path.Push(itemId);
+                            var usedBy = _randomized.Logic
+                                .Where(il => !ItemUtils.IsLocationJunk((Item)il.ItemId, _randomized.Settings))
+                                .Where(il => il.RequiredItemIds?.Contains(itemId) == true || il.ConditionalItemIds?.Any(c => c.Contains(itemId)) == true);
+                            if (usedBy.Any(il => !il.IsFakeItem))
+                            {
+                                return true;
+                            }
+
+                            return usedBy.Any(il => itemIsUsed(il.ItemId, path));
+                        }
+                        finally
+                        {
+                            path.Pop();
+                        }
                     }
-                    if ((item.Item.Name().Contains("Bombchu") || item.Item.Name().Contains("Shield")) && itemIsUsed((int)item.Item))
+                    if ((item.Item.Name().Contains("Bombchu") || item.Item.Name().Contains("Shield")) && itemIsUsed((int)item.Item, new Stack<int>()))
                     {
                         overrideChestType = item.Item.IsTemporary(_randomized.Settings) ? ChestTypeAttribute.ChestType.SmallGold : ChestTypeAttribute.ChestType.LargeGold;
                     }
