@@ -57606,39 +57606,7 @@
         "OtherFourMasks",
         "Summon Fairy"
       ],
-      "ConditionalItems": [
-        [
-          "OtherArrow",
-          "ItemHookshot",
-          "Any Bomb Bag",
-          "Any Bombchu Pack"
-        ],
-        [
-          "OtherArrow",
-          "Fierce Deity's Mask Anywhere",
-          "Any Bomb Bag",
-          "Any Bombchu Pack"
-        ],
-        [
-          "Kill Iron Knuckle",
-          "ItemHookshot",
-          "Link Trial Gossip Stones"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere",
-          "Link Trial Gossip Stones"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere",
-          "Gainer"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "Bomb Hovering"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -57653,32 +57621,10 @@
       ],
       "ConditionalItems": [
         [
-          "OtherArrow",
-          "ItemHookshot",
-          "Any Bomb Bag",
-          "Any Bombchu Pack"
+          "ItemHookshot"
         ],
         [
-          "OtherArrow",
-          "Fierce Deity's Mask Anywhere",
-          "Any Bomb Bag",
-          "Any Bombchu Pack"
-        ],
-        [
-          "Kill Iron Knuckle",
-          "ItemHookshot",
-          "Link Trial Gossip Stones"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere",
-          "Link Trial Gossip Stones"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere",
-          "Gainer"
-        ],
-        [
-          "FD Jumps"
+          "Fierce Deity's Mask Anywhere"
         ],
         [
           "Bomb Hovering"
