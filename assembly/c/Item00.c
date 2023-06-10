@@ -6,50 +6,9 @@
 #include "BaseRupee.h"
 #include "macro.h"
 
-static u16 collectableTable[0x80];
-
-u16 GetTweakedCollectableSceneIndex(u16 sceneIndex) {
-    switch (sceneIndex) {
-        case 0x1C: // Path to Mountain Village
-            if (gSaveContext.perm.weekEventReg.mountainCleared) {
-                return 0x71;
-            }
-            break;
-        case 0x5C: // Snowhead
-            if (gSaveContext.perm.weekEventReg.mountainCleared) {
-                return 0x72;
-            }
-            break;
-    }
-    return sceneIndex;
-}
-
-void Item00_LoadCollectableTable(GlobalContext* ctxt) {
-    if (MISC_CONFIG.internal.vanillaLayout) {
-        return;
-    }
-
-    u16 sceneIndex = GetTweakedCollectableSceneIndex(ctxt->sceneNum);
-
-    u32 index = MISC_CONFIG.shorts.collectableTableFileIndex;
-    DmaEntry entry = dmadata[index];
-
-    u32 start = entry.romStart + (sceneIndex * 0x100);
-
-    z2_RomToRam(start, &collectableTable, sizeof(collectableTable));
-}
-
-u16 Item00_CollectableFlagToGiIndex(u16 collectableFlag) {
-    if (MISC_CONFIG.internal.vanillaLayout) {
-        return 0;
-    }
-
-    return collectableTable[collectableFlag];
-}
-
 void Item00_Constructor(ActorEnItem00* actor, GlobalContext* ctxt) {
     if (actor->collectableFlag != 0) {
-        u16 giIndex = Item00_CollectableFlagToGiIndex(actor->collectableFlag);
+        u16 giIndex = Rupee_CollectableFlagToGiIndex(actor->collectableFlag);
         if (giIndex > 0) {
             Rupee_SetGiIndex(&actor->base, giIndex);
             u16 drawGiIndex = MMR_GetNewGiIndex(ctxt, 0, giIndex, false);
@@ -101,7 +60,7 @@ s8 Item00_CanBeSpawned(u16 params) {
     }
     u16 collectableFlag = (params >> 8) & 0x7F;
     if (collectableFlag > 0) {
-        u16 giIndex = Item00_CollectableFlagToGiIndex(collectableFlag);
+        u16 giIndex = Rupee_CollectableFlagToGiIndex(collectableFlag);
         if (giIndex > 0) {
             return result;
         }

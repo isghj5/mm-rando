@@ -397,3 +397,25 @@ Models_SetEnInMatrix_Hook:
     addiu   sp, sp, 0x10
     jr      ra
     or      a0, a3, r0
+
+Models_DrawFairy_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a0, 0x0018 (sp)
+
+    or      a0, s0, r0
+    jal     Models_DrawFairy
+    or      a1, s1, r0
+
+    bnez    v0, @@caller_return
+    nop
+
+@@displaced_code:
+    jal     0x8012C94C
+    lw      a0, 0x0018 (sp)
+    lhu     a0, 0x025A (s0)
+
+@@caller_return:
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18

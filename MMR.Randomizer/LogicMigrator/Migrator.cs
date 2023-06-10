@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 15;
+        public const int CurrentVersion = 16;
 
         public static string ApplyMigrations(string logic)
         {
@@ -197,6 +197,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 15)
             {
                 AddNotebookEntries(logicObject);
+            }
+
+            if (logicObject.Version < 16)
+            {
+                AddFairies(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -4080,6 +4085,256 @@ namespace MMR.Randomizer.LogicMigrator
                 ConditionalItems = new List<List<string>>(),
             }));
             logicObject.Version = 15;
+        }
+
+        private static void AddFairies(JsonFormatLogic logicObject)
+        {
+            void addFairySummon(JsonFormatLogicItem item)
+            {
+                item.RequiredItems.Add("Summon Fairy");
+            }
+
+            void addFairySummonAndRemoveMaskOfTruth(JsonFormatLogicItem item)
+            {
+                item.RequiredItems.Add("Summon Fairy");
+                item.RequiredItems.Remove("MaskTruth");
+            }
+
+            void removeGoronMask(JsonFormatLogicItem item)
+            {
+                item.RequiredItems.Remove("MaskGoron");
+            }
+
+            void removeEponasSong(JsonFormatLogicItem item)
+            {
+                if (!item.RequiredItems.Remove("Play Epona's Song"))
+                {
+                    item.RequiredItems.Remove("SongEpona");
+                    item.RequiredItems.Remove("ItemOcarina");
+                }
+            }
+
+            void addTodo(JsonFormatLogicItem item)
+            {
+                item.RequiredItems.Add("TODO");
+            }
+
+            void addRequiredIfExists(JsonFormatLogicItem item, string value)
+            {
+                if (logicObject.Logic.Any(x => x.Id == value))
+                {
+                    item.RequiredItems.Add(value);
+                }
+            }
+
+            void addConditional(JsonFormatLogicItem item, params string[] conditionals)
+            {
+                item.ConditionalItems.Add(conditionals.ToList());
+            }
+
+            bool addConditionalIfExists(JsonFormatLogicItem item, params string[] conditionals)
+            {
+                if (conditionals.All(c => logicObject.Logic.Any(x => x.Id == c)))
+                {
+                    addConditional(item, conditionals);
+                    return true;
+                }
+                return false;
+            }
+
+            bool removeConditional(JsonFormatLogicItem item, params string[] values)
+            {
+                return item.ConditionalItems.RemoveAll(c => c.SequenceEqual(values)) > 0;
+            }
+
+            void addDayOnly(JsonFormatLogicItem item)
+            {
+                item.TimeAvailable = TimeOfDay.Day1 | TimeOfDay.Day2 | TimeOfDay.Day3;
+                item.TimeSetup = TimeOfDay.Day1 | TimeOfDay.Day2 | TimeOfDay.Day3;
+            }
+
+            const int startIndex = 1135;
+            var itemNames = new (string name, int reference, Action<JsonFormatLogicItem> modify)[]
+            {
+                ("CollectableAncientCastleOfIkanaCastleExteriorPot1", 443, null),
+                ("CollectableAncientCastleOfIkanaHoleRoomPot3", 769, null),
+                ("CollectableAncientCastleOfIkanaHoleRoomPot4", 769, null),
+                ("CollectableGreatBayCoastPot11", 455, null),
+                ("CollectableGreatBayTempleEntranceRoomBarrel1", 507, null),
+                ("CollectableIkanaCanyonMainAreaGrass7", 480, null),
+                ("CollectableIkanaCanyonMainAreaGrass8", 480, null),
+                ("CollectableMilkRoadGrass3", 481, null),
+                ("CollectableMountainVillageSpringPot1", 482, (item) =>
+                {
+                    addConditional(item, "OtherArrow");
+                    addConditional(item, "MaskZora");
+                    addConditional(item, "ItemHookshot");
+                    addConditionalIfExists(item, "Clever Bombchu Usage");
+                    addConditionalIfExists(item, "Bomb Hovering");
+                    addConditionalIfExists(item, "Long Stick");
+                }),
+                ("CollectableMountainVillageSpringSmallSnowball4", 482, null),
+                ("CollectableMountainVillageWinterPot1", 483, (item) =>
+                {
+                    addConditional(item, "Short Ranged Weapon");
+                    addConditional(item, "Any Bomb Bag");
+                    addConditionalIfExists(item, "Powder Kegs as Explosives", "ItemPowderKeg");
+                    addConditionalIfExists(item, "Long Stick");
+                }),
+                ("CollectableMountainVillageWinterSmallSnowball8", 483, null),
+                ("CollectableRoadToIkanaPot1", 464, (item) =>
+                {
+                    addConditional(item, "OtherArrow");
+                    addConditional(item, "ItemHookshot");
+                    addConditionalIfExists(item, "Bomb Hovering");
+                    addConditionalIfExists(item, "Long Stick");
+                }),
+                ("CollectableSecretShrineMainRoomPot5", 471, null),
+                ("CollectableSnowheadSmallSnowball10", 487, null),
+                ("CollectableSnowheadTempleMainRoomPot3", 380, removeGoronMask),
+                ("CollectableSouthernSwampClearCentralSwampGrass2", 604, null),
+                ("CollectableSouthernSwampPoisonedCentralSwampGrass2", 605, null),
+                ("CollectableStoneTowerPot11", 831, null),
+                ("CollectableStoneTowerPot12", 831, null),
+                ("CollectableStoneTowerPot13", 475, null),
+                ("CollectableStoneTowerPot14", 488, null),
+                ("CollectableStoneTowerInvertedStoneTowerFlippedPot3", 590, null),
+                ("CollectableStoneTowerTempleEntranceRoomPot1", 0, (item) => item.RequiredItems.Add("AreaStoneTowerTempleAccess")),
+                ("CollectableStoneTowerTempleRoomAfterLightArrowsPot1", 0, (item) =>
+                {
+                    item.RequiredItems.Add("AreaStoneTowerTempleAccess");
+                    addRequiredIfExists(item, "STT Garo Master Access");
+                    addRequiredIfExists(item, "STT Thin Bridge Exit");
+                }),
+                ("CollectableStoneTowerTempleInvertedWizzrobeRoomPot1", 408, (item) =>
+                {
+                    if (removeConditional(item, "ISTT Lightless", "ISTT Cross Poe Gap"))
+                    {
+                        addConditionalIfExists(item, "ISTT Lightless", "ISTT Cross Poe Gap", "OtherArrow");
+                        addConditionalIfExists(item, "ISTT Lightless", "ISTT Cross Poe Gap", "ItemHookshot");
+                        addConditionalIfExists(item, "ISTT Lightless", "ISTT Cross Poe Gap", "MaskZora", "Gainer");
+                        addConditionalIfExists(item, "ISTT Lightless", "ISTT Cross Poe Gap", "Fierce Deity's Mask Anywhere");
+                        addConditionalIfExists(item, "ISTT Lightless", "ISTT Cross Poe Gap", "Clever Bombchu Usage");
+                    }
+                    else
+                    {
+                        addTodo(item); // user must handle it themselves
+                    }
+                }),
+                ("CollectableTerminaFieldPot1", 0, (item) =>
+                {
+                    addConditional(item, "OtherMagicBean", "Water for Magic Bean");
+                    addConditional(item, "Short Ranged Weapon");
+                    addConditionalIfExists(item, "Clever Bombchu Usage");
+                    addConditionalIfExists(item, "Bomb Hovering");
+                    addConditionalIfExists(item, "Powder Kegs as Explosives", "ItemPowderKeg", "Fewer Item Requirements");
+                    addConditionalIfExists(item, "Long Stick");
+                    addConditionalIfExists(item, "FD Jumps", "Jump Slash Take Downs");
+                }
+                ),
+                ("CollectableWoodfallPot3", 596, null),
+                ("CollectableWoodfallTempleEntranceRoomPot1", 0, (item) => item.RequiredItems.Add("AreaWoodFallTempleAccess")),
+                ("CollectableZoraCapePot5", 489, null),
+                ("CollectableCuccoShackGossipFairy1", 448, addFairySummon),
+                ("CollectableDoggyRacetrackGossipFairy1", 497, addFairySummon),
+                ("CollectableGreatBayCoastGossipFairy1", 455, addFairySummon),
+                ("CollectableGrottosOceanGossipStonesGossipFairy1", 0, addFairySummon),
+                ("CollectableIkanaCanyonMainAreaGossipFairy1", 191, addFairySummon),
+                ("CollectableIkanaCanyonMainAreaGossipFairy2", 480, addFairySummon),
+                ("CollectableIkanaCanyonSakonSHideoutAreaGossipFairy1", 257, addFairySummon),
+                ("CollectableMilkRoadGossipFairy1", 0, addFairySummon),
+                ("CollectableMountainVillageSpringPathToGoronGraveyardGossipFairy1", 224, addFairySummon),
+                ("CollectableMountainVillageSpringGossipFairy1", 1055, addFairySummon),
+                ("CollectablePathToMountainVillageGossipFairy1", 1292 - 83, addFairySummonAndRemoveMaskOfTruth),
+                ("CollectableRoadToIkanaGossipFairy1", 1294 - 83, addFairySummonAndRemoveMaskOfTruth),
+                ("CollectableRoadToSouthernSwampGossipFairy1", 1305 - 83, addFairySummonAndRemoveMaskOfTruth),
+                ("CollectableRomaniRanchGossipFairy1", 486, addFairySummon),
+                ("CollectableRomaniRanchGossipFairy2", 486, addFairySummon),
+                ("CollectableRomaniRanchGossipFairy3", 486, addFairySummon),
+                ("CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorGossipFairy1", 537, addFairySummon),
+                ("CollectableSwampSpiderHouseTreeRoomGossipFairy1", 301, addFairySummon),
+                ("CollectableTerminaFieldGossipFairy1", 1306 - 83, addFairySummonAndRemoveMaskOfTruth),
+                ("CollectableTerminaFieldGossipFairy2", 0, addFairySummon),
+                ("CollectableTerminaFieldGossipFairy3", 0, addFairySummon),
+                ("CollectableTerminaFieldGossipFairy4", 0, addFairySummon),
+                ("CollectableTerminaFieldGossipFairy5", 0, addFairySummon),
+                ("CollectableTerminaFieldGossipFairy6", 0, addFairySummon),
+                ("CollectableTheMoonDekuTrialDekuTrialGossipFairy1", 276, addFairySummon),
+                ("CollectableTheMoonDekuTrialDekuTrialGossipFairy2", 276, addFairySummon),
+                ("CollectableTheMoonDekuTrialDekuTrialGossipFairy3", 276, addFairySummon),
+                ("CollectableTheMoonDekuTrialDekuTrialGossipFairy4", 276, addFairySummon),
+                ("CollectableTheMoonDekuTrialDekuTrialGossipFairy5", 276, addFairySummon),
+                ("CollectableTheMoonGoronTrialGoronTrialGossipFairy1", 277, addFairySummon),
+                ("CollectableTheMoonGoronTrialGoronTrialGossipFairy2", 277, addFairySummon),
+                ("CollectableTheMoonGoronTrialGoronTrialGossipFairy3", 277, addFairySummon),
+                ("CollectableTheMoonGoronTrialGoronTrialGossipFairy4", 277, addFairySummon),
+                ("CollectableTheMoonGoronTrialGoronTrialGossipFairy5", 277, addFairySummon),
+                ("CollectableTheMoonLinkTrialGossipStoneRoom1GossipFairy1", 279, addFairySummon),
+                ("CollectableTheMoonLinkTrialGossipStoneRoom2GossipFairy1", 279, addFairySummon),
+                ("CollectableTheMoonLinkTrialIronKnuckleBattleGossipFairy1", 279, addFairySummon),
+                ("CollectableTheMoonLinkTrialIronKnuckleBattleGossipFairy2", 279, addFairySummon),
+                ("CollectableTheMoonLinkTrialPieceOfHeartRoomGossipFairy1", 279, addFairySummon),
+                ("CollectableTheMoonZoraTrialZoraTrialGossipFairy1", 278, addFairySummon),
+                ("CollectableTheMoonZoraTrialZoraTrialGossipFairy2", 278, addFairySummon),
+                ("CollectableTheMoonZoraTrialZoraTrialGossipFairy3", 278, addFairySummon),
+                ("CollectableTheMoonZoraTrialZoraTrialGossipFairy4", 278, addFairySummon),
+                ("CollectableTheMoonZoraTrialZoraTrialGossipFairy5", 278, addFairySummon),
+                ("CollectableZoraCapeGossipFairy1", 836, addFairySummon),
+                ("CollectableGreatBayCoastButterflyFairy1", 207, null),
+                ("CollectableGrottosOceanGossipStonesButterflyFairy1", 0, (item) =>
+                {
+                    addConditionalIfExists(item, "Termina Field Boulder Clip");
+                    addConditional(item, "MaskGoron");
+                    addConditional(item, "OtherExplosive");
+                }),
+                ("CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1", 6, null),
+                ("CollectableGrottosCowGrottoButterflyFairy1", 292, removeEponasSong),
+                ("CollectableGrottosCowGrottoButterflyFairy2", 294, removeEponasSong),
+                ("CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1", 1055, addDayOnly),
+                ("CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2", 1055, addDayOnly),
+                ("CollectableTerminaFieldButterflyFairy1", 0, null),
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(data =>
+            {
+                var reference = logicObject.Logic[data.reference];
+
+                var logicItem = new JsonFormatLogicItem
+                {
+                    Id = data.name,
+                    RequiredItems = reference.RequiredItems.ToList(),
+                    ConditionalItems = reference.ConditionalItems.Select(c => c.ToList()).ToList(),
+                    TimeAvailable = reference.TimeAvailable,
+                    TimeNeeded = reference.TimeNeeded,
+                    TimeSetup = reference.TimeSetup,
+                };
+
+                if (data.modify != null)
+                {
+                    data.modify(logicItem);
+                }
+
+                return logicItem;
+            }).ToList());
+
+            logicObject.Logic.Add(new JsonFormatLogicItem
+            {
+                Id = "Summon Fairy",
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>
+                {
+                    new List<string>
+                    {
+                        "Play Epona's Song"
+                    },
+                    new List<string>
+                    {
+                        "Play Song of Healing"
+                    },
+                },
+            });
+
+            logicObject.Version = 16;
         }
 
         private class MigrationItem

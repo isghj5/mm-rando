@@ -20,6 +20,7 @@
 .definelabel z2_random_drop_spawn, 0x800A7D28
 .definelabel z2_EffectSsKiraKira_SpawnSmall, 0x800B16B8
 .definelabel z2_EffectSsHitmark_SpawnCustomScale, 0x800B26A8
+.definelabel z2_EffectSsIceSmoke_Spawn, 0x800B320C
 .definelabel z2_SetShape, 0x800B3BA4
 .definelabel z2_get_generic_flag, 0x800B5BB0
 .definelabel z2_set_generic_flag, 0x800B5BF4
@@ -53,7 +54,6 @@
 .definelabel z2_load_scene_flags, 0x800B9170
 .definelabel z2_spawn_map_actors, 0x800B9334
 .definelabel z2_SpawnActor, 0x800BAC60
-.definelabel z2_actor_spawn_1, 0x800BAC60
 .definelabel z2_actor_spawn_2, 0x800BAE14
 .definelabel z2_Actor_SpawnAsChild, 0x800BB0C0
 .definelabel z2_ActorRemove, 0x800BB498
@@ -102,6 +102,7 @@
 .definelabel z2_RemoveItem, 0x801149A0
 .definelabel z2_HasEmptyBottle, 0x80114E90
 .definelabel z2_HudSetAButtonText, 0x8011552C
+.definelabel z2_Health_ChangeBy, 0x80115908
 .definelabel z2_AddRupees, 0x801159EC
 .definelabel z2_Inventory_ChangeAmmo, 0x80115A14
 .definelabel z2_DrawButtonAmounts, 0x80117BD0

@@ -111,7 +111,7 @@ extern void z2_remove_clear_flag();
 extern void z2_get_temp_clear_flag();
 extern void z2_set_temp_clear_flag();
 extern void z2_remove_temp_clear_flag();
-extern void z2_get_collectible_flag();
+extern bool z2_get_collectible_flag(GlobalContext* ctxt, s32 flag);
 extern void z2_set_collectibe_flag();
 extern void z2_load_scene_flags();
 extern u16 z2_check_scene_pairs(u16 sceneId);
@@ -124,7 +124,6 @@ extern ActorEnItem00* z2_fixed_drop_spawn(GlobalContext* ctxt, Vec3f* position, 
 extern void z2_rupee_drop_spawn();
 extern void z2_random_drop_spawn();
 extern void z2_spawn_map_actors();
-extern void z2_actor_spawn_1();
 extern void z2_actor_spawn_2();
 extern Actor* z2_Actor_SpawnAsChild(ActorContext* actorCtx, Actor* parent, GlobalContext* ctxt, s16 actorId, f32 posX, f32 posY,
                           f32 posZ, s16 rotX, s16 rotY, s16 rotZ, s32 params);
@@ -135,6 +134,7 @@ extern void z2_load_scene();
 extern void z2_EffectSsKiraKira_SpawnSmall(GlobalContext* globalCtx, Vec3f* pos, Vec3f* velocity, Vec3f* accel,
                                  ColorRGBA8* primColor, ColorRGBA8* envColor);
 extern void z2_EffectSsHitmark_SpawnCustomScale(GlobalContext* ctxt, s32 type, s16 scale, Vec3f* pos);
+extern void z2_EffectSsIceSmoke_Spawn(GlobalContext* ctxt, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale);
 
 // Function Prototypes (Actors).
 extern void z2_ActorProc(Actor* actor, GlobalContext* ctxt);
@@ -202,6 +202,7 @@ extern void z2_GiveItem(GlobalContext* ctxt, u8 itemId);
 extern u8 z2_IsItemKnown(u8 itemId);
 extern bool z2_HasEmptyBottle();
 extern void z2_GiveMap(u32 mapIndex);
+extern s32 z2_Health_ChangeBy(GlobalContext* ctxt, s16 healthChange);
 extern void z2_AddRupees(s32 amount);
 extern void z2_Inventory_ChangeAmmo(s16 item, s16 ammoChange);
 

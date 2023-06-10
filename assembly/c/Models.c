@@ -1126,6 +1126,29 @@ void Models_DrawPendantInHand(GlobalContext* ctxt, ActorPlayer* actor) {
     }
 }
 
+bool Models_DrawFairy(ActorEnElf* actor, GlobalContext* ctxt) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
+        u16 giIndex = Rupee_GetGiIndex(&actor->base);
+        if (giIndex > 0) {
+            u16 drawGiIndex = MMR_GetNewGiIndex(ctxt, 0, giIndex, false);
+            Rupee_SetDrawGiIndex(&actor->base, drawGiIndex);
+        }
+
+        u16 giIndexToDraw = Rupee_GetDrawGiIndex(&actor->base);
+        if (giIndexToDraw > 0) {
+            struct Model model;
+            GetItemEntry* entry = PrepareGiEntry(&model, ctxt, giIndexToDraw, false);
+
+            z2_CallSetupDList(ctxt->state.gfxCtx);
+            DrawModel(model, &actor->base, ctxt, 22.0);
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void Models_AfterActorDtor(Actor* actor) {
     if (MISC_CONFIG.drawFlags.freestanding) {
         if (actor->id == ACTOR_EN_ELFORG) {
