@@ -1,11 +1,11 @@
 #include <z64.h>
 #include "BaseRupee.h"
 
-const u16 sBaseGiIndex = 0x4A4;
+const static u16 sBaseGiIndex = 0x4A4;
 
 ActorEnElf* GossipStone_FairySpawn(ActorEnGs* actor, GlobalContext* ctxt, s16 actorId, f32 posX, f32 posY, f32 posZ, s16 rotX,
                    s16 rotY, s16 rotZ, s32 params) {
-    ActorEnElf* fairy = z2_SpawnActor(&ctxt->actorCtx, ctxt, actorId, posX, posY, posZ, rotX, rotY, rotZ, params);
+    ActorEnElf* fairy = (ActorEnElf*)z2_SpawnActor(&ctxt->actorCtx, ctxt, actorId, posX, posY, posZ, rotX, rotY, rotZ, params);
     u16 giIndex = 0;
     switch (ctxt->sceneNum) {
         case SCENE_F01C: // Cucco Shack

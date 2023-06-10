@@ -38,7 +38,7 @@
 .include "BombersNotebook.Patch.asm"
 .include "BugFixes.Patch.asm"
 .include "BusinessScrub.Patch.asm"
-.include "Buterfly.Patch.asm"
+.include "Butterfly.Patch.asm"
 .include "Chest.Patch.asm"
 .include "ChestGame.Patch.asm"
 .include "Cows.Patch.asm"
