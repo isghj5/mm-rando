@@ -10721,15 +10721,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x49C), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2CB9)]
         CollectableStoneTowerInvertedStoneTowerFlippedPot3,
 
-
-        [Visible]
-        [Repeatable]
-        [ItemName("Fairy"), LocationName("Stone Tower Temple Entrance Room Pot"), Region(Region.StoneTowerTemple)]
-        [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a winged friend", "a healer")]
-        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
-        [GetItemIndex(0x49D), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xB23)]
-        CollectableStoneTowerTempleEntranceRoomPot1,
+        // [GetItemIndex(0x49D)] // Removed
 
 
         [Visible]

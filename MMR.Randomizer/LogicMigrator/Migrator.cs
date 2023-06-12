@@ -4154,6 +4154,7 @@ namespace MMR.Randomizer.LogicMigrator
             }
 
             const int startIndex = 1135;
+            const int newItemCount = 82;
             var itemNames = new (string name, int reference, Action<JsonFormatLogicItem> modify)[]
             {
                 ("CollectableAncientCastleOfIkanaCastleExteriorPot1", 443, null),
@@ -4199,7 +4200,6 @@ namespace MMR.Randomizer.LogicMigrator
                 ("CollectableStoneTowerPot13", 475, null),
                 ("CollectableStoneTowerPot14", 488, null),
                 ("CollectableStoneTowerInvertedStoneTowerFlippedPot3", 590, null),
-                ("CollectableStoneTowerTempleEntranceRoomPot1", 0, (item) => item.RequiredItems.Add("AreaStoneTowerTempleAccess")),
                 ("CollectableStoneTowerTempleRoomAfterLightArrowsPot1", 0, (item) =>
                 {
                     item.RequiredItems.Add("AreaStoneTowerTempleAccess");
@@ -4245,15 +4245,15 @@ namespace MMR.Randomizer.LogicMigrator
                 ("CollectableMilkRoadGossipFairy1", 0, addFairySummon),
                 ("CollectableMountainVillageSpringPathToGoronGraveyardGossipFairy1", 224, addFairySummon),
                 ("CollectableMountainVillageSpringGossipFairy1", 1055, addFairySummon),
-                ("CollectablePathToMountainVillageGossipFairy1", 1292 - 83, addFairySummonAndRemoveMaskOfTruth),
-                ("CollectableRoadToIkanaGossipFairy1", 1294 - 83, addFairySummonAndRemoveMaskOfTruth),
-                ("CollectableRoadToSouthernSwampGossipFairy1", 1305 - 83, addFairySummonAndRemoveMaskOfTruth),
+                ("CollectablePathToMountainVillageGossipFairy1", 1292 - newItemCount, addFairySummonAndRemoveMaskOfTruth),
+                ("CollectableRoadToIkanaGossipFairy1", 1294 - newItemCount, addFairySummonAndRemoveMaskOfTruth),
+                ("CollectableRoadToSouthernSwampGossipFairy1", 1305 - newItemCount, addFairySummonAndRemoveMaskOfTruth),
                 ("CollectableRomaniRanchGossipFairy1", 486, addFairySummon),
                 ("CollectableRomaniRanchGossipFairy2", 486, addFairySummon),
                 ("CollectableRomaniRanchGossipFairy3", 486, addFairySummon),
                 ("CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorGossipFairy1", 537, addFairySummon),
                 ("CollectableSwampSpiderHouseTreeRoomGossipFairy1", 301, addFairySummon),
-                ("CollectableTerminaFieldGossipFairy1", 1306 - 83, addFairySummonAndRemoveMaskOfTruth),
+                ("CollectableTerminaFieldGossipFairy1", 1306 - newItemCount, addFairySummonAndRemoveMaskOfTruth),
                 ("CollectableTerminaFieldGossipFairy2", 0, addFairySummon),
                 ("CollectableTerminaFieldGossipFairy3", 0, addFairySummon),
                 ("CollectableTerminaFieldGossipFairy4", 0, addFairySummon),
