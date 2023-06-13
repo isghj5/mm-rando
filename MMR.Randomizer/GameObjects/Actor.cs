@@ -4678,7 +4678,9 @@ namespace MMR.Randomizer.GameObjects
             Item.TradeItemMoonTear,
             Item.CollectableTerminaFieldTelescopeGuay1,
             Item.HeartPieceTerminaBusinessScrub,
-            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2
+            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
+            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
             )]
         [GroundVariants(0x0)]
         [UnkillableAllVariants]
