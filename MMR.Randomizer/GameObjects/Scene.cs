@@ -269,19 +269,21 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1310)]
         [SceneInternalId(0x2D)]
         // this actor is mostly ignored, player might not even notice, dont waste lots of object budget on this thing
-        [EnemizerSceneEnemyReplacementBlock(Actor.ClayPot,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
             Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DekuBaba,
+            Actor.LikeLike)] // can grab you on grotto exit and softlock with only one heart, TODO make special code instead moving them?
         // these actors are only seen in the credits, we should block all large object actors from these spots to save generation time
-        [EnemizerSceneEnemyReplacementBlock(Actor.ViscenMoonLeaveCutscene,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ViscenMoonLeaveCutscene,
             Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
         ///*
-        [EnemizerSceneEnemyReplacementBlock(Actor.MutoMoonLeaveCutscene,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.MutoMoonLeaveCutscene,
                         Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.AnjusGrandmaCredits,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.AnjusGrandmaCredits,
                         Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.AnjuMotherWedding,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.AnjuMotherWedding,
                         Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.CuriosityShopMan,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CuriosityShopMan,
                         Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
         //*/
         TerminaField = 0x2A,
