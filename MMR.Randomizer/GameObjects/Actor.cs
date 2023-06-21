@@ -686,6 +686,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.SouthernSwamp, // dyna crash, remove if we get dyna overload detection working
             Scene.BeneathTheWell, Scene.IkanaGraveyard, Scene.StoneTower)]
         //*/
+        [EnemizerScenesPlacementBlock(Scene.DekuPalace)]
         UnusedStoneTowerStoneElevator = 0x4D, // Bg_F40_Flift
 
         // Has no File
@@ -1496,6 +1497,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
             Scene.StockPotInn, Scene.BeneathTheWell, Scene.IkanaGraveyard, Scene.StoneTower)]
         //*/
+        [EnemizerScenesPlacementBlock(Scene.DekuPalace)]
         [SwitchFlagsPlacement(mask: 0xFF, shift: 0)]
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
