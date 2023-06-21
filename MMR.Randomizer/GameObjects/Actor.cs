@@ -686,7 +686,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.SouthernSwamp, // dyna crash, remove if we get dyna overload detection working
             Scene.BeneathTheWell, Scene.IkanaGraveyard, Scene.StoneTower)]
         //*/
-        [EnemizerScenesPlacementBlock(Scene.DekuPalace)]
+        [EnemizerScenesPlacementBlock(Scene.DekuPalace, Scene.BeneathTheWell)]
         UnusedStoneTowerStoneElevator = 0x4D, // Bg_F40_Flift
 
         // Has no File
@@ -1497,7 +1497,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
             Scene.StockPotInn, Scene.BeneathTheWell, Scene.IkanaGraveyard, Scene.StoneTower)]
         //*/
-        [EnemizerScenesPlacementBlock(Scene.DekuPalace)]
+        [EnemizerScenesPlacementBlock(Scene.DekuPalace, Scene.BeneathTheWell)]
         [SwitchFlagsPlacement(mask: 0xFF, shift: 0)]
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
@@ -2543,7 +2543,7 @@ namespace MMR.Randomizer.GameObjects
         // Update crashes trying to update the skeleton, null pointer, reason unknown
         // seems to be room transition related, for now ban from any place where rooms change over
         [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear, Scene.SouthernSwamp, Scene.MayorsResidence, Scene.StockPotInn,
-            Scene.OceanSpiderHouse, Scene.DekuPalace, Scene.SwampSpiderHouse, Scene.DekuShrine, Scene.IkanaCanyon,
+            Scene.OceanSpiderHouse, Scene.DekuPalace, Scene.SwampSpiderHouse, Scene.DekuShrine, Scene.IkanaCanyon, Scene.BeneathTheWell,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.OceanSpiderHouse, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         [UnkillableAllVariants]
         HallucinationScrub = 0x169, // En_Dnk
