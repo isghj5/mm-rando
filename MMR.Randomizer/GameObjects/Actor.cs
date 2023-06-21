@@ -88,7 +88,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesPlacementBlock(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         [SwitchFlagsPlacementZRot]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
-        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard)] // asummed dyna crash
+        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear)] // asummed dyna crash
         TreasureChest = 0x6, // En_Box
 
         [FileID(45)]
@@ -1945,7 +1945,7 @@ namespace MMR.Randomizer.GameObjects
 
         // unused actor, now used by a new injected actor
         [FileID(246)]
-        [EnemizerScenesPlacementBlock(Scene.StoneTower)] // dyna crash possible
+        [EnemizerScenesPlacementBlock(Scene.StoneTower, Scene.SouthernSwamp, Scene.SouthernSwampClear)] // dyna crash possible
         Mimi = 0x111, // En_Bu
 
         //[EnemizerEnabled] //crash
