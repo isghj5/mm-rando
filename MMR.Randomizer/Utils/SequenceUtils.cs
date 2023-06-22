@@ -327,9 +327,9 @@ namespace MMR.Randomizer.Utils
                                 }
                                 catch // empty line wont convert or bad category value, ignore
                                 {
-                                    #if RELEASE
-                                    continue; // Release ignores music bugs and keeps going
-                                    #endif
+                                    //#if RELEASE
+                                    //continue; // Release ignores music bugs and keeps going
+                                    //#endif
                                     throw new Exception($"Error: Categories cannot be read: {currentSong.Name}");
                                 }
                             }
