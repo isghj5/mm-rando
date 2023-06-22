@@ -319,6 +319,8 @@ namespace MMR.Randomizer.Utils
                             }
                             foreach (var line in categoryData.Split(delimitingChar))
                             {
+                                if (line.Equals("")) continue;
+
                                 try
                                 {
                                     categoriesList.Add(Convert.ToInt32(line.Trim(), 16));
