@@ -162,8 +162,15 @@ namespace MMR.Randomizer.Asm
             // Frogs
             if (entry.ItemGained == 0xB4 && entry.Object == 0x266 && Indexes.Frogs.HasValue)
             {
-                var index = entry.Type >> 4;
-                return ((short)(Indexes.Frogs.Value + index - 1), entry.Index);
+                var index = (byte) ((entry.Type >> 4) switch
+                {
+                    1 => 0x47,
+                    2 => 0x4D,
+                    3 => 0x61,
+                    4 => 0x62,
+                    _ => throw new NotImplementedException()
+                });
+                return (Indexes.Frogs.Value, index);
             }
 
             return null;
@@ -259,9 +266,9 @@ namespace MMR.Randomizer.Asm
             AddDungeonMaps();
             this.Indexes.DungeonMaps = AdvanceIndex(4);
 
-            // Add Dungeon Maps
+            // Add Frogs
             AddFrogs();
-            this.Indexes.Frogs = AdvanceIndex(4);
+            this.Indexes.Frogs = AdvanceIndex();
 
             // Include Spin Attack Energy model into Kokiri Sword
             ObjUtils.InsertObj(Resources.models.gi_spinattack, 0x148);
@@ -977,23 +984,36 @@ namespace MMR.Randomizer.Asm
 
         #region Frogs
 
-        (uint, uint) AddFrog(Color env, Color primAndEnv)
+        (uint, uint) AddFrog()
         {
-            var data = CloneExistingData(1081);
-
-            WriteByte(data, 0x1064, env.ToBytesRGB());
-            WriteByte(data, 0x1114, primAndEnv.ToBytesRGB());
-            WriteByte(data, 0x111C, primAndEnv.ToBytesRGB());
-
-            return this.Bundle.Append(data);
+            return this.Bundle.Append(Resources.models.gi_frog);
         }
 
         void AddFrogs()
         {
-            this.Offsets.Add(AddFrog(Color.FromArgb(0, 170, 200), Color.FromArgb(0, 115, 81))); // Woodfall Temple (Cyan)
-            this.Offsets.Add(AddFrog(Color.FromArgb(210, 120, 100), Color.FromArgb(126, 81, 40))); // Great Bay Temple (Pink)
-            this.Offsets.Add(AddFrog(Color.FromArgb(120, 130, 230), Color.FromArgb(72, 88, 93))); // Swamp (Blue)
-            this.Offsets.Add(AddFrog(Color.FromArgb(190, 190, 190), Color.FromArgb(114, 129, 77))); // Laundry Pool (White)
+            this.Offsets.Add(AddFrog());
+
+            // Change unused getItem draw entries for use with frog model
+
+            // Removed as yellow frog is not randomized.
+            // ID 0x38, replaces null entry, yellow frog
+            // ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x115E70, 0x06000000);
+
+            //ID 0x47, replaces null entry, cyan frog
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116088, 0x800EF054);
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x11608C, 0x06000010);
+
+            // ID 0x4D, replaces null entry, pink frog
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116160, 0x800EF054);
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116164, 0x06000020);
+
+            // ID 0x61, replaces unused bottled seahorse model, blue frog
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116430, 0x800EF054);
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116434, 0x06000030);
+
+            // ID 0x62, replaces unused bottled loach model, white frog
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116454, 0x800EF054);
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116458, 0x06000040);
         }
 
         #endregion

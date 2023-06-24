@@ -18,7 +18,8 @@ void Minifrog_GiveReward(Actor* actor, GlobalContext* ctxt, s16 frogIndex) {
     } else {
         if (frogIndex > 0 && frogIndex < ARRAY_COUNT(giIndices)) {
             u16 giIndex = giIndices[frogIndex];
-            MMR_GiveItemToHold(actor, ctxt, giIndex);
+            ActorPlayer* player = GET_PLAYER(ctxt);
+            MMR_GiveItemToHold(&player->base, ctxt, giIndex);
         }
     }
 }
