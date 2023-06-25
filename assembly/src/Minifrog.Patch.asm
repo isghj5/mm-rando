@@ -24,10 +24,10 @@
     or      a2, t9, r0
     b       0x808A3F08
     nop
-    nop
-    nop
-    nop
-    nop
+    lui     at, hi(Minifrog_WaitForDespawn)
+    addiu   at, at, lo(Minifrog_WaitForDespawn)
+    sw      at, 0x02A8 (s0)
+    sw      r0, 0x013C (s0)
     nop
     nop
 
@@ -38,3 +38,20 @@
 .org 0x808A4EB8
     .dw 0x00000000
     .dw 0x00000000
+
+; Replaces:
+;   JAL     0x800B670C
+;   OR      A0, S0, R0
+.org 0x808A3EF8
+    nop
+    nop
+
+; Replaces:
+;   BEQZ    AT, 0x808A3EA4
+.org 0x808A3E14
+    beqz    at, 0x808A3E8C
+
+; Replaces:
+;   .dw 0x808A3EA4
+.org 0x808A4DC4
+    .dw 0x808A3E8C
