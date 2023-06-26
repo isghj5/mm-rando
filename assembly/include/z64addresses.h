@@ -273,9 +273,11 @@ extern void z2_MessageClose(GlobalContext* ctxt);
 #define z2_PlayerHandleBuoyancy_VRAM     0x808475B4
 #define z2_UseItem_VRAM                  0x80831990
 #define z2_Player_ItemToActionParam_VRAM 0x8082F524
-#define z2_Player_func_80849FE0_VRAM     0x80849FE0
-#define z2_Player_func_8084C16C_VRAM     0x8084C16C
+#define z2_Player_func_8083692C_VRAM     0x8083692C
 #define z2_Player_func_80838A90_VRAM     0x80838A90
+#define z2_Player_func_80849FE0_VRAM     0x80849FE0
+#define z2_Player_func_8084A884_VRAM     0x8084A884
+#define z2_Player_func_8084C16C_VRAM     0x8084C16C
 
 // Relocatable Data (player_actor).
 #define z2_D_80862B4C_VRAM               0x80862B4C
@@ -293,8 +295,10 @@ typedef void (*z2_PerformEnterWaterEffects_Func)(GlobalContext* ctxt, ActorPlaye
 typedef void (*z2_PlayerHandleBuoyancy_Func)(ActorPlayer* player);
 typedef void (*z2_UseItem_Func)(GlobalContext* ctxt, ActorPlayer* player, u8 item);
 typedef s32 (*z2_Player_ItemToActionParam_Func)(ActorPlayer* player, s32 itemId);
-typedef void (*z2_Player_func_80849FE0_Func)(ActorPlayer* player, GlobalContext* ctxt);
-typedef void (*z2_Player_func_8084C16C_Func)(ActorPlayer* player, GlobalContext* ctxt);
+typedef bool (*z2_Player_func_8083692C_Func)(ActorPlayer* player, GlobalContext* ctxt);
 typedef bool (*z2_Player_func_80838A90_Func)(ActorPlayer* player, GlobalContext* ctxt);
+typedef void (*z2_Player_func_80849FE0_Func)(ActorPlayer* player, GlobalContext* ctxt);
+typedef void (*z2_Player_func_8084A884_Func)(ActorPlayer* player, GlobalContext* ctxt);
+typedef void (*z2_Player_func_8084C16C_Func)(ActorPlayer* player, GlobalContext* ctxt);
 
 #endif

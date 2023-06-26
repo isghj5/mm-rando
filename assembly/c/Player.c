@@ -16,6 +16,16 @@ bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
 }
 
 PlayerActionFunc sPlayer_Falling = NULL;
+PlayerActionFunc sPlayer_BackwalkBraking = NULL;
+
+void Player_InitActionFuncPointers() {
+    if (sPlayer_Falling == NULL) {
+        sPlayer_Falling = z2_Player_func_8084C16C;
+    }
+    if (sPlayer_BackwalkBraking == NULL) {
+        sPlayer_BackwalkBraking = z2_Player_func_8084A884;
+    }
+}
 
 void Player_PreventDangerousStates(ActorPlayer* player) {
     if (!MISC_CONFIG.flags.saferGlitches) {
@@ -27,10 +37,6 @@ void Player_PreventDangerousStates(ActorPlayer* player) {
             || (player->stateFlags.state3 & PLAYER_STATE3_JUMP_ATTACK)) {
             player->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
         }
-    }
-
-    if (sPlayer_Falling == NULL) {
-        sPlayer_Falling = z2_Player_func_8084C16C;
     }
 
     // parent can be hookshot or epona
@@ -46,6 +52,7 @@ void Player_PreventDangerousStates(ActorPlayer* player) {
 }
 
 void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
+    Player_InitActionFuncPointers();
     Dpad_BeforePlayerActorUpdate(player, ctxt);
     ExternalEffects_Handle(player, ctxt);
     ArrowCycle_Handle(player, ctxt);
@@ -237,7 +244,7 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
     }
 }
 
-bool Player_AfterTransformInit(ActorPlayer* this) {
+bool Player_AfterTransformInit(ActorPlayer* this, GlobalContext* ctxt) {
     if (sSwimmingTransformation) {
         this->stateFlags.state2 |= PLAYER_STATE2_DIVING_2;
         sSwimmingTransformation = false;
@@ -246,6 +253,9 @@ bool Player_AfterTransformInit(ActorPlayer* this) {
         this->unkAA5 = 0;
     }
     if (MISC_CONFIG.flags.instantTransform && !(this->stateFlags.state2 & PLAYER_STATE2_CLIMBING)) {
+        if (this->actionFunc == sPlayer_BackwalkBraking) {
+            z2_Player_func_8083692C(this, ctxt);
+        }
         this->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
         this->animTimer = 0;
         return true;

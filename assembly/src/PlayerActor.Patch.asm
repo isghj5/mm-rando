@@ -173,6 +173,8 @@
 ; Override transformation behavior
 ;==================================================================================================
 
+.headersize G_PLAYER_ACTOR_DELTA
+
 ; Replaces:
 ;   BNEZL   T7, 0x80831BD8
 .org 0x80831BBC
@@ -196,6 +198,8 @@
 ; Skip post-transformation init code if instant transformation is enabled
 ;==================================================================================================
 
+.headersize G_PLAYER_ACTOR_DELTA
+
 ; Replaces:
 ;   LBU     V0, 0x0394 (S0)
 ;   ADDIU   AT, R0, 0x0009
@@ -212,6 +216,8 @@
 ;==================================================================================================
 ; Handle pulling out an item
 ;==================================================================================================
+
+.headersize G_PLAYER_ACTOR_DELTA
 
 ; Replaces:
 ;   LW      T7, 0x0A74 (S0)
@@ -232,6 +238,8 @@
 ;==================================================================================================
 ; Fix C-Button priority when holding bow and bomb buttons
 ;==================================================================================================
+
+.headersize G_PLAYER_ACTOR_DELTA
 
 ; Replaces:
 ;   LUI     T8, 0x8086
@@ -260,6 +268,8 @@
 ; Prevent Keg ammo being depleted when going through a loading zone while holding a keg
 ;==================================================================================================
 
+.headersize G_PLAYER_ACTOR_DELTA
+
 ; Replaces:
 ;   JAL     Inventory_ChangeAmmo
 .org 0x806ECC44 + 0x142B70
@@ -268,6 +278,8 @@
 ;==================================================================================================
 ; Stop player action chain if doing an instant transformation
 ;==================================================================================================
+
+.headersize G_PLAYER_ACTOR_DELTA
 
 ; Replaces:
 ;   JAL     0x80838A90

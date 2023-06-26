@@ -142,7 +142,7 @@ Player_AfterTransformInit_Hook:
     sw      ra, 0x0014 (sp)
 
     jal     Player_AfterTransformInit
-    nop
+    or      a1, s1, r0
 
     or      v1, v0, r0
 
