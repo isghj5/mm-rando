@@ -48,6 +48,25 @@ void Player_PreventDangerousStates(ActorPlayer* player) {
                 && !(player->stateFlags.state3 & PLAYER_STATE3_HOOK_ARRIVE_2))) {
             player->base.parent = NULL;
         }
+        Actor* door = player->doorActor;
+        if ((player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP) && door) {
+            if (player->doorType == 4) { // PLAYER_DOORTYPE_STAIRCASE
+                ActorDoorSpiral* doorStaircase = (ActorDoorSpiral*)door;
+                if (doorStaircase->shouldClimb) {
+                    player->base.parent = NULL;
+                }
+            } else if (player->doorType == 2) { // PLAYER_DOORTYPE_SLIDING
+                SlidingDoorActor* doorSliding = (SlidingDoorActor*)door;
+                if (doorSliding->unk_15C) {
+                    player->base.parent = NULL;
+                }
+            } else {
+                KnobDoorActor* doorHandle = (KnobDoorActor*)door;
+                if (doorHandle->playOpenAnim) {
+                    player->base.parent = NULL;
+                }
+            }
+        }
     }
 }
 

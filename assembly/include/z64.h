@@ -1870,6 +1870,27 @@ typedef struct {
     /* 0x16A */ UNK_TYPE1 pad16A[0x26];
 } ActorBgIngate; // size = 0x190
 
+typedef struct ActorDoorSpiral {
+    /* 0x000 */ Actor actor;
+    /* 0x144 */ u8 shouldClimb;
+    /* 0x145 */ UNK_TYPE1 unk_145[0xB];
+} ActorDoorSpiral; // size = 0x150
+
+typedef struct KnobDoorActor {
+    /* 0x000 */ DynaPolyActor dyna;
+    /* 0x15C */ SkelAnime skelAnime;
+    /* 0x1A0 */ u8 animIndex;
+    /* 0x1A1 */ u8 playOpenAnim;
+    /* 0x1A2 */ s8 requiredObjBankIndex;
+    /* 0x1A3 */ s8 dlIndex;
+} KnobDoorActor; // size = 0x1A4
+
+typedef struct SlidingDoorActor {
+    /* 0x000 */ DynaPolyActor dyna;
+    /* 0x15C */ s16 unk_15C;
+    /* 0x15E */ s16 unk_15E;
+} SlidingDoorActor; // size = 0x160
+
 // Door_Warp1 actor.
 typedef struct {
     /* 0x000 */ DynaPolyActor dyna;

@@ -329,7 +329,12 @@ typedef struct ActorPlayer {
     /* 0x34C */ Actor* heldActor;
     /* 0x350 */ UNK_TYPE1 pad350[0x18];
     /* 0x368 */ Vec3f unk368;
-    /* 0x374 */ UNK_TYPE1 pad374[0x10];
+    /* 0x374 */ UNK_TYPE1 pad374[0x8];
+    /* 0x37C */ s8 doorType; // PlayerDoorType enum
+    /* 0x37D */ s8 doorDirection;
+    /* 0x37E */ s8 doorTimer;
+    /* 0x37F */ s8 doorNext; // used with spiral staircase
+    /* 0x380 */ Actor* doorActor;
     /* 0x384 */ u16 getItem;
     /* 0x386 */ u16 unk386; // Some kind of rotation?
     /* 0x388 */ Actor* givingActor;
