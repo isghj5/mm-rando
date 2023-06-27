@@ -1604,7 +1604,9 @@ namespace MMR.Randomizer
                 GameObjects.Actor.GossipStone.ObjectIndex(),
                 GameObjects.Actor.LabFish.ObjectIndex(),
                 GameObjects.Actor.Lightblock.ObjectIndex(),
-                GameObjects.Actor.SkullKidPainting.ObjectIndex()
+                GameObjects.Actor.SkullKidPainting.ObjectIndex(),
+                GameObjects.Actor.GoronWithGeroMask.ObjectIndex()
+
             };
 
             var actorObjectsDetected = thisSceneData.ChosenReplacementObjects.Find(v => listTroubleActorsObj.Contains(v.ChosenV)) != null;
@@ -1621,7 +1623,8 @@ namespace MMR.Randomizer
                 GameObjects.Actor.GossipStone,
                 GameObjects.Actor.LabFish,
                 GameObjects.Actor.Lightblock,
-                GameObjects.Actor.SkullKidPainting
+                GameObjects.Actor.SkullKidPainting,
+                GameObjects.Actor.GoronWithGeroMask
             };
 
             for (int i = 0; i < thisSceneData.Actors.Count(); i++) // thisSceneData.Actors is only the actors we change
@@ -1819,7 +1822,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DragonFly, GameObjects.Actor.WarpDoor)) continue;
-                if (TestHardSetObject(GameObjects.Scene.RanchBuildings, GameObjects.Actor.FriendlyCucco, GameObjects.Actor.Scarecrow)) continue;
+                if (TestHardSetObject(GameObjects.Scene.MilkRoad, GameObjects.Actor.MilkroadCarpenter, GameObjects.Actor.GoronWithGeroMask)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.LikeLike, GameObjects.Actor.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.GateSoldier, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.DekuPatrolGuard, GameObjects.Actor.OOTPotionShopMan)) continue;
