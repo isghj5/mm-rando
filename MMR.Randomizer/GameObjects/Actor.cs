@@ -1490,7 +1490,7 @@ namespace MMR.Randomizer.GameObjects
         [BlockingVariantsAll]
         [FlyingToGroundHeightAdjustment(200)]
         /*
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack,
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine,
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
             Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
@@ -4128,15 +4128,16 @@ namespace MMR.Randomizer.GameObjects
         //[AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0144)] // lottery music
         LotteryKiosk = 0x239, // En_Kujiya
 
-        [ActorizerEnabled]
+        [ActorizerEnabled] 
         [FileID(529)]
         [ObjectListIndex(0xA1)]
         [CheckRestricted(check: Item.MaskDonGero)]
         [GroundVariants(0x0)]
         //[VariantsWithRoomMax]
-        [OnlyOneActorPerRoom]
+        //[OnlyOneActorPerRoom]
+        [VariantsWithRoomMax(max:0, variant:0)] // issue: hardlock if you put a bomb/keg near him
         [UnkillableAllVariants]
-        GoronWithGeroMask = 0x23A, // En_Geg
+        GoronWithGeroMask = 0x23A, // En_Geg : HungryGoron
 
         //[ActorizerEnabled] // boring since its hidden unless you wear one often junk mask, just decreases chances of noticable enemies
         [FileID(530)]
