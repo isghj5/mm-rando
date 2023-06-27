@@ -593,6 +593,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1508)]
         [SceneInternalId(0x6B)]
+        [EnemizerSceneBlockSensitive(Actor.BombFlower, -1)]
+        [EnemizerSceneBlockSensitive(Actor.UglyTree, -1)]
         GoronRacetrack = 0x68,
 
         [FileID(1510)]
