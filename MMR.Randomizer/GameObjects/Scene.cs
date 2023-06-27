@@ -347,7 +347,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1336)]
         [SceneInternalId(0x3B)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Torch,
-            Actor.ClocktowerGearsAndOrgan)]
+            Actor.ClocktowerGearsAndOrgan, Actor.RegularIceBlock)]
         PiratesFortressExterior = 0x38,
 
         [FileID(1338)]
