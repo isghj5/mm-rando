@@ -226,6 +226,9 @@ extern u32 z2_80147624(GlobalContext* ctxt);
 #define z2_PlayerHandleBuoyancy_VRAM     0x808475B4
 #define z2_UseItem_VRAM                  0x80831990
 
+// Relocatable PlayerUpperActionFunc
+#define z2_Player_UpperAction_CarryAboveHead_VRAM   0x808490B4
+
 // Relocatable Types (file_choose).
 #define FileChooseDataVRAM               0x80813DF0
 

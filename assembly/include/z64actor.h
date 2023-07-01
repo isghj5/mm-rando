@@ -16,6 +16,13 @@ typedef struct {
     /* 0x0C */ Vec3s rot;
 } PosRot; // size = 0x14
 
+typedef struct {
+    /* 0x00 */ f32 x[4];
+    /* 0x10 */ f32 y[4];
+    /* 0x20 */ f32 z[4];
+    /* 0x30 */ f32 w[4];
+} z_Matrix; // size = 0x40
+
 typedef void(*ActorFunc)(struct Actor *this, struct GlobalContext *ctxt);
 
 typedef union {
@@ -203,13 +210,22 @@ typedef enum {
     HELD_ITEM_BOTTLE = 0x15,
 } PlayerHeldItem;
 
-typedef struct {
+struct ActorPlayer;
+
+typedef void (*PlayerActionFunc)(struct ActorPlayer* this, struct GlobalContext* ctxt);
+typedef s32 (*PlayerUpperActionFunc)(struct ActorPlayer* this, struct GlobalContext* ctxt);
+typedef void (*PlayerFuncD58)(struct GlobalContext* ctxt, struct ActorPlayer* this);
+
+#define PLAYER_LIMB_BUF_SIZE 159 // TODO (ALIGN16(sizeof(PlayerAnimationFrame)) + 0xF)
+
+typedef struct ActorPlayer {
     /* 0x000 */ Actor base;
-    /* 0x144 */ u8 pad144[0x2];
+    /* 0x144 */ s8 currentShield;
+    /* 0x145 */ s8 currentBoots;
     /* 0x146 */ u8 itemButton;
     /* 0x147 */ s8 itemActionParam;
-    /* 0x148 */ u8 unk148;
-    /* 0x149 */ u8 unk149;
+    /* 0x148 */ u8 heldItemId; // ItemId enum
+    /* 0x149 */ s8 prevBoots;
     /* 0x14A */ s8 heldItemActionParam; // Which item Link currently has out?
     /* 0x14B */ u8 form;
     /* 0x14C */ UNK_TYPE1 pad14C[0x5];
@@ -222,11 +238,18 @@ typedef struct {
     /* 0x241 */ u8 unk241;
     /* 0x242 */ UNK_TYPE1 pad242[0x6];
     /* 0x248 */ PlayerAnimation currentAnimation;
-    /* 0x24C */ UNK_TYPE1 pad24C[0x100];
+    /* 0x24C */ UNK_TYPE1 pad24C[0xC];
+    /* 0x258 */ f32 animationCurrentFrame;
+    /* 0x25C */ UNK_TYPE1 pad25C[0xF0];
     /* 0x34C */ Actor* heldActor;
     /* 0x350 */ UNK_TYPE1 pad350[0x18];
     /* 0x368 */ Vec3f unk368;
-    /* 0x374 */ UNK_TYPE1 pad374[0x10];
+    /* 0x374 */ UNK_TYPE1 pad374[0x8];
+    /* 0x37C */ s8 doorType; // PlayerDoorType enum
+    /* 0x37D */ s8 doorDirection;
+    /* 0x37E */ s8 doorTimer;
+    /* 0x37F */ s8 doorNext; // used with spiral staircase
+    /* 0x380 */ Actor* doorActor;
     /* 0x384 */ u16 getItem;
     /* 0x386 */ u16 unk386; // Some kind of rotation?
     /* 0x388 */ Actor* givingActor;
@@ -237,18 +260,41 @@ typedef struct {
     /* 0x3CE */ s8 unk3CE;
     /* 0x3CF */ UNK_TYPE1 pad3CF[0x361];
     /* 0x730 */ Actor* target;
-    /* 0x734 */ UNK_TYPE1 pad734[0x334];
+    /* 0x734 */ char unk_734[4];
+    /* 0x738 */ s32 unk_738;
+    /* 0x73C */ s32 meleeWeaponEffectIndex[3];
+    /* 0x748 */ PlayerActionFunc actionFunc;
+    /* 0x74C */ u8 jointTableBuffer[PLAYER_LIMB_BUF_SIZE];
+    /* 0x7EB */ u8 morphTableBuffer[PLAYER_LIMB_BUF_SIZE];
+    /* 0x88A */ u8 blendTableBuffer[PLAYER_LIMB_BUF_SIZE];
+    /* 0x929 */ u8 unk_929[PLAYER_LIMB_BUF_SIZE];
+    /* 0x9C8 */ u8 unk_9C8[PLAYER_LIMB_BUF_SIZE];
     /* 0xA68 */ f32 *tableA68; // Transformation-dependant f32 array, [11] used for distance to begin swimming.
     /* 0xA6C */ PlayerStateFlags stateFlags;
-    /* 0xA78 */ UNK_TYPE1 padA78[0x8];
-    /* 0xA80 */ Actor* unkA80;
-    /* 0xA84 */ UNK_TYPE1 padA84[0x4];
-    /* 0xA88 */ Actor* unkA88;
-    /* 0xA8C */ f32 unkA8C;
+    /* 0xA78 */ Actor* unk_A78;
+    /* 0xA7C */ Actor* boomerangActor;
+    /* 0xA80 */ Actor* tatlActor;
+    /* 0xA84 */ s16 tatlTextId;
+    /* 0xA86 */ s8 currentActorCsIndex;
+    /* 0xA87 */ s8 exchangeItemId; // PlayerItemAction enum
+    /* 0xA88 */ Actor* talkActor;
+    /* 0xA8C */ f32 talkActorDistance;
     /* 0xA90 */ Actor* ocarinaCutsceneActor;
     /* 0xA94 */ UNK_TYPE1 padA94[0x11];
     /* 0xAA5 */ u8 unkAA5;
-    /* 0xAA6 */ UNK_TYPE1 padAA6[0x2A];
+    /* 0xAA6 */ u16 unk_AA6; // flags of some kind
+    /* 0xAA8 */ s16 unk_AA8;
+    /* 0xAAA */ s16 unk_AAA;
+    /* 0xAAC */ Vec3s unk_AAC;
+    /* 0xAB2 */ Vec3s unk_AB2;
+    /* 0xAB8 */ f32 unk_AB8;
+    /* 0xABC */ f32 unk_ABC;
+    /* 0xAC0 */ f32 unk_AC0;
+    /* 0xAC4 */ PlayerUpperActionFunc upperActionFunc;
+    /* 0xAC8 */ f32 unk_AC8;
+    /* 0xACC */ s16 unk_ACC;
+    /* 0xACE */ s8 unk_ACE;
+    /* 0xACF */ u8 putAwayCountdown; // Frames to wait before showing "Put Away" on A
     /* 0xAD0 */ f32 linearVelocity;
     /* 0xAD4 */ u16 movementAngle;
     /* 0xAD6 */ UNK_TYPE1 padAD6[0x5];
@@ -270,7 +316,11 @@ typedef struct {
     /* 0xB72 */ u16 floorType; // Determines sound effect used while walking.
     /* 0xB74 */ UNK_TYPE1 padB74[0x28];
     /* 0xB9C */ Vec3f unkB9C;
-    /* 0xBA8 */ UNK_TYPE1 padBA8[0x1B4];
+    /* 0xBA8 */ UNK_TYPE1 padBA8[0x44];
+    /* 0xBEC */ Vec3f bodyPartsPos[0x12];
+    /* 0xCC4 */ z_Matrix attachmentMtx0; //not sure what uses this
+    /* 0xD04 */ z_Matrix attachmentMtx1; //used by mirror shield lightray actor
+    /* 0xD44 */ UNK_TYPE1 padD44[0x18];
     /* 0xD5C */ s8 invincibilityFrames;
     /* 0xD5D */ UNK_TYPE1 padD5D[0x1B];
 } ActorPlayer; // size = 0xD78
