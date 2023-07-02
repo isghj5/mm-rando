@@ -17,13 +17,17 @@ bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
 
 PlayerActionFunc sPlayer_Falling = NULL;
 PlayerActionFunc sPlayer_BackwalkBraking = NULL;
+PlayerUpperActionFunc sPlayer_UpperAction_CarryAboveHead = NULL;
 
-void Player_InitActionFuncPointers() {
+void Player_InitFuncPointers() {
     if (sPlayer_Falling == NULL) {
         sPlayer_Falling = z2_Player_func_8084C16C;
     }
     if (sPlayer_BackwalkBraking == NULL) {
         sPlayer_BackwalkBraking = z2_Player_func_8084A884;
+    }
+    if (sPlayer_UpperAction_CarryAboveHead == NULL) {
+        sPlayer_UpperAction_CarryAboveHead = z2_Player_UpperAction_CarryAboveHead;
     }
 }
 
@@ -71,7 +75,7 @@ void Player_PreventDangerousStates(ActorPlayer* player) {
 }
 
 void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
-    Player_InitActionFuncPointers();
+    Player_InitFuncPointers();
     Dpad_BeforePlayerActorUpdate(player, ctxt);
     ExternalEffects_Handle(player, ctxt);
     ArrowCycle_Handle(player, ctxt);
@@ -82,7 +86,10 @@ void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
 
 bool Player_CanReceiveItem(GlobalContext* ctxt) {
     ActorPlayer* player = GET_PLAYER(ctxt);
-    if ((player->stateFlags.state1 & PLAYER_STATE1_AIM) != 0) {
+    if (player->stateFlags.state1 & (PLAYER_STATE1_AIM | PLAYER_STATE1_HOLD)) {
+        return false;
+    }
+    if (player->upperActionFunc == sPlayer_UpperAction_CarryAboveHead) {
         return false;
     }
     bool result = false;

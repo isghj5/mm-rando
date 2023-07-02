@@ -298,7 +298,7 @@ typedef struct {
 struct ActorPlayer;
 
 typedef void (*PlayerActionFunc)(struct ActorPlayer* this, struct GlobalContext* ctxt);
-typedef s32 (*PlayerFuncAC4)(struct ActorPlayer* this, struct GlobalContext* ctxt);
+typedef s32 (*PlayerUpperActionFunc)(struct ActorPlayer* this, struct GlobalContext* ctxt);
 typedef void (*PlayerFuncD58)(struct GlobalContext* ctxt, struct ActorPlayer* this);
 
 #define PLAYER_LIMB_BUF_SIZE 159 // TODO (ALIGN16(sizeof(PlayerAnimationFrame)) + 0xF)
@@ -375,7 +375,7 @@ typedef struct ActorPlayer {
     /* 0xAB8 */ f32 unk_AB8;
     /* 0xABC */ f32 unk_ABC;
     /* 0xAC0 */ f32 unk_AC0;
-    /* 0xAC4 */ PlayerFuncAC4 unk_AC4;
+    /* 0xAC4 */ PlayerUpperActionFunc upperActionFunc;
     /* 0xAC8 */ f32 unk_AC8;
     /* 0xACC */ s16 unk_ACC;
     /* 0xACE */ s8 unk_ACE;

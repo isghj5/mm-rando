@@ -282,6 +282,9 @@ extern void z2_MessageClose(GlobalContext* ctxt);
 // Relocatable Data (player_actor).
 #define z2_D_80862B4C_VRAM               0x80862B4C
 
+// Relocatable PlayerUpperActionFunc
+#define z2_Player_UpperAction_CarryAboveHead_VRAM   0x808490B4
+
 // Relocatable Types (file_choose).
 #define FileChooseDataVRAM               0x80813DF0
 

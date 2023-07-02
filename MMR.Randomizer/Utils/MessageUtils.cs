@@ -201,7 +201,9 @@ namespace MMR.Randomizer.Utils
                     Dictionary<Region, List<(ItemObject, Item)>> dict;
                     if (requiredItems.Count == 0 && importantItems.Count > 0)
                     {
-                        if (!randomizedResult.Settings.AddSongs && importantItems.All(io => io.io.Item.IsSong()))
+                        if (!randomizedResult.Settings.AddSongs
+                            && importantItems.All(io => io.io.Item.IsSong())
+                            && !kvp.Value.All(io => io.io.Item.IsSong()))
                         {
                             dict = songOnlyRegionCounts;
                         }
@@ -225,7 +227,11 @@ namespace MMR.Randomizer.Utils
                     
                     dict[kvp.Key] = requiredItems;
 
-                    if (!randomizedResult.Settings.AddSongs && requiredItems.Count > 0 && requiredItems.All(io => io.io.Item.IsSong()) && importantItems.All(io => io.io.Item.IsSong()))
+                    if (!randomizedResult.Settings.AddSongs
+                        && requiredItems.Count > 0
+                        && requiredItems.All(io => io.io.Item.IsSong())
+                        && importantItems.All(io => io.io.Item.IsSong())
+                        && !kvp.Value.All(io => io.io.Item.IsSong()))
                     {
                         songOnlyRegionCounts[kvp.Key] = requiredItems;
                     }
