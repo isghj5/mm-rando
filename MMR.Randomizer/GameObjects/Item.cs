@@ -11319,7 +11319,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
         [ShopText("The cyan frog from Don Gero's frog choir.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
-        [GetItemIndex(0x466), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs)]
+        [GetItemIndex(0x466), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs), NullableItem]
         [ExclusiveItemMessage(0x9003, "\u0017You found the \u0005Cyan Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
         FrogWoodfallTemple,
 
@@ -11328,7 +11328,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
         [ShopText("The pink frog from Don Gero's frog choir.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
-        [GetItemIndex(0x46D), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs)]
+        [GetItemIndex(0x46D), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs), NullableItem]
         [ExclusiveItemMessage(0x9004, "\u0017You found the \u0006Pink Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
         FrogGreatBayTemple,
 
@@ -11337,7 +11337,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
         [ShopText("The blue frog from Don Gero's frog choir.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
-        [GetItemIndex(0x46F), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs)]
+        [GetItemIndex(0x46F), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs), NullableItem]
         [ExclusiveItemMessage(0x9005, "\u0017You found the \u0003Blue Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
         FrogSwamp,
 
@@ -11346,7 +11346,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
         [ShopText("The white frog from Don Gero's frog choir.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
-        [GetItemIndex(0x473), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs)]
+        [GetItemIndex(0x473), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs), NullableItem]
         [ExclusiveItemMessage(0x9006, "\u0017You found the \u0001White Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
         FrogLaundryPool,
 

@@ -13,15 +13,21 @@ static u16 giIndices[] = {
 };
 
 void Minifrog_GiveReward(Actor* actor, GlobalContext* ctxt, s16 frogIndex) {
-    if (MISC_CONFIG.internal.vanillaLayout) {
-        SET_WEEKEVENTREG(isFrogReturnedFlags[frogIndex]);
-    } else {
-        if (frogIndex > 0 && frogIndex < ARRAY_COUNT(giIndices)) {
-            u16 giIndex = giIndices[frogIndex];
+    if (frogIndex <= 0 || frogIndex >= ARRAY_COUNT(giIndices)) {
+        return;
+    }
+
+    if (!MISC_CONFIG.internal.vanillaLayout) {
+        u16 giIndex = giIndices[frogIndex];
+        GetItemEntry* entry = MMR_GetGiEntry(giIndex);
+        if (entry->message != 0) {
             ActorPlayer* player = GET_PLAYER(ctxt);
             MMR_GiveItemToHold(actor, ctxt, giIndex);
+            return;
         }
     }
+
+    SET_WEEKEVENTREG(isFrogReturnedFlags[frogIndex]);
 }
 
 void Minifrog_WaitForDespawn(Actor* actor, GlobalContext* ctxt) {
