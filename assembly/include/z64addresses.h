@@ -300,8 +300,5 @@ typedef void (*z2_UseItem_Func)(GlobalContext* ctxt, ActorPlayer* player, u8 ite
 typedef s32 (*z2_Player_ItemToActionParam_Func)(ActorPlayer* player, s32 itemId);
 typedef bool (*z2_Player_func_8083692C_Func)(ActorPlayer* player, GlobalContext* ctxt);
 typedef bool (*z2_Player_func_80838A90_Func)(ActorPlayer* player, GlobalContext* ctxt);
-typedef void (*z2_Player_func_80849FE0_Func)(ActorPlayer* player, GlobalContext* ctxt);
-typedef void (*z2_Player_func_8084A884_Func)(ActorPlayer* player, GlobalContext* ctxt);
-typedef void (*z2_Player_func_8084C16C_Func)(ActorPlayer* player, GlobalContext* ctxt);
 
 #endif
