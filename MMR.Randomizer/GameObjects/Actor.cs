@@ -4678,6 +4678,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(600)]
         [ObjectListIndex(0x110)]
         [CheckRestricted(Item.ItemNotebook,
+            Item.ChestBomberHideoutSilverRupee,
             Item.TradeItemMoonTear,
             Item.CollectableTerminaFieldTelescopeGuay1,
             Item.HeartPieceTerminaBusinessScrub,
