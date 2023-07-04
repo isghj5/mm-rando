@@ -2356,9 +2356,13 @@ namespace MMR.Randomizer
                 var companionAttrs = actor.ActorEnum.GetAttributes<CompanionActorAttribute>();
                 if (companionAttrs != null)
                 {
+                    var targetActors = thisSceneData.ActorsPerObject[objectIndex];
+
                     // if 4 or fewer total actors here, no companions, not enough regular actors anyway
                     // reminder: these are companions that fully mix into the actor list
-                    if (thisSceneData.ActorsPerObject[objectIndex].Count <= 3) continue;
+                    if (targetActors.Count <= 3) continue;
+
+                    var objectHasBlockingSensitivity = targetActors.Any(actor => actor.Blockable == false);
 
                     foreach (var companion in companionAttrs)
                     {
@@ -2366,14 +2370,16 @@ namespace MMR.Randomizer
                         if (cObj != 1 && cObj != actor.ObjectId && !thisSceneData.Objects.Contains(cObj))
                             continue;
 
+                        var companionType = companion.Companion;
                         // if its banned on this actor slot, also avoid
                         var blockedReplacementActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(actor.OldActorEnum);
-                        if (blockedReplacementActors.Contains(companion.Companion))
+                        if (blockedReplacementActors.Contains(companionType) // blocked from being used as replacement
+                            || (objectHasBlockingSensitivity && companionType.IsBlockingActor())) // actor is bulky, blocks path
                         {
-                            continue; // blocked
+                            continue; // cannot use
                         }
 
-                        var newCompanion = new Actor(companion.Companion);
+                        var newCompanion = new Actor(companionType);
                         newCompanion.Variants = companion.Variants;
                         newCompanion.IsCompanion = true;
                         candidates.Add(newCompanion);

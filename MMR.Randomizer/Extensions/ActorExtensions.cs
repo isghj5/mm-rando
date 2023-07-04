@@ -447,5 +447,17 @@ namespace MMR.Randomizer.Extensions
             return true;
         }
 
+        public static bool IsBlockingActor(this Actor actor)
+        {
+            if (actor.GetAttribute<BlockingVariantsAll>() != null)
+            {
+                return true;
+            }
+
+            // TODO implement finer specifics
+
+            return false;
+        }
+
     }
 }
