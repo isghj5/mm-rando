@@ -14,10 +14,11 @@ namespace MMR.Randomizer.Models.Rom
 
         public int File;    // DMA Filetable index
         public int Number;  // Scene table index
+        public SceneSpecialObject SpecialObject;
         public GameObjects.Scene SceneEnum;  // Gameobject scene enum value
         public List<Map> Maps = new List<Map>();
         public List<SceneSetup> Setups { get; set; } = new List<SceneSetup>();
-        public SceneSpecialObject SpecialObject;
+        public List<Actor> Doors = new List<Actor>();
 
         public bool HasDungeonObject()
         {

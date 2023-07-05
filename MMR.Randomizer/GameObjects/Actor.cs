@@ -242,6 +242,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.MarineLab)]
         Fish = 0x17, // En_Fish
 
+        // a door type actor
         [FileID(57)]
         [ObjectListIndex(0x1)]
         En_Holl = 0x18, // En_Holl
@@ -281,7 +282,6 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(63)]
         [ObjectListIndex(0x1)] // FAKE, multi-object
-        //[ObjectListIndex(0x278)] // swamp spiderhouse
         // multiple door objects::
         /*  { gBossDoorDL, NULL, 130, 12, 50, 15 },
             { gameplay_keep_DL_077990, gameplay_keep_DL_078A80, 130, 12, 20, 15 },
@@ -296,7 +296,6 @@ namespace MMR.Randomizer.GameObjects
             { object_kaizoku_obj_DL_0001A0, gameplay_keep_DL_078A80, 130, 12, 20, 15 },
             { object_last_obj_DL_0039C0, gameplay_keep_DL_078A80, 130, 12, 20, 15 },
         */
-        // also can be ikana castile door
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         DoorShutter = 0x1E, // Door_Shutter
 

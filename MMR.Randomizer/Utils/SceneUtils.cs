@@ -110,6 +110,33 @@ namespace MMR.Randomizer.Utils
             }
         }
 
+        public static void GetSceneHeaders()
+        {
+            for (int i = 0; i < RomData.SceneList.Count; i++)
+            {
+                RomUtils.CheckCompressed(RomData.SceneList[i].File); // should be done by this point?
+                var sceneFile = RomData.MMFileList[RomData.SceneList[i].File].Data;
+                int ptr = 0;
+                while (true)
+                {
+                    byte cmd = sceneFile[ptr];
+                    if (cmd == 0x0E)
+                    {
+                        byte DoorCount = sceneFile[ptr + 1];
+                        int DoorAddr = (int)ReadWriteUtils.Arr_ReadU32(sceneFile, ptr + 4) & 0xFFFFFF;
+                        //RomData.SceneList[i].Maps[j].ActorAddr = ActorAddr;
+                        RomData.SceneList[i].Doors = ReadSceneDoors(sceneFile, DoorAddr, DoorCount, i);
+                    }
+                    else if (cmd == 0x14) // final header command, no more headers
+                    {
+                        break;
+                    }
+
+                    ptr += 8;
+                }
+            }
+        }
+
         public static void GetMapHeaders()
         {
             for (int i = 0; i < RomData.SceneList.Count; i++)
@@ -203,6 +230,45 @@ namespace MMR.Randomizer.Utils
             return Actors;
         }
 
+        private static List<Actor> ReadSceneDoors(byte[] Scene, int DoorActorListOffset, int Count, int sceneID)
+        {
+            List<Actor> doors = new List<Actor>();
+            for (ushort i = 0; i < Count; i++)
+            {
+                // transition list format https://wiki.cloudmodding.com/mm/Scenes_and_Rooms#Transition_Actors
+
+                var doorOffset = DoorActorListOffset + (i * 16); // location of specific door entry in list as address
+                Actor a = new Actor();
+                ushort an = ReadWriteUtils.Arr_ReadU16(Scene, doorOffset + 4);
+                a.ActorId = an & 0x0FFF;
+                a.OldActorEnum = a.ActorEnum = (GameObjects.Actor) a.ActorId;
+                a.OldName = a.Name = a.ActorEnum.ToString();
+                a.OldObjectId = a.ObjectId = a.ActorEnum.ObjectIndex();
+
+                a.Position.x = (short)ReadWriteUtils.Arr_ReadU16(Scene, doorOffset + 6);
+                a.Position.y = (short)ReadWriteUtils.Arr_ReadU16(Scene, doorOffset + 8);
+                a.Position.z = (short)ReadWriteUtils.Arr_ReadU16(Scene, doorOffset + 10);
+                a.Rotation.x = 0; // doors can't be x/z rotated I guess, they need the data space for other things
+                a.Rotation.y = (short)ReadWriteUtils.Arr_ReadU16(Scene, doorOffset + 12);
+                a.Rotation.z = 0;
+                a.Variants[0] = ReadWriteUtils.Arr_ReadU16(Scene, doorOffset + 14);
+                a.OldVariant = a.Variants[0];
+
+                // doors do not have a room, they are in the scene and therefor in every room
+                // but does do have a room they point towards, the next room that loads when you touch them
+                // for now, reusing this value for this other purpose
+                a.RoomActorIndex = ReadWriteUtils.Arr_ReadU16(Scene, doorOffset + 0);
+                // from the back
+                //a.RoomActorIndex = ReadWriteUtils.Arr_ReadU16(Scene, doorOffset + 2);
+
+                doors.Add(a);
+            }
+            Debug.WriteLine("\n");
+
+            return doors;
+        }
+
+
         private static List<int> ReadMapObjects(byte[] Map, int Addr, int Count)
         {
             List<int> Objects = new List<int>();
@@ -280,6 +346,9 @@ namespace MMR.Randomizer.Utils
                 UpdateMap(scene.Maps[i]);
             }
         }
+
+        //public static void ParseSceneHeaders
+
 
         public static void GetActors()
         {

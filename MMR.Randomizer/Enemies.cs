@@ -1699,6 +1699,17 @@ namespace MMR.Randomizer
 
                 }
             }
+            for (int doorNumber = 0; doorNumber < thisSceneData.Scene.Doors.Count; ++doorNumber)
+            {
+                var sceneDoor = thisSceneData.Scene.Doors[doorNumber];
+                var flags = ActorUtils.GetActorSwitchFlags(sceneDoor, (short)sceneDoor.OldVariant);
+                if (flags >= 0)
+                {
+                    claimedSwitchFlags.Add(flags);
+                    thisSceneData.Log.AppendLine($"  [{doorNumber}][{sceneDoor.ActorEnum}] has flags: [{flags}]");
+                }
+            }
+
 
             // change all new actors with switch flags to some flag not yet used
             var usableSwitches = new List<int>();
@@ -3391,6 +3402,7 @@ namespace MMR.Randomizer
 
                 PrepareEnemyLists();
                 SceneUtils.ReadSceneTable();
+                SceneUtils.GetSceneHeaders();
                 SceneUtils.GetMaps();
                 SceneUtils.GetMapHeaders();
                 SceneUtils.GetActors();
