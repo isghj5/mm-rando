@@ -687,9 +687,10 @@ namespace MMR.Randomizer
             tfScene.Maps[0].Objects[0] = SMALLEST_OBJ;
 
             // HEAVY BOM
-            RomUtils.CheckCompressed(GameObjects.Actor.PowderKeg.FileListIndex());
-            var kegFile = RomData.MMFileList[GameObjects.Actor.PowderKeg.FileListIndex()].Data;
-            kegFile[0x1FF5] |= 0x02; // add ACTOR_FLAG_20000, makes it heavy 
+            // you idiot, this is both kegs and regular bombs, you need to set the flag for just kegs with a code change or bombs are heavy too
+            //RomUtils.CheckCompressed(GameObjects.Actor.PowderKeg.FileListIndex());
+            //var kegFile = RomData.MMFileList[GameObjects.Actor.PowderKeg.FileListIndex()].Data;
+            //kegFile[0x1FF5] |= 0x02; // add ACTOR_FLAG_20000, makes it heavy 
 
 
 
