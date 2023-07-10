@@ -2021,8 +2021,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(258)]
         [ObjectListIndex(0x1AC)]
-        [CheckRestricted(Scene.SwampShootingGallery, 0x000F, Item.UpgradeBigQuiver, Item.HeartPieceSwampArchery)]
-        [CheckRestricted(Scene.TownShootingGallery, 0xFF01, Item.UpgradeBiggestQuiver, Item.HeartPieceTownArchery)]
+        [CheckRestricted(Scene.SwampShootingGallery, 0x000F, Item.UpgradeBiggestQuiver, Item.HeartPieceSwampArchery)]
+        [CheckRestricted(Scene.TownShootingGallery, 0xFF01, Item.UpgradeBigQuiver, Item.HeartPieceTownArchery)] // town
         [GroundVariants(0x000F, 0xFF01)]
         //[VariantsWithRoomMax(max:0, 0x000F, 0xFF01)] // assumption, you cannot see their legs
         [VariantsWithRoomMax(max: 3, variant: 0x000F, 0xFF01)]
