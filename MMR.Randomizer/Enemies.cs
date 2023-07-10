@@ -1606,8 +1606,8 @@ namespace MMR.Randomizer
                 GameObjects.Actor.LabFish.ObjectIndex(),
                 GameObjects.Actor.Lightblock.ObjectIndex(),
                 GameObjects.Actor.SkullKidPainting.ObjectIndex(),
+                GameObjects.Actor.LaundryPoolBell.ObjectIndex(),
                 GameObjects.Actor.GoronWithGeroMask.ObjectIndex()
-
             };
 
             var actorObjectsDetected = thisSceneData.ChosenReplacementObjects.Find(v => listTroubleActorsObj.Contains(v.ChosenV)) != null;
@@ -1625,6 +1625,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.LabFish,
                 GameObjects.Actor.Lightblock,
                 GameObjects.Actor.SkullKidPainting,
+                GameObjects.Actor.LaundryPoolBell,
                 GameObjects.Actor.GoronWithGeroMask
             };
 
