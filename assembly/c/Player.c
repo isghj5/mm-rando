@@ -14,7 +14,16 @@ bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
     return Icetrap_Give(player, ctxt);
 }
 
+PlayerUpperActionFunc sPlayer_UpperAction_CarryAboveHead = NULL;
+
+void Player_InitFuncPointers() {
+    if (sPlayer_UpperAction_CarryAboveHead == NULL) {
+        sPlayer_UpperAction_CarryAboveHead = z2_Player_UpperAction_CarryAboveHead;
+    }
+}
+
 void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
+    Player_InitFuncPointers(); // TODO can we load this on player init?
     Dpad_BeforePlayerActorUpdate(player, ctxt);
     ExternalEffects_Handle(player, ctxt);
     ArrowCycle_Handle(player, ctxt);
@@ -24,7 +33,10 @@ void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
 
 bool Player_CanReceiveItem(GlobalContext* ctxt) {
     ActorPlayer* player = GET_PLAYER(ctxt);
-    if ((player->stateFlags.state1 & PLAYER_STATE1_AIM) != 0) {
+    if (player->stateFlags.state1 & (PLAYER_STATE1_AIM | PLAYER_STATE1_HOLD)) {
+        return false;
+    }
+    if (player->upperActionFunc == sPlayer_UpperAction_CarryAboveHead) {
         return false;
     }
     bool result = false;

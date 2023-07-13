@@ -29,13 +29,6 @@ typedef void(*FuncPtr)(void);
 // Structure type aliases.
 typedef struct GlobalContext GlobalContext;
 
-typedef struct {
-    /* 0x00 */ f32 x[4];
-    /* 0x10 */ f32 y[4];
-    /* 0x20 */ f32 z[4];
-    /* 0x30 */ f32 w[4];
-} z_Matrix; // size = 0x40
-
 /// =============================================================
 /// Controller & Inputs
 /// =============================================================

@@ -317,9 +317,10 @@ namespace MMR.Randomizer.Utils
                             {
                                 delimitingChar = '\n';
                             }
+
                             foreach (var line in categoryData.Split(delimitingChar))
                             {
-                                if (line.Equals("")) continue;
+                                if (line == null || line.Length == 0) continue; // They probably left an extra comma at the end, not an error just ignore
 
                                 try
                                 {

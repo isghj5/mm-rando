@@ -210,6 +210,10 @@ namespace MMR.Randomizer.Utils
                 isRepeatable = false;
                 settings.AsmOptions.MMRConfig.ItemsToReturnIds.Add(getItemIndex);
             }
+            if (location == Item.ItemOcarina && ItemUtils.IsLogicallyJunk(item))
+            {
+                isRepeatable = false;
+            }
             if (!isRepeatable)
             {
                 SceneUtils.UpdateSceneFlagMask(getItemIndex);
