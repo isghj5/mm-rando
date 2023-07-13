@@ -1607,6 +1607,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Lightblock.ObjectIndex(),
                 GameObjects.Actor.SkullKidPainting.ObjectIndex(),
                 GameObjects.Actor.LaundryPoolBell.ObjectIndex(),
+                GameObjects.Actor.AnjusGrandmaCredits.ObjectIndex(),
                 GameObjects.Actor.GoronWithGeroMask.ObjectIndex()
             };
 
@@ -1626,6 +1627,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Lightblock,
                 GameObjects.Actor.SkullKidPainting,
                 GameObjects.Actor.LaundryPoolBell,
+                GameObjects.Actor.AnjusGrandmaCredits,
                 GameObjects.Actor.GoronWithGeroMask
             };
 
@@ -1833,7 +1835,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Seth2)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
-                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DragonFly, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.MilkRoad, GameObjects.Actor.MilkroadCarpenter, GameObjects.Actor.GoronWithGeroMask)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.LikeLike, GameObjects.Actor.LabFish)) continue;
@@ -3451,7 +3453,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 48.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 49.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

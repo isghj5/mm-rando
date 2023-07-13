@@ -536,8 +536,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x61)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Gorman,
             /* Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire,*/ Actor.LikeLike)]
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Anju,
-            Actor.AnjusGrandma, Actor.AnjusGrandmaCredits)] // if there are two of them in her room, story time gets hijacked
+        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Anju,
+        //    Actor.AnjusGrandma, Actor.AnjusGrandmaCredits)] // this this was just cutscenes, not the same bug
         [EnemizerSceneBlockSensitive(Actor.Gorman, -1)]
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RosaSisters,
         //    Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.LightBlock,
