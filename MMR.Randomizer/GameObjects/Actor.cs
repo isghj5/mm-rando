@@ -2341,7 +2341,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // need to replace if you replace the shooting gallery man
         [FileID(301)]
         [ObjectListIndex(0x5)]
-        [CheckRestricted(Item.UpgradeBiggestQuiver)]
+        [CheckRestricted(Item.UpgradeBigQuiver, Item.HeartPieceTownArchery)]
         [WaterVariants(0xFFF0, 0xFFF1, 0xFFF2, 0xFFF3, 0xFFF4, 0xFFF5, 0xFFF6, 0xFFF7, 0xFFF8)]
         [GroundVariants(0xFFF0, 0xFFF1, 0xFFF2, 0xFFF3, 0xFFF4, 0xFFF5, 0xFFF6, 0xFFF7, 0xFFF8)]
         // likely dont work without the shooting man anyway
