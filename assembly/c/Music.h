@@ -3,12 +3,14 @@
 
 #include <z64.h>
 
+void Music_Draw(GlobalContext* ctxt);
 void Music_Update(GlobalContext* ctxt);
 
 // Magic number for MusicConfig: "MUSI"
 #define MUSIC_CONFIG_MAGIC 0x4D555349
 
 #define SEQUENCE_DATA_SIZE 0x30
+#define SEQUENCE_NAME_MAX_SIZE 0x20
 
 enum SequencePlayState {
     SEQUENCE_PLAY_STATE_NONE            = 0b0000000000000000,
@@ -59,15 +61,17 @@ typedef struct MusicState {
 
 typedef struct {
     u32 removeMinorMusic    : 1;
-    u32                     : 31;
+    u32 showTrackName       : 1;
+    u32                     : 30;
 } MusicFlags;
 
 struct MusicConfig {
     /* 0x000 */ u32 magic;
     /* 0x004 */ u32 version;
     /* 0x008 */ u32 sequenceMaskFileIndex;
-    /* 0x00C */ MusicFlags flags;
-}; // size = 0x10
+    /* 0x00C */ u32 sequenceNamesFileIndex;
+    /* 0x010 */ MusicFlags flags;
+}; // size = 0x14
 
 extern struct MusicConfig MUSIC_CONFIG;
 

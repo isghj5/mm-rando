@@ -13,6 +13,11 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool RemoveMinorMusic { get; set; }
 
+        /// <summary>
+        /// When a new track starts playing in-game, show the name of the track at the bottom left of the screen.
+        /// </summary>
+        public bool ShowTrackName { get; set; }
+
         public MusicFlags()
         {
         }
@@ -29,6 +34,7 @@ namespace MMR.Randomizer.Asm
         void Load(uint flags)
         {
             this.RemoveMinorMusic = ((flags >> 31) & 1) == 1;
+            this.ShowTrackName = ((flags >> 30) & 1) == 1;
         }
 
         /// <summary>
@@ -39,6 +45,7 @@ namespace MMR.Randomizer.Asm
         {
             uint flags = 0;
             flags |= (this.RemoveMinorMusic ? (uint)1 : 0) << 31;
+            flags |= (this.ShowTrackName ? (uint)1 : 0) << 30;
             return flags;
         }
     }
@@ -47,6 +54,7 @@ namespace MMR.Randomizer.Asm
     {
         public uint Version;
         public int? SequenceMaskFileIndex;
+        public int? SequenceNamesFileIndex;
         public uint Flags;
 
         /// <summary>
@@ -60,6 +68,7 @@ namespace MMR.Randomizer.Asm
             {
                 writer.WriteUInt32(this.Version);
                 writer.Write(this.SequenceMaskFileIndex ?? 0);
+                writer.Write(this.SequenceNamesFileIndex ?? 0);
                 writer.WriteUInt32(this.Flags);
 
                 return memoryStream.ToArray();
@@ -71,7 +80,13 @@ namespace MMR.Randomizer.Asm
     {
         public int? SequenceMaskFileIndex { get; set; }
 
+        public int? SequenceNamesFileIndex { get; set; }
+
+        public const byte NUM_SEQUENCES = 0x80;
+
         public const byte SEQUENCE_DATA_SIZE = 0x30;
+
+        public const byte SEQUENCE_NAME_MAX_SIZE = 0x20;
 
         public MusicFlags Flags { get; set; }
 
@@ -88,11 +103,20 @@ namespace MMR.Randomizer.Asm
         {
             if (settings.Music == Models.Music.Random)
             {
-                SequenceMaskFileIndex = RomUtils.AppendFile(new byte[0x80 * SEQUENCE_DATA_SIZE]);
+                SequenceMaskFileIndex = RomUtils.AppendFile(new byte[NUM_SEQUENCES * SEQUENCE_DATA_SIZE]);
             }
             else
             {
                 SequenceMaskFileIndex = null;
+            }
+
+            if (settings.Music == Models.Music.Random && settings.ShowTrackName)
+            {
+                SequenceNamesFileIndex = RomUtils.AppendFile(new byte[NUM_SEQUENCES * SEQUENCE_NAME_MAX_SIZE]);
+            }
+            else
+            {
+                SequenceNamesFileIndex = null;
             }
         }
 
@@ -102,6 +126,7 @@ namespace MMR.Randomizer.Asm
             {
                 Version = version,
                 SequenceMaskFileIndex = this.SequenceMaskFileIndex,
+                SequenceNamesFileIndex = this.SequenceNamesFileIndex,
                 Flags = this.Flags.ToInt()
             };
         }

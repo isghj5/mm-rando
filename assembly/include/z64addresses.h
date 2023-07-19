@@ -83,6 +83,8 @@ extern void z2_HandleInputVelocity(f32* linearVelocity, f32 inputVelocity, f32 i
 extern bool z2_SetGetItemLongrange(Actor* actor, GlobalContext* ctxt, u16 giIndex);
 extern void z2_UpdatePictoFlags(GlobalContext* ctxt);
 extern void z2_8012C654(GraphicsContext* gfxCtx);
+extern Gfx* z2_Gfx_DrawTexRectIA8(Gfx* gfx, void* texture, s16 textureWidth, s16 textureHeight, s16 rectLeft, s16 rectTop,
+                        s16 rectWidth, s16 rectHeight, u16 dsdx, u16 dtdy);
 extern Gfx* z2_8010CFBC(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a);
 extern Gfx* z2_8010D480(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a, u16 arg14, u16 arg15);
 
@@ -215,11 +217,14 @@ extern void z2_UpdateButtonsState(u32 state);
 // Function Prototypes (Math).
 extern f32 z2_Math_Sins(s16 angle);
 extern f32 z2_Math_CosS(s16 angle);
+extern s32 z2_Math_StepToS(s16* pValue, s16 target, s16 step);
+extern s32 z2_Math_StepToC(s8* pValue, s8 target, s8 step);
 extern void z2_Math_Vec3f_Copy(Vec3f* dest, Vec3f* src);
 extern void z2_Math_Vec3s_ToVec3f(Vec3f* dest, Vec3s* src);
 extern void z2_Math_Vec3f_ToVec3s(Vec3s* dest, Vec3f* src);
 extern void z2_Math_Vec3f_Lerp(Vec3f* a, Vec3f* b, f32 t, Vec3f* dest);
 extern f32 z2_Math_Vec3f_DistXZ(Vec3f* p1, Vec3f* p2);
+extern s16 z2_Math_SmoothStepToS(s16* pValue, s16 target, s16 scale, s16 step, s16 minStep);
 
 // Function Prototypes (Objects).
 extern s8 z2_GetObjectIndex(const SceneContext* ctxt, u16 objectId);

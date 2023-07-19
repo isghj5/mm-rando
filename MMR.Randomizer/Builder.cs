@@ -123,7 +123,9 @@ namespace MMR.Randomizer
             }
 
             ResourceUtils.ApplyHack(Resources.mods.fix_music);
-            SequenceUtils.RebuildAudioSeq(RomData.SequenceList, _cosmeticSettings.AsmOptions.MusicConfig.SequenceMaskFileIndex);
+            SequenceUtils.RebuildAudioSeq(RomData.SequenceList,
+                _cosmeticSettings.AsmOptions.MusicConfig.SequenceMaskFileIndex,
+                _cosmeticSettings.AsmOptions.MusicConfig.SequenceNamesFileIndex);
             SequenceUtils.WriteNewSoundSamples(RomData.InstrumentSetList);
             SequenceUtils.RebuildAudioBank(RomData.InstrumentSetList);
         }

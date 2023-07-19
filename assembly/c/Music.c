@@ -4,6 +4,8 @@
 #include "Music.h"
 #include "enums.h"
 #include "macro.h"
+#include "Text.h"
+#include "Sprite.h"
 
 struct MusicConfig MUSIC_CONFIG = {
     .magic = MUSIC_CONFIG_MAGIC,
@@ -155,6 +157,43 @@ static void HandleFormChannels(GlobalContext* ctxt) {
     }
 }
 
+static char sCurrentTrackName[SEQUENCE_NAME_MAX_SIZE] = "\0";
+static ColorRGBA8 sColor = { 0xFF, 0xFF, 0xFF, 0xFF };
+static s16 sAlpha = 0;
+void Music_DrawCurrentTrackName(GlobalContext* ctxt) {
+    if (!MUSIC_CONFIG.flags.showTrackName || !s801D0B70.selected || !sAlpha) {
+        return;
+    }
+
+    sColor.a = sAlpha < 0x100 ? (u8)sAlpha : 0xFF;
+    Text_PrintWithColor(sCurrentTrackName, 5, 0xE0, sColor);
+
+    DispBuf* db = &ctxt->state.gfxCtx->overlay;
+    gSPDisplayList(db->p++, &gSetupDb);
+    gDPPipeSync(db->p++);
+    Text_Flush(db);
+    gDPPipeSync(db->p++);
+
+    z2_Math_StepToS(&sAlpha, 0, 0x10);
+}
+
+static void LoadTrackName(u32 id) {
+    u32 index = MUSIC_CONFIG.sequenceNamesFileIndex;
+    if (index) {
+        DmaEntry entry = dmadata[index];
+
+        u32 start = entry.romStart + (id * SEQUENCE_NAME_MAX_SIZE);
+
+        z2_RomToRam(start, &sCurrentTrackName, SEQUENCE_NAME_MAX_SIZE);
+
+        sAlpha = 0x200;
+    }
+}
+
+void Music_Draw(GlobalContext* ctxt) {
+    Music_DrawCurrentTrackName(ctxt);
+}
+
 void Music_Update(GlobalContext* ctxt) {
     HandleFormChannels(ctxt);
 }
@@ -190,6 +229,9 @@ void Music_HandleChannelMute(SequenceChannelContext* channelContext, ChannelStat
 
 void Music_SetLoadingSequenceId(u32 id) {
     sLoadingSequenceId = id;
+    if (id) {
+        LoadTrackName(id);
+    }
 }
 
 s8 Music_GetAudioLoadType(AudioInfo* audioInfo, u8 audioType) {

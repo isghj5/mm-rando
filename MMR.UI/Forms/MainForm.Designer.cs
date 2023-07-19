@@ -196,6 +196,7 @@ namespace MMR.UI.Forms
             this.lTatl = new System.Windows.Forms.Label();
             this.cTargettingStyle = new System.Windows.Forms.CheckBox();
             this.gCosmeticMusicSound = new System.Windows.Forms.GroupBox();
+            this.cMusicTrackNames = new System.Windows.Forms.CheckBox();
             this.cRemoveMinorMusic = new System.Windows.Forms.CheckBox();
             this.lLuckRoll = new System.Windows.Forms.Label();
             this.tLuckRollPercentage = new System.Windows.Forms.NumericUpDown();
@@ -2416,6 +2417,7 @@ namespace MMR.UI.Forms
             // 
             // gCosmeticMusicSound
             // 
+            this.gCosmeticMusicSound.Controls.Add(this.cMusicTrackNames);
             this.gCosmeticMusicSound.Controls.Add(this.cRemoveMinorMusic);
             this.gCosmeticMusicSound.Controls.Add(this.lLuckRoll);
             this.gCosmeticMusicSound.Controls.Add(this.tLuckRollPercentage);
@@ -2430,17 +2432,31 @@ namespace MMR.UI.Forms
             this.gCosmeticMusicSound.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gCosmeticMusicSound.Name = "gCosmeticMusicSound";
             this.gCosmeticMusicSound.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gCosmeticMusicSound.Size = new System.Drawing.Size(284, 195);
+            this.gCosmeticMusicSound.Size = new System.Drawing.Size(484, 195);
             this.gCosmeticMusicSound.TabIndex = 46;
             this.gCosmeticMusicSound.TabStop = false;
             this.gCosmeticMusicSound.Text = "Music / Sound";
+            // 
+            // cMusicTrackNames
+            // 
+            this.cMusicTrackNames.AutoSize = true;
+            this.cMusicTrackNames.BackColor = System.Drawing.Color.Transparent;
+            this.cMusicTrackNames.ForeColor = System.Drawing.Color.Black;
+            this.cMusicTrackNames.Location = new System.Drawing.Point(154, 50);
+            this.cMusicTrackNames.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMusicTrackNames.Name = "cMusicTrackNames";
+            this.cMusicTrackNames.Size = new System.Drawing.Size(125, 19);
+            this.cMusicTrackNames.TabIndex = 49;
+            this.cMusicTrackNames.Text = "Show Track Names";
+            this.cMusicTrackNames.UseVisualStyleBackColor = false;
+            this.cMusicTrackNames.CheckedChanged += new System.EventHandler(this.cMusicTrackNames_CheckedChanged);
             // 
             // cRemoveMinorMusic
             // 
             this.cRemoveMinorMusic.AutoSize = true;
             this.cRemoveMinorMusic.BackColor = System.Drawing.Color.Transparent;
             this.cRemoveMinorMusic.ForeColor = System.Drawing.Color.Black;
-            this.cRemoveMinorMusic.Location = new System.Drawing.Point(132, 23);
+            this.cRemoveMinorMusic.Location = new System.Drawing.Point(154, 23);
             this.cRemoveMinorMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cRemoveMinorMusic.Name = "cRemoveMinorMusic";
             this.cRemoveMinorMusic.Size = new System.Drawing.Size(139, 19);
@@ -2566,11 +2582,11 @@ namespace MMR.UI.Forms
             // 
             this.cHUDGroupBox.Controls.Add(this.cHueShiftMiscUI);
             this.cHUDGroupBox.Controls.Add(this.cHUDTableLayoutPanel);
-            this.cHUDGroupBox.Location = new System.Drawing.Point(299, 159);
+            this.cHUDGroupBox.Location = new System.Drawing.Point(499, 159);
             this.cHUDGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHUDGroupBox.Name = "cHUDGroupBox";
             this.cHUDGroupBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cHUDGroupBox.Size = new System.Drawing.Size(572, 195);
+            this.cHUDGroupBox.Size = new System.Drawing.Size(372, 195);
             this.cHUDGroupBox.TabIndex = 44;
             this.cHUDGroupBox.TabStop = false;
             this.cHUDGroupBox.Text = "HUD";
@@ -2604,7 +2620,7 @@ namespace MMR.UI.Forms
             this.cHUDTableLayoutPanel.RowCount = 2;
             this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.cHUDTableLayoutPanel.Size = new System.Drawing.Size(562, 66);
+            this.cHUDTableLayoutPanel.Size = new System.Drawing.Size(362, 66);
             this.cHUDTableLayoutPanel.TabIndex = 0;
             // 
             // cHUDHeartsComboBox
@@ -2615,7 +2631,7 @@ namespace MMR.UI.Forms
             this.cHUDHeartsComboBox.Location = new System.Drawing.Point(62, 3);
             this.cHUDHeartsComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHUDHeartsComboBox.Name = "cHUDHeartsComboBox";
-            this.cHUDHeartsComboBox.Size = new System.Drawing.Size(405, 23);
+            this.cHUDHeartsComboBox.Size = new System.Drawing.Size(205, 23);
             this.cHUDHeartsComboBox.TabIndex = 32;
             this.cHUDHeartsComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDHeartsComboBox_SelectedIndexChanged);
             // 
@@ -2649,7 +2665,7 @@ namespace MMR.UI.Forms
             this.cHUDMagicComboBox.Location = new System.Drawing.Point(62, 36);
             this.cHUDMagicComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHUDMagicComboBox.Name = "cHUDMagicComboBox";
-            this.cHUDMagicComboBox.Size = new System.Drawing.Size(405, 23);
+            this.cHUDMagicComboBox.Size = new System.Drawing.Size(205, 23);
             this.cHUDMagicComboBox.TabIndex = 35;
             this.cHUDMagicComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDMagicComboBox_SelectedIndexChanged);
             // 
@@ -2657,7 +2673,7 @@ namespace MMR.UI.Forms
             // 
             this.btn_hud.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btn_hud.AutoSize = true;
-            this.btn_hud.Location = new System.Drawing.Point(475, 11);
+            this.btn_hud.Location = new System.Drawing.Point(275, 11);
             this.btn_hud.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn_hud.Name = "btn_hud";
             this.cHUDTableLayoutPanel.SetRowSpan(this.btn_hud, 2);
@@ -3391,6 +3407,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.ComboBox cRequiredBossRemains;
         private System.Windows.Forms.Label lRequiredRemains;
         private System.Windows.Forms.CheckBox cGossipsTolerant;
+        private System.Windows.Forms.CheckBox cMusicTrackNames;
     }
 }
 

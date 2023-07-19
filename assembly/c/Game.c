@@ -2,6 +2,7 @@
 #include "Models.h"
 #include "OverlayMenu.h"
 #include "MMR.h"
+#include "Dpad.h"
 #include "Music.h"
 #include "WorldColors.h"
 
@@ -82,4 +83,9 @@ void Game_AfterUpdate(GlobalContext* ctxt) {
         // TODO Fix HUD visibility settings after respawning
         // CheckRespawn(ctxt);
     }
+}
+
+void Game_DrawOverlay(GlobalContext* ctxt) {
+    Dpad_Draw(ctxt);
+    Music_Draw(ctxt);
 }

@@ -565,7 +565,7 @@ namespace MMR.Randomizer.Utils
 
 
         // gets passed RomData.SequenceList in Builder.cs::WriteAudioSeq
-        public static void RebuildAudioSeq(List<SequenceInfo> sequenceList, int? sequenceMaskFileIndex)
+        public static void RebuildAudioSeq(List<SequenceInfo> sequenceList, int? sequenceMaskFileIndex, int? sequenceNamesFileIndex)
         {
             // spoiler log output DEBUG
             StringBuilder log = new StringBuilder();
@@ -756,6 +756,7 @@ namespace MMR.Randomizer.Utils
                 }
 
                 byte[] formMask = null;
+                string name = null;
 
                 if (j != -1)
                 {
@@ -764,6 +765,15 @@ namespace MMR.Randomizer.Utils
                     if (sequenceMaskFileIndex.HasValue)
                     {
                         formMask = sequenceList[j].SequenceBinaryList?.FirstOrDefault()?.FormMask;
+                    }
+
+                    if (sequenceNamesFileIndex.HasValue)
+                    {
+                        name = Path.GetFileNameWithoutExtension(sequenceList[j].Name);
+                        if (Path.GetExtension(sequenceList[j].Name) == ".zseq")
+                        {
+                            name = name.Split('_')[0];
+                        }
                     }
                 }
 
@@ -777,6 +787,18 @@ namespace MMR.Randomizer.Utils
                     ReadWriteUtils.Arr_Insert(formMask, 0, MusicConfig.SEQUENCE_DATA_SIZE, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * MusicConfig.SEQUENCE_DATA_SIZE);
                 }
 
+                if (sequenceNamesFileIndex.HasValue)
+                {
+                    name ??= "";
+                    if (name.Length > MusicConfig.SEQUENCE_NAME_MAX_SIZE - 1)
+                    {
+                        name = name.Substring(0, MusicConfig.SEQUENCE_NAME_MAX_SIZE - 4) + "...";
+                    }
+                    name += "\0";
+                    var nameBytes = Encoding.ASCII.GetBytes(name);
+                    Array.Resize(ref nameBytes, MusicConfig.SEQUENCE_NAME_MAX_SIZE);
+                    ReadWriteUtils.Arr_Insert(nameBytes, 0, MusicConfig.SEQUENCE_NAME_MAX_SIZE, RomData.MMFileList[sequenceNamesFileIndex.Value].Data, i * MusicConfig.SEQUENCE_NAME_MAX_SIZE);
+                }
             }
 
             //// DEBUG spoiler log output

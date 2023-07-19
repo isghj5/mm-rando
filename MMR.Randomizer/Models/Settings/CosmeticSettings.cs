@@ -156,6 +156,15 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MusicConfig.Flags.RemoveMinorMusic = value; }
         }
 
+        /// <summary>
+        /// When a new track starts playing in-game, show the name of the track at the bottom left of the screen.
+        /// </summary>
+        public bool ShowTrackName
+        {
+            get { return this.AsmOptions.MusicConfig.Flags.ShowTrackName; }
+            set { this.AsmOptions.MusicConfig.Flags.ShowTrackName = value; }
+        }
+
         #endregion
     }
 }
