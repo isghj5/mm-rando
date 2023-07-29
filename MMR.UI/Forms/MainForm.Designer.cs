@@ -196,6 +196,7 @@ namespace MMR.UI.Forms
             this.lTatl = new System.Windows.Forms.Label();
             this.cTargettingStyle = new System.Windows.Forms.CheckBox();
             this.gCosmeticMusicSound = new System.Windows.Forms.GroupBox();
+            this.cDisableFanfares = new System.Windows.Forms.CheckBox();
             this.cMusicTrackNames = new System.Windows.Forms.CheckBox();
             this.cRemoveMinorMusic = new System.Windows.Forms.CheckBox();
             this.lLuckRoll = new System.Windows.Forms.Label();
@@ -2417,6 +2418,7 @@ namespace MMR.UI.Forms
             // 
             // gCosmeticMusicSound
             // 
+            this.gCosmeticMusicSound.Controls.Add(this.cDisableFanfares);
             this.gCosmeticMusicSound.Controls.Add(this.cMusicTrackNames);
             this.gCosmeticMusicSound.Controls.Add(this.cRemoveMinorMusic);
             this.gCosmeticMusicSound.Controls.Add(this.lLuckRoll);
@@ -2436,6 +2438,18 @@ namespace MMR.UI.Forms
             this.gCosmeticMusicSound.TabIndex = 46;
             this.gCosmeticMusicSound.TabStop = false;
             this.gCosmeticMusicSound.Text = "Music / Sound";
+            // 
+            // cDisableFanfares
+            // 
+            this.cDisableFanfares.AutoSize = true;
+            this.cDisableFanfares.Location = new System.Drawing.Point(154, 76);
+            this.cDisableFanfares.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDisableFanfares.Name = "cDisableFanfares";
+            this.cDisableFanfares.Size = new System.Drawing.Size(111, 19);
+            this.cDisableFanfares.TabIndex = 50;
+            this.cDisableFanfares.Text = "Disable Fanfares";
+            this.cDisableFanfares.UseVisualStyleBackColor = true;
+            this.cDisableFanfares.CheckedChanged += new System.EventHandler(this.cDisableFanfares_CheckedChanged);
             // 
             // cMusicTrackNames
             // 
@@ -3408,6 +3422,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label lRequiredRemains;
         private System.Windows.Forms.CheckBox cGossipsTolerant;
         private System.Windows.Forms.CheckBox cMusicTrackNames;
+        private System.Windows.Forms.CheckBox cDisableFanfares;
     }
 }
 

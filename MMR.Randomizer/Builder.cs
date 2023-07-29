@@ -180,6 +180,14 @@ namespace MMR.Randomizer
             }
         }
 
+        private void WriteDisableFanfares()
+        {
+            if (_cosmeticSettings.DisableFanfares)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.disable_fanfares);
+            }
+        }
+
         #endregion
 
         private void WritePlayerModel()
@@ -6037,6 +6045,7 @@ namespace MMR.Randomizer
             WriteMuteMusic();
             WriteEnemyCombatMusicMute();
             WriteRemoveMinorMusic();
+            WriteDisableFanfares();
 
             progressReporter.ReportProgress(74, "Writing sound effects...");
             WriteSoundEffects(new Random(BitConverter.ToInt32(hash, 0)));

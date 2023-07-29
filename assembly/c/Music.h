@@ -62,7 +62,8 @@ typedef struct MusicState {
 typedef struct {
     u32 removeMinorMusic    : 1;
     u32 showTrackName       : 1;
-    u32                     : 30;
+    u32 disableFanfares     : 1;
+    u32                     : 29;
 } MusicFlags;
 
 struct MusicConfig {

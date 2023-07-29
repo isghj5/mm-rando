@@ -18,6 +18,11 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool ShowTrackName { get; set; }
 
+        /// <summary>
+        /// Replace item fanfares and swamp shooting gallery fanfares with sound effects.
+        /// </summary>
+        public bool DisableFanfares { get; set; }
+
         public MusicFlags()
         {
         }
@@ -35,6 +40,7 @@ namespace MMR.Randomizer.Asm
         {
             this.RemoveMinorMusic = ((flags >> 31) & 1) == 1;
             this.ShowTrackName = ((flags >> 30) & 1) == 1;
+            this.DisableFanfares = ((flags >> 29) & 1) == 1;
         }
 
         /// <summary>
@@ -46,6 +52,7 @@ namespace MMR.Randomizer.Asm
             uint flags = 0;
             flags |= (this.RemoveMinorMusic ? (uint)1 : 0) << 31;
             flags |= (this.ShowTrackName ? (uint)1 : 0) << 30;
+            flags |= (this.DisableFanfares ? (uint)1 : 0) << 29;
             return flags;
         }
     }

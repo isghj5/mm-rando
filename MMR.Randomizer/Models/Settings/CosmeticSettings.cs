@@ -165,6 +165,15 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MusicConfig.Flags.ShowTrackName = value; }
         }
 
+        /// <summary>
+        /// Replace item fanfares and swamp shooting gallery fanfares with sound effects.
+        /// </summary>
+        public bool DisableFanfares
+        {
+            get { return this.AsmOptions.MusicConfig.Flags.DisableFanfares; }
+            set { this.AsmOptions.MusicConfig.Flags.DisableFanfares = value; }
+        }
+
         #endregion
     }
 }
