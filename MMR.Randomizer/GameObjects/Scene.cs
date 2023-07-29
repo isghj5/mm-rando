@@ -399,8 +399,9 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x45)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // bit annoying 
         //    Actor.Peahat, Actor.LikeLike, Actor.Freezard)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.DragonFly, // blocks deku flying 
-            Actor.UnusedStoneTowerPlatform)]
+        //[EnemizerSceneEnemyReplacementBlock(Actor.DragonFly, // blocks deku flying 
+        //    Actor.UnusedStoneTowerPlatform, Actor.UnusedPirateElevator)]
+        [EnemizerSceneBlockSensitive(Actor.DragonFly, -1)]
         SouthernSwamp = 0x42,
 
         [FileID(1362)]
