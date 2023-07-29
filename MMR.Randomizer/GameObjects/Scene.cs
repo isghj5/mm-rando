@@ -372,6 +372,7 @@ namespace MMR.Randomizer.GameObjects
         // mirror blocks climbing
         [EnemizerSceneEnemyReplacementBlock(Actor.BadBat,
             Actor.Bo, Actor.StoneTowerMirror, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.SpiderWeb)]
+        [EnemizerSceneBlockSensitive(Actor.BadBat, -1)]
         RoadToSouthernSwamp = 0x3D,
 
         [FileID(1349)]
@@ -426,7 +427,8 @@ namespace MMR.Randomizer.GameObjects
         [ClearEnemyPuzzleRooms(3, 5, 7)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Skulltula,
             Actor.BigPoe)]// for some reason big poe in the first room can cause camera to lock, unknown reason
-        [FairyDroppingEnemies(8, 7)] // skulltula in first room 
+        [FairyDroppingEnemies(8, 7)] // skulltula in first room
+        [EnemizerSceneBlockSensitive(Actor.Dexihand, -1)]
         GreatBayTemple = 0x46,
 
         [FileID(1386)]
@@ -644,6 +646,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.PatrollingPirate, // could be annoying, hard to leave
             Actor.LikeLike )] // If you start with one heart this can be a softlock
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
+        [EnemizerSceneBlockSensitive(Actor.Kafei, -1)]
         SouthClockTown = 0x6C,
 
         [FileID(1518)]

@@ -2009,7 +2009,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(257)]
         [ObjectListIndex(0x110)]
-        [CheckRestricted(Item.ItemNotebook)]
+        [CheckRestricted(Item.ItemNotebook,
+            Item.ChestBomberHideoutSilverRupee,
+            Item.TradeItemMoonTear,
+            Item.CollectableTerminaFieldTelescopeGuay1,
+            Item.HeartPieceTerminaBusinessScrub,
+            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
+            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            )]
         [GroundVariants(0x510, 0x10)]
         [VariantsWithRoomMax(max: 0, variant: 0x510, 0x10)] // does not spawn except in cutscenes, dont place it will be empty
         [UnkillableAllVariants]
@@ -3256,7 +3264,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 8, variant: 0x1932, 0x3FFF)]
         //[EnemizerScenesExcluded(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GoronRacetrack)]
-        Dexihand = 0x1D1, // ???'s water logged brother
+        Dexihand = 0x1D1, // En_WdHand ???'s water logged brother
 
         [FileID(427)]
         [ObjectListIndex(0x1)]
