@@ -1,8 +1,56 @@
 ;==================================================================================================
-; Player actor update hooks
+; Player actor
 ;==================================================================================================
 
 .headersize G_PLAYER_ACTOR_DELTA
+
+;==================================================================================================
+; Player process get-item
+;==================================================================================================
+
+; Replaces:
+;   this->unk_AE7 = 1;
+;   Message_StartTextbox(play, giEntry->textId, &this->actor);
+;   Item_Give(play, giEntry->itemId);
+;
+;   if ((this->getItemId >= GI_MASK_DEKU) && (this->getItemId <= GI_MASK_KAFEIS_MASK)) {
+;       Audio_PlayFanfare(NA_BGM_GET_NEW_MASK);
+;   } else if (((this->getItemId >= GI_RUPEE_GREEN) && (this->getItemId <= GI_RUPEE_10)) ||
+;               (this->getItemId == GI_RECOVERY_HEART)) {
+;       play_sound(NA_SE_SY_GET_BOXITEM);
+;   } else {
+;       s32 seqId;
+;
+;       if ((this->getItemId == GI_HEART_CONTAINER) ||
+;           ((this->getItemId == GI_HEART_PIECE) && EQ_MAX_QUEST_HEART_PIECE_COUNT)) {
+;           seqId = NA_BGM_GET_HEART | 0x900;
+;       } else {
+;           s32 var_v1;
+;
+;           if ((this->getItemId == GI_HEART_PIECE) ||
+;               ((this->getItemId >= GI_RUPEE_PURPLE) && (this->getItemId <= GI_RUPEE_HUGE))) {
+;               var_v1 = NA_BGM_GET_SMALL_ITEM;
+;           } else {
+;               var_v1 = NA_BGM_GET_ITEM | 0x900;
+;           }
+;           seqId = var_v1;
+;       }
+;
+;       Audio_PlayFanfare(seqId);
+;   }
+.org 0x80848324
+.area 0xF0, 0
+    addiu   t0, r0, 0x0001
+    sb      t0, 0x0AE7 (s0)
+    or      a0, a3, r0
+    or      a1, v1, r0
+    jal     MMR_ProcessItem
+    or      a2, r0, r0
+.endarea
+
+;==================================================================================================
+; Player actor update hooks
+;==================================================================================================
 
 ; Runs when in the "main game" (and not using the menu)
 ; Replaces:
@@ -15,8 +63,6 @@
 ;==================================================================================================
 ; Damage processing hook
 ;==================================================================================================
-
-.headersize G_PLAYER_ACTOR_DELTA
 
 ; Replaces:
 ;   sw      s0, 0x0028 (sp)
@@ -31,8 +77,6 @@
 ; Before Handle Player Frozen State
 ;==================================================================================================
 
-.headersize G_PLAYER_ACTOR_DELTA
-
 ; Replaces:
 ;   or      s0, a0, r0
 ;   or      s1, a1, r0
@@ -46,8 +90,6 @@
 ; Before Handle Player Voiding State
 ;==================================================================================================
 
-.headersize G_PLAYER_ACTOR_DELTA
-
 ; Replaces:
 ;   or      s0, a0, r0
 ;   or      s1, a1, r0
@@ -60,8 +102,6 @@
 ;==================================================================================================
 ; Should Ice Void Zora
 ;==================================================================================================
-
-.headersize G_PLAYER_ACTOR_DELTA
 
 ; Call function to determine if Zora should void during freeze.
 ; Replaces:
@@ -80,8 +120,6 @@
 ;==================================================================================================
 ; Should Prevent Restoring Swim State
 ;==================================================================================================
-
-.headersize G_PLAYER_ACTOR_DELTA
 
 ; Fix branch into patched code, jump into the branch (instead of the delay slot).
 ; Replaces:
@@ -107,8 +145,6 @@
 ; Change Deku Mid-air speed modifier
 ;==================================================================================================
 
-.headersize G_PLAYER_ACTOR_DELTA
-
 ; Replaces:
 ;   lui     at, 0x3F00
 ;   mtc1    at, f4
@@ -119,8 +155,6 @@
 ;==================================================================================================
 ; Handle climbing anywhere
 ;==================================================================================================
-
-.headersize G_PLAYER_ACTOR_DELTA
 
 ; Replaces:
 ;   or      t0, r0, r0
@@ -139,8 +173,6 @@
 ;==================================================================================================
 ; Handle chest cutscene
 ;==================================================================================================
-
-.headersize G_PLAYER_ACTOR_DELTA
 
 ; Replaces:
 ;   LW      V1, 0x0024 (SP)
@@ -173,8 +205,6 @@
 ; Override transformation behavior
 ;==================================================================================================
 
-.headersize G_PLAYER_ACTOR_DELTA
-
 ; Replaces:
 ;   BNEZL   T7, 0x80831BD8
 .org 0x80831BBC
@@ -198,8 +228,6 @@
 ; Skip post-transformation init code if instant transformation is enabled
 ;==================================================================================================
 
-.headersize G_PLAYER_ACTOR_DELTA
-
 ; Replaces:
 ;   LBU     V0, 0x0394 (S0)
 ;   ADDIU   AT, R0, 0x0009
@@ -216,8 +244,6 @@
 ;==================================================================================================
 ; Handle pulling out an item
 ;==================================================================================================
-
-.headersize G_PLAYER_ACTOR_DELTA
 
 ; Replaces:
 ;   LW      T7, 0x0A74 (S0)
@@ -238,8 +264,6 @@
 ;==================================================================================================
 ; Fix C-Button priority when holding bow and bomb buttons
 ;==================================================================================================
-
-.headersize G_PLAYER_ACTOR_DELTA
 
 ; Replaces:
 ;   LUI     T8, 0x8086
@@ -268,8 +292,6 @@
 ; Prevent Keg ammo being depleted when going through a loading zone while holding a keg
 ;==================================================================================================
 
-.headersize G_PLAYER_ACTOR_DELTA
-
 ; Replaces:
 ;   JAL     Inventory_ChangeAmmo
 .org 0x806ECC44 + 0x142B70
@@ -278,8 +300,6 @@
 ;==================================================================================================
 ; Stop player action chain if doing an instant transformation
 ;==================================================================================================
-
-.headersize G_PLAYER_ACTOR_DELTA
 
 ; Replaces:
 ;   JAL     0x80838A90
