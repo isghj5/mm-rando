@@ -786,3 +786,32 @@
     or      a1, s1, r0
     beqzl   v0, 0x80831A5C
     xori    a2, a2, 0x0001
+
+;==================================================================================================
+; After getting crushed
+;==================================================================================================
+
+; Replaces:
+;   LUI     V0, 0x801F
+;   ADDIU   V0, V0, 0xF670
+;   LUI     T6, 0x801C
+;   LBU     T6, 0x20AA (T6)
+;   ADDIU   AT, R0, 0x0032
+;   ADDIU   T9, R0, 0x0004
+;   ADDU    T7, V0, T6
+;   LBU     T8, 0x0070 (T7)
+;   BEQ     T8, AT, .+0x10
+;   NOP
+;   SB      T9, 0x0020 (V0)
+;   SB      R0, 0x0004 (V0)
+;   JR      RA
+.org 0x808345C8
+.area 0x34, 0
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    jal     Player_AfterCrushed
+    nop
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+.endarea

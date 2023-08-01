@@ -632,3 +632,18 @@ f32 Player_GetGoronMaxRoll() {
 
     return result;
 }
+
+void Player_AfterCrushed(void) {
+    // Displaced Code:
+    // Intentionally removed code
+    // if (INV_CONTENT(ITEM_MASK_DEKU) == ITEM_MASK_DEKU) {
+    gSaveContext.perm.currentForm = PLAYER_FORM_HUMAN;
+    gSaveContext.perm.mask = 0; // PLAYER_MASK_NONE
+    // }
+    // End displaced code
+
+    if (MISC_CONFIG.flags.giantMaskAnywhere) {
+        GiantMask_MarkReset();
+        GiantMask_TryReset();
+    }
+}
