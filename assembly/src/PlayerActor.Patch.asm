@@ -815,3 +815,22 @@
     jr      ra
     addiu   sp, sp, 0x18
 .endarea
+
+;==================================================================================================
+; Player's weapon damage info
+;==================================================================================================
+
+; Replaces:
+;   LW      A2, 0x0000 (V0)
+.org 0x80833820
+    jal     Player_GetWeaponDamageFlags_Hook
+
+; Replaces:
+;   LW      V0, 0x0024 (SP)
+.org 0x80833838
+    nop
+
+; Replaces:
+;   LW      A2, 0x0000 (V0)
+.org 0x8083384C
+    lw      a2, 0x0024 (sp)

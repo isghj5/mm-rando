@@ -542,3 +542,18 @@ Player_GetGoronMaxSpikeRoll_Hook:
     lw      ra, 0x0014 (sp)
     jr      ra
     addiu   sp, sp, 0x18
+
+Player_GetWeaponDamageFlags_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a3, 0x0020 (sp)
+
+    lw      a1, 0x0000 (v0)
+    jal     Player_GetWeaponDamageFlags
+    or      a0, s0, r0
+
+    or      a2, v0, r0
+    lw      a3, 0x0020 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18

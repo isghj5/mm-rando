@@ -647,3 +647,10 @@ void Player_AfterCrushed(void) {
         GiantMask_TryReset();
     }
 }
+
+s32 Player_GetWeaponDamageFlags(ActorPlayer* player, s32 dmgFlags) {
+    if (player->mask == 0x14 && GiantMask_IsGiant()) {
+        return 0x100; // DMG_GORON_PUNCH
+    }
+    return dmgFlags;
+}
