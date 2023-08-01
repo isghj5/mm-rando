@@ -1,5 +1,5 @@
 {
-  "Version": 15,
+  "Version": 17,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -1141,51 +1141,14 @@
     {
       "Id": "HeartPieceChoir",
       "RequiredItems": [
-        "MaskDonGero",
         "AreaSnowheadTempleClear",
-        "AreaWoodFallTempleAccess",
-        "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple",
-        "Defeat WFT Gekko",
-        "Use Ice Arrow",
-        "GBT Yellow Valve",
-        "GBT Diving"
+        "MaskDonGero",
+        "FrogWoodfallTemple",
+        "FrogGreatBayTemple",
+        "FrogSwamp",
+        "FrogLaundryPool"
       ],
-      "ConditionalItems": [
-        [
-          "MaskZora",
-          "ItemFireArrow"
-        ],
-        [
-          "MaskZora",
-          "Clever Ice Platforms"
-        ],
-        [
-          "MaskZora",
-          "Long Jump",
-          "Take Damage",
-          "Any Bomb Bag"
-        ],
-        [
-          "MaskZora",
-          "Long Jump",
-          "Take Damage",
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg"
-        ],
-        [
-          "MaskZora",
-          "Harder Long Jumps",
-          "Take Damage"
-        ],
-        [
-          "GBT Reverse Water Direction",
-          "Use Fire Arrow"
-        ],
-        [
-          "FD Jumps"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -1975,16 +1938,11 @@
       "Id": "SongLullaby",
       "RequiredItems": [
         "AreaNorthAccess",
-        "MaskGoron"
+        "MaskGoron",
+        "ItemOcarina",
+        "Any Goron Lullaby"
       ],
-      "ConditionalItems": [
-        [
-          "Play Goron Lullaby"
-        ],
-        [
-          "Play Goron Lullaby Intro"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -2400,28 +2358,9 @@
     {
       "Id": "AreaStoneTowerTempleAccess",
       "RequiredItems": [
-        "AreaIkanaCanyonAccess",
-        "ItemHookshot",
-        "Play Elegy of Emptiness"
+        "Climb Stone Tower"
       ],
-      "ConditionalItems": [
-        [
-          "MaskGoron",
-          "MaskZora"
-        ],
-        [
-          "MaskGoron",
-          "Climb Stone Tower with One Transformation"
-        ],
-        [
-          "MaskZora",
-          "Climb Stone Tower with One Transformation"
-        ],
-        [
-          "FD Jumps",
-          "Climb Stone Tower with One Transformation"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -2430,7 +2369,7 @@
     {
       "Id": "AreaInvertedStoneTowerTempleAccess",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "Use Light Arrow"
       ],
       "ConditionalItems": [],
@@ -4487,7 +4426,7 @@
     {
       "Id": "ChestInvertedStoneTowerSilverRupee",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
@@ -4501,7 +4440,7 @@
     {
       "Id": "ChestInvertedStoneTowerBombchu10",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
@@ -4515,7 +4454,7 @@
     {
       "Id": "ChestInvertedStoneTowerBean",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
@@ -5306,6 +5245,9 @@
           "FD Difficult Jumps",
           "Fewer Item Requirements",
           "OtherExplosive"
+        ],
+        [
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -41406,6 +41348,18 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "OtherMagicBean",
+          "Water for Magic Bean",
+          "Short Ranged Weapon",
+          "Fewer Item Requirements"
+        ],
+        [
+          "OtherMagicBean",
+          "Water for Magic Bean",
+          "Clever Bombchu Usage",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -41550,6 +41504,14 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "Short Ranged Weapon",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Clever Bombchu Usage",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -44955,7 +44917,7 @@
     {
       "Id": "CollectableStoneTowerPot1",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -44966,7 +44928,7 @@
     {
       "Id": "CollectableStoneTowerPot2",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -45140,7 +45102,7 @@
     {
       "Id": "CollectableStoneTowerPot3",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -46955,7 +46917,7 @@
     {
       "Id": "CollectableStoneTowerPot4",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -46966,7 +46928,7 @@
     {
       "Id": "CollectableStoneTowerInvertedStoneTowerFlippedPot1",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
@@ -48957,7 +48919,7 @@
     {
       "Id": "CollectableStoneTowerPot5",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -48968,7 +48930,7 @@
     {
       "Id": "CollectableStoneTowerInvertedStoneTowerFlippedPot2",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
@@ -50447,6 +50409,9 @@
         [
           "FD Difficult Jumps",
           "Fewer Item Requirements"
+        ],
+        [
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -50756,7 +50721,7 @@
     {
       "Id": "CollectableStoneTowerPot6",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -50767,7 +50732,7 @@
     {
       "Id": "CollectableStoneTowerPot7",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -50778,7 +50743,7 @@
     {
       "Id": "CollectableStoneTowerPot8",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -50789,7 +50754,7 @@
     {
       "Id": "CollectableStoneTowerPot9",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -50800,7 +50765,7 @@
     {
       "Id": "CollectableStoneTowerPot10",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "Climb Stone Tower"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51223,7 +51188,7 @@
     {
       "Id": "CollectableStoneTowerSoftSoil1",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "Use Light Arrow",
         "BottleCatchBug"
       ],
@@ -51236,7 +51201,7 @@
     {
       "Id": "CollectableStoneTowerSoftSoil2",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
+        "Climb Stone Tower",
         "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow",
@@ -54391,12 +54356,6 @@
           "NotebookMeetAnjuInInn"
         ],
         [
-          "NotebookMeetAnjuInECT"
-        ],
-        [
-          "NotebookMeetAnjuInSCT"
-        ],
-        [
           "NotebookMeetAnjuInLaundryPool"
         ],
         [
@@ -55116,6 +55075,1557 @@
       "IsTrick": false
     },
     {
+      "Id": "CollectableAncientCastleOfIkanaCastleExteriorPot1",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Ikana Castle Access"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableAncientCastleOfIkanaHoleRoomPot3",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Ikana Castle Access",
+        "Use Fire Arrow"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "Ikana Castle Falling Ceiling Skip",
+          "Long Jump",
+          "Take Damage"
+        ],
+        [
+          "FD Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableAncientCastleOfIkanaHoleRoomPot4",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Ikana Castle Access",
+        "Use Fire Arrow"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "Ikana Castle Falling Ceiling Skip",
+          "Long Jump",
+          "Take Damage"
+        ],
+        [
+          "FD Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableGreatBayCoastPot11",
+      "RequiredItems": [
+        "AreaWestAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableGreatBayTempleEntranceRoomBarrel1",
+      "RequiredItems": [
+        "AreaGreatBayTempleAccess",
+        "Exit Great Bay Temple"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableIkanaCanyonMainAreaGrass7",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableIkanaCanyonMainAreaGrass8",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableMilkRoadGrass3",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableMountainVillageSpringPot1",
+      "RequiredItems": [
+        "AreaSnowheadTempleClear"
+      ],
+      "ConditionalItems": [
+        [
+          "OtherArrow"
+        ],
+        [
+          "MaskZora"
+        ],
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Clever Bombchu Usage"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableMountainVillageSpringSmallSnowball4",
+      "RequiredItems": [
+        "AreaSnowheadTempleClear"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableMountainVillageWinterPot1",
+      "RequiredItems": [
+        "AreaNorthAccess"
+      ],
+      "ConditionalItems": [
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "Any Bomb Bag"
+        ],
+        [
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableMountainVillageWinterSmallSnowball8",
+      "RequiredItems": [
+        "AreaNorthAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableRoadToIkanaPot1",
+      "RequiredItems": [
+        "Ikana Graveyard Access"
+      ],
+      "ConditionalItems": [
+        [
+          "OtherArrow"
+        ],
+        [
+          "ItemHookshot"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableSecretShrineMainRoomPot5",
+      "RequiredItems": [
+        "AreaEastAccess",
+        "Use Light Arrow"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableSnowheadSmallSnowball10",
+      "RequiredItems": [
+        "AreaNorthAccess"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskGoron",
+          "Magic Meter"
+        ],
+        [
+          "MaskGoron",
+          "Path to Snowhead without Magic"
+        ],
+        [
+          "FD Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableSnowheadTempleMainRoomPot3",
+      "RequiredItems": [
+        "AreaSnowheadTempleAccess",
+        "SHT Elevator Room Access"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableSouthernSwampClearCentralSwampGrass2",
+      "RequiredItems": [
+        "AreaWoodFallTempleClear"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableSouthernSwampPoisonedCentralSwampGrass2",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableStoneTowerPot11",
+      "RequiredItems": [
+        "Climb Stone Tower"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableStoneTowerPot12",
+      "RequiredItems": [
+        "Climb Stone Tower"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableStoneTowerPot13",
+      "RequiredItems": [
+        "Climb Stone Tower"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableStoneTowerPot14",
+      "RequiredItems": [
+        "Climb Stone Tower"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableStoneTowerInvertedStoneTowerFlippedPot3",
+      "RequiredItems": [
+        "Climb Stone Tower",
+        "OtherMagicBean",
+        "Water for Magic Bean",
+        "Use Light Arrow"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableStoneTowerTempleRoomAfterLightArrowsPot1",
+      "RequiredItems": [
+        "AreaStoneTowerTempleAccess",
+        "STT Garo Master Access",
+        "STT Thin Bridge Exit"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableStoneTowerTempleInvertedWizzrobeRoomPot1",
+      "RequiredItems": [
+        "AreaInvertedStoneTowerTempleAccess"
+      ],
+      "ConditionalItems": [
+        [
+          "ISTT 2nd Floor Puzzles"
+        ],
+        [
+          "ISTT Forward Updraft Room",
+          "ISTT Early Boss Key",
+          "ISTT Cross Under Eyegore Bridge",
+          "ISTT Cross Poe Gap"
+        ],
+        [
+          "ISTT Forward Updraft Room",
+          "ISTT Early Boss Key",
+          "ISTT Hookshot to Eyegore",
+          "ISTT Eyegore Bridge to Maze",
+          "ISTT Cross Poe Gap"
+        ],
+        [
+          "ISTT Forward Updraft Room",
+          "ISTT Cross Poe Gap",
+          "Recoil Flip"
+        ],
+        [
+          "ISTT Lightless",
+          "ISTT Cross Poe Gap",
+          "OtherArrow"
+        ],
+        [
+          "ISTT Lightless",
+          "ISTT Cross Poe Gap",
+          "ItemHookshot"
+        ],
+        [
+          "ISTT Lightless",
+          "ISTT Cross Poe Gap",
+          "MaskZora",
+          "Gainer"
+        ],
+        [
+          "ISTT Lightless",
+          "ISTT Cross Poe Gap",
+          "Fierce Deity's Mask Anywhere"
+        ],
+        [
+          "ISTT Lightless",
+          "ISTT Cross Poe Gap",
+          "Clever Bombchu Usage"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTerminaFieldPot1",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "OtherMagicBean",
+          "Water for Magic Bean"
+        ],
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "Clever Bombchu Usage"
+        ],
+        [
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "Fewer Item Requirements"
+        ],
+        [
+          "FD Jumps",
+          "Jump Slash Take Downs"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableWoodfallPot3",
+      "RequiredItems": [
+        "AreaSouthAccess"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "FD Difficult Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableWoodfallTempleEntranceRoomPot1",
+      "RequiredItems": [
+        "AreaWoodFallTempleAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableZoraCapePot5",
+      "RequiredItems": [
+        "AreaWestAccess"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "Swim to Zora Hall as Human"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableCuccoShackGossipFairy1",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableDoggyRacetrackGossipFairy1",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableGreatBayCoastGossipFairy1",
+      "RequiredItems": [
+        "AreaWestAccess",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableGrottosOceanGossipStonesGossipFairy1",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableIkanaCanyonMainAreaGossipFairy1",
+      "RequiredItems": [
+        "AreaEastAccess",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableIkanaCanyonMainAreaGossipFairy2",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableIkanaCanyonSakonSHideoutAreaGossipFairy1",
+      "RequiredItems": [
+        "AreaEastAccess",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskZora",
+          "TradeItemOceanDeed",
+          "MaskDeku"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Long Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Harder Long Jumps",
+          "Take Damage"
+        ],
+        [
+          "FD Difficult Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableMilkRoadGossipFairy1",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableMountainVillageSpringPathToGoronGraveyardGossipFairy1",
+      "RequiredItems": [
+        "AreaSnowheadTempleClear",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableMountainVillageSpringGossipFairy1",
+      "RequiredItems": [
+        "AreaSnowheadTempleClear",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectablePathToMountainVillageGossipFairy1",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "OtherArrow"
+        ],
+        [
+          "Play Song of Soaring",
+          "BottleCatchHotSpringWater"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableRoadToIkanaGossipFairy1",
+      "RequiredItems": [
+        "Ikana Graveyard Access",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableRoadToSouthernSwampGossipFairy1",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableRomaniRanchGossipFairy1",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableRomaniRanchGossipFairy2",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableRomaniRanchGossipFairy3",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorGossipFairy1",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableSwampSpiderHouseTreeRoomGossipFairy1",
+      "RequiredItems": [
+        "AreaSwampSpiderAccess",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTerminaFieldGossipFairy1",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "Bomber Guard Skip"
+        ],
+        [
+          "Guess Bomber Code"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTerminaFieldGossipFairy2",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTerminaFieldGossipFairy3",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTerminaFieldGossipFairy4",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTerminaFieldGossipFairy5",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTerminaFieldGossipFairy6",
+      "RequiredItems": [
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonDekuTrialDekuTrialGossipFairy1",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherOneMask",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "FD Difficult Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonDekuTrialDekuTrialGossipFairy2",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherOneMask",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "FD Difficult Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonDekuTrialDekuTrialGossipFairy3",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherOneMask",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "FD Difficult Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonDekuTrialDekuTrialGossipFairy4",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherOneMask",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "FD Difficult Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonDekuTrialDekuTrialGossipFairy5",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherOneMask",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "FD Difficult Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonGoronTrialGoronTrialGossipFairy1",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherTwoMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskGoron",
+          "Magic Meter"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonGoronTrialGoronTrialGossipFairy2",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherTwoMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskGoron",
+          "Magic Meter"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonGoronTrialGoronTrialGossipFairy3",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherTwoMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskGoron",
+          "Magic Meter"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonGoronTrialGoronTrialGossipFairy4",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherTwoMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskGoron",
+          "Magic Meter"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonGoronTrialGoronTrialGossipFairy5",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherTwoMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskGoron",
+          "Magic Meter"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonLinkTrialGossipStoneRoom1GossipFairy1",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherFourMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonLinkTrialGossipStoneRoom2GossipFairy1",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherFourMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "ItemHookshot",
+          "Fighting"
+        ],
+        [
+          "ItemHookshot",
+          "OtherArrow"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonLinkTrialIronKnuckleBattleGossipFairy1",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherFourMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "OtherArrow",
+          "ItemHookshot",
+          "Any Bomb Bag",
+          "Any Bombchu Pack"
+        ],
+        [
+          "OtherArrow",
+          "Fierce Deity's Mask Anywhere",
+          "Any Bomb Bag",
+          "Any Bombchu Pack"
+        ],
+        [
+          "Kill Iron Knuckle",
+          "ItemHookshot",
+          "Link Trial Gossip Stones"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Link Trial Gossip Stones"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Gainer"
+        ],
+        [
+          "FD Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonLinkTrialIronKnuckleBattleGossipFairy2",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherFourMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "OtherArrow",
+          "ItemHookshot",
+          "Any Bomb Bag",
+          "Any Bombchu Pack"
+        ],
+        [
+          "OtherArrow",
+          "Fierce Deity's Mask Anywhere",
+          "Any Bomb Bag",
+          "Any Bombchu Pack"
+        ],
+        [
+          "Kill Iron Knuckle",
+          "ItemHookshot",
+          "Link Trial Gossip Stones"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Link Trial Gossip Stones"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Gainer"
+        ],
+        [
+          "FD Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonLinkTrialPieceOfHeartRoomGossipFairy1",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherFourMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "OtherArrow",
+          "ItemHookshot",
+          "Any Bomb Bag",
+          "Any Bombchu Pack"
+        ],
+        [
+          "OtherArrow",
+          "Fierce Deity's Mask Anywhere",
+          "Any Bomb Bag",
+          "Any Bombchu Pack"
+        ],
+        [
+          "Kill Iron Knuckle",
+          "ItemHookshot",
+          "Link Trial Gossip Stones"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Link Trial Gossip Stones"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Gainer"
+        ],
+        [
+          "FD Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonZoraTrialZoraTrialGossipFairy1",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherThreeMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "MaskGoron",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Play Song of Time",
+          "Fewer Item Requirements"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonZoraTrialZoraTrialGossipFairy2",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherThreeMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "MaskGoron",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Play Song of Time",
+          "Fewer Item Requirements"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonZoraTrialZoraTrialGossipFairy3",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherThreeMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "MaskGoron",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Play Song of Time",
+          "Fewer Item Requirements"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonZoraTrialZoraTrialGossipFairy4",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherThreeMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "MaskGoron",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Play Song of Time",
+          "Fewer Item Requirements"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTheMoonZoraTrialZoraTrialGossipFairy5",
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "OtherThreeMasks",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "MaskGoron",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Play Song of Time",
+          "Fewer Item Requirements"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableZoraCapeGossipFairy1",
+      "RequiredItems": [
+        "AreaWestAccess",
+        "Summon Fairy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableGreatBayCoastButterflyFairy1",
+      "RequiredItems": [
+        "AreaWestAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableGrottosOceanGossipStonesButterflyFairy1",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskGoron"
+        ],
+        [
+          "OtherExplosive"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1",
+      "RequiredItems": [
+        "AreaSouthAccess"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "Deku Guard Skip"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableGrottosCowGrottoButterflyFairy1",
+      "RequiredItems": [
+        "OtherExplosive"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableGrottosCowGrottoButterflyFairy2",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Fewer Item Requirements",
+          "Take Damage"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1",
+      "RequiredItems": [
+        "AreaSnowheadTempleClear"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2, Day3",
+      "TimeSetup": "Day1, Day2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2",
+      "RequiredItems": [
+        "AreaSnowheadTempleClear"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2, Day3",
+      "TimeSetup": "Day1, Day2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableTerminaFieldButterflyFairy1",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "FrogWoodfallTemple",
+      "RequiredItems": [
+        "AreaWoodFallTempleAccess",
+        "Defeat WFT Gekko",
+        "MaskDonGero"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "FrogGreatBayTemple",
+      "RequiredItems": [
+        "MaskDonGero",
+        "AreaGreatBayTempleAccess",
+        "Exit Great Bay Temple",
+        "Use Ice Arrow",
+        "GBT Yellow Valve",
+        "GBT Diving"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskZora",
+          "ItemFireArrow"
+        ],
+        [
+          "MaskZora",
+          "Clever Ice Platforms"
+        ],
+        [
+          "MaskZora",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "MaskZora",
+          "Long Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ],
+        [
+          "MaskZora",
+          "Harder Long Jumps",
+          "Take Damage"
+        ],
+        [
+          "GBT Reverse Water Direction",
+          "Use Fire Arrow"
+        ],
+        [
+          "FD Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "FrogSwamp",
+      "RequiredItems": [
+        "MaskDonGero"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "FrogLaundryPool",
+      "RequiredItems": [
+        "MaskDonGero"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
       "Id": "ItemTingleMapTownInTown",
       "RequiredItems": [],
       "ConditionalItems": [
@@ -55735,28 +57245,6 @@
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "Day1, Night1, Day2, Night2, Day3",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "NotebookMeetAnjuInECT",
-      "RequiredItems": [
-        "ItemNotebook"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "Day2",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "NotebookMeetAnjuInSCT",
-      "RequiredItems": [
-        "ItemNotebook"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "Day2",
       "TimeSetup": "None",
       "IsTrick": false
     },
@@ -57197,9 +58685,7 @@
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Using Scarecrow's Song where not normally required.",
-      "TrickCategory": "Easy"
+      "IsTrick": false
     },
     {
       "Id": "Lensless Chests",
@@ -57281,6 +58767,36 @@
       "IsTrick": true,
       "TrickTooltip": "Removes Captain's Hat as requirement for Ocean Spider House mask code.",
       "TrickCategory": "Easy"
+    },
+    {
+      "Id": "Climb Stone Tower",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "ItemHookshot",
+        "Play Elegy of Emptiness"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskGoron",
+          "MaskZora"
+        ],
+        [
+          "MaskGoron",
+          "Climb Stone Tower with One Transformation"
+        ],
+        [
+          "MaskZora",
+          "Climb Stone Tower with One Transformation"
+        ],
+        [
+          "FD Jumps",
+          "Climb Stone Tower with One Transformation"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
     },
     {
       "Id": "Climb Stone Tower with One Transformation",
@@ -57670,7 +59186,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Shoot the Eyegore with Light Arrows from below, then hookshot to the chest.",
-      "TrickCategory": "Moderate"
+      "TrickCategory": "Hard"
     },
     {
       "Id": "Postman without Bunny Hood",
@@ -57869,7 +59385,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Backflip away from a wall, then re-target the wall 1 frame later.",
-      "TrickCategory": "Hard"
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Milk Multiple Cows",
@@ -58392,12 +59908,16 @@
       "IsTrick": false
     },
     {
-      "Id": "Play Goron Lullaby Intro",
-      "RequiredItems": [
-        "ItemOcarina",
-        "SongLullabyIntro"
+      "Id": "Any Goron Lullaby",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "SongLullabyIntro"
+        ],
+        [
+          "SongLullaby"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -58907,7 +60427,7 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Use 10 packs of Bombchu for destroying beehives, Stray Fairy bubbles, and crystal switches in STT.",
+      "TrickTooltip": "Use 10 packs of Bombchu for destroying beehives and popping Stray Fairy bubbles.",
       "TrickCategory": "Moderate"
     },
     {
@@ -58999,7 +60519,15 @@
         "Kill Snapper",
         "Kill Gekko"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskDeku",
+          "OtherArrow"
+        ],
+        [
+          "FD Jumps"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -60503,7 +62031,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Solve puzzles and overcome challenging obstacles with the lowest possible amount of items. Not compatible with randomized enemies!",
-      "TrickCategory": "Hard"
+      "TrickCategory": "Very Hard"
     },
     {
       "Id": "Harder Long Jumps",
@@ -60599,7 +62127,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Use precise movement with Goron Spikes to get to hard-to-reach areas.",
-      "TrickCategory": "Hard"
+      "TrickCategory": "Very Hard"
     },
     {
       "Id": "SHT Elevator Room Platforming",
@@ -61449,6 +62977,22 @@
         [
           "FairySpinAttack",
           "Any Sword"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Summon Fairy",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Play Epona's Song"
+        ],
+        [
+          "Play Song of Healing"
         ]
       ],
       "TimeNeeded": "None",

@@ -1,17 +1,3 @@
-Dpad_Draw_Hook:
-    addiu   sp, sp, -0x18
-    sw      ra, 0x0010 (sp)
-
-    jal     Dpad_Draw
-    nop
-
-    lw      ra, 0x0010 (sp)
-    addiu   sp, sp, 0x18
-
-    jr      ra
-    ; Displaced code
-    lw      t6, 0x0068 (sp)
-
 Dpad_Handle_Hook:
     ; Displaced code
     or      s0, a0, r0

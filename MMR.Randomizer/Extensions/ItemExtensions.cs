@@ -118,6 +118,17 @@ namespace MMR.Randomizer.Extensions
             throw new System.Exception($"{nameof(RegionAttribute)} must have either {nameof(RegionAttribute.Region)} or {nameof(RegionAttribute.Reference)}");
         }
 
+        public static Region RegionForDirectHint(this Item location, ItemList itemList)
+        {
+            Item[] multiRegionLocations;
+            if ((multiRegionLocations = location.GetAttribute<MultiLocationAttribute>()?.Locations) != null)
+            {
+                location = multiRegionLocations[0];
+            }
+
+            return location.Region(itemList).Value;
+        }
+
         public static RegionArea? RegionArea(this Item item, ItemList itemList)
         {
             return item.GetAttribute<RegionAreaAttribute>()?.RegionArea ?? item.Region(itemList)?.RegionArea();
@@ -194,6 +205,13 @@ namespace MMR.Randomizer.Extensions
             return item.Name() == null;
         }
 
+        public static bool CanBeStartedWith(this Item item)
+        {
+            return item.HasAttribute<StartingTingleMapAttribute>()
+                || item.HasAttribute<StartingItemIdAttribute>()
+                || item.HasAttribute<StartingItemAttribute>();
+        }
+
         public static IList<DungeonEntrance> DungeonEntrances(this Item item)
         {
             if (!item.HasAttribute<DungeonEntranceAttribute>())
@@ -210,9 +228,14 @@ namespace MMR.Randomizer.Extensions
             return result;
         }
 
-        public static bool IsOverwritable(this Item item)
+        public static OverwritableAttribute.ItemSlot OverwriteableSlot(this Item item, GameplaySettings settings)
         {
-            return item.HasAttribute<OverwritableAttribute>();
+            var overwriteableAttribute = item.GetAttribute<OverwritableAttribute>();
+            if (overwriteableAttribute?.Condition(settings) == true)
+            {
+                return overwriteableAttribute.Slot;
+            }
+            return OverwritableAttribute.ItemSlot.None;
         }
 
         public static bool IsSong(this Item item)

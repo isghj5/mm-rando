@@ -8,6 +8,10 @@
 #include "enums.h"
 #include "GiantMask.h"
 
+static u16 isFrogReturnedFlags[] = {
+    0, 0x2040, 0x2080, 0x2101, 0x2102,
+};
+
 /**
  * Helper function used to process receiving a custom item.
  **/
@@ -73,6 +77,10 @@ static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
                     SET_WEEKEVENTREG(sBombersNotebookEventWeekEventFlags[BOMBERS_NOTEBOOK_EVENT_LEARNED_SECRET_CODE]);
                     break;
             }
+            break;
+        case CUSTOM_ITEM_FROG:;
+            u8 frogIndex = MMR_GetItemEntryContext->type >> 4;
+            SET_WEEKEVENTREG(isFrogReturnedFlags[frogIndex]);
             break;
     }
 }

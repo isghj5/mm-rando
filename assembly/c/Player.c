@@ -9,24 +9,89 @@
 #include "Reloc.h"
 #include "Misc.h"
 #include "enums.h"
+#include "Util.h"
 #include "GiantMask.h"
 
 bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
     return Icetrap_Give(player, ctxt);
 }
 
+PlayerActionFunc sPlayer_Falling = NULL;
+PlayerActionFunc sPlayer_BackwalkBraking = NULL;
+PlayerUpperActionFunc sPlayer_UpperAction_CarryAboveHead = NULL;
+
+void Player_InitFuncPointers() {
+    if (sPlayer_Falling == NULL) {
+        sPlayer_Falling = z2_Player_func_8084C16C;
+    }
+    if (sPlayer_BackwalkBraking == NULL) {
+        sPlayer_BackwalkBraking = z2_Player_func_8084A884;
+    }
+    if (sPlayer_UpperAction_CarryAboveHead == NULL) {
+        sPlayer_UpperAction_CarryAboveHead = z2_Player_UpperAction_CarryAboveHead;
+    }
+}
+
+void Player_PreventDangerousStates(ActorPlayer* player) {
+    if (!MISC_CONFIG.flags.saferGlitches) {
+        return;
+    }
+
+    if (player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP_3) {
+        if (((player->stateFlags.state1 & PLAYER_STATE1_AIR) && !(player->stateFlags.state1 & PLAYER_STATE1_LEDGE_CLIMB))
+            || (player->stateFlags.state3 & PLAYER_STATE3_JUMP_ATTACK)) {
+            player->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
+        }
+    }
+
+    // parent can be hookshot or epona
+    // "&& player->base.parent->id == ACTOR_ARMS_HOOK" doesn't work because parent might be stale reference
+    if (player->base.parent) {
+        if ((player->stateFlags.state1 & PLAYER_STATE1_AIR) // might be redundant with the sPlayer_Falling check below
+            || (player->stateFlags.state3 & PLAYER_STATE3_JUMP_ATTACK)
+            || (player->actionFunc == sPlayer_Falling
+                && !(player->stateFlags.state3 & PLAYER_STATE3_HOOK_ARRIVE_2))) {
+            player->base.parent = NULL;
+        }
+        Actor* door = player->doorActor;
+        if ((player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP) && door) {
+            if (player->doorType == 4) { // PLAYER_DOORTYPE_STAIRCASE
+                ActorDoorSpiral* doorStaircase = (ActorDoorSpiral*)door;
+                if (doorStaircase->shouldClimb) {
+                    player->base.parent = NULL;
+                }
+            } else if (player->doorType == 2) { // PLAYER_DOORTYPE_SLIDING
+                SlidingDoorActor* doorSliding = (SlidingDoorActor*)door;
+                if (doorSliding->unk_15C) {
+                    player->base.parent = NULL;
+                }
+            } else {
+                KnobDoorActor* doorHandle = (KnobDoorActor*)door;
+                if (doorHandle->playOpenAnim) {
+                    player->base.parent = NULL;
+                }
+            }
+        }
+    }
+}
+
 void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
+    Player_InitFuncPointers();
     Dpad_BeforePlayerActorUpdate(player, ctxt);
     ExternalEffects_Handle(player, ctxt);
     ArrowCycle_Handle(player, ctxt);
     ArrowMagic_Handle(player, ctxt);
     DekuHop_Handle(player, ctxt);
     GiantMask_Handle(player, ctxt);
+    Player_PreventDangerousStates(player);
 }
 
 bool Player_CanReceiveItem(GlobalContext* ctxt) {
     ActorPlayer* player = GET_PLAYER(ctxt);
-    if ((player->stateFlags.state1 & PLAYER_STATE1_AIM) != 0) {
+    if (player->stateFlags.state1 & (PLAYER_STATE1_AIM | PLAYER_STATE1_HOLD)) {
+        return false;
+    }
+    if (player->upperActionFunc == sPlayer_UpperAction_CarryAboveHead) {
         return false;
     }
     bool result = false;
@@ -119,10 +184,10 @@ void Player_BeforeHandleVoidingState(ActorPlayer* player, GlobalContext* ctxt) {
  **/
 bool Player_ShouldIceVoidZora(ActorPlayer* player, GlobalContext* ctxt) {
     switch (ctxt->sceneNum) {
-        case 0x1F: // Odolwa Boss Room
-        case 0x44: // Goht Boss Room
-        case 0x5F: // Gyorg Boss Room
-        case 0x36: // Twinmold Boss Room
+        case SCENE_MITURIN_BS: // Odolwa Boss Room
+        case SCENE_HAKUGIN_BS: // Goht Boss Room
+        case SCENE_SEA_BS: // Gyorg Boss Room
+        case SCENE_INISIE_BS: // Twinmold Boss Room
             return false;
         default:
             return true;
@@ -165,8 +230,17 @@ u32 Player_GetCollisionType(ActorPlayer* player, GlobalContext* ctxt, u32 collis
     return collisionType;
 }
 
+static bool sSwimmingTransformation = false;
+
 void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actionParam) {
-    if (!MISC_CONFIG.flags.instantTransform || actionParam < PLAYER_IA_MASK_FIERCE_DEITY || actionParam > PLAYER_IA_MASK_DEKU) {
+    if (!MISC_CONFIG.flags.instantTransform
+        || actionParam < PLAYER_IA_MASK_FIERCE_DEITY
+        || actionParam > PLAYER_IA_MASK_DEKU
+        || this->animTimer != 0
+        || (this->talkActor != NULL && this->talkActor->flags & 0x10000)
+        || (this->stateFlags.state1 & PLAYER_STATE1_TIME_STOP)
+        || (this->stateFlags.state2 & PLAYER_STATE2_DIVING)
+        || (this->currentBoots == 4 && this->prevBoots == 5)) {
         // Displaced code:
         this->heldItemActionParam = actionParam;
         this->unkAA5 = 5; // PLAYER_UNKAA5_5
@@ -185,10 +259,87 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
     this->base.update = (ActorFunc)0x8012301C;
     this->base.draw = NULL;
     this->animTimer = 1;
+
+    this->stateFlags.state1 |= PLAYER_STATE1_TIME_STOP_3;
+
+    // really hacky, but necessary to prevent certain softlocks. unkAA5 gets reset back to 0 after transformation.
+    this->heldItemActionParam = 0;
+    this->unkAA5 = 5;
+
+    if (this->stateFlags.state2 & PLAYER_STATE2_DIVING_2) {
+        sSwimmingTransformation = true;
+        this->stateFlags.state2 &= ~PLAYER_STATE2_DIVING_2;
+    }
 }
 
-bool Player_AfterTransformInit() {
-    return MISC_CONFIG.flags.instantTransform;
+bool Player_AfterTransformInit(ActorPlayer* this, GlobalContext* ctxt) {
+    if (sSwimmingTransformation) {
+        this->stateFlags.state2 |= PLAYER_STATE2_DIVING_2;
+        sSwimmingTransformation = false;
+    }
+    if (this->unkAA5 == 5) {
+        this->unkAA5 = 0;
+    }
+    if (MISC_CONFIG.flags.instantTransform && !(this->stateFlags.state2 & PLAYER_STATE2_CLIMBING)) {
+        if (this->actionFunc == sPlayer_BackwalkBraking) {
+            z2_Player_func_8083692C(this, ctxt);
+        }
+        this->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
+        this->animTimer = 0;
+        return true;
+    }
+    return false;
+}
+
+bool Player_HandleCutsceneItem(ActorPlayer* this, GlobalContext* ctxt) {
+    if (MISC_CONFIG.flags.instantTransform && this->base.draw == NULL) {
+        return true;
+    }
+    return z2_Player_func_80838A90(this, ctxt);
+}
+
+void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 actionParam) {
+    if (MISC_CONFIG.flags.bombArrows && item == ITEM_BOMB) {
+        ActorEnArrow* arrow = (ActorEnArrow*)ArrowCycle_FindArrow(player, ctxt);
+        if (arrow != NULL && arrow->base.params == 2) {
+            if (arrow->base.child == NULL) {
+                ActorEnBom* bomb = (ActorEnBom*) z2_Actor_SpawnAsChild(&ctxt->actorCtx, &arrow->base, ctxt, ACTOR_EN_BOM,
+                                    arrow->base.currPosRot.pos.x, arrow->base.currPosRot.pos.y, arrow->base.currPosRot.pos.z,
+                                    0, arrow->base.shape.rot.y, 0, 0);
+                if (bomb != NULL) {
+                    bomb->collider1.base.flagsAC &= ~8; // AC_TYPE_PLAYER Disable player-aligned damage
+                    arrow->collider.body.toucher.collidesWith = 8; // make arrow do explosive damage
+                    z2_SetActorSize(&bomb->base, 0.002);
+                    z2_Inventory_ChangeAmmo(item, -1);
+                }
+            }
+            *z2_D_80862B4C = 1;
+            return;
+        }
+    }
+
+    // Displaced code:
+    player->heldItemId = item;
+    player->stateFlags.state3 |= PLAYER_STATE3_PULL_ITEM;
+}
+
+void Player_CheckHeldItem(ActorPlayer* this, GlobalContext* ctxt, u16 curButtons, u16* checkButtons) {
+    for (s32 i = 0; i < 4; i++) {
+        if (CHECK_BTN_ALL(curButtons, checkButtons[i])) {
+            s32 item = z2_Inventory_GetBtnItem(ctxt, this, i);
+            if ((item < 0xFD) && (z2_Player_ItemToActionParam(this, item) == this->itemActionParam)) {
+                *z2_D_80862B4C = 1;
+                break;
+            }
+        }
+    }
+}
+
+void Player_UseExplosiveAmmo(s16 item, s16 ammoChange, GlobalContext* ctxt) {
+    if (item == ITEM_POWDER_KEG && GET_PLAYER(ctxt)->base.init) {
+        return;
+    }
+    z2_Inventory_ChangeAmmo(item, ammoChange);
 }
 
 static const f32 giantSpeedModifier = 7.0f / 11.0f;

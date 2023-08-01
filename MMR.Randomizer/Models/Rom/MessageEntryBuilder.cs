@@ -371,6 +371,12 @@ namespace MMR.Randomizer.Models.Rom
                 Append(0xE0);
 
             /// <summary>
+            /// Appends the disable text skip control character (0x15) to the message.
+            /// </summary>
+            /// <returns></returns>
+            public MessageBuilder DisableTextSkip() => Append(0x15);
+
+            /// <summary>
             /// Appends the disable text skip II control character (0x19) to the message.
             /// </summary>
             /// <returns></returns>
@@ -668,20 +674,10 @@ namespace MMR.Randomizer.Models.Rom
                 .RuntimeGenericStop();
         }
 
-        public static MessageEntryBuilder.MessageBuilder RuntimeStrayFairyLocations(this MessageEntryBuilder.MessageBuilder @this, Region? region, params Item[] locations)
+        public static MessageEntryBuilder.MessageBuilder RuntimeStrayFairyLocations(this MessageEntryBuilder.MessageBuilder @this, Region region, params Item[] locations)
         {
-            string regionName;
-            string regionPreposition;
-            if (region == null)
-            {
-                regionPreposition = "in";
-                regionName = "Termina";
-            }
-            else
-            {
-                regionPreposition = region.Value.Preposition();
-                regionName = region.Value.Name();
-            }
+            var regionPreposition = region.Preposition();
+            var regionName = region.Name();
             if (!string.IsNullOrWhiteSpace(regionPreposition))
             {
                 regionPreposition += " ";

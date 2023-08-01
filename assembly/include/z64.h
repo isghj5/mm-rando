@@ -31,13 +31,6 @@ typedef void(*FuncPtr)(void);
 // Structure type aliases.
 typedef struct GlobalContext GlobalContext;
 
-// typedef struct {
-//     /* 0x00 */ f32 x[4];
-//     /* 0x10 */ f32 y[4];
-//     /* 0x20 */ f32 z[4];
-//     /* 0x30 */ f32 w[4];
-// } z_Matrix; // size = 0x40
-
 /// =============================================================
 /// Controller & Inputs
 /// =============================================================
@@ -1011,6 +1004,12 @@ typedef struct {
     /* 0x10 */ Vec3f unk10;
 } GlobalContext1F78; // size = 0x1C
 
+typedef struct {
+    /* 0x0 */ u8   seqId;
+    /* 0x1 */ u8   ambienceId;
+} SequenceContext2; // size = 0x2
+// TODO rename the other SequenceContext to something more appropriate
+
 struct GlobalContext {
     /* 0x00000 */ GameState state;
     /* 0x000A4 */ s16 sceneNum;
@@ -1023,9 +1022,7 @@ struct GlobalContext {
     /* 0x00800 */ Camera* cameraPtrs[4];
     /* 0x00810 */ s16 activeCamera;
     /* 0x00812 */ s16 unk812;
-    /* 0x00814 */ u8 unk814;
-    /* 0x00815 */ u8 unk815;
-    /* 0x00816 */ UNK_TYPE1 pad816[0x2];
+    /* 0x00814 */ SequenceContext2 sequenceCtx;
     /* 0x00818 */ LightingContext lightCtx;
     /* 0x00828 */ u32 unk828;
     /* 0x0082C */ UNK_TYPE1 pad82C[0x4];
@@ -1421,7 +1418,9 @@ typedef struct {
     /* 0x0E80 */ UNK_TYPE1 padE80[0x24];
     /* 0x0EA4 */ u8 minimapBitfield[0x1C]; // Bit per scene indicating whether minimap is enabled.
     /* 0x0EC0 */ u16 skullTokens[2];
-    /* 0x0EC4 */ UNK_TYPE1 padEC4[0x10];
+    /* 0x0EC4 */ u32 unk_EC4; // Gossip stone heart piece flags
+    /* 0x0EC8 */ u32 unk_EC8;
+    /* 0x0ECC */ u32 unk_ECC[2]; // Related to blue warps
     /* 0x0ED4 */ u8 stolenItem; // There's a 4 byte struct here of some kind.
     /* 0x0ED5 */ UNK_TYPE1 padED5[0x7];
     /* 0x0EDC */ u32 bankRupees;
@@ -1482,8 +1481,8 @@ typedef struct {
     /* 0x088 */ UNK_TYPE1 pad88[0xA8];
     /* 0x130 */ u8 timers[0x40];
     /* 0x170 */ UNK_TYPE1 pad170[0x106];
-    /* 0x276 */ u8 unk276;
-    /* 0x277 */ UNK_TYPE1 unk277;
+    /* 0x276 */ u8 seqId;
+    /* 0x277 */ u8 ambienceId;
     /* 0x278 */ u8 buttonsUsable[5];
     /* 0x27D */ UNK_TYPE1 pad27D[0x3];
     /* 0x280 */ ButtonsState buttonsState;
@@ -1501,8 +1500,10 @@ typedef struct {
     /* 0x2B2 */ u16 environmentTime;
     /* 0x2B4 */ UNK_TYPE1 pad2B4[0x4];
     /* 0x2B8 */ s16 unk2b8;
-    /* 0x2BA */ UNK_TYPE1 pad2BA[0xA];
-    /* 0x2C4 */ f32 unk2C4;
+    /* 0x2BA */ s16 healthAccumulator;                 // "life_mode"
+    /* 0x2BC */ s32 unk_3F5C;                          // "bet_rupees"
+    /* 0x2C0 */ u8 screenScaleFlag;                    // "framescale_flag"
+    /* 0x2C4 */ f32 screenScale;                       // "framescale_scale"
     /* 0x2C8 */ CycleSceneFlags cycleSceneFlags[120];
 } SaveContextExtra; // size = 0xC28
 
@@ -1552,7 +1553,9 @@ typedef struct {
 
 typedef struct {
     /* 0x000 */ Actor base;
-    /* 0x144 */ UNK_TYPE1 pad144[0xAC];
+    /* 0x144 */ ColCylinder collider1;
+    /* 0x190 */ ColSphereGroup collider2;
+    /* 0x1B0 */ ColSphereGroupElement collider3;
     /* 0x1F0 */ s16 timer;
     /* 0x1F2 */ s16 flashSpeedScale;
     /* 0x1F4 */ f32 unk_1F4;
@@ -1560,14 +1563,162 @@ typedef struct {
     /* 0x1F9 */ u8 isPowderKeg;
     /* 0x1FA */ s16 unk_1FA;
     /* 0x1FC */ u8 unk_1FC;
-    /* 0x200 */ UNK_TYPE1 pad200[0x4];
+    /* 0x200 */ void* actionFunc;
 } ActorEnBom; // size = 0x204
+
+typedef struct {
+    /* 0x00 */ s32 active;
+    /* 0x04 */ Vec3f tip;
+    /* 0x10 */ Vec3f base;
+} WeaponInfo; // size = 0x1C
+
+typedef struct {
+    /* 0x00 */ Vec3f unk_00[2];
+    /* 0x18 */ Vec3f unk_18[2][2];
+    /* 0x48 */ Vec3f unk_48;
+} EnArrowUnkStruct; // size = 0x54
+
+typedef struct {
+    /* 0x144 */ SkelAnime skelAnime;
+    /* 0x188 */ Vec3s jointTable[5];
+} ActorEnArrowArrow; // size = 0x1A8
+
+typedef struct {
+    /* 0x144 */ f32 unk_144;
+    /* 0x148 */ u8 unk_148;
+    /* 0x149 */ s8 unk_149;
+    /* 0x14A */ s16 unk_14A;
+    /* 0x14C */ s16 unk_14C;
+} ActorEnArrowBubble; // size = 0x150
+
+typedef struct ActorEnArrow {
+    /* 0x000 */ Actor base;
+    union {
+        ActorEnArrowArrow arrow;
+        ActorEnArrowBubble bubble;
+    };
+    /* 0x1A8 */ ColQuad collider;
+    /* 0x228 */ Vec3f unk_228;
+    /* 0x234 */ Vec3f unk_234;
+    /* 0x240 */ s32 unk_240;
+    /* 0x244 */ WeaponInfo weaponInfo;
+    /* 0x260 */ u8 despawnTimer; // timer in OoT
+    /* 0x261 */ u8 hitFlags; // hitFlags in OoT
+    /* 0x262 */ u8 unk_262;
+    /* 0x263 */ u8 unk_263;
+    /* 0x264 */ Actor* actorBeingCarried;
+    /* 0x268 */ Vec3f unk_268;
+    /* 0x274 */ void* actionFunc;
+} ActorEnArrow; // size = 0x278
+
+struct ActorEnButte;
+
+typedef void (*ActorEnButteActionFunc)(struct ActorEnButte*, GlobalContext*);
+
+typedef struct ActorEnButte {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ ColSphereGroup collider;
+    /* 0x164 */ ColSphereGroupElement colldierElements[1];
+    /* 0x1A4 */ SkelAnime skelAnime;
+    /* 0x1E8 */ Vec3s jointTable[8];
+    /* 0x218 */ Vec3s morphTable[8];
+    /* 0x248 */ ActorEnButteActionFunc actionFunc;
+    /* 0x24C */ s16 unk_24C;
+    /* 0x24E */ u8 unk_24E;
+    /* 0x24F */ u8 unk_24F;
+    /* 0x250 */ u8 unk_250;
+    /* 0x252 */ s16 unk_252;
+    /* 0x254 */ s16 unk_254;
+    /* 0x256 */ s16 unk_256;
+    /* 0x258 */ s16 unk_258;
+    /* 0x25C */ f32 unk_25C;
+} ActorEnButte; // size = 0x260
+
+struct ActorEnGs;
+
+typedef void (*ActorEnGsActionFunc)(struct ActorEnGs*, GlobalContext*);
+
+typedef struct ActorEnGs {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ ColCylinder collider;
+    /* 0x190 */ ActorEnGsActionFunc actionFunc;
+    /* 0x194 */ s8 unk_194;
+    /* 0x195 */ u8 unk_195;
+    /* 0x196 */ u8 switchFlag;
+    /* 0x197 */ s8 unk_197;
+    /* 0x198 */ s16 unk_198;
+    /* 0x19A */ s16 unk_19A;
+    /* 0x19C */ s8 unk_19C;
+    /* 0x19D */ u8 unk_19D;
+    /* 0x19E */ Vec3s unk_19E[3];
+    /* 0x1B0 */ Vec3f unk_1B0[2];
+    /* 0x1C8 */ UNK_TYPE1 unk1C8[0xC];
+    /* 0x1D4 */ s16 unk_1D4;
+    /* 0x1D6 */ UNK_TYPE1 unk1D6[0x6];
+    /* 0x1DC */ f32 unk_1DC;
+    /* 0x1E0 */ f32 unk_1E0;
+    /* 0x1E4 */ f32 unk_1E4;
+    /* 0x1E8 */ f32 unk_1E8;
+    /* 0x1EC */ f32 unk_1EC;
+    /* 0x1F0 */ f32 unk_1F0;
+    /* 0x1F4 */ ColorRGB8 unk_1F4;
+    /* 0x1F7 */ ColorRGB8 unk_1F7;
+    /* 0x1FA */ ColorRGB8 unk_1FA;
+    /* 0x200 */ f32 unk_200;
+    /* 0x204 */ s32 unk_204;
+    /* 0x208 */ s32 unk_208;
+    /* 0x20C */ s32 unk_20C;
+    /* 0x210 */ u16 unk_210;
+    /* 0x212 */ s16 csIdList[2];
+    /* 0x216 */ s16 unk_216;
+    /* 0x218 */ s16 unk_218;
+    /* 0x21A */ s16 unk_21A;
+    /* 0x21C */ s16 quakeY;
+    /* 0x21E */ s16 quakeDuration;
+} ActorEnGs; // size = 0x220
+
+struct ActorEnElf;
+
+typedef void (*ActorEnElfActionFunc)(struct ActorEnElf*, GlobalContext*);
+typedef void (*ActorEnElfUnkFunc)(struct ActorEnElf*, GlobalContext*);
 
 // En_Elf actor (Fairy).
 typedef struct {
     /* 0x000 */ Actor base;
-    /* 0x144 */ UNK_TYPE1 pad144[0x116];
-    /* 0x25A */ u16 animTimer; // Counts from 0 to 0x5F as "fairy heal" animation progresses.
+    /* 0x144 */ SkelAnime skelAnime;
+    /* 0x188 */ Vec3s jointTable[7];
+    /* 0x1B2 */ Vec3s morphTable[7];
+    /* 0x1DC */ Color_RGBAf innerColor;
+    /* 0x1EC */ Color_RGBAf outerColor;
+    /* 0x1FC */ LightInfo lightInfoGlow;
+    /* 0x20C */ z_Light* lightNodeGlow;
+    /* 0x210 */ LightInfo lightInfoNoGlow;
+    /* 0x220 */ z_Light* lightNodeNoGlow;
+    /* 0x224 */ Vec3f unk_224;
+    /* 0x230 */ Actor* elfMsg;
+    /* 0x234 */ Actor* unk_234;
+    /* 0x238 */ f32 unk_238;
+    /* 0x23C */ f32 unk_23C;
+    /* 0x240 */ f32 unk_240;
+    /* 0x244 */ s16 unk_244;
+    /* 0x246 */ s16 unk_246;
+    /* 0x248 */ s16 unk_248;
+    /* 0x24A */ s16 unk_24A;
+    /* 0x24C */ s16 unk_24C;
+    /* 0x250 */ f32 unk_250;
+    /* 0x254 */ f32 unk_254;
+    /* 0x258 */ s16 unk_258;
+    /* 0x25A */ u16 timer;
+    /* 0x25C */ s16 unk_25C;
+    /* 0x25E */ s16 disappearTimer;
+    /* 0x260 */ s16 collectableFlag;
+    /* 0x262 */ u16 fairyFlags;
+    /* 0x264 */ u16 unk_264;
+    /* 0x266 */ u16 unk_266;
+    /* 0x268 */ u8 unk_268;
+    /* 0x269 */ u8 unk_269;
+    /* 0x26C */ ActorEnElfUnkFunc unk_26C;
+    /* 0x270 */ ActorEnElfActionFunc actionFunc;
 } ActorEnElf; // size = 0x25C?
 
 // En_Test4 actor.
@@ -1725,13 +1876,60 @@ typedef struct {
     /* 0x16A */ UNK_TYPE1 pad16A[0x26];
 } ActorBgIngate; // size = 0x190
 
+typedef struct ActorDoorSpiral {
+    /* 0x000 */ Actor actor;
+    /* 0x144 */ u8 shouldClimb;
+    /* 0x145 */ UNK_TYPE1 unk_145[0xB];
+} ActorDoorSpiral; // size = 0x150
+
+typedef struct KnobDoorActor {
+    /* 0x000 */ DynaPolyActor dyna;
+    /* 0x15C */ SkelAnime skelAnime;
+    /* 0x1A0 */ u8 animIndex;
+    /* 0x1A1 */ u8 playOpenAnim;
+    /* 0x1A2 */ s8 requiredObjBankIndex;
+    /* 0x1A3 */ s8 dlIndex;
+} KnobDoorActor; // size = 0x1A4
+
+typedef struct SlidingDoorActor {
+    /* 0x000 */ DynaPolyActor dyna;
+    /* 0x15C */ s16 unk_15C;
+    /* 0x15E */ s16 unk_15E;
+} SlidingDoorActor; // size = 0x160
+
 // Door_Warp1 actor.
 typedef struct {
-    /* 0x000 */ Actor base;
-    /* 0x144 */ UNK_TYPE1 pad144[0x8A];
+    /* 0x000 */ DynaPolyActor dyna;
+    /* 0x15C */ SkelAnime skelAnime;
+    /* 0x1A0 */ Actor* unk_1A0; // DmHina
+    /* 0x1A4 */ f32 unk_1A4;
+    /* 0x1A8 */ f32 unk_1A8;
+    /* 0x1AC */ f32 unk_1AC;
+    /* 0x1B0 */ f32 unk_1B0;
+    /* 0x1B4 */ f32 unk_1B4;
+    /* 0x1B8 */ f32 unk_1B8;
+    /* 0x1BC */ f32 unk_1BC;
+    /* 0x1C0 */ f32 unk_1C0;
+    /* 0x1C4 */ s16 unk_1C4;
+    /* 0x1C6 */ s16 unk_1C6;
+    /* 0x1C8 */ s16 unk_1C8;
+    /* 0x1CA */ s16 unk_1CA;
+    /* 0x1CC */ s16 unk_1CC;
     /* 0x1CE */ s16 warpTimer;
-    /* 0x1D0 */ s16 warpTimer2;
-} ActorDoorWarp1;
+    /* 0x1D0 */ u16 warpTimer2;
+    /* 0x1D2 */ s8 unk_1D2;
+    /* 0x1D3 */ u8 unk_1D3;
+    /* 0x1D4 */ u8 unk_1D4;
+    /* 0x1D8 */ void* actionFunc; // DoorWarp1ActionFunc
+    /* 0x1DC */ z_Light* unk_1DC;
+    /* 0x1E0 */ LightInfo unk_1E0;
+    /* 0x1F0 */ z_Light* unk_1F0;
+    /* 0x1F4 */ LightInfo unk_1F4;
+    /* 0x202 */ u8 unk_202;
+    /* 0x203 */ u8 unk_203;
+    /* 0x204 */ f32 unk_204;
+    /* 0x208 */ u8 unk_208;
+} ActorDoorWarp1; // size = 0x20C
 
 // En_Kakasi actor (Scarecrow).
 typedef struct {

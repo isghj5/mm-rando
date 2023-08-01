@@ -16,6 +16,8 @@ namespace MMR.Randomizer.Models
 
         public bool IsJunk { get; }
 
+        public bool IsLocationJunked { get; }
+
         public bool IsImportant { get; }
 
         public bool IsRequired { get; }
@@ -24,7 +26,7 @@ namespace MMR.Randomizer.Models
 
         public ItemCategory ItemCategory { get; set; }
 
-        public SpoilerItem(ItemObject itemObject, Region region, bool isRequired, bool isImportant, bool isImportantSong, bool progressiveUpgrades, ItemList itemList)
+        public SpoilerItem(ItemObject itemObject, Region region, bool isRequired, bool isImportant, bool isLocationJunked, bool isImportantSong, bool progressiveUpgrades, ItemList itemList)
         {
             Id = itemObject.ID;
             Name = itemObject.NameOverride ?? itemObject.Item.ProgressiveUpgradeName(progressiveUpgrades) ?? itemObject.Name;
@@ -32,6 +34,7 @@ namespace MMR.Randomizer.Models
             NewLocationName = itemObject.NewLocation.Value.Location(itemList);
             Region = region;
             IsJunk = ItemUtils.IsJunk(itemObject.Item);
+            IsLocationJunked = isLocationJunked;
             IsImportant = isImportant;
             IsRequired = isRequired;
             IsImportantSong = isImportantSong;

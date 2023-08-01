@@ -59,8 +59,9 @@ typedef struct {
     u32 saferGlitches       : 1;
     u32 bombchuDrops        : 1;
     u32 instantTransform    : 1;
+    u32 bombArrows          : 1;
     u32 giantMaskAnywhere   : 1;
-    u32                     : 4;
+    u32                     : 3;
 } MiscFlags;
 
 typedef union {
@@ -87,7 +88,9 @@ typedef struct {
     u32 multiBank           : 1;
     u32 shortChestOpening   : 1;
     u32 chestGameMinimap    : 2;
-    u32                     : 21;
+    u32 skipGiantsCutscene  : 1;
+    u32 oathHint            : 1;
+    u32                     : 19;
 } MiscSpeedups;
 
 typedef struct {
@@ -97,7 +100,8 @@ typedef struct {
 
 typedef struct {
     u8 npcKafeiReplaceMask;
-    u8 pad[3];
+    u8 requiredBossRemains;
+    u8 pad[2];
 } MiscBytes;
 
 typedef struct {

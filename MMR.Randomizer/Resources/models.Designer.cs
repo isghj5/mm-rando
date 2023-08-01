@@ -243,6 +243,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] gi_frog {
+            get {
+                object obj = ResourceManager.GetObject("gi_frog", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] gi_link_mask {
             get {
                 object obj = ResourceManager.GetObject("gi_link_mask", resourceCulture);

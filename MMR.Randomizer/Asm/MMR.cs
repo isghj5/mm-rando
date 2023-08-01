@@ -182,7 +182,7 @@ namespace MMR.Randomizer.Asm
             Array.Resize(ref extraStartingItemIds, 0x10);
 
             var itemsToReturnIds = this.ItemsToReturnIds.ToArray();
-            Array.Resize(ref itemsToReturnIds, 0x10);
+            Array.Resize(ref itemsToReturnIds, 0x1F);
             return new MMRConfigStruct
             {
                 Version = version,

@@ -26,6 +26,8 @@ namespace MMR.Randomizer.Asm
         public short? SmallKeys;
         public short? Compasses;
         public short? DungeonMaps;
+        public short? NotebookPage;
+        public short? Frogs;
     }
 
     /// <summary>
@@ -62,6 +64,12 @@ namespace MMR.Randomizer.Asm
         /// <returns>Object Id if resolved.</returns>
         public (short objectId, byte graphicId)? ResolveGraphics(GetItemEntry entry)
         {
+            // Notebook Pages
+            if (entry.ItemGained == 0xB2 && entry.Object == 0x253 && Indexes.NotebookPage.HasValue)
+            {
+                return (Indexes.NotebookPage.Value, 0xC);
+            }
+
             // Royal Wallet.
             if (entry.ItemGained == 0xA4 && entry.Object == 0xA8 && Indexes.RoyalWallet.HasValue)
             {
@@ -151,6 +159,20 @@ namespace MMR.Randomizer.Asm
                 return (Indexes.Rupees.Value, entry.Index);
             }
 
+            // Frogs
+            if (entry.ItemGained == 0xB4 && entry.Object == 0x266 && Indexes.Frogs.HasValue)
+            {
+                var index = (byte) ((entry.Type >> 4) switch
+                {
+                    1 => 0x47,
+                    2 => 0x4D,
+                    3 => 0x61,
+                    4 => 0x62,
+                    _ => throw new NotImplementedException()
+                });
+                return (Indexes.Frogs.Value, index);
+            }
+
             return null;
 
             // TODO: Move behavior for resolving others into here.
@@ -200,6 +222,10 @@ namespace MMR.Randomizer.Asm
         /// <param name="skulltulas">Whether or not to include Skulltula Token objects</param>
         void AddExtendedObjects(Item smithy1Item, Item smithy2Item, bool fairies = false, bool skulltulas = false, bool progressiveUpgrades = false)
         {
+            // Add Notebook Page
+            this.Offsets.Add(AddNotebookPage());
+            Indexes.NotebookPage = AdvanceIndex();
+
             // Add Royal Wallet.
             this.Offsets.Add(AddRoyalWallet());
             Indexes.RoyalWallet = AdvanceIndex();
@@ -239,6 +265,10 @@ namespace MMR.Randomizer.Asm
             // Add Dungeon Maps
             AddDungeonMaps();
             this.Indexes.DungeonMaps = AdvanceIndex(4);
+
+            // Add Frogs
+            AddFrogs();
+            this.Indexes.Frogs = AdvanceIndex();
 
             // Include Spin Attack Energy model into Kokiri Sword
             ObjUtils.InsertObj(Resources.models.gi_spinattack, 0x148);
@@ -925,6 +955,65 @@ namespace MMR.Randomizer.Asm
             AddSmithyItemWithAdditionals(smithy1Item, progressiveUpgrades);
 
             AddSmithyItemWithAdditionals(smithy2Item, progressiveUpgrades);
+        }
+
+        #endregion
+
+        #region Notebook Page
+
+        (uint, uint) AddNotebookPage()
+        {
+            // Clone bombers notebook model
+            var data = CloneExistingData(1066);
+
+            // Remove cover label
+            WriteUint(data, 0xB00,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0
+            );
+
+            return this.Bundle.Append(data);
+        }
+
+        #endregion
+
+        #region Frogs
+
+        (uint, uint) AddFrog()
+        {
+            return this.Bundle.Append(Resources.models.gi_frog);
+        }
+
+        void AddFrogs()
+        {
+            this.Offsets.Add(AddFrog());
+
+            // Change unused getItem draw entries for use with frog model
+
+            // Removed as yellow frog is not randomized.
+            // ID 0x38, replaces null entry, yellow frog
+            // ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x115E70, 0x06000000);
+
+            //ID 0x47, replaces null entry, cyan frog
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116088, 0x800EF054);
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x11608C, 0x06000010);
+
+            // ID 0x4D, replaces null entry, pink frog
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116160, 0x800EF054);
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116164, 0x06000020);
+
+            // ID 0x61, replaces unused bottled seahorse model, blue frog
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116430, 0x800EF054);
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116434, 0x06000030);
+
+            // ID 0x62, replaces unused bottled loach model, white frog
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116454, 0x800EF054);
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116458, 0x06000040);
         }
 
         #endregion

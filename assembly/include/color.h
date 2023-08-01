@@ -47,6 +47,10 @@ typedef union Color {
     u8 bytes[4];
 } Color; // size = 0x4
 
+typedef struct {
+    f32 r, g, b, a;
+} Color_RGBAf;
+
 typedef ColorRGB8 RGB8;
 typedef ColorRGB8 RGB;
 typedef ColorRGBA8 RGBA8;

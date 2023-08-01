@@ -51,6 +51,7 @@
 // Function Prototypes.
 extern int z2_CanInteract(GlobalContext* ctxt);
 extern int z2_CanInteract2(GlobalContext* ctxt, ActorPlayer* player);
+extern int z2_Inventory_GetBtnItem(GlobalContext* ctxt, ActorPlayer* player, s32 buttonIndex);
 extern void z2_DrawButtonAmounts(GlobalContext* ctxt, u32 arg1, u16 alpha);
 extern void z2_DrawBButtonIcon(GlobalContext* ctxt);
 extern void z2_DrawCButtonIcons(GlobalContext* ctxt);
@@ -67,6 +68,7 @@ extern void z2_TranslateMatrix(f32 x, f32 y, f32 z, u8 matrixMode);
 extern void z2_Matrix_Scale(f32 x, f32 y, f32 z, u8 matrixMode);
 extern void z2_Matrix_RotateXS(s16 x, u8 matrixMode);
 extern Gfx* z2_ShiftMatrix(GraphicsContext* gfxCtx);
+extern void z2_Matrix_MultVec3f(Vec3f* src, Vec3f* dest);
 extern void z2_Matrix_GetStateTranslationAndScaledX(f32 scale, Vec3f* dst);
 extern void z2_Matrix_GetStateTranslationAndScaledY(f32 scale, Vec3f* dst);
 extern void z2_Matrix_GetStateTranslationAndScaledZ(f32 scale, Vec3f* dst);
@@ -80,6 +82,7 @@ extern void z2_PlayLoopingSfxAtActor(Actor* actor, u32 id);
 extern Actor* z2_SpawnActor(ActorContext* actorCtxt, GlobalContext* ctxt, u16 id, f32 x, f32 y, f32 z, u16 rx, u16 ry, u16 rz, u16 params);
 extern void z2_UpdateButtonUsability(GlobalContext* ctxt);
 extern void z2_WriteHeartColors(GlobalContext* ctxt);
+extern bool z2_LifeMeter_IsCritical(void);
 extern void* z2_Lib_SegmentedToVirtual(void* ptr);
 extern u8 z2_CheckItemObtainability(u32 item);
 extern void z2_RemoveItem(u32 item, u8 slot);
@@ -88,6 +91,8 @@ extern s32 z2_Math_AsymStepToF(f32* pValue, f32 target, f32 incrStep, f32 decrSt
 extern bool z2_SetGetItemLongrange(Actor* actor, GlobalContext* ctxt, u16 giIndex);
 extern void z2_UpdatePictoFlags(GlobalContext* ctxt);
 extern void z2_8012C654(GraphicsContext* gfxCtx);
+extern Gfx* z2_Gfx_DrawTexRectIA8(Gfx* gfx, void* texture, s16 textureWidth, s16 textureHeight, s16 rectLeft, s16 rectTop,
+                        s16 rectWidth, s16 rectHeight, u16 dsdx, u16 dtdy);
 extern Gfx* z2_8010CFBC(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a);
 extern Gfx* z2_8010D480(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a, u16 arg14, u16 arg15);
 
@@ -116,7 +121,7 @@ extern void z2_remove_clear_flag();
 extern void z2_get_temp_clear_flag();
 extern void z2_set_temp_clear_flag();
 extern void z2_remove_temp_clear_flag();
-extern void z2_get_collectible_flag();
+extern bool z2_get_collectible_flag(GlobalContext* ctxt, s32 flag);
 extern void z2_set_collectibe_flag();
 extern void z2_load_scene_flags();
 extern u16 z2_check_scene_pairs(u16 sceneId);
@@ -129,14 +134,17 @@ extern ActorEnItem00* z2_fixed_drop_spawn(GlobalContext* ctxt, Vec3f* position, 
 extern void z2_rupee_drop_spawn();
 extern void z2_random_drop_spawn();
 extern void z2_spawn_map_actors();
-extern void z2_actor_spawn_1();
 extern void z2_actor_spawn_2();
+extern Actor* z2_Actor_SpawnAsChild(ActorContext* actorCtx, Actor* parent, GlobalContext* ctxt, s16 actorId, f32 posX, f32 posY,
+                          f32 posZ, s16 rotX, s16 rotY, s16 rotZ, s32 params);
 extern void z2_object_spawn();
 extern void z2_load_objects();
 extern void z2_load_scene();
 
 extern void z2_EffectSsKiraKira_SpawnSmall(GlobalContext* globalCtx, Vec3f* pos, Vec3f* velocity, Vec3f* accel,
                                  ColorRGBA8* primColor, ColorRGBA8* envColor);
+extern void z2_EffectSsHitmark_SpawnCustomScale(GlobalContext* ctxt, s32 type, s16 scale, Vec3f* pos);
+extern void z2_EffectSsIceSmoke_Spawn(GlobalContext* ctxt, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale);
 
 // Function Prototypes (Actors).
 extern void z2_ActorProc(Actor* actor, GlobalContext* ctxt);
@@ -204,7 +212,9 @@ extern void z2_GiveItem(GlobalContext* ctxt, u8 itemId);
 extern u8 z2_IsItemKnown(u8 itemId);
 extern bool z2_HasEmptyBottle();
 extern void z2_GiveMap(u32 mapIndex);
+extern s32 z2_Health_ChangeBy(GlobalContext* ctxt, s16 healthChange);
 extern void z2_AddRupees(s32 amount);
+extern void z2_Inventory_ChangeAmmo(s16 item, s16 ammoChange);
 
 // Function Prototypes (HUD).
 extern void z2_HudSetAButtonText(GlobalContext* ctxt, u16 textId);
@@ -215,13 +225,23 @@ extern void z2_UpdateButtonsState(u32 state);
 // Function Prototypes (Math).
 extern f32 z2_Math_Sins(s16 angle);
 extern f32 z2_Math_CosS(s16 angle);
+extern s32 z2_Math_StepToS(s16* pValue, s16 target, s16 step);
+extern s32 z2_Math_StepToC(s8* pValue, s8 target, s8 step);
+extern void z2_Math_Vec3f_Copy(Vec3f* dest, Vec3f* src);
+extern void z2_Math_Vec3s_ToVec3f(Vec3f* dest, Vec3s* src);
+extern void z2_Math_Vec3f_ToVec3s(Vec3s* dest, Vec3f* src);
+extern void z2_Math_Vec3f_Lerp(Vec3f* a, Vec3f* b, f32 t, Vec3f* dest);
 extern f32 z2_Math_Vec3f_DistXZ(Vec3f* p1, Vec3f* p2);
 extern f32 z2_Math_SmoothStepToF(f32* pValue, f32 target, f32 fraction, f32 step, f32 minStep);
 extern f32 Math_ApproachF(f32* a0, f32 a1, f32 a2, f32 a3);
 extern f32 Math_ApproachZeroF(f32* a0, f32 a1, f32 a2);
+extern s16 z2_Math_SmoothStepToS(s16* pValue, s16 target, s16 scale, s16 step, s16 minStep);
 
 // Function Prototypes (Objects).
 extern s8 z2_GetObjectIndex(const SceneContext* ctxt, u16 objectId);
+
+extern s32 z2_Entrance_GetSceneIdAbsolute(u16 entrance);
+extern s32 z2_Entrance_GetTransitionFlags(u16 entrance);
 
 extern void z2_AnimatedMat_Draw(GlobalContext* play, AnimatedTexture* matAnim);
 extern void z2_SkelAnime_DrawLimb(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, bool* overrideLimbDraw, void* postLimbDraw, Actor* actor);
@@ -242,10 +262,13 @@ extern void z2_LoadRoom(GlobalContext* ctxt, RoomContext* roomCtxt, u8 roomId);
 extern void z2_UnloadRoom(GlobalContext* ctxt, RoomContext* roomCtxt);
 
 // Function Prototypes (Sound).
+extern void z2_Audio_PlayObjSoundBgm(Vec3f* pos, s8 seqId);
 extern void z2_SetBGM2(u16 bgmId);
+extern u16 z2_AudioSeq_GetActiveSeqId(u8 seqPlayerIndex);
 
 // Function Prototypes (Text).
 extern void z2_ShowMessage(GlobalContext* ctxt, u16 messageId, Actor* actor);
+extern void z2_Message_ContinueTextbox(GlobalContext* ctxt, u16 textId);
 extern bool z2_IsMessageClosing(Actor* actor, GlobalContext *ctxt);
 extern u8 z2_GetMessageState(MessageContext* msgCtx);
 
@@ -276,7 +299,19 @@ extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 #define z2_PerformEnterWaterEffects_VRAM 0x8083B8D0
 #define z2_PlayerHandleBuoyancy_VRAM     0x808475B4
 #define z2_UseItem_VRAM                  0x80831990
+#define z2_Player_ItemToActionParam_VRAM 0x8082F524
 #define z2_PlayerWaitForGiantMask_VRAM   0x80838A20
+#define z2_Player_func_8083692C_VRAM     0x8083692C
+#define z2_Player_func_80838A90_VRAM     0x80838A90
+#define z2_Player_func_80849FE0_VRAM     0x80849FE0
+#define z2_Player_func_8084A884_VRAM     0x8084A884
+#define z2_Player_func_8084C16C_VRAM     0x8084C16C
+
+// Relocatable Data (player_actor).
+#define z2_D_80862B4C_VRAM               0x80862B4C
+
+// Relocatable PlayerUpperActionFunc
+#define z2_Player_UpperAction_CarryAboveHead_VRAM   0x808490B4
 
 // Relocatable Types (file_choose).
 #define FileChooseDataVRAM               0x80813DF0
@@ -291,5 +326,8 @@ typedef void (*z2_PerformEnterWaterEffects_Func)(GlobalContext* ctxt, ActorPlaye
 typedef void (*z2_PlayerHandleBuoyancy_Func)(ActorPlayer* player);
 typedef void (*z2_UseItem_Func)(GlobalContext* ctxt, ActorPlayer* player, u8 item);
 typedef void (*z2_PlayerWaitForGiantMask_Func)(GlobalContext* ctxt, ActorPlayer* player);
+typedef s32 (*z2_Player_ItemToActionParam_Func)(ActorPlayer* player, s32 itemId);
+typedef bool (*z2_Player_func_8083692C_Func)(ActorPlayer* player, GlobalContext* ctxt);
+typedef bool (*z2_Player_func_80838A90_Func)(ActorPlayer* player, GlobalContext* ctxt);
 
 #endif

@@ -20,6 +20,7 @@ namespace MMR.Randomizer.GameObjects
         [Progressive]
         [StartingItem(0xC5CE25, 0x01)]
         [StartingItem(0xC5CE6F, 0x01)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Quiver, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Hero's Bow"), LocationName("Hero's Bow Chest"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("a projectile", "a ranged weapon")]
         [ShopText("Use it to shoot arrows.", isDefinite: true)]
@@ -55,6 +56,7 @@ namespace MMR.Randomizer.GameObjects
         [Purchaseable, Visible]
         [StartingItem(0xC5CE2A, 0x06)]
         [StartingItem(0xC5CE6F, 0x08)]
+        [Overwritable(OverwritableAttribute.ItemSlot.BombBag, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Bomb Bag"), LocationName("Bomb Bag Purchase"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town shop"), GossipItemHint("an item carrier", "a vessel of explosives")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.BombShop, 0)]
@@ -153,7 +155,7 @@ namespace MMR.Randomizer.GameObjects
         ItemFairySword,
 
         [StartingItemId(0x11)]
-        [Repeatable, Temporary, Overwritable] // specially handled to turn into Red Potion on subsequent times
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)] // specially handled to turn into Red Potion on subsequent times
         [ItemName("Bottle of Red Potion"), LocationName("Kotake"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("the sleeping witch"), GossipItemHint("a vessel of health", "bottled fortitude")]
         [ShopText("Replenishes your life energy.\u0009\u0001\u0000\u0000 Comes with an Empty Bottle.\u0009\u0002")]
@@ -162,10 +164,9 @@ namespace MMR.Randomizer.GameObjects
         ItemBottleWitch,
 
         [StartingItemId(0x18)]
-        [Repeatable, Temporary, Overwritable] // specially handled to turn into Milk on subsequent times
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)] // specially handled to turn into Milk on subsequent times
         [ItemName("Milk Bottle"), LocationName("Aliens Defense"), Region(Region.RomaniRanch)]
         [GossipLocationHint("the ranch girl", "a good deed"), GossipItemHint("a dairy product", "the produce of cows"), GossipCompetitiveHint(-2)]
-        [GossipCombineOrder(0), GossipCombine("Ranch Sisters Defense", MaskRomani)]
         [ShopText("Recover five hearts with one drink. Contains two helpings.\u0009\u0001\u0000\u0000 Comes with an Empty Bottle.\u0009\u0002")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x60), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
@@ -173,7 +174,7 @@ namespace MMR.Randomizer.GameObjects
 
         [RupeeRepeatable]
         [StartingItemId(0x22)]
-        [Repeatable, Temporary, Overwritable] // specially handled to turn into Gold Dust on subsequent times
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)] // specially handled to turn into Gold Dust on subsequent times
         [ItemName("Bottle of Gold Dust"), LocationName("Goron Race"), Region(Region.TwinIslands)]
         [GossipLocationHint("a sporting event"), GossipItemHint("a gleaming powder"), GossipCompetitiveHint(-2)]
         [ShopText("It's very high quality.\u0009\u0001\u0000\u0000 Comes with an Empty Bottle.\u0009\u0002")]
@@ -184,7 +185,6 @@ namespace MMR.Randomizer.GameObjects
         [StartingItemId(0x12)]
         [ItemName("Empty Bottle"), LocationName("Beaver Race #1"), Region(Region.ZoraCape)]
         [GossipLocationHint("a river dweller"), GossipItemHint("an empty vessel", "a glass container"), GossipCompetitiveHint(-2)]
-        [GossipCombineOrder(0), GossipCombine("Beaver Races", HeartPieceBeaverRace)]
         [ShopText("Carry various items in this.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x5A), ItemPool(ItemCategory.MainInventory, LocationCategory.Minigames, ClassicCategory.BaseItemPool)]
@@ -199,7 +199,7 @@ namespace MMR.Randomizer.GameObjects
         ItemBottleDampe,
 
         [StartingItemId(0x25)]
-        [Repeatable, Temporary, Overwritable] // specially handled to turn into Chateau Romani on subsequent times
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)] // specially handled to turn into Chateau Romani on subsequent times
         [ItemName("Bottle of Chateau Romani"), LocationName("Madame Aroma in Bar"), Region(Region.EastClockTown)]
         [GossipLocationHint("an important lady"), GossipItemHint("a dairy product", "an adult beverage")]
         [ShopText("Drink it to get lasting stamina for your magic power.\u0009\u0001\u0000\u0000 Comes with an Empty Bottle.\u0009\u0002")]
@@ -221,6 +221,7 @@ namespace MMR.Randomizer.GameObjects
         [Visible]
         [StartingItem(0xC5CE21, 0x02)]
         [StartingItem(0xC5CE00, 0x4E)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Sword, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Razor Sword"), LocationName("Mountain Smithy Day 1"), Region(Region.MountainVillage)]
         [GossipLocationHint("the mountain smith"), GossipItemHint("a sharp blade")]
         [ShopText("A sharp sword forged at the smithy.")]
@@ -233,6 +234,7 @@ namespace MMR.Randomizer.GameObjects
         [Visible]
         [StartingItem(0xC5CE21, 0x03)]
         [StartingItem(0xC5CE00, 0x4F)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Sword, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Gilded Sword"), LocationName("Mountain Smithy Day 2"), Region(Region.MountainVillage)]
         [GossipLocationHint("the mountain smith"), GossipItemHint("a sharp blade")]
         [ShopText("A very sharp sword forged from gold dust.")]
@@ -242,6 +244,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Downgradable]
         [StartingItem(0xC5CE21, 0x20)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Shield, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Mirror Shield"), LocationName("Mirror Shield Chest"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a hollow ground"), GossipItemHint("a reflective guard", "echoing protection")]
         [ShopText("It can reflect certain rays of light.")]
@@ -254,9 +257,9 @@ namespace MMR.Randomizer.GameObjects
         [Downgradable]
         [StartingItem(0xC5CE25, 0x01)]
         [StartingItem(0xC5CE6F, 0x02)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Quiver, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Large Quiver"), LocationName("Town Archery #1"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town activity"), GossipItemHint("a projectile", "a ranged weapon"), GossipCompetitiveHint(-3)]
-        [GossipCombineOrder(0), GossipCombine("Town Archery", HeartPieceTownArchery)]
         [ShopText("This can hold up to a maximum of 40 arrows.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x23), ItemPool(ItemCategory.MainInventory, LocationCategory.Minigames, ClassicCategory.BaseItemPool)]
@@ -267,9 +270,9 @@ namespace MMR.Randomizer.GameObjects
         [Downgradable]
         [StartingItem(0xC5CE25, 0x01)]
         [StartingItem(0xC5CE6F, 0x03)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Quiver, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Largest Quiver"), LocationName("Swamp Archery #1"), Region(Region.RoadToSouthernSwamp)]
         [GossipLocationHint("a swamp game"), GossipItemHint("a projectile", "a ranged weapon"), GossipCompetitiveHint(-3)]
-        [GossipCombineOrder(0), GossipCombine("Swamp Archery", HeartPieceSwampArchery)]
         [ShopText("This can hold up to a maximum of 50 arrows.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x24), ItemPool(ItemCategory.MainInventory, LocationCategory.Minigames, ClassicCategory.BaseItemPool)]
@@ -280,6 +283,7 @@ namespace MMR.Randomizer.GameObjects
         [Purchaseable, Visible]
         [StartingItem(0xC5CE2A, 0x06)]
         [StartingItem(0xC5CE6F, 0x10)]
+        [Overwritable(OverwritableAttribute.ItemSlot.BombBag, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Big Bomb Bag"), LocationName("Big Bomb Bag Purchase"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town shop"), GossipItemHint("an item carrier", "a vessel of explosives")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.BombShop, 1)]
@@ -293,6 +297,7 @@ namespace MMR.Randomizer.GameObjects
         [Downgradable, Purchaseable]
         [StartingItem(0xC5CE2A, 0x06)]
         [StartingItem(0xC5CE6F, 0x18)]
+        [Overwritable(OverwritableAttribute.ItemSlot.BombBag, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Biggest Bomb Bag"), LocationName("Biggest Bomb Bag Purchase"), MultiLocation(UpgradeBiggestBombBagInMountain, UpgradeBiggestBombBagInSwamp)]
         [GossipLocationHint("a northern merchant"), GossipItemHint("an item carrier", "a vessel of explosives")]
         [ShopText("This can hold up to a maximum of 40 bombs.", isDefinite: true)]
@@ -302,6 +307,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Progressive]
         [StartingItem(0xC5CE6E, 0x10)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Wallet, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Adult Wallet"), LocationName("Bank Reward #1"), Region(Region.WestClockTown)]
         [GossipLocationHint("a keeper of wealth"), GossipItemHint("a coin case", "great wealth")]
         [ShopText("This can hold up to a maximum of 200 rupees.")]
@@ -312,9 +318,9 @@ namespace MMR.Randomizer.GameObjects
         [Progressive]
         [Downgradable]
         [StartingItem(0xC5CE6E, 0x20)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Wallet, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Giant Wallet"), LocationName("Ocean Spider House Day 1 Reward"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a gold spider"), GossipItemHint("a coin case", "great wealth"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false)]
-        [GossipCombineOrder(0), GossipCombine("Ocean Spider House", MundaneItemOceanSpiderHouseDay2PurpleRupee, MundaneItemOceanSpiderHouseDay3RedRupee)]
         [ShopText("This can hold up to a maximum of 500 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x09), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
@@ -323,6 +329,7 @@ namespace MMR.Randomizer.GameObjects
         [Progressive]
         [Downgradable]
         [StartingItem(0xC5CE6E, 0x30)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Wallet, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Royal Wallet"), LocationName("Removed by Royal Wallet"), Region(Region.Misc)]
         [GossipItemHint("a coin case", "great wealth")]
         [ShopText("This can hold up to a maximum of 999 rupees.")]
@@ -332,7 +339,8 @@ namespace MMR.Randomizer.GameObjects
 
         //trades
         [Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Moon's Tear"), LocationName("Astronomy Telescope"), Region(Region.TerminaField)]
         [GossipLocationHint("a falling star"), GossipItemHint("a lunar teardrop", "celestial sadness")]
         [ShopText("A shining stone from the moon.")]
@@ -340,7 +348,8 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x96), ItemPool(ItemCategory.TradeItems, LocationCategory.Events, ClassicCategory.BaseItemPool)]
         TradeItemMoonTear,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Land Title Deed"), LocationName("Clock Town Scrub Trade"), Region(Region.SouthClockTown)]
         [GossipLocationHint("a town merchant"), GossipItemHint("a property deal")]
         [ShopText("The title deed to the Deku Flower in Clock Town.")]
@@ -348,7 +357,8 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x97), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemLandDeed,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Swamp Title Deed"), LocationName("Swamp Scrub Trade"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a southern merchant"), GossipItemHint("a property deal")]
         [ShopText("The title deed to the Deku Flower in Southern Swamp.")]
@@ -356,7 +366,8 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x98), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemSwampDeed,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Mountain Title Deed"), LocationName("Mountain Scrub Trade"), Region(Region.GoronVillage)]
         [GossipLocationHint("a northern merchant"), GossipItemHint("a property deal")]
         [ShopText("The title deed to the Deku Flower near Goron Village.")]
@@ -364,7 +375,8 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x99), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemMountainDeed,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Ocean Title Deed"), LocationName("Ocean Scrub Trade"), Region(Region.ZoraHall)]
         [GossipLocationHint("a western merchant"), GossipItemHint("a property deal")]
         [ShopText("The title deed to the Deku Flower in Zora Hall.")]
@@ -372,7 +384,8 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x9A), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemOceanDeed,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.KeyExpress, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Room Key"), LocationName("Inn Reservation"), Region(Region.StockPotInn)]
         [GossipLocationHint("checking in", "check-in"), GossipItemHint("a door opener", "a lock opener")]
         [ShopText("With this, you can go in and out of the Stock Pot Inn at night.")]
@@ -380,7 +393,8 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xA0), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemRoomKey,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.PendantKafei, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Letter to Kafei"), LocationName("Midnight Meeting"), Region(Region.StockPotInn)]
         [GossipLocationHint("a late meeting"), GossipItemHint("a lover's plight", "a lover's letter")]
         [ShopText("A love letter from Anju to Kafei.")]
@@ -389,19 +403,19 @@ namespace MMR.Randomizer.GameObjects
         TradeItemKafeiLetter,
 
         [Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.PendantKafei, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Pendant of Memories"), LocationName("Kafei"), Region(Region.LaundryPool)]
         [GossipLocationHint("a posted letter"), GossipItemHint("a cherished necklace", "a symbol of trust")]
-        [GossipCombineOrder(0), GossipCombine("Letter to Kafei Delivery", MaskKeaton, TradeItemMamaLetter)]
         [ShopText("Kafei's symbol of trust for Anju.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0xAB), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemPendant,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.KeyExpress, nameof(GameplaySettings.QuestItemStorage), false)]
+        [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Letter to Mama"), LocationName("Curiosity Shop Man #2"), Region(Region.LaundryPool)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("an important note", "a special delivery")]
-        [GossipCombineOrder(2), GossipCombine("Letter to Kafei Delivery", TradeItemPendant, MaskKeaton)]
         [ShopText("It's a parcel for Kafei's mother.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0xA1), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
@@ -470,7 +484,6 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Deku Playground Three Days"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("a segment of health"), GossipCompetitiveHint]
-        [GossipCombineOrder(1), GossipCombine("Deku Playground", MundaneItemDekuPlaygroundPurpleRupee)]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x31), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Minigames, ClassicCategory.BaseItemPool)]
@@ -480,7 +493,6 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Town Archery #2"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town game"), GossipItemHint("a segment of health"), GossipCompetitiveHint(1, nameof(GameplaySettings.DoubleArcheryRewards), false)]
-        [GossipCombineOrder(1), GossipCombine("Town Archery", UpgradeBigQuiver)]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x90), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Minigames, ClassicCategory.BaseItemPool)]
@@ -489,7 +501,6 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Honey and Darling Three Days"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town game"), GossipItemHint("a segment of health"), GossipCompetitiveHint(-2)]
-        [GossipCombineOrder(1), GossipCombine("Honey and Darling", MundaneItemHoneyAndDarlingPurpleRupee)]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x94), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Minigames, ClassicCategory.BaseItemPool)]
@@ -533,7 +544,6 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Swamp Archery #2"), Region(Region.RoadToSouthernSwamp)]
         [GossipLocationHint("a swamp game"), GossipItemHint("a segment of health"), GossipCompetitiveHint(1, nameof(GameplaySettings.DoubleArcheryRewards), false)]
-        [GossipCombineOrder(1), GossipCombine("Swamp Archery", UpgradeBiggestQuiver)]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0xA6), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Minigames, ClassicCategory.BaseItemPool)]
@@ -568,7 +578,6 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Beaver Race #2"), Region(Region.ZoraCape)]
         [GossipLocationHint("a river dweller", "a race in the water"), GossipItemHint("a segment of health"), GossipCompetitiveHint(1)]
-        [GossipCombineOrder(1), GossipCombine("Beaver Races", ItemBottleBeavers)]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0xAD), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Minigames, ClassicCategory.BaseItemPool)]
@@ -722,7 +731,6 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE42, 0x3A)]
         [ItemName("Keaton Mask"), LocationName("Curiosity Shop Man #1"), Region(Region.LaundryPool)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a popular mask", "a fox's mask")]
-        [GossipCombineOrder(1), GossipCombine("Letter to Kafei Delivery", TradeItemPendant, TradeItemMamaLetter)]
         [ShopText("The mask of the ghost fox, Keaton.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x80), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
@@ -765,7 +773,6 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE48, 0x3C)]
         [ItemName("Romani's Mask"), LocationName("Cremia"), Region(Region.RomaniRanch)]
         [GossipLocationHint("the ranch lady", "an older sister"), GossipItemHint("proof of membership", "a cow's mask"), GossipCompetitiveHint]
-        [GossipCombineOrder(1), GossipCombine("Ranch Sisters Defense", ItemBottleAliens)]
         [ShopText("Wear it to show you're a member of the Milk Bar, Latte.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x82), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
@@ -1194,7 +1201,7 @@ namespace MMR.Randomizer.GameObjects
 
         //shop items
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Red Potion"), LocationName("Trading Post Red Potion"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 7)]
@@ -1205,7 +1212,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemTradingPostRedPotion,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Green Potion"), LocationName("Trading Post Green Potion"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a magic potion", "a green drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 2)]
@@ -1217,6 +1224,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable, Visible]
         [Repeatable]
+        [Overwritable(OverwritableAttribute.ItemSlot.Shield, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Hero's Shield"), LocationName("Trading Post Hero's Shield"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a basic guard", "protection")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 3)]
@@ -1227,7 +1235,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemTradingPostShield,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Fairy"), LocationName("Trading Post Fairy"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a winged friend", "a healer")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 0)]
@@ -1282,7 +1290,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemTradingPostArrow50,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Blue Potion"), LocationName("Witch Shop Blue Potion"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a sleeping witch", "a southern merchant"), GossipItemHint("consumable strength", "a magic potion", "a blue drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.WitchShop, 2)]
@@ -1293,7 +1301,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemWitchBluePotion,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Red Potion"), LocationName("Witch Shop Red Potion"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a sleeping witch", "a southern merchant"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.WitchShop, 0)]
@@ -1303,7 +1311,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemWitchRedPotion,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Green Potion"), LocationName("Witch Shop Green Potion"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a sleeping witch", "a southern merchant"), GossipItemHint("a magic potion", "a green drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.WitchShop, 1)]
@@ -1355,7 +1363,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemGoronArrow10,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Red Potion"), LocationName("Goron Shop Red Potion"), MultiLocation(ShopItemGoronRedPotionInWinter, ShopItemGoronRedPotionInSpring), RegionArea(RegionArea.Mountain)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShop, 2)]
@@ -1367,6 +1375,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable, Visible]
         [Repeatable]
+        [Overwritable(OverwritableAttribute.ItemSlot.Shield, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Hero's Shield"), LocationName("Zora Shop Hero's Shield"), Region(Region.ZoraHall)]
         [GossipLocationHint("a western merchant", "an aquatic shop"), GossipItemHint("a basic guard", "protection")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.ZoraShop, 0)]
@@ -1386,7 +1395,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemZoraArrow10,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Red Potion"), LocationName("Zora Shop Red Potion"), Region(Region.ZoraHall)]
         [GossipLocationHint("a western merchant", "an aquatic shop"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.ZoraShop, 2)]
@@ -2252,6 +2261,7 @@ namespace MMR.Randomizer.GameObjects
         [Progressive]
         [StartingItem(0xC5CE21, 0x01)]
         [StartingItem(0xC5CE00, 0x4D)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Sword, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Kokiri Sword"), LocationName("Starting Sword"), Region(Region.Misc)]
         [GossipLocationHint("a new file", "a quest's inception"), GossipItemHint("a forest blade")]
         [ShopText("A sword created by forest folk.")]
@@ -2262,6 +2272,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Repeatable]
         [StartingItem(0xC5CE21, 0x10)]
+        [Overwritable(OverwritableAttribute.ItemSlot.Shield, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Hero's Shield"), LocationName("Starting Shield"), Region(Region.Misc)]
         [GossipLocationHint("a new file", "a quest's inception"), GossipItemHint("a basic guard", "protection")]
         [ShopText("Use it to defend yourself.")]
@@ -2293,7 +2304,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x12B), ItemPool(ItemCategory.HeartContainers, LocationCategory.StartingItems, ClassicCategory.CrazyStartingItems)]
         StartingHeartContainer2,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Ranch Cow #1"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2301,7 +2312,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x132), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemRanchBarnMainCowMilk,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Ranch Cow #2"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2309,7 +2320,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x182), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemRanchBarnOtherCowMilk1,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Ranch Cow #3"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2317,7 +2328,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1A2), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemRanchBarnOtherCowMilk2,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Cow Beneath the Well"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2325,7 +2336,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x135), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemWellCowMilk,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Termina Grotto Cow #1"), Region(Region.TerminaField)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2333,7 +2344,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x136), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemTerminaGrottoCowMilk1,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Termina Grotto Cow #2"), Region(Region.TerminaField)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2341,7 +2352,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x137), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemTerminaGrottoCowMilk2,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Great Bay Coast Grotto Cow #1"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2349,7 +2360,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x138), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemCoastGrottoCowMilk1,
 
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Milk"), LocationName("Great Bay Coast Grotto Cow #2"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -2842,11 +2853,13 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Return it to the Fairy Fountain in North Clock Town.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [HackContent(nameof(Resources.mods.fix_town_fairy_text))]
         [GetItemIndex(0x3B), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         //[GetItemIndex(0x1A1)] // used as a flag to track if the actual fairy has been collected.
         CollectibleStrayFairyClockTown,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Lower Right Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2855,6 +2868,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall1,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Entrance Fairy"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2863,6 +2877,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall2,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Upper Left Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2871,6 +2886,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall3,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Pillar Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2879,6 +2895,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall4,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Deku Baba"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2887,6 +2904,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall5,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Poison Water Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2895,6 +2913,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall6,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Main Room Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2903,6 +2922,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall7,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Skulltula"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2911,6 +2931,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall8,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Upper Right Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2919,6 +2940,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall9,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Main Room Switch"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2927,6 +2949,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall10,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Entrance Platform"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2935,6 +2958,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall11,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Dark Room"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2943,6 +2967,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall12,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Jar Fairy"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2951,6 +2976,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall13,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Bridge Room Hive"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2959,6 +2985,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall14,
 
         [Visible]
+        [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Platform Room Hive"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2967,6 +2994,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyWoodfall15,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Snow Room Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -2975,6 +3003,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead1,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Ceiling Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -2983,6 +3012,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead2,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Dinolfos 1"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -2991,6 +3021,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead3,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Bridge Room Ledge Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -2999,6 +3030,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead4,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Bridge Room Pillar Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3007,6 +3039,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead5,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Dinolfos 2"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3015,6 +3048,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead6,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Map Room Fairy"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3023,6 +3057,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead7,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Map Room Ledge"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3031,6 +3066,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead8,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Basement"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3039,6 +3075,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead9,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Twin Block"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3047,6 +3084,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead10,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Icicle Room Wall"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3055,6 +3093,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead11,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Main Room Wall"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3063,6 +3102,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead12,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Pillar Freezards"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3071,6 +3111,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead13,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Ice Puzzle"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3079,6 +3120,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead14,
 
         [Visible]
+        [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Crate"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
@@ -3087,6 +3129,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairySnowhead15,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Skulltula"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3095,6 +3138,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay1,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Pre-Boss Room Underwater Bubble"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3103,6 +3147,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay2,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Water Control Room Underwater Bubble"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3111,6 +3156,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay3,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Pre-Boss Room Bubble"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3121,6 +3167,7 @@ namespace MMR.Randomizer.GameObjects
         // A8 empty
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Waterwheel Room Upper"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3129,6 +3176,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay5,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Green Valve"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3137,6 +3185,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay6,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Seesaw Room"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3145,6 +3194,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay7,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Waterwheel Room Lower"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3153,6 +3203,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay8,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Entrance Torches"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3161,6 +3212,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay9,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Bio Babas"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3169,6 +3221,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay10,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Underwater Barrel"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3177,6 +3230,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay11,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Whirlpool Jar"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3185,6 +3239,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay12,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Whirlpool Barrel"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3193,6 +3248,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay13,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Dexihands Jar"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3201,6 +3257,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay14,
 
         [Visible]
+        [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Ledge Jar"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
@@ -3209,6 +3266,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyGreatBay15,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Mirror Sun Block"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3217,6 +3275,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower1,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Eyegore"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3225,6 +3284,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower2,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Lava Room Fire Ring"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3233,6 +3293,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower3,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Updraft Fire Ring"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3241,6 +3302,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower4,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Mirror Sun Switch"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3249,6 +3311,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower5,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Entrance Sun Switch"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3257,6 +3320,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower6,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Wizzrobe"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3265,6 +3329,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower7,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Death Armos"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3273,6 +3338,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower8,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Updraft Frozen Eye"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3281,6 +3347,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower9,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Thin Bridge"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3289,6 +3356,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower10,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Basement Ledge"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3297,6 +3365,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower11,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Statue Eye"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3305,6 +3374,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower12,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Underwater"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3313,6 +3383,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower13,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Bridge Crystal"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3321,6 +3392,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower14,
 
         [Visible]
+        [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Lava Room Ledge"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
@@ -3346,7 +3418,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x13D), ItemPool(ItemCategory.BlueRupees, LocationCategory.NpcRewards, ClassicCategory.MundaneRewards)]
         MundaneItemBankBlueRupee,
 
-        [Repeatable, Temporary, Overwritable, Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
         [ItemName("Chateau Romani"), LocationName("Milk Bar Chateau"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town shop"), GossipItemHint("a dairy product", "an adult beverage")]
         [ShopText("Drink it to get lasting stamina for your magic power.", isMultiple: true)]
@@ -3355,7 +3427,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x180), ItemPool(ItemCategory.Chateau, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemMilkBarChateau,
 
-        [Repeatable, Temporary, Overwritable, Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
         [ItemName("Milk"), LocationName("Milk Bar Milk"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town shop"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -3368,7 +3440,6 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable]
         [ItemName("Purple Rupee"), LocationName("Deku Playground Any Day"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff"), GossipCompetitiveHint(-3)]
-        [GossipCombineOrder(0), GossipCombine("Deku Playground", HeartPieceDekuPlayground)]
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x133), ItemPool(ItemCategory.PurpleRupees, LocationCategory.Minigames, ClassicCategory.MundaneRewards)]
@@ -3378,7 +3449,6 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable]
         [ItemName("Purple Rupee"), LocationName("Honey and Darling Any Day"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff"), GossipCompetitiveHint(-3)]
-        [GossipCombineOrder(0), GossipCombine("Honey and Darling", HeartPieceHoneyAndDarling)]
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x183), ItemPool(ItemCategory.PurpleRupees, LocationCategory.Minigames, ClassicCategory.MundaneRewards)]
@@ -3421,7 +3491,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x19B), ItemPool(ItemCategory.MainInventory, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemBusinessScrubMagicBean,
 
-        [Repeatable, Temporary, Overwritable, Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
         [ItemName("Green Potion"), LocationName("Ocean Scrub Purchase"), MultiLocation(ShopItemBusinessScrubGreenPotionInOcean, ShopItemBusinessScrubGreenPotionInMountain)]
         [GossipLocationHint("a western merchant"), GossipItemHint("a magic potion", "a green drink")]
         [ShopText("Replenishes your magic power.")]
@@ -3430,7 +3500,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x19C), ItemPool(ItemCategory.GreenPotions, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemBusinessScrubGreenPotion,
 
-        [Repeatable, Temporary, Overwritable, Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
         [ItemName("Blue Potion"), LocationName("Canyon Scrub Purchase"), MultiLocation(ShopItemBusinessScrubBluePotionInCanyon, ShopItemBusinessScrubBluePotionInOcean)]
         [GossipLocationHint("an eastern merchant"), GossipItemHint("consumable strength", "a magic potion", "a blue drink")]
         [ShopText("Replenishes both life energy and magic power.")]
@@ -3447,7 +3517,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x19E), ItemPool(ItemCategory.BlueRupees, LocationCategory.NpcRewards, ClassicCategory.MundaneRewards)]
         MundaneItemZoraStageLightsBlueRupee,
 
-        [Repeatable, Temporary, Overwritable, Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
         [ItemName("Milk"), LocationName("Gorman Bros Milk Purchase"), Region(Region.MilkRoad)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -3459,7 +3529,6 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable]
         [ItemName("Purple Rupee"), LocationName("Ocean Spider House Day 2 Reward"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a gold spider"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false)]
-        [GossipCombineOrder(1), GossipCombine("Ocean Spider House", UpgradeGiantWallet, MundaneItemOceanSpiderHouseDay3RedRupee)]
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x134), ItemPool(ItemCategory.PurpleRupees, LocationCategory.NpcRewards, ClassicCategory.MundaneRewards)]
@@ -3468,7 +3537,6 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Ocean Spider House Day 3 Reward"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a gold spider"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false)]
-        [GossipCombineOrder(2), GossipCombine("Ocean Spider House", UpgradeGiantWallet, MundaneItemOceanSpiderHouseDay2PurpleRupee)]
         [ShopText("This is worth 20 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x1A3), ItemPool(ItemCategory.RedRupees, LocationCategory.NpcRewards, ClassicCategory.MundaneRewards)]
@@ -3556,7 +3624,7 @@ namespace MMR.Randomizer.GameObjects
         MundaneItemCuriosityShopGoldRupee,
 
         [Visible, Purchaseable]
-        [Repeatable, Temporary, Overwritable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Seahorse"), LocationName("Fisherman Pictograph"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a fisherman"), GossipItemHint("a sea creature")]
         [ShopText("It wants to go back home to Pinnacle Rock.")]
@@ -10003,426 +10071,1284 @@ namespace MMR.Randomizer.GameObjects
 
 
 
-        [ItemName("Notebook: Bombers"), LocationName("Notebook: Meeting the Bombers"), MultiLocation(NotebookMeetBombersInNCT, NotebookMeetBombersInECT), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Bombers"), LocationName("Notebook Meeting: The Bombers"), MultiLocation(NotebookMeetBombersInNCT, NotebookMeetBombersInECT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a group of children", "a town game"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Bombers.")]
+        [ShopText("The Bombers' Notebook entry for meeting the Bombers.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x44F), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetBombers,
 
 
-        [ItemName("Notebook: Anju"), LocationName("Notebook: Meeting Anju"), MultiLocation(NotebookMeetAnjuInInn, NotebookMeetAnjuInECT, NotebookMeetAnjuInSCT, NotebookMeetAnjuInLaundryPool, NotebookMeetAnjuInRanch)]
+        [ItemName("Notebook: Anju"), LocationName("Notebook Meeting: Anju"), MultiLocation(NotebookMeetAnjuInInn, NotebookMeetAnjuInLaundryPool, NotebookMeetAnjuInRanch)]
         [GossipLocationHint("a lady in town"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting Anju.")]
+        [ShopText("The Bombers' Notebook entry for meeting Anju.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x450), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetAnju,
 
 
-        [ItemName("Notebook: Kafei"), LocationName("Notebook: Meeting Kafei"), MultiLocation(NotebookMeetKafeiInLaundryPool, NotebookMeetKafeiInIkanaCanyon, NotebookMeetKafeiInInn)]
+        [ItemName("Notebook: Kafei"), LocationName("Notebook Meeting: Kafei"), MultiLocation(NotebookMeetKafeiInLaundryPool, NotebookMeetKafeiInIkanaCanyon, NotebookMeetKafeiInInn)]
         [GossipLocationHint("a cursed man"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting Kafei.")]
+        [ShopText("The Bombers' Notebook entry for meeting Kafei.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x451), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetKafei,
 
 
-        [ItemName("Notebook: Man from Curiosity Shop"), LocationName("Notebook: Meeting the Curiosity Shop Man"), MultiLocation(NotebookMeetCuriosityShopManInWCT, NotebookMeetCuriosityShopManInLaundryPool), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Man from Curiosity Shop"), LocationName("Notebook Meeting: The Curiosity Shop Man"), MultiLocation(NotebookMeetCuriosityShopManInWCT, NotebookMeetCuriosityShopManInLaundryPool), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Man from Curiosity Shop.")]
+        [ShopText("The Bombers' Notebook entry for meeting the Man from Curiosity Shop.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x452), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetCuriosityShopMan,
 
 
-        [ItemName("Notebook: Old Lady from Bomb Shop"), LocationName("Notebook: Meeting the Old Lady"), MultiLocation(NotebookMeetOldLadyInNCT, NotebookMeetOldLadyInWCT), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Old Lady from Bomb Shop"), LocationName("Notebook Meeting: The Old Lady"), MultiLocation(NotebookMeetOldLadyInNCT, NotebookMeetOldLadyInWCT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("an old lady"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Old Lady from Bomb Shop.")]
+        [ShopText("The Bombers' Notebook entry for meeting the Old Lady from Bomb Shop.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x453), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetOldLady,
 
 
-        [ItemName("Notebook: Romani"), LocationName("Notebook: Meeting Romani"), Region(Region.RomaniRanch)]
+        [ItemName("Notebook: Romani"), LocationName("Notebook Meeting: Romani"), Region(Region.RomaniRanch)]
         [GossipLocationHint("the ranch girl"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting Romani.")]
+        [ShopText("The Bombers' Notebook entry for meeting Romani.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x454), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetRomani,
 
 
-        [ItemName("Notebook: Cremia"), LocationName("Notebook: Meeting Cremia"), Region(Region.RomaniRanch)]
+        [ItemName("Notebook: Cremia"), LocationName("Notebook Meeting: Cremia"), Region(Region.RomaniRanch)]
         [GossipLocationHint("the ranch lady"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting Cremia.")]
+        [ShopText("The Bombers' Notebook entry for meeting Cremia.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x455), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetCremia,
 
 
-        [ItemName("Notebook: Mr. Dotour"), LocationName("Notebook: Meeting Mayor Dotour"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Mr. Dotour"), LocationName("Notebook Meeting: Mayor Dotour"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town leader", "an upstanding figure"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting Mayor Dotour.")]
+        [ShopText("The Bombers' Notebook entry for meeting Mayor Dotour.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x456), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetMayorDotour,
 
 
-        [ItemName("Notebook: Madame Aroma"), LocationName("Notebook: Meeting Madame Aroma"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Madame Aroma"), LocationName("Notebook Meeting: Madame Aroma"), Region(Region.EastClockTown)]
         [GossipLocationHint("an important lady", "an esteemed woman"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting Madame Aroma.")]
+        [ShopText("The Bombers' Notebook entry for meeting Madame Aroma.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x457), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetMadameAroma,
 
 
-        [ItemName("Notebook: Toto"), LocationName("Notebook: Meeting Toto"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Toto"), LocationName("Notebook Meeting: Toto"), Region(Region.EastClockTown)]
         [GossipLocationHint("a band manager"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting Toto.")]
+        [ShopText("The Bombers' Notebook entry for meeting Toto.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x458), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetToto,
 
 
-        [ItemName("Notebook: Gorman"), LocationName("Notebook: Meeting Gorman"), MultiLocation(NotebookMeetGormanInECT, NotebookMeetGormanInInn), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Gorman"), LocationName("Notebook Meeting: Gorman"), MultiLocation(NotebookMeetGormanInECT, NotebookMeetGormanInInn), RegionArea(RegionArea.Town)]
         [GossipLocationHint("an entertainer", "a miserable leader"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting Gorman.")]
+        [ShopText("The Bombers' Notebook entry for meeting Gorman.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x459), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetGorman,
 
 
-        [ItemName("Notebook: Postman"), LocationName("Notebook: Meeting the Postman"), MultiLocation(NotebookMeetPostmanInWCT, NotebookMeetPostmanInSCT, NotebookMeetPostmanInNCT, NotebookMeetPostmanInECT, NotebookMeetPostmanInInn, NotebookMeetPostmanInLaundryPool), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Postman"), LocationName("Notebook Meeting: The Postman"), MultiLocation(NotebookMeetPostmanInWCT, NotebookMeetPostmanInSCT, NotebookMeetPostmanInNCT, NotebookMeetPostmanInECT, NotebookMeetPostmanInInn, NotebookMeetPostmanInLaundryPool), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a hard worker", "a delivery person"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Postman.")]
+        [ShopText("The Bombers' Notebook entry for meeting the Postman.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x45A), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetPostman,
 
 
-        [ItemName("Notebook: Rosa Sisters"), LocationName("Notebook: Meeting the Rosa Sisters"), MultiLocation(NotebookMeetRosaSistersInWCT, NotebookMeetRosaSistersInInn), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Rosa Sisters"), LocationName("Notebook Meeting: The Rosa Sisters"), MultiLocation(NotebookMeetRosaSistersInWCT, NotebookMeetRosaSistersInInn), RegionArea(RegionArea.Town)]
         [GossipLocationHint("traveling sisters", "twin entertainers"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Rosa Sisters.")]
+        [ShopText("The Bombers' Notebook entry for meeting the Rosa Sisters.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x45B), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetRosaSisters,
 
 
-        [ItemName("Notebook: ???"), LocationName("Notebook: Meeting the Toilet Hand"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: ???"), LocationName("Notebook Meeting: The Toilet Hand"), Region(Region.StockPotInn)]
         [GossipLocationHint("a mystery appearance", "a strange palm"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Toilet Hand.")]
+        [ShopText("The Bombers' Notebook entry for meeting the Toilet Hand.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x45C), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetToiletHand,
 
 
-        [ItemName("Notebook: Anju's Grandmother"), LocationName("Notebook: Meeting Anju's Grandmother"), MultiLocation(NotebookMeetAnjusGrandmotherInInn, NotebookMeetAnjusGrandmotherInRanch)]
+        [ItemName("Notebook: Anju's Grandmother"), LocationName("Notebook Meeting: Anju's Grandmother"), MultiLocation(NotebookMeetAnjusGrandmotherInInn, NotebookMeetAnjusGrandmotherInRanch)]
         [GossipLocationHint("an old lady"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting Anju's Grandmother.")]
+        [ShopText("The Bombers' Notebook entry for meeting Anju's Grandmother.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x45D), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetAnjusGrandmother,
 
 
-        [ItemName("Notebook: Kamaro"), LocationName("Notebook: Meeting Kamaro"), Region(Region.TerminaField)]
+        [ItemName("Notebook: Kamaro"), LocationName("Notebook Meeting: Kamaro"), Region(Region.TerminaField)]
         [GossipLocationHint("a ghostly dancer", "a dancer"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting Kamaro.")]
+        [ShopText("The Bombers' Notebook entry for meeting Kamaro.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x45E), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetKamaro,
 
 
-        [ItemName("Notebook: Grog"), LocationName("Notebook: Meeting Grog"), Region(Region.RomaniRanch)]
+        [ItemName("Notebook: Grog"), LocationName("Notebook Meeting: Grog"), Region(Region.RomaniRanch)]
         [GossipLocationHint("an ugly but kind heart", "a lover of chickens"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting Grog.")]
+        [ShopText("The Bombers' Notebook entry for meeting Grog.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x45F), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetGrog,
 
 
-        [ItemName("Notebook: Gorman Brothers"), LocationName("Notebook: Meeting the Gorman Brothers"), Region(Region.MilkRoad)]
+        [ItemName("Notebook: Gorman Brothers"), LocationName("Notebook Meeting: The Gorman Brothers"), Region(Region.MilkRoad)]
         [GossipLocationHint("shady brothers"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Gorman Brothers.")]
+        [ShopText("The Bombers' Notebook entry for meeting the Gorman Brothers.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x460), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetGormanBrothers,
 
 
-        [ItemName("Notebook: Shiro"), LocationName("Notebook: Meeting Shiro"), Region(Region.RoadToIkana)]
+        [ItemName("Notebook: Shiro"), LocationName("Notebook Meeting: Shiro"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a hidden soldier", "a stone circle"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting Shiro.")]
+        [ShopText("The Bombers' Notebook entry for meeting Shiro.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x461), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetShiro,
 
 
-        [ItemName("Notebook: Guru-Guru"), LocationName("Notebook: Meeting Guru-Guru"), MultiLocation(NotebookMeetGuruGuruInInn, NotebookMeetGuruGuruInLaundryPool), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Guru-Guru"), LocationName("Notebook Meeting: Guru-Guru"), MultiLocation(NotebookMeetGuruGuruInInn, NotebookMeetGuruGuruInLaundryPool), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a musician", "an entertainer"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting Guru-Guru.")]
+        [ShopText("The Bombers' Notebook entry for meeting Guru-Guru.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x462), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMeetGuruGuru,
 
 
-        [ItemName("Notebook: Received Room Key"), LocationName("Notebook: Inn Reservation"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Received Room Key"), LocationName("Inn Reservation"), Region(Region.StockPotInn)]
         [GossipLocationHint("checking in", "check-in"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for the Inn Reservation.")]
+        [ShopText("The Bombers' Notebook entry for the Inn Reservation.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x463), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookInnReservation,
 
 
-        [ItemName("Notebook: Secret Night Meeting"), LocationName("Notebook: Promise Anju Meeting"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Secret Night Meeting"), LocationName("Setting up Midnight Meeting"), Region(Region.StockPotInn)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for promising to meet Anju.")]
+        [ShopText("The Bombers' Notebook entry for promising to meet Anju.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x464), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPromiseAnjuMeeting,
 
 
-        [ItemName("Notebook: Promised to meet Kafei"), LocationName("Notebook: Promise Anju Delivery"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Promised to meet Kafei"), LocationName("Midnight Meeting"), Region(Region.StockPotInn)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for promising Anju that you'll meet Kafei.")]
+        [ShopText("The Bombers' Notebook entry for promising Anju that you'll meet Kafei.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x465), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPromiseAnjuDelivery,
 
 
-        //GetItemIndex(0x466)
+        //GetItemIndex(0x466) // see frogs
 
 
-        [ItemName("Notebook: Deposit Letter to Kafei"), LocationName("Notebook: Deposit Letter to Kafei"), MultiLocation(NotebookDepositLetterToKafeiInSCT, NotebookDepositLetterToKafeiInNCT, NotebookDepositLetterToKafeiInECT), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Deposit Letter to Kafei"), LocationName("Depositing the Letter to Kafei"), MultiLocation(NotebookDepositLetterToKafeiInSCT, NotebookDepositLetterToKafeiInNCT, NotebookDepositLetterToKafeiInECT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for depositing the Letter to Kafei.")]
+        [ShopText("The Bombers' Notebook entry for depositing the Letter to Kafei.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x467), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookDepositLetterToKafei,
 
 
-        [ItemName("Notebook: Pendant of Memories"), LocationName("Notebook: Promise Kafei"), Region(Region.LaundryPool)]
+        [ItemName("Notebook: Pendant of Memories"), LocationName("Kafei"), Region(Region.LaundryPool)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for promising Kafei that you'll return to Anju.")]
+        [ShopText("The Bombers' Notebook entry for promising Kafei that you'll return to Anju.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x468), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPromiseKafei,
 
 
-        [ItemName("Notebook: Delivered Pendant"), LocationName("Notebook: Deliver Pendant"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Delivered Pendant"), LocationName("Deliver the Pendant of Memories"), Region(Region.StockPotInn)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for delivering the Pendant of Memories.")]
+        [ShopText("The Bombers' Notebook entry for delivering the Pendant of Memories.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x469), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookDeliverPendant,
 
 
-        [ItemName("Notebook: Escaped from Sakon's Hideout"), LocationName("Notebook: Escape from Sakon's Hideout"), Region(Region.IkanaCanyon)]
+        [ItemName("Notebook: Escaped from Sakon's Hideout"), LocationName("Escaping from Sakon's Hideout"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for escaping Sakon's Hideout.")]
+        [ShopText("The Bombers' Notebook entry for escaping Sakon's Hideout.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x46A), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookEscapeFromSakonSHideout,
 
 
-        [ItemName("Notebook: Became ranch hand"), LocationName("Notebook: Promise Romani"), Region(Region.RomaniRanch)]
+        [ItemName("Notebook: Became ranch hand"), LocationName("Romani's Game"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for promising Romani that you'll help defend against the 'them'.")]
+        [ShopText("The Bombers' Notebook entry for promising Romani that you'll help defend against the 'them'.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x46B), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPromiseRomani,
 
 
-        [ItemName("Notebook: Saved cows from \"them\""), LocationName("Notebook: Save the Cows"), Region(Region.RomaniRanch)]
-        [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for saving the cows.")]
+        [ItemName("Notebook: Saved cows from \"them\""), LocationName("Aliens Defense"), Region(Region.RomaniRanch)]
+        [GossipLocationHint("a good deed"), GossipItemHint("a diary entry"), GossipCompetitiveHint(-2)]
+        [ShopText("The Bombers' Notebook entry for saving the cows.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x46C), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookSaveTheCows,
 
 
-        //GetItemIndex(0x46D)
+        //GetItemIndex(0x46D) // see frogs
 
 
-        [ItemName("Notebook: Protected milk delivery"), LocationName("Notebook: Protect milk delivery"), Region(Region.RomaniRanch)]
-        [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for protecting Cremia.")]
+        [ItemName("Notebook: Protected milk delivery"), LocationName("Cremia"), Region(Region.RomaniRanch)]
+        [GossipLocationHint("a good deed"), GossipItemHint("a diary entry"), GossipCompetitiveHint]
+        [ShopText("The Bombers' Notebook entry for protecting Cremia.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x46E), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookProtectMilkDelivery,
 
 
-        //GetItemIndex(0x46F)
+        //GetItemIndex(0x46F) // see frogs
 
 
-        [ItemName("Notebook: Keaton Mask"), LocationName("Notebook: Curiosity Shop Man's Gift"), Region(Region.LaundryPool)]
+        [ItemName("Notebook: Keaton Mask"), LocationName("Curiosity Shop Man #1"), Region(Region.LaundryPool)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for speaking with the Curiosity Shop man about Kafei.")]
+        [ShopText("The Bombers' Notebook entry for speaking with the Curiosity Shop man about Kafei.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x470), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookCuriosityShopManSGift,
 
 
-        [ItemName("Notebook: Letter to Mama"), LocationName("Notebook: Promise Curiosity Shop Man"), Region(Region.LaundryPool)]
+        [ItemName("Notebook: Letter to Mama"), LocationName("Curiosity Shop Man #2"), Region(Region.LaundryPool)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for promising to deliver the Express Mail.")]
+        [ShopText("The Bombers' Notebook entry for promising to deliver the Express Mail.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x471), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPromiseCuriosityShopMan,
 
 
-        [ItemName("Notebook: Chateau Romani"), LocationName("Notebook: Deliver Letter to Mama"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Chateau Romani"), LocationName("Madame Aroma in Bar"), Region(Region.EastClockTown)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for delivering the Letter to Mama.")]
+        [ShopText("The Bombers' Notebook entry for delivering the Letter to Mama.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x472), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookDeliverLetterToMama,
 
 
-        //GetItemIndex(0x473)
+        //GetItemIndex(0x473) // see frogs
 
 
-        [ItemName("Notebook: Bombers' Notebook"), LocationName("Notebook: Learn Bombers' Code"), MultiLocation(NotebookLearnBombersCodeInNCT, NotebookLearnBombersCodeInECT), RegionArea(RegionArea.Town)]
+        [ItemName("Notebook: Bombers' Notebook"), LocationName("Bombers' Hide and Seek"), MultiLocation(NotebookLearnBombersCodeInNCT, NotebookLearnBombersCodeInECT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a group of children", "a town game"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for the Bombers' Hideout code.")]
+        [ShopText("The Bombers' Notebook entry for the Bombers' Hideout code.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x474), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookLearnBombersCode,
 
 
-        [ItemName("Notebook: Dotour's Thanks"), LocationName("Notebook: Dotour's Thanks"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Dotour's Thanks"), LocationName("Mayor"), Region(Region.EastClockTown)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for ending the Mayor's meeting.")]
+        [ShopText("The Bombers' Notebook entry for ending the Mayor's meeting.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x475), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookDotoursThanks,
 
 
-        [ItemName("Notebook: Rosa Sisters' Thanks"), LocationName("Notebook: Rosa Sisters' Thanks"), Region(Region.WestClockTown)]
+        [ItemName("Notebook: Rosa Sisters' Thanks"), LocationName("Rosa Sisters"), Region(Region.WestClockTown)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for teaching the Rosa Sisters to dance.")]
+        [ShopText("The Bombers' Notebook entry for teaching the Rosa Sisters to dance.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x476), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookRosaSistersThanks,
 
 
-        [ItemName("Notebook: Thanks for the paper"), LocationName("Notebook: Toilet Hand's Thanks"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Thanks for the paper"), LocationName("Toilet Hand"), Region(Region.StockPotInn)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for giving paper to the hand.")]
+        [ShopText("The Bombers' Notebook entry for giving paper to the hand.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x477), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookToiletHandSThanks,
 
 
-        [ItemName("Notebook: Reading Prize 1"), LocationName("Notebook: Grandma Short Story"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Reading Prize 1"), LocationName("Grandma Short Story"), Region(Region.StockPotInn)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for staying awake for 2 hours.")]
+        [ShopText("The Bombers' Notebook entry for staying awake for 2 hours.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x478), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookGrandmaShortStory,
 
 
-        [ItemName("Notebook: Reading Prize 2"), LocationName("Notebook: Grandma Long Story"), Region(Region.StockPotInn)]
+        [ItemName("Notebook: Reading Prize 2"), LocationName("Grandma Long Story"), Region(Region.StockPotInn)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for staying awake until morning.")]
+        [ShopText("The Bombers' Notebook entry for staying awake until morning.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x479), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookGrandmaLongStory,
 
 
-        [ItemName("Notebook: Training Award"), LocationName("Notebook: Postman's Game"), Region(Region.WestClockTown)]
+        [ItemName("Notebook: Training Award"), LocationName("Postman's Game"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town game"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for counting to 10 seconds.")]
+        [ShopText("The Bombers' Notebook entry for counting to 10 seconds.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x47A), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPostmansGame,
 
 
-        [ItemName("Notebook: Kafei's Mask"), LocationName("Notebook: Promise Madame Aroma"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Kafei's Mask"), LocationName("Madame Aroma in Office"), Region(Region.EastClockTown)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for promising to find Kafei.")]
+        [ShopText("The Bombers' Notebook entry for promising to find Kafei.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [HackContent(nameof(Resources.mods.fix_notebook_madame_aroma), false)]
         [GetItemIndex(0x47B), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPromiseMadameAroma,
 
 
-        [ItemName("Notebook: All-Night Mask"), LocationName("Notebook: Purchase Curiosity Shop Item"), Region(Region.WestClockTown)]
-        [GossipLocationHint("a shady deal"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for buying the item from the Curiosity Shop on the final night.")]
+        [ItemName("Notebook: All-Night Mask"), LocationName("All-Night Mask Purchase"), Region(Region.WestClockTown)]
+        [GossipLocationHint("a shady deal"), GossipItemHint("a diary entry"), GossipCompetitiveHint]
+        [ShopText("The Bombers' Notebook entry for buying the item from the Curiosity Shop on the final night.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x47C), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPurchaseCuriosityShopItem,
 
 
-        [ItemName("Notebook: Bunny Hood"), LocationName("Notebook: Grog's Thanks"), Region(Region.RomaniRanch)]
+        [ItemName("Notebook: Bunny Hood"), LocationName("Grog"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for growing the baby cuccos.")]
+        [ShopText("The Bombers' Notebook entry for growing the baby cuccos.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x47D), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookGrogsThanks,
 
 
-        [ItemName("Notebook: Garo's Mask"), LocationName("Notebook: Defeat Gorman Brothers"), Region(Region.MilkRoad)]
+        [ItemName("Notebook: Garo's Mask"), LocationName("Gorman Bros Race"), Region(Region.MilkRoad)]
         [GossipLocationHint("a sporting event"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for defeating the Gorman Brothers.")]
+        [ShopText("The Bombers' Notebook entry for defeating the Gorman Brothers.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x47E), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookDefeatGormanBrothers,
 
 
-        [ItemName("Notebook: Circus Leader's Mask"), LocationName("Notebook: Moving Gorman"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Circus Leader's Mask"), LocationName("Gorman"), Region(Region.EastClockTown)]
         [GossipLocationHint("a moving performance"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for moving Gorman with a performance.")]
+        [ShopText("The Bombers' Notebook entry for moving Gorman with a performance.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x47F), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookMovingGorman,
 
 
-        [ItemName("Notebook: Postman's Hat"), LocationName("Notebook: Postman's Freedom"), Region(Region.EastClockTown)]
+        [ItemName("Notebook: Postman's Hat"), LocationName("Postman's Freedom Reward"), Region(Region.EastClockTown)]
         [GossipLocationHint("a special delivery", "one last job"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for allowing the Postman to flee.")]
+        [ShopText("The Bombers' Notebook entry for allowing the Postman to flee.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x480), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPostmansFreedom,
 
 
-        [ItemName("Notebook: Couple's Mask"), LocationName("Notebook: Unite Anju and Kafei"), Region(Region.StockPotInn)]
-        [GossipLocationHint("a reunion", "a lovers' reunion"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for reuniting Anju and Kafei.")]
+        [ItemName("Notebook: Couple's Mask"), LocationName("Anju and Kafei"), Region(Region.StockPotInn)]
+        [GossipLocationHint("a reunion", "a lovers' reunion"), GossipItemHint("a diary entry"), GossipCompetitiveHint(3)]
+        [ShopText("The Bombers' Notebook entry for reuniting Anju and Kafei.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x481), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookUniteAnjuAndKafei,
 
 
-        [ItemName("Notebook: Blast Mask"), LocationName("Notebook: Save Old Lady"), Region(Region.NorthClockTown)]
+        [ItemName("Notebook: Blast Mask"), LocationName("Old Lady"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for saving the Old Lady.")]
+        [ShopText("The Bombers' Notebook entry for saving the Old Lady.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x482), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookSaveOldLady,
 
 
-        [ItemName("Notebook: Kamaro's Mask"), LocationName("Notebook: Promise Kamaro"), Region(Region.TerminaField)]
+        [ItemName("Notebook: Kamaro's Mask"), LocationName("Kamaro"), Region(Region.TerminaField)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Bombers.")]
+        [ShopText("The Bombers' Notebook entry for meeting the Bombers.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x483), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPromiseKamaro,
 
 
-        [ItemName("Notebook: Stone Mask"), LocationName("Notebook: Save Invisible Soldier"), Region(Region.RoadToIkana)]
+        [ItemName("Notebook: Stone Mask"), LocationName("Invisible Soldier"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Bombers.")]
+        [ShopText("The Bombers' Notebook entry for meeting the Bombers.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x484), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookSaveInvisibleSoldier,
 
 
-        [ItemName("Notebook: Bremen Mask"), LocationName("Notebook: Guru-Guru"), Region(Region.LaundryPool)]
+        [ItemName("Notebook: Bremen Mask"), LocationName("Guru-Guru"), Region(Region.LaundryPool)]
         [GossipLocationHint("a musician", "an entertainer"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Bombers.")]
+        [ShopText("The Bombers' Notebook entry for meeting the Bombers.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x485), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookGuruGuru,
 
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Ikana Castle Courtyard Pot"), Region(Region.IkanaCastle)]
+        [GossipLocationHint("an ancient jar"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x486), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xEBE)]
+        CollectableAncientCastleOfIkanaCastleExteriorPot1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Ikana Castle Hole Room Pot 3"), Region(Region.IkanaCastle)]
+        [GossipLocationHint("an ancient jar"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x487), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xECD)]
+        CollectableAncientCastleOfIkanaHoleRoomPot3,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Ikana Castle Hole Room Pot 4"), Region(Region.IkanaCastle)]
+        [GossipLocationHint("an ancient jar"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x488), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xECE)]
+        CollectableAncientCastleOfIkanaHoleRoomPot4,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Great Bay Coast Pot 8"), Region(Region.GreatBayCoast)]
+        [GossipLocationHint("an ocean jar"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x489), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x1BAB)]
+        CollectableGreatBayCoastPot11,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Great Bay Temple Entrance Room Barrel"), Region(Region.GreatBayTemple)]
+        [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x48A), ItemPool(ItemCategory.Fairy, LocationCategory.Barrels, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x24B3)]
+        CollectableGreatBayTempleEntranceRoomBarrel1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Ikana Canyon Grass 4"), Region(Region.IkanaCanyon)]
+        [GossipLocationHint("an ancient plant"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x48B), ItemPool(ItemCategory.Fairy, LocationCategory.Grass, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x9A3)]
+        CollectableIkanaCanyonMainAreaGrass7,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Ikana Canyon Grass 5"), Region(Region.IkanaCanyon)]
+        [GossipLocationHint("an ancient plant"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x48C), ItemPool(ItemCategory.Fairy, LocationCategory.Grass, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x9C9)]
+        CollectableIkanaCanyonMainAreaGrass8,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Milk Road Grass 3"), Region(Region.MilkRoad)]
+        [GossipLocationHint("a roadside plant"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x48D), ItemPool(ItemCategory.Fairy, LocationCategory.Grass, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x1120)]
+        CollectableMilkRoadGrass3,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Mountain Village Spring Pot"), Region(Region.MountainVillage)]
+        [GossipLocationHint("a spring jar"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x48E), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2D26)]
+        CollectableMountainVillageSpringPot1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Mountain Village Spring Snowball 4"), Region(Region.MountainVillage)]
+        [GossipLocationHint("a spring snowball"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x48F), ItemPool(ItemCategory.Fairy, LocationCategory.SmallSnowballs, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2D2B)]
+        CollectableMountainVillageSpringSmallSnowball4,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Mountain Village Winter Pot"), Region(Region.MountainVillage)]
+        [GossipLocationHint("a village jar"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x490), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2820)]
+        CollectableMountainVillageWinterPot1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Mountain Village Winter Small Snowball 6"), Region(Region.MountainVillage)]
+        [GossipLocationHint("a village snowball"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x491), ItemPool(ItemCategory.Fairy, LocationCategory.SmallSnowballs, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2836)]
+        CollectableMountainVillageWinterSmallSnowball8,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Road to Ikana Pot"), Region(Region.RoadToIkana)]
+        [GossipLocationHint("a jar on a rock"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x492), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x29A0)]
+        CollectableRoadToIkanaPot1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Secret Shrine Underwater Pot 5"), Region(Region.SecretShrine)]
+        [GossipLocationHint("a secret place"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x493), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x307A)]
+        CollectableSecretShrineMainRoomPot5,
+
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Snowhead Small Snowball"), Region(Region.Snowhead)]
+        [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x494), ItemPool(ItemCategory.Fairy, LocationCategory.SmallSnowballs, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2E22)]
+        CollectableSnowheadSmallSnowball10,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Snowhead Main Room Pot"), Region(Region.SnowheadTemple)]
+        [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x495), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x10A7)]
+        CollectableSnowheadTempleMainRoomPot3,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Cleared Swamp Owl Grass 2"), Region(Region.SouthernSwamp)]
+        [GossipLocationHint("swamp grass"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x496), ItemPool(ItemCategory.Fairy, LocationCategory.Grass, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x27)]
+        CollectableSouthernSwampClearCentralSwampGrass2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Southern Swamp Owl Grass 2"), Region(Region.SouthernSwamp)]
+        [GossipLocationHint("swamp grass"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x497), ItemPool(ItemCategory.Fairy, LocationCategory.Grass, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x22AD)]
+        CollectableSouthernSwampPoisonedCentralSwampGrass2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Stone Tower Lower Scarecrow Pot 4"), Region(Region.StoneTower)]
+        [GossipLocationHint("a high tower"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x498), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2C23)]
+        CollectableStoneTowerPot11,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Stone Tower Lower Scarecrow Pot 5"), Region(Region.StoneTower)]
+        [GossipLocationHint("a high tower"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x499), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2C25)]
+        CollectableStoneTowerPot12,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Stone Tower Upper Scarecrow Pot 5"), Region(Region.StoneTower)]
+        [GossipLocationHint("a high tower"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x49A), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2C2C)]
+        CollectableStoneTowerPot13,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Stone Tower Owl Pot 4"), Region(Region.StoneTower)]
+        [GossipLocationHint("a high tower"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x49B), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2C39)]
+        CollectableStoneTowerPot14,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Inverted Stone Tower Pot 3"), Region(Region.StoneTower)]
+        [GossipLocationHint("a sky below"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x49C), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2CB9)]
+        CollectableStoneTowerInvertedStoneTowerFlippedPot3,
+
+        // [GetItemIndex(0x49D)] // Removed
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Stone Tower Temple Thin Bridge Pot"), Region(Region.StoneTowerTemple)]
+        [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x49E), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xB24)]
+        CollectableStoneTowerTempleRoomAfterLightArrowsPot1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Stone Tower Temple Wizzrobe Pot"), Region(Region.StoneTowerTemple)]
+        [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x49F), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xC21)]
+        CollectableStoneTowerTempleInvertedWizzrobeRoomPot1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Termina Field Pillar Pot"), Region(Region.TerminaField)]
+        [GossipLocationHint("a jar on a pillar"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4A0), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x16A0)]
+        CollectableTerminaFieldPot1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Woodfall Pot 3"), Region(Region.Woodfall)]
+        [GossipLocationHint("a poisoned platform"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4A1), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2321)]
+        CollectableWoodfallPot3,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Woodfall Temple Entrance Pot"), Region(Region.WoodfallTemple)]
+        [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4A2), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xDA1)]
+        CollectableWoodfallTempleEntranceRoomPot1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Zora Cape Owl Pot 4"), Region(Region.ZoraCape)]
+        [GossipLocationHint("a cape jar"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4A3), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x1C24)]
+        CollectableZoraCapePot5,
+
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Cucco Shack Gossip Fairy"), Region(Region.RomaniRanch)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4A4), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableCuccoShackGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Doggy Racetrack Gossip Fairy"), Region(Region.RomaniRanch)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4A5), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableDoggyRacetrackGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Great Bay Coast Gossip Fairy"), Region(Region.GreatBayCoast)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4A6), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableGreatBayCoastGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Gossip Grotto Fairy"), Region(Region.TerminaField)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4A7), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableGrottosOceanGossipStonesGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Ikana Canyon Dock Gossip Fairy"), Region(Region.IkanaCanyon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4A8), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableIkanaCanyonMainAreaGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Ikana Canyon Spirit House Gossip Fairy"), Region(Region.IkanaCanyon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4A9), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableIkanaCanyonMainAreaGossipFairy2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Ikana Canyon Ravine Gossip Fairy"), Region(Region.IkanaCanyon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4AA), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableIkanaCanyonSakonSHideoutAreaGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Milk Road Gossip Fairy"), Region(Region.MilkRoad)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4AB), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableMilkRoadGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Mountain Village Spring Path Gossip Fairy"), Region(Region.MountainVillage)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4AC), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableMountainVillageSpringPathToGoronGraveyardGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Mountain Village Spring Frog Gossip Fairy"), Region(Region.MountainVillage)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4AD), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableMountainVillageSpringGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Path to Mountain Village Gossip Fairy"), Region(Region.MountainVillage)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4AE), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectablePathToMountainVillageGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Road to Ikana Gossip Fairy"), Region(Region.RoadToIkana)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4AF), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableRoadToIkanaGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Road to Southern Swamp Gossip Fairy"), Region(Region.RoadToSouthernSwamp)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4B0), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableRoadToSouthernSwampGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Ranch Entrance Gossip Fairy"), Region(Region.RomaniRanch)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4B1), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableRomaniRanchGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Ranch Tree Gossip Fairy"), Region(Region.RomaniRanch)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4B2), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableRomaniRanchGossipFairy2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Ranch Barn Gossip Fairy"), Region(Region.RomaniRanch)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4B3), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableRomaniRanchGossipFairy3,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Southern Swamp Gossip Fairy"), Region(Region.SouthernSwamp)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4B4), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Swamp Spider House Gossip Fairy"), Region(Region.SouthernSwamp)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4B5), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableSwampSpiderHouseTreeRoomGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Termina Field Observatory Gossip Fairy"), Region(Region.TerminaField)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4B6), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTerminaFieldGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Termina Field East Gossip Fairy"), Region(Region.TerminaField)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4B7), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTerminaFieldGossipFairy2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Termina Field South Gossip Fairy"), Region(Region.TerminaField)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4B8), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTerminaFieldGossipFairy3,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Termina Field North Gossip Fairy"), Region(Region.TerminaField)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4B9), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTerminaFieldGossipFairy4,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Termina Field West Gossip Fairy"), Region(Region.TerminaField)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4BA), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTerminaFieldGossipFairy5,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Termina Field Milk Gossip Fairy"), Region(Region.TerminaField)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4BB), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTerminaFieldGossipFairy6,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Deku Trial Left Closer Gossip Fairy"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4BC), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonDekuTrialDekuTrialGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Deku Trial Right Closer Gossip Fairy"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4BD), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonDekuTrialDekuTrialGossipFairy2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Deku Trial Left Middle Gossip Fairy"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4BE), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonDekuTrialDekuTrialGossipFairy3,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Deku Trial Right Middle Gossip Fairy"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4BF), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonDekuTrialDekuTrialGossipFairy4,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Deku Trial Right Further Gossip Fairy"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4C0), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonDekuTrialDekuTrialGossipFairy5,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Goron Trial End Gossip Fairy"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4C1), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonGoronTrialGoronTrialGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Goron Trial Second Set Gossip Fairy"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4C2), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonGoronTrialGoronTrialGossipFairy2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Goron Trial Second Set Gossip Fairy 2"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4C3), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonGoronTrialGoronTrialGossipFairy3,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Goron Trial First Set Gossip Fairy"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4C4), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonGoronTrialGoronTrialGossipFairy4,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Goron Trial First Set Gossip Fairy 2"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4C5), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonGoronTrialGoronTrialGossipFairy5,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Link Trial First Gossip Fairy"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4C6), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonLinkTrialGossipStoneRoom1GossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Link Trial Second Gossip Fairy"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4C7), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonLinkTrialGossipStoneRoom2GossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Link Trial Iron Knuckle Fairy"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4C8), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonLinkTrialIronKnuckleBattleGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Link Trial Iron Knuckle Fairy 2"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4C9), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonLinkTrialIronKnuckleBattleGossipFairy2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Link Trial Last Gossip Fairy"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4CA), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonLinkTrialPieceOfHeartRoomGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4CB), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonZoraTrialZoraTrialGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy 2"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4CC), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonZoraTrialZoraTrialGossipFairy2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy 3"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4CD), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonZoraTrialZoraTrialGossipFairy3,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy 4"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4CE), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonZoraTrialZoraTrialGossipFairy4,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy 5"), Region(Region.TheMoon)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4CF), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableTheMoonZoraTrialZoraTrialGossipFairy5,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Zora Cape Gossip Fairy"), Region(Region.ZoraCape)]
+        [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4D0), ItemPool(ItemCategory.Fairy, LocationCategory.GossipFairies, ClassicCategory.GossipFairies), NullableItem]
+        CollectableZoraCapeGossipFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Great Bay Coast Butterfly Fairy"), Region(Region.GreatBayCoast)]
+        [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4D1), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
+        CollectableGreatBayCoastButterflyFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Termina Field West Gossip Grotto Butterfly Fairy"), Region(Region.TerminaField)]
+        [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4D2), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
+        CollectableGrottosOceanGossipStonesButterflyFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Bean Man Butterfly Fairy"), Region(Region.TerminaField)]
+        [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4D3), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
+        CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Termina Field Cow Grotto Butterfly Fairy"), Region(Region.TerminaField)]
+        [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4D4), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
+        CollectableGrottosCowGrottoButterflyFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Great Bay Coast Cow Grotto Butterfly Fairy"), Region(Region.TerminaField)]
+        [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4D5), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
+        CollectableGrottosCowGrottoButterflyFairy2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Mountain Village Spring Butterfly Fairy"), Region(Region.MountainVillage)]
+        [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4D6), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
+        CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Mountain Village Spring Butterfly Fairy 2"), Region(Region.MountainVillage)]
+        [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4D7), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
+        CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Fairy"), LocationName("Near Peahat Grotto Butterfly Fairy"), Region(Region.TerminaField)]
+        [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
+        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x4D8), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
+        CollectableTerminaFieldButterflyFairy1,
+
+        [Repeatable, Temporary]
+        [ItemName("Cyan Frog"), LocationName("Frog in Woodfall Temple"), Region(Region.WoodfallTemple)]
+        [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
+        [ShopText("The cyan frog from Don Gero's frog choir.", isDefinite: true)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x466), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs), NullableItem]
+        [ExclusiveItemMessage(0x9003, "\u0017You found the \u0005Cyan Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
+        FrogWoodfallTemple,
+
+        [Repeatable, Temporary]
+        [ItemName("Pink Frog"), LocationName("Frog in Great Bay Temple"), Region(Region.GreatBayTemple)]
+        [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
+        [ShopText("The pink frog from Don Gero's frog choir.", isDefinite: true)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x46D), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs), NullableItem]
+        [ExclusiveItemMessage(0x9004, "\u0017You found the \u0006Pink Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
+        FrogGreatBayTemple,
+
+        [Repeatable, Temporary]
+        [ItemName("Blue Frog"), LocationName("Frog in the Swamp"), Region(Region.SouthernSwamp)]
+        [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
+        [ShopText("The blue frog from Don Gero's frog choir.", isDefinite: true)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x46F), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs), NullableItem]
+        [ExclusiveItemMessage(0x9005, "\u0017You found the \u0003Blue Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
+        FrogSwamp,
+
+        [Repeatable, Temporary]
+        [ItemName("White Frog"), LocationName("Frog in the Laundry Pool"), Region(Region.LaundryPool)]
+        [GossipLocationHint("an amphibian"), GossipItemHint("a choir member")]
+        [ShopText("The white frog from Don Gero's frog choir.", isDefinite: true)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x473), ItemPool(ItemCategory.Frogs, LocationCategory.Frogs, ClassicCategory.Frogs), NullableItem]
+        [ExclusiveItemMessage(0x9006, "\u0017You found the \u0001White Frog\u0000!\u0018\u0011It will wait for you in the mountains.\u00BF")]
+        FrogLaundryPool,
 
 
 
@@ -10559,12 +11485,6 @@ namespace MMR.Randomizer.GameObjects
 
         [MainLocation(NotebookMeetAnju), Region(Region.StockPotInn)]
         NotebookMeetAnjuInInn,
-
-        [MainLocation(NotebookMeetAnju), Region(Region.EastClockTown)]
-        NotebookMeetAnjuInECT,
-
-        [MainLocation(NotebookMeetAnju), Region(Region.SouthClockTown)]
-        NotebookMeetAnjuInSCT,
 
         [MainLocation(NotebookMeetAnju), Region(Region.LaundryPool)]
         NotebookMeetAnjuInLaundryPool,

@@ -172,6 +172,9 @@
   <data name="gameplay_keep_swordenvs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>models\gameplay_keep_swordenvs.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="gi_frog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>models\gi-frog;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="gi_link_mask" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>models\gi-link-mask;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

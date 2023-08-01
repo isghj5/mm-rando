@@ -2,7 +2,7 @@
 #include "ActorExt.h"
 #include "LoadedModels.h"
 #include "Models.h"
-#include "Item00.h"
+#include "BaseRupee.h"
 #include "MMR.h"
 
 /**
@@ -16,7 +16,7 @@ void Scene_AfterInit(GlobalContext* ctxt) {
     // Clear loaded actor model info
     LoadedModels_ClearActorModels();
     // Load Collectable Table info for the scene
-    Item00_LoadCollectableTable(ctxt);
+    Rupee_LoadCollectableTable(ctxt);
     // Clear Item Queue
     MMR_ClearItemQueue();
 }

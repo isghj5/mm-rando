@@ -143,6 +143,11 @@ namespace MMR.Randomizer.Utils
                 newItem = RomData.GetItemList[item.GetItemIndex().Value];
             }
 
+            if (!itemObject.IsRandomized && item.ItemCategory() == ItemCategory.NotebookEntries)
+            {
+                newItem.Message = 0; // specially handled for non-randomized notebook entries
+            }
+
             // set values for draw flags for some mask checks (and pendant of memories)
             if (getItemIndex is 0x80 or 0x81 or 0x84 or 0x88 or 0x8A or 0xAB)
             {
@@ -216,6 +221,10 @@ namespace MMR.Randomizer.Utils
                 isRepeatable = false;
                 settings.AsmOptions.MMRConfig.ItemsToReturnIds.Add(getItemIndex);
             }
+            if (location == Item.ItemOcarina && ItemUtils.IsLogicallyJunk(item))
+            {
+                isRepeatable = false;
+            }
             if (!isRepeatable)
             {
                 SceneUtils.UpdateSceneFlagMask(getItemIndex);
@@ -255,13 +264,21 @@ namespace MMR.Randomizer.Utils
                 var messageId = ReadWriteUtils.ReadU16(shopInventory.ShopItemAddress + 0x0A);
                 var oldMessage = messageTable.GetMessage((ushort)(messageId + 1));
                 var cost = ReadWriteUtils.Arr_ReadU16(oldMessage.Header, 5);
+                var itemCost = $"{cost} Rupee{(cost != 1 ? "s" : "")}";
+                var maxLineLength = 35;
+                var maxItemNameLength = maxLineLength - $": {itemCost}".Length;
+                var itemName = itemObject.DisplayName();
+                if (itemName.Length > maxItemNameLength)
+                {
+                    itemName = itemName.Substring(0, maxItemNameLength - 3) + "...";
+                }
                 newMessages.Add(new MessageEntryBuilder()
                     .Id(messageId)
                     .Message(it =>
                     {
                         it.Red(() =>
                         {
-                            it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text(cost.ToString()).Text(" Rupees").NewLine();
+                            it.RuntimeItemName(itemName, location).Text(": ").Text(itemCost).NewLine();
                         })
                         .RuntimeWrap(() =>
                         {
@@ -277,7 +294,7 @@ namespace MMR.Randomizer.Utils
                     .Id((ushort)(messageId + 1))
                     .Message(it =>
                     {
-                        it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text(cost.ToString()).Text(" Rupees").NewLine()
+                        it.RuntimeItemName(itemName, location).Text(": ").Text(itemCost).NewLine()
                         .Text(" ").NewLine()
                         .StartGreenText()
                         .TwoChoices()

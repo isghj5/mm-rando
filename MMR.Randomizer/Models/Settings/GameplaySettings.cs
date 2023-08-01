@@ -213,6 +213,21 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.InstantTransform = value; }
         }
 
+        public bool BombArrows
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.BombArrows; }
+            set { this.AsmOptions.MiscConfig.Flags.BombArrows = value; }
+        }
+
+        /// <summary>
+        /// How many boss remains are required to proceed through the final Giants cutscene.
+        /// </summary>
+        public byte RequiredBossRemains
+        {
+            get { return this.AsmOptions.MiscConfig.MMRBytes.RequiredBossRemains; }
+            set { this.AsmOptions.MiscConfig.MMRBytes.RequiredBossRemains = value; }
+        }
+
         #endregion
 
         #region Random Elements
@@ -434,6 +449,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public bool ClearGaroHints { get; set; }
 
+        public bool TolerantGossipStones { get; set; } = true;
+
         public bool HintsIndicateImportance { get; set; }
 
         public int? OverrideNumberOfRequiredGossipHints { get; set; }
@@ -465,6 +482,11 @@ namespace MMR.Randomizer.Models.Settings
         public bool UpdateChests { get; set; }
 
         /// <summary>
+        /// Updates NPC Text when referring to items and locations
+        /// </summary>
+        public bool UpdateNPCText { get; set; }
+
+        /// <summary>
         /// Change epona B button behavior to prevent player losing sword if they don't have a bow.
         /// </summary>
         public bool FixEponaSword { get; set; } = true;
@@ -475,6 +497,8 @@ namespace MMR.Randomizer.Models.Settings
         public bool EnablePictoboxSubject { get; set; } = true;
 
         public bool LenientGoronSpikes { get; set; }
+
+        public bool KeepQuestTradeThroughTime { get; set; }
 
         #endregion
 
@@ -536,6 +560,14 @@ namespace MMR.Randomizer.Models.Settings
             if (CustomJunkLocations == null)
             {
                 return "Invalid junk locations list.";
+            }
+            if (KeepQuestTradeThroughTime && !QuestItemStorage)
+            {
+                return $"Must enable '{nameof(QuestItemStorage)}' if '{nameof(KeepQuestTradeThroughTime)}' is enabled.";
+            }
+            if (RequiredBossRemains < 1 || RequiredBossRemains > 4)
+            {
+                return $"{nameof(RequiredBossRemains)} must be between 1 and 4.";
             }
             return null;
         }

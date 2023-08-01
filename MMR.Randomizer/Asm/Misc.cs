@@ -96,6 +96,16 @@ namespace MMR.Randomizer.Asm
         public ChestGameMinimapState ChestGameMinimap { get; set; }
 
         /// <summary>
+        /// Whether or not the Giant's Cutscene Skip is enabled.
+        /// </summary>
+        public bool SkipGiantsCutscene { get; set; }
+
+        /// <summary>
+        /// Whether or not to show the Oath Hint cutscene when SkipGiantsCutscene is enabled.
+        /// </summary>
+        public bool OathHint { get; set; }
+
+        /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
         /// <returns>Integer</returns>
@@ -112,6 +122,8 @@ namespace MMR.Randomizer.Asm
             flags |= (this.BankMultiRewards ? (uint)1 : 0) << 24;
             flags |= (this.ShortChestOpening ? (uint)1 : 0) << 23;
             flags |= (((uint)this.ChestGameMinimap) & 3) << 21;
+            flags |= (this.SkipGiantsCutscene ? (uint)1 : 0) << 20;
+            flags |= (this.OathHint ? (uint)1 : 0) << 19;
             return flags;
         }
     }
@@ -260,6 +272,11 @@ namespace MMR.Randomizer.Asm
         public bool InstantTransform { get; set; }
 
         /// <summary>
+        /// Whether or not bomb arrows should be enabled.
+        /// </summary>
+        public bool BombArrows { get; set; }
+
+        /// <summary>
         /// Whether or to enable logic needed for Giant Mask Anywhere to work.
         /// </summary>
         public bool GiantMaskAnywhere { get; set; }
@@ -300,7 +317,8 @@ namespace MMR.Randomizer.Asm
             this.SaferGlitches = ((flags >> 7) & 1) == 1;
             this.BombchuDrops = ((flags >> 6) & 1) == 1;
             this.InstantTransform = ((flags >> 5) & 1) == 1;
-            this.GiantMaskAnywhere = ((flags >> 4) & 1) == 1;
+            this.BombArrows = ((flags >> 4) & 1) == 1;
+            this.GiantMaskAnywhere = ((flags >> 3) & 1) == 1;
         }
 
         /// <summary>
@@ -334,7 +352,8 @@ namespace MMR.Randomizer.Asm
             flags |= (this.SaferGlitches ? (uint)1 : 0) << 7;
             flags |= (this.BombchuDrops ? (uint)1 : 0) << 6;
             flags |= (this.InstantTransform ? (uint)1 : 0) << 5;
-            flags |= (this.GiantMaskAnywhere ? (uint)1 : 0) << 4;
+            flags |= (this.BombArrows ? (uint)1 : 0) << 4;
+            flags |= (this.GiantMaskAnywhere ? (uint)1 : 0) << 3;
             return flags;
         }
     }
@@ -434,6 +453,8 @@ namespace MMR.Randomizer.Asm
     {
         public byte NpcKafeiReplaceMask { get; set; }
 
+        public byte RequiredBossRemains { get; set; } = 4;
+
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
@@ -443,6 +464,7 @@ namespace MMR.Randomizer.Asm
         {
             uint flags = 0;
             flags |= (uint)NpcKafeiReplaceMask << 24;
+            flags |= (uint)RequiredBossRemains << 16;
             return flags;
         }
 
@@ -625,6 +647,8 @@ namespace MMR.Randomizer.Asm
             this.Speedups.DonGero = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.HungryGoron);
             this.Speedups.FastBankRupees = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FasterBankText);
             this.Speedups.ShortChestOpening = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.ShortChestOpening);
+            this.Speedups.SkipGiantsCutscene = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.EverythingElse);
+            this.Speedups.OathHint = settings.UpdateNPCText;
 
             // If using Adult Link model, allow Mikau cutscene to activate early.
             this.Flags.EarlyMikau = settings.Character == Character.AdultLink;

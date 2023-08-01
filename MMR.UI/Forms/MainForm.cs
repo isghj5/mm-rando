@@ -80,7 +80,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cPatch, "Output a patch file that can be applied using the Patch settings tab to reproduce the same ROM.\nPatch file includes all settings except Tunic and Tatl color.");
 
             // Main Settings
-            TooltipBuilder.SetTooltip(cMode, "Select mode of logic:\n - Casual: The randomization logic ensures that the game can be beaten casually.\n - Using glitches: The randomization logic allows for placement of items that are only obtainable using known glitches.\n - Vanilla Layout: All items are left vanilla.\n - User logic: Upload your own custom logic to be used in the randomization.\n - No logic: Completely random, no guarantee the game is beatable.");
+            TooltipBuilder.SetTooltip(cMode, "Select mode of logic:\n - Casual: The randomization logic ensures that the game can be beaten casually.\n - Glitched: The randomization logic allows for placement of items that are only obtainable using known glitches.\n - Vanilla Layout: All items are left vanilla.\n - User Logic: Upload your own custom logic to be used in the randomization.\n - No Logic: Completely random, no guarantee the game is beatable. Uses Glitched logic with all tricks enabled for HTML tracker and Blitz junk location calculation.");
 
             TooltipBuilder.SetTooltip(cMixSongs, "Enable songs being placed among items in the randomization pool.");
             TooltipBuilder.SetTooltip(cProgressiveUpgrades, "Enable swords, wallets, magic, bomb bags, quivers and the Goron Lullaby to be found in the intended order.");
@@ -100,6 +100,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cAutoInvert, "Auto-invert time at the start of a cycle.");
             TooltipBuilder.SetTooltip(cHideClock, "Clock UI will be hidden.");
             TooltipBuilder.SetTooltip(cStartingItems, "Select a starting item mode:\n\nNone - You will not start with any randomized starting items.\nRandom - You will start with randomized starting items.\nAllow Temporary Items - You will start with randomized starting items including Keg, Magic Bean and Bottles with X.");
+            TooltipBuilder.SetTooltip(cRequiredBossRemains, "Set the number of Boss Remains required to proceed through the final Giants cutscene.");
             TooltipBuilder.SetTooltip(cBlastCooldown, "Adjust the cooldown timer after using the Blast Mask.");
             TooltipBuilder.SetTooltip(cIceTraps, "Amount of ice traps to be added to pool by replacing junk items.");
             TooltipBuilder.SetTooltip(cBombTraps, "Amount of bomb traps to mix in with ice traps.");
@@ -114,6 +115,8 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cHookshotAnySurface, "Hookshot can hook to any surface.");
             TooltipBuilder.SetTooltip(cClimbMostSurfaces, "Link can climb most surfaces.");
             TooltipBuilder.SetTooltip(cIceTrapQuirks, "Ice traps will behave slightly differently from other items in certain situations.");
+            TooltipBuilder.SetTooltip(cInstantTransformations, "Transforming using Deku Mask, Goron Mask, Zora Mask and Fierce Deity's Mask will be almost instant. These items can no longer be used as \"cutscene items\".");
+            TooltipBuilder.SetTooltip(cBombArrows, "Use a bomb while an arrow is out when using the bow to attach the bomb to the tip of the arrow.");
             TooltipBuilder.SetTooltip(cGiantMaskAnywhere, "Allows the Giant's Mask to be used anywhere with a high enough (or no) ceiling.");
 
             // Comforts/cosmetics
@@ -124,6 +127,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(tLuckRollPercentage, "Music Rando comes with a chance to accept a song from outside of its categories.\n - This controls the percentage chance of a Luck Roll allowing out-of-category music placement\n - This is per specific slot+song check\n - Only songs with their first category being a general category (0-16) are Luck Rollable.");
             TooltipBuilder.SetTooltip(cFreeHints, "Enable reading gossip stone hints without requiring the Mask of Truth.");
             TooltipBuilder.SetTooltip(cFreeGaroHints, "Enable fighting Garos by speaking to Tatl instead of wearing the Garo's Mask.");
+            TooltipBuilder.SetTooltip(cGossipsTolerant, "The angle at which Gossip Stones can be read will be more tolerant.");
             TooltipBuilder.SetTooltip(cMixGaroWithGossip, "Garo hints distribution and gossip hint distribution will be mixed together.");
             TooltipBuilder.SetTooltip(cClearHints, "Gossip stone hints will give clear item and location names.");
             TooltipBuilder.SetTooltip(cClearGaroHints, "Garo hints will give clear item and location names.");
@@ -131,9 +135,11 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cNoDowngrades, "Downgrading items will be prevented.");
             TooltipBuilder.SetTooltip(cShopAppearance, "Shops models and text will be updated to match the item they give.");
             TooltipBuilder.SetTooltip(cUpdateChests, "Chest appearance will be updated to match the item they contain.");
+            TooltipBuilder.SetTooltip(cUpdateNpcText, "NPC text that refers to items and their locations will be updated.");
             TooltipBuilder.SetTooltip(cEponaSword, "Change Epona's B button behavior to prevent you from losing your sword if you don't have a bow.\nMay affect vanilla glitches that use Epona's B button.");
             TooltipBuilder.SetTooltip(cDrawHash, "Draw hash icons on the File Select screen.");
             TooltipBuilder.SetTooltip(cQuestItemStorage, "Enable Quest Item Storage, which allows for storing multiple quest items in their dedicated inventory slot. Quest items will also always be consumed when used.");
+            TooltipBuilder.SetTooltip(cQuestItemKeep, "Quest items will return to your inventory after Song of Time.");
             TooltipBuilder.SetTooltip(cDisableCritWiggle, "Disable crit wiggle movement modification when 1 heart of health or less.");
             TooltipBuilder.SetTooltip(cLink, "Select a character model to replace Link's default model.");
             TooltipBuilder.SetTooltip(cTatl, "Select a color scheme to replace Tatl's default color scheme.");
@@ -149,6 +155,9 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFastPush, "Increase the speed of pushing and pulling blocks and faucets.");
             TooltipBuilder.SetTooltip(cFreestanding, "Show world models as their actual item instead of the original item. This includes Pieces of Heart, Heart Containers, Skulltula Tokens, Stray Fairies, Moon's Tear and the Seahorse.");
             TooltipBuilder.SetTooltip(cEnableNightMusic, "Enables playing daytime Background music during nighttime in the field.\n(Clocktown night music can be weird)");
+            TooltipBuilder.SetTooltip(cRemoveMinorMusic, "Minor music such as indoors and grottos will not play. Background music that is already playing will instead continue.");
+            TooltipBuilder.SetTooltip(cMusicTrackNames, "When a new track starts playing in-game, show the name of the track at the bottom left of the screen.");
+            TooltipBuilder.SetTooltip(cDisableFanfares, "Replace item fanfares and swamp shooting gallery fanfares with sound effects.");
             TooltipBuilder.SetTooltip(cArrowCycling, "Cycle through arrow types when pressing R while an arrow is out when using the bow.");
             TooltipBuilder.SetTooltip(cCloseCows, "When playing Epona's Song for a group of cows, the closest cow will respond, instead of the default behavior.");
             TooltipBuilder.SetTooltip(cCombatMusicDisable, "Disables combat music around all regular (non boss or miniboss) enemies in the game.");
@@ -163,9 +172,8 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFreeScarecrow, "Spawn scarecrow automatically when using ocarina if within range.");
             TooltipBuilder.SetTooltip(cFillWallet, "Fills wallet with max rupees upon finding a wallet upgrade.");
             TooltipBuilder.SetTooltip(cInvisSparkle, "Hit Tags and Invisible Rupees will emit a sparkle.");
-            TooltipBuilder.SetTooltip(cSaferGlitches, "Fixes HESS crash, Weirdshot crash, Action Swap crash, Song of Double Time softlock during 0th or 4th day, Tatl text softlock on 0th of 4th day, 0th day file deletion, hookslide crash, 0th day Goron Bow crash, applies safety fixes for Fierce Deity even if Fierce Deity Anywhere is not enabled, index warp no longer crashes or softlocks (but you won't be able to use it to access the Debug Menu), TODO more...");
+            TooltipBuilder.SetTooltip(cSaferGlitches, "Makes it safer to use glitches:\n - Prevents HESS crash\n - Prevents Weirdshot crash\n - Prevents Action Swap crash\n - Prevents Song of Double Time softlock during 0th or 4th day\n - Prevents Tatl text softlock on 0th of 4th day\n - Prevents 0th day file deletion\n - Prevents hookslide crash\n - Prevents softlocks when using Remote Hookshot\n - Prevents 0th day Goron Bow crash\n - Applies safety fixes for Fierce Deity even if Fierce Deity Anywhere is not enabled\n - Index warp no longer crashes or softlocks (but you won't be able to use it to access the Debug Menu)\n - Prevents softlocks when interrupting mask transformations\n - Mayor is removed on 4th day\n - TODO more...");
             TooltipBuilder.SetTooltip(cAddBombchuDrops, "If you have found Bombchu, then any random Bomb drop or fixed non-randomized Bomb drop will have a chance to drop Bombchu instead. Where relevant, Bombchu packs of 1 and 5 will be in logic in addition to packs of 10.");
-            TooltipBuilder.SetTooltip(cInstantTransformations, "Transforming using Deku Mask, Goron Mask, Zora Mask and Fierce Deity's Mask will be almost instant. These items can no longer be used as \"cutscene items\".");
 
             TooltipBuilder.SetTooltip(nMaxGossipWotH, "Set the number of Way of the Hero hints that will appear on Gossip Stones.");
             TooltipBuilder.SetTooltip(nMaxGossipFoolish, "Set the number of Foolish hints that will appear on Gossip Stones.");
@@ -328,7 +336,7 @@ namespace MMR.UI.Forms
             var locationCategoryLabel = new LocationCategoryLabel();
             locationCategoryLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             locationCategoryLabel.Location = new Point(locationCategoriesX + 24, 0);
-            locationCategoryLabel.Width = 636;
+            locationCategoryLabel.Width = 714;
             locationCategoryLabel.Height = 105;
             locationCategoryLabel.Lines = Enum.GetValues<LocationCategory>().Where(c => c > 0).Select(c => $"{addSpacesRegex.Replace(c.ToString(), " $1")}: +{itemsByLocationCategory[c].Count}").ToList();
 
@@ -1105,6 +1113,7 @@ namespace MMR.UI.Forms
             cQText.Checked = _configuration.GameplaySettings.QuickTextEnabled;
             cFreeHints.Checked = _configuration.GameplaySettings.FreeHints;
             cFreeGaroHints.Checked = _configuration.GameplaySettings.FreeGaroHints;
+            cGossipsTolerant.Checked = _configuration.GameplaySettings.TolerantGossipStones;
             cMixGaroWithGossip.Checked = _configuration.GameplaySettings.MixGossipAndGaroHints;
             cClearHints.Checked = _configuration.GameplaySettings.ClearHints;
             cClearGaroHints.Checked = _configuration.GameplaySettings.ClearGaroHints;
@@ -1120,8 +1129,10 @@ namespace MMR.UI.Forms
             cNoDowngrades.Checked = _configuration.GameplaySettings.PreventDowngrades;
             cShopAppearance.Checked = _configuration.GameplaySettings.UpdateShopAppearance;
             cStartingItems.SelectedIndex = (int)_configuration.GameplaySettings.StartingItemMode;
+            cRequiredBossRemains.SelectedIndex = _configuration.GameplaySettings.RequiredBossRemains - 1;
             cEponaSword.Checked = _configuration.GameplaySettings.FixEponaSword;
             cUpdateChests.Checked = _configuration.GameplaySettings.UpdateChests;
+            cUpdateNpcText.Checked = _configuration.GameplaySettings.UpdateNPCText;
             cSkipBeaver.Checked = _configuration.GameplaySettings.SpeedupBeavers;
             cGoodDampeRNG.Checked = _configuration.GameplaySettings.SpeedupDampe;
             cGoodDogRaceRNG.Checked = _configuration.GameplaySettings.SpeedupDogRace;
@@ -1193,6 +1204,9 @@ namespace MMR.UI.Forms
             cTargettingStyle.Checked = _configuration.CosmeticSettings.EnableHoldZTargeting;
             cInstantPictobox.Checked = !_configuration.CosmeticSettings.KeepPictoboxAntialiasing;
             cEnableNightMusic.Checked = _configuration.CosmeticSettings.EnableNightBGM;
+            cRemoveMinorMusic.Checked = _configuration.CosmeticSettings.RemoveMinorMusic;
+            cMusicTrackNames.Checked = _configuration.CosmeticSettings.ShowTrackName;
+            cDisableFanfares.Checked = _configuration.CosmeticSettings.DisableFanfares;
             cBombTrapTunicColors.Checked = _configuration.CosmeticSettings.BombTrapsRandomizeTunicColor;
             cRainbowTunic.Checked = _configuration.CosmeticSettings.RainbowTunic;
 
@@ -1202,6 +1216,7 @@ namespace MMR.UI.Forms
             cDrawHash.Checked = _configuration.OutputSettings.GeneratePatch || (_drawHashChecked && (_configuration.OutputSettings.GenerateROM || _configuration.OutputSettings.OutputVC));
             cFastPush.Checked = _configuration.GameplaySettings.FastPush;
             cQuestItemStorage.Checked = _configuration.GameplaySettings.QuestItemStorage;
+            cQuestItemKeep.Checked = _configuration.GameplaySettings.KeepQuestTradeThroughTime;
             cContinuousDekuHopping.Checked = _configuration.GameplaySettings.ContinuousDekuHopping;
             cHookshotAnySurface.Checked = _configuration.GameplaySettings.HookshotAnySurface;
             cClimbMostSurfaces.Checked = _configuration.GameplaySettings.ClimbMostSurfaces;
@@ -1221,6 +1236,7 @@ namespace MMR.UI.Forms
             cSaferGlitches.Checked = _configuration.GameplaySettings.SaferGlitches;
             cAddBombchuDrops.Checked = _configuration.GameplaySettings.BombchuDrops;
             cInstantTransformations.Checked = _configuration.GameplaySettings.InstantTransform;
+            cBombArrows.Checked = _configuration.GameplaySettings.BombArrows;
             cChestGameMinimap.SelectedIndex = (int)_configuration.GameplaySettings.ChestGameMinimap;
 
             nMaxGossipWotH.Value = _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints ?? 3;
@@ -1294,11 +1310,25 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.CosmeticSettings.RandomizeSounds = cSFX.Checked);
         }
 
+        private void cRemoveMinorMusic_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.CosmeticSettings.RemoveMinorMusic = cRemoveMinorMusic.Checked);
+        }
+
+        private void cMusicTrackNames_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.CosmeticSettings.ShowTrackName = cMusicTrackNames.Checked);
+        }
+
+        private void cDisableFanfares_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.CosmeticSettings.DisableFanfares = cDisableFanfares.Checked);
+        }
+
         private void cEnableNightMusic_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.CosmeticSettings.EnableNightBGM = cEnableNightMusic.Checked);
         }
-
 
         private void cMusic_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1370,6 +1400,11 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.GameplaySettings.FreeGaroHints = cFreeGaroHints.Checked);
         }
 
+        private void cGossipsTolerant_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TolerantGossipStones = cGossipsTolerant.Checked);
+        }
+
         private void cMixGaroWithGossip_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.MixGossipAndGaroHints = cMixGaroWithGossip.Checked);
@@ -1403,6 +1438,11 @@ namespace MMR.UI.Forms
         private void cUpdateChests_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.UpdateChests = cUpdateChests.Checked);
+        }
+
+        private void cUpdateNpcText_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.UpdateNPCText = cUpdateNpcText.Checked);
         }
 
         private void cEponaSword_CheckedChanged(object sender, EventArgs e)
@@ -1443,6 +1483,11 @@ namespace MMR.UI.Forms
         private void cStartingItems_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.StartingItemMode = (StartingItemMode)cStartingItems.SelectedIndex);
+        }
+
+        private void cRequiredBossRemains_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.RequiredBossRemains = (byte)(cRequiredBossRemains.SelectedIndex + 1));
         }
 
         private void cQText_CheckedChanged(object sender, EventArgs e)
@@ -1494,6 +1539,11 @@ namespace MMR.UI.Forms
         private void cQuestItemStorage_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.QuestItemStorage = cQuestItemStorage.Checked);
+        }
+
+        private void cQuestItemKeep_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.KeepQuestTradeThroughTime = cQuestItemKeep.Checked);
         }
 
         private void cContinuousDekuHopping_CheckedChanged(object sender, EventArgs e)
@@ -1846,6 +1896,7 @@ namespace MMR.UI.Forms
             cGossipHints.Enabled = !vanillaMode;
             cGaroHint.Enabled = !vanillaMode;
             cStartingItems.Enabled = !vanillaMode;
+            cRequiredBossRemains.Enabled = !vanillaMode;
             tJunkLocationsList.Enabled = !vanillaMode;
             bJunkLocationsEditor.Enabled = !vanillaMode;
             bToggleTricks.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
@@ -1897,6 +1948,13 @@ namespace MMR.UI.Forms
             bCustomizeHintPriorities.Enabled = cHintImportance.Enabled;
 
             tLuckRollPercentage.Enabled = _configuration.CosmeticSettings.Music == Music.Random;
+
+            cQuestItemKeep.Enabled = _configuration.GameplaySettings.QuestItemStorage;
+            if (!cQuestItemKeep.Enabled)
+            {
+                _configuration.GameplaySettings.KeepQuestTradeThroughTime = false;
+                cQuestItemKeep.Checked = false;
+            }
         }
 
         /// <summary>
@@ -1932,6 +1990,7 @@ namespace MMR.UI.Forms
             cDEnt.Enabled = v;
             cShuffleBosses.Enabled = v;
             cStartingItems.Enabled = v;
+            cRequiredBossRemains.Enabled = v;
             cMixSongs.Enabled = v;
             cProgressiveUpgrades.Enabled = v;
             cEnemy.Enabled = v;
@@ -1942,6 +2001,9 @@ namespace MMR.UI.Forms
             cTatl.Enabled = v;
             cMusic.Enabled = v;
             cEnableNightMusic.Enabled = v;
+            cRemoveMinorMusic.Enabled = v;
+            cDisableFanfares.Enabled = v;
+            cMusicTrackNames.Enabled = v;
             cLink.Enabled = v;
 
             cHUDHeartsComboBox.Enabled = v;
@@ -1951,6 +2013,7 @@ namespace MMR.UI.Forms
             cGossipHints.Enabled = v;
             cFreeHints.Enabled = v;
             cFreeGaroHints.Enabled = v;
+            cGossipsTolerant.Enabled = v;
             cClearHints.Enabled = v;
             cGaroHint.Enabled = v;
             cClearGaroHints.Enabled = v;
@@ -1967,9 +2030,11 @@ namespace MMR.UI.Forms
             cFastPush.Enabled = v;
             cShopAppearance.Enabled = v;
             cUpdateChests.Enabled = v;
+            cUpdateNpcText.Enabled = v;
             cNoDowngrades.Enabled = v;
             cEponaSword.Enabled = v;
             cQuestItemStorage.Enabled = v;
+            cQuestItemKeep.Enabled = v;
             cFreestanding.Enabled = v;
             cArrowCycling.Enabled = v;
             cCloseCows.Enabled = v;
@@ -1983,6 +2048,7 @@ namespace MMR.UI.Forms
             cSaferGlitches.Enabled = v;
             cAddBombchuDrops.Enabled = v;
             cInstantTransformations.Enabled = v;
+            cBombArrows.Enabled = v;
             cChestGameMinimap.Enabled = v;
 
             cSkipBeaver.Enabled = v;
@@ -2465,6 +2531,11 @@ namespace MMR.UI.Forms
         private void cInstantTransformations_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.InstantTransform = cInstantTransformations.Checked);
+        }
+
+        private void cBombArrows_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.BombArrows = cBombArrows.Checked);
         }
 
         private void cItemPoolAdvanced_CheckedChanged(object sender, EventArgs e)

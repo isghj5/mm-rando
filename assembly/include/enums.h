@@ -464,7 +464,8 @@ enum PlayerForm {
 };
 
 enum PlayerState1 {
-    PLAYER_STATE1_GROTTO_IN   = 0x80000000, // Link is entering a grotto.
+    PLAYER_STATE1_GROTTO_IN   = 0x80000000, // Link is entering a grotto. // Also voiding.
+    PLAYER_STATE1_TARGET_FAR  = 0x40000000, // Target is too far away, auto-untargetting.
     PLAYER_STATE1_TIME_STOP   = 0x20000000, // Time is stopped but Link & NPC animations continue.
     PLAYER_STATE1_SPECIAL_2   = 0x10000000, // Form transition, using ocarina.
     PLAYER_STATE1_SWIM        = 0x08000000, // Swimming.
@@ -480,6 +481,7 @@ enum PlayerState1 {
     PLAYER_STATE1_Z_VIEW      = 0x00020000, // In Z-target view.
     PLAYER_STATE1_Z_CHECK     = 0x00010000, // Z-target check-able or speak-able.
     PLAYER_STATE1_Z_ON        = 0x00008000, // Z-target enabled.
+    PLAYER_STATE1_CLIMB_UP    = 0x00004000, // Getting up from climbing wall (not ladder)
     PLAYER_STATE1_LEDGE_HANG  = 0x00002000, // Hanging from ledge.
     PLAYER_STATE1_CHARGE_SPIN = 0x00001000, // Charging spin attack.
     PLAYER_STATE1_HOLD        = 0x00000800, // Hold above head.
@@ -487,6 +489,7 @@ enum PlayerState1 {
     PLAYER_STATE1_TIME_STOP_2 = 0x00000200, // Time is stopped (does not affect Tatl, HUD animations).
     PLAYER_STATE1_GIANT_MASK  = 0x00000100, // Equipping Giant's Mask
     PLAYER_STATE1_DEAD        = 0x00000080, // Dead.
+    PLAYER_STATE1_TALKING     = 0x00000040, // Talking with an acctor
     PLAYER_STATE1_MOVE_SCENE  = 0x00000020, // When walking in a cutscene? Used during Postman's minigame.
     PLAYER_STATE1_BARRIER     = 0x00000010, // Zora electric barrier.
     PLAYER_STATE1_ITEM_OUT    = 0x00000008, // Item is out, may later prompt "Put Away." Relevant to Bow, Hookshot, not Great Fairy Sword.
@@ -496,46 +499,73 @@ enum PlayerState1 {
 };
 
 enum PlayerState2 {
-    PLAYER_STATE2_IDLE        = 0x10000000, // Idle animation.
-    PLAYER_STATE2_OCARINA     = 0x08000000, // Using ocarina? Maybe more.
-    PLAYER_STATE2_KAMARO      = 0x02000000, // Kamaro mask dance.
-    PLAYER_STATE2_MASKHAND    = 0x01000000, // Mask drawn in hand during form change.
-    PLAYER_STATE2_CAN_DOWN    = 0x00400000, // Can get down from Epona.
-    PLAYER_STATE2_TATL_BUTTON = 0x00200000, // Tatl C up button prompt.
-    PLAYER_STATE2_TATL_OUT    = 0x00100000, // When tatl is out.
-    PLAYER_STATE2_Z_JUMP      = 0x00080000, // Z-target jumping (sidehop, backflip).
-    PLAYER_STATE2_SPIN_ATTACK = 0x00020000, // Spin attack.
-    PLAYER_STATE2_FROZEN      = 0x00004000, // Frozen, ends once ice cracks.
-    PLAYER_STATE2_CLIMB_STAY  = 0x00001000, // Stationary while climbing.
-    PLAYER_STATE2_DIVING      = 0x00000800, // Diving.
-    PLAYER_STATE2_DIVING_2    = 0x00000400, // Diving, swimming as Zora.
-    PLAYER_STATE2_GRABBING    = 0x00000100, // Grabbing onto a block.
-    PLAYER_STATE2_CLIMBING    = 0x00000040, // Climbing. Also occurs during: transforming, hanging from ledge, deku spinning, goron ball, sliding.
-    PLAYER_STATE2_MOVING      = 0x00000020, // Running / moving.
-    PLAYER_STATE2_PUSH_PULL   = 0x00000010, // Pushing or pulling a block.
-    PLAYER_STATE2_MOVING_2    = 0x00000008, // Is set for some movement frames.
-    PLAYER_STATE2_CHECK       = 0x00000002, // "Check" or "Speak" prompt may appear.
-    PLAYER_STATE2_MAY_GRAB    = 0x00000001, // "Grab" prompt may appear.
+    PLAYER_STATE2_VORTEX_VOID     = 0x80000000, // Vortex void
+    PLAYER_STATE2_LUNGE           = 0x40000000, // Lunge: small forward boost at the end of certain attack animations
+    PLAYER_STATE2_NO_PLAYER_DRAW  = 0x20000000, // Disable drawing player
+    PLAYER_STATE2_IDLE            = 0x10000000, // Idle animation.
+    PLAYER_STATE2_OCARINA         = 0x08000000, // Using ocarina? Maybe more.
+    PLAYER_STATE2_PLAYER_REFLECT  = 0x04000000, // Player reflection is enabled
+    PLAYER_STATE2_KAMARO          = 0x02000000, // Kamaro mask dance.
+    PLAYER_STATE2_MASKHAND        = 0x01000000, // Mask drawn in hand during form change.
+    PLAYER_STATE2_PASSING_DOOR    = 0x00800000, // Player is going through a door
+    PLAYER_STATE2_CAN_DOWN        = 0x00400000, // Can get down from Epona.
+    PLAYER_STATE2_TATL_BUTTON     = 0x00200000, // Tatl C up button prompt.
+    PLAYER_STATE2_TATL_OUT        = 0x00100000, // When tatl is out.
+    PLAYER_STATE2_Z_JUMP          = 0x00080000, // Z-target jumping (sidehop, backflip).
+    PLAYER_STATE2_00040000        = 0x00040000, // Something related to Kafei
+    PLAYER_STATE2_SPIN_ATTACK     = 0x00020000, // Spin attack.
+    PLAYER_STATE2_CAN_LIFT_ACTOR  = 0x00010000, // Player can pick up an actor
+    PLAYER_STATE2_00008000        = 0x00008000,
+    PLAYER_STATE2_FROZEN          = 0x00004000, // Frozen, ends once ice cracks.
+    PLAYER_STATE2_SWITCH_TARGET   = 0x00002000, // Switching targets in Switch-Target mode?
+    PLAYER_STATE2_CLIMB_STAY      = 0x00001000, // Stationary while climbing.
+    PLAYER_STATE2_DIVING          = 0x00000800, // Diving.
+    PLAYER_STATE2_DIVING_2        = 0x00000400, // Diving, swimming as Zora.
+    PLAYER_STATE2_00000200        = 0x00000200,
+    PLAYER_STATE2_GRABBING        = 0x00000100, // Grabbing onto a block.
+    PLAYER_STATE2_LIFT_ACTOR      = 0x00000080, // Picking up an actor
+    PLAYER_STATE2_CLIMBING        = 0x00000040, // Climbing. Also occurs during: transforming, hanging from ledge, deku spinning, goron ball, sliding.
+    PLAYER_STATE2_MOVING          = 0x00000020, // Running / moving.
+    PLAYER_STATE2_PUSH_PULL       = 0x00000010, // Pushing or pulling a block.
+    PLAYER_STATE2_MOVING_2        = 0x00000008, // Is set for some movement frames.
+    PLAYER_STATE2_CAN_CLIMB_ACTOR = 0x00000004, // Can climb actor
+    PLAYER_STATE2_CHECK           = 0x00000002, // "Check" or "Speak" prompt may appear.
+    PLAYER_STATE2_MAY_GRAB        = 0x00000001, // "Grab" prompt may appear.
 };
 
 enum PlayerState3 {
-    PLAYER_STATE3_PULL_ITEM   = 0x40000000, // Pulling out a held item.
-    PLAYER_STATE3_BREMEN      = 0x20000000, // Bremen mask march.
-    PLAYER_STATE3_ROLLING     = 0x08000000, // Rolling (non-Goron).
-    PLAYER_STATE3_ATTACK      = 0x02000000, // Attacking with sword, B button weapon.
-    PLAYER_STATE3_DEKU_AIR_2  = 0x01000000, // Hover with flower petals? Maybe more.
-    PLAYER_STATE3_DEKU_HOP    = 0x00200000, // Deku hopping on water.
-    PLAYER_STATE3_GORON_SPIKE = 0x00080000, // Goron spike roll.
-    PLAYER_STATE3_TRANS_PART  = 0x00020000, // Transforming (latter-half).
-    PLAYER_STATE3_ZORA_SWIM   = 0x00008000, // Zora swimming/diving.
-    PLAYER_STATE3_DEKU_AIR    = 0x00002000, // Hover with flower petals.
-    PLAYER_STATE3_GORON_ROLL  = 0x00001000, // Goron rolling
-    PLAYER_STATE3_DEKU_RISE   = 0x00000200, // Jumping out of Deku flower.
-    PLAYER_STATE3_DEKU_DIVE   = 0x00000100, // Deku flower dive.
-    PLAYER_STATE3_PULL_BOW    = 0x00000040, // Pull back bow string.
-    PLAYER_STATE3_HOOK_ARV    = 0x00000010, // After arriving at hookshot target?
-    PLAYER_STATE3_ATTACK_2    = 0x00000008, // Post-attack.
-    PLAYER_STATE3_JUMP_ATTACK = 0x00000002, // Beginning of jump attack.
+    PLAYER_STATE3_TARGET_ENEMY    = 0x80000000, // Targetting an enemy.
+    PLAYER_STATE3_PULL_ITEM       = 0x40000000, // Pulling out a held item.
+    PLAYER_STATE3_BREMEN          = 0x20000000, // Bremen mask march.
+    PLAYER_STATE3_DEKU_HOP_VOID   = 0x10000000, // Voding from deku hopping.
+    PLAYER_STATE3_ROLLING         = 0x08000000, // Rolling (non-Goron).
+    PLAYER_STATE3_OFFERING_ITEM   = 0x04000000, // Offering an item to an actor
+    PLAYER_STATE3_ATTACK          = 0x02000000, // Attacking with sword, B button weapon.
+    PLAYER_STATE3_DEKU_AIR_2      = 0x01000000, // Hover with flower petals? Maybe more.
+    PLAYER_STATE3_ZORA_FIN_DONE   = 0x00800000, // Set when zora fin is destroyed, not unset if not actively caught.
+    PLAYER_STATE3_HONEY_DARLING   = 0x00400000, // Honey and Darling in progress
+    PLAYER_STATE3_DEKU_HOP        = 0x00200000, // Deku hopping on water.
+    PLAYER_STATE3_DEKU_SPIN       = 0x00100000, // Deku spinning
+    PLAYER_STATE3_GORON_SPIKE     = 0x00080000, // Goron spike roll.
+    PLAYER_STATE3_FLOWERLESS_JUMP = 0x00040000, // Deku jump from dive with no Deku Flower
+    PLAYER_STATE3_TRANS_PART      = 0x00020000, // Transforming (latter-half).
+    PLAYER_STATE3_HOOK_ARRIVE_1   = 0x00010000, // Arriving after being pulled by hookshot
+    PLAYER_STATE3_ZORA_SWIM       = 0x00008000, // Zora swimming/diving.
+    PLAYER_STATE3_00004000        = 0x00004000,
+    PLAYER_STATE3_DEKU_AIR        = 0x00002000, // Hover with flower petals.
+    PLAYER_STATE3_GORON_ROLL      = 0x00001000, // Goron rolling
+    PLAYER_STATE3_SCOOPING        = 0x00000800, // Scooping with a bottle.
+    PLAYER_STATE3_MINIGAME_ARROWS = 0x00000400, // Has infinite minigame arrows
+    PLAYER_STATE3_DEKU_RISE       = 0x00000200, // Jumping out of Deku flower.
+    PLAYER_STATE3_DEKU_DIVE       = 0x00000100, // Deku flower dive.
+    PLAYER_STATE3_HOOK_FLYING     = 0x00000080, // Pulled by hookshot
+    PLAYER_STATE3_PULL_BOW        = 0x00000040, // Pull back bow string.
+    PLAYER_STATE3_AUTO_OCARINA    = 0x00000020, // Automatically pull out ocarina after conversation
+    PLAYER_STATE3_HOOK_ARRIVE_2   = 0x00000010, // After arriving at hookshot target?
+    PLAYER_STATE3_ATTACK_2        = 0x00000008, // Post-attack.
+    PLAYER_STATE3_00000004        = 0x00000004,
+    PLAYER_STATE3_JUMP_ATTACK     = 0x00000002, // Beginning of jump attack.
+    PLAYER_STATE3_NO_FLOOR_CLIP   = 0x00000001, // Ignore floor collision
 };
 
 enum SegmentID {

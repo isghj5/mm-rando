@@ -6,5 +6,10 @@
         {
             Condition = CreateConditionFunction(settingFlagProperty, flagValue, hasFlag);
         }
+
+        public ReturnableAttribute(string settingProperty, object settingValue)
+        {
+            Condition = CreateConditionFunction(settingProperty, settingValue);
+        }
     }
 }

@@ -28,6 +28,7 @@ namespace MMR.Randomizer.Utils
                     u.Region,
                     ItemUtils.IsRequired(u.ItemObject.Item, u.LocationForImportance, randomized),
                     ItemUtils.IsImportant(u.ItemObject.Item, u.LocationForImportance, randomized),
+                    ItemUtils.IsLocationJunk(u.LocationForImportance, randomized.Settings),
                     randomized.ImportantSongLocations?.Contains(u.LocationForImportance) == true,
                     settings.ProgressiveUpgrades,
                     randomized.ItemList
@@ -78,6 +79,8 @@ namespace MMR.Randomizer.Utils
                 DungeonEntrances = dungeonEntrances,
                 ItemList = itemList.ToList(),
                 Logic = randomized.Logic,
+                BlitzExtraItems = randomized.BlitzExtraItems.AsReadOnly(),
+                Spheres = randomized.Spheres,
                 GossipHints = randomized.GossipQuotes?.ToDictionary(me => (GossipQuote) me.Id, (me) =>
                 {
                     var message = me.Message.Substring(1);
@@ -97,7 +100,7 @@ namespace MMR.Randomizer.Utils
                         // junk
                         message = "JUNK - " + message;
                     }
-                    return plainTextRegex.Replace(message.Replace("\x11", " "), "");
+                    return plainTextRegex.Replace(message.Replace("\x11", " ").Replace("\x10", " "), "");
                 }),
                 MessageCosts = randomized.MessageCosts.Select((mc, i) =>
                 {
@@ -155,6 +158,16 @@ namespace MMR.Randomizer.Utils
             log.AppendLine($"{"Seed:",-17} {spoiler.Seed}");
             log.AppendLine();
 
+            if (spoiler.BlitzExtraItems.Any())
+            {
+                log.AppendLine(" Blitz Starting Items");
+                foreach (var remain in spoiler.BlitzExtraItems)
+                {
+                    log.AppendLine(remain.Name());
+                }
+                log.AppendLine("");
+            }
+
             if (spoiler.DungeonEntrances.Any())
             {
                 log.AppendLine($" {"Entrance",-21}    {"Destination"}");
@@ -173,6 +186,10 @@ namespace MMR.Randomizer.Utils
                 log.AppendLine($" {region.Key.Name()}");
                 foreach (var item in region.OrderBy(item => item.NewLocationName))
                 {
+                    if (item.IsLocationJunked)
+                    {
+                        log.Append("- ");
+                    }
                     log.AppendLine($"{item.NewLocationName,-50} -> {item.Name}" + (item.IsImportant ? "*" : "") + (item.IsRequired ? "*" : item.IsImportantSong ? "^" : ""));
                 }
             }
@@ -197,6 +214,26 @@ namespace MMR.Randomizer.Utils
                 foreach (var hint in spoiler.GossipHints.OrderBy(h => h.Key.ToString()))
                 {
                     log.AppendLine($"{hint.Key,-25} -> {hint.Value}");
+                }
+            }
+
+
+            if (spoiler.Spheres != null && spoiler.Spheres.Any())
+            {
+                log.AppendLine();
+                log.AppendLine();
+                log.AppendLine(" Playthrough");
+
+                log.AppendLine($"{"Sphere", -10} {"Location",-50}    {"Item"}");
+                var i = 0;
+                foreach (var sphere in spoiler.Spheres)
+                {
+                    foreach (var (item, location) in sphere)
+                    {
+                        log.AppendLine($"{i,-10} {location,-50} -> {item}");
+                    }
+                    log.AppendLine();
+                    i++;
                 }
             }
 

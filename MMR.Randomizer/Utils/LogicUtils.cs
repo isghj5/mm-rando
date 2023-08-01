@@ -141,6 +141,10 @@ namespace MMR.Randomizer.Utils
 
         public static LogicPaths GetImportantLocations(ItemList itemList, GameplaySettings settings, Item location, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedLocations = null, Dictionary<Item, ItemObject> itemsByLocation = null, CancellationTokenSource cts = null, params Item[] exclude)
         {
+            if (settings.LogicMode == LogicMode.NoLogic)
+            {
+                return new LogicPaths();
+            }
             cts?.Token.ThrowIfCancellationRequested();
             if (itemsByLocation == null)
             {

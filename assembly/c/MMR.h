@@ -22,7 +22,7 @@ GetItemEntry* MMR_GetGiEntry(u16 index);
 bool MMR_GetGiFlag(u16 giIndex);
 void MMR_Init(void);
 u16 MMR_GetNewGiIndex(GlobalContext* ctxt, Actor* actor, u16 giIndex, bool grant);
-void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex);
+void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex, bool continueTextbox);
 void MMR_ClearItemQueue();
 void MMR_ProcessItemQueue(GlobalContext* ctxt);
 void MMR_GiveItemToHold(Actor* actor, GlobalContext* ctxt, u16 giIndex);
@@ -75,9 +75,9 @@ typedef struct {
 } ExtraStartingItems; // size = 0x12
 
 typedef struct {
-    /* 0x00 */ u16 ids[0x10];
-    /* 0x20 */ u16 length;
-} ItemsToReturn; // size = 0x22
+    /* 0x00 */ u16 ids[0x1F];
+    /* 0x3E */ u16 length;
+} ItemsToReturn; // size = 0x40
 
 typedef union {
     struct {

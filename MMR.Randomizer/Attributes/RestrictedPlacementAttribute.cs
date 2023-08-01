@@ -1,5 +1,6 @@
 ﻿using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
+using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,10 +41,9 @@ namespace MMR.Randomizer.Attributes
             }
         }
 
-        private readonly IReadOnlyCollection<Item> _greatFairyRewards = new List<Item> { Item.FairySpinAttack, Item.FairyDoubleMagic, Item.FairyDoubleDefense, Item.ItemFairySword };
         private bool GreatFairyRewards(Item item, Item location, ItemList itemList)
         {
-            return _greatFairyRewards.Contains(location);
+            return ItemUtils.GreatFairyRewards().Contains(location);
         }
 
         private bool KeepWithinTemples(Item item, Item location, ItemList itemList)

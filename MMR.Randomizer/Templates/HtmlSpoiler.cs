@@ -54,6 +54,16 @@ namespace MMR.Randomizer.Templates
             this.Write("</span><br/>\r\n<br/>\r\n<button type=\"button\" onclick=\"toggleDarkLight()\" title=\"Tog" +
                     "gle dark/light mode\">Toggle Dark Theme</button>\r\n<br/>\r\n<br/>\r\n<label><b>Spoiler" +
                     " Log State: </b></label><input id=\"spoilerLogState\" type=\"text\"/><br/>\r\n");
+ if (spoiler.BlitzExtraItems.Any()) { 
+
+            this.Write("<h2>Blitz Starting Items</h2>\r\n");
+         foreach (var remains in spoiler.BlitzExtraItems) {
+
+            this.Write("<div>");
+            this.Write(this.ToStringHelper.ToStringWithCulture(remains.Name()));
+            this.Write("</div>\r\n");
+ } 
+ } 
  if (spoiler.DungeonEntrances.Any()) { 
 
             this.Write("<h2>Dungeon Entrance Replacements</h2>\r\n<table border=\"1\" class=\"item-replacement" +
