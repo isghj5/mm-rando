@@ -184,7 +184,7 @@ namespace MMR.Randomizer
         {
             if (_cosmeticSettings.DisableFanfares)
             {
-                ResourceUtils.ApplyHack(Resources.mods.disable_fanfares);
+                ResourceUtils.ApplyHack(Resources.mods.remove_fanfares);
             }
         }
 
