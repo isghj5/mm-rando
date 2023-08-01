@@ -48,6 +48,9 @@ namespace MMR.Randomizer.Utils
             // New function: F0 = F2 + 68.0
             ReadWriteUtils.WriteU32ToROM(0xC72FA8, 0x800B7058); // Physical: 0xBC2AC8
 
+            // Remove hardcoded voiceSfxIdOffset when using Giant's Mask
+            ReadWriteUtils.WriteCodeNOP(0x8019F854);
+
             // Patch player_actor.
             {
                 // Replace floats? Physical: 0xC25D38
