@@ -858,7 +858,7 @@ namespace MMR.UI.Forms
             this.cGiantMaskAnywhere.AutoSize = true;
             this.cGiantMaskAnywhere.BackColor = System.Drawing.Color.Transparent;
             this.cGiantMaskAnywhere.ForeColor = System.Drawing.Color.Black;
-            this.cGiantMaskAnywhere.Location = new System.Drawing.Point(148, 150);
+            this.cGiantMaskAnywhere.Location = new System.Drawing.Point(148, 175);
             this.cGiantMaskAnywhere.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cGiantMaskAnywhere.Name = "cGiantMaskAnywhere";
             this.cGiantMaskAnywhere.Size = new System.Drawing.Size(180, 19);
