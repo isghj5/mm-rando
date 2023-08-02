@@ -45,6 +45,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1137)]
         [SceneInternalId(0x00)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Octarok,
+            Actor.Wolfos, // can attack you off the boat
+            Actor.LikeLike)] // can grab you on the boat ride
         SouthernSwampClear = 0x06,
 
         [FileID(1151)]
