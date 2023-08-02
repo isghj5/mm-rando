@@ -1090,7 +1090,7 @@ namespace MMR.Randomizer.GameObjects
         Freezard = 0x8F, // En_Fz
 
         // damn it, another multi-object actor
-        [EnemizerEnabled]
+        [ActorizerEnabled]
         [ActorInstanceSize(0x19C)]
         [FileID(135)]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
@@ -1098,6 +1098,7 @@ namespace MMR.Randomizer.GameObjects
         // 1 creates a grass circle in termina field, 0 is grotto grass single
         // 642B is a smaller cuttable grass from the ground in secret shrine
         [GroundVariants(0, 1)]
+        [AlignedCompanionActor(Shot_Sun, CompanionAlignment.OnTop, ourVariant: 1, variant: 0x41)] // fairies love grass
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.Grottos)] // dont remove from peahat grotto
         GrassBush = 0x90, // En_Kusa
@@ -1384,6 +1385,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: 0402,
             variant: 0x8200, 0xA200, // secret japanese grottos, hidden
             0x6233, 0x623B, 0x6218, 0x625C)] // grottos that might hold checks, also hidden
+        [AlignedCompanionActor(Shot_Sun, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x41)] // fairies love grass
         [UnkillableAllVariants]
         GrassRockCluster = 0xB3, // Obj_Mure2
 
@@ -1543,9 +1545,16 @@ namespace MMR.Randomizer.GameObjects
 
         EmptyCF = 0xCF,
 
-        // ? is this related to fire arrows in OOT?/
+        // this is related to giving fire arrows in oot, but also gives a fairy on sunsong
+        //[ActorizerEnabled] // we want as companion only
         [FileID(176)]
         [ObjectListIndex(0x1)]
+        //[ObjectListIndex(0x11D)] // testing with object
+        // 40 is sun shot, 41 is storms fairy
+        [GroundVariants(0x41)] // companion only
+        //[FlyingVariants(0x0)] // "else" variant: gives item
+        [VariantsWithRoomMax(max: 1, variant:0x41, 0x40)]
+        [UnkillableAllVariants]
         Shot_Sun = 0xD0, // Shot_Sun
 
         EmptyD1 = 0xD1,
@@ -1930,6 +1939,7 @@ namespace MMR.Randomizer.GameObjects
             0x901, // chance of lots of money, as this is the drop table for money enemies
             0x300, 0x301)] // this drop table is unused according to mzxrules, but looks balanced
         [UnkillableAllVariants]
+        [AlignedCompanionActor(Shot_Sun, CompanionAlignment.OnTop, ourVariant: 1, variant: 0x41)] // fairies love grass
         NaturalPatchOfGrass = 0x10D, // Obj_Grass_Unit
 
         Empty10E = 0x10E, // Empty10E
