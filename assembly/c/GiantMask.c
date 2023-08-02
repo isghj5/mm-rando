@@ -422,6 +422,16 @@ void GiantMask_TryReset() {
     }
 }
 
+f32 GiantMask_GetHitDistance(Vec3f* position, Actor* hittingActor) {
+    if (hittingActor->id == ACTOR_PLAYER) {
+        ActorPlayer* player = (ActorPlayer*)hittingActor;
+        if (player->mask == 0x14) {
+            return 0.0f;
+        }
+    }
+    return z2_Math3D_Vec3fDistSq(position, &hittingActor->currPosRot.pos);
+}
+
 /*
 C Buttons Anywhere
 E9738CE0 595A

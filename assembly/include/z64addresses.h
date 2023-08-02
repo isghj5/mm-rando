@@ -236,6 +236,7 @@ extern f32 z2_Math_SmoothStepToF(f32* pValue, f32 target, f32 fraction, f32 step
 extern f32 Math_ApproachF(f32* a0, f32 a1, f32 a2, f32 a3);
 extern f32 Math_ApproachZeroF(f32* a0, f32 a1, f32 a2);
 extern s16 z2_Math_SmoothStepToS(s16* pValue, s16 target, s16 scale, s16 step, s16 minStep);
+extern f32 z2_Math3D_Vec3fDistSq(Vec3f* a, Vec3f* b);
 
 // Function Prototypes (Objects).
 extern s8 z2_GetObjectIndex(const SceneContext* ctxt, u16 objectId);

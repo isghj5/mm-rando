@@ -167,6 +167,7 @@
 .definelabel z2_store_scene_flags, 0x80169D40
 .definelabel z2_LoadFileFromArchive, 0x80178DAC
 .definelabel z2_LoadVFileFromArchive, 0x80178E3C
+.definelabel z2_Math3D_Vec3fDistSq, 0x8017A6F8
 .definelabel z2_PushMatrixStackCopy, 0x8018019C
 .definelabel z2_PopMatrixStack, 0x801801CC
 .definelabel z2_CopyFromMatrixStackTop, 0x801801E8

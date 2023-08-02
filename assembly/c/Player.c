@@ -650,7 +650,7 @@ void Player_AfterCrushed(void) {
 
 s32 Player_GetWeaponDamageFlags(ActorPlayer* player, s32 dmgFlags) {
     if (player->mask == 0x14 && GiantMask_IsGiant()) {
-        return 0x100; // DMG_GORON_PUNCH
+        return 0x80000008; // DMG_POWDER_KEG | DMG_EXPLOSIVES
     }
     return dmgFlags;
 }

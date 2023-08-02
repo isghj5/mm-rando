@@ -83,3 +83,55 @@
 ;   JAL     0x800E7DF8
 .org 0x808B601C
     jal     GiantMask_AdjustSpinAttackHeight
+
+;==================================================================================================
+; Regular Boulder hit detection
+;==================================================================================================
+
+.headersize G_OBJ_BOMBIWA_DELTA
+
+; Replaces:
+;   JAL     Math3D_Vec3fDistSq
+;   ADDIU   A1, V1, 0x0024
+.org 0x809393EC
+    jal     GiantMask_GetHitDistance
+    or      a1, v1, r0
+
+; Replaces:
+;   JAL     Math3D_Vec3fDistSq
+;   ADDIU   A1, V0, 0x0024
+.org 0x809394B0
+    jal     GiantMask_GetHitDistance
+    or      a1, v0, r0
+
+;==================================================================================================
+; Huge Boulder hit detection
+;==================================================================================================
+
+.headersize G_OBJ_HUGEBOMBIWA_DELTA
+
+; Replaces:
+;   ADDIU   A1, V0, 0x0024
+.org 0x80A54A60
+    or      a1, v0, r0
+
+; Replaces:
+;   JAL     Math3D_Vec3fDistSq
+.org 0x80A54A78
+    jal     GiantMask_GetHitDistance
+
+;==================================================================================================
+; Barrel hit detection
+;==================================================================================================
+
+.headersize G_OBJ_TARU_DELTA
+
+; Replaces:
+;   ADDIU   A1, V0, 0x0024
+.org 0x80B9BFC8
+    or      a1, v0, r0
+
+; Replaces:
+;   JAL     Math3D_Vec3fDistSq
+.org 0x80B9BFDC
+    jal     GiantMask_GetHitDistance
