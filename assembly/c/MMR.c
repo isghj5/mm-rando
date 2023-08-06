@@ -291,7 +291,7 @@ void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex, bool continueTextbox) {
     } else {
         z2_ShowMessage(ctxt, entry->message, NULL);
     }
-    u8 soundType = !MUSIC_CONFIG.flags.disableFanfares ? entry->type & 0x0F : 1;
+    u8 soundType = !MUSIC_CONFIG.flags.disableFanfares ? entry->type & 0x0F : 0;
     u16 fanfare = gFanfares[soundType];
     if (soundType < 2) {
         z2_PlaySfx(fanfare);
