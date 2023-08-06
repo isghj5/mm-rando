@@ -1832,7 +1832,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Shot_Sun)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.FriendlyCucco)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
@@ -3075,21 +3075,30 @@ namespace MMR.Randomizer
 
                             InjectedActors.Add(injectedActor);
 
+                            // we have to add the changes to our list of actors we are going to use in enemizer/actorizer
                             // behavior now differs between replacement actors and brand new
-                            var replacementActorSearch = ReplacementCandidateList.Find(act => act.ActorId == injectedActor.ActorId);
-                            if (replacementActorSearch != null) // previous actor
+                            var replacementEnemySearch = ReplacementCandidateList.Find(act => act.ActorId == injectedActor.ActorId);
+                            //var replacementListSearch = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList().Find(act => (int) act == injectedActor.ActorId);
+                            if (replacementEnemySearch != null) // previous actor
                             {
-                                replacementActorSearch.UpdateActor(injectedActor);
+                                replacementEnemySearch.UpdateActor(injectedActor);
                             }
+                            //else (injectedActor.)
+                            /* else if (injectedActor.fileID != 0)
+                            {
+                                // sometimes we want to inject an actor that wont be used by actorizer/enemizer,
+                                // so it wont be in the list above, but its not marked as a new actor either
+                                replacementEnemySearch = null;
+                            } // */
                             else
                             {
-                                replacementActorSearch = new Actor(injectedActor, filename);
-                                ReplacementCandidateList.Add(replacementActorSearch);
+                                replacementEnemySearch = new Actor(injectedActor, filename);
+                                ReplacementCandidateList.Add(replacementEnemySearch);
                             }
 
                             if (injectedActor.ObjectId <= 3)
                             {
-                                FreeCandidateList.Add(replacementActorSearch);
+                                FreeCandidateList.Add(replacementEnemySearch);
                             }
 
                             // this is separate from the above because this lets us modify files not found in ReplacementCandidateList
@@ -3237,13 +3246,13 @@ namespace MMR.Randomizer
 
             foreach (var injectedActor in InjectedActors)
             {
+                // TODO: where does actorid get set for new inject (whihc is currently busted)
                 var ActorId = injectedActor.ActorId;
                 var fileID = injectedActor.fileID;
                 MMFile file = RomData.MMFileList[fileID];
 
                 try
                 {
-
                     int entryLoc = actorOvlTblOffset + (ActorId * 32); // overlay table is sorted by ActorId
 
                     uint oldVROMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x0);
@@ -3262,6 +3271,7 @@ namespace MMR.Randomizer
                     file.Addr = previousLastVROMEnd;
                     file.End = previousLastVROMEnd + uncompresedVROMSize;
                     previousLastVROMEnd = file.End;
+
                     ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint)file.Addr);
                     ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint)file.End);
 

@@ -532,11 +532,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1A40)]
         [FileID(84)]
         [ObjectListIndex(0x51)]
-        [FlyingVariants(0xFFFF)]
+        [FlyingVariants(0xFFFF)] // vanilla has no params, these are what they used on themap
+        [GroundVariants(1)] // no reason it cannot be put on land, right?
         [VariantsWithRoomMax(max: 8, variant: 0xFFFF)]
         [FlyingToGroundHeightAdjustment(50)]
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
-        [UnkillableAllVariants] // respawning
+        [RespawningAllVariants]
         BlueBubble = 0x3E, // En_Bb
 
         [FileID(85)]
@@ -740,10 +741,15 @@ namespace MMR.Randomizer.GameObjects
         Empty52 = 0x52,
         Empty53 = 0x53,
 
-        // a different child epona?
-        // todo
+        // child epona from OOT, ununsed in MM at all, this is NOT regular epona,
+        // does nothing and has a semi-broken AI and collider, bit weird to find her
+        //  I modified her so she at least starts with a better AI than stand perfectly still, new actor file
+        //[ActorizerEnabled]
         [FileID(98)]
         [ObjectListIndex(0x7D)]
+        [GroundVariants(0)] // no vanilla params at all
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
         En_Horse_Link_Child = 0x54, // En_Horse_Link_Child
 
         [ActorizerEnabled]
