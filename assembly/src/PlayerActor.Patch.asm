@@ -834,3 +834,41 @@
 ;   LW      A2, 0x0000 (V0)
 .org 0x8083384C
     lw      a2, 0x0024 (sp)
+
+;==================================================================================================
+; Player check if should be knocked over
+;==================================================================================================
+
+; Replaces:
+;   BEQ     V1, AT, 0x80833DB8
+;   LW      A0, 0x0030 (SP)
+;   ADDIU   AT, R0, 0x0002
+;   BEQ     V1, AT, 0x80833DB8
+;   NOP
+;   LHU     T8, 0x0090 (S0)
+;   LUI     AT, 0x0020
+;   ORI     AT, AT, 0x6004
+;   ANDI    T9, T8, 0x0001
+;   BEQZ    T9, 0x80833DB8
+;   AND     T0, V0, AT
+;   BEQZ    T0, 0x80833ED0
+;   LUI     AT, 0x4080
+.org 0x80833D84
+.area 0x34, 0
+    lw      a0, 0x0030 (sp)
+    or      a1, s0, r0
+    jal     Player_ShouldBeKnockedOver
+    or      a2, v1, r0
+    beqz    v0, 0x80833ED0
+    lui     at, 0x4080
+    lw      a0, 0x0030 (sp)
+.endarea
+
+;==================================================================================================
+; Player additional checks if can be grabbed
+;==================================================================================================
+
+; Replaces:
+;   JAL     Player_InBlockingCsMode
+.org 0x8085B200
+    jal     Player_CantBeGrabbed

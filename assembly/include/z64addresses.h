@@ -50,7 +50,7 @@
 
 // Function Prototypes.
 extern int z2_CanInteract(GlobalContext* ctxt);
-extern int z2_CanInteract2(GlobalContext* ctxt, ActorPlayer* player);
+extern int z2_Player_InBlockingCsMode(GlobalContext* ctxt, ActorPlayer* player);
 extern int z2_Inventory_GetBtnItem(GlobalContext* ctxt, ActorPlayer* player, s32 buttonIndex);
 extern void z2_DrawButtonAmounts(GlobalContext* ctxt, u32 arg1, u16 alpha);
 extern void z2_DrawBButtonIcon(GlobalContext* ctxt);
@@ -281,6 +281,8 @@ extern s32 z2_MessageShouldAdvance(GlobalContext* ctxt);
 extern void z2_MessageClose(GlobalContext* ctxt);
 extern u32 z2_80147624(GlobalContext* ctxt);
 extern void z2_8016566C(s16 unkA0);
+extern f32 z2_CollisionCheck_GetDamageAndEffectOnBumper(ColCommon* at, ColBodyInfo* atInfo, ColCommon* ac, ColBodyInfo* acInfo, u32* effect);
+extern s32 z2_CollisionCheck_GetToucherDamage(ColCommon* at, ColBodyInfo* atInfo, ColCommon* ac, ColBodyInfo* acInfo);
 extern void z2_Collider_UpdateCylinder(Actor* actor, ColCylinder* collider);
 extern void z2_800EA0D4(GlobalContext* ctxt, CutsceneContext* csCtx);
 extern void z2_800EA0EC(GlobalContext* ctxt, CutsceneContext* csCtx);

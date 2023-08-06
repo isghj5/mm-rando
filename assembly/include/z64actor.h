@@ -28,8 +28,8 @@ typedef void(*ActorFunc)(struct Actor *this, struct GlobalContext *ctxt);
 
 typedef union {
     struct {
-        u8 damage : 4;
         u8 effect : 4;
+        u8 damage : 4;
     };
     u8 value;
 } ActorDamageByte; // size = 0x1

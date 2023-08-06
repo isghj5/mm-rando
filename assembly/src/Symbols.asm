@@ -61,6 +61,8 @@
 .definelabel z2_BgCheck_EntityCheckCeiling, 0x800C4F84
 .definelabel z2_GetFloorPhysicsType, 0x800C99D4
 .definelabel z2_Camera_IsHookArrival, 0x800CB7CC
+.definelabel z2_CollisionCheck_GetDamageAndEffectOnBumper, 0x800E0410
+.definelabel z2_CollisionCheck_GetToucherDamage, 0x800E04EC
 .definelabel z2_Collider_UpdateCylinder, 0x800E7DF8
 .definelabel z2_800EA0D4, 0x800EA0D4
 .definelabel z2_800EA0EC, 0x800EA0EC
@@ -119,7 +121,7 @@
 .definelabel z2_DrawButtonAmounts, 0x80117BD0
 .definelabel z2_DrawBButtonIcon, 0x80118084
 .definelabel z2_DrawCButtonIcons, 0x80118890
-.definelabel z2_CanInteract2, 0x80123358
+.definelabel z2_Player_InBlockingCsMode, 0x80123358
 .definelabel z2_CanInteract, 0x801233E4
 .definelabel z2_Inventory_GetBtnItem, 0x8012364C
 .definelabel z2_801242DC, 0x801242DC

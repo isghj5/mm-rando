@@ -308,7 +308,7 @@ void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 ac
                                     0, arrow->base.shape.rot.y, 0, 0);
                 if (bomb != NULL) {
                     bomb->collider1.base.flagsAC &= ~8; // AC_TYPE_PLAYER Disable player-aligned damage
-                    arrow->collider.body.toucher.collidesWith = 8; // make arrow do explosive damage
+                    arrow->collider.body.toucher.dmgFlags = 8; // make arrow do explosive damage
                     z2_SetActorSize(&bomb->base, 0.002);
                     z2_Inventory_ChangeAmmo(item, -1);
                 }
@@ -650,7 +650,28 @@ void Player_AfterCrushed(void) {
 
 s32 Player_GetWeaponDamageFlags(ActorPlayer* player, s32 dmgFlags) {
     if (player->mask == 0x14 && GiantMask_IsGiant()) {
-        return 0x80000008; // DMG_POWDER_KEG | DMG_EXPLOSIVES
+        return 0xC0000108; // DMG_POWDER_KEG | DMG_EXPLOSIVES | DMG_GORON_PUNCH | DMG_UNK_0x1E // DMG_UNK_0x1E is used to trigger different damage calculation algorithm.
     }
     return dmgFlags;
+}
+
+bool Player_ShouldBeKnockedOver(GlobalContext* ctxt, ActorPlayer* player, s32 damageType) {
+    if (player->mask == 0x14 && GiantMask_IsGiant()) {
+        return false;
+    }
+
+    // Displaced code:
+    return damageType == 1
+        || damageType == 2
+        || !(player->base.bgcheckFlags & 1) // BGCHECKFLAG_GROUND
+        || (player->stateFlags.state1 & (PLAYER_STATE1_LEDGE_CLIMB | PLAYER_STATE1_LEDGE_HANG | PLAYER_STATE1_CLIMB_UP | PLAYER_STATE1_LADDER));
+}
+
+bool Player_CantBeGrabbed(GlobalContext* ctxt, ActorPlayer* player) {
+    if (player->mask == 0x14 && GiantMask_IsGiant()) {
+        return true;
+    }
+
+    // Displaced code:
+    return z2_Player_InBlockingCsMode(ctxt, player);
 }

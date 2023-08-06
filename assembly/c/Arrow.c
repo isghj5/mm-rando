@@ -16,7 +16,7 @@ void Arrow_AfterDraw(GlobalContext* ctxt, ActorEnArrow* this, EnArrowUnkStruct* 
             f32 projectedWaterSurfaceDist = bomb->base.waterSurfaceDist - yDiff;
 
             if (projectedWaterSurfaceDist >= 20.0f) { // bomb will be underwater
-                this->collider.body.toucher.collidesWith = 0x20; // restore arrow damage to normal
+                this->collider.body.toucher.dmgFlags = 0x20; // restore arrow damage to normal
                 bomb->base.parent = NULL;
                 this->base.child = NULL;
                 z2_SetActorSize(&bomb->base, 0.01);

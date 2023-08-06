@@ -24,7 +24,7 @@ typedef struct {
 } ColCommonInit; // size = 0x6
 
 typedef struct {
-    /* 0x0 */ u32 collidesWith;
+    /* 0x0 */ u32 dmgFlags;
     /* 0x4 */ u8 unk4;
     /* 0x5 */ u8 damage;
 } ColTouch; // size = 0x8

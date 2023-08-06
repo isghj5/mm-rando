@@ -41,6 +41,7 @@
 .include "Butterfly.Patch.asm"
 .include "Chest.Patch.asm"
 .include "ChestGame.Patch.asm"
+.include "CollisionCheck.Patch.asm"
 .include "Cows.Patch.asm"
 .include "Dampe.Patch.asm"
 .include "DekuScrubPlaygroundElevator.Patch.asm"

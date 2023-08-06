@@ -56,19 +56,6 @@
     jal     GiantMask_GetLedgeWalkOffHeight_Hook
 
 ;==================================================================================================
-; Adjust big octo spit velocity
-;==================================================================================================
-
-.headersize G_EN_BIGOKUTA_DELTA
-
-; Replaces:
-;   LUI     AT, 0x4120
-;   MTC1    AT, F2
-.org 0x80AC2AE8
-    jal     GiantMask_GetBigOctoSpitVelocity_Hook
-    nop
-
-;==================================================================================================
 ; Adjust spin attack size
 ;==================================================================================================
 
@@ -135,3 +122,101 @@
 ;   JAL     Math3D_Vec3fDistSq
 .org 0x80B9BFDC
     jal     GiantMask_GetHitDistance
+
+;==================================================================================================
+; Large Crate hit detection
+;==================================================================================================
+
+.headersize G_OBJ_KIBAKO2_DELTA
+
+; Replaces:
+;   ADDIU   A1, V0, 0x0024
+.org 0x8098EBB4
+    or      a1, v0, r0
+
+; Replaces:
+;   JAL     Math3D_Vec3fDistSq
+.org 0x8098EBC8
+    jal     GiantMask_GetHitDistance
+
+;==================================================================================================
+; Snowhead Temple Bombable Wall hit detection
+;==================================================================================================
+
+.headersize G_BG_HAKUGIN_BOMBWALL_DELTA
+
+; Replaces:
+;   ADDIU   A1, V0, 0x0024
+;   JAL     Math3D_Vec3fDistSq
+.org 0x80ABCB8C
+    or      a1, v0, r0
+    jal     GiantMask_GetHitDistance
+
+; Replaces:
+;   ADDIU   A1, V0, 0x0024
+;   JAL     Math3D_Vec3fDistSq
+.org 0x80ABCC44
+    or      a1, v0, r0
+    jal     GiantMask_GetHitDistance
+
+;==================================================================================================
+; Ocean Spider House Bombable Wall hit detection
+;==================================================================================================
+
+.headersize G_BG_KIN2_BOMBWALL_DELTA
+
+; Replaces:
+;   JAL     Math3D_Vec3fDistSq
+;   ADDIU   A1, V0, 0x0024
+.org 0x80B6E050
+    jal     GiantMask_GetHitDistance
+    or      a1, v0, r0
+
+;==================================================================================================
+; Stone Tower Temple Bombable Floor and Wall hit detection
+;==================================================================================================
+
+.headersize G_BG_IKANA_BOMBWALL_DELTA
+
+; Replaces:
+;   JAL     Math3D_Vec3fDistSq
+;   ADDIU   A1, V0, 0x0024
+.org 0x80BD4E70
+    jal     GiantMask_GetHitDistance
+    or      a1, v0, r0
+
+; Replaces:
+;   JAL     Math3D_Vec3fDistSq
+;   ADDIU   A1, V0, 0x0024
+.org 0x80BD4ED8
+    jal     GiantMask_GetHitDistance
+    or      a1, v0, r0
+
+;==================================================================================================
+; Beneath the Grave Bombable Wall hit detection
+;==================================================================================================
+
+.headersize G_BG_HAKA_BOMBWALL_DELTA
+
+; Replaces:
+;   JAL     Math3D_Vec3fDistSq
+;   ADDIU   A1, V0, 0x0024
+.org 0x80BD5E2C
+    jal     GiantMask_GetHitDistance
+    or      a1, v0, r0
+
+;==================================================================================================
+; Big Octo damage flags
+;==================================================================================================
+
+.headersize G_EN_BIGOKUTA_DELTA
+
+; Replaces:
+;   .dw 0xF7CFC74F
+.org 0x80AC4544
+    .dw 0xB7CFC74F
+
+; Replaces:
+;   .dw 0x000038B0
+.org 0x80AC4570
+    .dw 0x400038B0

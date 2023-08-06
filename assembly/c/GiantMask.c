@@ -375,18 +375,6 @@ f32 GiantMask_GetLedgeWalkOffHeight(Actor* actor) {
     return result;
 }
 
-f32 GiantMask_GetBigOctoSpitVelocity() {
-    // Displaced code:
-    f32 result = 10.0f;
-    // End displaced code
-
-    if (_isGiant) {
-        result *= 2.0f;
-    }
-
-    return result;
-}
-
 f32 GiantMask_Math_SmoothStepToF(f32* pValue, f32 target, f32 fraction, f32 step, f32 minStep) {
     const f32 modifier = GiantMask_GetSimpleScaleModifier();
 

@@ -474,7 +474,7 @@ enum PlayerState1 {
     PLAYER_STATE1_ZORA_WEAPON = 0x01000000, // Zora fins are out, "Put Away" may be prompted.
     PLAYER_STATE1_EPONA       = 0x00800000, // On Epona.
     PLAYER_STATE1_SHIELD      = 0x00400000, // Shielding.
-    PLAYER_STATE1_ZORA_FINS   = 0x00200000, // Using Zora fins.
+    PLAYER_STATE1_LADDER      = 0x00200000, // Climbing a ladder.
     PLAYER_STATE1_AIM         = 0x00100000, // Aiming bow, hookshot, Zora fins, etc.
     PLAYER_STATE1_FALLING     = 0x00080000, // In the air (without jumping beforehand).
     PLAYER_STATE1_AIR         = 0x00040000, // In the air (with jumping beforehand).
