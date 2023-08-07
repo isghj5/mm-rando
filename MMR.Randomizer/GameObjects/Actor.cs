@@ -1337,27 +1337,33 @@ namespace MMR.Randomizer.GameObjects
         En_Owl = 0xAF, // En_Owl
 
         // MULTIPLE OBJECT ACTOR
-        // todo aparently there is a sliver boulder in this actor, does it need object?
-        [EnemizerEnabled]
+        [ActorizerEnabled]
         [FileID(158)]
         [ActorInstanceSize(0x198)]
-        [ObjectListIndex(0x2)]
+        [ObjectListIndex(0x2)] // pick up rock version
+        //[ObjectListIndex(0x1F6)] // NEVER USED IN MM, damn thing lied to me, even the boulders are object 2
         // it actually uses one of two objects: gameplay_field or object_ishi, which is only in SSHouse
         //6a does not load
-        // params from m2c:
+        // params:
         // 3 >> & 1 uses object_ishi instead of gameplay_field
         // sooo what is 0x1FE?
-        // 1 is silver boulder, pick-upable by darmani (FE is the highest scene flag I can set, which might be always )
+        // & F0 is drop type on destroy, 
+        // 1 is silver boulder,, 0xFE01 are the silver boulder in zora cape
+        // 0xFE00 is switch flags
         // 0x1F2 you get bugs if you pick it up, best version
-        [GroundVariants(0x1F2, 0xFE01)]
-        [VariantsWithRoomMax(max: 1, variant: 0xFE01)]
-        [BlockingVariants(1, 0xFE01)]
+        // A1 is boulder type (1) and A drop table
+        [GroundVariants(0x1F2, 0xA1)]
+        [WaterVariants(0xFE01)]
+        [VariantsWithRoomMax(max: 10, variant: 0xA1, 0xFE01)]
+        [BlockingVariants(0xA1, 0xFE01)]
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
-        [EnemizerScenesExcluded(Scene.TerminaField)] // dont replace them in TF
+        //[EnemizerScenesExcluded(Scene.TerminaField)] // dont replace them in TF
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x3F5F)]
+        [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: 1,
+            variant: 0x6033, 0x603B, 0x6018, 0x605C, 0x8000, 0xA000, 0x7000, 0xC000, 0xE000, 0xF000, 0xD000)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
-        Rock = 0xB0, // En_Ishi
+        SilverRock = 0xB0, // En_Ishi
 
         //[ActorizerEnabled] // works but a bit lame
         [FileID(159)]
@@ -1867,11 +1873,17 @@ namespace MMR.Randomizer.GameObjects
 
         Empty101 = 0x101,
 
-        // TODO
-        // ... puzzle block? like what?
+        // puzzle block used in sakon's hideout I think
+        [ActorizerEnabled]
         [FileID(237)]
-        [ObjectListIndex(0x1)]
+        [ObjectListIndex(0x3)] // double object, the other one is object_secom (sakons hideout)
+        // params: 1000 uses alt object instead of dangeon, 0x700 determins minor color, 0x7F is switch flag
+        // rotz is used as a unknown param
+        [GroundVariants(0x000, 0x100, 0x200, 0x300, 0x400, 0x500, 0x600, 0x700)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        [OnlyOneActorPerRoom]
+        [BlockingVariantsAll]
+        [UnkillableAllVariants]
         PuzzleBlock = 0x102, // Obj_Pzlblock
 
         //[ActorizerEnabled] // doesnt spawn without 2 node path, if you remove the code to allow for more:crash
@@ -2707,6 +2719,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(Scene.PostOffice)]
         BedroomPostman = 0x17D, // En_Mm3
 
+        // what is this?
         [FileID(344)]
         [ObjectListIndex(0x18A)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 7)]

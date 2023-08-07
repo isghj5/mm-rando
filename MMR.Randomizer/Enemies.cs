@@ -1222,10 +1222,12 @@ namespace MMR.Randomizer
             ///   considering nothing in vanilla needs these, and because
             ///   I'm worried about setting flags for something else, lets remove that
 
-            var ishiFid = GameObjects.Actor.Rock.FileListIndex();
+            var ishiFid = GameObjects.Actor.SilverRock.FileListIndex();
             RomUtils.CheckCompressed(ishiFid);
             var ishiData = RomData.MMFileList[ishiFid].Data;
             ReadWriteUtils.Arr_WriteU32(ishiData, Dest: 0x12CC, val: 0x00000000); // JAL (Actor_SetSwitchFlag) -> NOP
+            // there is code to stop the boulder from dropping random good shit, we should have that
+            ReadWriteUtils.Arr_WriteU32(ishiData, Dest: 0x8CC, val: 0x00000000); // BNEZ (If ! ishi param & 1) -> NOP
         }
 
         public static void FixBabaAndDragonflyShadows()
@@ -1832,7 +1834,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.FriendlyCucco)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.SilverRock)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
