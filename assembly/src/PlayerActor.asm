@@ -288,16 +288,18 @@ Player_GetInvertedLedgeClimbFactor_Hook:
     jr      ra
     addiu   sp, sp, 0x20
 
-Player_GetLedgeJumpSpeed_Hook:
+Player_ModifyLedgeJumpWallHeight_Hook:
     addiu   sp, sp, -0x20
     sw      ra, 0x001C (sp)
     swc1    f4, 0x0018 (sp)
     swc1    f6, 0x0014 (sp)
 
-    jal     Player_GetLedgeJumpSpeed
-    nop
+    jal     Player_ModifyLedgeJumpWallHeight
+    addiu   a0, sp, 0x0018
 
-    mov.s   f8, f0
+    ; Displaced code:
+    lui     at, 0x40B0
+    mtc1    at, f8
 
     lwc1    f6, 0x0014 (sp)
     lwc1    f4, 0x0018 (sp)
@@ -324,19 +326,6 @@ Player_GetMidAirJumpSlashHeight_Hook:
     jr      ra
     addiu   sp, sp, 0x18
 
-Player_ModifyJumpHeight_Hook:
-    addiu   sp, sp, -0x18
-    sw      ra, 0x0014 (sp)
-
-    jal     Player_GetJumpHeightModifier
-    swc1    f0, 0x0010 (sp)
-
-    lwc1    f4, 0x0010 (sp)
-    mul.s   f0, f4, f0
-
-    lw      ra, 0x0014 (sp)
-    jr      ra
-    addiu   sp, sp, 0x18
 
 Player_ModifyJumpVelocity_Hook:
     addiu   sp, sp, -0x18

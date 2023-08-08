@@ -430,14 +430,8 @@ f32 Player_GetInvertedLedgeClimbFactor() {
 }
 
 // 806F275C
-f32 Player_GetLedgeJumpSpeed() {
-    // Displaced code:
-    f32 result = 5.5f;
-    // End displaced code
-
-    result *= GiantMask_GetSimpleScaleModifier();
-
-    return result;
+void Player_ModifyLedgeJumpWallHeight(f32* wallHeight) {
+    *wallHeight *= GiantMask_GetSimpleInvertedScaleModifier();
 }
 
 f32 Player_GetMidAirJumpSlashHeight(f32* outAlternateHeight) {
@@ -463,6 +457,12 @@ f32 Player_GetJumpHeightModifier(GlobalContext* ctxt, ActorPlayer* player) {
     // End displaced code
 
     return result;
+}
+
+void Player_SetVelocityY(ActorPlayer* player, f32 yVelocity) {
+    yVelocity *= GiantMask_GetSimpleScaleModifier();
+
+    player->base.velocity.y = yVelocity;
 }
 
 void Player_ModifyJumpVelocity(ActorPlayer* player) {

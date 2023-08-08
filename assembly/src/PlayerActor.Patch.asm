@@ -473,7 +473,7 @@
 ;   LUI     AT, 0x40B0
 ;   MTC1    AT, F8
 .org 0x808352CC
-    jal     Player_GetLedgeJumpSpeed_Hook
+    jal     Player_ModifyLedgeJumpWallHeight_Hook
     nop
 
 ; Replaces:
@@ -496,17 +496,33 @@
 ;   NOP
 ;   MUL.S   F0, F0, F4
 ;   NOP
-.org 0x808398A0
-    sw      v1, 0x0028 (sp)
-    jal     Player_ModifyJumpHeight_Hook
-    or      a1, s0, r0
-    sll     t7, s1, 2
-    lw      v1, 0x0028 (sp)
-    nop
-    nop
-    nop
-    nop
-    nop
+; Replaces:
+;   MTC1    A1, F12
+;   ANDI    A1, A2, 0xFFFF
+;   SW      RA, 0x0014 (SP)
+;   SW      A2, 0x0020 (SP)
+;   LUI     AT, hi(0x8085C3E4)
+;   LWC1    F4, lo(0x8085C3E4) (AT)
+;   LHU     T6, 0x0090 (A0)
+;   MUL.S   F6, F12, F4
+;   ANDI    T7, T7, 0xFFFE
+;   SH      T7, 0x0090 (A0)
+;   BEQZ    A1, .+0x24
+;   SWC1    F6, 0x0068 (A0)
+.org 0x80834CD4
+    sw      ra, 0x0014 (sp)
+    lhu     t6, 0x0090 (a0)
+    andi    t7, t6, 0xFFFE
+    sh      t7, 0x0090 (a0)
+    lui     at, hi(0x8085C3E4)
+    lwc1    f4, lo(0x8085C3E4) (at)
+    sw      a0, 0x0018 (sp)
+    sw      a1, 0x001C (sp)
+    jal     Player_SetVelocityY
+    sw      a2, 0x0020 (sp)
+    lhu     a1, 0x0022 (sp)
+    beqz    a1, .+0x20
+
 
 ; Replaces:
 ;   LW      T2, 0x0A70 (S0)

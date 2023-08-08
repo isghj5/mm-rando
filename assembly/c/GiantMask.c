@@ -48,7 +48,6 @@ static void GiantMask_Reg_Grow(bool fromGiantTransformation) {
     REG(43) *= 10;  // idle deceleration
     REG(45) *= 10;  // running speed
     REG(68) *= 10;  // gravity
-    IREG(67) *= 10; // jump strength // read at 806F48EC
 
     if (!fromGiantTransformation) {
         REG(19) *= 0.5;             // running acceleration
