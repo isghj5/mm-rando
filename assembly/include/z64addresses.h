@@ -55,6 +55,7 @@ extern int z2_Inventory_GetBtnItem(GlobalContext* ctxt, ActorPlayer* player, s32
 extern void z2_DrawButtonAmounts(GlobalContext* ctxt, u32 arg1, u16 alpha);
 extern void z2_DrawBButtonIcon(GlobalContext* ctxt);
 extern void z2_DrawCButtonIcons(GlobalContext* ctxt);
+extern BgMeshHeader* z2_BgCheck_GetCollisionHeader(CollisionContext* colCtx, s32 bgId);
 extern bool z2_BgCheck_EntityCheckCeiling(CollisionContext* colCtx, f32* outY, Vec3f* pos, f32 checkHeight, BgPolygon** outPoly, s32* outBgId, Actor* actor);
 extern u32 z2_GetFloorPhysicsType(void* arg0, void* arg1, u8 arg2);
 extern bool z2_Camera_IsHookArrival(Camera* camera);

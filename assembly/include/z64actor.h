@@ -7,6 +7,7 @@
 #include <z64math.h>
 #include <z64animation.h>
 #include <z64collision_check.h>
+#include <z64light.h>
 
 struct Actor;
 struct BgPolygon;
@@ -334,6 +335,19 @@ typedef struct {
     /* 0x00 */ u32 maskDListEntry[24];
 } PlayerMaskDList; // size = 0x60
 
+typedef struct {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 alpha;
+    /* 0x04 */ z_Matrix mf;
+} struct_80122D44_arg1_unk_04; // size = 0x44
+
+typedef struct {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ s8 unk_01;
+    /* 0x02 */ char unk_02[2]; // probably alignment padding
+    /* 0x04 */ struct_80122D44_arg1_unk_04 unk_04[4];
+} struct_80122D44_arg1; // size >= 0x114
+
 struct ActorPlayer;
 
 typedef void (*PlayerActionFunc)(struct ActorPlayer* this, struct GlobalContext* ctxt);
@@ -382,7 +396,11 @@ typedef struct ActorPlayer {
     /* 0x395 */ UNK_TYPE1 pad395[0x37];
     /* 0x3CC */ s16 unk3CC;
     /* 0x3CE */ s8 unk3CE;
-    /* 0x3CF */ UNK_TYPE1 pad3CF[0x149];
+    /* 0x3CF */ u8 unk_3CF;
+    /* 0x3D0 */ struct_80122D44_arg1 unk_3D0;
+    /* 0x4E4 */ UNK_TYPE1 unk_4E4[0x20];
+    /* 0x504 */ z_Light* lightNode;
+    /* 0x508 */ LightInfo lightInfo;
     /* 0x518 */ ColCylinder collisionCylinder;
     /* 0x564 */ UNK_TYPE1 pad564[0x1CC];
     /* 0x730 */ Actor* target;

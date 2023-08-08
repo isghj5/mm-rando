@@ -633,6 +633,29 @@ f32 Player_GetGoronMaxRoll() {
     return result;
 }
 
+void Player_SetGoronPoundGravity(ActorPlayer* this, f32* gravityAtPeak) {
+    f32 gravity;
+    f32 peakThreshold = -GiantMask_GetSimpleScaleModifier();
+    if (this->base.velocity.y > peakThreshold) {
+        gravity = *gravityAtPeak;
+    } else {
+        this->unk_3D0.unk_00 = 1;
+        gravity = -10.0f;
+    }
+    this->base.gravity = gravity * GiantMask_GetSimpleScaleModifier();
+}
+
+Actor* Player_SpawnCrater(ActorContext* actorCtxt, GlobalContext* ctxt, u16 id, f32 x, f32 y, f32 z, u16 rx, u16 ry, u16 rz, u16 params) {
+    if (GiantMask_IsGiant()) {
+        if (params == 0) {
+            params = 0x2400;
+        } else if (params == 500) {
+            params = 5000;
+        }
+    }
+    return z2_SpawnActor(actorCtxt, ctxt, id, x, y, z, rx, ry, rz, params);
+}
+
 void Player_AfterCrushed(void) {
     // Displaced Code:
     // Intentionally removed code

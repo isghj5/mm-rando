@@ -888,3 +888,46 @@
 ;   JAL     Player_InBlockingCsMode
 .org 0x8085B200
     jal     Player_CantBeGrabbed
+
+;==================================================================================================
+; Player goron pound gravity
+;==================================================================================================
+
+; Replaces:
+;   C.LT.S  F4, F12
+;   LUI     AT, 0xC120
+;   BC1FL   .+0x1C
+;   MTC1    AT, F10
+;   LUI     AT, hi(0x8085E6EC)
+;   LWC1    F6, lo(0x8085E6EC) (AT)
+;   B       .+0x18
+;   SWC1    F6, 0x0074 (S0)
+;   MTC1    AT, F10
+;   ADDIU   T6, R0, 0x0001
+;   SB      T6, 0x03D0 (S0)
+;   SWC1    F10, 0x0074 (S0)
+.org 0x80858AC0
+.area 0x30, 0
+    nop
+    nop
+    nop
+    nop
+    lui     a1, hi(0x8085E6EC)
+    addiu   a1, a1, lo(0x8085E6EC)
+    jal     Player_SetGoronPoundGravity
+    or      a0, s0, r0
+.endarea
+
+;==================================================================================================
+; Player goron pound and punch crater spawn
+;==================================================================================================
+
+; Replaces:
+;   JAL     Actor_Spawn
+.org 0x80840470
+    jal     Player_SpawnCrater
+
+; Replaces:
+;   JAL     Actor_Spawn
+.org 0x80857BB8
+    jal     Player_SpawnCrater

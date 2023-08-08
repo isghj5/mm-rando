@@ -34,6 +34,7 @@
 .include "Arrow.Patch.asm"
 .include "ArrowMagic.Patch.asm"
 .include "BankAmount.Patch.asm"
+.include "BgCheck.Patch.asm"
 .include "Bomb.Patch.asm"
 .include "BombersNotebook.Patch.asm"
 .include "BugFixes.Patch.asm"
