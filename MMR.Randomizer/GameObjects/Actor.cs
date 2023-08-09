@@ -4681,7 +4681,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         MysteryHand = 0x27D, // En_Bjt
 
-        [ActorizerEnabled]// cannot be rando'd without breaking bomber kids
+        [ActorizerEnabled]
         [FileID(597)]
         [ObjectListIndex(0x110)]
         [CheckRestricted(Item.ItemNotebook)]

@@ -399,6 +399,7 @@ namespace MMR.Randomizer
             SplitSpiderGrottoSkulltulaObject();
             SplitOceanSpiderhouseSpiderObject();
             FixDekuPalaceReceptionGuards();
+            FixBomberKidsGameFinishWarp();
 
             Shinanigans();
         }
@@ -1047,6 +1048,20 @@ namespace MMR.Randomizer
             dekuPalaceScene.Maps[0].Objects[7] = frontGuardOID;
             dekuPalaceScene.Maps[1].Objects[7] = frontGuardOID;
             dekuPalaceScene.Maps[2].Objects[7] = frontGuardOID;
+        }
+
+        private static void FixBomberKidsGameFinishWarp()
+        {
+            /// for some weird reason, their warp is calculated in real time based on the player's position,
+            /// the code is unknown, but.. it should always go to the same spot so we should be able to just replace it
+            /// the saving kids warp is 0x6D50
+
+            var bombjimbFid = GameObjects.Actor.BombersYouChase.FileListIndex();
+            RomUtils.CheckCompressed(bombjimbFid);
+            var bombjimbData = RomData.MMFileList[bombjimbFid].Data;
+            // we want to replace the Entrance_CreateFromSpawn function call,
+            // which would load the old entrance address into v0, with a manual load v0 with our warp
+            ReadWriteUtils.Arr_WriteU32(bombjimbData, 0x1E88, 0x240265D0); // Jal Entrance_CreateFromSpawn -> Addiu V0, R0, 0x6D50
         }
 
         public static void FixKafeiPlacements()
@@ -3465,7 +3480,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 49.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 50.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
