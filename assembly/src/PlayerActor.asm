@@ -546,3 +546,15 @@ Player_GetWeaponDamageFlags_Hook:
     lw      ra, 0x0014 (sp)
     jr      ra
     addiu   sp, sp, 0x18
+
+Player_GetLinearVelocityForLimbRotation_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+
+    jal     Player_GetLinearVelocityForLimbRotation
+    sw      at, 0x0010 (sp)
+
+    lwc1    f4, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18

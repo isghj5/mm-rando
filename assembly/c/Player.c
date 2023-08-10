@@ -698,3 +698,7 @@ bool Player_CantBeGrabbed(GlobalContext* ctxt, ActorPlayer* player) {
     // Displaced code:
     return z2_Player_InBlockingCsMode(ctxt, player);
 }
+
+f32 Player_GetLinearVelocityForLimbRotation(ActorPlayer* player) {
+    return player->linearVelocity * GiantMask_GetSimpleInvertedScaleModifier();
+}

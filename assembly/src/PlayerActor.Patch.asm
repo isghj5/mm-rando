@@ -931,3 +931,14 @@
 ;   JAL     Actor_Spawn
 .org 0x80857BB8
     jal     Player_SpawnCrater
+
+;==================================================================================================
+; Player limb rotation
+;==================================================================================================
+
+; Replaces:
+;   LWC1    F0, 0x0AD0 (S0)
+;   MTC1    AT, F4
+.org 0x8083C91C
+    jal     Player_GetLinearVelocityForLimbRotation_Hook
+    or      a0, s0, r0
