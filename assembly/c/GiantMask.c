@@ -38,21 +38,27 @@ static void GiantMask_FormProperties_Shrink(PlayerFormProperties* formProperties
     formProperties->unk_40 *= 0.1;
 }
 
-static void GiantMask_Reg_Grow(bool fromGiantTransformation) {
-    REG(19) *= 10;  // run acceleration // deceleration needs hook 806F9FE8
+static void GiantMask_Reg_Grow() {
     //REG(27);        // turning circle
-    REG(30) = 0x40; // sidewalk animation speed
-    REG(32) = 0x40; // sidewalk animation speed
-    REG(38) = 0x20; // walk animation speed
-    REG(39) = 0x20; // walk animation speed
+    REG(48) *= 10; // slow backwalk animation threshold
+    REG(19) *= 10;  // run acceleration // deceleration needs hook 806F9FE8
+    // REG(30) /= 10; // base sidewalk animation speed
+    REG(32) /= 10; // sidewalk animation speed multiplier
+    // REG(34) *= 10; // ? unused ?
+    // REG(35) *= 10; // base slow backwalk
+    REG(36) /= 10; // slow backwalk animation speed multiplier
+    REG(37) /= 10; // walk speed threshold
+    REG(38) /= 10; // walk animation speed multiplier
+    // REG(39) *= 10; // base walk animation speed
     REG(43) *= 10;  // idle deceleration
     REG(45) *= 10;  // running speed
     REG(68) *= 10;  // gravity
-
-    if (!fromGiantTransformation) {
-        REG(19) *= 0.5;             // running acceleration
-        REG(45) *= 7.0f / 11.0f;    // running speed
-    }
+    // REG(69) *= 10;  // jump strength
+    IREG(66) *= 10; // baby jump threshold
+    // IREG(67) *= 10; // baby jump speed
+    // IREG(68) *= 10; // normal jump base speed
+    // IREG(69) *= 10; // normal jump speed multiplier
+    MREG(95) /= 10; // bow sidewalk animation?
 }
 
 static void GiantMask_SetTransformationFlash(GlobalContext* globalCtx, u8 r, u8 g, u8 b, u8 a) {
@@ -243,17 +249,24 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
         case 21:
             _transformationState = 0;
             if (_isGiant) {
-                GiantMask_Reg_Grow(player->mask == 0x14);
+                GiantMask_Reg_Grow();
             }
             break;
     }
 
     if (_isGiant) {
+        if (player->mask == 0x14 && player->currentBoots == 1) {
+            player->currentBoots = 2;
+            z2_Player_SetBootData(globalCtx, player);
+        } else if (player->mask != 0x14 && player->currentBoots == 2) {
+            player->currentBoots = 1;
+            z2_Player_SetBootData(globalCtx, player);
+        }
         if (player->formProperties->unk_00 < 200.0) {
             GiantMask_FormProperties_Grow(player->formProperties);
         }
-        if (REG(38) != 0x20) {
-            GiantMask_Reg_Grow(false);
+        if (REG(68) > -200) {
+            GiantMask_Reg_Grow();
         }
     }
     if (!_isGiant && player->formProperties->unk_00 >= 200.0) {
