@@ -633,6 +633,26 @@ f32 Player_GetGoronMaxRoll() {
     return result;
 }
 
+s32 Player_StepGoronRollRotation(s16* pValue, s32 target, s16 incrStep, s16 decrStep) {
+    return z2_Math_AsymStepToS(pValue, target * GiantMask_GetSimpleInvertedScaleModifier(), incrStep, decrStep);
+}
+
+f32 Player_GetGoronInitialRollRotatationMultiplier(ActorPlayer* this) {
+    return GiantMask_GetSimpleInvertedScaleModifier() * 500.0f;
+}
+
+f32 Player_GetGoronRollYawStepMultiplier(ActorPlayer* this) {
+    return GiantMask_GetSimpleInvertedScaleModifier() * 20.0f;
+}
+
+f32 Player_GetGoronRollReboundSpeedThreshold() {
+    return GiantMask_GetSimpleScaleModifier() * 12.0f;
+}
+
+bool Player_IsAboveBonkThreshold(GlobalContext* ctxt, ActorPlayer* player, f32* velocity, f32 threshold) {
+    return *velocity > (threshold * GiantMask_GetSimpleScaleModifier());
+}
+
 void Player_SetGoronPoundGravity(ActorPlayer* this, f32* gravityAtPeak) {
     f32 gravity;
     f32 peakThreshold = -GiantMask_GetSimpleScaleModifier();

@@ -593,12 +593,87 @@
 .org 0x8084AAF8
     jal     Player_HandleInputVelocity
 
+; Bonk Speed check
+
+; Replaces:
+;   LWC1    F4, 0x0000 (A2)
+;   OR      A3, R0, R0
+;   C.LE.S  F12, F4
+;   NOP
+;   BC1FL   0x80840CC0
+.org 0x80840A48
+    jal     Player_IsAboveBonkThreshold
+    nop
+    nop
+    or      a3, r0, r0
+    beqz    v0, 0x80840CC0
+
 ; Goron Rolling
+
+; Replaces:
+;   LUI     AT, 0x4140
+;   ANDI    T6, T5, 0x0008
+;   BEQZL   T6, 0x80857DCC
+;   LW      T8, 0x0A70 (S0)
+;   LWC1    F0, 0x0B08 (S0)
+;   MTC1    AT, F10
+;   ORI     A3, R0, 0x8000
+;   LUI     AT, hi(0x8085E6BC)
+;   C.LE.S  F10, F0
+;   NOP
+;   BC1FL   0x80857DCC
+.org 0x80857D04
+    andi    t6, t5, 0x0008
+    beqzl   t6, 0x80857DCC
+    lw      t8, 0x0A70 (s0)
+    jal     Player_GetGoronRollReboundSpeedThreshold
+    nop
+    lwc1    f10, 0x0B08 (s0)
+    ori     a3, r0, 0x8000
+    lui     at, hi(0x8085E6BC)
+    c.le.s  f0, f10
+    nop
+    bc1fl   0x80857DCC
+
+; Replaces:
+;   MUL.S   F8, F0, F6
+.org 0x80857D6C
+    mul.s   f8, f10, f6
+
+; Replaces:
+;   LW      A2, 0x001C (SP)
+;   LUI     AT, 0x41F0
+;   MTC1    AT, F4
+;   LUI     AT, 0x43FA
+;   MTC1    AT, F6
+;   LWC1    F0, 0x0AD0 (A2)
+.org 0x80857A70
+    jal     Player_GetGoronInitialRollRotatationMultiplier
+    lw      a0, 0x001C (sp)
+    lw      a2, 0x001C (sp)
+    lui     at, 0x41F0
+    mtc1    at, f4
+    lwc1    f6, 0x0AD0 (a2)
+
+; Replaces:
+;   SWC1    F0, 0x0B08 (A2)
+.org 0x80857AC4
+    swc1    f6, 0x0B08 (a2)
 
 ; Replaces:
 ;   MTC1    AT, F10
 .org 0x80857E48
     jal     Player_GetGoronMaxSpikeRoll_Hook; Into F10
+
+; Replaces:
+;   LH      A1, 0x00DE (SP)
+.org 0x80858B20
+    lw      a1, 0x00DC (sp)
+
+; Replaces:
+;   JAL     Math_AsymStepToS
+.org 0x80858B3C
+    jal     Player_StepGoronRollRotation
 
 ; Replaces:
 ;   JAL     0x800FF2F8
@@ -662,6 +737,19 @@
     nop
     nop
     nop
+
+; Goron Roll Turning Circle
+
+; Replaces:
+;   LWC1    F0, 0x0070 (S0)
+;   LUI     AT, 0x41A0
+;   MTC1    AT, F4
+;   ABS.S   F0, F0
+.org 0x80858484
+    jal     Player_GetGoronRollYawStepMultiplier
+    or      a0, s0, r0
+    lwc1    f4, 0x0070 (s0)
+    abs.s   F4, F4
 
 ; Replaces:
 ;   ADDIU   T9, R0, 0x00C8

@@ -88,6 +88,7 @@ extern void* z2_Lib_SegmentedToVirtual(void* ptr);
 extern u8 z2_CheckItemObtainability(u32 item);
 extern void z2_RemoveItem(u32 item, u8 slot);
 extern void z2_ToggleSfxDampen(int enable);
+extern s32 z2_Math_AsymStepToS(s16* pValue, s16 target, s16 incrStep, s16 decrStep);
 extern s32 z2_Math_AsymStepToF(f32* pValue, f32 target, f32 incrStep, f32 decrStep);
 extern bool z2_SetGetItemLongrange(Actor* actor, GlobalContext* ctxt, u16 giIndex);
 extern void z2_UpdatePictoFlags(GlobalContext* ctxt);

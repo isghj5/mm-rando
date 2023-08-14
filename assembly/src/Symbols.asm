@@ -91,6 +91,7 @@
 .definelabel z2_Math_Sins, 0x800FED84
 .definelabel z2_Math_StepToS, 0x800FEF2C
 .definelabel z2_Math_StepToC, 0x800FEFB4
+.definelabel z2_Math_AsymStepToS, 0x800FF1FC
 .definelabel z2_Math_AsymStepToF, 0x800FF2F8
 .definelabel z2_Math_Vec3f_Copy, 0x800FF50C
 .definelabel z2_Math_Vec3s_ToVec3f, 0x800FF54C
