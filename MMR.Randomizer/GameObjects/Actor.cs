@@ -3049,8 +3049,9 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x5E00, 0x6000, 0x5800, 0x5600)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 9)] // 0xFE00
         [EnemizerScenesExcluded(Scene.Woodfall, Scene.Snowhead, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
-        ElfBubble = 0x1B1,
+        ElfBubble = 0x1B1, // En_Elfbub
 
         Empty1B2 = 0x1B2,
 
