@@ -342,7 +342,6 @@ void Player_UseExplosiveAmmo(s16 item, s16 ammoChange, GlobalContext* ctxt) {
     z2_Inventory_ChangeAmmo(item, ammoChange);
 }
 
-static const f32 giantSpeedModifier = 7.0f / 11.0f;
 void Player_HandleFormSpeed(GlobalContext* ctxt, ActorPlayer* player, f32* speed) {
     // Displaced code:
     if (player->form == PLAYER_FORM_FIERCE_DEITY) {
@@ -351,10 +350,6 @@ void Player_HandleFormSpeed(GlobalContext* ctxt, ActorPlayer* player, f32* speed
     // End displaced code
 
     *speed *= GiantMask_GetSimpleScaleModifier();
-
-    if (player->mask == 0x14) {
-        *speed *= giantSpeedModifier;
-    }
 }
 
 f32 Player_GetWallCollisionHeight(ActorPlayer* player) {
