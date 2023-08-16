@@ -861,9 +861,9 @@
 ;   SB      R0, 0xF674 (AT)
 ;   OR      V0, R0, R0
 .org 0x80841C80
-    jal     Player_GetMaskOnLoad
     or      a0, s0, r0
-    nop
+    jal     Player_GetMaskOnLoad
+    or      a1, s1, r0
     nop
     nop
     nop
