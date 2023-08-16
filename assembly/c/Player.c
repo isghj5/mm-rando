@@ -687,14 +687,14 @@ void Player_AfterCrushed(void) {
 }
 
 s32 Player_GetWeaponDamageFlags(ActorPlayer* player, s32 dmgFlags) {
-    if (player->mask == 0x14 && GiantMask_IsGiant()) {
+    if (GiantMask_IsGiant()) {
         return 0xC0000108; // DMG_POWDER_KEG | DMG_EXPLOSIVES | DMG_GORON_PUNCH | DMG_UNK_0x1E // DMG_UNK_0x1E is used to trigger different damage calculation algorithm.
     }
     return dmgFlags;
 }
 
 bool Player_ShouldBeKnockedOver(GlobalContext* ctxt, ActorPlayer* player, s32 damageType) {
-    if (player->mask == 0x14 && GiantMask_IsGiant()) {
+    if (GiantMask_IsGiant()) {
         return false;
     }
 
@@ -706,7 +706,7 @@ bool Player_ShouldBeKnockedOver(GlobalContext* ctxt, ActorPlayer* player, s32 da
 }
 
 bool Player_CantBeGrabbed(GlobalContext* ctxt, ActorPlayer* player) {
-    if (player->mask == 0x14 && GiantMask_IsGiant()) {
+    if (GiantMask_IsGiant()) {
         return true;
     }
 
