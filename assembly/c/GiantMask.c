@@ -105,7 +105,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
         return;
     }
 
-    if (globalCtx->sceneNum == 0x36) {
+    if (globalCtx->sceneNum == SCENE_INISIE_BS) {
         return;
     }
 

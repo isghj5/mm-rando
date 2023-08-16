@@ -48,7 +48,7 @@ void DoorWarp_GiveItem2(ActorDoorWarp1* actor, GlobalContext* ctxt) {
 u8 DoorWarp_GetSpawnItem(ActorDoorWarp1* actor, GlobalContext* ctxt) {
     u8 result = 0;
     switch (ctxt->sceneNum) {
-        case 0x1F:
+        case SCENE_MITURIN_BS:
             if (MISC_CONFIG.internal.vanillaLayout) {
                 if (!gSaveContext.perm.inv.questStatus.odolwasRemains) {
                     result = 1;
@@ -57,7 +57,7 @@ u8 DoorWarp_GetSpawnItem(ActorDoorWarp1* actor, GlobalContext* ctxt) {
                 result = 1;
             }
             break;
-        case 0x44:
+        case SCENE_HAKUGIN_BS:
             if (MISC_CONFIG.internal.vanillaLayout) {
                 if (!gSaveContext.perm.inv.questStatus.gohtsRemains) {
                     result = 2;
@@ -66,7 +66,7 @@ u8 DoorWarp_GetSpawnItem(ActorDoorWarp1* actor, GlobalContext* ctxt) {
                 result = 2;
             }
             break;
-        case 0x5F:
+        case SCENE_SEA_BS:
             if (MISC_CONFIG.internal.vanillaLayout) {
                 if (!gSaveContext.perm.inv.questStatus.gyorgsRemains) {
                     result = 3;
@@ -75,7 +75,7 @@ u8 DoorWarp_GetSpawnItem(ActorDoorWarp1* actor, GlobalContext* ctxt) {
                 result = 3;
             }
             break;
-        case 0x36:
+        case SCENE_INISIE_BS:
             if (MISC_CONFIG.internal.vanillaLayout) {
                 if (!gSaveContext.perm.inv.questStatus.twinmoldsRemains) {
                     result = 4;
