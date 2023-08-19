@@ -424,8 +424,7 @@ void GiantMask_TryReset() {
 
 f32 GiantMask_GetHitDistance(Vec3f* position, Actor* hittingActor) {
     if (hittingActor->id == ACTOR_PLAYER) {
-        ActorPlayer* player = (ActorPlayer*)hittingActor;
-        if (player->mask == 0x14) {
+        if (_isGiant) {
             return 0.0f;
         }
     }
