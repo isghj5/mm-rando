@@ -12,6 +12,7 @@ using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Models;
 using MMR.Common.Utils;
 using MMR.Randomizer.Asm;
+using System.Text.RegularExpressions;
 
 namespace MMR.Randomizer.Utils
 {
@@ -773,6 +774,11 @@ namespace MMR.Randomizer.Utils
                         if (Path.GetExtension(sequenceList[j].Name) == ".zseq")
                         {
                             name = name.Split('_')[0];
+                        }
+                        if (name.Contains("songforce"))
+                        {
+                            name = Regex.Replace(name, "(\\W|^)songforce\\W", string.Empty);
+                            name = name.Replace("songforce", string.Empty);
                         }
                     }
                 }
