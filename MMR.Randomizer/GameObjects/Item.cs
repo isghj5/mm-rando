@@ -11257,7 +11257,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Fairy"), LocationName("Bean Man Butterfly Fairy"), Region(Region.TerminaField)]
+        [ItemName("Fairy"), LocationName("Bean Man Butterfly Fairy"), Region(Region.DekuPalace)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -11277,7 +11277,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Fairy"), LocationName("Great Bay Coast Cow Grotto Butterfly Fairy"), Region(Region.TerminaField)]
+        [ItemName("Fairy"), LocationName("Great Bay Coast Cow Grotto Butterfly Fairy"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
