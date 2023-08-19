@@ -307,6 +307,18 @@ Player_ModifyLedgeJumpWallHeight_Hook:
     jr      ra
     addiu   sp, sp, 0x20
 
+Player_ModifyWallJumpSpeed_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+
+    jal     Player_ModifyWallJumpSpeed
+    sw      t4, 0x0010 (sp)
+
+    lw      t4, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
 Player_GetMidAirJumpSlashHeight_Hook:
     addiu   sp, sp, -0x18
     sw      ra, 0x0014 (sp)

@@ -504,6 +504,21 @@
     nop
 
 ; Replaces:
+;   ADDIU   AT, R0, 0x0004
+;   BNE     T3, AT, .+0x14
+;   LUI     AT, 0x3F80
+;   MTC1    AT, F10
+;   NOP
+;   ADD.S   F0, F0, F10
+.org 0x8084D5B0
+    or      a0, s0, r0
+    jal     Player_ModifyWallJumpSpeed_Hook
+    mfc1    a1, f0
+    lw      a0, 0x0044 (sp)
+    or      a1, s0, r0
+    or      a2, r0, r0
+
+; Replaces:
 ;   LUI     AT, 0x4090
 ;   MTC1    AT, F4
 ;   LUI     A3, 0x4040

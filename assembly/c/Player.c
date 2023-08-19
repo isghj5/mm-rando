@@ -429,6 +429,20 @@ void Player_ModifyLedgeJumpWallHeight(f32* wallHeight) {
     *wallHeight *= GiantMask_GetSimpleInvertedScaleModifier();
 }
 
+// 8070AA40
+f32 Player_ModifyWallJumpSpeed(ActorPlayer* this, f32 speed) {
+    // VelocityY is multiplied later, but this speed is based on wall height
+    speed *= GiantMask_GetSimpleInvertedScaleModifier();
+
+    // Displaced code:
+    if (this->form == PLAYER_FORM_HUMAN) {
+        speed += 1.0f;
+    }
+    // End displaced code
+
+    return speed;
+}
+
 f32 Player_GetMidAirJumpSlashHeight(f32* outAlternateHeight) {
     // Displaced code:
     f32 result = 3.0f;
