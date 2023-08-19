@@ -48,6 +48,33 @@
     or      a2, r0, r0
 .endarea
 
+; Replaces
+;   SLL     T7, T6, 2
+;   SUBU    T7, T7, T6
+;   SLL     T7, T7, 1
+;   ADDIU   T8, T7, 0xFFFA
+;   ADDU    V0, T8, T9
+;   LB      V1, 0x0002 (V0)
+;   BGEZ    V1, .+0x10
+;   SUBU    T0, R0, V1
+;   JR      RA
+;   SB      T0, 0x0B2A (A0)
+;   SB      V1, 0x0B2A (A0)
+;   JR      RA
+.org 0x8082ECEC
+    addiu   sp, sp, -0x20
+    sw      ra, 0x0014 (sp)
+    nop
+    jal     MMR_GetNewGiEntry
+    or      a0, t6, r0
+    lb      v1, 0x0002 (v0)
+    bgez    v1, .+0xC
+    lw      ra, 0x0014 (sp)
+    subu    v1, r0, v1
+    sb      v1, 0x0B2A (s0)
+    jr      ra
+    addiu   sp, sp, 0x20
+
 ;==================================================================================================
 ; Player actor update hooks
 ;==================================================================================================

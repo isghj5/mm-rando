@@ -275,6 +275,11 @@ u16 MMR_GetNewGiIndex(GlobalContext* ctxt, Actor* actor, u16 giIndex, bool grant
     return newGiIndex;
 }
 
+GetItemEntry* MMR_GetNewGiEntry(u16 giIndex) {
+    u16 newGiIndex = MMR_GetNewGiIndex(NULL, NULL, giIndex, false);
+    return MMR_GetGiEntry(newGiIndex);
+}
+
 static u16 gFanfares[] = { 0x4831, 0x4855, 0x0922, 0x0924, 0x0037, 0x0039, 0x0052 };
 
 #define ITEM_QUEUE_LENGTH 4
