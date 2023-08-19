@@ -186,7 +186,7 @@ static void LoadTrackName(u32 id) {
 
         z2_RomToRam(start, &sCurrentTrackName, SEQUENCE_NAME_MAX_SIZE);
 
-        sAlpha = 0x200;
+        sAlpha = 0x300;
     }
 }
 
