@@ -442,18 +442,6 @@ f32 Player_GetMidAirJumpSlashHeight(f32* outAlternateHeight) {
     return result;
 }
 
-f32 Player_GetJumpHeightModifier(GlobalContext* ctxt, ActorPlayer* player) {
-    f32 result = GiantMask_GetSimpleScaleModifier();
-
-    // Displaced code:
-    if (player->currentBoots == 2) {
-        result *= 0.5f;
-    }
-    // End displaced code
-
-    return result;
-}
-
 void Player_SetVelocityY(ActorPlayer* player, f32 yVelocity) {
     yVelocity *= GiantMask_GetSimpleScaleModifier();
 

@@ -55,9 +55,9 @@ static void GiantMask_Reg_Grow() {
     REG(68) *= 10;  // gravity
     // REG(69) *= 10;  // jump strength
     IREG(66) *= 10; // baby jump threshold
-    // IREG(67) *= 10; // baby jump speed
-    // IREG(68) *= 10; // normal jump base speed
-    // IREG(69) *= 10; // normal jump speed multiplier
+    // IREG(67) *= 10; // normal jump speed
+    // IREG(68) *= 10; // baby jump base speed
+    IREG(69) /= 10; // baby jump speed multiplier
     MREG(95) /= 10; // bow sidewalk animation?
 }
 
