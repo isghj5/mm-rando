@@ -2032,6 +2032,26 @@ typedef struct {
     /* 0x4AC */ u32 modelFlag;
 } ActorEnIn; // size = 0x4CC
 
+// En_Minifrog (Frog Choir Frogs)
+
+struct ActorEnMinifrog;
+
+typedef void (*EnMinifrogActionFunc)(struct ActorEnMinifrog*, GlobalContext*);
+
+typedef struct ActorEnMinifrog {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ SkelAnime skelAnime;
+    /* 0x188 */ Vec3s jointTable[24];
+    /* 0x218 */ Vec3s morphTable[24];
+    /* 0x2A8 */ EnMinifrogActionFunc actionFunc;
+    /* 0x2AC */ struct ActorEnMinifrog* frog;
+    /* 0x2B0 */ s16 frogIndex;
+    /* 0x2B2 */ s16 jumpState;
+    /* 0x2B4 */ s16 timer;
+    /* 0x2B6 */ u16 flags;
+    /* 0x2B8 */ ColCylinder collider;
+} ActorEnMinifrog; // size = 0x304
+
 /// =============================================================
 /// Actor Cutscene
 /// =============================================================

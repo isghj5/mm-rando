@@ -30,6 +30,22 @@ void Minifrog_GiveReward(Actor* actor, GlobalContext* ctxt, s16 frogIndex) {
     SET_WEEKEVENTREG(isFrogReturnedFlags[frogIndex]);
 }
 
+bool Minifrog_HasGivenReward(ActorEnMinifrog* this, GlobalContext* ctxt) {
+    if (this->frogIndex == 0 || this->frogIndex >= ARRAY_COUNT(giIndices)) {
+        return true;
+    }
+
+    if (!MISC_CONFIG.internal.vanillaLayout) {
+        u16 giIndex = giIndices[this->frogIndex];
+        GetItemEntry* entry = MMR_GetGiEntry(giIndex);
+        if (entry->message != 0) {
+            return MMR_GetGiFlag(giIndex);
+        }
+    }
+
+    return CHECK_WEEKEVENTREG(isFrogReturnedFlags[this->frogIndex]);
+}
+
 void Minifrog_WaitForDespawn(Actor* actor, GlobalContext* ctxt) {
     ActorPlayer* player = GET_PLAYER(ctxt);
     if (player->givingActor != actor) {
