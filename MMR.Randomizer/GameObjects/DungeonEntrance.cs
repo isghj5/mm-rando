@@ -32,7 +32,6 @@ namespace MMR.Randomizer.GameObjects
         EntranceWoodfallFromWoodfallTempleEntrance,
 
         [Region(Region.ZoraCape)]
-        [ExitCutscene(Scene.ZoraCape, 0, 1)]
         [ExitCutscene(Scene.ZoraCape, 0, 2)]
         [ExitCutscene(Scene.ZoraCape, 1, 2)]
         [ExitCutscene(Scene.GreatBayCutscene, 0, 0)]
