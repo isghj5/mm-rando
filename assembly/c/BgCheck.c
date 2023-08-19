@@ -2,7 +2,7 @@
 #include "GiantMask.h"
 
 s32 SurfaceType_IsBurrowable(CollisionContext* colCtx, BgPolygon* poly, s32 bgId) {
-    if (GiantMask_IsGiant()) {
+    if (poly == NULL || GiantMask_IsGiant()) {
         return false;
     }
 
