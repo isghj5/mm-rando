@@ -89,6 +89,7 @@
 0x800FED84,z2_Math_Sins
 0x800FEF2C,z2_Math_StepToS
 0x800FEFB4,z2_Math_StepToC
+0x800FF03C,z2_Math_StepToF
 0x800FF1FC,z2_Math_AsymStepToS
 0x800FF2F8,z2_Math_AsymStepToF
 0x800FF50C,z2_Math_Vec3f_Copy

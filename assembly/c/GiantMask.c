@@ -397,6 +397,10 @@ f32 GiantMask_Math_SmoothStepToF(f32* pValue, f32 target, f32 fraction, f32 step
     return z2_Math_SmoothStepToF(pValue, target, fraction, step, minStep);
 }
 
+f32 GiantMask_Math_StepToF(f32* pValue, f32 target, f32 step) {
+    return z2_Math_StepToF(pValue, target, step * GiantMask_GetSimpleScaleModifier());
+}
+
 void GiantMask_AdjustSpinAttackHeight(Actor* actor, ColCylinder* collider) {
     collider->params.height *= GiantMask_GetSimpleScaleModifier();
 

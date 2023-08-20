@@ -230,6 +230,7 @@ extern f32 z2_Math_Sins(s16 angle);
 extern f32 z2_Math_CosS(s16 angle);
 extern s32 z2_Math_StepToS(s16* pValue, s16 target, s16 step);
 extern s32 z2_Math_StepToC(s8* pValue, s8 target, s8 step);
+extern s32 z2_Math_StepToF(f32* pValue, f32 target, f32 step);
 extern void z2_Math_Vec3f_Copy(Vec3f* dest, Vec3f* src);
 extern void z2_Math_Vec3s_ToVec3f(Vec3f* dest, Vec3s* src);
 extern void z2_Math_Vec3f_ToVec3s(Vec3s* dest, Vec3f* src);

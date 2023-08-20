@@ -650,6 +650,13 @@
     or      a3, r0, r0
     beqz    v0, 0x80840CC0
 
+; After bonk backwards linear velocity
+
+; Replaces:
+;   JAL     0x800FF03C ; Math_StepToF
+.org 0x8084C7D0
+    jal     GiantMask_Math_StepToF
+
 ; Goron Rolling
 
 ; Replaces:
