@@ -4694,7 +4694,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(598)]
         [ObjectListIndex(0x110)]
-        [CheckRestricted(Item.ItemNotebook)]
+        [CheckRestricted(Item.ItemNotebook,
+            Item.ChestBomberHideoutSilverRupee,
+            Item.TradeItemMoonTear,
+            Item.CollectableTerminaFieldTelescopeGuay1,
+            Item.HeartPieceTerminaBusinessScrub,
+            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
+            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+        )]
         [GroundVariants(0x0B11, 0x0B22, 0x50F, 0x0513, 0x0910)]
         [UnkillableAllVariants]
         BombersYouChase = 0x27F, // En_Bomjimb

@@ -3551,20 +3551,21 @@ namespace MMR.Randomizer
 
                 if (outputSettings.GenerateROM)
                 {
-                    if (ROM.Length > 0x4000000) // over 64mb
+                    /*if (ROM.Length > 0x4000000) // over 64mb
                     {
                         throw new ROMOverflowException("64 MB", "hardware (Everdrive)");
-                    }
+                    }// */
                     progressReporter.ReportProgress(85, "Writing ROM...");
                     RomUtils.WriteROM(outputSettings.OutputROMFilename, ROM);
                 }
 
                 if (outputSettings.OutputVC)
                 {
+                    /* 
                     if (ROM.Length > 0x2000000) // over 32mb
                     {
                         throw new ROMOverflowException("32 MB", "WiiVC");
-                    }
+                    } // */
                     progressReporter.ReportProgress(90, "Writing VC...");
                     var fileName = Path.ChangeExtension(outputSettings.OutputROMFilename, "wad");
                     if (!Path.IsPathRooted(fileName))
