@@ -30,14 +30,17 @@ namespace MMR.Randomizer.Attributes
             return Expression.Lambda<Func<GameplaySettings, bool>>(flagExpression, parameter).Compile();
         }
 
-        protected Func<GameplaySettings, bool> CreateConditionFunction(string settingProperty, object settingValue)
+        protected Func<GameplaySettings, bool> CreateConditionFunction(string settingProperty, object settingValue, bool isEqual)
         {
             var parameter = Expression.Parameter(typeof(GameplaySettings));
 
-            // settings => settings[settingProperty] == settingValue
+            // settings => (settings[settingProperty] == settingValue) == isEqual
             var settingExpression = Expression.Equal(
-                Expression.Property(parameter, settingProperty),
-                Expression.Constant(settingValue)
+                Expression.Equal(
+                    Expression.Property(parameter, settingProperty),
+                    Expression.Constant(settingValue)
+                ),
+                Expression.Constant(isEqual)
             );
             return Expression.Lambda<Func<GameplaySettings, bool>>(settingExpression, parameter).Compile();
         }
@@ -45,6 +48,11 @@ namespace MMR.Randomizer.Attributes
         protected Func<GameplaySettings, bool> CreateConditionFunction(ItemCategory itemCategory, bool doesContain)
         {
             return settings => settings.CustomItemList.Any(item => item.ItemCategory() == itemCategory) == doesContain;
+        }
+
+        protected Func<GameplaySettings, bool> CreateConditionFunction(Item item, bool isRandomized)
+        {
+            return settings => settings.CustomItemList.Contains(item) == isRandomized;
         }
     }
 }

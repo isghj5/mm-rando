@@ -449,9 +449,16 @@ namespace MMR.Randomizer
                 if (itemObject.Conditionals != null)
                 {
                     itemObject.Conditionals.RemoveAll(c => c.Any(item => ItemList[item].IsTrick && !_settings.EnabledTricks.Contains(ItemList[item].Name)));
+                    itemObject.Conditionals.RemoveAll(c => c.Any(item => !item.IsLogicSettingEnabled(_settings)));
                 }
 
                 if (itemObject.IsTrick && !_settings.EnabledTricks.Contains(itemObject.Name))
+                {
+                    itemObject.DependsOnItems?.Clear();
+                    itemObject.Conditionals?.Clear();
+                }
+
+                if (!itemObject.Item.IsLogicSettingEnabled(_settings))
                 {
                     itemObject.DependsOnItems?.Clear();
                     itemObject.Conditionals?.Clear();
@@ -1027,11 +1034,6 @@ namespace MMR.Randomizer
             Debug.WriteLine($"CheckDependence({currentItem.Name()}, {targetName}[{target}])");
             var currentItemObject = ItemList[currentItem];
             var currentTargetObject = ItemList[target];
-
-            if (currentTargetObject.IsTrick && !_settings.EnabledTricks.Contains(currentTargetObject.Name))
-            {
-                return Dependence.Dependent;
-            }
 
             if (currentItemObject.TimeNeeded == 0 && ItemUtils.IsLogicallyJunk(currentItem))
             {
@@ -2974,7 +2976,11 @@ namespace MMR.Randomizer
                         {
                             var item = (Item)itemLogic.ItemId;
                             var isFake = item.IsFake() && (!item.Region(ItemList).HasValue || item.Entrance() != null);
-                            if (isFake && (!ItemList[itemLogic.ItemId].IsTrick || _settings.EnabledTricks.Contains(ItemList[itemLogic.ItemId].Name)) && !itemLogic.RequiredItemIds.Any() && !itemLogic.ConditionalItemIds.Any())
+                            if (isFake
+                                && (!ItemList[itemLogic.ItemId].IsTrick || _settings.EnabledTricks.Contains(ItemList[itemLogic.ItemId].Name))
+                                && item.IsLogicSettingEnabled(_settings)
+                                && !itemLogic.RequiredItemIds.Any()
+                                && !itemLogic.ConditionalItemIds.Any())
                             {
                                 freeItemIds.Add(itemLogic.ItemId);
                                 updated = true;

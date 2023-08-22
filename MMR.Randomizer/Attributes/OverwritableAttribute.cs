@@ -12,10 +12,10 @@ namespace MMR.Randomizer.Attributes
             Condition = (setting) => true;
         }
 
-        public OverwritableAttribute(ItemSlot slot, string settingProperty, object settingValue)
+        public OverwritableAttribute(ItemSlot slot, string settingProperty, object settingValue, bool isEqual = true)
         {
             Slot = slot;
-            Condition = CreateConditionFunction(settingProperty, settingValue);
+            Condition = CreateConditionFunction(settingProperty, settingValue, isEqual);
         }
 
         public enum ItemSlot

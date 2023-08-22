@@ -7,9 +7,9 @@
             Condition = settings => true;
         }
 
-        public TemporaryAttribute(string settingProperty, object settingValue)
+        public TemporaryAttribute(string settingProperty, object settingValue, bool isEqual = true)
         {
-            Condition = CreateConditionFunction(settingProperty, settingValue);
+            Condition = CreateConditionFunction(settingProperty, settingValue, isEqual);
         }
 
         public TemporaryAttribute(string settingFlagProperty, int flagValue, bool hasFlag)

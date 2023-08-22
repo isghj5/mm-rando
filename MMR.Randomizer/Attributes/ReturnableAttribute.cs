@@ -7,9 +7,9 @@
             Condition = CreateConditionFunction(settingFlagProperty, flagValue, hasFlag);
         }
 
-        public ReturnableAttribute(string settingProperty, object settingValue)
+        public ReturnableAttribute(string settingProperty, object settingValue, bool isEqual = true)
         {
-            Condition = CreateConditionFunction(settingProperty, settingValue);
+            Condition = CreateConditionFunction(settingProperty, settingValue, isEqual);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 17;
+        public const int CurrentVersion = 18;
 
         public static string ApplyMigrations(string logic)
         {
@@ -207,6 +207,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 17)
             {
                 AddFrogs(logicObject);
+            }
+
+            if (logicObject.Version < 18)
+            {
+                AddSettings(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -4381,6 +4386,95 @@ namespace MMR.Randomizer.LogicMigrator
             frogChoirLogic.ConditionalItems = new List<List<string>>();
 
             logicObject.Version = 17;
+        }
+
+        private static void AddSettings(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 136;
+            var itemNames = new (string name, string referenceName, Action<JsonFormatLogicItem> modify)[]
+            {
+                ("SettingCloseCows", "Close Cows", null),
+                ("SettingContinuousDekuHopping", null, null),
+                ("SettingClimbMostSurfaces", null, null),
+                ("SettingFreeScarecrow", null, null),
+                ("SettingGiantMaskAnywhere", null, null),
+                //("SettingSaferGlitches", null, null),
+                ("SettingBombchuDrops", null, null),
+                ("SettingInstantTransform", null, null),
+                ("SettingBombArrows", null, null),
+                ("SettingNotRandomizeEnemies", null, null),
+                ("SettingStrayFairyModeChestsOnly", null, null),
+                ("SettingNotStrayFairyModeChestsOnly", null, null),
+                ("SettingNotRandomizedItemGreatBayBossKey", null, null),
+                ("SettingNotRandomizedItemCategoryScoopedItems", "Unrandomized Bottled Contents", null),
+                ("SettingDamageModeDefault", null, null),
+                ("SettingNotDamageModeDouble", null, null),
+                ("SettingNotDamageModeQuadruple", null, null),
+                ("SettingNotDamageModeOHKO", null, null),
+                ("SettingNotDamageModeDoom", null, null),
+                ("SettingDamageEffectDefault", null, null),
+                ("SettingNotDamageEffectFire", null, null),
+                ("SettingNotDamageEffectIce", null, null),
+                ("SettingNotDamageEffectShock", null, null),
+                ("SettingNotDamageEffectKnockdown", null, null),
+                ("SettingNotDamageEffectRandom", null, null),
+                ("SettingMovementModeDefault", null, null),
+                ("SettingMovementModeSuperLowGravity", null, null),
+                ("SettingMovementModeLowGravity", null, null),
+                ("SettingNotMovementModeHighSpeed", null, null),
+                ("SettingNotMovementModeHighGravity", null, null),
+                ("SettingFloorTypeDefault", null, null),
+                ("SettingNotFloorTypeSand", null, null),
+                ("SettingNotFloorTypeIce", null, null),
+                ("SettingNotFloorTypeSnow", null, null),
+                ("SettingNotFloorTypeRandom", null, null),
+                ("SettingClockSpeedDefault", null, null),
+                ("SettingNotClockSpeedFast", null, null),
+                ("SettingNotClockSpeedVeryFast", null, null),
+                ("SettingNotClockSpeedSuperFast", null, null),
+                ("SettingBlastMaskCooldownInstant", null, null),
+                ("SettingBlastMaskCooldownVeryShort", null, null),
+                ("SettingEnableSunsSong", null, null),
+                ("SettingAllowFierceDeityAnywhere", "Fierce Deity's Mask Anywhere", null),
+                ("SettingNotByoAmmo", null, null),
+                ("SettingNotDeathMoonCrash", null, null),
+                ("SettingHookshotAnySurface", null, null),
+                ("SettingCharacterAdultLink", null, null),
+                ("SettingNotCharacterAdultLink", null, null),
+                ("SettingNotFixEponaSword", null, null)
+                //("SettingSpeedupBank", "Faster Bank", null),
+                //("SettingNotSpeedupBank", null, null),
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(data =>
+            {
+                var reference = logicObject.Logic.FirstOrDefault(item => item.Id == data.referenceName && item.IsTrick)
+                    ?? new JsonFormatLogicItem
+                    {
+                        RequiredItems = new List<string>(),
+                        ConditionalItems = new List<List<string>>(),
+                    };
+
+                // TODO delete old reference
+
+                var logicItem = new JsonFormatLogicItem
+                {
+                    Id = data.name,
+                    RequiredItems = reference.RequiredItems.ToList(),
+                    ConditionalItems = reference.ConditionalItems.Select(c => c.ToList()).ToList(),
+                    TimeAvailable = reference.TimeAvailable,
+                    TimeNeeded = reference.TimeNeeded,
+                    TimeSetup = reference.TimeSetup,
+                };
+
+                if (data.modify != null)
+                {
+                    data.modify(logicItem);
+                }
+
+                return logicItem;
+            }).ToList());
+            logicObject.Version = 18;
         }
 
         private class MigrationItem
