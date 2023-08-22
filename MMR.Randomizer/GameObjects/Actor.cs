@@ -2459,12 +2459,12 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0xFF34,
             0xFF02, 0xFF03, 0x0102, 0x0103, // graveyard
             0xFF01)]
-        [WallVariants(0xFF9F, 0x019F)] // 19F graveyard
+        [WallVariants(0xFF9F, 0x019F)] // 19F graveyard, FF9F is perched on tree RTSS
         [VariantsWithRoomMax(max: 1, 0xFF34)] // swarm
         [FlyingToGroundHeightAdjustment(150)]
         //[EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
-        // switch flags are only for the graveyard, no other version uses it
-        // hardcoded to use only in that scene too, so canno't use for anything else without modifying
+          // switch flags are only for the graveyard, no other version uses it
+          // hardcoded to use only in that scene too, so canno't use for anything else without modifying
         //[SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         BadBat = 0x15B, // En_Bat
 
@@ -3228,12 +3228,23 @@ namespace MMR.Randomizer.GameObjects
         [BlockingVariantsAll]
         NorthTFIceBlock = 0x1C8, // Obj_BigIcicle
 
+        [ActorizerEnabled]
         [FileID(419)]
         [ObjectListIndex(0x1E5)]
-        En_Lift_Nuts = 0x1C9, // En_Lift_Nuts
+        [CheckRestricted(Scene.DekuPlayground, variant:-1,
+            Item.CollectableDekuPlaygroundItem1, Item.CollectableDekuPlaygroundItem2, Item.CollectableDekuPlaygroundItem3,
+            Item.CollectableDekuPlaygroundItem4, Item.CollectableDekuPlaygroundItem5, Item.CollectableDekuPlaygroundItem6,
+            Item.CollectableDekuPlaygroundItem7, Item.CollectableDekuPlaygroundItem8, Item.CollectableDekuPlaygroundItem9,
+            Item.CollectableDekuPlaygroundItem10, Item.CollectableDekuPlaygroundItem11, Item.CollectableDekuPlaygroundItem12,
+            Item.CollectableDekuPlaygroundItem13, Item.CollectableDekuPlaygroundItem14, Item.CollectableDekuPlaygroundItem15,
+            Item.CollectableDekuPlaygroundItem16, Item.CollectableDekuPlaygroundItem17, Item.CollectableDekuPlaygroundItem18,
+            Item.MundaneItemDekuPlaygroundPurpleRupee, Item.HeartPieceDekuPlayground)]
+        [GroundVariants(0x7FF, 0x6FF)]
+        [VariantsWithRoomMax(max:0, variant: 0x7FF, 0x6FF)] // if you actually talk to them, and start the game, they cutscene hardlock
+        [UnkillableAllVariants]
+        DekuPlaygroundKeepers = 0x1C9, // En_Lift_Nuts
 
-        // TODO try with new actor rando, ignore placement until I create a version that does not move
-        [ActorizerEnabled] //busted
+        [ActorizerEnabled]
         [FileID(420)]
         [ObjectListIndex(0x1AF)]
         [CheckRestricted(Scene.IkanaGraveyard, variant: 0x814, Item.CollectableIkanaGraveyardDay2Bats1)]

@@ -256,6 +256,10 @@ namespace MMR.Randomizer.Models.Rom
             this.InjectedActor = otherActor.InjectedActor;
         }
 
+        public void ChangeVariant(int variant)
+        {
+            this.OldVariant = this.Variants[0] = variant;
+        }
 
         // should this function also be checking for other compatibility issues like respawning? currently elsewhere
         public List<int> CompatibleVariants(Actor otherActor, Random rng, bool roomIsClearPuzzleRoom = false)
