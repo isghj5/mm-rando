@@ -88,7 +88,7 @@
 .definelabel z2_Kanfont_LoadAsciiChar, 0x800F4F54
 .definelabel z2_memcpy, 0x800FEC90
 .definelabel z2_Math_CosS, 0x800FED44
-.definelabel z2_Math_Sins, 0x800FED84
+.definelabel z2_Math_SinS, 0x800FED84
 .definelabel z2_Math_StepToS, 0x800FEF2C
 .definelabel z2_Math_StepToC, 0x800FEFB4
 .definelabel z2_Math_StepToF, 0x800FF03C

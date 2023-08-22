@@ -123,11 +123,11 @@ static void SpawnIceSmoke(ActorEnElf* actor, GlobalContext* ctxt) {
     if (z2_Rand_ZeroOne() < 0.3f) {
         randomf = 2.0f * z2_Rand_ZeroOne() - 1.0f;
         pos = actor->base.currPosRot.pos;
-        pos.x += randomf * 20.0f * z2_Math_Sins(actor->base.currPosRot.rot.y + 0x4000);
+        pos.x += randomf * 20.0f * z2_Math_SinS(actor->base.currPosRot.rot.y + 0x4000);
         pos.z += randomf * 20.0f * z2_Math_CosS(actor->base.currPosRot.rot.y + 0x4000);
 
         randomf = 2.0f * z2_Rand_ZeroOne() - 1.0f;
-        velocity.x = randomf * 1.6f * z2_Math_Sins(actor->base.currPosRot.rot.y);
+        velocity.x = randomf * 1.6f * z2_Math_SinS(actor->base.currPosRot.rot.y);
         velocity.y = 1.8f;
         velocity.z = randomf * 1.6f * z2_Math_CosS(actor->base.currPosRot.rot.y);
         z2_EffectSsIceSmoke_Spawn(ctxt, &pos, &velocity, &accel, 150);

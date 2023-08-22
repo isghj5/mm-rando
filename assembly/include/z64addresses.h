@@ -226,7 +226,7 @@ extern void z2_ReloadButtonTexture(GlobalContext* ctxt, u8 idx);
 extern void z2_UpdateButtonsState(u32 state);
 
 // Function Prototypes (Math).
-extern f32 z2_Math_Sins(s16 angle);
+extern f32 z2_Math_SinS(s16 angle);
 extern f32 z2_Math_CosS(s16 angle);
 extern s32 z2_Math_StepToS(s16* pValue, s16 target, s16 step);
 extern s32 z2_Math_StepToC(s8* pValue, s8 target, s8 step);

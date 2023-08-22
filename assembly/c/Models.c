@@ -135,7 +135,7 @@ static bool SetLoadedActorModel(struct Model* model, Actor* actor, GlobalContext
  * Cause model to "float" using rotation value.
  **/
 static void ApplyHoverFloat(Actor* actor, f32 base, f32 multiplier) {
-    f32 rot = z2_Math_Sins(actor->shape.rot.y);
+    f32 rot = z2_Math_SinS(actor->shape.rot.y);
     actor->shape.yDisplacement = (rot * multiplier) + base;
 }
 
@@ -1104,7 +1104,7 @@ void Models_DrawPendantOfMemories(GlobalContext* ctxt, ActorPlayer* actor) {
 
 void Models_DrawPendantInHand(GlobalContext* ctxt, ActorPlayer* actor) {
     if (MISC_CONFIG.drawFlags.freestanding && (!MISC_CONFIG.drawFlags.drawPendant) && ((actor->stateFlags.state1 & PLAYER_STATE1_GET_ITEM) == 0)) {
-        z2_TranslateMatrix(((z2_Math_Sins(actor->base.shape.rot.y)) * 3.3) + actor->bodyPartsPos[0xC].x,
+        z2_TranslateMatrix(((z2_Math_SinS(actor->base.shape.rot.y)) * 3.3) + actor->bodyPartsPos[0xC].x,
                             actor->bodyPartsPos[0xC].y + 8.0,
                             ((z2_Math_CosS(actor->base.shape.rot.y)) * 3.3) + actor->bodyPartsPos[0xC].z, 0);
 

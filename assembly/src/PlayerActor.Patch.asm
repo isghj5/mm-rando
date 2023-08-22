@@ -1079,3 +1079,17 @@
 .org 0x8083C91C
     jal     Player_GetLinearVelocityForLimbRotation_Hook
     or      a0, s0, r0
+
+;==================================================================================================
+; Giant Zora Swimming
+;==================================================================================================
+
+; Replaces:
+;   JAL     0x800FED44 ; Math_CosS
+.org 0x80850BB8
+    jal     Player_GetZoraSwimLinearVelocityMultiplier
+
+; Replaces:
+;   JAL     0x800FED84 ; Math_SinS
+.org 0x80850BD0
+    jal     Player_GetZoraSwimVelocityYMultiplier

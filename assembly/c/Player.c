@@ -680,6 +680,14 @@ Actor* Player_SpawnCrater(ActorContext* actorCtxt, GlobalContext* ctxt, u16 id, 
     return z2_SpawnActor(actorCtxt, ctxt, id, x, y, z, rx, ry, rz, params);
 }
 
+f32 Player_GetZoraSwimLinearVelocityMultiplier(s16 swimPitch) {
+    return z2_Math_CosS(swimPitch) * GiantMask_GetSimpleScaleModifier();
+}
+
+f32 Player_GetZoraSwimVelocityYMultiplier(s16 swimPitch) {
+    return z2_Math_SinS(swimPitch) * GiantMask_GetSimpleScaleModifier();
+}
+
 void Player_AfterCrushed(void) {
     // Displaced Code:
     // Intentionally removed code

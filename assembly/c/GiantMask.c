@@ -340,7 +340,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
         _unk_1D30.y = player->base.currPosRot.pos.y + _unk_1D6C;
         _unk_1D30.z = player->base.currPosRot.pos.z;
 
-        _unk_1D54 = z2_Math_Sins(_cutsceneCounter * 1512) * _unk_1D58;
+        _unk_1D54 = z2_Math_SinS(_cutsceneCounter * 1512) * _unk_1D58;
         z2_Matrix_InsertZRotation_f(_unk_1D54, 1); // MTXMODE_APPLY
         z2_Matrix_GetStateTranslationAndScaledY(1.0f, &_unk_1D3C);
         z2_Play_CameraSetAtEyeUp(globalCtx, _transformationCameraId, &_unk_1D30, &_unk_1D24, &_unk_1D3C);
