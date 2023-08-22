@@ -256,8 +256,9 @@ namespace MMR.Randomizer.Models.Rom
             this.InjectedActor = otherActor.InjectedActor;
         }
 
-        // todo remove oldActorVariant no longer used
-        public List<int> CompatibleVariants(Actor otherActor, Random rng)
+
+        // should this function also be checking for other compatibility issues like respawning? currently elsewhere
+        public List<int> CompatibleVariants(Actor otherActor, Random rng, bool roomIsClearPuzzleRoom = false)
         {
             /// with mixed types, typing could be messy, keep it hidden here
             /// EG. like like can spawn on the sand (land), but also on the bottom of GBC (water floor)
@@ -270,7 +271,6 @@ namespace MMR.Randomizer.Models.Rom
 
             // randomly select a type, check if they have matching types
 
-            // TODO figure out how to make this once
             var listOfVariantTypes = Enum.GetValues(typeof(ActorType)).Cast<ActorType>().ToList();
             listOfVariantTypes.Remove(ActorType.Unset);
             // we randomize the type list because some actors have multiple, if we didnt randomize it would always default to first sequential type
@@ -282,27 +282,30 @@ namespace MMR.Randomizer.Models.Rom
             foreach (var randomVariantType in listOfVariantTypes)
             {
                 // pull the variants for our random type
-                List<int> ourVariants   = this.AllVariants[(int)randomVariantType - 1].ToList();
-                List<int> theirVariants = otherActor.AllVariants[(int)randomVariantType - 1].ToList();
+                List<int> ourVariants   = this.AllVariants[ (int) randomVariantType - 1].ToList();
+                List<int> theirVariants = otherActor.AllVariants[ (int) randomVariantType - 1].ToList();
 
-                // TODO if both are zero, exit early
                 if (ourVariants.Count == 0 && theirVariants.Count == 0) continue;
 
+                bool ourVariantMatches = ourVariants.Contains(this.OldVariant);
+
                 // large chance of pathing enemies allowing ground or flying replacements
-                if (randomVariantType == ActorType.Pathing
-                    && ourVariants.Contains(this.OldVariant) && theirVariants.Count == 0 && rng.Next(100) < 80)
+                if (randomVariantType == ActorType.Pathing  && ourVariantMatches && theirVariants.Count == 0 && rng.Next(100) < 80)
                 {
-                    // TODO could make this random
-                    theirVariants = otherActor.AllVariants[(int) ActorType.Flying - 1];
-                    if (theirVariants.Count == 0)
+                    var possibleReplacementTypeList = new List<ActorType> { ActorType.Flying, ActorType.Ground };
+                    possibleReplacementTypeList = possibleReplacementTypeList.OrderBy(u => rng.Next()).ToList();
+
+                    foreach( var type in possibleReplacementTypeList)
                     {
-                        theirVariants = otherActor.AllVariants[(int) ActorType.Ground - 1];
+                        theirVariants = otherActor.AllVariants[(int)type - 1];
+
+                        if (theirVariants.Count != 0) break;
                     }
                 }
 
-                // small chance of ground enemies allowing flying replacements
+                // some chance of ground enemies allowing flying replacements
                 if (randomVariantType == ActorType.Ground
-                    && ourVariants.Contains(this.OldVariant) && rng.Next(100) < 30)
+                    && ourVariantMatches && rng.Next(100) < 40)
                 {
                     var theirFlyingVariants = otherActor.AllVariants[(int)ActorType.Flying - 1];
                     if (theirVariants.Count != 0)
@@ -311,23 +314,42 @@ namespace MMR.Randomizer.Models.Rom
                     }
                 }
 
-                if (ourVariants.Count > 0 && theirVariants.Count > 0) // both have same type
+                // if we dont have the required variants still, even with optional substitution above
+                if (ourVariants.Count == 0 && theirVariants.Count == 0) continue;
+                
+                var compatibleVariants = theirVariants;
+
+                // make sure their variants aren't un-placable either
+                var zeroPlacementVarieties = otherActor.UnplaceableVariants;
+                if (zeroPlacementVarieties != null)
                 {
-                    var compatibleVariants = theirVariants;
+                    //compatibleVariants = compatibleVariants.FindAll(u => !zeroPlacementVarieties.Contains(u));
+                    compatibleVariants.RemoveAll(u => zeroPlacementVarieties.Contains(u));
+                }
 
-                    // make sure their variants aren't un-placable either
-                    var zeroPlacementVarieties = otherActor.UnplaceableVariants;
-                    if (zeroPlacementVarieties != null)
+                if (compatibleVariants.Count == 0 || !ourVariants.Contains(this.OldVariant)) continue;
+
+                if (this.Blockable == false)
+                {
+                    if (otherActor.ActorEnum.GetAttribute<BlockingVariantsAll>() != null)
                     {
-                        //compatibleVariants = compatibleVariants.FindAll(u => !zeroPlacementVarieties.Contains(u));
-                        compatibleVariants.RemoveAll(u => zeroPlacementVarieties.Contains(u));
+                        return null; // test actor is always blocking, oldactor cannot be blocked, continue to next actor
                     }
-
-                    if (compatibleVariants.Count > 0 && ourVariants.Contains(this.OldVariant))
+                    else
                     {
-                        return compatibleVariants; // return with first compatible variants, not all
+                        compatibleVariants = otherActor.FilterBlockingTypes(compatibleVariants);
                     }
                 }
+
+                var respawningVariants = otherActor.RespawningVariants;
+                if ((this.MustNotRespawn || roomIsClearPuzzleRoom) && respawningVariants != null)
+                {
+                    compatibleVariants.RemoveAll(variant => respawningVariants.Contains(variant));
+                }
+
+                if (compatibleVariants.Count != 0)
+                    return compatibleVariants; // return with first compatible variants, not all
+                
             }
 
             return null; // none found
@@ -477,7 +499,7 @@ namespace MMR.Randomizer.Models.Rom
             flyingVariantEntry.AddRange(injectedActor.flyingVariants.Except(flyingVariantEntry));
         }
 
-
+        // TODO merge these two, but for right now they are used differently in different places
         public List<int> RemoveBlockingTypes()
         {
             var blockingTypeVariants = this.ActorEnum.GetAttribute<BlockingVariantsAttribute>();
@@ -488,5 +510,17 @@ namespace MMR.Randomizer.Models.Rom
 
             return this.Variants;
         }
+
+        public List<int>FilterBlockingTypes(List<int> PreviousCandidateVariants)
+        {
+            var blockingTypeVariants = this.ActorEnum.GetAttribute<BlockingVariantsAttribute>();
+            if (blockingTypeVariants != null)
+            {
+                PreviousCandidateVariants = PreviousCandidateVariants.Where(var => !blockingTypeVariants.Variants.Contains(var)).ToList();
+            }
+
+            return PreviousCandidateVariants;
+        }
+
     }
 }

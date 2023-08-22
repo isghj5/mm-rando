@@ -813,13 +813,13 @@ namespace MMR.Randomizer
             var movedToCliffBat = roadtoswampScene.Maps[0].Actors[6];
             movedToCliffBat.Position = new vec16(2432, -40, 2871);
             // match rotation with the other tree sitting bat
-            movedToCliffBat.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 90, flags: roadtoswampScene.Maps[0].Actors[6].Rotation.y);
+            movedToCliffBat.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 90, flags: movedToCliffBat.Rotation.y);
 
             // because the third bat was moved out of center corridor back, move one of the baba forward, we're basically swapping them
             var movedForwardDekuBaba = roadtoswampScene.Maps[0].Actors[14];
             movedForwardDekuBaba.Position.x = 1990;
             movedForwardDekuBaba.Position.z = 2594;
-            movedForwardDekuBaba.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 195, flags: roadtoswampScene.Maps[0].Actors[14].Rotation.y);
+            movedForwardDekuBaba.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 195, flags: movedForwardDekuBaba.Rotation.y);
         }
 
         private static void FixSpecificLikeLikeTypes()
@@ -1853,7 +1853,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DragonFly, GameObjects.Actor.WarpDoor)) continue;
+                if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Tingle, GameObjects.Actor.Skulltula)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.MilkRoad, GameObjects.Actor.MilkroadCarpenter, GameObjects.Actor.GoronWithGeroMask)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.LikeLike, GameObjects.Actor.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.GateSoldier, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
@@ -2035,49 +2035,48 @@ namespace MMR.Randomizer
                 // the enemy we got from the scene has the specific variant number, the general game object has all
                 foreach (var candidateEnemy in reducedCandidateList)
                 {
+                    // if current test actor not already in the new pool
+                    //   TODO why would we get duplicates this late? shouldnt the candidates be unique list?
+                    if (enemyMatchesPool.Any(act => act.ActorId == candidateEnemy.ActorId)) continue;
+
                     var compatibleVariants = oldActor.CompatibleVariants(candidateEnemy, thisSceneData.RNG);
 
                     if (compatibleVariants == null || compatibleVariants.Count == 0) continue;
 
-                    // if current test actor not already in the new pool
-                    //   TODO why would we get duplicates this late? shouldnt the candidates be unique list?
-                    if (!enemyMatchesPool.Any(act => act.ActorId == candidateEnemy.ActorId))
-                    {
-                        var newEnemy = candidateEnemy.CopyActor();
+                    var newEnemy = candidateEnemy.CopyActor();
 
-                        // reduce varieties to meet killable requirements
-                        if (MustBeKillable)
+                    // reduce varieties to meet killable requirements
+                    if (MustBeKillable)
+                    {
+                        newEnemy.Variants = candidateEnemy.KillableVariants(compatibleVariants); // reduce to available
+                        if (newEnemy.Variants.Count == 0)
                         {
-                            newEnemy.Variants = candidateEnemy.KillableVariants(compatibleVariants); // reduce to available
-                            if (newEnemy.Variants.Count == 0)
-                            {
-                                continue; // can't put this enemy here: it has no non-respawning variants
-                            }
+                            continue; // can't put this enemy here: it has no non-respawning variants
                         }
-                        else if (oldActor.Blockable == false)
+                    }
+                    else if (oldActor.Blockable == false)
+                    {
+                        if (newEnemy.ActorEnum.GetAttribute<BlockingVariantsAll>() != null)
                         {
-                            if (newEnemy.ActorEnum.GetAttribute<BlockingVariantsAll>() != null)
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                newEnemy.Variants = compatibleVariants;
-                                newEnemy.RemoveBlockingTypes();
-                                if (newEnemy.Variants.Count == 0) // TODO refactor this into the overall flow
-                                {
-                                    continue;
-                                }
-                            }
+                            continue;
                         }
                         else
                         {
                             newEnemy.Variants = compatibleVariants;
+                            newEnemy.RemoveBlockingTypes();
+                            if (newEnemy.Variants.Count == 0) // TODO refactor this into the overall flow
+                            {
+                                continue;
+                            }
                         }
-
-                        // ACCEPTABLE
-                        enemyMatchesPool.Add(newEnemy);
                     }
+                    else
+                    {
+                        newEnemy.Variants = compatibleVariants;
+                    }
+
+                    // ACCEPTABLE
+                    enemyMatchesPool.Add(newEnemy);
                 } // for each candidate end
             } // for each slot end
 
@@ -2123,7 +2122,7 @@ namespace MMR.Randomizer
         public static void TrimSpecificActor(SceneEnemizerData thisSceneData, Actor actorType, List<Actor> roomActors, List<Actor> roomFreeActors,
                                            bool roomIsClearPuzzleRoom, int variant = -1)
         {
-            /// actors with maximum counts have their extras trimmed off, replaced with free or empty actors, depending on randomRate
+            /// actors with maximum counts have their extras trimmed off, replaced with empty, or free/extra actors, depending on randomRate
 
             List<Actor> trimCandidates;
             if (actorType.OnlyOnePerRoom != null)
@@ -2271,7 +2270,6 @@ namespace MMR.Randomizer
             return SceneFreeActors;
         }
 
-        //public static List<Actor> GetRoomFreeActors(Scene scene, List<int> objectList, List<Actor> SceneFreeActors = null)
         public static List<Actor> GetRoomFreeActors(SceneEnemizerData thisScene, int thisRoomIndex)
         {
             var sceneFreeActors = thisScene.SceneFreeActors;
@@ -2292,7 +2290,8 @@ namespace MMR.Randomizer
         public static void EmptyOrFreeActor(SceneEnemizerData thisSceneData,  Actor oldActor, List<Actor> currentRoomActorList,
                                             List<Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false)
         {
-            /// returns an actor that is either an empty actor or a free actor that can be placed here beacuse it doesn't require a new unique object
+            /// returns an actor that is either an empty actor or a free actor
+            /// assuming one can be placed here beacuse it doesn't require a new unique object, or an object already exists
 
             // roll dice: either get a free actor, or empty
             if (thisSceneData.RNG.Next(100) < thisSceneData.FreeActorRate)
@@ -2307,9 +2306,11 @@ namespace MMR.Randomizer
                     int listIndex = (randomStart + matchAttempt) % acceptableFreeActors.Count;
                     var testEnemy = acceptableFreeActors[listIndex];
 
-                    var testEnemyCompatibleVariants = oldActor.CompatibleVariants(testEnemy, thisSceneData.RNG);
-                    if (testEnemyCompatibleVariants == null) continue;  // no type compatibility, skip
+                    var testEnemyCompatibleVariants = oldActor.CompatibleVariants(testEnemy, thisSceneData.RNG, roomIsClearPuzzleRoom);
+                    if (testEnemyCompatibleVariants == null || testEnemyCompatibleVariants.Count == 0) continue;  // no type compatibility, skip
 
+                    // this should be working in compatibleVariants now
+                    /*
                     if (oldActor.Blockable == false)
                     {
                         if (testEnemy.ActorEnum.GetAttribute<BlockingVariantsAll>() != null)
@@ -2320,7 +2321,7 @@ namespace MMR.Randomizer
                         {
                             testEnemyCompatibleVariants = testEnemy.RemoveBlockingTypes();
                         }
-                    }
+                    } 
 
                     var respawningVariants = testEnemy.RespawningVariants;
                     if ((oldActor.MustNotRespawn || roomIsClearPuzzleRoom) && respawningVariants != null)
@@ -2329,6 +2330,8 @@ namespace MMR.Randomizer
                     }
 
                     if (testEnemyCompatibleVariants.Count == 0) continue;  // no variants remain, leave
+
+                    // */
 
                     var enemyHasMaximums = testEnemy.HasVariantsWithRoomLimits();
                     var acceptableVariants = new List<int>();
@@ -2846,6 +2849,15 @@ namespace MMR.Randomizer
             #endif
             /////////////////////////////
             #endregion
+
+            // tired of this, wont reproduce at all
+            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.RoadToSouthernSwamp)
+            {
+                var skullwallaSearch = thisSceneData.Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.GoldSkulltula);
+                //var badVariants = GameObjects.Actor.GoldSkulltula.V
+                if (skullwallaSearch.Count > 0)// && skullwallaSearch.Find( u => u.Variants[0]))
+                    throw new Exception("Spiders in the swamp again, try another");
+            }
 
             var flagLog = new StringBuilder();
 

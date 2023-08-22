@@ -1190,10 +1190,10 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Resources.mods.fierce_deity_anywhere);
 
-                // test if FD sword spin attack makes sense
-                RomUtils.CheckCompressed(38);
+                // Enable FD Spinattack, by removing the check to make sure link is human form
+                RomUtils.CheckCompressed(38); // ovl_player_actor
                 var playerFile = RomData.MMFileList[38].Data;
-                ReadWriteUtils.Arr_WriteU32(playerFile, 0x5880, 0x00000000); // branch on player->transoformation == FD -> NOP
+                ReadWriteUtils.Arr_WriteU32(playerFile, 0x5880, 0x00000000); // branch on player->transoformation != Human -> NOP
             }
 
             if (_randomized.Settings.ByoAmmo)
