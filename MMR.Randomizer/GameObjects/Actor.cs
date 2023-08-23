@@ -388,7 +388,7 @@ namespace MMR.Randomizer.GameObjects
         Empty2B = 0x2B,
         Empty2C = 0x2C,
 
-        [EnemizerEnabled] // sometimes crash, caused by paths I bet TODO rewrite him so he just wanders around a home instead
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x1CC0)]
         [FileID(71)]
         [ObjectListIndex(0x1D)]
@@ -1050,7 +1050,6 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0001)]
         ProximityTatlTalkingSpot = 0x8B, // Elf_Msg
 
-        // todo finish testing
         [EnemizerEnabled]
         [FileID(131)]
         [ObjectListIndex(3)]
@@ -1860,7 +1859,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // we dont want as an actual actor, we want as a companion
         // why is the letter of all things in gameplay_keep? maybe its the same texture of LTK?
         [FileID(235)]
-        [ObjectListIndex(0x1CB)] // gameplay_keep obj 1
+        [ObjectListIndex(0x1CB)] // gameplay_keep obj 1, but I dont want it everywhere, I just want with mailbox
         [GroundVariants(0)]
         [UnkillableAllVariants]
         LetterToPostman = 0xFE,
@@ -2257,9 +2256,10 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacementXRot]
         Obj_Raillift = 0x13C, // Obj_Raillift
 
+        // ??
         [FileID(281)]
         [ObjectListIndex(0x164)]
-        Bg_Numa_Hana = 0x13D, // Bg_Numa_Hana
+        WoodfallTempleWoodenFlower = 0x13D, // Bg_Numa_Hana
 
         [ActorizerEnabledFreeOnly] // big object, collector flag, boring actor
         //[ActorizerEnabled]
@@ -2287,10 +2287,15 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x141)]
         ShootingGalleryDekuWolfos = 0x141, // En_Syateki_Wf
 
+        [ActorizerEnabled]
         [FileID(286)]
         [ObjectListIndex(0x3)]
+        [GroundVariants(0)]
+        [UnkillableAllVariants]
+        [BlockingVariantsAll]
         PushableBlockOnIce = 0x142, // Obj_Skateblock
 
+        // assuming this is the block ice arrows spawns
         [FileID(288)]
         [ObjectListIndex(0x167)]
         Obj_Iceblock = 0x143, // Obj_Iceblock
@@ -2470,7 +2475,7 @@ namespace MMR.Randomizer.GameObjects
 
         // can hold many different types of graves or stones containing.. nothing bit broke
         // has BG crashed in east clock town before
-        //[ActorizerEnabled] // this works fine but shows up waay too often
+        [ActorizerEnabled] // this works fine but shows up waay too often
         // there are actaually 3 others, but they are three separate objects, so hard to program
         [FileID(314)]
         [ObjectListIndex(0x173)]
@@ -2478,6 +2483,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [VariantsWithRoomMax(max: 1, variant: 0)]
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         // might be used for mikau grave, but also beta actors that teach songs...??
         MagicSlab = 0x15C, // En_Sekihi
 
@@ -2717,6 +2724,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(Scene.PostOffice)]
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         BedroomPostman = 0x17D, // En_Mm3
 
         // what is this?
@@ -2729,9 +2737,13 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled]
         [FileID(345)]
         [ObjectListIndex(0x1F3)]
-        // params 0xC000, 0x2F8, 0x7F, 0xF ???
+        // params 0xC000 is type, 0 and 1 are params, "other" is in front of his dead son
+        // 0x2F8,
+        // 0x7F,
+        // 0xF ???
         // 0x8000 is cutscene version, 0x7FFF is main hall but doesn't spawn?
         //[GroundVariants(0x2000)]
+        [GroundVariants(0x8000)]
         // good candidate for aligned front companions, to his son
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 3)] // 0x3F8
@@ -2801,8 +2813,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(353)]
         [ObjectListIndex(0x18E)]
         [CheckRestricted(Item.ItemPictobox)]
-        [GroundVariants(0)]
-        [VariantsWithRoomMax(0, 0)] // crash reason unk
+        [GroundVariants(0xFF)] // path = invalid
+        [PathingVariants(0x6, 0x3, 0x2)]
+        [PathingTypeVarsPlacement(mask: 0xFF, shift:0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         InjuredKoume = 0x187, // En_Tru
@@ -3175,6 +3188,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1AA)]
         [GroundVariants(0)] // just stands around
         [UnkillableAllVariants]
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         OOTPotionShopMan = 0x1C3, // En_Ds2n
 
         [ActorizerEnabled]
@@ -3206,6 +3220,7 @@ namespace MMR.Randomizer.GameObjects
         //[VariantsWithRoomMax(0, 0)]
         [EnemizerScenesExcluded(Scene.TouristCenter)]
         [UnkillableAllVariants]
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         SwampTouristGuide = 0x1C5, // En_Shn
 
         Empty1C6 = 0x1C6,
@@ -3215,8 +3230,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1B6)]
         [GroundVariants(0x7F, 0x307F, 0x207F, 0x107F)]
         [BlockingVariantsAll]
-        //[EnemizerScenesPlacementBlock(Scene.Woodfall)]
         [UnkillableAllVariants]
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         GateSoldier = 0x1C7,
 
         [ObjectListIndex(0x1AD)]
@@ -3266,8 +3281,28 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1B0)]
         Bg_Market_Step = 0x1CC, // Bg_Market_Step
 
+        [ActorizerEnabled]
         [FileID(422)]
         [ObjectListIndex(0x163)]
+        [CheckRestricted(Scene.DekuPlayground, variant: -1,
+            Item.CollectableDekuPlaygroundItem1, Item.CollectableDekuPlaygroundItem2, Item.CollectableDekuPlaygroundItem3,
+            Item.CollectableDekuPlaygroundItem4, Item.CollectableDekuPlaygroundItem5, Item.CollectableDekuPlaygroundItem6,
+            Item.CollectableDekuPlaygroundItem7, Item.CollectableDekuPlaygroundItem8, Item.CollectableDekuPlaygroundItem9,
+            Item.CollectableDekuPlaygroundItem10, Item.CollectableDekuPlaygroundItem11, Item.CollectableDekuPlaygroundItem12,
+            Item.CollectableDekuPlaygroundItem13, Item.CollectableDekuPlaygroundItem14, Item.CollectableDekuPlaygroundItem15,
+            Item.CollectableDekuPlaygroundItem16, Item.CollectableDekuPlaygroundItem17, Item.CollectableDekuPlaygroundItem18,
+            Item.MundaneItemDekuPlaygroundPurpleRupee, Item.HeartPieceDekuPlayground)]
+        [FlyingVariants(0x8000, 0x8001, 0x8002, 0x8003, 0x8004, 0x9005, // pathing types too
+                        0x8008, 0x8009, 0x800A, 0x800B, 0x800C, 0x900D,
+                        0x800E, 0x800F, 0x8010, 0x8011, 0x9012, 0x8013)]
+        // we are not putting these in the world, only replacing them
+        // why? because they all use paths, but they are flying, this is an annoying double type that we dont account for normally
+        [VariantsWithRoomMax(max: 0, 
+            0x8000, 0x8001, 0x8002, 0x8003, 0x8004, 0x9005,
+            0x8008, 0x8009, 0x800A, 0x800B, 0x800C, 0x900D,
+            0x800E, 0x800F, 0x8010, 0x8011, 0x9012, 0x8013)]
+        //[OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
         DekuPlayGroundGameElevator = 0x1CD, // Obj_Lupygamelift
 
         // the effects in the cutscene, where link is surrounded by feathers
@@ -3313,7 +3348,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(428)]
         [ObjectListIndex(0x1)]
-        Bg_Danpei_Movebg = 0x1D3, // Bg_Danpei_Movebg
+        DampeHouseElevator = 0x1D3, // Bg_Danpei_Movebg
 
         [ActorizerEnabledFreeOnly]
         [FileID(429)]
@@ -3367,6 +3402,7 @@ namespace MMR.Randomizer.GameObjects
         [BlockingVariantsAll]
         GibdoWell = 0x1DA, // En_Talk_Gibud
 
+        // TODO
         [FileID(436)]
         [ObjectListIndex(0x1B8)]
         En_Giant = 0x1DB, // En_Giant
@@ -3455,7 +3491,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(448)]
         [ObjectListIndex(0x1C5)]
         //0x100 is red, 0x200 is blue, 0x300 is green, 00 is purple, however, its difficult to fight more than 2
-        [FlyingVariants(0x300, 0x200, 0x100)] // not meg because I think she shows up too frequently
+        //[FlyingVariants(0x300, 0x200, 0x100)] // not meg because I think she shows up too frequently
         [GroundVariants(0x300, 0x200, 0x100, 0x000)]
         [RespawningVariants(0x0)] // meg does NOT respawn but her death doesnt always trigger kills rooms, not sure why
         [VariantsWithRoomMax(max: 1, variant: 0x000, 0x100, 0x200, 0x300)] // only one per
@@ -3553,6 +3589,8 @@ namespace MMR.Randomizer.GameObjects
         // FF is in the game, in OOT 02 was a composer brother, but in MM 0-6 are the same as FF
         [GroundVariants(0x00FF)]
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
+        // uhhh what else
+        //[CheckRestricted(Scene.InvertedStoneTowerTemple, variant:-1,  Item.MundaneItemCuriosityShopBlueRupee)]
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple)]
         Poe = 0x1F3, // En_Poh
 
@@ -3597,8 +3635,17 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1D0)]
         DarkmanisGhost2 = 0x1FA, // En_Gg2
 
+        [ActorizerEnabled]
         [FileID(467)]
-        [ObjectListIndex(0x1FB)]
+        [ObjectListIndex(0x1D2)]
+        [GroundVariants(0xFF)]
+        [UnkillableAllVariants]
+        [BlockingVariantsAll]
+        [CheckRestricted(Item.MaskGoron, Item.ChestHotSpringGrottoRedRupee,
+            Item.UpgradeRazorSword, Item.UpgradeGildedSword,
+            Item.ItemPowderKeg)]
+        [OnlyOneActorPerRoom] // dyna crash hazard
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         DarmaniGrave = 0x1FB, // Obj_Ghaka
 
         [ActorizerEnabled]
@@ -3815,12 +3862,15 @@ namespace MMR.Randomizer.GameObjects
         [BlockingVariantsAll]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         GoronElder = 0x213, // En_Jg
 
-        // todo can we put them on the wall?
+        
+        //[ActorizerEnabled]
         [FileID(491)]
         [ObjectListIndex(0x18E)]
-        KoumeTargetGameTargets = 0x214, // En_Tru_Mt
+        [UnkillableAllVariants]
+        BoatArcheryKoume = 0x214, // En_Tru_Mt
 
         // todo 
         [FileID(492)]
@@ -4063,9 +4113,12 @@ namespace MMR.Randomizer.GameObjects
         // special additive switch flag, bleh..
         PFSwitchActivatedGeyser = 0x22E, // Obj_Hunsui
 
-        // ?
+        // Boat archery targets
+        [ActorizerEnabled]
         [FileID(518)]
         [ObjectListIndex(0x18E)]
+        [WallVariants(0x0)] // no params in code, -1 is used to spawn in vanilla
+        [UnkillableAllVariants]
         BoatCruiseTarget = 0x22F, // En_Jc_Mato
 
         // ?
@@ -4080,6 +4133,7 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0)]
         [UnkillableAllVariants]
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)] // FIRE AND DARKNESS
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         [EnemizerScenesExcluded(Scene.ZoraHallRooms)]
         [OnlyOneActorPerRoom]
         Japas = 0x231, // En_Zob
@@ -4268,6 +4322,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [VariantsWithRoomMax(max: 1, variant: 0)] // does not spawn, time varibles? second required object?
         [UnkillableAllVariants]
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         [EnemizerScenesExcluded(Scene.StockPotInn)]
         AnjusGrandma = 0x243, // En_Nb
 
@@ -4375,6 +4430,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0,2)]
         [VariantsWithRoomMax(max:0, variant: 0, 2)]
         [UnkillableAllVariants]
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         AnjusMother = 0x253, // En_Ah
         
         [FileID(555)]
@@ -4454,7 +4510,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(567)]
         [ObjectListIndex(0xD0)]
-        [WaterVariants(0,1)] // TODO are thhre more?
+        [WaterVariants(0,1)]
         [UnkillableAllVariants]
         SwimmingZora = 0x260, // En_Zow
 
@@ -4482,7 +4538,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(571)]
         [ObjectListIndex(0xE3)]
-        BombbagstolenBySakon = 0x264, // En_Nimotsu
+        BombbagStolenBySakon = 0x264, // En_Nimotsu
 
         // I want to put these everywhere as an empty actor you can hit by accident, but that adds a lot of colliders
         [FileID(572)]
@@ -4547,6 +4603,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0, 0x1)] // mayors office
         [VariantsWithRoomMax(max:0, variant: 0, 0x1)]
         [UnkillableAllVariants]
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         Viscen = 0x26C, // En_Baisen
 
         [ActorizerEnabled]
@@ -4794,15 +4851,15 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 7)] // fairy fountain
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
+        [AlignedCompanionActor(Butler, CompanionAlignment.InFront, ourVariant: -1, variant: 0x8000)]
         [OnlyOneActorPerRoom]
         ButlersSon = 0x289, // En_Nnh
 
-        // what? todo
-        // what? todo
         [FileID(609)]
         [ObjectListIndex(0x260)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
-        UnderwaterGrave = 0x28A, // Obj_Kzsaku
+        UnderwaterGrate = 0x28A, // Obj_Kzsaku
         
         [FileID(610)]
         [ObjectListIndex(0x261)]
@@ -4885,6 +4942,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GoronRacetrack)]
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         AnjuWeddingDress = 0x299, // En_And "En_An + dress"
 
         [FileID(625)]
@@ -4903,7 +4961,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xD)]
         MadamAromaCutscene = 0x29D, // Dm_Al
 
-        // todo
+        // Dm_Gm is a complete duplicate of this according to darkeye
         [FileID(629)]
         [ObjectListIndex(0xE2)]
         AnjuCutscene = 0x29E, // Dm_An

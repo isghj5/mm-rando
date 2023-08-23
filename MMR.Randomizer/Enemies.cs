@@ -401,6 +401,7 @@ namespace MMR.Randomizer
             FixDekuPalaceReceptionGuards();
             FixBomberKidsGameFinishWarp();
             ModifyAllGraveyardBatsToFly();
+            FixInjuredKoume();
 
             Shinanigans();
         }
@@ -1081,6 +1082,17 @@ namespace MMR.Randomizer
 
             ikanaGraveyardScene.Maps[0].Actors[22].ChangeVariant(newVariant);
             ikanaGraveyardScene.Maps[0].Actors[23].ChangeVariant(newVariant);
+        }
+
+        private static void FixInjuredKoume()
+        {
+            /// Injured koume in the woods of mystery, her code checks if she is in the woods of mystery and self culls
+
+            var koumeFID = GameObjects.Actor.InjuredKoume.FileListIndex();
+            RomUtils.CheckCompressed(koumeFID);
+            var koumeData = RomData.MMFileList[koumeFID].Data;
+            // the code check is entrance, and then moves to kill, so just remove the branch
+            ReadWriteUtils.Arr_WriteU32(koumeData, 0x2D38, 0x00000000); // BNE to actor kill -> NOP 
         }
 
         public static void FixKafeiPlacements()
@@ -1868,15 +1880,15 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DekuPlaygroundKeepers)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Butler)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Tingle, GameObjects.Actor.Skulltula)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Tingle, GameObjects.Actor.Skulltula)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.MilkRoad, GameObjects.Actor.MilkroadCarpenter, GameObjects.Actor.GoronWithGeroMask)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.LikeLike, GameObjects.Actor.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.GateSoldier, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.DekuPatrolGuard, GameObjects.Actor.OOTPotionShopMan)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.DekuPatrolGuard, GameObjects.Actor.InjuredKoume)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
                 #endif
@@ -2873,8 +2885,7 @@ namespace MMR.Randomizer
             if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.RoadToSouthernSwamp)
             {
                 var skullwallaSearch = thisSceneData.Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.GoldSkulltula);
-                //var badVariants = GameObjects.Actor.GoldSkulltula.V
-                if (skullwallaSearch.Count > 0)// && skullwallaSearch.Find( u => u.Variants[0]))
+                if (skullwallaSearch.Count > 0 && skullwallaSearch[0].Variants[0] < 0xFF00)// && skullwallaSearch.Find( u => u.Variants[0]))
                     throw new Exception("Spiders in the swamp again, try another");
             }
 
