@@ -3402,10 +3402,24 @@ namespace MMR.Randomizer.GameObjects
         [BlockingVariantsAll]
         GibdoWell = 0x1DA, // En_Talk_Gibud
 
-        // TODO
+        
+        //[ActorizerEnabled] // had to modify him to make him more interesting, is now an MMRA
         [FileID(436)]
         [ObjectListIndex(0x1B8)]
-        En_Giant = 0x1DB, // En_Giant
+        // 0xFE01-4 are in termina field setup 1, assumption being the cutscene
+        // 0xFE08-B are in st 6
+        // chamber are 0xFE08 and 0xFE0F
+        //0xFE0F doesnt spawn, assumping its the one that is walking away after tatl pisses them off
+        //[GroundVariants(0xFE08)]
+        [EnemizerScenesPlacementBlock(Scene.AstralObservatory, Scene.Grottos, Scene.IkanaCastle,
+            Scene.WestClockTown, Scene.EastClockTown, Scene.NorthClockTown, Scene.SouthClockTown, Scene.LaundryPool,
+            Scene.TouristCenter, Scene.DekuKingChamber, Scene.DekuShrine, Scene.MountainSmithy, Scene.GoronGrave, Scene.GoronShrine, Scene.FishermansHut, Scene.ZoraHall, Scene.MarineLab, Scene.SecretShrine, Scene.IkanaCastle, Scene.IgosDuIkanasLair, Scene.SwordsmansSchool,
+            Scene.TradingPost, Scene.BombShop, Scene.PotionShop, Scene.GoronShop, Scene.ZoraHallRooms, Scene.TreasureChestShop, Scene.SwampShootingGallery, Scene.TownShootingGallery,
+            Scene.HoneyDarling, Scene.PostOffice, Scene.MayorsResidence, Scene.StockPotInn
+            )]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
+        Giant = 0x1DB, // En_Giant
 
         [FileID(437)]
         [ObjectListIndex(0xEF)]
