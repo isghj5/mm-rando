@@ -1131,7 +1131,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(137)]
         [ObjectListIndex(0x12A)]
-        [GroundVariants(0x807F, 0x8004, 0x8002)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
+        // 0x0114-8 are the bombable rocks in hotspring water
+        [GroundVariants(0x807F, 0x8004, 0x8002, // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
+           0xE // swamp spiderhouse
+            )]
         [FlyingVariants(0x807F, 0x8004, 0x8002)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
         [VariantsWithRoomMax(max: 3, variant: 0x807F, 0x8004)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
         [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: -1,
@@ -2681,6 +2684,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x186)]
         [GroundVariants(0xFFFF)]
         [OnlyOneActorPerRoom]
+        [BlockingVariantsAll]
         [UnkillableAllVariants]
         PirateTelescope = 0x178, // En_Warp_Uzu
 
