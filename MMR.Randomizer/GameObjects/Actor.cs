@@ -1131,16 +1131,24 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(137)]
         [ObjectListIndex(0x12A)]
+        [CheckRestricted(Scene.TerminaField, variant:-1,
+            check: Item.HeartPieceTerminaGossipStones, Item.HeartPieceZoraGrotto, Item.CollectableGrottosOceanHeartPieceGrottoBeehive1)]
+        [CheckRestricted(Scene.Grottos, variant: -1,
+            check: Item.ChestHotSpringGrottoRedRupee)]
         // 0x0114-8 are the bombable rocks in hotspring water
+        // params: 0x100 is the big bombable one only, no goron punch
+        // 0x8000 creates a Good Job jingle when you break it
         [GroundVariants(0x807F, 0x8004, 0x8002, // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
-           0xE // swamp spiderhouse
-            )]
-        [FlyingVariants(0x807F, 0x8004, 0x8002)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
+           0xE, // swamp spiderhouse
+           0x0114, 0x0115, 0x0116, 0x0117, 0x0118, 
+           0x8003, 0x807F )]
+        [FlyingVariants(0x07F, 0x004)]
+        [WaterVariants(0x8077)] // does not exist, used for the bottom of the ocean signs in pinnacle rock (hack)
         [VariantsWithRoomMax(max: 3, variant: 0x807F, 0x8004)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
         [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x7000, 0xC000, 0xE000, 0xF000, 0xD000)] // regular unhidden grottos
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
-        [EnemizerScenesExcluded(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Grottos)]
+        [EnemizerScenesExcluded(Scene.GreatBayCoast, Scene.ZoraCape, Scene.Grottos)]
         [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, // too much dyna (unverified)
             Scene.Woodfall, Scene.DekuShrine)] // blocking enemies
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
@@ -1355,7 +1363,8 @@ namespace MMR.Randomizer.GameObjects
         // 0x1F2 you get bugs if you pick it up, best version
         // A1 is boulder type (1) and A drop table
         [GroundVariants(0x1F2, 0xA1)]
-        [WaterVariants(0xFE01)]
+        [WaterVariants(0xFE01, // silver boulder
+            0xFEF0)] // regular small rock (like in pinaccle)
         [VariantsWithRoomMax(max: 10, variant: 0xA1, 0xFE01)]
         [BlockingVariants(0xA1, 0xFE01)]
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
@@ -1365,7 +1374,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: 1,
             variant: 0x6033, 0x603B, 0x6018, 0x605C, 0x8000, 0xA000, 0x7000, 0xC000, 0xE000, 0xF000, 0xD000)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
-        SilverRock = 0xB0, // En_Ishi
+        SmallRock = 0xB0, // En_Ishi
 
         //[ActorizerEnabled] // works but a bit lame
         [FileID(159)]
@@ -3631,6 +3640,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 0, variant: 0x0, 0x1400, 0x1600, 0x1500, 0x1C00, 0x1A00, 0x1E00, 0x2000)]
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
+        [EnemizerScenesPlacementBlock(Scene.PinnacleRock)] // now that we have signs randomized, its almost garenteeded to happen
         ZoraEgg = 0x1F5, // En_Zoraegg
 
         [FileID(462)]

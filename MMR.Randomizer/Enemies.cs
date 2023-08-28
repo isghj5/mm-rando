@@ -402,6 +402,7 @@ namespace MMR.Randomizer
             FixBomberKidsGameFinishWarp();
             ModifyAllGraveyardBatsToFly();
             FixInjuredKoume();
+            RandomizePinnacleRockSigns();
 
             Shinanigans();
         }
@@ -1095,6 +1096,23 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_WriteU32(koumeData, 0x2D38, 0x00000000); // BNE to actor kill -> NOP 
         }
 
+        private static void RandomizePinnacleRockSigns()
+        {
+            /// these signs use gameplay_keep, so there is no sign to associate with them
+            /// HOWEVER, there is a bombiwa object in the object list that doesnt seem to do anything, we can randomize it
+            /// we do have to live with the log saying there are a lot of bombiwa there that are really not there, but so be it
+
+            var listOfSignIds = new List<int> { 14, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43 };
+
+            var pinnacleSceneActors = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PinnacleRock.FileID());
+
+            foreach (var aId in listOfSignIds)
+            {
+                pinnacleSceneActors.Maps[0].Actors[aId].ChangeActor(GameObjects.Actor.Bombiwa, vars: 0x8077, true);
+                pinnacleSceneActors.Maps[0].Actors[aId].OldName = "WaypointSign";
+            }
+        }
+
         public static void FixKafeiPlacements()
         {
             if ( ! VanillaEnemyList.Contains(GameObjects.Actor.Kafei)) return;
@@ -1268,7 +1286,7 @@ namespace MMR.Randomizer
             ///   considering nothing in vanilla needs these, and because
             ///   I'm worried about setting flags for something else, lets remove that
 
-            var ishiFid = GameObjects.Actor.SilverRock.FileListIndex();
+            var ishiFid = GameObjects.Actor.SmallRock.FileListIndex();
             RomUtils.CheckCompressed(ishiFid);
             var ishiData = RomData.MMFileList[ishiFid].Data;
             ReadWriteUtils.Arr_WriteU32(ishiData, Dest: 0x12CC, val: 0x00000000); // JAL (Actor_SetSwitchFlag) -> NOP
