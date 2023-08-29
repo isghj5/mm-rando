@@ -108,7 +108,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1175)]
         [SceneInternalId(0x16)]
         [ClearEnemyPuzzleRooms(4, 7)]// basement lava
-        [FairyDroppingEnemies(1, 2)] // eygore
+        [FairyDroppingEnemies(roomNumber: 1, actorNumber: 2)] // eygore
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RealBombchu,
         //    Actor.WarpDoor)]
         [EnemizerSceneBlockSensitive(Actor.RealBombchu, -1)] // chicken holder leads to a chest
@@ -125,8 +125,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1190)]
         [SceneInternalId(0x18)]
-        [FairyDroppingEnemies(1, 3)] // eygore 
-        [FairyDroppingEnemies(1, 1)] // wizrobe
+        [FairyDroppingEnemies(roomNumber: 1, actorNumber: 3)] // eygore 
+        [FairyDroppingEnemies(roomNumber: 1, actorNumber: 1)] // wizrobe
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DeathArmos,
             Actor.PatrollingPirate)] // casual, causes a need for stone mask to procede through the temple
         InvertedStoneTowerTemple = 0x15,
@@ -142,10 +142,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1208)]
         [SceneInternalId(0x1B)]
         [ClearEnemyPuzzleRooms(4, 6, 7, 8, 9)] // 4: mapchest, 6: snapper room, 7: bow room, 8: BK, 9:dark
-        //[FairyDroppingEnemies(0,  )] 
-        [FairyDroppingEnemies(1, 4, 34)] // wooden flower room, deku baba and stray fairy in bubble
-        [FairyDroppingEnemies(3, 3)] // west wing, skulltula:3
-        [FairyDroppingEnemies(5, 22)] // east wing, beehive:22
+        [FairyDroppingEnemies(roomNumber: 1, actorNumber: 4, 34)] // wooden flower room, deku baba and stray fairy in bubble
+        [FairyDroppingEnemies(roomNumber: 3, actorNumber: 3)] // west wing, skulltula:3
+        [FairyDroppingEnemies(roomNumber: 5, actorNumber: 22)] // east wing, beehive:22
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Dinofos, // weak enemies are kinda lame here
             Actor.Leever, Actor.ChuChu, Actor.DekuBabaWithered)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula, 
@@ -198,7 +197,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.WarpDoor, // Cannot walk through them to get to the chest under
             Actor.Wolfos)] // wolfos: ice wolfos can push the regular actual dog backwards through the wall
         [EnemizerSceneBlockSensitive(Actor.Freezard, 5)] // can block access to the elevator
-        [FairyDroppingEnemies(11, 2, 3)] // dinofos 
+        [FairyDroppingEnemies(roomNumber: 11, actorNumber: 2, 3)] // dinofos 
         SnowheadTemple = 0x1E,
 
         [FileID(1256)]
@@ -411,7 +410,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1362)]
         [SceneInternalId(0x46)]
         //  we want the hiploop to be non-blocking actors, making them killable with this flag does the job
-        [FairyDroppingEnemies(24, 25, 26)] // hiploops
+        [FairyDroppingEnemies(roomNumber: 24, actorNumber: 25, 26)] // hiploops
         [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
             Actor.Peahat, Actor.BabaIsUnused //Actor.Seth1, Actor.Tijo, Actor.ArmosStatue, Actor.ClocktowerGearsAndOrgan, // blocking bridges
             /* Actor.Wolfos */ )] // wolfos:iceblock
@@ -431,8 +430,10 @@ namespace MMR.Randomizer.GameObjects
         //3: clear the biobabas, 5 is gekko, 8 is wart
         [ClearEnemyPuzzleRooms(3, 5, 7)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Skulltula,
-            Actor.BigPoe)]// for some reason big poe in the first room can cause camera to lock, unknown reason
-        [FairyDroppingEnemies(8, 7)] // skulltula in first room
+            Actor.BigPoe)] // for some reason big poe in the first room can cause camera to lock, unknown reason
+        [EnemizerSceneEnemyReplacementBlock(Actor.Dexihand,
+            Actor.Bumper)] // can block the water channel
+        [FairyDroppingEnemies(roomNumber: 8, actorNumber: 7)] // skulltula in first room
         [EnemizerSceneBlockSensitive(Actor.Dexihand, -1)]
         GreatBayTemple = 0x46,
 

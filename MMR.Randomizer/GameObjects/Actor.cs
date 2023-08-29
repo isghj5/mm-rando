@@ -2859,7 +2859,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x198)]
         // params: f0ff/f1ff is standing after getting the final item
         //f603 is sitting on the bottom of the ocean
+        // assumed pathless are 0xF1FF-0xF5FF
+        // params: 0xF00 is type, 0xFF is path
         //[WaterVariants] //woried they are pathing
+        [PathingTypeVarsPlacement(mask:0xFF, shift: 0)]
         AngryBeavers = 0x18D, // En_Az
 
         [FileID(358)]
@@ -2923,6 +2926,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         Dm_Char04 = 0x196, // Dm_Char04
 
+        // these should all be cutscene actors, but which one we do not know
         [FileID(367)]
         [ObjectListIndex(0x213)]
         Dm_Char05 = 0x197, // Dm_Char05
@@ -2956,7 +2960,7 @@ namespace MMR.Randomizer.GameObjects
         // missing switch flags
         Monkey = 0x19E, // En_Mnk
 
-        // ??
+        // assumed spawned rock from eyegore ground slam
         [FileID(374)]
         [ObjectListIndex(0x18D)]
         EyegoreBlock = 0x19F, // En_Egblock
@@ -2985,21 +2989,25 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x190)]
         RaisableSnowheadPillar = 0x1A3, // Bg_Hakugin_Elvpole
 
-        // cannot randomize even with checkchecking because her object must remain for invade poh
         [ActorizerEnabled] // regular romani
         [FileID(379)]
         [ObjectListIndex(0xB7)] // 100 and FF00
+        // cremia shows up if you repel the aliens even if romani is gone
         [CheckRestricted(Item.SongEpona, Item.ItemBottleAliens)]
         [PathingVariants(0xFF00, 0x100)]
         [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)] //zzz
         [UnkillableAllVariants]
-        //[EnemizerScenesExcluded(Scene.RomaniRanch, Scene.RanchBuildings)]
         RomaniWithBow = 0x1A4, // En_Ma4
 
-        // twig?
+        //[ActorizerEnabled] // none of the types will spawn out of minigame
+        // cannot turn into mmra, need to modify the actor to speed up, but even with shifting the actor will not draw, reason unknown
         [FileID(380)]
         [ObjectListIndex(0x199)]
-        En_Twig = 0x1A5, // En_Twig
+        // 0xF are type, 1 is ring 2 is wall
+        //[WaterVariants(0x2)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.WaterfallRapids)] // do not remove the original, yet
+        ZoraRaceRing = 0x1A5, // En_Twig
 
         [ActorizerEnabled]
         [ActorInstanceSize(0x330)] // 274 but fake increase size to reduce frequency
@@ -3026,6 +3034,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.SouthernSwamp, Scene.DekuPalace)]
         BigOcto = 0x1A8, // En_Bigokuta
 
+        // requires ice surface type
         [FileID(384)]
         [ObjectListIndex(0x1E7)]
         IcePlatform = 0x1A9, // Bg_Icefloe
