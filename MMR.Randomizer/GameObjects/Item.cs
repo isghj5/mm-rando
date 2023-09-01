@@ -1069,8 +1069,8 @@ namespace MMR.Randomizer.GameObjects
         [LogicSetting(ItemGreatBayBossKey, false)]
         SettingNotRandomizedItemGreatBayBossKey,
 
-        [LogicSetting(ItemCategory.ScoopedItems, false)]
-        SettingNotRandomizedItemCategoryScoopedItems,
+        [LogicSetting(BottleCatchHotSpringWater, false)]
+        SettingNotRandomizedBottleCatchHotSpringWater,
 
         [LogicSetting(nameof(GameplaySettings.DamageMode), DamageMode.Default)]
         SettingDamageModeDefault,

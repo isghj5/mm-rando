@@ -4406,7 +4406,7 @@ namespace MMR.Randomizer.LogicMigrator
                 ("SettingStrayFairyModeChestsOnly", null, null),
                 ("SettingNotStrayFairyModeChestsOnly", null, null),
                 ("SettingNotRandomizedItemGreatBayBossKey", null, null),
-                ("SettingNotRandomizedItemCategoryScoopedItems", "Unrandomized Bottled Contents", null),
+                ("SettingNotRandomizedBottleCatchHotSpringWater", "Unrandomized Bottled Contents", null),
                 ("SettingDamageModeDefault", null, null),
                 ("SettingNotDamageModeDouble", null, null),
                 ("SettingNotDamageModeQuadruple", null, null),
@@ -4455,7 +4455,8 @@ namespace MMR.Randomizer.LogicMigrator
                         ConditionalItems = new List<List<string>>(),
                     };
 
-                // TODO delete old reference
+                // mark for deletion
+                reference.Id = null;
 
                 var logicItem = new JsonFormatLogicItem
                 {
@@ -4474,6 +4475,31 @@ namespace MMR.Randomizer.LogicMigrator
 
                 return logicItem;
             }).ToList());
+
+            foreach (var data in itemNames)
+            {
+                if (data.referenceName != null)
+                {
+                    void replaceInList(List<string> list)
+                    {
+                        var index = list.FindIndex(x => x == data.referenceName);
+                        if (index != -1)
+                        {
+                            list[index] = data.name;
+                        }
+                    }
+
+                    foreach (var item in logicObject.Logic)
+                    {
+                        replaceInList(item.RequiredItems);
+                        item.ConditionalItems.ForEach(replaceInList);
+                    }
+                }
+            }
+
+            // delete entries marked for deletion
+            logicObject.Logic.RemoveAll(item => item.Id == null);
+
             logicObject.Version = 18;
         }
 
