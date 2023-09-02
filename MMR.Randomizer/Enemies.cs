@@ -308,6 +308,47 @@ namespace MMR.Randomizer
             return false;
         }
 
+        private static bool ObjectIsItemBlocked(Scene scene, GameObjects.Actor testActor)
+        {
+            /// sometimes, an actor cannot be randomized if an item+thisActor leads to more checks
+            /// IE: koume leads to boat ride, but only if red potion or picto are not-junk
+
+            if (testActor == GameObjects.Actor.InjuredKoume)
+            {
+                // need to check if red potion is NOT randomized
+                var itemRedPotion = _randomized.ItemList;
+            }
+
+
+            /*
+            var checkRestrictedAttr = testActor.GetAttributes<CheckRestrictedAttribute>();
+            if (checkRestrictedAttr != null && checkRestrictedAttr.Count() > 0) // actor has check restrictions
+            {
+                foreach (var restriction in checkRestrictedAttr) // can have multiple rules
+                {
+                    if (restriction.Scene != ANYSCENE && restriction.Scene != scene.SceneEnum) continue;
+
+                    var restrictedChecks = restriction.Checks;
+                    for (int checkIndex = 0; checkIndex < restrictedChecks.Count; checkIndex++)
+                    {
+                        if (_randomized.ItemList == null) return true; // vanilla logic
+
+                        // TODO: make it random rather than yes/no
+                        var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]).Item;
+                        //var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory)itemInCheck.ItemCategory()) == false);
+                        var itemIsNotJunk = !ItemUtils.IsJunk(itemInCheck);
+                        if (itemIsNotJunk)
+                        {
+                            return true;
+                        }
+                    }
+
+                }
+            } // */
+
+
+            return false;
+        }
 
         public static List<int> GetSceneEnemyObjects(SceneEnemizerData thisSceneData)
         {
@@ -406,6 +447,9 @@ namespace MMR.Randomizer
             RandomizeDekuPalaceBombiwaSigns();
 
             Shinanigans();
+
+            var itemRedPotion = _randomized.ItemList;
+
         }
 
         public static void EnemizerLateFixes()
@@ -1104,12 +1148,15 @@ namespace MMR.Randomizer
         private static void FixInjuredKoume()
         {
             /// Injured koume in the woods of mystery, her code checks if she is in the woods of mystery and self culls
+            if (!ReplacementListContains(GameObjects.Actor.InjuredKoume)) return;
 
             var koumeFID = GameObjects.Actor.InjuredKoume.FileListIndex();
             RomUtils.CheckCompressed(koumeFID);
             var koumeData = RomData.MMFileList[koumeFID].Data;
             // the code check is entrance, and then moves to kill, so just remove the branch
-            ReadWriteUtils.Arr_WriteU32(koumeData, 0x2D38, 0x00000000); // BNE to actor kill -> NOP 
+            ReadWriteUtils.Arr_WriteU32(koumeData, 0x2D38, 0x00000000); // BNE to actor kill -> NOP
+
+            // we should also check if 
         }
 
         private static void RandomizePinnacleRockSigns()

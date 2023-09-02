@@ -2854,6 +2854,8 @@ namespace MMR.Randomizer.GameObjects
         [PathingVariants(0x6, 0x3, 0x2)]
         [PathingTypeVarsPlacement(mask: 0xFF, shift:0)]
         [OnlyOneActorPerRoom]
+        //[VariantsWithRoomMax(max:0, variant: 0xFF)]
+        [EnemizerScenesExcluded(Scene.WoodsOfMystery)] // for now, until I can detect items required for boat race
         [UnkillableAllVariants]
         InjuredKoume = 0x187, // En_Tru
 
