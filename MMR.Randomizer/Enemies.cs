@@ -403,6 +403,7 @@ namespace MMR.Randomizer
             ModifyAllGraveyardBatsToFly();
             FixInjuredKoume();
             RandomizePinnacleRockSigns();
+            RandomizeDekuPalaceBombiwaSigns();
 
             Shinanigans();
         }
@@ -1119,13 +1120,39 @@ namespace MMR.Randomizer
 
             var listOfSignIds = new List<int> { 14, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43 };
 
-            var pinnacleSceneActors = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PinnacleRock.FileID());
+            var pinnacleSceneActors = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PinnacleRock.FileID()).Maps[0].Actors;
 
             foreach (var aId in listOfSignIds)
             {
-                pinnacleSceneActors.Maps[0].Actors[aId].ChangeActor(GameObjects.Actor.Bombiwa, vars: 0x8077, true);
-                pinnacleSceneActors.Maps[0].Actors[aId].OldName = "WaypointSign";
+                pinnacleSceneActors[aId].ChangeActor(GameObjects.Actor.Bombiwa, vars: 0x8077, true);
+                pinnacleSceneActors[aId].OldName = "WaypointSign";
             }
+        }
+
+        private static void RandomizeDekuPalaceBombiwaSigns()
+        {
+            /// In deku palace, there are signs pointing you to the left and right across lilipads, on top of bombiwa
+            /// leaving the signs while randomizing the bombiwa would be weird, so I am going to move the signs and turn them into bombiwa to add immersion
+
+            if (!ReplacementListContains(GameObjects.Actor.Bombiwa)) return;
+
+            var dekuPalaceActors = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuPalace.FileID()).Maps[0].Actors;
+
+            dekuPalaceActors[23].ChangeActor(GameObjects.Actor.Bombiwa, vars: 0x8077, modifyOld: true);
+            dekuPalaceActors[23].OldName = "WayPointSignRight";
+            dekuPalaceActors[23].Position = new vec16( 1429, -40, 1583 ); // west to the right side
+
+            dekuPalaceActors[24].ChangeActor(GameObjects.Actor.Bombiwa, vars: 0x8077, modifyOld: true);
+            dekuPalaceActors[24].OldName = "WayPointSignLeft ";
+            dekuPalaceActors[24].Position = new vec16(-1297, -40, 1529); // east to the left side
+
+            // not sure why, in scenetatl they have no ratation, but in-rando they have x/z rotations which is messing up the actors
+            ActorUtils.FlattenPitchRoll(dekuPalaceActors[23]);
+            ActorUtils.FlattenPitchRoll(dekuPalaceActors[24]);
+
+            // actual bombiwa are really low in the water, raise to just below surface
+            dekuPalaceActors[19].Position.y = -40;
+            dekuPalaceActors[20].Position.y = -40;
         }
 
         public static void FixKafeiPlacements()
