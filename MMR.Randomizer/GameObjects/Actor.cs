@@ -1529,6 +1529,28 @@ namespace MMR.Randomizer.GameObjects
         [FileID(172)]
         [ActorInstanceSize(0x2A0)]
         [ObjectListIndex(0x11D)]
+        [CheckRestricted(Scene.TwinIslandsSpring, variant: -1, Item.ItemBottleGoronRace,
+            Item.CollectableGoronRacetrackPot1, Item.CollectableGoronRacetrackPot2, Item.CollectableGoronRacetrackPot3,
+            Item.CollectableGoronRacetrackPot4, Item.CollectableGoronRacetrackPot5, Item.CollectableGoronRacetrackPot6,
+            Item.CollectableGoronRacetrackPot7, Item.CollectableGoronRacetrackPot8, Item.CollectableGoronRacetrackPot9, Item.CollectableGoronRacetrackPot10,
+            Item.CollectableGoronRacetrackPot11, Item.CollectableGoronRacetrackPot12, Item.CollectableGoronRacetrackPot13,
+            Item.CollectableGoronRacetrackPot14, Item.CollectableGoronRacetrackPot15, Item.CollectableGoronRacetrackPot16,
+            Item.CollectableGoronRacetrackPot17, Item.CollectableGoronRacetrackPot18, Item.CollectableGoronRacetrackPot19, Item.CollectableGoronRacetrackPot20,
+            Item.CollectableGoronRacetrackPot21, Item.CollectableGoronRacetrackPot22, Item.CollectableGoronRacetrackPot23,
+            Item.CollectableGoronRacetrackPot24, Item.CollectableGoronRacetrackPot25, Item.CollectableGoronRacetrackPot26,
+            Item.CollectableGoronRacetrackPot27, Item.CollectableGoronRacetrackPot28, Item.CollectableGoronRacetrackPot29, Item.CollectableGoronRacetrackPot30
+            )]
+        [CheckRestricted(Scene.TwinIslands, variant: -1, Item.ItemBottleGoronRace,
+            Item.CollectableGoronRacetrackPot1, Item.CollectableGoronRacetrackPot2, Item.CollectableGoronRacetrackPot3,
+            Item.CollectableGoronRacetrackPot4, Item.CollectableGoronRacetrackPot5, Item.CollectableGoronRacetrackPot6,
+            Item.CollectableGoronRacetrackPot7, Item.CollectableGoronRacetrackPot8, Item.CollectableGoronRacetrackPot9, Item.CollectableGoronRacetrackPot10,
+            Item.CollectableGoronRacetrackPot11, Item.CollectableGoronRacetrackPot12, Item.CollectableGoronRacetrackPot13,
+            Item.CollectableGoronRacetrackPot14, Item.CollectableGoronRacetrackPot15, Item.CollectableGoronRacetrackPot16,
+            Item.CollectableGoronRacetrackPot17, Item.CollectableGoronRacetrackPot18, Item.CollectableGoronRacetrackPot19, Item.CollectableGoronRacetrackPot20,
+            Item.CollectableGoronRacetrackPot21, Item.CollectableGoronRacetrackPot22, Item.CollectableGoronRacetrackPot23,
+            Item.CollectableGoronRacetrackPot24, Item.CollectableGoronRacetrackPot25, Item.CollectableGoronRacetrackPot26,
+            Item.CollectableGoronRacetrackPot27, Item.CollectableGoronRacetrackPot28, Item.CollectableGoronRacetrackPot29, Item.CollectableGoronRacetrackPot30
+            )]
         //0x1200, 0x1B00, 0x2800 spawns from the ground after you play a song
         // versions: 1200, 1B00, 2800 shows up a lot, 2D00 stonetower, 3200 zora cape, 0x11D is zora cape
         // trading post version is 1
@@ -1541,7 +1563,7 @@ namespace MMR.Randomizer.GameObjects
         // crash: if you teach song to him in TF the ice block cutscene triggers
         // if you try to teach him a song with more than one it can lock
         //[EnemizerScenesPlacementBlock(Scene.TradingPost, Scene.TerminaField)]
-        [EnemizerScenesExcluded(Scene.TradingPost, Scene.TwinIslands, Scene.SnowheadTemple, Scene.StoneTower,
+        [EnemizerScenesExcluded(Scene.TradingPost, Scene.SnowheadTemple, Scene.StoneTower,
             Scene.PathToSnowhead)]//, Scene.AstralObservatory)] // re-disable this if playing Entrando
         Scarecrow = 0xCA, // En_Kakasi
 
