@@ -515,6 +515,10 @@ namespace MMR.Randomizer
                 dekuPalace.Maps[1].Actors[28].Position.z -= 10; // left
                 dekuPalace.Maps[1].Actors[27].Position.z += 10; // right
                 dekuPalace.Maps[1].Actors[25].Position.z += 10; // right
+                // deku bean torches north, rotate 
+                dekuPalace.Maps[2].Actors[33].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[1].Actors[33].Rotation.y);
+                dekuPalace.Maps[2].Actors[34].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[1].Actors[34].Rotation.y);
+
                 // west side torches face... north? turn them to face the player
                 dekuPalace.Maps[2].Actors[33].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[2].Actors[33].Rotation.y);
                 dekuPalace.Maps[2].Actors[34].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[2].Actors[34].Rotation.y);
@@ -551,6 +555,9 @@ namespace MMR.Randomizer
                 var gormanTrack = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GormanTrack.FileID());
                 gormanTrack.Maps[0].Objects[11] = GameObjects.Actor.GormanBros.ObjectIndex();
                 gormanTrack.Maps[0].Actors[75].ChangeActor(GameObjects.Actor.Treee, vars: 0xFF02, modifyOld: true);
+
+
+
             }
         }
 
@@ -3540,7 +3547,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 51.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 51.1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
