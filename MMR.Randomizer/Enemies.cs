@@ -516,12 +516,20 @@ namespace MMR.Randomizer
                 dekuPalace.Maps[1].Actors[27].Position.z += 10; // right
                 dekuPalace.Maps[1].Actors[25].Position.z += 10; // right
                 // deku bean torches north, rotate 
-                dekuPalace.Maps[2].Actors[33].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[1].Actors[33].Rotation.y);
-                dekuPalace.Maps[2].Actors[34].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[1].Actors[34].Rotation.y);
+                dekuPalace.Maps[1].Actors[25].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: dekuPalace.Maps[1].Actors[25].Rotation.y);
+                dekuPalace.Maps[1].Actors[26].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: dekuPalace.Maps[1].Actors[26].Rotation.y);
+                dekuPalace.Maps[1].Actors[27].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: dekuPalace.Maps[1].Actors[27].Rotation.y);
+                dekuPalace.Maps[1].Actors[28].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: dekuPalace.Maps[1].Actors[28].Rotation.y);
 
-                // west side torches face... north? turn them to face the player
+                // west side hp torches face... north? turn them to face the player
                 dekuPalace.Maps[2].Actors[33].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[2].Actors[33].Rotation.y);
                 dekuPalace.Maps[2].Actors[34].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[2].Actors[34].Rotation.y);
+                // green rup torches face north as well
+                dekuPalace.Maps[2].Actors[29].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: dekuPalace.Maps[2].Actors[29].Rotation.y);
+                dekuPalace.Maps[2].Actors[30].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: dekuPalace.Maps[2].Actors[30].Rotation.y);
+                dekuPalace.Maps[2].Actors[31].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: dekuPalace.Maps[2].Actors[31].Rotation.y);
+                dekuPalace.Maps[2].Actors[32].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: dekuPalace.Maps[2].Actors[32].Rotation.y);
+
 
                 // Jim the bomber actually spawns within the tree to the north... move is spawn over a bit
                 var northClockTown = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.NorthClockTown.FileID());
@@ -1910,10 +1918,10 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Tingle, GameObjects.Actor.Skulltula)) continue;
-                if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.LikeLike, GameObjects.Actor.MagicSlab)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.LikeLike, GameObjects.Actor.MagicSlab)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.ZoraRaceRing)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.GateSoldier, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.DekuPatrolGuard, GameObjects.Actor.InjuredKoume)) continue;
+                if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
                 #endif
