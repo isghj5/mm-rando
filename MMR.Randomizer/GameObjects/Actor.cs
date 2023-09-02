@@ -4142,7 +4142,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingToGroundHeightAdjustment(15)]
         [FlyingVariants(0x0)]
         [GroundVariants(0x0)]
-        [WaterVariants(0x0)]
+        //[WaterVariants(0x0)]
         [VariantsWithRoomMax(variant: 0, max: 1)]
         [EnemizerScenesPlacementBlock(Scene.StoneTower, Scene.IkanaGraveyard, // too much dyna
             Scene.SouthernSwamp, Scene.SouthernSwampClear,
