@@ -3435,6 +3435,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2940)]
         [FileID(435)]
         [ObjectListIndex(0x75)]
+        // issue, we dont know how to check if the scoop is important or not, could be a lot of checks
+        //[CheckRestricted(Scene.BeneathTheWell, variant: -1, Item.Curi)]
         // params: switch flag(xFF0) and item used(0xF)
         // 8 is bigpo, 0 is blue pot, 7 is hot spring, 9 is milk
         [GroundVariants(1, 2, 3, 4, 5, 6)]
@@ -4445,10 +4447,23 @@ namespace MMR.Randomizer.GameObjects
         [FileID(547)]
         [ObjectListIndex(0x1E5)]
         FlyingFieldScrub = 0x24C, // En_Scopenuts
-        
+
+        [ActorizerEnabled]
         [FileID(548)]
         [ObjectListIndex(0x6)]
-        TelescopeRupeeCrow = 0x24D, // En_Scopecrow
+        [CheckRestricted(Scene.TerminaField, variant: -1, Item.CollectableTerminaFieldTelescopeGuay1,
+            Item.CollectableTerminaFieldGuay1, Item.CollectableTerminaFieldGuay2, Item.CollectableTerminaFieldGuay3,
+            Item.CollectableTerminaFieldGuay4, Item.CollectableTerminaFieldGuay5, Item.CollectableTerminaFieldGuay6,
+            Item.CollectableTerminaFieldGuay7, Item.CollectableTerminaFieldGuay8, Item.CollectableTerminaFieldGuay9, Item.CollectableTerminaFieldGuay10,
+            Item.CollectableTerminaFieldGuay11, Item.CollectableTerminaFieldGuay12, Item.CollectableTerminaFieldGuay13,
+            Item.CollectableTerminaFieldGuay14, Item.CollectableTerminaFieldGuay15, Item.CollectableTerminaFieldGuay16,
+            Item.CollectableTerminaFieldGuay17, Item.CollectableTerminaFieldGuay18, Item.CollectableTerminaFieldGuay19, Item.CollectableTerminaFieldGuay20,
+            Item.CollectableTerminaFieldGuay21, Item.CollectableTerminaFieldGuay22, Item.CollectableTerminaFieldGuay23
+            )]
+        [FlyingVariants(0x5A2)]
+        [VariantsWithRoomMax(max: 0, variant: 0x5A2)] // flying pathing
+        [UnkillableAllVariants]
+        TelescopeGuay = 0x24D, // En_Scopecrow
         
         [FileID(549)]
         [ObjectListIndex(0x1)]
@@ -4604,10 +4619,23 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         HitSpot = 0x265, // En_Hit_Tag
-        
+
+        [ActorizerEnabled]
         [FileID(573)]
         [ObjectListIndex(0x6)]
-        En_Ruppecrow = 0x266, // En_Ruppecrow
+        [CheckRestricted(Scene.TerminaField, variant: -1, Item.CollectableTerminaFieldTelescopeGuay1,
+            Item.CollectableTerminaFieldGuay1, Item.CollectableTerminaFieldGuay2, Item.CollectableTerminaFieldGuay3,
+            Item.CollectableTerminaFieldGuay4, Item.CollectableTerminaFieldGuay5, Item.CollectableTerminaFieldGuay6,
+            Item.CollectableTerminaFieldGuay7, Item.CollectableTerminaFieldGuay8, Item.CollectableTerminaFieldGuay9, Item.CollectableTerminaFieldGuay10,
+            Item.CollectableTerminaFieldGuay11, Item.CollectableTerminaFieldGuay12, Item.CollectableTerminaFieldGuay13,
+            Item.CollectableTerminaFieldGuay14, Item.CollectableTerminaFieldGuay15, Item.CollectableTerminaFieldGuay16,
+            Item.CollectableTerminaFieldGuay17, Item.CollectableTerminaFieldGuay18, Item.CollectableTerminaFieldGuay19, Item.CollectableTerminaFieldGuay20,
+            Item.CollectableTerminaFieldGuay21, Item.CollectableTerminaFieldGuay22, Item.CollectableTerminaFieldGuay23
+            )]
+        [FlyingVariants(0xC00)]
+        [VariantsWithRoomMax(max:0, variant:0xC00 )]
+        [UnkillableAllVariants] // assumption
+        TFGuay = 0x266, // En_Ruppecrow
 
         [ActorizerEnabled] // spawned for me, but not streamers? weird time dependencies?
         [FileID(574)]
@@ -4862,10 +4890,18 @@ namespace MMR.Randomizer.GameObjects
         [BlockingVariantsAll]
         BomberHideoutGuard = 0x281, // En_Bombers2
 
-        [ActorizerEnabled] // broken: if you pop it, it locks you in a never ending cutscene
+        [ActorizerEnabled]
         [FileID(601)]
         [ObjectListIndex(0x280)]
-        [CheckRestricted(Item.ItemNotebook)]
+        [CheckRestricted(Item.ItemNotebook,
+            Item.ChestBomberHideoutSilverRupee,
+            Item.TradeItemMoonTear,
+            Item.CollectableTerminaFieldTelescopeGuay1,
+            Item.HeartPieceTerminaBusinessScrub,
+            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
+            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            )]
         [FlyingVariants(0)]
         [FlyingToGroundHeightAdjustment(200)]
         [VariantsWithRoomMax(max:0, variant:0)] // because of the unpoppable without cutscene thing, cannot put places
