@@ -368,7 +368,7 @@
         checkLocations(locationsToCheck);
     }
 
-    var startingLocations = [0, 97, 284, 285, 286, 287];
+    var startingLocations = [0, 97, 332, 333, 334, 335];
     for (var id of startingLocations) {
         logic[id].Checked = true;
         var row = document.querySelector("tr[data-newlocationid='" + id + "']");
