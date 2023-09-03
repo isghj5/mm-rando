@@ -63776,12 +63776,7 @@
           "ItemPowderKeg"
         ],
         [
-          "SettingCharacterAdultLink",
-          "Long Jump",
-          "Take Damage"
-        ],
-        [
-          "MaskZora",
+          "Tall Character",
           "Harder Long Jumps",
           "Take Damage"
         ],

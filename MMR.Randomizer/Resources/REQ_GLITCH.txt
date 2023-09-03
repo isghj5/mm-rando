@@ -1,5 +1,5 @@
 {
-  "Version": 17,
+  "Version": 18,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -227,7 +227,7 @@
           "MaskZora"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -310,7 +310,7 @@
           "SongLullaby",
           "MaskGoron",
           "Ocarina Items",
-          "Unrandomized Bottled Contents",
+          "SettingNotRandomizedBottleCatchHotSpringWater",
           "Any Bottle"
         ],
         [
@@ -360,11 +360,7 @@
         ],
         [
           "Clever Ice Platforms",
-          "MaskZora"
-        ],
-        [
-          "Clever Ice Platforms",
-          "Fierce Deity's Mask Anywhere"
+          "Tall Character"
         ],
         [
           "Clever Ice Platforms",
@@ -491,7 +487,7 @@
           "MaskZora"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Magic Meter"
         ],
         [
@@ -661,7 +657,7 @@
           "Any Sword"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Any Wallet"
@@ -880,7 +876,7 @@
           "TradeItemKafeiLetter"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Out of Bounds"
         ],
         [
@@ -1288,7 +1284,7 @@
           "Take Damage"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -1341,14 +1337,14 @@
         ],
         [
           "Run Through Poisoned Water",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Long Jump",
           "Take Damage",
           "Any Bomb Bag"
         ],
         [
           "Run Through Poisoned Water",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Long Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
@@ -1357,7 +1353,7 @@
         ],
         [
           "Run Through Poisoned Water",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
           "Take Damage",
           "MaskBlast"
@@ -1496,7 +1492,7 @@
           "OtherExplosive"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -1521,7 +1517,7 @@
           "Any Sword"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -1576,7 +1572,7 @@
           "TradeItemKafeiLetter"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Out of Bounds"
         ],
         [
@@ -1890,11 +1886,11 @@
           "Short Ranged Weapon"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Magic Meter"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Jump Slash Take Downs"
         ],
         [
@@ -1918,11 +1914,11 @@
           "Short Ranged Weapon"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Magic Meter"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Jump Slash Take Downs"
         ],
         [
@@ -1978,7 +1974,7 @@
         ],
         [
           "AreaSouthAccess",
-          "Fierce Deity's Mask Anywhere",
+          "Tall Character",
           "Run Through Poisoned Water",
           "Long Jump",
           "Take Damage",
@@ -1986,7 +1982,7 @@
         ],
         [
           "AreaSouthAccess",
-          "Fierce Deity's Mask Anywhere",
+          "Tall Character",
           "Run Through Poisoned Water",
           "Long Jump",
           "Take Damage",
@@ -1995,7 +1991,7 @@
         ],
         [
           "AreaSouthAccess",
-          "Fierce Deity's Mask Anywhere",
+          "Tall Character",
           "Run Through Poisoned Water",
           "Harder Long Jumps",
           "Take Damage"
@@ -2176,7 +2172,7 @@
           "Kill Big Octo",
           "Run Through Poisoned Water",
           "Take Damage",
-          "Fierce Deity's Mask Anywhere"
+          "Tall Character"
         ],
         [
           "Kill Big Octo",
@@ -2208,6 +2204,14 @@
           "FD Difficult Jumps"
         ],
         [
+          "Big Octo Skip",
+          "Take Damage",
+          "Run Through Poisoned Water",
+          "Recoil Flip",
+          "Play Song of Soaring",
+          "SettingCharacterAdultLink"
+        ],
+        [
           "Long Bomb Hovers"
         ]
       ],
@@ -2235,7 +2239,7 @@
         [
           "Ocarina Items",
           "Any Bottle",
-          "Unrandomized Bottled Contents",
+          "SettingNotRandomizedBottleCatchHotSpringWater",
           "Magic Meter"
         ]
       ],
@@ -2314,7 +2318,7 @@
           "MaskGoron",
           "SongLullaby",
           "Ocarina Items",
-          "Unrandomized Bottled Contents",
+          "SettingNotRandomizedBottleCatchHotSpringWater",
           "Any Bottle"
         ],
         [
@@ -2528,14 +2532,14 @@
         [
           "Goron Bomb Jump",
           "Take Damage",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Gainer",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
           "Take Damage",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Gainer",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
@@ -2635,7 +2639,7 @@
         [
           "Time Stop",
           "Any Bottle",
-          "Unrandomized Bottled Contents"
+          "SettingNotRandomizedBottleCatchHotSpringWater"
         ]
       ],
       "TimeNeeded": "None",
@@ -2846,6 +2850,452 @@
       "Id": "OtherKillTwinmold",
       "RequiredItems": [
         "Kill Twinmold"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingCloseCows",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingContinuousDekuHopping",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingClimbMostSurfaces",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingFreeScarecrow",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingGiantMaskAnywhere",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingBombchuDrops",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingInstantTransform",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingBombArrows",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotRandomizeEnemies",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingStrayFairyModeChestsOnly",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotStrayFairyModeChestsOnly",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotRandomizedItemGreatBayBossKey",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotRandomizedBottleCatchHotSpringWater",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingDamageModeDefault",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotDamageModeDouble",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotDamageModeQuadruple",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotDamageModeOHKO",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotDamageModeDoom",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingDamageEffectDefault",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotDamageEffectFire",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotDamageEffectIce",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotDamageEffectShock",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotDamageEffectKnockdown",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotDamageEffectRandom",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingMovementModeDefault",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingMovementModeSuperLowGravity",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingMovementModeLowGravity",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotMovementModeHighSpeed",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotMovementModeHighGravity",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingFloorTypeDefault",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotFloorTypeSand",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotFloorTypeIce",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotFloorTypeSnow",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotFloorTypeRandom",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingClockSpeedDefault",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotClockSpeedFast",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotClockSpeedVeryFast",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotClockSpeedSuperFast",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingBlastMaskCooldownInstant",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingBlastMaskCooldownVeryShort",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingEnableSunsSong",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingAllowFierceDeityAnywhere",
+      "RequiredItems": [
+        "MaskFierceDeity"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotByoAmmo",
+      "RequiredItems": [
+        "MaskFierceDeity"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotDeathMoonCrash",
+      "RequiredItems": [
+        "MaskFierceDeity"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingHookshotAnySurface",
+      "RequiredItems": [
+        "MaskFierceDeity"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingCharacterAdultLink",
+      "RequiredItems": [
+        "MaskFierceDeity"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotCharacterAdultLink",
+      "RequiredItems": [
+        "MaskFierceDeity"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SettingNotFixEponaSword",
+      "RequiredItems": [
+        "MaskFierceDeity"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -3731,7 +4181,7 @@
           "Any Sword"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -3897,13 +4347,13 @@
         ],
         [
           "Pinnacle Rock Access",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "MaskGoron",
           "OtherArrow"
         ],
         [
           "Pinnacle Rock Access",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "MaskGoron",
           "MaskDeku",
           "Magic Meter"
@@ -4107,7 +4557,7 @@
         [
           "Powder Kegs as Explosives",
           "Powder Keg Challenge with Hot Spring Water",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Powder Kegs as Explosives",
@@ -4218,7 +4668,7 @@
         ],
         [
           "MaskZora",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "MaskZora",
@@ -4593,31 +5043,7 @@
     {
       "Id": "ChestDogRacePurpleRupee",
       "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "MaskZora"
-        ],
-        [
-          "ItemHookshot"
-        ],
-        [
-          "OtherMagicBean",
-          "Water for Magic Bean"
-        ],
-        [
-          "Jump Slash through One Sided Geometry"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere"
-        ],
-        [
-          "Bomb Hovering"
-        ],
-        [
-          "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "Day3",
       "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
@@ -4647,12 +5073,7 @@
         [
           "Run Through Poisoned Water",
           "Take Damage",
-          "MaskZora"
-        ],
-        [
-          "Run Through Poisoned Water",
-          "Take Damage",
-          "Fierce Deity's Mask Anywhere"
+          "Tall Character"
         ],
         [
           "FD Jumps"
@@ -4731,14 +5152,14 @@
         ],
         [
           "Run Through Poisoned Water",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Long Jump",
           "Take Damage",
           "Any Bomb Bag"
         ],
         [
           "Run Through Poisoned Water",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Long Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
@@ -4747,7 +5168,7 @@
         ],
         [
           "Run Through Poisoned Water",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
           "Take Damage",
           "MaskBlast"
@@ -5218,7 +5639,7 @@
           "TradeItemLandDeed"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Gainer"
         ],
         [
@@ -5361,7 +5782,7 @@
           "Zora Hall Scrub Ledge Climb"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Bomb Hovering"
@@ -5491,20 +5912,20 @@
           "MaskDeku"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Long Jump",
           "Take Damage",
           "Any Bomb Bag"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Long Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
           "Take Damage"
         ],
@@ -5560,7 +5981,7 @@
           "Use Fire Arrow",
           "Jump along invisible platforms",
           "Ikana Castle Falling Ceiling Skip",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Long Jump",
           "Take Damage",
           "Any Bomb Bag"
@@ -5569,7 +5990,7 @@
           "Use Fire Arrow",
           "Jump along invisible platforms",
           "Ikana Castle Falling Ceiling Skip",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Long Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
@@ -5579,7 +6000,7 @@
           "Use Fire Arrow",
           "Jump along invisible platforms",
           "Ikana Castle Falling Ceiling Skip",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
           "Take Damage"
         ],
@@ -5792,19 +6213,13 @@
           "Keg Trial Access"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Harder Long Jumps",
           "Take Damage",
           "Any Bomb Bag"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
-          "Harder Long Jumps",
-          "Take Damage",
-          "Any Bomb Bag"
-        ],
-        [
-          "MaskZora",
+          "Tall Character",
           "Clever Bombchu Usage"
         ],
         [
@@ -41575,7 +41990,7 @@
         ],
         [
           "OtherArrow",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Any Bomb Bag",
           "Any Bombchu Pack"
         ],
@@ -41585,11 +42000,11 @@
           "Link Trial Gossip Stones"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Link Trial Gossip Stones"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Gainer"
         ],
         [
@@ -41631,7 +42046,7 @@
           "ItemHookshot"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Bomb Hovering"
@@ -41654,7 +42069,7 @@
           "ItemHookshot"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Bomb Hovering"
@@ -42177,7 +42592,7 @@
           "Any Sword"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Zora Boomerang Through Walls"
@@ -42471,7 +42886,7 @@
           "MaskZora"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Out of Bounds"
         ]
       ],
@@ -42493,7 +42908,7 @@
           "MaskZora"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Out of Bounds"
         ]
       ],
@@ -42527,16 +42942,21 @@
       ],
       "ConditionalItems": [
         [
+          "SettingNotCharacterAdultLink"
+        ],
+        [
+          "MaskDeku"
+        ],
+        [
+          "Zora Boomerang Through Walls"
+        ],
+        [
+          "Fewer Item Requirements",
           "ItemHookshot"
         ],
         [
-          "MaskZora"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "Bomb Hovering"
+          "Fewer Item Requirements",
+          "BottleCatchFish"
         ]
       ],
       "TimeNeeded": "None",
@@ -43135,7 +43555,7 @@
         ],
         [
           "Jump Slash Take Downs",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -43804,7 +44224,7 @@
         ],
         [
           "SHT Fireless",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "SHT Fireless",
@@ -43872,11 +44292,11 @@
           "OtherExplosive"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "MaskGoron"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "OtherExplosive"
         ],
         [
@@ -44090,7 +44510,7 @@
         [
           "GBT Reverse Water Direction",
           "Use Fire Arrow",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "GBT Reverse Water Direction",
@@ -45607,7 +46027,7 @@
           "ItemHookshot"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Bomb Hovering"
@@ -45857,7 +46277,7 @@
           "Magic Meter"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Bomb Hovering"
@@ -46326,7 +46746,7 @@
         ],
         [
           "AreaSnowheadTempleClear",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46349,7 +46769,7 @@
         ],
         [
           "AreaSnowheadTempleClear",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46372,7 +46792,7 @@
         ],
         [
           "AreaSnowheadTempleClear",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46395,7 +46815,7 @@
         ],
         [
           "AreaSnowheadTempleClear",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46413,7 +46833,7 @@
           "ItemHookshot"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Bomb Hovering"
@@ -46738,10 +47158,7 @@
           "MaskDeku"
         ],
         [
-          "MaskZora"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere"
+          "Tall Character"
         ],
         [
           "Long Jump",
@@ -46780,10 +47197,7 @@
           "MaskDeku"
         ],
         [
-          "MaskZora"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere"
+          "Tall Character"
         ],
         [
           "Long Jump",
@@ -46858,11 +47272,11 @@
           "STT Thin Bridge Exit"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46881,11 +47295,11 @@
           "STT Thin Bridge Exit"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46904,11 +47318,11 @@
           "STT Thin Bridge Exit"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46927,11 +47341,11 @@
           "STT Thin Bridge Exit"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46950,11 +47364,11 @@
           "STT Thin Bridge Exit"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46973,11 +47387,11 @@
           "STT Thin Bridge Exit"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46996,11 +47410,11 @@
           "STT Thin Bridge Exit"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -47019,11 +47433,11 @@
           "STT Thin Bridge Exit"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -47365,7 +47779,7 @@
           "Any B Sword"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -47381,7 +47795,7 @@
           "Any B Sword"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -47397,7 +47811,7 @@
           "Any B Sword"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -47413,7 +47827,7 @@
           "Any B Sword"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -47429,7 +47843,7 @@
           "Any B Sword"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -47452,7 +47866,7 @@
         [
           "AreaSouthAccess",
           "Run Through Poisoned Water",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Long Jump",
           "Take Damage",
           "Any Bomb Bag"
@@ -47469,7 +47883,7 @@
         [
           "AreaSouthAccess",
           "Run Through Poisoned Water",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
           "Take Damage",
           "MaskBlast"
@@ -47516,7 +47930,7 @@
         ],
         [
           "MaskDeku",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "FD Jumps"
@@ -50079,12 +50493,12 @@
         ],
         [
           "Use Light Arrow",
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
           "Use Light Arrow",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Use Light Arrow",
@@ -50132,12 +50546,12 @@
         ],
         [
           "Use Light Arrow",
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
           "Use Light Arrow",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Use Light Arrow",
@@ -51243,13 +51657,7 @@
           "Harder Long Jumps",
           "Take Damage",
           "Any Bomb Bag",
-          "MaskZora"
-        ],
-        [
-          "Harder Long Jumps",
-          "Take Damage",
-          "Any Bomb Bag",
-          "Fierce Deity's Mask Anywhere"
+          "Tall Character"
         ],
         [
           "Precise Zora Jumps"
@@ -51436,7 +51844,7 @@
           "MaskGoron",
           "SongLullaby",
           "Ocarina Items",
-          "Unrandomized Bottled Contents",
+          "SettingNotRandomizedBottleCatchHotSpringWater",
           "Any Bottle"
         ],
         [
@@ -51477,7 +51885,7 @@
           "MaskGoron",
           "SongLullaby",
           "Ocarina Items",
-          "Unrandomized Bottled Contents",
+          "SettingNotRandomizedBottleCatchHotSpringWater",
           "Any Bottle"
         ],
         [
@@ -51518,7 +51926,7 @@
           "MaskGoron",
           "SongLullaby",
           "Ocarina Items",
-          "Unrandomized Bottled Contents",
+          "SettingNotRandomizedBottleCatchHotSpringWater",
           "Any Bottle"
         ],
         [
@@ -51563,7 +51971,7 @@
           "MaskGoron",
           "SongLullaby",
           "Ocarina Items",
-          "Unrandomized Bottled Contents",
+          "SettingNotRandomizedBottleCatchHotSpringWater",
           "Any Bottle"
         ],
         [
@@ -51604,7 +52012,7 @@
           "MaskGoron",
           "SongLullaby",
           "Ocarina Items",
-          "Unrandomized Bottled Contents",
+          "SettingNotRandomizedBottleCatchHotSpringWater",
           "Any Bottle"
         ],
         [
@@ -51645,7 +52053,7 @@
           "MaskGoron",
           "SongLullaby",
           "Ocarina Items",
-          "Unrandomized Bottled Contents",
+          "SettingNotRandomizedBottleCatchHotSpringWater",
           "Any Bottle"
         ],
         [
@@ -52058,7 +52466,7 @@
           "Magic Meter"
         ],
         [
-          "Precise Zora Jumps"
+          "Tall Character"
         ],
         [
           "FD Jumps"
@@ -52220,7 +52628,7 @@
           "MaskZora"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Any B Sword"
@@ -52275,7 +52683,7 @@
         [
           "Run Through Poisoned Water",
           "Take Damage",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Long Bomb Hovers"
@@ -54339,7 +54747,7 @@
         ],
         [
           "Restricted Items",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Any Bomb Bag"
         ]
       ],
@@ -54358,7 +54766,7 @@
         ],
         [
           "Restricted Items",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Any Bomb Bag"
         ]
       ],
@@ -54377,7 +54785,7 @@
         ],
         [
           "Restricted Items",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Any Bomb Bag"
         ]
       ],
@@ -55920,7 +56328,7 @@
           "TradeItemKafeiLetter"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Out of Bounds"
         ],
         [
@@ -55954,7 +56362,7 @@
           "TradeItemKafeiLetter"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Out of Bounds"
         ],
         [
@@ -56130,7 +56538,7 @@
           "OtherExplosive"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -56216,7 +56624,7 @@
           "Any Sword"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -56772,7 +57180,7 @@
         [
           "ISTT Lightless",
           "ISTT Cross Poe Gap",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "ISTT Lightless",
@@ -56952,20 +57360,20 @@
           "MaskDeku"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Long Jump",
           "Take Damage",
           "Any Bomb Bag"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Long Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
           "Take Damage"
         ],
@@ -57550,7 +57958,7 @@
           "ItemHookshot"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Bomb Hovering"
@@ -57577,7 +57985,7 @@
         ],
         [
           "OtherArrow",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Any Bomb Bag",
           "Any Bombchu Pack"
         ],
@@ -57587,11 +57995,11 @@
           "Link Trial Gossip Stones"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Link Trial Gossip Stones"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Gainer"
         ],
         [
@@ -57622,7 +58030,7 @@
         ],
         [
           "OtherArrow",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Any Bomb Bag",
           "Any Bombchu Pack"
         ],
@@ -57632,11 +58040,11 @@
           "Link Trial Gossip Stones"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Link Trial Gossip Stones"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Gainer"
         ],
         [
@@ -57667,7 +58075,7 @@
         ],
         [
           "OtherArrow",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Any Bomb Bag",
           "Any Bombchu Pack"
         ],
@@ -57677,11 +58085,11 @@
           "Link Trial Gossip Stones"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Link Trial Gossip Stones"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Gainer"
         ],
         [
@@ -58052,7 +58460,7 @@
         ],
         [
           "Jump Slash Take Downs",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -58077,7 +58485,7 @@
         [
           "Jump Slash Take Downs",
           "Bomb Hovering",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Jump Slash Take Downs",
@@ -58087,7 +58495,7 @@
         [
           "Jump Slash Take Downs",
           "Blast Mask Hovers",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -58110,7 +58518,7 @@
         [
           "Jump Slash Take Downs",
           "Bomb Hovering",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -58131,7 +58539,7 @@
         ],
         [
           "Jump Slash Take Downs",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -58150,7 +58558,7 @@
         ],
         [
           "Jump Slash Take Downs",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Jump Slash Take Downs",
@@ -58183,7 +58591,7 @@
         [
           "Jump Slash Take Downs",
           "Bomb Hovering",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -58229,7 +58637,7 @@
         ],
         [
           "Jump Slash Take Downs",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Jump Slash Take Downs",
@@ -58269,7 +58677,7 @@
         [
           "Extremely Long Bomb Hovers",
           "Jump Slash Take Downs",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -58321,7 +58729,7 @@
         [
           "Jump Slash Take Downs",
           "Bomb Hovering",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Jump Slash Take Downs",
@@ -58331,7 +58739,7 @@
         [
           "Jump Slash Take Downs",
           "Blast Mask Hovers",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -58361,7 +58769,7 @@
         [
           "Extremely Long Bomb Hovers",
           "Jump Slash Take Downs",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -58696,7 +59104,7 @@
           "Take Damage"
         ],
         [
-          "MaskZora"
+          "Tall Character"
         ],
         [
           "Recoil Flip"
@@ -58726,7 +59134,7 @@
         ],
         [
           "BottleCatchHotSpringWater",
-          "Unrandomized Bottled Contents",
+          "SettingNotRandomizedBottleCatchHotSpringWater",
           "Hot Spring Water in Mountains"
         ],
         [
@@ -58756,7 +59164,7 @@
         ],
         [
           "BottleCatchHotSpringWater",
-          "Unrandomized Bottled Contents",
+          "SettingNotRandomizedBottleCatchHotSpringWater",
           "Hot Spring Water in Mountains"
         ],
         [
@@ -58896,7 +59304,7 @@
           "TradeItemKafeiLetter"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Out of Bounds"
         ],
         [
@@ -59433,20 +59841,20 @@
           "MaskDeku"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Long Jump",
           "Take Damage",
           "Any Bomb Bag"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Long Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
           "Take Damage"
         ],
@@ -60223,19 +60631,6 @@
       "TrickCategory": "Setting"
     },
     {
-      "Id": "Fierce Deity's Mask Anywhere",
-      "RequiredItems": [
-        "MaskFierceDeity"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Use with the Allow Fierce Deity's Mask Anywhere gimmick.",
-      "TrickCategory": "Setting"
-    },
-    {
       "Id": "Take Damage",
       "RequiredItems": [],
       "ConditionalItems": [],
@@ -60570,7 +60965,7 @@
     {
       "Id": "SHT Zora Jumps",
       "RequiredItems": [
-        "MaskZora"
+        "Tall Character"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -60855,17 +61250,17 @@
           "Take Damage"
         ],
         [
-          "Inn Balcony as Zora"
+          "Inn Balcony Jump"
         ],
         [
           "Inn Balcony with Cucco"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Difficult Goron Spike Rolls"
@@ -61025,16 +61420,16 @@
       "TrickCategory": "Moderate"
     },
     {
-      "Id": "Inn Balcony as Zora",
+      "Id": "Inn Balcony Jump",
       "RequiredItems": [
-        "MaskZora"
+        "Tall Character"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Jump to the Inn balcony as Zora.",
+      "TrickTooltip": "Jump to the Inn balcony as Zora or Adult Link.",
       "TrickCategory": "Moderate"
     },
     {
@@ -61300,7 +61695,7 @@
           "Remote Hookshot",
           "Play Scarecrow's Song",
           "SHT BK Skip",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "RemainsGoht"
@@ -61922,11 +62317,11 @@
           "UpgradeMirrorShield"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Goron Bomb Jump",
@@ -62009,7 +62404,7 @@
         [
           "Run Through Poisoned Water",
           "Take Damage",
-          "Fierce Deity's Mask Anywhere",
+          "Tall Character",
           "Kill Big Octo"
         ],
         [
@@ -62033,6 +62428,14 @@
           "Take Damage",
           "Run Through Poisoned Water",
           "FD Jumps",
+          "Play Song of Soaring"
+        ],
+        [
+          "Big Octo Skip",
+          "Take Damage",
+          "Recoil Flip",
+          "Run Through Poisoned Water",
+          "SettingCharacterAdultLink",
           "Play Song of Soaring"
         ],
         [
@@ -62215,7 +62618,7 @@
         ],
         [
           "Long Bomb Hovers",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Magic Meter"
         ]
       ],
@@ -62414,9 +62817,6 @@
           "SHT Compass Room to Twin Block Room"
         ],
         [
-          "Use Fire Arrow"
-        ],
-        [
           "Long Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
@@ -62589,7 +62989,7 @@
         [
           "ItemHookshot",
           "MaskDeku",
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
@@ -62599,7 +62999,7 @@
         ],
         [
           "MaskDeku",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "STT Updrafts without Deku Mask",
@@ -62611,7 +63011,7 @@
           "STT Updrafts without Deku Mask",
           "Recoil Flip",
           "ISTT Updraft Recoil Flips",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Long Bomb Hovers"
@@ -62791,11 +63191,11 @@
           "Any Shield"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Goron Bomb Jump",
@@ -62856,7 +63256,7 @@
         ],
         [
           "Time Stop",
-          "Unrandomized Bottled Contents"
+          "SettingNotRandomizedBottleCatchHotSpringWater"
         ]
       ],
       "TimeNeeded": "None",
@@ -63062,10 +63462,10 @@
           "ItemHookshot"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
@@ -63122,11 +63522,11 @@
           "Use Light Arrow"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Goron Bomb Jump",
@@ -63170,7 +63570,7 @@
         ],
         [
           "Powder Keg Challenge with Hot Spring Water",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Powder Keg Challenge with Hot Spring Water",
@@ -63201,7 +63601,7 @@
           "ItemHookshot"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
@@ -63209,7 +63609,7 @@
           "Take Damage"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "SHT Zora Jumps"
@@ -63254,6 +63654,9 @@
           "MaskBlast"
         ],
         [
+          "Use Fire Arrow"
+        ],
+        [
           "Bomb Hovering"
         ],
         [
@@ -63282,10 +63685,7 @@
           "ItemHookshot"
         ],
         [
-          "MaskZora"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere"
+          "Tall Character"
         ],
         [
           "Goron Bomb Jump",
@@ -63335,11 +63735,11 @@
           "ItemHookshot"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Goron Bomb Jump",
@@ -63361,6 +63761,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SHT Zora Jumps"
         ],
         [
           "Bomb Hovering"
@@ -63874,7 +64277,7 @@
         ],
         [
           "GBT Iceless",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "GBT Iceless",
@@ -63915,7 +64318,7 @@
           "ItemPowderKeg"
         ],
         [
-          "MaskZora",
+          "Tall Character",
           "Harder Long Jumps",
           "Take Damage"
         ],
@@ -64006,7 +64409,7 @@
           "MaskGoron"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Use Light Arrow",
@@ -64129,7 +64532,7 @@
         ],
         [
           "Use Fire Arrow",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Gainer",
           "Any Bomb Bag",
           "Any Bombchu Pack"
@@ -64145,7 +64548,7 @@
         ],
         [
           "Link Trial Gossip Stones",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Link Trial Gossip Stones",
@@ -64174,7 +64577,7 @@
           "MaskZora"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Any Trade Item"
@@ -64525,24 +64928,13 @@
           "MaskZora"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false
-    },
-    {
-      "Id": "Unrandomized Bottled Contents",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Makes requirements less strict for certain bottled contents.",
-      "TrickCategory": "Setting"
     },
     {
       "Id": "Repeatable Scoop",
@@ -65304,31 +65696,31 @@
         [
           "MaskGoron",
           "Lensless Climbing",
-          "Unrandomized Bottled Contents"
+          "SettingNotRandomizedBottleCatchHotSpringWater"
         ],
         [
           "AreaNorthAccess",
           "MaskGoron",
           "ItemLens",
           "Magic Meter",
-          "Unrandomized Bottled Contents"
+          "SettingNotRandomizedBottleCatchHotSpringWater"
         ],
         [
           "AreaNorthAccess",
           "MaskGoron",
           "Lensless Climbing",
-          "Unrandomized Bottled Contents"
+          "SettingNotRandomizedBottleCatchHotSpringWater"
         ],
         [
           "AreaNorthAccess",
           "AreaSnowheadTempleClear",
-          "Unrandomized Bottled Contents"
+          "SettingNotRandomizedBottleCatchHotSpringWater"
         ],
         [
           "AreaNorthAccess",
           "Recoil Flip Through Ice",
           "Recoil Flip",
-          "Unrandomized Bottled Contents"
+          "SettingNotRandomizedBottleCatchHotSpringWater"
         ]
       ],
       "TimeNeeded": "None",
@@ -65368,7 +65760,7 @@
         [
           "Any Bomb Bag",
           "Any Bombchu Pack",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Beneath the Well Sun Block Clip"
         ]
       ],
@@ -65483,7 +65875,7 @@
           "Deliver Deku Princess Without Deku Mask",
           "Run Through Poisoned Water",
           "Take Damage",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "OtherArrow",
           "Bomb Hovering"
         ],
@@ -65492,7 +65884,7 @@
           "Deliver Deku Princess Without Deku Mask",
           "Run Through Poisoned Water",
           "Take Damage",
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "ItemHookshot",
           "Bomb Hovering"
         ],
@@ -65935,7 +66327,7 @@
           "MaskBlast"
         ],
         [
-          "Fierce Deity's Mask Anywhere",
+          "SettingAllowFierceDeityAnywhere",
           "Gainer"
         ]
       ],
@@ -66532,7 +66924,7 @@
           "Gainer"
         ],
         [
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Goron Bomb Jump",
@@ -66597,7 +66989,7 @@
         ],
         [
           "Powder Keg Challenge with Hot Spring Water",
-          "Fierce Deity's Mask Anywhere"
+          "SettingAllowFierceDeityAnywhere"
         ],
         [
           "Action Swap",
@@ -66645,6 +67037,25 @@
         ],
         [
           "Play Song of Healing"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Tall Character",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "SettingCharacterAdultLink"
+        ],
+        [
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
