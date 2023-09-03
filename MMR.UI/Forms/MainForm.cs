@@ -183,6 +183,88 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(nMaxGaroCT, "Set the maximum number of Way of the Hero / Foolish hints on Garos that can be for a Clock Town region (including Laundry Pool).");
         }
 
+        void UpdateSettingLogicMarkers()
+        {
+            var data = LogicUtils.ReadRulesetFromResources(_configuration.GameplaySettings.LogicMode, _configuration.GameplaySettings.UserLogicFileName);
+            ItemList itemList;
+            try
+            {
+                itemList = LogicUtils.PopulateItemListFromLogicData(data);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                itemList = LogicUtils.PopulateItemListWithoutLogic();
+            }
+
+            var settingToControlMapping = new Dictionary<Item, Control>
+            {
+                { Item.SettingCloseCows, cCloseCows },
+                { Item.SettingContinuousDekuHopping, cContinuousDekuHopping },
+                { Item.SettingClimbMostSurfaces, cClimbMostSurfaces },
+                { Item.SettingFreeScarecrow, cFreeScarecrow },
+                { Item.SettingGiantMaskAnywhere, cGiantMaskAnywhere },
+                // { Item.SettingSaferGlitches, cSaferGlitches },
+                { Item.SettingBombchuDrops, cAddBombchuDrops },
+                { Item.SettingInstantTransform, cInstantTransformations },
+                { Item.SettingBombArrows, cBombArrows },
+                { Item.SettingNotRandomizeEnemies, cEnemy },
+                { Item.SettingStrayFairyModeChestsOnly, null },
+                { Item.SettingNotStrayFairyModeChestsOnly, null },
+                { Item.SettingNotRandomizedItemGreatBayBossKey, null },
+                { Item.SettingNotRandomizedBottleCatchHotSpringWater, null },
+                { Item.SettingDamageModeDefault, lDMult },
+                { Item.SettingNotDamageModeDouble, lDMult },
+                { Item.SettingNotDamageModeQuadruple, lDMult },
+                { Item.SettingNotDamageModeOHKO, lDMult },
+                { Item.SettingNotDamageModeDoom, lDMult },
+                { Item.SettingDamageEffectDefault, lDType },
+                { Item.SettingNotDamageEffectFire, lDType },
+                { Item.SettingNotDamageEffectIce, lDType },
+                { Item.SettingNotDamageEffectShock, lDType },
+                { Item.SettingNotDamageEffectKnockdown, lDType },
+                { Item.SettingNotDamageEffectRandom, lDType },
+                { Item.SettingMovementModeDefault, lGravity },
+                { Item.SettingMovementModeSuperLowGravity, lGravity },
+                { Item.SettingMovementModeLowGravity, lGravity },
+                { Item.SettingNotMovementModeHighSpeed, lGravity },
+                { Item.SettingNotMovementModeHighGravity, lGravity },
+                { Item.SettingFloorTypeDefault, lFloors },
+                { Item.SettingNotFloorTypeSand, lFloors },
+                { Item.SettingNotFloorTypeIce, lFloors },
+                { Item.SettingNotFloorTypeSnow, lFloors },
+                { Item.SettingNotFloorTypeRandom, lFloors },
+                { Item.SettingClockSpeedDefault, lClockSpeed },
+                { Item.SettingNotClockSpeedFast, lClockSpeed },
+                { Item.SettingNotClockSpeedVeryFast, lClockSpeed },
+                { Item.SettingNotClockSpeedSuperFast, lClockSpeed },
+                { Item.SettingBlastMaskCooldownInstant, lBlastMask },
+                { Item.SettingBlastMaskCooldownVeryShort, lBlastMask },
+                { Item.SettingEnableSunsSong, cSunsSong },
+                { Item.SettingAllowFierceDeityAnywhere, cFDAnywhere },
+                { Item.SettingNotByoAmmo, cByoAmmo },
+                { Item.SettingNotDeathMoonCrash, cDeathMoonCrash },
+                { Item.SettingHookshotAnySurface, cHookshotAnySurface },
+                { Item.SettingCharacterAdultLink, null },
+                { Item.SettingNotCharacterAdultLink, null },
+                { Item.SettingNotFixEponaSword, null },
+                // { Item.SettingSpeedupBank, null },
+                // { Item.SettingNotSpeedupBank, null },
+            };
+
+            foreach (var (setting, control) in settingToControlMapping)
+            {
+                if (control != null)
+                {
+                    control.Text = Regex.Replace(control.Text, "\\*$", "");
+                    if (itemList.Any(io => io.DependsOnItems.Contains(setting) || io.Conditionals.Any(c => c.Contains(setting))))
+                    {
+                        control.Text += "*";
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Initialize components in the HUD <see cref="GroupBox"/>.
         /// </summary>
@@ -1746,6 +1828,7 @@ namespace MMR.UI.Forms
                     UpdateNumTricksEnabled();
                 }
                 _configuration.GameplaySettings.LogicMode = logicMode;
+                UpdateSettingLogicMarkers();
             });
         }
 
@@ -2375,6 +2458,7 @@ namespace MMR.UI.Forms
             tROMName.Text = _configuration.OutputSettings.InputROMFilename;
             tLuckRollPercentage.Value = _configuration.CosmeticSettings.MusicLuckRollChance;
             UpdateNumTricksEnabled();
+            UpdateSettingLogicMarkers();
         }
 
         private void SaveSettingsToolStripMenuItem_Click(object sender, EventArgs e)

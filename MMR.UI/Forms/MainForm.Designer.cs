@@ -118,7 +118,7 @@ namespace MMR.UI.Forms
             this.cAutoInvert = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cClockSpeed = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lClockSpeed = new System.Windows.Forms.Label();
             this.cHideClock = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tabComfort = new System.Windows.Forms.TabPage();
@@ -1321,7 +1321,7 @@ namespace MMR.UI.Forms
             this.groupBox1.Controls.Add(this.cAutoInvert);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.cClockSpeed);
-            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.lClockSpeed);
             this.groupBox1.Controls.Add(this.cHideClock);
             this.groupBox1.Location = new System.Drawing.Point(678, 206);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1375,15 +1375,15 @@ namespace MMR.UI.Forms
             this.cClockSpeed.TabIndex = 15;
             this.cClockSpeed.SelectedIndexChanged += new System.EventHandler(this.cClockSpeed_SelectedIndexChanged);
             // 
-            // label6
+            // lClockSpeed
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(4, 24);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(39, 15);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "Speed";
+            this.lClockSpeed.AutoSize = true;
+            this.lClockSpeed.Location = new System.Drawing.Point(4, 24);
+            this.lClockSpeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lClockSpeed.Name = "lClockSpeed";
+            this.lClockSpeed.Size = new System.Drawing.Size(39, 15);
+            this.lClockSpeed.TabIndex = 16;
+            this.lClockSpeed.Text = "Speed";
             // 
             // cHideClock
             // 
@@ -1404,13 +1404,14 @@ namespace MMR.UI.Forms
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(257, 16);
+            this.label4.Location = new System.Drawing.Point(257, 12);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(266, 60);
+            this.label4.Size = new System.Drawing.Size(266, 75);
             this.label4.TabIndex = 14;
             this.label4.Text = "WARNING!\r\nMost of these settings are not considered in logic\r\nand some can cause " +
-    "the seed to be unbeatable.\r\nUse at your own risk!";
+    "the seed to be unbeatable.\r\nUse at your own risk!\r\nItems marked with * are consi" +
+    "dered in logic.";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tabComfort
@@ -3274,7 +3275,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.TextBox tPatch;
         private System.Windows.Forms.Button bLoadPatch;
         private System.Windows.Forms.CheckBox cClearHints;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lClockSpeed;
         private System.Windows.Forms.Label lNutAndStickDrops;
         private System.Windows.Forms.ComboBox cNutAndStickDrops;
         private System.Windows.Forms.ComboBox cClockSpeed;
