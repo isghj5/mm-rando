@@ -85,6 +85,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -139,6 +142,9 @@
         ],
         [
           "Deku Guard Skip"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -229,6 +235,15 @@
           "FD Jumps",
           "MaskDeku",
           "Magic Meter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherArrow"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskDeku",
+          "Magic Meter"
         ]
       ],
       "TimeNeeded": "None",
@@ -286,6 +301,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -324,6 +342,18 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -398,6 +428,9 @@
         ],
         [
           "Low% Ocean Great Fairy"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -474,11 +507,17 @@
     {
       "Id": "ItemBottleBeavers",
       "RequiredItems": [
-        "ItemHookshot",
         "MaskZora",
         "AreaWestAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -606,6 +645,20 @@
         [
           "Use Fire Arrow",
           "Use Light Arrow"
+        ],
+        [
+          "MaskGibdo",
+          "BottleCatchBigPoe",
+          "Any Milk",
+          "SettingClimbMostSurfaces",
+          "Out of Bounds",
+          "MaskDeku",
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds",
+          "MaskDeku",
+          "Use Fire Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -765,6 +818,9 @@
         ],
         [
           "MaskDeku"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -855,10 +911,16 @@
     },
     {
       "Id": "TradeItemMamaLetter",
-      "RequiredItems": [
-        "TradeItemKafeiLetter"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "TradeItemKafeiLetter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "Day3",
       "TimeAvailable": "Day3",
       "TimeSetup": "Day1, Night1",
@@ -1097,6 +1159,9 @@
         ],
         [
           "MaskDeku"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -1157,11 +1222,17 @@
     {
       "Id": "HeartPieceBeaverRace",
       "RequiredItems": [
-        "ItemHookshot",
         "MaskZora",
         "AreaWestAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -1355,6 +1426,10 @@
         [
           "FD Difficult Jumps",
           "ItemHookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -1408,6 +1483,9 @@
         ],
         [
           "Lensless Walking"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -1499,6 +1577,9 @@
           "Goron Bomb Jump",
           "Take Damage",
           "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -1519,10 +1600,16 @@
     },
     {
       "Id": "MaskKeaton",
-      "RequiredItems": [
-        "TradeItemKafeiLetter"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "TradeItemKafeiLetter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "Day3",
       "TimeSetup": "Day1, Night1",
@@ -1883,6 +1970,10 @@
         [
           "AreaSouthAccess",
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "AreaSouthAccess"
         ]
       ],
       "TimeNeeded": "None",
@@ -1927,6 +2018,9 @@
         ],
         [
           "Water for Magic Bean"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -2031,6 +2125,11 @@
           "Take Damage"
         ],
         [
+          "Kill Big Octo",
+          "SettingClimbMostSurfaces",
+          "Take Damage"
+        ],
+        [
           "Big Octo Skip",
           "Take Damage",
           "MaskDeku"
@@ -2053,6 +2152,11 @@
           "Take Damage",
           "Run Through Poisoned Water",
           "FD Difficult Jumps"
+        ],
+        [
+          "Big Octo Skip",
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -2165,6 +2269,18 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -2196,6 +2312,10 @@
           "FD Jumps",
           "Out of Bounds",
           "Play Song of Soaring"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
         ]
       ],
       "TimeNeeded": "None",
@@ -2234,6 +2354,9 @@
           "Harder Long Jumps",
           "Take Damage",
           "Play Song of Soaring"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -2265,6 +2388,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -2329,6 +2455,9 @@
           "Play Epona's Song",
           "Play Song of Soaring",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -2339,15 +2468,19 @@
     {
       "Id": "AreaIkanaCanyonAccess",
       "RequiredItems": [
-        "AreaEastAccess",
-        "ItemHookshot"
+        "AreaEastAccess"
       ],
       "ConditionalItems": [
         [
+          "ItemHookshot",
           "Ikana Canyon Iceless"
         ],
         [
+          "ItemHookshot",
           "Use Ice Arrow"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3031,6 +3164,10 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -3088,6 +3225,10 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -3175,6 +3316,9 @@
           "Goron Bomb Jump",
           "Take Damage",
           "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3215,6 +3359,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3242,6 +3389,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3266,6 +3416,9 @@
         ],
         [
           "GBT Reverse Water Direction"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3319,6 +3472,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3356,6 +3512,10 @@
           "Step on Lava"
         ],
         [
+          "SettingClimbMostSurfaces",
+          "Step on Lava"
+        ],
+        [
           "Recoil Flip",
           "SettingAllowFierceDeityAnywhere",
           "Gainer"
@@ -3377,8 +3537,16 @@
           "MaskBlast"
         ],
         [
+          "Recoil Flip",
+          "SettingClimbMostSurfaces"
+        ],
+        [
           "FD Jumps",
           "Gainer"
+        ],
+        [
+          "FD Jumps",
+          "SettingClimbMostSurfaces"
         ],
         [
           "FD Jumps",
@@ -3434,6 +3602,9 @@
           "STT Water Tunnel as Human",
           "UpgradeMirrorShield",
           "1 Stone Tower Key"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3485,6 +3656,14 @@
           "1 Stone Tower Key",
           "ISTT Lightless",
           "ISTT Lightless Boss Key"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "ISTT Lightless Boss Key"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Use Light Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -3549,6 +3728,9 @@
           "STT Elegy Maze",
           "UpgradeMirrorShield",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3608,6 +3790,9 @@
         ],
         [
           "ISTT Lightless"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3915,6 +4100,9 @@
         ],
         [
           "ISTT Lightless"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -4019,7 +4207,18 @@
         ],
         [
           "Pinnacle Rock Access",
+          "SettingClimbMostSurfaces",
+          "MaskDeku",
+          "Magic Meter"
+        ],
+        [
+          "Pinnacle Rock Access",
           "ItemHookshot",
+          "OtherArrow"
+        ],
+        [
+          "Pinnacle Rock Access",
+          "SettingClimbMostSurfaces",
           "OtherArrow"
         ],
         [
@@ -4059,6 +4258,11 @@
           "BottleCatchEgg",
           "BottleCatchFish",
           "ItemHookshot"
+        ],
+        [
+          "BottleCatchEgg",
+          "BottleCatchFish",
+          "SettingClimbMostSurfaces"
         ],
         [
           "BottleCatchEgg",
@@ -4149,6 +4353,9 @@
         [
           "OtherMagicBean",
           "Water for Magic Bean"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -4248,6 +4455,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -4267,6 +4477,9 @@
         [
           "MaskGoron",
           "Out of Bounds"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -4289,6 +4502,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -4312,6 +4528,9 @@
         [
           "FD Jumps",
           "PF Guard Room Rear Entry"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -4494,10 +4713,16 @@
     {
       "Id": "ChestGreatBayCapeLedge1",
       "RequiredItems": [
-        "AreaWestAccess",
-        "ItemHookshot"
+        "AreaWestAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -4506,10 +4731,16 @@
     {
       "Id": "ChestGreatBayCapeLedge2",
       "RequiredItems": [
-        "AreaWestAccess",
-        "ItemHookshot"
+        "AreaWestAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -4611,6 +4842,9 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -4639,9 +4873,18 @@
           "AreaSouthAccess"
         ],
         [
+          "AreaSouthAccess",
+          "SettingClimbMostSurfaces"
+        ],
+        [
           "Run Through Poisoned Water",
           "Take Damage",
           "MaskZora"
+        ],
+        [
+          "Take Damage",
+          "Kill Big Octo",
+          "SettingClimbMostSurfaces"
         ],
         [
           "Run Through Poisoned Water",
@@ -4685,6 +4928,11 @@
           "Big Octo Skip",
           "Take Damage",
           "FD Difficult Jumps"
+        ],
+        [
+          "Big Octo Skip",
+          "Take Damage",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -4744,6 +4992,9 @@
           "Harder Long Jumps",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -4837,10 +5088,15 @@
     },
     {
       "Id": "ChestToIkanaRedRupee",
-      "RequiredItems": [
-        "ItemHookshot"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -4861,11 +5117,17 @@
       "Id": "ChestInvertedStoneTowerSilverRupee",
       "RequiredItems": [
         "Climb Stone Tower",
-        "OtherMagicBean",
-        "Water for Magic Bean",
         "Use Light Arrow"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "OtherMagicBean",
+          "Water for Magic Bean"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -4875,11 +5137,17 @@
       "Id": "ChestInvertedStoneTowerBombchu10",
       "RequiredItems": [
         "Climb Stone Tower",
-        "OtherMagicBean",
-        "Water for Magic Bean",
         "Use Light Arrow"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "OtherMagicBean",
+          "Water for Magic Bean"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -4889,11 +5157,17 @@
       "Id": "ChestInvertedStoneTowerBean",
       "RequiredItems": [
         "Climb Stone Tower",
-        "OtherMagicBean",
-        "Water for Magic Bean",
         "Use Light Arrow"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "OtherMagicBean",
+          "Water for Magic Bean"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -4916,6 +5190,11 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -5057,6 +5336,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5077,6 +5359,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5149,6 +5434,9 @@
         [
           "Clever Bombchu Usage",
           "MaskDeku"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5170,6 +5458,9 @@
         [
           "SettingAllowFierceDeityAnywhere",
           "Gainer"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5191,11 +5482,17 @@
     {
       "Id": "HeartPieceGoronVillageScrub",
       "RequiredItems": [
-        "AreaNorthAccess",
-        "MaskDeku",
-        "TradeItemSwampDeed"
+        "AreaNorthAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskDeku",
+          "TradeItemSwampDeed"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -5292,6 +5589,9 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5350,6 +5650,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5388,6 +5691,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5399,58 +5705,66 @@
       "Id": "HeartPieceCastle",
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
-        "Ikana Castle Access",
-        "Use Fire Arrow"
+        "Ikana Castle Access"
       ],
       "ConditionalItems": [
         [
           "MaskDeku",
-          "Jump along invisible platforms"
+          "Jump along invisible platforms",
+          "Use Fire Arrow"
         ],
         [
-          "FD Difficult Jumps"
+          "FD Difficult Jumps",
+          "Use Fire Arrow"
         ],
         [
           "FD Jumps",
-          "MaskDeku"
+          "MaskDeku",
+          "Use Fire Arrow"
         ],
         [
           "FD Jumps",
           "Long Jump",
           "Take Damage",
-          "Any Bomb Bag"
+          "Any Bomb Bag",
+          "Use Fire Arrow"
         ],
         [
           "FD Jumps",
           "Long Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
-          "ItemPowderKeg"
+          "ItemPowderKeg",
+          "Use Fire Arrow"
         ],
         [
           "FD Jumps",
           "Harder Long Jumps",
-          "Take Damage"
+          "Take Damage",
+          "Use Fire Arrow"
         ],
         [
           "FD Jumps",
           "Goron Bomb Jump",
           "Take Damage",
-          "Any Bomb Bag"
+          "Any Bomb Bag",
+          "Use Fire Arrow"
         ],
         [
           "FD Jumps",
           "Goron Bomb Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
-          "ItemPowderKeg"
+          "ItemPowderKeg",
+          "Use Fire Arrow"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
           "Take Damage",
           "Jump along invisible platforms",
           "Goron Bomb Jump",
-          "Any Bomb Bag"
+          "Any Bomb Bag",
+          "Use Fire Arrow"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
@@ -5459,7 +5773,8 @@
           "Goron Bomb Jump",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
-          "SettingAllowFierceDeityAnywhere"
+          "SettingAllowFierceDeityAnywhere",
+          "Use Fire Arrow"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
@@ -5469,7 +5784,8 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "MaskZora",
-          "Gainer"
+          "Gainer",
+          "Use Fire Arrow"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
@@ -5478,7 +5794,8 @@
           "Goron Bomb Jump",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
-          "ItemLightArrow"
+          "ItemLightArrow",
+          "Use Fire Arrow"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
@@ -5487,7 +5804,11 @@
           "Goron Bomb Jump",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
-          "UpgradeMirrorShield"
+          "UpgradeMirrorShield",
+          "Use Fire Arrow"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5647,6 +5968,10 @@
       "ConditionalItems": [
         [
           "MaskGoron",
+          "OtherExplosive"
+        ],
+        [
+          "SettingClimbMostSurfaces",
           "OtherExplosive"
         ],
         [
@@ -41359,6 +41684,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -41454,6 +41782,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -41494,6 +41825,9 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -41514,6 +41848,9 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -41594,21 +41931,21 @@
     },
     {
       "Id": "ItemRanchBarnOtherCowMilk2",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "Play Epona's Song",
+        "OtherEpona"
+      ],
       "ConditionalItems": [
         [
-          "Play Epona's Song",
-          "OtherEpona",
           "SettingCloseCows"
         ],
         [
-          "Play Epona's Song",
-          "OtherEpona",
           "Milk Multiple Cows"
         ],
         [
-          "Play Epona's Song",
-          "OtherEpona",
+          "SettingClimbMostSurfaces"
+        ],
+        [
           "AreaMoonAccess"
         ]
       ],
@@ -41688,6 +42025,9 @@
         [
           "Fewer Item Requirements",
           "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -41707,6 +42047,9 @@
         [
           "Fewer Item Requirements",
           "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -41757,6 +42100,14 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherArrow"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherExplosive"
         ]
       ],
       "TimeNeeded": "None",
@@ -41794,6 +42145,14 @@
           "Water for Magic Bean",
           "Clever Bombchu Usage",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherArrow"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherExplosive"
         ]
       ],
       "TimeNeeded": "None",
@@ -41946,6 +42305,14 @@
         [
           "Clever Bombchu Usage",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Short Ranged Weapon"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -42013,6 +42380,16 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -42090,6 +42467,16 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -42135,6 +42522,16 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -42169,6 +42566,16 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -42275,6 +42682,9 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42311,6 +42721,9 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42329,6 +42742,9 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42373,6 +42789,9 @@
         ],
         [
           "MaskGoron"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42407,6 +42826,9 @@
         ],
         [
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42430,6 +42852,9 @@
         ],
         [
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42481,6 +42906,14 @@
         ],
         [
           "MaskZora",
+          "Use Fire Arrow"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Ocean Skulltulas without Fire Arrows"
+        ],
+        [
+          "SettingClimbMostSurfaces",
           "Use Fire Arrow"
         ]
       ],
@@ -42537,6 +42970,10 @@
         [
           "OtherArrow",
           "MaskGoron"
+        ],
+        [
+          "OtherArrow",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42643,6 +43080,9 @@
         [
           "MaskZora",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42686,6 +43126,9 @@
         ],
         [
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42707,6 +43150,9 @@
         ],
         [
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42773,6 +43219,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42795,6 +43244,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42925,6 +43377,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42947,6 +43402,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43053,6 +43511,42 @@
           "ItemHookshot",
           "Take Damage",
           "MaskGreatFairy"
+        ],
+        [
+          "MaskDeku",
+          "Short Ranged Weapon",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "MaskDeku",
+          "Any Bomb Bag",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "MaskDeku",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "FD Jumps",
+          "MaskZora",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "ItemHookshot",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "FD Jumps",
+          "Any Bomb Bag",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "FD Jumps",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43065,31 +43559,40 @@
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
         "Enter Snowhead Temple",
-        "Pass through false walls",
-        "SHT Iced Stairwell",
-        "SHT Jump to 3rd Locked Door",
-        "MaskGreatFairy"
+        "Pass through false walls"
       ],
       "ConditionalItems": [
         [
           "Use Fire Arrow",
-          "MaskGoron"
+          "MaskGoron",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "1 Snowhead Key",
-          "SHT Map Room Elevator"
+          "SHT Map Room Elevator",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "1 Snowhead Key",
           "ItemHookshot",
           "Scarecrow's Song",
-          "Pass through false walls"
+          "Pass through false walls",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "1 Snowhead Key",
           "ItemHookshot",
           "Scarecrow's Song",
-          "SHT 2F Ramps"
+          "SHT 2F Ramps",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "2 Snowhead Keys",
@@ -43097,25 +43600,37 @@
           "SHT Twin Block Room Climb",
           "SHT Pound Switch Puzzle",
           "SHT 2F Ramps",
-          "OtherExplosive"
+          "OtherExplosive",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "2 Snowhead Keys",
           "ItemHookshot",
-          "OtherExplosive"
+          "OtherExplosive",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "3 Snowhead Keys",
           "SHT Pound Switch Puzzle",
           "SHT 2F Ramps",
-          "OtherExplosive"
+          "OtherExplosive",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "3 Snowhead Keys",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage"
+          "Take Damage",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "2 Snowhead Keys",
@@ -43123,7 +43638,18 @@
           "ItemPowderKeg",
           "Long Jump",
           "Take Damage",
-          "SHT Twin Block Room Climb"
+          "SHT Twin Block Room Climb",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "1 Snowhead Key"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Use Fire Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -43228,6 +43754,9 @@
           "SHT Elevator Room Access",
           "Take Damage",
           "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43371,6 +43900,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43489,6 +44021,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43514,6 +44049,9 @@
         [
           "SHT Fireless",
           "ItemHookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43578,6 +44116,10 @@
           "SHT Bridge Room",
           "SHT Twin Block Room Climb",
           "OtherArrow"
+        ],
+        [
+          "SHT Fireless",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43646,6 +44188,10 @@
           "MaskGreatFairy",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherExplosive"
         ]
       ],
       "TimeNeeded": "None",
@@ -43768,6 +44314,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43788,6 +44337,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43835,6 +44387,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43863,6 +44418,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43899,6 +44457,9 @@
         ],
         [
           "GBT Reverse Water Direction"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43932,6 +44493,15 @@
         ],
         [
           "FD Jumps",
+          "MaskGreatFairy",
+          "Clever Bombchu Usage"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskZora"
+        ],
+        [
+          "SettingClimbMostSurfaces",
           "MaskGreatFairy",
           "Clever Bombchu Usage"
         ]
@@ -43992,6 +44562,9 @@
         ],
         [
           "GBT Reverse Water Direction"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -44044,6 +44617,14 @@
           "Use Light Arrow",
           "STT Water Tunnel",
           "STT Eyegore Room Key to Bridge"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "1 Stone Tower Key"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "STT Water Tunnel"
         ]
       ],
       "TimeNeeded": "None",
@@ -44076,6 +44657,9 @@
         [
           "STT Updrafts without Deku Mask",
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -44140,6 +44724,9 @@
           "Recoil Flip",
           "STT Updrafts without Deku Mask",
           "2 Stone Tower Keys"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -44201,6 +44788,9 @@
         [
           "ISTT Lightless",
           "ISTT Cross Poe Gap"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -44236,6 +44826,9 @@
         ],
         [
           "ISTT Lightless"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -44355,6 +44948,9 @@
         ],
         [
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -44383,6 +44979,9 @@
         [
           "Recoil Flip",
           "MaskBlast"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -44421,6 +45020,10 @@
         [
           "AreaInvertedStoneTowerTempleAccess",
           "Play Song of Soaring"
+        ],
+        [
+          "AreaInvertedStoneTowerTempleAccess",
+          "SettingClimbMostSurfaces"
         ],
         [
           "Clever Ice Platforms"
@@ -45099,6 +45702,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45225,6 +45831,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45248,6 +45857,9 @@
         [
           "PF Guard Room Rear Entry",
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45270,6 +45882,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45291,6 +45906,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45396,6 +46014,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45416,6 +46037,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45482,6 +46106,9 @@
         [
           "MaskGoron",
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45526,6 +46153,18 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -45588,6 +46227,9 @@
         ],
         [
           "MaskDeku"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45621,6 +46263,9 @@
         ],
         [
           "MaskDeku"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45758,10 +46403,16 @@
     {
       "Id": "CollectableGreatBayCoastPot6",
       "RequiredItems": [
-        "AreaWestAccess",
-        "ItemHookshot"
+        "AreaWestAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -45770,10 +46421,16 @@
     {
       "Id": "CollectableGreatBayCoastPot7",
       "RequiredItems": [
-        "AreaWestAccess",
-        "ItemHookshot"
+        "AreaWestAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -45782,10 +46439,16 @@
     {
       "Id": "CollectableGreatBayCoastPot8",
       "RequiredItems": [
-        "AreaWestAccess",
-        "ItemHookshot"
+        "AreaWestAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -45845,6 +46508,18 @@
           "Bio Baba Hive Luck",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "Bio Baba Hive Luck",
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "Bio Baba Hive Luck",
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -45972,6 +46647,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45993,6 +46671,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46014,6 +46695,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46035,6 +46719,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46094,6 +46781,9 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46123,6 +46813,9 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46152,6 +46845,9 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46273,6 +46969,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46329,6 +47028,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46649,6 +47351,9 @@
         [
           "Fewer Item Requirements",
           "MaskGoron"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46669,6 +47374,9 @@
         [
           "Fewer Item Requirements",
           "MaskGoron"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46688,6 +47396,9 @@
         ],
         [
           "Zora Boomerang Through Walls"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46707,6 +47418,9 @@
         ],
         [
           "Zora Boomerang Through Walls"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46726,6 +47440,9 @@
         ],
         [
           "Zora Boomerang Through Walls"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46747,6 +47464,9 @@
         [
           "Fewer Item Requirements",
           "MaskGoron"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46768,6 +47488,9 @@
         [
           "Fewer Item Requirements",
           "MaskGoron"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46789,6 +47512,9 @@
         [
           "Fewer Item Requirements",
           "MaskGoron"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46810,6 +47536,9 @@
         [
           "Fewer Item Requirements",
           "MaskGoron"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46830,6 +47559,9 @@
         [
           "Fewer Item Requirements",
           "MaskGoron"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46850,6 +47582,9 @@
         [
           "Fewer Item Requirements",
           "MaskGoron"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47265,6 +48000,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47285,6 +48023,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47341,6 +48082,18 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -47363,11 +48116,17 @@
       "Id": "CollectableStoneTowerInvertedStoneTowerFlippedPot1",
       "RequiredItems": [
         "Climb Stone Tower",
-        "OtherMagicBean",
-        "Water for Magic Bean",
         "Use Light Arrow"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "OtherMagicBean",
+          "Water for Magic Bean"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47395,21 +48154,26 @@
       "Id": "CollectableAncientCastleOfIkana1FWestStaircasePot1",
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
-        "Ikana Castle Access",
-        "Use Fire Arrow"
+        "Ikana Castle Access"
       ],
       "ConditionalItems": [
         [
           "Jump along invisible platforms",
-          "MaskDeku"
+          "MaskDeku",
+          "Use Fire Arrow"
         ],
         [
           "Jump along invisible platforms",
           "Ikana Castle Falling Ceiling Skip",
-          "Take Damage"
+          "Take Damage",
+          "Use Fire Arrow"
         ],
         [
-          "FD Jumps"
+          "FD Jumps",
+          "Use Fire Arrow"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47453,6 +48217,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47471,6 +48238,10 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -47586,6 +48357,10 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -48631,17 +49406,9 @@
     {
       "Id": "CollectableGoronRacetrackPot1",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48650,17 +49417,9 @@
     {
       "Id": "CollectableGoronRacetrackPot2",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48669,17 +49428,9 @@
     {
       "Id": "CollectableGoronRacetrackPot3",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48688,17 +49439,9 @@
     {
       "Id": "CollectableGoronRacetrackPot4",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48707,17 +49450,9 @@
     {
       "Id": "CollectableGoronRacetrackPot5",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48726,17 +49461,9 @@
     {
       "Id": "CollectableGoronRacetrackPot6",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48745,17 +49472,9 @@
     {
       "Id": "CollectableGoronRacetrackPot7",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48764,17 +49483,9 @@
     {
       "Id": "CollectableGoronRacetrackPot8",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48783,17 +49494,9 @@
     {
       "Id": "CollectableGoronRacetrackPot9",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48802,17 +49505,9 @@
     {
       "Id": "CollectableGoronRacetrackPot10",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48821,17 +49516,9 @@
     {
       "Id": "CollectableGoronRacetrackPot11",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48840,17 +49527,9 @@
     {
       "Id": "CollectableGoronRacetrackPot12",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48859,17 +49538,9 @@
     {
       "Id": "CollectableGoronRacetrackPot13",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48878,17 +49549,9 @@
     {
       "Id": "CollectableGoronRacetrackPot14",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48897,17 +49560,9 @@
     {
       "Id": "CollectableGoronRacetrackPot15",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48916,17 +49571,9 @@
     {
       "Id": "CollectableGoronRacetrackPot16",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48935,17 +49582,9 @@
     {
       "Id": "CollectableGoronRacetrackPot17",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48954,17 +49593,9 @@
     {
       "Id": "CollectableGoronRacetrackPot18",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48973,17 +49604,9 @@
     {
       "Id": "CollectableGoronRacetrackPot19",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48992,17 +49615,9 @@
     {
       "Id": "CollectableGoronRacetrackPot20",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49011,17 +49626,9 @@
     {
       "Id": "CollectableGoronRacetrackPot21",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49030,17 +49637,9 @@
     {
       "Id": "CollectableGoronRacetrackPot22",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49049,17 +49648,9 @@
     {
       "Id": "CollectableGoronRacetrackPot23",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49068,17 +49659,9 @@
     {
       "Id": "CollectableGoronRacetrackPot24",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49087,17 +49670,9 @@
     {
       "Id": "CollectableGoronRacetrackPot25",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49106,17 +49681,9 @@
     {
       "Id": "CollectableGoronRacetrackPot26",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49125,17 +49692,9 @@
     {
       "Id": "CollectableGoronRacetrackPot27",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49218,6 +49777,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -49290,6 +49852,9 @@
         ],
         [
           "Lensless Climbing"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -49309,6 +49874,9 @@
         ],
         [
           "Lensless Climbing"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -49343,6 +49911,18 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -49365,11 +49945,17 @@
       "Id": "CollectableStoneTowerInvertedStoneTowerFlippedPot2",
       "RequiredItems": [
         "Climb Stone Tower",
-        "OtherMagicBean",
-        "Water for Magic Bean",
         "Use Light Arrow"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "OtherMagicBean",
+          "Water for Magic Bean"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49469,6 +50055,9 @@
         [
           "PF Guard Room Rear Entry",
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -49492,6 +50081,9 @@
         [
           "PF Guard Room Rear Entry",
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -49515,6 +50107,9 @@
         [
           "PF Guard Room Rear Entry",
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -49595,6 +50190,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -49615,6 +50213,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -49845,6 +50446,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -49902,6 +50506,9 @@
         ],
         [
           "Zora Boomerang Through Walls"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -49947,6 +50554,9 @@
         ],
         [
           "Zora Boomerang Through Walls"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50035,6 +50645,9 @@
           "Harder Long Jumps",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50095,6 +50708,9 @@
           "Harder Long Jumps",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50130,10 +50746,16 @@
       "Id": "CollectableAncientCastleOfIkanaFireCeilingRoomPot1",
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
-        "Ikana Castle Access",
-        "Use Fire Arrow"
+        "Ikana Castle Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Use Fire Arrow"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -50143,20 +50765,25 @@
       "Id": "CollectableAncientCastleOfIkanaHoleRoomPot1",
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
-        "Ikana Castle Access",
-        "Use Fire Arrow"
+        "Ikana Castle Access"
       ],
       "ConditionalItems": [
         [
-          "MaskDeku"
+          "MaskDeku",
+          "Use Fire Arrow"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
           "Long Jump",
-          "Take Damage"
+          "Take Damage",
+          "Use Fire Arrow"
         ],
         [
-          "FD Jumps"
+          "FD Jumps",
+          "Use Fire Arrow"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50168,20 +50795,25 @@
       "Id": "CollectableAncientCastleOfIkanaHoleRoomPot2",
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
-        "Ikana Castle Access",
-        "Use Fire Arrow"
+        "Ikana Castle Access"
       ],
       "ConditionalItems": [
         [
-          "MaskDeku"
+          "MaskDeku",
+          "Use Fire Arrow"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
           "Long Jump",
-          "Take Damage"
+          "Take Damage",
+          "Use Fire Arrow"
         ],
         [
-          "FD Jumps"
+          "FD Jumps",
+          "Use Fire Arrow"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50215,6 +50847,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50248,6 +50883,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50281,6 +50919,9 @@
         ],
         [
           "MaskDeku"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50327,6 +50968,9 @@
         ],
         [
           "Zora Boomerang Through Walls"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50361,6 +51005,9 @@
         ],
         [
           "Zora Boomerang Through Walls"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50371,17 +51018,9 @@
     {
       "Id": "CollectableGoronRacetrackPot28",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -50390,17 +51029,9 @@
     {
       "Id": "CollectableGoronRacetrackPot29",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -50409,17 +51040,9 @@
     {
       "Id": "CollectableGoronRacetrackPot30",
       "RequiredItems": [
-        "MaskGoron",
-        "AreaNorthAccess"
+        "Goron Racetrack Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemPowderKeg"
-        ],
-        [
-          "Keg Trial Access"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -50846,6 +51469,9 @@
         ],
         [
           "Recoil Flip"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50881,6 +51507,18 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -50905,6 +51543,18 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -50929,6 +51579,18 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -50953,6 +51615,18 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -51045,6 +51719,18 @@
         ],
         [
           "Magic Meter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -51065,6 +51751,18 @@
         ],
         [
           "Magic Meter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -51085,6 +51783,18 @@
         ],
         [
           "Magic Meter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -51105,6 +51815,18 @@
         ],
         [
           "Magic Meter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -51125,6 +51847,18 @@
         ],
         [
           "Magic Meter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -51145,6 +51879,18 @@
         ],
         [
           "Magic Meter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -51282,6 +52028,9 @@
         ],
         [
           "MaskDeku"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -51490,6 +52239,9 @@
         ],
         [
           "MaskDeku"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -51534,6 +52286,9 @@
         ],
         [
           "Deku Guard Skip"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -51553,6 +52308,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -51575,10 +52333,16 @@
       "Id": "CollectableGreatBayCoastSoftSoil1",
       "RequiredItems": [
         "AreaWestAccess",
-        "ItemHookshot",
         "BottleCatchBug"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -51636,12 +52400,18 @@
       "Id": "CollectableStoneTowerSoftSoil2",
       "RequiredItems": [
         "Climb Stone Tower",
-        "OtherMagicBean",
-        "Water for Magic Bean",
         "Use Light Arrow",
         "BottleCatchBug"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "OtherMagicBean",
+          "Water for Magic Bean"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -51720,6 +52490,9 @@
         ],
         [
           "MaskDeku"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -52899,6 +53672,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -52920,6 +53696,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -52941,6 +53720,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -52962,6 +53744,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -52983,6 +53768,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -53004,6 +53792,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -53041,6 +53832,15 @@
         ],
         [
           "FD Jumps",
+          "MaskDeku",
+          "Magic Meter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherArrow"
+        ],
+        [
+          "SettingClimbMostSurfaces",
           "MaskDeku",
           "Magic Meter"
         ]
@@ -53082,6 +53882,15 @@
           "FD Jumps",
           "MaskDeku",
           "Magic Meter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherArrow"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskDeku",
+          "Magic Meter"
         ]
       ],
       "TimeNeeded": "None",
@@ -53119,6 +53928,15 @@
         ],
         [
           "FD Jumps",
+          "MaskDeku",
+          "Magic Meter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherArrow"
+        ],
+        [
+          "SettingClimbMostSurfaces",
           "MaskDeku",
           "Magic Meter"
         ]
@@ -53383,6 +54201,16 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -53414,6 +54242,16 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -53445,6 +54283,16 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -53825,6 +54673,16 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -53848,6 +54706,16 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -53871,6 +54739,16 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -53914,6 +54792,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -53935,6 +54816,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -53967,16 +54851,26 @@
     {
       "Id": "CollectableIkanaGraveyardIkanaGraveyardUpperRock1",
       "RequiredItems": [
-        "Ikana Graveyard Access",
-        "Play Sonata of Awakening"
+        "Ikana Graveyard Access"
       ],
       "ConditionalItems": [
         [
-          "Any Bomb Bag"
+          "Any Bomb Bag",
+          "Play Sonata of Awakening"
         ],
         [
           "Powder Kegs as Explosives",
-          "ItemPowderKeg"
+          "ItemPowderKeg",
+          "Play Sonata of Awakening"
+        ],
+        [
+          "Any Bomb Bag",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -53988,10 +54882,16 @@
       "Id": "CollectableIkanaGraveyardIkanaGraveyardUpperRock2",
       "RequiredItems": [
         "OtherExplosive",
-        "Ikana Graveyard Access",
-        "Play Sonata of Awakening"
+        "Ikana Graveyard Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Play Sonata of Awakening"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54001,10 +54901,16 @@
       "Id": "CollectableIkanaGraveyardIkanaGraveyardUpperRock3",
       "RequiredItems": [
         "OtherExplosive",
-        "Ikana Graveyard Access",
-        "Play Sonata of Awakening"
+        "Ikana Graveyard Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Play Sonata of Awakening"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54068,16 +54974,26 @@
     {
       "Id": "CollectableIkanaGraveyardIkanaGraveyardUpperRock4",
       "RequiredItems": [
-        "Ikana Graveyard Access",
-        "Play Sonata of Awakening"
+        "Ikana Graveyard Access"
       ],
       "ConditionalItems": [
         [
-          "Any Bomb Bag"
+          "Any Bomb Bag",
+          "Play Sonata of Awakening"
         ],
         [
           "Powder Kegs as Explosives",
-          "ItemPowderKeg"
+          "ItemPowderKeg",
+          "Play Sonata of Awakening"
+        ],
+        [
+          "Any Bomb Bag",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -54088,16 +55004,26 @@
     {
       "Id": "CollectableIkanaGraveyardIkanaGraveyardUpperRock5",
       "RequiredItems": [
-        "Ikana Graveyard Access",
-        "Play Sonata of Awakening"
+        "Ikana Graveyard Access"
       ],
       "ConditionalItems": [
         [
-          "Any Bomb Bag"
+          "Any Bomb Bag",
+          "Play Sonata of Awakening"
         ],
         [
           "Powder Kegs as Explosives",
-          "ItemPowderKeg"
+          "ItemPowderKeg",
+          "Play Sonata of Awakening"
+        ],
+        [
+          "Any Bomb Bag",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -55042,6 +55968,9 @@
           "Goron Bomb Jump",
           "Take Damage",
           "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -55201,10 +56130,16 @@
     },
     {
       "Id": "NotebookCuriosityShopManSGift",
-      "RequiredItems": [
-        "TradeItemKafeiLetter"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "TradeItemKafeiLetter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "Day3",
       "TimeSetup": "Day1, Night1",
@@ -55212,10 +56147,16 @@
     },
     {
       "Id": "NotebookPromiseCuriosityShopMan",
-      "RequiredItems": [
-        "TradeItemKafeiLetter"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "TradeItemKafeiLetter"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "Day3",
       "TimeSetup": "Day1, Night1",
@@ -55492,6 +56433,9 @@
           "Goron Bomb Jump",
           "Take Damage",
           "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -55524,20 +56468,25 @@
       "Id": "CollectableAncientCastleOfIkanaHoleRoomPot3",
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
-        "Ikana Castle Access",
-        "Use Fire Arrow"
+        "Ikana Castle Access"
       ],
       "ConditionalItems": [
         [
-          "MaskDeku"
+          "MaskDeku",
+          "Use Fire Arrow"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
           "Long Jump",
-          "Take Damage"
+          "Take Damage",
+          "Use Fire Arrow"
         ],
         [
-          "FD Jumps"
+          "FD Jumps",
+          "Use Fire Arrow"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -55549,20 +56498,25 @@
       "Id": "CollectableAncientCastleOfIkanaHoleRoomPot4",
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
-        "Ikana Castle Access",
-        "Use Fire Arrow"
+        "Ikana Castle Access"
       ],
       "ConditionalItems": [
         [
-          "MaskDeku"
+          "MaskDeku",
+          "Use Fire Arrow"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
           "Long Jump",
-          "Take Damage"
+          "Take Damage",
+          "Use Fire Arrow"
         ],
         [
-          "FD Jumps"
+          "FD Jumps",
+          "Use Fire Arrow"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -55641,6 +56595,9 @@
         ],
         [
           "Clever Bombchu Usage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -55674,6 +56631,9 @@
         [
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -55738,6 +56698,18 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -55825,11 +56797,17 @@
       "Id": "CollectableStoneTowerInvertedStoneTowerFlippedPot3",
       "RequiredItems": [
         "Climb Stone Tower",
-        "OtherMagicBean",
-        "Water for Magic Bean",
         "Use Light Arrow"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "OtherMagicBean",
+          "Water for Magic Bean",
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -55900,6 +56878,9 @@
           "ISTT Lightless",
           "ISTT Cross Poe Gap",
           "Clever Bombchu Usage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -55929,6 +56910,9 @@
         [
           "FD Jumps",
           "Jump Slash Take Downs"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -55947,6 +56931,10 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -56084,6 +57072,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56252,6 +57243,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56327,6 +57321,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56347,6 +57344,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56367,6 +57367,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56387,6 +57390,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56407,6 +57413,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56600,6 +57609,9 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56642,6 +57654,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56684,6 +57699,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56726,6 +57744,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56908,6 +57929,9 @@
         ],
         [
           "Deku Guard Skip"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56936,6 +57960,9 @@
         [
           "Fewer Item Requirements",
           "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57030,6 +58057,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57094,10 +58124,30 @@
     },
     {
       "Id": "ItemTingleMapWoodfallInSwamp",
-      "RequiredItems": [
-        "Short Ranged Weapon"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds",
+          "Jump Slash Take Downs",
+          "Any Sword"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds",
+          "Jump Slash Take Downs",
+          "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds",
+          "Magic Meter",
+          "SettingAllowFierceDeityAnywhere"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -57145,10 +58195,30 @@
     },
     {
       "Id": "ItemTingleMapSnowheadInSwamp",
-      "RequiredItems": [
-        "Short Ranged Weapon"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds",
+          "Jump Slash Take Downs",
+          "Any Sword"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds",
+          "Jump Slash Take Downs",
+          "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds",
+          "Magic Meter",
+          "SettingAllowFierceDeityAnywhere"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -58238,6 +59308,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -58310,6 +59383,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -58569,17 +59645,22 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "Ikana Castle Access",
-        "Use Fire Arrow",
-        "Jump along invisible platforms",
         "MaskGaro"
       ],
       "ConditionalItems": [
         [
+          "Use Fire Arrow",
+          "Jump along invisible platforms",
           "MaskDeku"
         ],
         [
+          "Use Fire Arrow",
+          "Jump along invisible platforms",
           "Ikana Castle Falling Ceiling Skip",
           "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -58827,6 +59908,9 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Dungeon Entrance Return"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -59181,26 +60265,35 @@
     {
       "Id": "Climb Stone Tower",
       "RequiredItems": [
-        "AreaIkanaCanyonAccess",
-        "ItemHookshot",
-        "Play Elegy of Emptiness"
+        "AreaIkanaCanyonAccess"
       ],
       "ConditionalItems": [
         [
           "MaskGoron",
-          "MaskZora"
+          "MaskZora",
+          "ItemHookshot",
+          "Play Elegy of Emptiness"
         ],
         [
           "MaskGoron",
-          "Climb Stone Tower with One Transformation"
+          "Climb Stone Tower with One Transformation",
+          "ItemHookshot",
+          "Play Elegy of Emptiness"
         ],
         [
           "MaskZora",
-          "Climb Stone Tower with One Transformation"
+          "Climb Stone Tower with One Transformation",
+          "ItemHookshot",
+          "Play Elegy of Emptiness"
         ],
         [
           "FD Jumps",
-          "Climb Stone Tower with One Transformation"
+          "Climb Stone Tower with One Transformation",
+          "ItemHookshot",
+          "Play Elegy of Emptiness"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -59353,6 +60446,9 @@
           "Goron Bomb Jump",
           "Take Damage",
           "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -59431,6 +60527,9 @@
           "Recoil Flip",
           "MaskBlast",
           "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -59743,6 +60842,9 @@
         [
           "Death Warp",
           "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -59779,6 +60881,9 @@
         ],
         [
           "Difficult Goron Spike Rolls"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -60165,6 +61270,17 @@
           "WFT Bow Skip",
           "WFT 2nd Floor Skip",
           "Take Damage"
+        ],
+        [
+          "ItemWoodfallBossKey",
+          "OtherArrow",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "ItemWoodfallBossKey",
+          "WFT Bow Skip",
+          "Take Damage",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -60186,6 +61302,10 @@
           "MaskGoron",
           "Magic Meter",
           "SHT 4F"
+        ],
+        [
+          "ItemSnowheadBossKey",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -60218,6 +61338,11 @@
           "ItemGreatBayBossKey",
           "GBT Reverse Water Direction",
           "FD Jumps"
+        ],
+        [
+          "ItemGreatBayBossKey",
+          "GBT Reverse Water Direction",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -60238,6 +61363,10 @@
         ],
         [
           "RemainsTwinmold"
+        ],
+        [
+          "ItemStoneTowerBossKey",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -60636,6 +61765,10 @@
           "STT Water Tunnel",
           "UpgradeMirrorShield",
           "2 Stone Tower Keys"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "1 Stone Tower Key"
         ]
       ],
       "TimeNeeded": "None",
@@ -60690,6 +61823,9 @@
         [
           "STT Updrafts without Deku Mask",
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -60724,6 +61860,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -60761,6 +61900,9 @@
           "ItemPowderKeg",
           "UpgradeMirrorShield",
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -60819,6 +61961,16 @@
         [
           "AreaSouthAccess",
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Kill Big Octo",
+          "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Big Octo Skip",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -60889,6 +62041,9 @@
         [
           "GBT Hookless Exit",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -60936,6 +62091,10 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -60988,6 +62147,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61041,6 +62203,10 @@
           "WFT Bow Skip",
           "WFT 2nd Floor Access",
           "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherArrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -61060,6 +62226,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61088,6 +62257,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61222,6 +62394,9 @@
           "STT Updrafts without Deku Mask",
           "MaskGoron",
           "ItemHookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61275,6 +62450,9 @@
           "Goron Bomb Jump",
           "Take Damage",
           "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61291,6 +62469,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61317,6 +62498,9 @@
         ],
         [
           "ISTT Lightless"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61326,15 +62510,18 @@
     },
     {
       "Id": "ISTT Forward Updraft Room",
-      "RequiredItems": [
-        "Use Light Arrow"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [
         [
+          "Use Light Arrow",
           "MaskDeku"
         ],
         [
+          "Use Light Arrow",
           "STT Updrafts without Deku Mask"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61384,6 +62571,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61423,6 +62613,9 @@
         ],
         [
           "Use Light Arrow"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61489,6 +62682,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61499,16 +62695,21 @@
     {
       "Id": "STT Elegy Maze",
       "RequiredItems": [
-        "Play Elegy of Emptiness",
-        "STT Dungeon Entrance Return",
-        "MaskGoron"
+        "STT Dungeon Entrance Return"
       ],
       "ConditionalItems": [
         [
+          "Play Elegy of Emptiness",
+          "MaskGoron",
           "OtherExplosive"
         ],
         [
+          "Play Elegy of Emptiness",
+          "MaskGoron",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61557,6 +62758,20 @@
           "Use Light Arrow",
           "STT Masked Hiploop",
           "STT Eyegore Bridge to Courtyard",
+          "2 Stone Tower Keys"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskZora",
+          "1 Stone Tower Key"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "STT Water Tunnel as Human",
+          "1 Stone Tower Key"
+        ],
+        [
+          "SettingClimbMostSurfaces",
           "2 Stone Tower Keys"
         ]
       ],
@@ -61642,6 +62857,9 @@
           "Fewer Item Requirements",
           "Death Warp",
           "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61680,6 +62898,9 @@
           "ISTT Hookshot to Eyegore",
           "ISTT Eyegore Bridge to Dexihand",
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61706,6 +62927,9 @@
           "Death Warp",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61767,6 +62991,18 @@
           "STT Masked Hiploop",
           "STT Eyegore Bridge to Courtyard",
           "1 Stone Tower Key"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskZora"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "STT Water Tunnel as Human"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "1 Stone Tower Key"
         ]
       ],
       "TimeNeeded": "None",
@@ -61811,6 +63047,9 @@
         ],
         [
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61836,6 +63075,9 @@
           "Goron Bomb Jump",
           "Take Damage",
           "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61906,6 +63148,9 @@
         ],
         [
           "SHT Zora Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61939,6 +63184,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61963,6 +63211,9 @@
           "Goron Bomb Jump",
           "Take Damage",
           "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62030,6 +63281,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62058,6 +63312,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62085,6 +63342,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62110,6 +63370,9 @@
         ],
         [
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62136,6 +63399,9 @@
           "ItemHookshot",
           "Scarecrow's Song",
           "Pass through false walls"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62235,6 +63501,9 @@
           "1 Snowhead Key",
           "Harder Long Jumps",
           "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62263,6 +63532,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62355,6 +63627,10 @@
         [
           "STT Garo Master Access",
           "STT Masked Hiploop"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "STT Water Tunnel"
         ]
       ],
       "TimeNeeded": "None",
@@ -62379,6 +63655,10 @@
           "1 Stone Tower Key",
           "STT Masked Hiploop",
           "STT Eyegore Bridge Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "STT Water Tunnel"
         ]
       ],
       "TimeNeeded": "None",
@@ -62425,6 +63705,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62484,6 +63767,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62518,6 +63804,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62548,6 +63837,9 @@
         ],
         [
           "Jump along invisible platforms"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62577,6 +63869,9 @@
         ],
         [
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62675,10 +63970,15 @@
     },
     {
       "Id": "Complete Deku Trial",
-      "RequiredItems": [
-        "MaskDeku"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -62752,6 +64052,16 @@
         [
           "Link Trial Gossip Stones",
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "Use Fire Arrow",
+          "Any Bomb Bag",
+          "Any Bombchu Pack",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "Link Trial Gossip Stones",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62823,6 +64133,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63169,6 +64482,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63201,6 +64517,9 @@
         [
           "STT Eyegore Bridge Jumps",
           "MaskDeku"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63219,6 +64538,9 @@
         ],
         [
           "Deku Guard Skip"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63253,6 +64575,9 @@
         ],
         [
           "Lensless Climbing"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63392,6 +64717,30 @@
         ],
         [
           "Play Song of Healing"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Goron Racetrack Access",
+      "RequiredItems": [
+        "AreaNorthAccess"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskGoron",
+          "ItemPowderKeg"
+        ],
+        [
+          "MaskGoron",
+          "Keg Trial Access"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
         ]
       ],
       "TimeNeeded": "None",
