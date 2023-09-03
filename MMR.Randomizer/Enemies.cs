@@ -308,15 +308,22 @@ namespace MMR.Randomizer
             return false;
         }
 
-        private static bool ObjectIsItemBlocked(Scene scene, GameObjects.Actor testActor)
+        private static bool ObjectIsItemBlocked(/* Scene scene, GameObjects.Actor testActor */)
         {
             /// sometimes, an actor cannot be randomized if an item+thisActor leads to more checks
             /// IE: koume leads to boat ride, but only if red potion or picto are not-junk
 
-            if (testActor == GameObjects.Actor.InjuredKoume)
+            //if (testActor == GameObjects.Actor.InjuredKoume)
             {
                 // need to check if red potion is NOT randomized
-                var itemRedPotion = _randomized.ItemList;
+                var itemRedPotion = _randomized.ItemList.Find(item => item.Item == GameObjects.Item.ShopItemWitchRedPotion);
+                // does NOT work, shows false for no-logic, so thats an issue here
+                var isJunk = ItemUtils.IsJunk(itemRedPotion.Item); 
+
+                //var isRequired = ItemUtils.IsRequired(itemRedPotion.Item, itemRedPotion.locationForImportance, randomizedResult
+
+
+                var end = 0xFF;
             }
 
 
@@ -447,9 +454,7 @@ namespace MMR.Randomizer
             RandomizeDekuPalaceBombiwaSigns();
 
             Shinanigans();
-
-            var itemRedPotion = _randomized.ItemList;
-
+            ObjectIsItemBlocked();
         }
 
         public static void EnemizerLateFixes()
@@ -1987,7 +1992,7 @@ namespace MMR.Randomizer
                     return false;
                 }
                  
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Giant)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.En_Horse_Link_Child)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
@@ -3629,7 +3634,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 51.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 51.2\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

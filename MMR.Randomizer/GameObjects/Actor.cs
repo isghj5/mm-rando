@@ -747,6 +747,9 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled]
         [FileID(98)]
         [ObjectListIndex(0x7D)]
+        // issue: the game tries to malloc space for a skin skeleton, the default size is WRONG
+        // not sure about the actual size tho, so going with overkill size (I hope)
+        [ActorInstanceSize(0x1500)] 
         [GroundVariants(0)] // no vanilla params at all
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]

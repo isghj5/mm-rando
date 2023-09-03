@@ -102,6 +102,7 @@ namespace MMR.Randomizer.Utils
             var attr = ((GameObjects.Actor)actorOvlTblIndex).GetAttribute<ActorInstanceSizeAttribute>();
             if (attr != null)
             {
+                // for now, assume this override is always correct, even for injected actors
                 return attr.Size;
             }
 
