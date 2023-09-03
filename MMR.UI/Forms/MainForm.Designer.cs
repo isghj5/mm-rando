@@ -1951,7 +1951,7 @@ namespace MMR.UI.Forms
             this.cLink.Items.AddRange(new object[] {
             "Link (MM)",
             "Link (OoT)",
-            "Adult Link (Risky!)",
+            "Adult Link",
             "Kafei"});
             this.cLink.Location = new System.Drawing.Point(7, 38);
             this.cLink.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

@@ -388,6 +388,10 @@
         ],
         [
           "Clever Ice Platforms",
+          "SettingCharacterAdultLink"
+        ],
+        [
+          "Clever Ice Platforms",
           "MaskZora"
         ],
         [
@@ -1945,6 +1949,30 @@
         ],
         [
           "AreaSouthAccess",
+          "SettingCharacterAdultLink",
+          "Run Through Poisoned Water",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "AreaSouthAccess",
+          "SettingCharacterAdultLink",
+          "Run Through Poisoned Water",
+          "Long Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ],
+        [
+          "AreaSouthAccess",
+          "SettingCharacterAdultLink",
+          "Run Through Poisoned Water",
+          "Harder Long Jumps",
+          "Take Damage"
+        ],
+        [
+          "AreaSouthAccess",
           "SettingAllowFierceDeityAnywhere",
           "Run Through Poisoned Water",
           "Long Jump",
@@ -2117,6 +2145,12 @@
           "Kill Big Octo",
           "Run Through Poisoned Water",
           "Take Damage",
+          "SettingCharacterAdultLink"
+        ],
+        [
+          "Kill Big Octo",
+          "Run Through Poisoned Water",
+          "Take Damage",
           "SettingAllowFierceDeityAnywhere"
         ],
         [
@@ -2157,6 +2191,14 @@
           "Big Octo Skip",
           "SettingClimbMostSurfaces",
           "Take Damage"
+        ],
+        [
+          "Big Octo Skip",
+          "Take Damage",
+          "Run Through Poisoned Water",
+          "Recoil Flip",
+          "Play Song of Soaring",
+          "SettingCharacterAdultLink"
         ]
       ],
       "TimeNeeded": "None",
@@ -2246,6 +2288,17 @@
           "OtherArrow",
           "Snowball Skip",
           "Fewer Item Requirements"
+        ],
+        [
+          "OtherArrow",
+          "Snowball Skip",
+          "SettingCharacterAdultLink"
+        ],
+        [
+          "Play Song of Soaring",
+          "BottleCatchHotSpringWater",
+          "Snowball Skip",
+          "SettingCharacterAdultLink"
         ]
       ],
       "TimeNeeded": "None",
@@ -3319,6 +3372,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingCharacterAdultLink"
         ]
       ],
       "TimeNeeded": "None",
@@ -4845,6 +4901,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingCharacterAdultLink"
         ]
       ],
       "TimeNeeded": "None",
@@ -4880,6 +4939,12 @@
           "Run Through Poisoned Water",
           "Take Damage",
           "MaskZora"
+        ],
+        [
+          "AreaSouthAccess",
+          "Run Through Poisoned Water",
+          "Take Damage",
+          "SettingCharacterAdultLink"
         ],
         [
           "Take Damage",
@@ -5990,6 +6055,12 @@
           "Any Bomb Bag"
         ],
         [
+          "SettingCharacterAdultLink",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
           "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
           "Take Damage",
@@ -5997,6 +6068,11 @@
         ],
         [
           "MaskZora",
+          "Clever Bombchu Usage",
+          "Fewer Item Requirements"
+        ],
+        [
+          "SettingCharacterAdultLink",
           "Clever Bombchu Usage",
           "Fewer Item Requirements"
         ],
@@ -42782,16 +42858,21 @@
       ],
       "ConditionalItems": [
         [
+          "SettingNotCharacterAdultLink"
+        ],
+        [
+          "MaskDeku"
+        ],
+        [
+          "Zora Boomerang Through Walls"
+        ],
+        [
+          "Fewer Item Requirements",
           "ItemHookshot"
         ],
         [
-          "MaskZora"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "SettingClimbMostSurfaces"
+          "Fewer Item Requirements",
+          "BottleCatchFish"
         ]
       ],
       "TimeNeeded": "None",
@@ -43079,6 +43160,10 @@
         ],
         [
           "MaskZora",
+          "Fewer Item Requirements"
+        ],
+        [
+          "SettingCharacterAdultLink",
           "Fewer Item Requirements"
         ],
         [
@@ -46784,6 +46869,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingCharacterAdultLink"
         ]
       ],
       "TimeNeeded": "None",
@@ -46816,6 +46904,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingCharacterAdultLink"
         ]
       ],
       "TimeNeeded": "None",
@@ -46848,6 +46939,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingCharacterAdultLink"
         ]
       ],
       "TimeNeeded": "None",
@@ -47071,6 +47165,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingCharacterAdultLink"
         ]
       ],
       "TimeNeeded": "None",
@@ -47100,6 +47197,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingCharacterAdultLink"
         ]
       ],
       "TimeNeeded": "None",
@@ -47157,6 +47257,10 @@
           "Gainer"
         ],
         [
+          "SettingCharacterAdultLink",
+          "Gainer"
+        ],
+        [
           "SettingAllowFierceDeityAnywhere"
         ]
       ],
@@ -47177,6 +47281,10 @@
         ],
         [
           "MaskZora",
+          "Gainer"
+        ],
+        [
+          "SettingCharacterAdultLink",
           "Gainer"
         ],
         [
@@ -47203,6 +47311,10 @@
           "Gainer"
         ],
         [
+          "SettingCharacterAdultLink",
+          "Gainer"
+        ],
+        [
           "SettingAllowFierceDeityAnywhere"
         ]
       ],
@@ -47223,6 +47335,10 @@
         ],
         [
           "MaskZora",
+          "Gainer"
+        ],
+        [
+          "SettingCharacterAdultLink",
           "Gainer"
         ],
         [
@@ -47249,6 +47365,10 @@
           "Gainer"
         ],
         [
+          "SettingCharacterAdultLink",
+          "Gainer"
+        ],
+        [
           "SettingAllowFierceDeityAnywhere"
         ]
       ],
@@ -47269,6 +47389,10 @@
         ],
         [
           "MaskZora",
+          "Gainer"
+        ],
+        [
+          "SettingCharacterAdultLink",
           "Gainer"
         ],
         [
@@ -47295,6 +47419,10 @@
           "Gainer"
         ],
         [
+          "SettingCharacterAdultLink",
+          "Gainer"
+        ],
+        [
           "SettingAllowFierceDeityAnywhere"
         ]
       ],
@@ -47315,6 +47443,10 @@
         ],
         [
           "MaskZora",
+          "Gainer"
+        ],
+        [
+          "SettingCharacterAdultLink",
           "Gainer"
         ],
         [
@@ -50345,6 +50477,10 @@
         ],
         [
           "Clever Bombchu Usage"
+        ],
+        [
+          "SettingCharacterAdultLink",
+          "Short Ranged Weapon"
         ]
       ],
       "TimeNeeded": "None",
@@ -50489,6 +50625,11 @@
         ],
         [
           "Use Light Arrow",
+          "SettingCharacterAdultLink",
+          "Gainer"
+        ],
+        [
+          "Use Light Arrow",
           "SettingAllowFierceDeityAnywhere"
         ],
         [
@@ -50533,6 +50674,11 @@
         [
           "Use Light Arrow",
           "MaskZora",
+          "Gainer"
+        ],
+        [
+          "Use Light Arrow",
+          "SettingCharacterAdultLink",
           "Gainer"
         ],
         [
@@ -51456,6 +51602,12 @@
           "Harder Long Jumps",
           "Take Damage",
           "Any Bomb Bag",
+          "SettingCharacterAdultLink"
+        ],
+        [
+          "Harder Long Jumps",
+          "Take Damage",
+          "Any Bomb Bag",
           "SettingAllowFierceDeityAnywhere"
         ],
         [
@@ -52111,6 +52263,10 @@
         ],
         [
           "MaskZora",
+          "Fewer Item Requirements"
+        ],
+        [
+          "SettingCharacterAdultLink",
           "Fewer Item Requirements"
         ],
         [
@@ -58642,7 +58798,12 @@
           "Take Damage"
         ],
         [
-          "MaskZora"
+          "MaskZora",
+          "Fewer Item Requirements"
+        ],
+        [
+          "SettingCharacterAdultLink",
+          "Fewer Item Requirements"
         ],
         [
           "Recoil Flip"
@@ -60539,10 +60700,15 @@
     },
     {
       "Id": "SHT Zora Jumps",
-      "RequiredItems": [
-        "MaskZora"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "SettingCharacterAdultLink"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -60867,13 +61033,17 @@
           "Take Damage"
         ],
         [
-          "Inn Balcony as Zora"
+          "Inn Balcony Jump"
         ],
         [
           "Inn Balcony with Cucco"
         ],
         [
           "MaskZora",
+          "Gainer"
+        ],
+        [
+          "SettingCharacterAdultLink",
           "Gainer"
         ],
         [
@@ -61063,16 +61233,21 @@
       "IsTrick": false
     },
     {
-      "Id": "Inn Balcony as Zora",
-      "RequiredItems": [
-        "MaskZora"
+      "Id": "Inn Balcony Jump",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "SettingCharacterAdultLink"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Jump to the Inn balcony as Zora.",
+      "TrickTooltip": "Jump to the Inn balcony as Zora or Adult Link.",
       "TrickCategory": "Moderate"
     },
     {
@@ -61848,6 +62023,10 @@
           "Gainer"
         ],
         [
+          "SettingCharacterAdultLink",
+          "Gainer"
+        ],
+        [
           "SettingAllowFierceDeityAnywhere"
         ],
         [
@@ -61930,6 +62109,12 @@
           "Kill Big Octo"
         ],
         [
+          "Run Through Poisoned Water",
+          "Take Damage",
+          "SettingCharacterAdultLink",
+          "Kill Big Octo"
+        ],
+        [
           "Poisoned Water as Goron",
           "Take Damage",
           "Kill Big Octo"
@@ -61950,6 +62135,14 @@
           "Take Damage",
           "Run Through Poisoned Water",
           "FD Jumps",
+          "Play Song of Soaring"
+        ],
+        [
+          "Big Octo Skip",
+          "Take Damage",
+          "Recoil Flip",
+          "Run Through Poisoned Water",
+          "SettingCharacterAdultLink",
           "Play Song of Soaring"
         ],
         [
@@ -62250,9 +62443,6 @@
           "SHT Compass Room to Twin Block Room"
         ],
         [
-          "Use Fire Arrow"
-        ],
-        [
           "Long Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
@@ -62420,6 +62610,12 @@
           "ItemHookshot",
           "MaskDeku",
           "MaskZora",
+          "Gainer"
+        ],
+        [
+          "ItemHookshot",
+          "MaskDeku",
+          "SettingCharacterAdultLink",
           "Gainer"
         ],
         [
@@ -62601,6 +62797,10 @@
         ],
         [
           "MaskZora",
+          "Gainer"
+        ],
+        [
+          "SettingCharacterAdultLink",
           "Gainer"
         ],
         [
@@ -62952,6 +63152,10 @@
           "Gainer"
         ],
         [
+          "SettingCharacterAdultLink",
+          "Gainer"
+        ],
+        [
           "Any Bomb Bag"
         ],
         [
@@ -63069,6 +63273,10 @@
           "Gainer"
         ],
         [
+          "SettingCharacterAdultLink",
+          "Gainer"
+        ],
+        [
           "SettingAllowFierceDeityAnywhere"
         ],
         [
@@ -63140,6 +63348,10 @@
           "Gainer"
         ],
         [
+          "SettingCharacterAdultLink",
+          "Gainer"
+        ],
+        [
           "Long Jump",
           "Take Damage"
         ],
@@ -63186,6 +63398,9 @@
           "MaskBlast"
         ],
         [
+          "Use Fire Arrow"
+        ],
+        [
           "SettingClimbMostSurfaces"
         ]
       ],
@@ -63214,6 +63429,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingCharacterAdultLink"
         ]
       ],
       "TimeNeeded": "None",
@@ -63259,6 +63477,10 @@
           "Gainer"
         ],
         [
+          "SettingCharacterAdultLink",
+          "Gainer"
+        ],
+        [
           "SettingAllowFierceDeityAnywhere"
         ],
         [
@@ -63281,6 +63503,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SHT Zora Jumps"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -63796,6 +64021,11 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingCharacterAdultLink",
+          "Long Jump",
+          "Take Damage"
         ],
         [
           "MaskZora",
