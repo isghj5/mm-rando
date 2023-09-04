@@ -4432,7 +4432,7 @@ namespace MMR.Randomizer.LogicMigrator
                 ("SettingNotClockSpeedFast", null, null),
                 ("SettingNotClockSpeedVeryFast", null, null),
                 ("SettingNotClockSpeedSuperFast", null, null),
-                ("SettingBlastMaskCooldownInstant", null, null),
+                ("SettingBlastMaskCooldownInstant", "Instant Blast Mask Cooldown", null),
                 ("SettingBlastMaskCooldownVeryShort", null, null),
                 ("SettingEnableSunsSong", null, null),
                 ("SettingAllowFierceDeityAnywhere", "Fierce Deity's Mask Anywhere", null),

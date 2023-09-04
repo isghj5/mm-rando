@@ -796,7 +796,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -1869,7 +1869,7 @@
           "Ignore Fire Rings",
           "Take Damage",
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "Ignore Fire Rings",
@@ -3281,7 +3281,9 @@
     },
     {
       "Id": "SettingBlastMaskCooldownInstant",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskBlast"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -3290,7 +3292,9 @@
     },
     {
       "Id": "SettingBlastMaskCooldownVeryShort",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskBlast"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -4663,7 +4667,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -4975,7 +4979,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ]
       ],
       "TimeNeeded": "None",
@@ -5066,7 +5070,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ]
       ],
       "TimeNeeded": "None",
@@ -6097,7 +6101,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -46919,7 +46923,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -46962,7 +46966,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -51542,7 +51546,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -51585,7 +51589,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -51628,7 +51632,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -53096,7 +53100,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "Remote Hookshot"
@@ -53322,7 +53326,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -53445,7 +53449,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -53595,7 +53599,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -61331,7 +61335,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -67914,19 +67918,6 @@
       "IsTrick": false
     },
     {
-      "Id": "Instant Blast Mask Cooldown",
-      "RequiredItems": [
-        "MaskBlast"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "The cooldown of Blast Mask is removed.",
-      "TrickCategory": "Setting"
-    },
-    {
       "Id": "Enter PFS",
       "RequiredItems": [
         "MaskZora"
@@ -67944,7 +67935,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown"
+          "SettingBlastMaskCooldownInstant"
         ]
       ],
       "TimeNeeded": "None",
@@ -67978,7 +67969,7 @@
         ],
         [
           "Blast Mask Hovers",
-          "Instant Blast Mask Cooldown",
+          "SettingBlastMaskCooldownInstant",
           "Out of Bounds"
         ],
         [
