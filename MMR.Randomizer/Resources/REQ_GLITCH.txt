@@ -2493,7 +2493,8 @@
         [
           "MaskGoron",
           "Damage Boosting",
-          "Hostile NPC Interaction",
+          "Enemy Interactions",
+          "SettingNotRandomizeEnemies",
           "Take Damage",
           "Play Song of Soaring"
         ],
@@ -2506,7 +2507,8 @@
         ],
         [
           "Leever Hover",
-          "Hostile NPC Interaction",
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies",
           "Play Song of Soaring"
         ],
         [
@@ -2622,7 +2624,8 @@
           "Take Damage",
           "FD Difficult Jumps",
           "Gainer",
-          "Hostile NPC Interaction"
+          "Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ],
         [
           "Damage Boosting",
@@ -3834,14 +3837,16 @@
         [
           "AreaStoneTowerTempleAccess",
           "STT Elegy Maze",
-          "Hostile NPC Interaction",
+          "Enemy Interactions",
+          "SettingNotRandomizeEnemies",
           "FD Difficult Jumps",
           "Stone Tower Map Chest Retrieval"
         ],
         [
           "AreaStoneTowerTempleAccess",
           "STT Elegy Maze",
-          "Hostile NPC Interaction",
+          "Enemy Interactions",
+          "SettingNotRandomizeEnemies",
           "UpgradeMirrorShield",
           "Step on Lava"
         ],
@@ -3996,7 +4001,8 @@
         ],
         [
           "STT Elegy Maze",
-          "Hostile NPC Interaction",
+          "Enemy Interactions",
+          "SettingNotRandomizeEnemies",
           "UpgradeMirrorShield"
         ],
         [
@@ -6447,7 +6453,8 @@
         [
           "FD Difficult Jumps",
           "OtherExplosive",
-          "Hostile NPC Interaction"
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ],
         [
           "Superslide",
@@ -45638,7 +45645,8 @@
         ],
         [
           "STT Elegy Maze",
-          "Hostile NPC Interaction",
+          "Enemy Interactions",
+          "SettingNotRandomizeEnemies",
           "Momentary Anti-Gravity",
           "Take Damage"
         ],
@@ -47759,7 +47767,8 @@
         [
           "MaskGoron",
           "Damage Boosting",
-          "Hostile NPC Interaction",
+          "Enemy Interactions",
+          "SettingNotRandomizeEnemies",
           "Take Damage"
         ]
       ],
@@ -47798,7 +47807,8 @@
         [
           "MaskGoron",
           "Damage Boosting",
-          "Hostile NPC Interaction",
+          "Enemy Interactions",
+          "SettingNotRandomizeEnemies",
           "Take Damage"
         ]
       ],
@@ -52002,7 +52012,8 @@
         [
           "Action Swap",
           "OtherArrow",
-          "Hostile NPC Interaction"
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52027,7 +52038,8 @@
         [
           "Action Swap",
           "OtherArrow",
-          "Hostile NPC Interaction"
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52052,7 +52064,8 @@
         [
           "Action Swap",
           "OtherArrow",
-          "Hostile NPC Interaction"
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52077,7 +52090,8 @@
         [
           "Action Swap",
           "OtherArrow",
-          "Hostile NPC Interaction"
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52102,7 +52116,8 @@
         [
           "Action Swap",
           "OtherArrow",
-          "Hostile NPC Interaction"
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52121,7 +52136,14 @@
         ],
         [
           "Action Swap",
-          "OtherArrow"
+          "OtherArrow",
+          "Any Shield"
+        ],
+        [
+          "Action Swap",
+          "OtherArrow",
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52140,7 +52162,14 @@
         ],
         [
           "Action Swap",
-          "OtherArrow"
+          "OtherArrow",
+          "Any Shield"
+        ],
+        [
+          "Action Swap",
+          "OtherArrow",
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52159,7 +52188,14 @@
         ],
         [
           "Action Swap",
-          "OtherArrow"
+          "OtherArrow",
+          "Any Shield"
+        ],
+        [
+          "Action Swap",
+          "OtherArrow",
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52178,7 +52214,14 @@
         ],
         [
           "Action Swap",
-          "OtherArrow"
+          "OtherArrow",
+          "Any Shield"
+        ],
+        [
+          "Action Swap",
+          "OtherArrow",
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52203,7 +52246,8 @@
         [
           "Action Swap",
           "OtherArrow",
-          "Hostile NPC Interaction"
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52228,7 +52272,8 @@
         [
           "Action Swap",
           "OtherArrow",
-          "Hostile NPC Interaction"
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52253,7 +52298,8 @@
         [
           "Action Swap",
           "OtherArrow",
-          "Hostile NPC Interaction"
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52278,7 +52324,8 @@
         [
           "Action Swap",
           "OtherArrow",
-          "Hostile NPC Interaction"
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52303,7 +52350,8 @@
         [
           "Action Swap",
           "OtherArrow",
-          "Hostile NPC Interaction"
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -52357,7 +52405,8 @@
         ],
         [
           "FD Difficult Jumps",
-          "Hostile NPC Interaction"
+          "Harder Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ]
       ],
       "TimeNeeded": "None",
@@ -64340,7 +64389,8 @@
         [
           "MaskGoron",
           "Play Elegy of Emptiness",
-          "Hostile NPC Interaction"
+          "Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ],
         [
           "MaskGoron",
@@ -66183,15 +66233,26 @@
       "TrickCategory": "Moderate"
     },
     {
-      "Id": "Hostile NPC Interaction",
+      "Id": "Enemy Interactions",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Utilize hostile NPCs to your advantage. Not compatible with randomized enemies!",
-      "TrickCategory": "Setting"
+      "TrickTooltip": "Utilize enemies to your advantage. Not compatible with randomized enemies!",
+      "TrickCategory": "Easy"
+    },
+    {
+      "Id": "Harder Enemy Interactions",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Utilize enemies to perform difficult tricks. Not compatible with randomized enemies!",
+      "TrickCategory": "Hard"
     },
     {
       "Id": "Superslide",
@@ -67304,7 +67365,8 @@
         ],
         [
           "Blast Mask Hovers",
-          "Hostile NPC Interaction"
+          "Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ],
         [
           "Weirdshot"
@@ -67735,7 +67797,8 @@
           "Day 2 Grave Clip",
           "Damage Boosting",
           "Take Damage",
-          "Hostile NPC Interaction"
+          "Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ],
         [
           "Day 1 Grave Clip",
@@ -67847,7 +67910,8 @@
           "Day 3 Grave Clip",
           "Damage Boosting",
           "Take Damage",
-          "Hostile NPC Interaction"
+          "Enemy Interactions",
+          "SettingNotRandomizeEnemies"
         ],
         [
           "SettingClimbMostSurfaces",
