@@ -79,6 +79,9 @@
         [
           "SHT Map Room Elevator",
           "SHT 2F Ramps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -261,12 +264,20 @@
         ],
         [
           "AreaSouthAccess",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "AreaSouthAccess",
           "FD Difficult Jumps",
           "Take Damage"
         ],
         [
           "Index Warp",
           "MaskDeku"
+        ],
+        [
+          "Index Warp",
+          "SettingClimbMostSurfaces"
         ],
         [
           "Index Warp",
@@ -382,6 +393,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -467,6 +481,9 @@
         ],
         [
           "Extremely Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -780,6 +797,9 @@
         [
           "Blast Mask Hovers",
           "Instant Blast Mask Cooldown"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -894,6 +914,10 @@
           "Deku Recoil",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
         ]
       ],
       "TimeNeeded": "Day3",
@@ -1130,6 +1154,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -1199,6 +1226,9 @@
         ],
         [
           "Extremely Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -1371,6 +1401,10 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -1449,6 +1483,9 @@
           "ItemPowderKeg",
           "Day 2 Grave Clip",
           "Zora Clips"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -1546,6 +1583,9 @@
         ],
         [
           "Index Warp"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -1591,6 +1631,10 @@
           "Deku Recoil",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
         ]
       ],
       "TimeNeeded": "None",
@@ -2002,6 +2046,10 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "AreaSouthAccess"
         ]
       ],
       "TimeNeeded": "None",
@@ -2065,6 +2113,9 @@
           "Magic Meter",
           "Repeatable Scoop",
           "Water for Magic Bean"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -2180,6 +2231,11 @@
           "Take Damage"
         ],
         [
+          "Kill Big Octo",
+          "SettingClimbMostSurfaces",
+          "Take Damage"
+        ],
+        [
           "Big Octo Skip",
           "Take Damage",
           "MaskDeku"
@@ -2210,6 +2266,11 @@
           "Recoil Flip",
           "Play Song of Soaring",
           "SettingCharacterAdultLink"
+        ],
+        [
+          "Big Octo Skip",
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ],
         [
           "Long Bomb Hovers"
@@ -2374,6 +2435,10 @@
         ],
         [
           "Epona Push"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
         ]
       ],
       "TimeNeeded": "None",
@@ -2443,6 +2508,9 @@
           "Leever Hover",
           "Hostile NPC Interaction",
           "Play Song of Soaring"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -2496,6 +2564,9 @@
         [
           "Zora Clips",
           "Clever Ice Platforms"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -2574,6 +2645,9 @@
         ],
         [
           "Index Warp"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -2600,6 +2674,9 @@
         ],
         [
           "Index Warp"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -2640,6 +2717,9 @@
           "Time Stop",
           "Any Bottle",
           "SettingNotRandomizedBottleCatchHotSpringWater"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3239,9 +3319,7 @@
     },
     {
       "Id": "SettingNotByoAmmo",
-      "RequiredItems": [
-        "MaskFierceDeity"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -3250,9 +3328,7 @@
     },
     {
       "Id": "SettingNotDeathMoonCrash",
-      "RequiredItems": [
-        "MaskFierceDeity"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -3261,9 +3337,7 @@
     },
     {
       "Id": "SettingHookshotAnySurface",
-      "RequiredItems": [
-        "MaskFierceDeity"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -3272,9 +3346,7 @@
     },
     {
       "Id": "SettingCharacterAdultLink",
-      "RequiredItems": [
-        "MaskFierceDeity"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -3283,9 +3355,7 @@
     },
     {
       "Id": "SettingNotCharacterAdultLink",
-      "RequiredItems": [
-        "MaskFierceDeity"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -3294,9 +3364,7 @@
     },
     {
       "Id": "SettingNotFixEponaSword",
-      "RequiredItems": [
-        "MaskFierceDeity"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -3346,6 +3414,10 @@
         [
           "Blast Mask Hovers",
           "OtherArrow",
+          "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces",
           "Take Damage"
         ]
       ],
@@ -3405,6 +3477,10 @@
           "Blast Mask Hovers",
           "Take Damage",
           "OtherArrow"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -3462,6 +3538,9 @@
         ],
         [
           "Remote Hookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3529,6 +3608,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3559,6 +3641,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3674,6 +3759,11 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "Ocarina Dive",
+          "Take Damage",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3750,6 +3840,21 @@
           "Hostile NPC Interaction",
           "UpgradeMirrorShield",
           "Step on Lava"
+        ],
+        [
+          "AreaStoneTowerTempleAccess",
+          "SettingClimbMostSurfaces",
+          "Step on Lava"
+        ],
+        [
+          "AreaStoneTowerTempleAccess",
+          "SettingClimbMostSurfaces",
+          "Recoil Flip"
+        ],
+        [
+          "AreaStoneTowerTempleAccess",
+          "SettingClimbMostSurfaces",
+          "FD Jumps"
         ],
         [
           "AreaInvertedStoneTowerTempleAccess",
@@ -3830,6 +3935,14 @@
         [
           "ISTT Reverse 2F",
           "ISTT Early Boss Key"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "ISTT Lightless Boss Key"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Use Light Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -3881,6 +3994,9 @@
           "STT Elegy Maze",
           "Hostile NPC Interaction",
           "UpgradeMirrorShield"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -3947,6 +4063,10 @@
           "AreaInvertedStoneTowerTempleAccess",
           "ISTT Death Armos Maze Chest Switch",
           "ISTT Lightless"
+        ],
+        [
+          "AreaInvertedStoneTowerTempleAccess",
+          "SettingClimbMostSurfaces"
         ],
         [
           "AreaStoneTowerTempleAccess",
@@ -4238,6 +4358,9 @@
         ],
         [
           "ISTT Lightless"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -4296,6 +4419,11 @@
         ],
         [
           "AreaNorthAccess",
+          "MaskGoron",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "AreaNorthAccess",
           "Hot Spring Water Transport"
         ],
         [
@@ -4341,7 +4469,18 @@
         ],
         [
           "Pinnacle Rock Access",
+          "SettingClimbMostSurfaces",
+          "OtherArrow"
+        ],
+        [
+          "Pinnacle Rock Access",
           "ItemHookshot",
+          "MaskDeku",
+          "Magic Meter"
+        ],
+        [
+          "Pinnacle Rock Access",
+          "SettingClimbMostSurfaces",
           "MaskDeku",
           "Magic Meter"
         ],
@@ -4402,6 +4541,11 @@
           "MaskZora"
         ],
         [
+          "BottleCatchEgg",
+          "BottleCatchFish",
+          "SettingClimbMostSurfaces"
+        ],
+        [
           "Equip Swap",
           "MaskZora",
           "ItemHookshot"
@@ -4420,6 +4564,11 @@
           "Equip Swap",
           "MaskZora",
           "MaskGoron"
+        ],
+        [
+          "Equip Swap",
+          "MaskZora",
+          "SettingClimbMostSurfaces"
         ],
         [
           "Equip Swap",
@@ -4515,6 +4664,9 @@
         [
           "Blast Mask Hovers",
           "Instant Blast Mask Cooldown"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -4649,6 +4801,9 @@
         ],
         [
           "Out of Bounds"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -4673,6 +4828,10 @@
         [
           "MaskZora",
           "Bomb Hovering"
+        ],
+        [
+          "MaskZora",
+          "SettingClimbMostSurfaces"
         ],
         [
           "Remote Hookshot",
@@ -4937,6 +5096,9 @@
         ],
         [
           "Extremely Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -4955,6 +5117,9 @@
         ],
         [
           "Extremely Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5093,6 +5258,10 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -5182,6 +5351,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5286,6 +5458,9 @@
         ],
         [
           "Remote Hookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5302,6 +5477,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5341,6 +5519,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5360,6 +5541,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5379,6 +5563,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5537,6 +5724,9 @@
         ],
         [
           "Business Scrub Flower Theft"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5566,6 +5756,9 @@
         ],
         [
           "Business Scrub Flower Theft"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5620,6 +5813,9 @@
         ],
         [
           "Clever Bombchu Usage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5650,6 +5846,9 @@
         ],
         [
           "Business Scrub Flower Theft"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5686,6 +5885,9 @@
         ],
         [
           "Business Scrub Flower Theft"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5789,6 +5991,9 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5893,6 +6098,9 @@
         [
           "Blast Mask Hovers",
           "Instant Blast Mask Cooldown"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -5940,6 +6148,9 @@
         ],
         [
           "Business Scrub Flower Theft"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -6042,6 +6253,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -6201,6 +6415,10 @@
       "ConditionalItems": [
         [
           "MaskGoron",
+          "OtherExplosive"
+        ],
+        [
+          "SettingClimbMostSurfaces",
           "OtherExplosive"
         ],
         [
@@ -41913,6 +42131,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42012,6 +42233,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42050,6 +42274,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42073,6 +42300,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42160,10 +42390,16 @@
       "Id": "ItemRanchBarnOtherCowMilk2",
       "RequiredItems": [
         "Play Epona's Song",
-        "OtherEpona",
-        "ItemOcarina"
+        "OtherEpona"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemOcarina"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -42239,6 +42475,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42257,6 +42496,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42311,6 +42553,14 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherArrow"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherExplosive"
         ]
       ],
       "TimeNeeded": "None",
@@ -42342,6 +42592,14 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherArrow"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherExplosive"
         ]
       ],
       "TimeNeeded": "None",
@@ -42492,6 +42750,14 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Short Ranged Weapon"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherExplosive"
         ]
       ],
       "TimeNeeded": "None",
@@ -42564,6 +42830,16 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -42646,6 +42922,16 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -42696,6 +42982,16 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -42735,6 +43031,16 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -42845,6 +43151,9 @@
         [
           "FD Jumps",
           "Out of Bounds"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42888,6 +43197,9 @@
         [
           "SettingAllowFierceDeityAnywhere",
           "Out of Bounds"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -42910,6 +43222,9 @@
         [
           "SettingAllowFierceDeityAnywhere",
           "Out of Bounds"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43042,6 +43357,14 @@
         ],
         [
           "MaskZora",
+          "Use Fire Arrow"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Ocean Skulltulas without Fire Arrows"
+        ],
+        [
+          "SettingClimbMostSurfaces",
           "Use Fire Arrow"
         ],
         [
@@ -43329,6 +43652,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43355,6 +43681,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43486,6 +43815,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43505,6 +43837,9 @@
         [
           "Long Jump",
           "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43626,6 +43961,42 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "MaskDeku",
+          "Short Ranged Weapon",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "MaskDeku",
+          "Any Bomb Bag",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "MaskDeku",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "FD Jumps",
+          "MaskZora",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "ItemHookshot",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "FD Jumps",
+          "Any Bomb Bag",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "FD Jumps",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43638,31 +44009,40 @@
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
         "Enter Snowhead Temple",
-        "Pass through false walls",
-        "SHT Iced Stairwell",
-        "SHT Jump to 3rd Locked Door",
-        "MaskGreatFairy"
+        "Pass through false walls"
       ],
       "ConditionalItems": [
         [
           "Use Fire Arrow",
-          "MaskGoron"
+          "MaskGoron",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "1 Snowhead Key",
-          "SHT Map Room Elevator"
+          "SHT Map Room Elevator",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "1 Snowhead Key",
           "ItemHookshot",
           "Scarecrow's Song",
-          "Pass through false walls"
+          "Pass through false walls",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "1 Snowhead Key",
           "ItemHookshot",
           "Scarecrow's Song",
-          "SHT 2F Ramps"
+          "SHT 2F Ramps",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "2 Snowhead Keys",
@@ -43670,25 +44050,37 @@
           "SHT Twin Block Room Climb",
           "SHT Pound Switch Puzzle",
           "SHT 2F Ramps",
-          "OtherExplosive"
+          "OtherExplosive",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "2 Snowhead Keys",
           "ItemHookshot",
-          "OtherExplosive"
+          "OtherExplosive",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "3 Snowhead Keys",
           "SHT Pound Switch Puzzle",
           "SHT 2F Ramps",
-          "OtherExplosive"
+          "OtherExplosive",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "3 Snowhead Keys",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage"
+          "Take Damage",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
         ],
         [
           "2 Snowhead Keys",
@@ -43696,7 +44088,18 @@
           "ItemPowderKeg",
           "Long Jump",
           "Take Damage",
-          "SHT Twin Block Room Climb"
+          "SHT Twin Block Room Climb",
+          "SHT Iced Stairwell",
+          "SHT Jump to 3rd Locked Door",
+          "MaskGreatFairy"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "1 Snowhead Key"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Use Fire Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -43710,8 +44113,7 @@
         "AreaSnowheadTempleAccess",
         "Enter Snowhead Temple",
         "Pass through false walls",
-        "SHT Pop Ceiling Bubble",
-        "MaskGreatFairy"
+        "SHT Pop Ceiling Bubble"
       ],
       "ConditionalItems": [
         [
@@ -43764,6 +44166,10 @@
         [
           "SHT 4F",
           "MaskGoron"
+        ],
+        [
+          "SHT 4F",
+          "SettingClimbMostSurfaces"
         ],
         [
           "SHT 4F",
@@ -43853,6 +44259,9 @@
           "SHT Elevator Room Access",
           "Take Damage",
           "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -43922,6 +44331,10 @@
         [
           "SHT 4F",
           "MaskGoron"
+        ],
+        [
+          "SHT 4F",
+          "SettingClimbMostSurfaces"
         ],
         [
           "SHT 4F",
@@ -44042,6 +44455,9 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ],
         [
           "Bomb Hovering"
@@ -44165,6 +44581,9 @@
           "FD Difficult Jumps"
         ],
         [
+          "SettingClimbMostSurfaces"
+        ],
+        [
           "Bomb Hovering"
         ]
       ],
@@ -44189,7 +44608,14 @@
           "OtherArrow"
         ],
         [
+          "SHT Fireless",
+          "ItemHookshot"
+        ],
+        [
           "Unlimited Hot Spring Water"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -44258,6 +44684,10 @@
         [
           "SHT Fireless",
           "Bomb Hovering"
+        ],
+        [
+          "SHT Fireless",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -44329,6 +44759,10 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherExplosive"
         ]
       ],
       "TimeNeeded": "None",
@@ -44441,6 +44875,9 @@
           "FD Jumps"
         ],
         [
+          "SettingClimbMostSurfaces"
+        ],
+        [
           "Bomb Hovering"
         ]
       ],
@@ -44464,6 +44901,9 @@
         [
           "ItemHookshot",
           "FD Difficult Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ],
         [
           "ItemHookshot",
@@ -44520,6 +44960,9 @@
           "FD Jumps"
         ],
         [
+          "SettingClimbMostSurfaces"
+        ],
+        [
           "Bomb Hovering"
         ]
       ],
@@ -44549,6 +44992,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ],
         [
           "Bomb Hovering"
@@ -44591,6 +45037,9 @@
           "GBT Reverse Water Direction"
         ],
         [
+          "SettingClimbMostSurfaces"
+        ],
+        [
           "Ocarina Dive",
           "Take Damage"
         ]
@@ -44626,6 +45075,15 @@
         ],
         [
           "FD Jumps",
+          "MaskGreatFairy",
+          "Clever Bombchu Usage"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskZora"
+        ],
+        [
+          "SettingClimbMostSurfaces",
           "MaskGreatFairy",
           "Clever Bombchu Usage"
         ]
@@ -44685,8 +45143,17 @@
           "FD Jumps"
         ],
         [
+          "SettingClimbMostSurfaces",
+          "Short Ranged Weapon"
+        ],
+        [
           "GBT Reverse Water Direction",
           "Short Ranged Weapon"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskGreatFairy",
+          "Clever Bombchu Usage"
         ],
         [
           "GBT Reverse Water Direction",
@@ -44754,6 +45221,9 @@
           "Death Warp",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -44780,6 +45250,14 @@
           "STT Compass Sun Block",
           "STT Water Tunnel",
           "STT Eyegore Room Key to Bridge"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "1 Stone Tower Key"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "STT Water Tunnel"
         ]
       ],
       "TimeNeeded": "None",
@@ -44849,6 +45327,10 @@
         [
           "Open Upside-Down Chests",
           "Weirdshot"
+        ],
+        [
+          "AreaInvertedStoneTowerTempleAccess",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -44873,6 +45355,9 @@
         [
           "Long Bomb Hovers",
           "UpgradeMirrorShield"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -44931,6 +45416,9 @@
         [
           "ISTT Lightless",
           "ISTT Cross Poe Gap"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -44966,6 +45454,9 @@
         ],
         [
           "ISTT Lightless"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45001,6 +45492,20 @@
           "STT Compass Sun Block",
           "Open Upside-Down Chests",
           "Long Bomb Hovers",
+          "Unlimited Hot Spring Water"
+        ],
+        [
+          "AreaStoneTowerTempleAccess",
+          "STT Compass Sun Block",
+          "Open Upside-Down Chests",
+          "SettingClimbMostSurfaces",
+          "Use Fire Arrow"
+        ],
+        [
+          "AreaStoneTowerTempleAccess",
+          "STT Compass Sun Block",
+          "Open Upside-Down Chests",
+          "SettingClimbMostSurfaces",
           "Unlimited Hot Spring Water"
         ]
       ],
@@ -45082,6 +45587,17 @@
           "Open Upside-Down Chests",
           "Long Bomb Hovers",
           "ItemHookshot"
+        ],
+        [
+          "AreaInvertedStoneTowerTempleAccess",
+          "Open Upside-Down Chests",
+          "Long Bomb Hovers",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "AreaStoneTowerTempleAccess",
+          "STT Garo Master Access",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45124,6 +45640,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45190,6 +45709,11 @@
           "AreaInvertedStoneTowerTempleAccess",
           "Open Upside-Down Chests",
           "Long Bomb Hovers"
+        ],
+        [
+          "AreaInvertedStoneTowerTempleAccess",
+          "Open Upside-Down Chests",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -45877,6 +46401,9 @@
         [
           "Use Ice Arrow",
           "Ocarina Dive"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46035,6 +46562,9 @@
         [
           "MaskGoron",
           "Out of Bounds"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46191,6 +46721,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46214,6 +46747,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46281,6 +46817,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46381,6 +46920,9 @@
         [
           "Blast Mask Hovers",
           "Instant Blast Mask Cooldown"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46421,6 +46963,9 @@
         [
           "Blast Mask Hovers",
           "Instant Blast Mask Cooldown"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46587,6 +47132,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46605,6 +47153,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46623,6 +47174,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -46675,6 +47229,18 @@
           "Bio Baba Hive Luck",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "Bio Baba Hive Luck",
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "Bio Baba Hive Luck",
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -46841,6 +47407,9 @@
         [
           "MaskGoron",
           "Out of Bounds"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47073,6 +47642,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47132,6 +47704,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47480,6 +48055,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47510,6 +48088,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47540,6 +48121,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47570,6 +48154,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47600,6 +48187,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47626,6 +48216,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47652,6 +48245,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47678,6 +48274,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47704,6 +48303,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47734,6 +48336,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -47764,6 +48369,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -48202,6 +48810,9 @@
         [
           "Use Ice Arrow",
           "Ocarina Dive"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -48225,6 +48836,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -48299,6 +48913,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -48340,6 +48957,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -48406,6 +49026,11 @@
         ],
         [
           "Index Warp"
+        ],
+        [
+          "AreaSouthAccess",
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -48536,6 +49161,11 @@
         ],
         [
           "Index Warp"
+        ],
+        [
+          "AreaSouthAccess",
+          "SettingClimbMostSurfaces",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -49846,6 +50476,9 @@
         [
           "Use Ice Arrow",
           "Ocarina Dive"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -49922,6 +50555,9 @@
         ],
         [
           "Lensless Climbing"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -49941,6 +50577,9 @@
         ],
         [
           "Lensless Climbing"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -49993,6 +50632,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50185,6 +50827,10 @@
         ],
         [
           "Extremely Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Bomb Hovers"
         ]
       ],
       "TimeNeeded": "None",
@@ -50214,6 +50860,10 @@
         ],
         [
           "Extremely Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Bomb Hovers"
         ]
       ],
       "TimeNeeded": "None",
@@ -50458,6 +51108,9 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50523,6 +51176,9 @@
         [
           "Weirdshot Off a Powder Keg Explosion",
           "Play Song of Soaring"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50576,6 +51232,9 @@
         [
           "Weirdshot Off a Powder Keg Explosion",
           "Play Song of Soaring"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50665,6 +51324,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50727,6 +51389,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50773,6 +51438,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50801,6 +51469,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50829,6 +51500,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50869,6 +51543,9 @@
         [
           "Blast Mask Hovers",
           "Instant Blast Mask Cooldown"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50909,6 +51586,9 @@
         [
           "Blast Mask Hovers",
           "Instant Blast Mask Cooldown"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50949,6 +51629,9 @@
         [
           "Blast Mask Hovers",
           "Instant Blast Mask Cooldown"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -50991,6 +51674,9 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -51021,6 +51707,9 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -51705,6 +52394,18 @@
         ],
         [
           "Path to Snowhead With Nothing"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -51746,6 +52447,18 @@
         ],
         [
           "Path to Snowhead With Nothing"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -52387,6 +53100,9 @@
         ],
         [
           "Remote Hookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -52607,6 +53323,9 @@
         [
           "Blast Mask Hovers",
           "Instant Blast Mask Cooldown"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -52651,6 +53370,9 @@
         ],
         [
           "Deku Guard Skip"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -52687,6 +53409,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -52721,6 +53446,9 @@
         [
           "Blast Mask Hovers",
           "Instant Blast Mask Cooldown"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -52788,6 +53516,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -52865,6 +53596,9 @@
         [
           "Blast Mask Hovers",
           "Instant Blast Mask Cooldown"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -54422,6 +55156,16 @@
         [
           "Powder Kegs as Explosives",
           "Powder Keg Storage"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -54456,6 +55200,16 @@
         [
           "Powder Kegs as Explosives",
           "Powder Keg Storage"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -54490,6 +55244,16 @@
         [
           "Powder Kegs as Explosives",
           "Powder Keg Storage"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -54895,6 +55659,16 @@
         [
           "Action Swap",
           "Long Stick"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -54922,6 +55696,16 @@
         [
           "Action Swap",
           "Long Stick"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -54949,6 +55733,16 @@
         [
           "Action Swap",
           "Long Stick"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskBlast",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -55025,7 +55819,7 @@
       "Id": "CollectableIkanaGraveyardIkanaGraveyardUpperRock1",
       "RequiredItems": [
         "Ikana Graveyard Access",
-        "Play Sonata of Awakening"
+        "Pass Keeta"
       ],
       "ConditionalItems": [
         [
@@ -55046,7 +55840,7 @@
       "RequiredItems": [
         "OtherExplosive",
         "Ikana Graveyard Access",
-        "Play Sonata of Awakening"
+        "Pass Keeta"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -55059,7 +55853,7 @@
       "RequiredItems": [
         "OtherExplosive",
         "Ikana Graveyard Access",
-        "Play Sonata of Awakening"
+        "Pass Keeta"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -55156,7 +55950,7 @@
       "Id": "CollectableIkanaGraveyardIkanaGraveyardUpperRock4",
       "RequiredItems": [
         "Ikana Graveyard Access",
-        "Play Sonata of Awakening"
+        "Pass Keeta"
       ],
       "ConditionalItems": [
         [
@@ -55176,7 +55970,7 @@
       "Id": "CollectableIkanaGraveyardIkanaGraveyardUpperRock5",
       "RequiredItems": [
         "Ikana Graveyard Access",
-        "Play Sonata of Awakening"
+        "Pass Keeta"
       ],
       "ConditionalItems": [
         [
@@ -55666,6 +56460,18 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -55694,6 +56500,18 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -56164,6 +56982,9 @@
         ],
         [
           "Index Warp"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56347,6 +57168,10 @@
           "Deku Recoil",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
         ]
       ],
       "TimeNeeded": "None",
@@ -56381,6 +57206,10 @@
           "Deku Recoil",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
         ]
       ],
       "TimeNeeded": "None",
@@ -56664,6 +57493,9 @@
         ],
         [
           "Index Warp"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56713,6 +57545,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56741,6 +57576,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56825,6 +57663,9 @@
         ],
         [
           "Long Stick"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -56861,6 +57702,9 @@
         ],
         [
           "Long Stick"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57114,6 +57958,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57186,6 +58033,9 @@
           "ISTT Lightless",
           "ISTT Cross Poe Gap",
           "Clever Bombchu Usage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57216,6 +58066,9 @@
         [
           "FD Jumps",
           "Jump Slash Take Downs"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57249,6 +58102,10 @@
         ],
         [
           "Index Warp"
+        ],
+        [
+          "AreaSouthAccess",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57388,6 +58245,9 @@
         ],
         [
           "Business Scrub Flower Theft"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57431,6 +58291,9 @@
         ],
         [
           "Remote Hookshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57586,6 +58449,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57664,6 +58530,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57687,6 +58556,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57710,6 +58582,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57733,6 +58608,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57756,6 +58634,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -57962,6 +58843,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -58007,6 +58891,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -58052,6 +58939,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -58097,6 +58987,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -58298,6 +59191,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -58418,6 +59314,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -58519,6 +59418,18 @@
           "Jump Slash Take Downs",
           "Bomb Hovering",
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds",
+          "Jump Slash Take Downs",
+          "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds",
+          "Magic Meter",
+          "SettingAllowFierceDeityAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -58591,6 +59502,18 @@
         [
           "Jump Slash Take Downs",
           "Bomb Hovering",
+          "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds",
+          "Jump Slash Take Downs",
+          "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds",
+          "Magic Meter",
           "SettingAllowFierceDeityAnywhere"
         ]
       ],
@@ -59323,6 +60246,10 @@
           "Deku Recoil",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
         ]
       ],
       "TimeNeeded": "None",
@@ -59608,6 +60535,9 @@
         [
           "Superslide",
           "Any Bomb Bag"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -59795,6 +60725,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -59866,6 +60799,9 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -60140,6 +61076,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -60393,6 +61332,9 @@
         [
           "Blast Mask Hovers",
           "Instant Blast Mask Cooldown"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -60875,6 +61817,9 @@
         ],
         [
           "Index Warp"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -60955,6 +61900,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61273,6 +62221,9 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61639,6 +62590,17 @@
           "WFT BK Skip",
           "Bomb Hovering",
           "Zora Clips"
+        ],
+        [
+          "ItemWoodfallBossKey",
+          "OtherArrow",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "ItemWoodfallBossKey",
+          "WFT Bow Skip",
+          "Take Damage",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61699,6 +62661,14 @@
         ],
         [
           "RemainsGoht"
+        ],
+        [
+          "SHT BK Skip",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "ItemSnowheadBossKey",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -61731,6 +62701,11 @@
           "ItemGreatBayBossKey",
           "GBT Reverse Water Direction",
           "FD Jumps"
+        ],
+        [
+          "ItemGreatBayBossKey",
+          "GBT Reverse Water Direction",
+          "SettingClimbMostSurfaces"
         ],
         [
           "GBT BK Skip",
@@ -61804,6 +62779,14 @@
         [
           "Long Bomb Hovers",
           "STT BK Skip"
+        ],
+        [
+          "ItemStoneTowerBossKey",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "STT BK Skip",
+          "SettingClimbMostSurfaces"
         ],
         [
           "RemainsTwinmold"
@@ -62337,6 +63320,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62381,6 +63367,9 @@
           "MaskGoron",
           "ItemPowderKeg",
           "UpgradeMirrorShield"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62450,6 +63439,16 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Kill Big Octo",
+          "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Big Octo Skip",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -62512,6 +63511,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62708,6 +63710,9 @@
           "Blast Mask Hovers",
           "Take Damage",
           "OtherArrow"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62771,6 +63776,10 @@
           "WFT Bow Skip",
           "WFT 2nd Floor Access",
           "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "OtherArrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -62796,6 +63805,9 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62824,6 +63836,9 @@
         ],
         [
           "Unlimited Hot Spring Water"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -62967,6 +63982,9 @@
         ],
         [
           "Precise Zora Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63015,6 +64033,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63034,6 +64055,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63060,6 +64084,9 @@
         ],
         [
           "ISTT Lightless"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63102,6 +64129,9 @@
           "MaskBlast",
           "Zora Clips",
           "STT Updrafts without Deku Mask"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63166,6 +64196,9 @@
         ],
         [
           "Precise Zora Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63207,6 +64240,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63276,6 +64312,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63312,6 +64351,9 @@
         [
           "Bomb Hovering",
           "Out of Bounds"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63418,6 +64460,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63447,6 +64492,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63478,6 +64526,9 @@
         [
           "MaskBlast",
           "Take Damage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63507,6 +64558,18 @@
           "STT Garo Master Access",
           "STT Masked Hiploop",
           "STT Eyegore Bridge to Courtyard"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskZora"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "STT Water Tunnel as Human"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "1 Stone Tower Key"
         ]
       ],
       "TimeNeeded": "None",
@@ -63538,6 +64601,9 @@
         ],
         [
           "Weirdshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63619,6 +64685,9 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63670,6 +64739,9 @@
           "Action Swap",
           "OtherArrow",
           "Any Shield"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63694,6 +64766,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63767,6 +64842,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63803,6 +64881,9 @@
           "SHT Bridge Room",
           "SHT Map Room Elevator",
           "SHT 2F Ramps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63833,6 +64914,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -63877,6 +64961,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -64024,6 +65111,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -64061,6 +65151,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -64073,10 +65166,15 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "Long Ranged Weapon"
+          "Long Ranged Weapon",
+          "MaskGreatFairy"
         ],
         [
-          "Clever Bombchu Usage"
+          "Clever Bombchu Usage",
+          "MaskGreatFairy"
+        ],
+        [
+          "Long Bomb Hovers"
         ]
       ],
       "TimeNeeded": "None",
@@ -64153,6 +65251,10 @@
         [
           "STT Garo Master Access",
           "STT Masked Hiploop"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "STT Water Tunnel"
         ]
       ],
       "TimeNeeded": "None",
@@ -64176,6 +65278,10 @@
           "STT Garo Master Access",
           "STT Masked Hiploop",
           "STT Eyegore Bridge Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "STT Water Tunnel"
         ]
       ],
       "TimeNeeded": "None",
@@ -64235,6 +65341,9 @@
           "Deku Recoil",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -64290,6 +65399,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -64327,6 +65439,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -64360,6 +65475,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -64473,6 +65591,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -64553,6 +65674,16 @@
         [
           "Link Trial Gossip Stones",
           "Bomb Hovering"
+        ],
+        [
+          "Use Fire Arrow",
+          "Any Bomb Bag",
+          "Any Bombchu Pack",
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "Link Trial Gossip Stones",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -64606,6 +65737,9 @@
         ],
         [
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -65416,6 +66550,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -65528,6 +66665,9 @@
         ],
         [
           "Extremely Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -65594,6 +66734,20 @@
         ],
         [
           "Index Warp"
+        ],
+        [
+          "AreaNorthAccess",
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "AreaNorthAccess",
+          "SettingClimbMostSurfaces",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -65713,6 +66867,12 @@
         ],
         [
           "AreaNorthAccess",
+          "MaskGoron",
+          "SettingClimbMostSurfaces",
+          "SettingNotRandomizedBottleCatchHotSpringWater"
+        ],
+        [
+          "AreaNorthAccess",
           "AreaSnowheadTempleClear",
           "SettingNotRandomizedBottleCatchHotSpringWater"
         ],
@@ -65762,6 +66922,11 @@
           "Any Bombchu Pack",
           "SettingAllowFierceDeityAnywhere",
           "Beneath the Well Sun Block Clip"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "MaskDeku",
+          "Out of Bounds"
         ]
       ],
       "TimeNeeded": "None",
@@ -66094,6 +67259,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -66136,6 +67304,9 @@
         ],
         [
           "Weirdshot"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -66168,6 +67339,9 @@
         [
           "STT Eyegore Bridge Jumps",
           "Bomb Hovering"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -66266,6 +67440,9 @@
         ],
         [
           "Blast Mask Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -66302,6 +67479,9 @@
         ],
         [
           "Long Bomb Hovers"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -66569,6 +67749,10 @@
         [
           "Day 1 Grave Clip",
           "FD Jumps"
+        ],
+        [
+          "Day 1 Grave Clip",
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -66586,6 +67770,9 @@
         ],
         [
           "Lensless Walking"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -66657,6 +67844,10 @@
           "Damage Boosting",
           "Take Damage",
           "Hostile NPC Interaction"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
         ]
       ],
       "TimeNeeded": "None",
@@ -66793,6 +67984,10 @@
         [
           "Remote Hookshot",
           "Play Scarecrow's Song"
+        ],
+        [
+          "SettingClimbMostSurfaces",
+          "Out of Bounds"
         ]
       ],
       "TimeNeeded": "None",
@@ -66902,6 +68097,9 @@
         ],
         [
           "Deku Guard Skip"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -66932,6 +68130,9 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Powder Keg Storage"
+        ],
+        [
+          "SettingClimbMostSurfaces"
         ]
       ],
       "TimeNeeded": "None",
@@ -67056,6 +68257,25 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Pass Keeta",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Play Sonata of Awakening"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "Bomb Hovering"
         ]
       ],
       "TimeNeeded": "None",

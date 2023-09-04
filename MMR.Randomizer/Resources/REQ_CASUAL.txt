@@ -44314,15 +44314,16 @@
       "Id": "CollectibleStrayFairyGreatBay6",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "GBT Yellow Valve",
-        "ItemHookshot"
+        "GBT Yellow Valve"
       ],
       "ConditionalItems": [
         [
-          "Use Ice Arrow"
+          "Use Ice Arrow",
+          "ItemHookshot"
         ],
         [
-          "FD Difficult Jumps"
+          "FD Difficult Jumps",
+          "ItemHookshot"
         ],
         [
           "SettingClimbMostSurfaces"
