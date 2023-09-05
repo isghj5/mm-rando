@@ -848,7 +848,19 @@ void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
     Gfx backup = *(ctxt->state.gfxCtx->polyOpa.p-- - 1);
 
     // Perform underlying draw.
-    DrawFromGiTable(actor, ctxt, 25.0, 0x4C);
+    Vec3s posRot[2] = {
+        {
+            .x = -384,
+            .y = -384,
+            .z = 384
+        },
+        {
+            .x = 0x4000,
+            .y = 0x0000,
+            .z = 0x4000
+        }
+    };
+    Models_DrawCutsceneItem(ctxt, actor, posRot, NULL, 16.0, 0x4C);
 
     // Restore setup DList to that which Skull Kid's actor expects.
     ctxt->state.gfxCtx->polyOpa.p = z2_Gfx_CallSetupDL(ctxt->state.gfxCtx->polyOpa.p, 0x19);
