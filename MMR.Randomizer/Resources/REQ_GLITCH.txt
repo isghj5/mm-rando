@@ -43277,11 +43277,9 @@
           "Zora Boomerang Through Walls"
         ],
         [
-          "Fewer Item Requirements",
           "ItemHookshot"
         ],
         [
-          "Fewer Item Requirements",
           "BottleCatchFish"
         ]
       ],
