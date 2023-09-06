@@ -173,6 +173,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFillWallet, "Fills wallet with max rupees upon finding a wallet upgrade.");
             TooltipBuilder.SetTooltip(cInvisSparkle, "Hit Tags and Invisible Rupees will emit a sparkle.");
             TooltipBuilder.SetTooltip(cSaferGlitches, "Makes it safer to use glitches:\n - Prevents HESS crash\n - Prevents Weirdshot crash\n - Prevents Action Swap crash\n - Prevents Song of Double Time softlock during 0th or 4th day\n - Prevents Tatl text softlock on 0th of 4th day\n - Prevents 0th day file deletion\n - Prevents hookslide crash\n - Prevents softlocks when using Remote Hookshot\n - Prevents 0th day Goron Bow crash\n - Applies safety fixes for Fierce Deity even if Fierce Deity Anywhere is not enabled\n - Index warp no longer crashes or softlocks (but you won't be able to use it to access the Debug Menu)\n - Prevents softlocks when interrupting mask transformations\n - Mayor is removed on 4th day\n - TODO more...");
+            TooltipBuilder.SetTooltip(cImprovedCamera, "Improves the responsiveness of the controls with relation to the direction the camera is facing.");
             TooltipBuilder.SetTooltip(cAddBombchuDrops, "If you have found Bombchu, then any random Bomb drop or fixed non-randomized Bomb drop will have a chance to drop Bombchu instead. Where relevant, Bombchu packs of 1 and 5 will be in logic in addition to packs of 10.");
 
             TooltipBuilder.SetTooltip(nMaxGossipWotH, "Set the number of Way of the Hero hints that will appear on Gossip Stones.");
@@ -1323,6 +1324,7 @@ namespace MMR.UI.Forms
             cFillWallet.Checked = _configuration.GameplaySettings.FillWallet;
             cInvisSparkle.Checked = _configuration.GameplaySettings.HiddenRupeesSparkle;
             cSaferGlitches.Checked = _configuration.GameplaySettings.SaferGlitches;
+            cImprovedCamera.Checked = _configuration.GameplaySettings.ImprovedCamera;
             cAddBombchuDrops.Checked = _configuration.GameplaySettings.BombchuDrops;
             cInstantTransformations.Checked = _configuration.GameplaySettings.InstantTransform;
             cBombArrows.Checked = _configuration.GameplaySettings.BombArrows;
@@ -2136,6 +2138,7 @@ namespace MMR.UI.Forms
             cFillWallet.Enabled = v;
             cInvisSparkle.Enabled = v;
             cSaferGlitches.Enabled = v;
+            cImprovedCamera.Enabled = v;
             cAddBombchuDrops.Enabled = v;
             cInstantTransformations.Enabled = v;
             cBombArrows.Enabled = v;
@@ -2612,6 +2615,11 @@ namespace MMR.UI.Forms
         private void cSaferGlitches_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.SaferGlitches = cSaferGlitches.Checked);
+        }
+
+        private void cImprovedCamera_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.ImprovedCamera = cImprovedCamera.Checked);
         }
 
         private void cAddBombchuDrops_CheckedChanged(object sender, EventArgs e)

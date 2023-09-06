@@ -1693,6 +1693,12 @@ namespace MMR.Randomizer
                 hacks.Add(hack);
             }
 
+            if (_randomized.Settings.ImprovedCamera)
+            {
+                ReadWriteUtils.WriteCodeNOP(0x800DF44C);
+                ReadWriteUtils.WriteCodeNOP(0x800DF450);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);

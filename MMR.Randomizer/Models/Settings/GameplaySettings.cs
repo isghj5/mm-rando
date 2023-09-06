@@ -500,6 +500,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public bool KeepQuestTradeThroughTime { get; set; }
 
+        public bool ImprovedCamera { get; set; }
+
         #endregion
 
         #region Speedups
