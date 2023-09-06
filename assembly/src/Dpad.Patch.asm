@@ -25,3 +25,14 @@
 .org 0x808555F0 ; In RDRAM: 0x80772A80
     jal     Dpad_SkipTransformationCheck_Hook
     lhu     v0, 0x000C (t8)
+
+;==================================================================================================
+; Allow equipping over a DPad mask
+;==================================================================================================
+
+.headersize G_CODE_DELTA
+
+; Replaces:
+;   JAL     0x80122ED8 ; z2_Player_MaskIdToItemId
+.org 0x80122F08
+    jal     Dpad_MaskIdToItemId

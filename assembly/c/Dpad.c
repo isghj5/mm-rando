@@ -371,3 +371,15 @@ u16 Dpad_SkipTransformationCheck(ActorPlayer* player, GlobalContext* ctxt, u16 c
 
     return cur & pad.value;
 }
+
+u8 Dpad_MaskIdToItemId(s32 maskIdMinusOne) {
+    u8 itemId = z2_Player_MaskIdToItemId(maskIdMinusOne);
+
+    for (u8 i = 0; i < ARRAY_COUNT(DPAD_CONFIG.primary.values); i++) {
+        if (DPAD_CONFIG.primary.values[i] == itemId) {
+            return ITEM_NONE;
+        }
+    }
+
+    return itemId;
+}

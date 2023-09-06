@@ -367,6 +367,29 @@ namespace MMR.Randomizer
                 ResourceUtils.ApplyHack(Resources.mods.instant_pictobox);
             }
 
+            // Allow player to equip over masks handled by the DPad.
+            if (_cosmeticSettings.DPad.State != DPadState.Disabled)
+            {
+                var formToDpad = new Dictionary<TransformationForm, DPadValue>
+                {
+                    //{ TransformationForm.FierceDeity, DPadValue.FierceDeityMask },
+                    { TransformationForm.Goron, DPadValue.GoronMask },
+                    { TransformationForm.Zora, DPadValue.ZoraMask },
+                    { TransformationForm.Deku, DPadValue.DekuMask },
+                    //{ TransformationForm.Human, DPadValue.HumanMask },
+                };
+                const int FileKaleidoScopeAddress = 0xC90550;
+                const int sMaskPlayerFormItemsOffset = 0x1562C;
+                const byte none = 0xFF;
+                foreach (var (form, dpad) in formToDpad)
+                {
+                    if (_cosmeticSettings.DPad.Pad.Values.Contains(dpad))
+                    {
+                        ReadWriteUtils.WriteToROM(FileKaleidoScopeAddress + sMaskPlayerFormItemsOffset + form.Id(), none);
+                    }
+                }
+            }
+
             WriteCrashDebuggerShow();
 
             // Dolphin/WiiVC audiothread shutdown workaround

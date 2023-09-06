@@ -124,6 +124,7 @@
 .definelabel z2_DrawButtonAmounts, 0x80117BD0
 .definelabel z2_DrawBButtonIcon, 0x80118084
 .definelabel z2_DrawCButtonIcons, 0x80118890
+.definelabel z2_Player_MaskIdToItemId, 0x80122ED8
 .definelabel z2_Player_SetBootData, 0x80123140
 .definelabel z2_Player_InBlockingCsMode, 0x80123358
 .definelabel z2_CanInteract, 0x801233E4

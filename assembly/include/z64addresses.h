@@ -50,6 +50,7 @@
 
 // Function Prototypes.
 extern int z2_CanInteract(GlobalContext* ctxt);
+extern u8 z2_Player_MaskIdToItemId(s32 maskIdMinusOne);
 extern void z2_Player_SetBootData(GlobalContext* ctxt, ActorPlayer* player);
 extern int z2_Player_InBlockingCsMode(GlobalContext* ctxt, ActorPlayer* player);
 extern int z2_Inventory_GetBtnItem(GlobalContext* ctxt, ActorPlayer* player, s32 buttonIndex);
