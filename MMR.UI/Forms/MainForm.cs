@@ -187,13 +187,20 @@ namespace MMR.UI.Forms
         {
             var data = LogicUtils.ReadRulesetFromResources(_configuration.GameplaySettings.LogicMode, _configuration.GameplaySettings.UserLogicFileName);
             ItemList itemList;
-            try
+            if (data != null)
             {
-                itemList = LogicUtils.PopulateItemListFromLogicData(data);
+                try
+                {
+                    itemList = LogicUtils.PopulateItemListFromLogicData(data);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    itemList = LogicUtils.PopulateItemListWithoutLogic();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 itemList = LogicUtils.PopulateItemListWithoutLogic();
             }
 
