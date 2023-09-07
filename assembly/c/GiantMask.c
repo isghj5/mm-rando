@@ -401,6 +401,14 @@ f32 GiantMask_Math_StepToF(f32* pValue, f32 target, f32 step) {
     return z2_Math_StepToF(pValue, target, step * GiantMask_GetSimpleScaleModifier());
 }
 
+f32 GiantMask_GetScaledFloat(f32 value) {
+    return value * GiantMask_GetSimpleScaleModifier();
+}
+
+f32 GiantMask_GetInvertedScaledFloat(f32 value) {
+    return value * GiantMask_GetSimpleInvertedScaleModifier();
+}
+
 void GiantMask_AdjustSpinAttackHeight(Actor* actor, ColCylinder* collider) {
     collider->params.height *= GiantMask_GetSimpleScaleModifier();
 

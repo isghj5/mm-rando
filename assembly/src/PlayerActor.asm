@@ -499,7 +499,7 @@ Player_ModifyGoronRollMultiplier_Hook:
     addiu   sp, sp, -0x18
     sw      ra, 0x0014 (sp)
 
-    jal     Player_ModifyGoronRollMultiplier
+    jal     GiantMask_GetInvertedScaledFloat
     nop
 
     mov.s   f10, f0

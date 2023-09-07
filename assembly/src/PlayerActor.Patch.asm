@@ -735,6 +735,49 @@
     jal     Player_HandleInputVelocity
 
 ; Replaces:
+;   JAL     0x800FF2F8
+.org 0x80850C3C
+    jal     Player_HandleZoraSwimInputVelocity
+
+; Zora initial swim speed
+; Replaces:
+;   MTC1    AT, F10
+;   NOP
+;   SWC1    F10, 0x0B48 (S0)
+.org 0x80850F38
+    jal     GiantMask_GetScaledFloat
+    mtc1    at, f12
+    swc1    f0, 0x0B48 (s0)
+
+; Zora dive max speed
+; Replaces:
+;   LUI     AT, 0x4158
+;   MTC1    AT, F0
+.org 0x8083B600
+    jal     Player_GetZoraDiveMaxSpeed
+    nop
+
+; Replaces:
+;   LHU     T9, 0x0090 (S0)
+;   LUI     AT, 0xBF80
+;   ANDI    T0, T9, 0x0001
+;   BEQZL   T0, 0x8084CB20
+;   MTC1    AT, R6
+.org 0x8084CAA4
+    jal     Player_GetZoraDiveGravity
+    nop
+    lhu     t9, 0x0090 (s0)
+    andi    t0, t9, 0x0001
+    beqz    t0, 0x8084CB1C
+
+; Replaces:
+;   MTC1    AT, F6
+.org 0x8084CB1C
+    mov.s   f6, f0
+
+
+
+; Replaces:
 ;   MTC1    AT, F10
 ;   LWC1    F8, 0x00E4 (SP)
 .org 0x80857F38
@@ -1079,17 +1122,3 @@
 .org 0x8083C91C
     jal     Player_GetLinearVelocityForLimbRotation_Hook
     or      a0, s0, r0
-
-;==================================================================================================
-; Giant Zora Swimming
-;==================================================================================================
-
-; Replaces:
-;   JAL     0x800FED44 ; Math_CosS
-.org 0x80850BB8
-    jal     Player_GetZoraSwimLinearVelocityMultiplier
-
-; Replaces:
-;   JAL     0x800FED84 ; Math_SinS
-.org 0x80850BD0
-    jal     Player_GetZoraSwimVelocityYMultiplier

@@ -513,6 +513,34 @@ s32 Player_HandleInputVelocity(f32* pValue, f32 target, f32 incrStep, f32 decrSt
     return z2_Math_AsymStepToF(pValue, target, incrStep, decrStep);
 }
 
+s32 Player_HandleZoraSwimInputVelocity(f32* pValue, f32 target, f32 incrStep, f32 decrStep) {
+    const f32 modifier = GiantMask_GetSimpleScaleModifier();
+    incrStep *= modifier;
+    // decrStep *= modifier;
+    target *= modifier;
+    return z2_Math_AsymStepToF(pValue, target, incrStep, decrStep);
+}
+
+f32 Player_GetZoraDiveMaxSpeed() {
+    // Displaced code:
+    f32 result = 13.5f;
+    // End displaced code
+
+    result *= GiantMask_GetSimpleScaleModifier();
+
+    return result;
+}
+
+f32 Player_GetZoraDiveGravity() {
+    // Displaced code:
+    f32 result = -1.0f;
+    // End displaced code
+
+    result *= GiantMask_GetSimpleScaleModifier();
+
+    return result;
+}
+
 void Player_GetMidAirAcceleration(f32* increment, f32* decrement) {
     const f32 modifier = GiantMask_GetSimpleScaleModifier();
     *increment *= modifier;
@@ -623,10 +651,6 @@ bool Player_ShouldCheckItemUsabilityWhileSwimming(ActorPlayer* player, u8 item) 
     return true;
 }
 
-f32 Player_ModifyGoronRollMultiplier(f32 multiplier) {
-    return multiplier * GiantMask_GetSimpleInvertedScaleModifier();
-}
-
 f32 Player_GetGoronMaxRoll() {
     // Displaced code:
     f32 result = 18.0f;
@@ -678,14 +702,6 @@ Actor* Player_SpawnCrater(ActorContext* actorCtxt, GlobalContext* ctxt, u16 id, 
         }
     }
     return z2_SpawnActor(actorCtxt, ctxt, id, x, y, z, rx, ry, rz, params);
-}
-
-f32 Player_GetZoraSwimLinearVelocityMultiplier(s16 swimPitch) {
-    return z2_Math_CosS(swimPitch) * GiantMask_GetSimpleScaleModifier();
-}
-
-f32 Player_GetZoraSwimVelocityYMultiplier(s16 swimPitch) {
-    return z2_Math_SinS(swimPitch) * GiantMask_GetSimpleScaleModifier();
 }
 
 void Player_AfterCrushed(void) {
