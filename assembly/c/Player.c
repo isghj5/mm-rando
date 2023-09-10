@@ -400,7 +400,7 @@ f32 Player_GetLedgeClimbFactorFromSwim() {
 // 806F25A8
 f32 Player_GetLedgeClimbFactor() {
     // Displaced code:
-    f32 result = 59.0f;
+    f32 result = 41.0f;
     // End displaced code
 
     result *= GiantMask_GetSimpleScaleModifier();
@@ -411,7 +411,7 @@ f32 Player_GetLedgeClimbFactor() {
 // 806F25C0
 f32 Player_GetLedgeClimbFactor2() {
     // Displaced code:
-    f32 result = 41.0f;
+    f32 result = 59.0f;
     // End displaced code
 
     result *= GiantMask_GetSimpleScaleModifier();
