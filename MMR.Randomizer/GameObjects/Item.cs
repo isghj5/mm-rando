@@ -8,6 +8,7 @@ namespace MMR.Randomizer.GameObjects
     public enum Item
     {
         // free
+        [Repeatable]
         [StartingItem(0xC5CE41, 0x32)]
         [ItemName("Deku Mask"), LocationName("Starting Item"), Region(Region.Misc)]
         [GossipLocationHint("a new file", "a quest's inception"), GossipItemHint("a woodland spirit")]
@@ -17,6 +18,7 @@ namespace MMR.Randomizer.GameObjects
         MaskDeku,
 
         // items
+        [Repeatable]
         [Progressive]
         [StartingItem(0xC5CE25, 0x01)]
         [StartingItem(0xC5CE6F, 0x01)]
@@ -28,6 +30,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x22), ItemPool(ItemCategory.MainInventory, LocationCategory.BossFights, ClassicCategory.BaseItemPool)]
         ItemBow,
 
+        [Repeatable]
         [StartingItem(0xC5CE26, 0x02)]
         [ItemName("Fire Arrow"), LocationName("Fire Arrow Chest"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("the power of fire", "a magical item")]
@@ -36,6 +39,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x25), ItemPool(ItemCategory.MainInventory, LocationCategory.BossFights, ClassicCategory.BaseItemPool)]
         ItemFireArrow,
 
+        [Repeatable]
         [StartingItem(0xC5CE27, 0x03)]
         [ItemName("Ice Arrow"), LocationName("Ice Arrow Chest"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("the power of ice", "a magical item")]
@@ -44,6 +48,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x26), ItemPool(ItemCategory.MainInventory, LocationCategory.BossFights, ClassicCategory.BaseItemPool)]
         ItemIceArrow,
 
+        [Repeatable]
         [StartingItem(0xC5CE28, 0x04)]
         [ItemName("Light Arrow"), LocationName("Light Arrow Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("the power of light", "a magical item")]
@@ -52,6 +57,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x27), ItemPool(ItemCategory.MainInventory, LocationCategory.BossFights, ClassicCategory.BaseItemPool)]
         ItemLightArrow,
 
+        [Repeatable]
         [Progressive]
         [Purchaseable, Visible]
         [StartingItem(0xC5CE2A, 0x06)]
@@ -84,6 +90,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x123), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         ItemPowderKeg,
 
+        [Repeatable]
         [StartingItem(0xC5CE31, 0x0D)]
         [ItemName("Pictograph Box"), LocationName("Koume"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a witch"), GossipItemHint("a light recorder", "a capture device")]
@@ -92,6 +99,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x43), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         ItemPictobox,
 
+        [Repeatable]
         [StartingItem(0xC5CE32, 0x0E)]
         [ItemName("Lens of Truth"), LocationName("Lens of Truth Chest"), Region(Region.GoronVillage)]
         [GossipLocationHint("a lonely peak"), GossipItemHint("eyeglasses", "the truth", "focused vision")]
@@ -100,6 +108,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x42), ItemPool(ItemCategory.MainInventory, LocationCategory.Chests, ClassicCategory.BaseItemPool)]
         ItemLens,
 
+        [Repeatable]
         [StartingItem(0xC5CE33, 0x0F)]
         [ItemName("Hookshot"), LocationName("Hookshot Chest"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("a chain and grapple")]
@@ -108,6 +117,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x41), ItemPool(ItemCategory.MainInventory, LocationCategory.Chests, ClassicCategory.BaseItemPool)]
         ItemHookshot,
 
+        [Repeatable]
         [Progressive]
         [StartingItem(0xC5CDED, 0x30)]
         [StartingItem(0xC5CDF4, 0x01)]
@@ -117,7 +127,8 @@ namespace MMR.Randomizer.GameObjects
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x12C), ItemPool(ItemCategory.MagicPowers, LocationCategory.NpcRewards, ClassicCategory.GreatFairyRewards)]
         FairyMagic,
-        
+
+        [Repeatable]
         [StartingItemId(0xA6)]
         [ItemName("Spin Attack Mastery"), LocationName("Woodfall Great Fairy"), Region(Region.Woodfall)]
         [GossipLocationHint("a magical being"), GossipItemHint("a magic attack"), GossipCompetitiveHint(4, ItemCategory.StrayFairies, false, nameof(GameplaySettings.StrayFairyMode), (int)StrayFairyMode.ChestsOnly, false)]
@@ -126,6 +137,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x12D), ItemPool(ItemCategory.MagicPowers, LocationCategory.NpcRewards, ClassicCategory.GreatFairyRewards)]
         FairySpinAttack,
 
+        [Repeatable]
         [Progressive]
         [StartingItem(0xC5CDED, 0x60)]
         [StartingItem(0xC5CDF4, 0x01)]
@@ -137,6 +149,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x12E), ItemPool(ItemCategory.MagicPowers, LocationCategory.NpcRewards, ClassicCategory.GreatFairyRewards)]
         FairyDoubleMagic,
 
+        [Repeatable]
         [StartingItem(0xC5CDF6, 0x01)]
         [StartingItem(0xC5CE87, 0x14)]
         [ItemName("Double Defense"), LocationName("Ocean Great Fairy"), Region(Region.ZoraCape)]
@@ -146,6 +159,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x12F), ItemPool(ItemCategory.MagicPowers, LocationCategory.NpcRewards, ClassicCategory.GreatFairyRewards)]
         FairyDoubleDefense,
 
+        [Repeatable]
         [StartingItem(0xC5CE34, 0x10)]
         [ItemName("Great Fairy's Sword"), LocationName("Ikana Great Fairy"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a magical being"), GossipItemHint("a black rose", "a powerful blade"), GossipCompetitiveHint(4, ItemCategory.StrayFairies, false, nameof(GameplaySettings.StrayFairyMode), (int)StrayFairyMode.ChestsOnly, false)]
@@ -207,6 +221,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x6F), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         ItemBottleMadameAroma,
 
+        [Repeatable]
         [StartingItem(0xC5CE71, 0x04)]
         [ItemName("Bombers' Notebook"), LocationName("Bombers' Hide and Seek"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a group of children", "a town game"), GossipItemHint("a handy notepad", "a quest logbook")]
@@ -216,6 +231,7 @@ namespace MMR.Randomizer.GameObjects
         ItemNotebook,
 
         //upgrades
+        [Repeatable]
         [Progressive]
         [Downgradable]
         [Visible]
@@ -229,6 +245,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x38), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         UpgradeRazorSword,
 
+        [Repeatable]
         [Progressive]
         [Downgradable]
         [Visible]
@@ -242,6 +259,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x39), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         UpgradeGildedSword,
 
+        [Repeatable]
         [Downgradable]
         [StartingItem(0xC5CE21, 0x20)]
         [Overwritable(OverwritableAttribute.ItemSlot.Shield, nameof(GameplaySettings.PreventDowngrades), false)]
@@ -252,6 +270,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x33), ItemPool(ItemCategory.MainInventory, LocationCategory.Chests, ClassicCategory.BaseItemPool)]
         UpgradeMirrorShield,
 
+        [Repeatable]
         [RupeeRepeatable]
         [Progressive]
         [Downgradable]
@@ -265,6 +284,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x23), ItemPool(ItemCategory.MainInventory, LocationCategory.Minigames, ClassicCategory.BaseItemPool)]
         UpgradeBigQuiver,
 
+        [Repeatable]
         [RupeeRepeatable]
         [Progressive]
         [Downgradable]
@@ -278,6 +298,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x24), ItemPool(ItemCategory.MainInventory, LocationCategory.Minigames, ClassicCategory.BaseItemPool)]
         UpgradeBiggestQuiver,
 
+        [Repeatable]
         [Progressive]
         [Downgradable]
         [Purchaseable, Visible]
@@ -293,6 +314,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1C), ItemPool(ItemCategory.MainInventory, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         UpgradeBigBombBag,
 
+        [Repeatable]
         [Progressive]
         [Downgradable, Purchaseable]
         [StartingItem(0xC5CE2A, 0x06)]
@@ -305,6 +327,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1D), ItemPool(ItemCategory.MainInventory, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         UpgradeBiggestBombBag,
 
+        [Repeatable]
         [Progressive]
         [StartingItem(0xC5CE6E, 0x10)]
         [Overwritable(OverwritableAttribute.ItemSlot.Wallet, nameof(GameplaySettings.PreventDowngrades), false)]
@@ -315,6 +338,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x08), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         UpgradeAdultWallet,
 
+        [Repeatable]
         [Progressive]
         [Downgradable]
         [StartingItem(0xC5CE6E, 0x20)]
@@ -326,6 +350,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x09), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         UpgradeGiantWallet,
 
+        [Repeatable]
         [Progressive]
         [Downgradable]
         [StartingItem(0xC5CE6E, 0x30)]
@@ -684,6 +709,7 @@ namespace MMR.Randomizer.GameObjects
         HeartPieceKnuckle,
 
         //mask
+        [Repeatable]
         [Visible]
         [StartingItem(0xC5CE3C, 0x3E)]
         [ItemName("Postman's Hat"), LocationName("Postman's Freedom Reward"), Region(Region.EastClockTown)]
@@ -693,6 +719,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x84), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskPostmanHat,
 
+        [Repeatable]
         [Purchaseable, Visible]
         [StartingItem(0xC5CE3D, 0x38)]
         [ItemName("All-Night Mask"), LocationName("All-Night Mask Purchase"), Region(Region.WestClockTown)]
@@ -703,6 +730,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x7E), ItemPool(ItemCategory.Masks, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         MaskAllNight,
 
+        [Repeatable]
         [StartingItem(0xC5CE3E, 0x47)]
         [ItemName("Blast Mask"), LocationName("Old Lady"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a good deed", "an old lady's struggle"), GossipItemHint("a dangerous mask")]
@@ -711,6 +739,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x8D), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskBlast,
 
+        [Repeatable]
         [StartingItem(0xC5CE3F, 0x45)]
         [ItemName("Stone Mask"), LocationName("Invisible Soldier"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a hidden soldier", "a stone circle"), GossipItemHint("inconspicuousness")]
@@ -719,6 +748,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x8B), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskStone,
 
+        [Repeatable]
         [StartingItem(0xC5CE40, 0x40)]
         [ItemName("Great Fairy's Mask"), LocationName("Town Great Fairy"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a magical being"), GossipItemHint("a friend of fairies")]
@@ -727,6 +757,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x131), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.GreatFairyRewards)]
         MaskGreatFairy,
 
+        [Repeatable]
         [Visible]
         [StartingItem(0xC5CE42, 0x3A)]
         [ItemName("Keaton Mask"), LocationName("Curiosity Shop Man #1"), Region(Region.LaundryPool)]
@@ -736,6 +767,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x80), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskKeaton,
 
+        [Repeatable]
         [StartingItem(0xC5CE43, 0x46)]
         [ItemName("Bremen Mask"), LocationName("Guru Guru"), Region(Region.LaundryPool)]
         [GossipLocationHint("a musician", "an entertainer"), GossipItemHint("a mask of leadership", "a bird's mask")]
@@ -744,6 +776,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x8C), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskBremen,
 
+        [Repeatable]
         [StartingItem(0xC5CE44, 0x39)]
         [ItemName("Bunny Hood"), LocationName("Grog"), Region(Region.RomaniRanch)]
         [GossipLocationHint("an ugly but kind heart", "a lover of chickens"), GossipItemHint("the ears of the wild", "a rabbit's hearing")]
@@ -752,6 +785,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x7F), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskBunnyHood,
 
+        [Repeatable]
         [Visible]
         [StartingItem(0xC5CE45, 0x42)]
         [ItemName("Don Gero's Mask"), LocationName("Hungry Goron"), Region(Region.MountainVillage)]
@@ -761,6 +795,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x88), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskDonGero,
 
+        [Repeatable]
         [RupeeRepeatable]
         [StartingItem(0xC5CE46, 0x48)]
         [ItemName("Mask of Scents"), LocationName("Butler"), Region(Region.DekuPalace)]
@@ -770,6 +805,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x8E), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskScents,
 
+        [Repeatable]
         [StartingItem(0xC5CE48, 0x3C)]
         [ItemName("Romani's Mask"), LocationName("Cremia"), Region(Region.RomaniRanch)]
         [GossipLocationHint("the ranch lady", "an older sister"), GossipItemHint("proof of membership", "a cow's mask"), GossipCompetitiveHint]
@@ -778,6 +814,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x82), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskRomani,
 
+        [Repeatable]
         [StartingItem(0xC5CE49, 0x3D)]
         [ItemName("Circus Leader's Mask"), LocationName("Gorman"), Region(Region.EastClockTown)]
         [GossipLocationHint("an entertainer", "a miserable leader"), GossipItemHint("a mask of sadness")]
@@ -786,6 +823,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x83), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskCircusLeader,
 
+        [Repeatable]
         [StartingItem(0xC5CE4A, 0x37)]
         [ItemName("Kafei's Mask"), LocationName("Madame Aroma in Office"), Region(Region.EastClockTown)]
         [GossipLocationHint("an important lady", "an esteemed woman"), GossipItemHint("the mask of a missing one", "a son's mask")]
@@ -794,6 +832,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x8F), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskKafei,
 
+        [Repeatable]
         [StartingItem(0xC5CE4B, 0x3F)]
         [ItemName("Couple's Mask"), LocationName("Anju and Kafei"), Region(Region.StockPotInn)]
         [GossipLocationHint("a reunion", "a lovers' reunion"), GossipItemHint("a sign of love", "the mark of a couple"), GossipCompetitiveHint(3)]
@@ -802,6 +841,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x85), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskCouple,
 
+        [Repeatable]
         [Visible]
         [StartingItem(0xC5CE4C, 0x36)]
         [ItemName("Mask of Truth"), LocationName("Swamp Spider House Reward"), Region(Region.SouthernSwamp)]
@@ -811,6 +851,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x8A), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskTruth,
 
+        [Repeatable]
         [StartingItem(0xC5CE4E, 0x43)]
         [ItemName("Kamaro's Mask"), LocationName("Kamaro"), Region(Region.TerminaField)]
         [GossipLocationHint("a ghostly dancer", "a dancer"), GossipItemHint("dance moves")]
@@ -819,6 +860,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x89), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskKamaro,
 
+        [Repeatable]
         [Visible]
         [StartingItem(0xC5CE4F, 0x41)]
         [ItemName("Gibdo Mask"), LocationName("Pamela's Father"), Region(Region.IkanaCanyon)]
@@ -828,6 +870,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x87), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskGibdo,
 
+        [Repeatable]
         [Visible]
         [RupeeRepeatable]
         [StartingItem(0xC5CE50, 0x3B)]
@@ -838,6 +881,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x81), ItemPool(ItemCategory.Masks, LocationCategory.Minigames, ClassicCategory.BaseItemPool)]
         MaskGaro,
 
+        [Repeatable]
         [StartingItem(0xC5CE51, 0x44)]
         [ItemName("Captain's Hat"), LocationName("Captain Keeta's Chest"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a ghostly battle", "a skeletal leader"), GossipItemHint("a commanding presence")]
@@ -846,6 +890,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x7C), ItemPool(ItemCategory.Masks, LocationCategory.BossFights, ClassicCategory.BaseItemPool)]
         MaskCaptainHat,
 
+        [Repeatable]
         [StartingItem(0xC5CE52, 0x49)]
         [ItemName("Giant's Mask"), LocationName("Giant's Mask Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a growth spurt")]
@@ -854,6 +899,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x7D), ItemPool(ItemCategory.Masks, LocationCategory.Chests, ClassicCategory.BaseItemPool)]
         MaskGiant,
 
+        [Repeatable]
         [Visible]
         [StartingItem(0xC5CE47, 0x33)]
         [ItemName("Goron Mask"), LocationName("Darmani"), Region(Region.MountainVillage)]
@@ -863,6 +909,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x79), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskGoron,
 
+        [Repeatable]
         [Visible]
         [StartingItem(0xC5CE4D, 0x34)]
         [ItemName("Zora Mask"), LocationName("Mikau"), Region(Region.GreatBayCoast)]
@@ -873,6 +920,7 @@ namespace MMR.Randomizer.GameObjects
         MaskZora,
 
         //song
+        [Repeatable]
         [Visible]
         [StartingItem(0xC5CE24, 0x00)]
         [ItemName("Ocarina of Time"), LocationName("Skull Kid"), Region(Region.ClockTowerRoof)]
@@ -882,6 +930,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x4C), ItemPool(ItemCategory.TimeTravel, LocationCategory.BossFights, ClassicCategory.OcarinaAndSongOfTime)]
         ItemOcarina,
 
+        [Repeatable]
         [StartingItem(0xC5CE72, 0x10)]
         [ItemName("Song of Time"), LocationName("Skull Kid Song"), Region(Region.ClockTowerRoof)]
         [GossipLocationHint("a distant memory"), GossipItemHint("a forgotten melody")]
@@ -890,6 +939,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x44C), ItemPool(ItemCategory.TimeTravel, LocationCategory.BossFights, ClassicCategory.OcarinaAndSongOfTime)]
         SongTime,
 
+        [Repeatable]
         [StartingItem(0xC5CE72, 0x20)]
         [ItemName("Song of Healing"), LocationName("Starting Song"), Region(Region.Misc)]
         [GossipLocationHint("a new file", "a quest's inception"), GossipItemHint("a soothing melody")]
@@ -898,6 +948,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x124), ItemPool(ItemCategory.Songs, LocationCategory.StartingItems, ClassicCategory.BaseItemPool)]
         SongHealing,
 
+        [Repeatable]
         [StartingItem(0xC5CE72, 0x80)]
         [ItemName("Song of Soaring"), LocationName("Swamp Music Statue"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a stone tablet"), GossipItemHint("white wings")]
@@ -906,6 +957,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x70), ItemPool(ItemCategory.SongOfSoaring, LocationCategory.NpcRewards, ClassicCategory.SongOfSoaring)]
         SongSoaring,
 
+        [Repeatable]
         [RupeeRepeatable]
         [StartingItem(0xC5CE72, 0x40)]
         [ItemName("Epona's Song"), LocationName("Romani's Game"), Region(Region.RomaniRanch)]
@@ -915,6 +967,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x71), ItemPool(ItemCategory.Songs, LocationCategory.Minigames, ClassicCategory.BaseItemPool)]
         SongEpona,
 
+        [Repeatable]
         [StartingItem(0xC5CE71, 0x01)]
         [ItemName("Song of Storms"), LocationName("Day 1 Grave Tablet"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a hollow ground", "a stone tablet"), GossipItemHint("rain and thunder", "stormy weather")]
@@ -923,6 +976,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x72), ItemPool(ItemCategory.Songs, LocationCategory.BossFights, ClassicCategory.BaseItemPool)]
         SongStorms,
 
+        [Repeatable]
         [StartingItem(0xC5CE73, 0x40)]
         [ItemName("Sonata of Awakening"), LocationName("Imprisoned Monkey"), Region(Region.DekuPalace)]
         [GossipLocationHint("a prisoner", "a false imprisonment"), GossipItemHint("a royal song", "an awakening melody")]
@@ -931,6 +985,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x73), ItemPool(ItemCategory.Songs, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         SongSonata,
 
+        [Repeatable]
         [Progressive]
         [StartingItem(0xC5CE73, 0x80)]
         [ItemName("Goron Lullaby"), LocationName("Baby Goron"), Region(Region.GoronVillage)]
@@ -940,6 +995,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x74), ItemPool(ItemCategory.Songs, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         SongLullaby,
 
+        [Repeatable]
         [StartingItem(0xC5CE72, 0x01)]
         [ItemName("New Wave Bossa Nova"), LocationName("Baby Zoras"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("the lost children", "the pirates' loot"), GossipItemHint("an ocean roar", "a song of newborns"), GossipCompetitiveHint(2, nameof(GameplaySettings.AddSongs), true)]
@@ -948,6 +1004,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x75), ItemPool(ItemCategory.Songs, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         SongNewWaveBossaNova,
 
+        [Repeatable]
         [StartingItem(0xC5CE72, 0x02)]
         [ItemName("Elegy of Emptiness"), LocationName("Ikana King"), Region(Region.IkanaCastle)]
         [GossipLocationHint("a fallen king", "a battle in darkness"), GossipItemHint("empty shells", "skin shedding")]
@@ -956,6 +1013,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1CB), ItemPool(ItemCategory.Songs, LocationCategory.BossFights, ClassicCategory.BaseItemPool)] // 0x76 is a special value used for ice traps in chests
         SongElegy,
 
+        [Repeatable]
         [Visible]
         [StartingItem(0xC5CE72, 0x04)]
         [ItemName("Oath to Order"), LocationName("Boss Blue Warp"), MultiLocation(SongOathInWFT, SongOathInSHT, SongOathInGBT, SongOathInISTT)]
@@ -1184,6 +1242,7 @@ namespace MMR.Randomizer.GameObjects
         // SettingNotSpeedupBank,
 
         //keysanity items
+        [Repeatable]
         [StartingItem(0xC5CE74, 0x04)]
         [ItemName("Woodfall Map"), LocationName("Woodfall Map Chest"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("a navigation aid", "a paper guide")]
@@ -1192,6 +1251,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x3E), ItemPool(ItemCategory.Navigation, LocationCategory.Chests, ClassicCategory.DungeonItems)]
         ItemWoodfallMap,
 
+        [Repeatable]
         [StartingItem(0xC5CE74, 0x02)]
         [ItemName("Woodfall Compass"), LocationName("Woodfall Compass Chest"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("a navigation aid", "a magnetic needle")]
@@ -1216,6 +1276,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x3C), ItemPool(ItemCategory.DungeonKeys, LocationCategory.Chests, ClassicCategory.DungeonItems)]
         ItemWoodfallKey1,
 
+        [Repeatable]
         [StartingItem(0xC5CE75, 0x04)]
         [ItemName("Snowhead Map"), LocationName("Snowhead Map Chest"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("a navigation aid", "a paper guide")]
@@ -1224,6 +1285,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x54), ItemPool(ItemCategory.Navigation, LocationCategory.Chests, ClassicCategory.DungeonItems)]
         ItemSnowheadMap,
 
+        [Repeatable]
         [StartingItem(0xC5CE75, 0x02)]
         [ItemName("Snowhead Compass"), LocationName("Snowhead Compass Chest"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("a navigation aid", "a magnetic needle")]
@@ -1264,6 +1326,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x48), ItemPool(ItemCategory.DungeonKeys, LocationCategory.Chests, ClassicCategory.DungeonItems)]
         ItemSnowheadKey3,
 
+        [Repeatable]
         [StartingItem(0xC5CE76, 0x04)]
         [ItemName("Great Bay Map"), LocationName("Great Bay Map Chest"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("a navigation aid", "a paper guide")]
@@ -1272,6 +1335,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x55), ItemPool(ItemCategory.Navigation, LocationCategory.Chests, ClassicCategory.DungeonItems)]
         ItemGreatBayMap,
 
+        [Repeatable]
         [StartingItem(0xC5CE76, 0x02)]
         [ItemName("Great Bay Compass"), LocationName("Great Bay Compass Chest"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("a navigation aid", "a magnetic needle")]
@@ -1296,6 +1360,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x40), ItemPool(ItemCategory.DungeonKeys, LocationCategory.Chests, ClassicCategory.DungeonItems)]
         ItemGreatBayKey1,
 
+        [Repeatable]
         [StartingItem(0xC5CE77, 0x04)]
         [ItemName("Stone Tower Map"), LocationName("Stone Tower Map Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a navigation aid", "a paper guide")]
@@ -1304,6 +1369,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x56), ItemPool(ItemCategory.Navigation, LocationCategory.Chests, ClassicCategory.DungeonItems)]
         ItemStoneTowerMap,
 
+        [Repeatable]
         [StartingItem(0xC5CE77, 0x02)]
         [ItemName("Stone Tower Compass"), LocationName("Stone Tower Compass Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a navigation aid", "a magnetic needle")]
@@ -2264,6 +2330,7 @@ namespace MMR.Randomizer.GameObjects
         HeartContainerStoneTower,
 
         //maps
+        [Repeatable]
         [Purchaseable]
         [StartingTingleMap(TingleMap.Town)]
         [ItemName("Map of Clock Town"), LocationName("Clock Town Map Purchase"), MultiLocation(ItemTingleMapTownInTown, ItemTingleMapTownInCanyon)]
@@ -2273,6 +2340,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xB4), ItemPool(ItemCategory.Navigation, LocationCategory.Purchases, ClassicCategory.EverythingElse)]
         ItemTingleMapTown,
 
+        [Repeatable]
         [Purchaseable]
         [StartingTingleMap(TingleMap.Swamp)]
         [ItemName("Map of Woodfall"), LocationName("Woodfall Map Purchase"), MultiLocation(ItemTingleMapWoodfallInSwamp, ItemTingleMapWoodfallInTown)]
@@ -2282,6 +2350,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xB5), ItemPool(ItemCategory.Navigation, LocationCategory.Purchases, ClassicCategory.EverythingElse)]
         ItemTingleMapWoodfall,
 
+        [Repeatable]
         [Purchaseable]
         [StartingTingleMap(TingleMap.Mountain)]
         [ItemName("Map of Snowhead"), LocationName("Snowhead Map Purchase"), MultiLocation(ItemTingleMapSnowheadInMountain, ItemTingleMapSnowheadInSwamp)]
@@ -2291,6 +2360,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xB6), ItemPool(ItemCategory.Navigation, LocationCategory.Purchases, ClassicCategory.EverythingElse)]
         ItemTingleMapSnowhead,
 
+        [Repeatable]
         [Purchaseable]
         [StartingTingleMap(TingleMap.Ranch)]
         [ItemName("Map of Romani Ranch"), LocationName("Romani Ranch Map Purchase"), MultiLocation(ItemTingleMapRanchInRanch, ItemTingleMapRanchInMountain)]
@@ -2300,6 +2370,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xB7), ItemPool(ItemCategory.Navigation, LocationCategory.Purchases, ClassicCategory.EverythingElse)]
         ItemTingleMapRanch,
 
+        [Repeatable]
         [Purchaseable]
         [StartingTingleMap(TingleMap.Ocean)]
         [ItemName("Map of Great Bay"), LocationName("Great Bay Map Purchase"), MultiLocation(ItemTingleMapGreatBayInOcean, ItemTingleMapGreatBayInRanch)]
@@ -2309,6 +2380,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xB8), ItemPool(ItemCategory.Navigation, LocationCategory.Purchases, ClassicCategory.EverythingElse)]
         ItemTingleMapGreatBay,
 
+        [Repeatable]
         [Purchaseable]
         [StartingTingleMap(TingleMap.Canyon)]
         [ItemName("Map of Stone Tower"), LocationName("Stone Tower Map Purchase"), MultiLocation(ItemTingleMapStoneTowerInCanyon, ItemTingleMapStoneTowerInOcean)]
@@ -2378,6 +2450,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x122), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.MoonItems, ClassicCategory.MoonItems)]
         HeartPieceLinkTrial,
 
+        [Repeatable]
         [StartingItem(0xC5CE53, 0x35)]
         [ItemName("Fierce Deity's Mask"), LocationName("Majora Child"), Region(Region.TheMoon)]
         [GossipLocationHint("the lonely child"), GossipItemHint("the wrath of a god")]
@@ -2411,6 +2484,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x128), ItemPool(ItemCategory.DekuNuts, LocationCategory.GlitchesRequired, ClassicCategory.GlitchesRequired)]
         ChestPreClocktownDekuNut,
 
+        [Repeatable]
         [Progressive]
         [StartingItem(0xC5CE21, 0x01)]
         [StartingItem(0xC5CE00, 0x4D)]

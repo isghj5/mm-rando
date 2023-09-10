@@ -299,11 +299,10 @@ namespace MMR.Randomizer.Utils
                 .Select(io => io.Item)
                 .ToList()
                 .AsReadOnly();
-            JunkItems = itemList.Where(io => io.Item != Item.CollectableIkanaGraveyardDay2Bats1
-                                          && io.Item.IsRepeatable()
-                                          && io.Item.GetAttribute<ChestTypeAttribute>()?.Type == ChestTypeAttribute.ChestType.SmallWooden
-                                          && LogicallyJunkItems.Contains(io.Item)
-                                      ).Select(io => io.Item).ToList().AsReadOnly();
+            JunkItems = LogicallyJunkItems.Where(item => item != Item.CollectableIkanaGraveyardDay2Bats1
+                                          && item.ItemCategory() != ItemCategory.Navigation
+                                          && item.GetAttribute<ChestTypeAttribute>()?.Type == ChestTypeAttribute.ChestType.SmallWooden
+                                      ).ToList().AsReadOnly();
         }
 
         public static bool IsJunk(Item item)

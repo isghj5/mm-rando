@@ -5,6 +5,7 @@
 #include "enums.h"
 #include "Items.h"
 #include "Music.h"
+#include "SaveFile.h"
 
 struct MMRConfig MMR_CONFIG = {
     .magic = MMR_CONFIG_MAGIC,
@@ -119,55 +120,94 @@ bool MMR_CheckBottleAndGetGiFlag(u16 giIndex, u16* newGiIndex) {
     return MMR_GetGiFlag(giIndex);
 }
 
-u16 MMR_CheckProgressiveUpgrades(u16 giIndex) {
+u16 MMR_CheckProgressiveUpgrades(u16 giIndex, bool grant) {
     if (giIndex == MMR_CONFIG.locations.swordKokiri || giIndex == MMR_CONFIG.locations.swordRazor || giIndex == MMR_CONFIG.locations.swordGilded) {
-        if (gSaveContext.perm.unk4C.equipment.sword == 0) {
-            if (gSaveContext.perm.stolenItem == ITEM_GILDED_SWORD || gSaveContext.perm.stolenItem == ITEM_RAZOR_SWORD) {
-                return MMR_CONFIG.locations.swordGilded;
-            } else if (gSaveContext.perm.stolenItem == ITEM_KOKIRI_SWORD) {
-                return MMR_CONFIG.locations.swordRazor;
+        u16 swordLevel = gSaveContext.perm.unk4C.equipment.sword;
+        if (swordLevel == 0) {
+            switch (gSaveContext.perm.stolenItem) {
+                case ITEM_KOKIRI_SWORD:
+                    swordLevel = 1;
+                    break;
+                case ITEM_RAZOR_SWORD:
+                    swordLevel = 2;
+                    break;
+                case ITEM_GILDED_SWORD:
+                    swordLevel = 3;
+                    break;
+            }
+        }
+        if (swordLevel == 0 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.swordKokiri) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.swordKokiri = giIndex;
             }
             return MMR_CONFIG.locations.swordKokiri;
         }
-        if (gSaveContext.perm.unk4C.equipment.sword == 1) {
+        if (swordLevel == 1 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.swordRazor) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.swordRazor = giIndex;
+            }
             return MMR_CONFIG.locations.swordRazor;
         }
         return MMR_CONFIG.locations.swordGilded;
     }
     if (giIndex == MMR_CONFIG.locations.magicSmall || giIndex == MMR_CONFIG.locations.magicLarge) {
-        if (gSaveContext.perm.unk24.hasMagic == 0) {
+        if (gSaveContext.perm.unk24.hasMagic == 0 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.magicSmall) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.magicSmall = giIndex;
+            }
             return MMR_CONFIG.locations.magicSmall;
         }
         return MMR_CONFIG.locations.magicLarge;
     }
     if (giIndex == MMR_CONFIG.locations.walletAdult || giIndex == MMR_CONFIG.locations.walletGiant || giIndex == MMR_CONFIG.locations.walletRoyal) {
-        if (gSaveContext.perm.inv.upgrades.wallet == 0) {
+        if (gSaveContext.perm.inv.upgrades.wallet == 0 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.walletAdult) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.walletAdult = giIndex;
+            }
             return MMR_CONFIG.locations.walletAdult;
-        } else if (gSaveContext.perm.inv.upgrades.wallet == 1) {
+        } else if (gSaveContext.perm.inv.upgrades.wallet == 1 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.walletGiant) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.walletGiant = giIndex;
+            }
             return MMR_CONFIG.locations.walletGiant;
         }
         return MMR_CONFIG.locations.walletRoyal;
     }
     if (giIndex == MMR_CONFIG.locations.bombBagSmall || giIndex == MMR_CONFIG.locations.bombBagBig || giIndex == MMR_CONFIG.locations.bombBagBiggest) {
-        if (gSaveContext.perm.inv.upgrades.bombBag == 0) {
+        if (gSaveContext.perm.inv.upgrades.bombBag == 0 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.bombBagSmall) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.bombBagSmall = giIndex;
+            }
             return MMR_CONFIG.locations.bombBagSmall;
         }
-        if (gSaveContext.perm.inv.upgrades.bombBag == 1) {
+        if (gSaveContext.perm.inv.upgrades.bombBag == 1 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.bombBagBig) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.bombBagBig = giIndex;
+            }
             return MMR_CONFIG.locations.bombBagBig;
         }
         return MMR_CONFIG.locations.bombBagBiggest;
     }
     if (giIndex == MMR_CONFIG.locations.quiverSmall || giIndex == MMR_CONFIG.locations.quiverLarge || giIndex == MMR_CONFIG.locations.quiverLargest) {
-        if (gSaveContext.perm.inv.upgrades.quiver == 0) {
+        if (gSaveContext.perm.inv.upgrades.quiver == 0 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.quiverSmall) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.quiverSmall = giIndex;
+            }
             return MMR_CONFIG.locations.quiverSmall;
         }
-        if (gSaveContext.perm.inv.upgrades.quiver == 1) {
+        if (gSaveContext.perm.inv.upgrades.quiver == 1 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.quiverLarge) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.quiverLarge = giIndex;
+            }
             return MMR_CONFIG.locations.quiverLarge;
         }
         return MMR_CONFIG.locations.quiverLargest;
     }
     if (giIndex == MMR_CONFIG.locations.lullabyIntro || giIndex == MMR_CONFIG.locations.lullaby) {
-        if (gSaveContext.perm.inv.questStatus.lullabyIntro == 0) {
+        if (gSaveContext.perm.inv.questStatus.lullabyIntro == 0 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.lullabyIntro) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.lullabyIntro = giIndex;
+            }
             return MMR_CONFIG.locations.lullabyIntro;
         }
         return MMR_CONFIG.locations.lullaby;
@@ -258,7 +298,7 @@ u16 MMR_GetNewGiIndex(GlobalContext* ctxt, Actor* actor, u16 giIndex, bool grant
         }
         newGiIndex = giIndex;
         if (MISC_CONFIG.flags.progressiveUpgrades) {
-            newGiIndex = MMR_CheckProgressiveUpgrades(newGiIndex);
+            newGiIndex = MMR_CheckProgressiveUpgrades(newGiIndex, grant);
         }
     } else {
         bool isCycleRepeatable = MMR_IsCycleRepeatable(newGiIndex);

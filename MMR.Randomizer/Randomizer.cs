@@ -1869,7 +1869,7 @@ namespace MMR.Randomizer
 
         private void ReplaceRecoveryHeartsWithJunk()
         {
-            var allUsableJunk = ItemUtils.JunkItems.Where(item => item.IsRepeatable()).ToList();
+            var allUsableJunk = ItemUtils.JunkItems.ToList();
             var usableJunk = allUsableJunk.Where(item => ItemList[item].IsRandomized).ToList();
             if (!usableJunk.Any())
             {
