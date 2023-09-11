@@ -10,6 +10,7 @@
 .definelabel z2_RngInt, 0x80086FA0
 .definelabel z2_RngSetSeed, 0x80086FD0
 .definelabel z2_Rand_ZeroOne, 0x80086FDC
+.definelabel z2_sqrtf, 0x8008D700
 .definelabel z2_strlen, 0x8008F1E0
 .definelabel z2_BaseDrawCollectable, 0x800A7128
 .definelabel z2_DrawRupee, 0x800A72AC

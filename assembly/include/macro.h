@@ -28,4 +28,6 @@
 #define INV_CONTENT(item) gSaveContext.perm.inv.items[SLOT(item)]
 #define GET_INV_CONTENT(item) ((void)0, gSaveContext.perm.inv.items)[SLOT(item)]
 
+#define SQ(x) ((x) * (x))
+
 #endif

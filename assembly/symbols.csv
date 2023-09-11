@@ -9,6 +9,7 @@
 0x80086FA0,z2_RngInt
 0x80086FD0,z2_RngSetSeed
 0x80086FDC,z2_Rand_ZeroOne
+0x8008D700,z2_sqrtf
 0x8008F1E0,z2_strlen
 0x800A7128,z2_BaseDrawCollectable
 0x800A72AC,z2_DrawRupee

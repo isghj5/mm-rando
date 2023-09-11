@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <z64.h>
+#include "macro.h"
 #include "ArrowCycle.h"
 #include "ArrowMagic.h"
 #include "DekuHop.h"
@@ -675,6 +676,39 @@ f32 Player_GetGoronRollYawStepMultiplier(ActorPlayer* this) {
 
 f32 Player_GetGoronRollReboundSpeedThreshold() {
     return GiantMask_GetSimpleScaleModifier() * 12.0f;
+}
+
+void Player_HandleGoronRollSlopeAdjustment(Vec3f* slopeNormal, f32* deltaMovementX, f32* deltaMovementZ, f32* deltaMovementXZ) {
+    f32 multiplier = GiantMask_GetSimpleScaleModifier();
+    f32 deltaMovementWithSlopeX = (0.6f * multiplier * slopeNormal->x) + *deltaMovementX;
+    f32 deltaMovementWithSlopeY = (0.6f * multiplier * slopeNormal->z) + *deltaMovementZ;
+    f32 deltaMovementWithSlopeXZ = z2_sqrtf(SQ(deltaMovementWithSlopeX) + SQ(deltaMovementWithSlopeY));
+
+    if ((deltaMovementWithSlopeXZ < *deltaMovementXZ) || (deltaMovementWithSlopeXZ < 6.0f * multiplier)) {
+        *deltaMovementX = deltaMovementWithSlopeX;
+        *deltaMovementZ = deltaMovementWithSlopeY;
+        *deltaMovementXZ = deltaMovementWithSlopeXZ;
+    }
+}
+
+f32 Player_GetGoronRollAutoRollThreshold() {
+    // Displaced code:
+    f32 result = 0.3f;
+    // End displaced code
+
+    result *= GiantMask_GetSimpleScaleModifier();
+
+    return result;
+}
+
+f32 Player_GetGoronRollSoundFactor() {
+    // Displaced code:
+    f32 result = 800.0f;
+    // End displaced code
+
+    result *= GiantMask_GetSimpleInvertedScaleModifier();
+
+    return result;
 }
 
 bool Player_IsAboveBonkThreshold(GlobalContext* ctxt, ActorPlayer* player, f32* velocity, f32 threshold) {

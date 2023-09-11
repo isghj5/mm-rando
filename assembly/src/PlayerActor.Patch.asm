@@ -659,6 +659,110 @@
 ; Goron Rolling
 
 ; Replaces:
+;   LUI     AT, 0x8086
+;   MUL.S   F6, F4, F4
+;   LWC1    F4, 0x0094 (SP)
+;   ADD.S   F0, F10, F6
+;   BEQZ    T9, 0x808586CC
+;   SQRT.S  F14, F0
+.org 0x80858640
+    mul.s   f6, f4, f4
+    add.s   f0, f10, f6
+    sqrt.s  f14, f0
+    swc1    f14, 0x00B8 (sp)
+    beqz    t9, 0x808586CC
+    nop
+
+; Replaces:
+;   BNEZL   AT, 0x80858740
+.org 0x8085868C
+    bnezl   at, 0x808586E0
+
+; Replaces:
+;   B       0x8085873C
+;   LWC1    F14, 0x00B8 (SP)
+;   LWC1    F8, 0xE6DC (AT)
+;   LWC1    F6, 0x0038 (SP)
+;   LUI     AT, 0x8086
+;   MUL.S   F10, F8, F4
+;   LWC1    F4, 0x009C (SP)
+;   LWC1    F8, 0xE6E0 (AT)
+;   LUI     AT, 0x40C0
+;   ADD.S   F16, F10, F6
+;   MUL.S   F10, F8, F4
+;   LWC1    F6, 0x0034 (SP)
+;   MUL.S   F8, F16, F16
+;   ADD.S   F18, F10, F6
+;   MUL.S   F4, F18, F18
+;   ADD.S   F0, F8, F4
+;   SQRT.S  F0, F0
+;   C.LT.S  F0, F14
+;   NOP
+;   BC1TL   .+0x24
+;   SWC1    F16, 0x00A4 (SP)
+;   MTC1    AT, F10
+;   NOP
+;   C.LS.T  F0, F10
+;   NOP
+;   BC1FL   .+0x18
+;   MTC1    R0, F12
+;   SWC1    F16, 0x00A4 (SP)
+;   SWC1    F18, 0x00A0 (SP)
+;   MOV.S   F14, F0
+;   MTC1    R0, F12
+;   LUI     AT, 0x8086
+;   C.EQ.S  F14, F12
+;   NOP
+;   BC1T    0x80858828
+;   NOP
+;   LWC1    F2, 0xE6E4 (AT)
+.org 0x808586C4
+.area 0x94, 0
+    b       .+0x1C
+    nop
+    addiu   a0, sp, 0x94 ; &slopeNormal
+    addiu   a1, sp, 0xA4 ; &deltaMovementX
+    addiu   a2, sp, 0xA0 ; &deltaMovementZ
+    jal     Player_HandleGoronRollSlopeAdjustment
+    addiu   a3, sp, 0xB8 ; &deltaMovementXZ
+    jal     Player_GetGoronRollAutoRollThreshold
+    nop
+    mov.s   f2, f0
+    lwc1    f14, 0x00B8 (sp)
+    mtc1    r0, f12
+    c.eq.s  f14, f12
+    nop
+    bc1t    0x80858828
+.endarea
+
+; Fix relocations.
+; Replaces:
+;   .dw 0x4502ABB0
+;   .dw 0x4602AC3C
+;   .dw 0x4502AC44
+;   .dw 0x4602AC50
+;   .dw 0x4502ACB0
+;   .dw 0x4602ACC4
+.org 0x8082DA90 + 0x34770
+    .dw 0x00000000
+    .dw 0x00000000
+    .dw 0x00000000
+    .dw 0x00000000
+    .dw 0x00000000
+    .dw 0x00000000
+
+; Replaces:
+;   LUI     AT, 0x4448
+;   BNEZ    T4, 0x80858828
+;   NOP
+;   MTC1    AT, F6
+.org 0x808587B0
+    bnez    t4, 0x80858828
+    nop
+    jal     Player_GetGoronRollSoundFactor_Hook
+    nop
+
+; Replaces:
 ;   LUI     AT, 0x4140
 ;   ANDI    T6, T5, 0x0008
 ;   BEQZL   T6, 0x80857DCC

@@ -257,6 +257,7 @@ extern void z2_SkelAnime_DrawLimb3(GlobalContext* ctxt, u32* skeleton, Vec3s* li
 // Function Prototypes (OS).
 extern void z2_memcpy(void* dest, const void* src, u32 size);
 extern size_t z2_strlen(const unsigned char* s);
+extern f32 z2_sqrtf(f32 f);
 
 // Function Prototypes (RNG).
 extern u32 z2_RngInt(void);
