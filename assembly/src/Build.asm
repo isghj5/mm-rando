@@ -63,6 +63,7 @@
 .include "GinkoMan.Patch.asm"
 .include "GoronElder.Patch.asm"
 .include "GossipStone.Patch.asm"
+.include "Gyorg.Patch.asm"
 .include "HitTag.Patch.asm"
 .include "HudColors.Patch.asm"
 .include "Input.Patch.asm"

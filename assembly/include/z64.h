@@ -1677,6 +1677,13 @@ typedef struct ActorEnGs {
     /* 0x21E */ s16 quakeDuration;
 } ActorEnGs; // size = 0x220
 
+typedef struct ActorBoss03 {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 unk_144[0x108];
+    /* 0x24C */ s16 workTimer[3]; // GYORG_WORK_TIMER_MAX
+    /* 0x252 */ UNK_TYPE1 unk_252[0x32A];
+} ActorBoss03; // size = 0x57C
+
 struct ActorEnElf;
 
 typedef void (*ActorEnElfActionFunc)(struct ActorEnElf*, GlobalContext*);
