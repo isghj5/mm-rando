@@ -619,7 +619,8 @@ u8 Player_GetMaskOnLoad(ActorPlayer* player, GlobalContext* ctxt) {
     u8 result = gSaveContext.perm.mask;
     if (result == 0x14) {
         if (MISC_CONFIG.flags.giantMaskAnywhere) {
-            if (ctxt->sceneNum == SCENE_INISIE_BS) {
+            s32 voidFlag = gSaveContext.extra.voidFlag;
+            if (ctxt->sceneNum == SCENE_INISIE_BS || voidFlag == -5) {
                 gSaveContext.perm.mask = 0;
                 result = 0;
                 GiantMask_MarkReset();
