@@ -436,6 +436,9 @@
   <data name="shorten_cutscene_gyorg_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\shorten-cutscene-gyorg-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="shorten_cutscene_hold_a_auto_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-hold-a-auto-text.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="shorten_cutscene_igos_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\shorten-cutscene-igos-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

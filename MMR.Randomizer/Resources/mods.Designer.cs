@@ -713,6 +713,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] giant_mask_anywhere {
+            get {
+                object obj = ResourceManager.GetObject("giant_mask_anywhere", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] gossip_hints_free {
             get {
                 object obj = ResourceManager.GetObject("gossip_hints_free", resourceCulture);
@@ -726,16 +736,6 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] gossip_hints_tolerant {
             get {
                 object obj = ResourceManager.GetObject("gossip_hints_tolerant", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] giant_mask_anywhere {
-            get {
-                object obj = ResourceManager.GetObject("giant_mask_anywhere", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1126,6 +1126,16 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] shorten_cutscene_gyorg_intro {
             get {
                 object obj = ResourceManager.GetObject("shorten_cutscene_gyorg_intro", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] shorten_cutscene_hold_a_auto_text {
+            get {
+                object obj = ResourceManager.GetObject("shorten_cutscene_hold_a_auto_text", resourceCulture);
                 return ((byte[])(obj));
             }
         }

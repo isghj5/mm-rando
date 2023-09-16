@@ -63,6 +63,10 @@ namespace MMR.Randomizer.Models.Settings
         [HackContent(nameof(Resources.mods.shorten_cutscene_kotake))]
         Kotake = 1 << 14,
 
+        [Description("Hold A to automatically advance text.")]
+        [HackContent(nameof(Resources.mods.shorten_cutscene_hold_a_auto_text))]
+        HoldAText = 1 << 15,
+
         [Description("Various cutscenes are skipped or otherwise shortened.")]
         [HackContent(nameof(Resources.mods.short_cutscenes))]
         EverythingElse = 1 << 31,
