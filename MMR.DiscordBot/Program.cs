@@ -67,11 +67,18 @@ namespace MMR.DiscordBot
 
         private ServiceProvider ConfigureServices()
         {
+            var config = new DiscordSocketConfig()
+            {
+                AlwaysDownloadUsers = true,
+                GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.GuildMembers
+            };
+
             return new ServiceCollection()
                 .AddSingleton<MMRReleaseService>()
                 .AddSingleton<MMRBetaService>()
                 .AddSingleton<MMRTournament1Service>()
                 .AddSingleton<MMRTournament2Service>()
+                .AddSingleton(config)
                 .AddSingleton<DiscordSocketClient>()
                 .AddSingleton<CommandService>()
                 .AddSingleton<CommandHandlingService>()
