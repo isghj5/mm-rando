@@ -254,6 +254,17 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             break;
     }
 
+    if (sp57) {
+        _isGiant = !_isGiant;
+        if (!_isGiant) {
+            _scale = 0.01f;
+            _nextScaleFactor = 10.0f;
+        } else {
+            _scale = 0.1f;
+            _nextScaleFactor = 0.1f;
+        }
+    }
+
     if (_isGiant) {
         if (player->mask == 0x14 && player->currentBoots == 1) {
             player->currentBoots = 2;
@@ -277,17 +288,6 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
         z2_SetActorSize(&player->base, _scale * 1.5f);
     } else {
         z2_SetActorSize(&player->base, _scale);
-    }
-
-    if (sp57) {
-        _isGiant = !_isGiant;
-        if (!_isGiant) {
-            _scale = 0.01f;
-            _nextScaleFactor = 10.0f;
-        } else {
-            _scale = 0.1f;
-            _nextScaleFactor = 0.1f;
-        }
     }
 
     switch (_transformationFlashState) {
