@@ -125,7 +125,6 @@ PAYLOAD_START:
 .include "BombersNotebook.asm"
 .include "BusinessScrub.asm"
 .include "BugFixes.asm"
-.include "Chest.asm"
 .include "ChestGame.asm"
 .include "Cows.asm"
 .include "Dampe.asm"

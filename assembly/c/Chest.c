@@ -40,19 +40,6 @@ void Chest_WriteGiIndex(ActorEnBox* actor, GlobalContext* ctxt) {
     }
 }
 
-/**
- * Hook function used to update the chest get-item index before opening.
- **/
-u32 Chest_GetNewGiIndex(ActorEnBox* actor, GlobalContext* ctxt, bool grant) {
-    if (!MISC_CONFIG.internal.vanillaLayout) {
-        // Resolve new gi-table index if not ice trap.
-        if (actor->giIndex != 0x76) {
-            return MMR_GetNewGiIndex(ctxt, &actor->base, actor->giIndex, grant);
-        }
-    }
-    return actor->giIndex;
-}
-
 bool Chest_IsLongOpening(ActorEnBox* chest, GlobalContext* ctxt, GetItemEntry* giEntry) {
     if (MISC_CONFIG.speedups.shortChestOpening) {
         return false;
