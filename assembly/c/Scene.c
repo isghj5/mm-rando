@@ -4,6 +4,7 @@
 #include "Models.h"
 #include "BaseRupee.h"
 #include "MMR.h"
+#include "GiantMask.h"
 
 /**
  * Hook function used after the scene initialize function has been called.
@@ -19,4 +20,5 @@ void Scene_AfterInit(GlobalContext* ctxt) {
     Rupee_LoadCollectableTable(ctxt);
     // Clear Item Queue
     MMR_ClearItemQueue();
+    GiantMask_ClearState();
 }

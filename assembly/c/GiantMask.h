@@ -12,5 +12,6 @@ f32 GiantMask_GetNextScaleFactor();
 bool GiantMask_IsGiant();
 void GiantMask_MarkReset();
 void GiantMask_TryReset();
+void GiantMask_ClearState();
 
 #endif // GIANT_MASK_H

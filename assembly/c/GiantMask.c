@@ -434,6 +434,12 @@ void GiantMask_TryReset() {
     }
 }
 
+void GiantMask_ClearState() {
+    _transformationState = 0;
+    _transformationCameraId = 0;
+    _scale = _isGiant ? 0.1f : 0.01f;
+}
+
 f32 GiantMask_GetHitDistance(Vec3f* position, Actor* hittingActor) {
     if (hittingActor->id == ACTOR_PLAYER) {
         if (_isGiant) {
