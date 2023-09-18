@@ -10734,7 +10734,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("an ancient jar"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
-        [GetItemIndex(0x487), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xECD)]
+        [GetItemIndex(0x487), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xECE)]
         CollectableAncientCastleOfIkanaHoleRoomPot3,
 
 
@@ -10744,7 +10744,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("an ancient jar"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
-        [GetItemIndex(0x488), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xECE)]
+        [GetItemIndex(0x488), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xED0)]
         CollectableAncientCastleOfIkanaHoleRoomPot4,
 
 
