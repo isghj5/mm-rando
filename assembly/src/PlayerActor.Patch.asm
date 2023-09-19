@@ -629,6 +629,60 @@
 .org 0x8084C7D0
     jal     GiantMask_Math_StepToF
 
+; Grotto spawn linear velocity
+
+; Replaces:
+;   OR      A3, A0, R0
+;   LUI     AT, 0xBF80
+;   MTC1    AT, F4
+;   ADDIU   A1, A3, 0x0240
+;   SWC1    F4, 0x0074 (A3)
+;   SW      A3, 0x0018 (SP)
+.org 0x808543A8
+    jal     GiantMask_GetSimpleScaleModifier
+    sw      a0, 0x0018 (sp)
+    lw      a3, 0x0018 (sp)
+    neg.s   f0, f0
+    swc1    f0, 0x0074 (a3)
+    addiu   a1, a3, 0x0240
+
+; Replaces:
+;   LW      A3, 0x0018 (SP)
+;   MTC1    R0, F6
+;   LUI     AT, 0x40C0
+;   LWC1    F0, 0x0068 (A3)
+;   OR      A0, A3, R0
+;   C.LT.S  F0, F6
+;   NOP
+;   BC1FL   .+0x1C
+;   MTC1    AT, F8
+.org 0x808543C8
+    lui     at, 0x40C0
+    jal     GiantMask_GetScaledFloat
+    mtc1    at, f12
+    mtc1    r0, f6
+    lwc1    f8, 0x0068 (s0)
+    c.lt.s  f8, f6
+    nop
+    bc1f    .+0x1C
+    or      a0, s0, r0
+
+; Replaces:
+;   MTC1    AT, F8
+;   ADDIU   A0, A3, 0x0AD0
+;   LUI     A1, 0x4040
+;   C.LT.S  F0, F8
+.org 0x808543FC
+    nop
+    addiu   a0, s0, 0x0AD0
+    lui     a1, 0x4040
+    c.lt.s  f8, f0
+
+; Replaces:
+;   JAL     0x800FF03C ; Math_StepToF
+.org 0x80854418
+    jal     GiantMask_Math_StepToF
+
 ; Goron Rolling
 
 ; Replaces:
