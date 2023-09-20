@@ -55,6 +55,13 @@
     nop
     jal     GiantMask_GetLedgeWalkOffHeight_Hook
 
+; Giant's Mask Magic Meter consumption timer, set default value to 20 (as per Twinmold's logic) instead of 80
+
+; Replaces:
+;   SH      V1, 0x0AE6 (T5)
+.org 0x801731A0
+    sh      t9, 0x0AE6 (T5)
+
 ;==================================================================================================
 ; Adjust spin attack size
 ;==================================================================================================
