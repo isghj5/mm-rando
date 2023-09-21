@@ -2774,24 +2774,27 @@ namespace MMR.Randomizer
         }
 
         /// <summary>
-        /// Overwrite junk items with ice traps.
+        /// Overwrite junk items with traps.
         /// </summary>
-        /// <param name="iceTraps">Ice traps amount setting</param>
-        /// <param name="appearance">Ice traps appearance setting</param>
-        public void AddIceTraps(IceTraps iceTraps, BombTraps bombtraps, IceTrapAppearance appearance)
+        /// <param name="trapAmount">Traps amount setting</param>
+        /// <param name="appearance">Traps appearance setting</param>
+        public void AddTraps(TrapAmount trapAmount, Dictionary<TrapType, int> trapWeights, TrapAppearance appearance)
         {
             var random = this.Random;
 
             // Select replaceable junk items of specified amount.
-            var items = IceTrapUtils.SelectJunkItems(ItemList, iceTraps, random);
+            var items = TrapUtils.SelectJunkItems(ItemList, trapAmount, random);
 
-            // Dynamically generate appearance set for ice traps.
+            // Dynamically generate appearance set for traps.
             // Only mimic items if they are included in the main randomization pool (not in their own pool).
-            var mimics = IceTrapUtils.BuildIceTrapMimicSet(ItemList, appearance, (item) => item.IsPlacementHighlyRestricted(_settings))
+            var mimics = TrapUtils.BuildTrapMimicSet(ItemList, appearance, (item) => item.IsPlacementHighlyRestricted(_settings))
                 .ToArray();
 
-            int totalbombtraps = IceTrapUtils.GetBombTrapAmount(bombtraps, items.Length);
-            int currentbomb = 0;
+            var trapTypeItems = new Dictionary<TrapType, Item>
+            {
+                { TrapType.Ice, Item.IceTrap },
+                { TrapType.Bomb, Item.BombTrap },
+            };
 
             var list = new List<ItemObject>();
             foreach (var item in items)
@@ -2801,53 +2804,45 @@ namespace MMR.Randomizer
 
                 var newLocation = item.NewLocation.Value;
 
-                // Run through placing bomb traps before ice traps.
-                if (currentbomb < totalbombtraps && !newLocation.IsBlockingBombTrapPlacement())
+                var allowedTrapTypes = trapTypeItems.Keys.ToList();
+                if (newLocation.IsBlockingBombTrapPlacement())
                 {
-                    item.ItemOverride = Item.BombTrap;
-                    item.Mimic = mimic;
+                    allowedTrapTypes.Remove(TrapType.Bomb);
+                }
 
-                    if (newLocation.IsVisible() || newLocation.IsPurchaseable())
-                    {
-                        // Store name override for logging in HTML tracker.
-                        item.NameOverride = $"{Item.BombTrap.Name()} ({mimic.Item.Name()})";
-
-                        // If ice trap quirks enabled and placed as a shop item, use a fake shop item name.
-                        if (_settings.IceTrapQuirks && newLocation.IsPurchaseable())
-                        {
-                            item.Mimic.FakeName = FakeNameUtils.CreateFakeName(item.Mimic.Item.Name(), random);
-                        }
-                    }
-                    currentbomb++;
-                } else
+                if (allowedTrapTypes.Count == 0)
                 {
-                    item.ItemOverride = Item.IceTrap;
-                    item.Mimic = mimic;
+                    continue;
+                }
 
-                    //var newLocation = item.NewLocation.Value;
-                    if (newLocation.IsVisible() || newLocation.IsPurchaseable())
+                var trapType = allowedTrapTypes.Random(random, t => trapWeights.GetValueOrDefault(t));
+                var trapItem = trapTypeItems[trapType];
+
+                item.ItemOverride = trapItem;
+                item.Mimic = mimic;
+
+                if (newLocation.IsVisible() || newLocation.IsPurchaseable())
+                {
+                    // Store name override for logging in HTML tracker.
+                    item.NameOverride = $"{trapItem.Name()} ({mimic.Item.Name()})";
+
+                    // If trap quirks enabled and placed as a shop item, use a fake shop item name.
+                    if (_settings.TrapQuirks && newLocation.IsPurchaseable())
                     {
-                        // Store name override for logging in HTML tracker.
-                        item.NameOverride = $"{Item.IceTrap.Name()} ({mimic.Item.Name()})";
-
-                        // If ice trap quirks enabled and placed as a shop item, use a fake shop item name.
-                        if (_settings.IceTrapQuirks && newLocation.IsPurchaseable())
-                        {
-                            item.Mimic.FakeName = FakeNameUtils.CreateFakeName(item.Mimic.Item.Name(), random);
-                        }
+                        item.Mimic.FakeName = FakeNameUtils.CreateFakeName(item.Mimic.Item.Name(), random);
                     }
                 }
 
                 if (_settings.UpdateChests)
                 {
-                    // Choose chest type for ice trap appearance.
-                    item.Mimic.ChestType = IceTrapUtils.GetIceTrapChestTypeOverride(appearance, random);
+                    // Choose chest type for trap appearance.
+                    item.Mimic.ChestType = TrapUtils.GetTrapChestTypeOverride(appearance, random);
                 }
 
                 list.Add(item);
             }
 
-            _randomized.IceTraps = list.AsReadOnly();
+            _randomized.Traps = list.AsReadOnly();
         }
 
         /// <summary>
@@ -2911,8 +2906,8 @@ namespace MMR.Randomizer
                 }
                 ReplaceRecoveryHeartsWithJunk(); // TODO make this an option?
 
-                // Replace junk items with ice traps according to settings.
-                AddIceTraps(_settings.IceTraps, _settings.BombTraps, _settings.IceTrapAppearance);
+                // Replace junk items with traps according to settings.
+                AddTraps(_settings.TrapAmount, _settings.TrapWeights, _settings.TrapAppearance);
                 
                 var freeItemIds = _settings.CustomStartingItemList
                     .Union(_randomized.BlitzExtraItems)

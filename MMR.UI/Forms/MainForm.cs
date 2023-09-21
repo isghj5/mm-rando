@@ -53,6 +53,7 @@ namespace MMR.UI.Forms
             InitializeShortenCutsceneSettings();
             InitializeItemPoolSettings();
             InitializeDungeonModeSettings();
+            InitializeTrapSettings();
             InitalizeLowHealthSFXOptions();
 
             StartingItemEditor = new StartingItemEditForm();
@@ -102,9 +103,9 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cStartingItems, "Select a starting item mode:\n\nNone - You will not start with any randomized starting items.\nRandom - You will start with randomized starting items.\nAllow Temporary Items - You will start with randomized starting items including Keg, Magic Bean and Bottles with X.");
             TooltipBuilder.SetTooltip(cRequiredBossRemains, "Set the number of Boss Remains required to proceed through the final Giants cutscene.");
             TooltipBuilder.SetTooltip(cBlastCooldown, "Adjust the cooldown timer after using the Blast Mask.");
-            TooltipBuilder.SetTooltip(cIceTraps, "Amount of ice traps to be added to pool by replacing junk items.");
-            TooltipBuilder.SetTooltip(cBombTraps, "Amount of bomb traps to mix in with ice traps.");
-            TooltipBuilder.SetTooltip(cIceTrapsAppearance, "Appearance of ice traps in pool for world models.");
+            TooltipBuilder.SetTooltip(cTrapAmount, "Amount of ice traps to be added to pool by replacing junk items.");
+            TooltipBuilder.SetTooltip(lTrapWeightings, "How much to weigh each type of trap when randomizing which one to use.");
+            TooltipBuilder.SetTooltip(cTrapsAppearance, "Appearance of ice traps in pool for world models.");
             TooltipBuilder.SetTooltip(cSunsSong, "Enable using the Sun's Song, which speeds up time to 400 units per frame (normal time speed is 3 units per frame) until dawn or dusk or a loading zone.");
             TooltipBuilder.SetTooltip(cUnderwaterOcarina, "Enable using the ocarina underwater.");
             TooltipBuilder.SetTooltip(cTargettingStyle, "Default Z-Targeting style to Hold.");
@@ -288,6 +289,78 @@ namespace MMR.UI.Forms
         }
 
         Regex addSpacesRegex = new Regex("(?<!^)([A-Z])");
+
+        private void InitializeTrapSettings()
+        {
+            var initialX = 7;
+            var initialY = 146;
+            var deltaX = 87;
+            var deltaY = 23;
+            var maxLabelWidth = 100;
+            var inputWidth = 31;
+            var height = 23;
+            var currentX = initialX;
+            var currentY = initialY;
+            var inputMarginLeft = 0;
+            var inputMarginRight = 7;
+
+            foreach (var trapType in Enum.GetValues<TrapType>())
+            {
+                if (Convert.ToInt32(trapType) == 0)
+                {
+                    continue;
+                }
+
+                var labelText = addSpacesRegex.Replace(trapType.ToString(), " $1");
+
+                var label = new Label
+                {
+                    Name = $"lTrap_{trapType}",
+                    Tag = trapType,
+                    Text = labelText,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Location = new Point(currentX, currentY),
+                    Size = new Size(maxLabelWidth, height),
+                };
+
+                var size = TextRenderer.MeasureText(labelText, label.Font);
+                label.Width = size.Width;
+
+                if (currentX + label.Width + inputMarginLeft + inputWidth > gTraps.Width)
+                {
+                    currentX = initialX;
+                    currentY += deltaY;
+                    label.Location = new Point(currentX, currentY);
+                }
+
+                var input = new NumericUpDown
+                {
+                    Name = $"nTrap_{trapType}",
+                    Tag = trapType,
+                    Location = new Point(currentX + label.Width + inputMarginLeft, currentY),
+                    Size = new Size(inputWidth, height),
+                };
+                var description = trapType.GetAttribute<DescriptionAttribute>()?.Description;
+                if (description != null)
+                {
+                    TooltipBuilder.SetTooltip(input, description);
+                }
+
+                input.ValueChanged += nTrap_CheckedChanged;
+
+                gTraps.Controls.Add(label);
+                gTraps.Controls.Add(input);
+
+                currentX += label.Width + inputMarginLeft + inputWidth + inputMarginRight;
+            }
+        }
+
+        private void nTrap_CheckedChanged(object sender, EventArgs e)
+        {
+            var input = (NumericUpDown)sender;
+            var trapType = (TrapType)input.Tag;
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TrapWeights[trapType] = (int)input.Value);
+        }
 
         private void InitializeDungeonModeSettings()
         {
@@ -1213,7 +1286,7 @@ namespace MMR.UI.Forms
             cFDAnywhere.Checked = _configuration.GameplaySettings.AllowFierceDeityAnywhere;
             cByoAmmo.Checked = _configuration.GameplaySettings.ByoAmmo;
             cDeathMoonCrash.Checked = _configuration.GameplaySettings.DeathMoonCrash;
-            cIceTrapQuirks.Checked = _configuration.GameplaySettings.IceTrapQuirks;
+            cIceTrapQuirks.Checked = _configuration.GameplaySettings.TrapQuirks;
             cClockSpeed.SelectedIndex = (int)_configuration.GameplaySettings.ClockSpeed;
             cAutoInvert.SelectedIndex = (int)_configuration.GameplaySettings.AutoInvert;
             cNoDowngrades.Checked = _configuration.GameplaySettings.PreventDowngrades;
@@ -1244,9 +1317,8 @@ namespace MMR.UI.Forms
             cGossipHints.SelectedIndex = (int)_configuration.GameplaySettings.GossipHintStyle;
             cGaroHint.SelectedIndex = (int)_configuration.GameplaySettings.GaroHintStyle;
             cBlastCooldown.SelectedIndex = (int)_configuration.GameplaySettings.BlastMaskCooldown;
-            cIceTraps.SelectedIndex = (int)_configuration.GameplaySettings.IceTraps;
-            cBombTraps.SelectedIndex = (int)_configuration.GameplaySettings.BombTraps;
-            cIceTrapsAppearance.SelectedIndex = (int)_configuration.GameplaySettings.IceTrapAppearance;
+            cTrapAmount.SelectedIndex = (int)_configuration.GameplaySettings.TrapAmount;
+            cTrapsAppearance.SelectedIndex = (int)_configuration.GameplaySettings.TrapAppearance;
             cMusic.SelectedIndex = (int)_configuration.CosmeticSettings.Music;
             foreach (TabPage cosmeticFormTab in tFormCosmetics.TabPages)
             {
@@ -1329,6 +1401,17 @@ namespace MMR.UI.Forms
             cInstantTransformations.Checked = _configuration.GameplaySettings.InstantTransform;
             cBombArrows.Checked = _configuration.GameplaySettings.BombArrows;
             cChestGameMinimap.SelectedIndex = (int)_configuration.GameplaySettings.ChestGameMinimap;
+
+            foreach (var trapType in Enum.GetValues<TrapType>())
+            {
+                if (Convert.ToInt32(trapType) == 0)
+                {
+                    continue;
+                }
+
+                var nTrap = (NumericUpDown)gTraps.Controls.Find($"nTrap_{trapType}", false)[0];
+                nTrap.Value = _configuration.GameplaySettings.TrapWeights.GetValueOrDefault(trapType);
+            }
 
             nMaxGossipWotH.Value = _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints ?? 3;
             nMaxGossipFoolish.Value = _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints ?? 3;
@@ -1568,7 +1651,7 @@ namespace MMR.UI.Forms
 
         private void cIceTrapQuirks_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.IceTrapQuirks = cIceTrapQuirks.Checked);
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TrapQuirks = cIceTrapQuirks.Checked);
         }
 
         private void cStartingItems_SelectedIndexChanged(object sender, EventArgs e)
@@ -1875,12 +1958,12 @@ namespace MMR.UI.Forms
 
         private void cIceTraps_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.IceTraps = (IceTraps)cIceTraps.SelectedIndex);
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TrapAmount = (TrapAmount)cTrapAmount.SelectedIndex);
         }
 
         private void cIceTrapsAppearance_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.IceTrapAppearance = (IceTrapAppearance)cIceTrapsAppearance.SelectedIndex);
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TrapAppearance = (TrapAppearance)cTrapsAppearance.SelectedIndex);
         }
 
         private void cVC_CheckedChanged(object sender, EventArgs e)
@@ -1992,8 +2075,8 @@ namespace MMR.UI.Forms
             tJunkLocationsList.Enabled = !vanillaMode;
             bJunkLocationsEditor.Enabled = !vanillaMode;
             bToggleTricks.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
-            cIceTraps.Enabled = !vanillaMode;
-            cIceTrapsAppearance.Enabled = !vanillaMode;
+            cTrapAmount.Enabled = !vanillaMode;
+            cTrapsAppearance.Enabled = !vanillaMode;
             cIceTrapQuirks.Enabled = !vanillaMode;
 
             bLoadLogic.Enabled = _configuration.GameplaySettings.LogicMode == LogicMode.UserLogic;
@@ -2159,8 +2242,8 @@ namespace MMR.UI.Forms
             cClockSpeed.Enabled = v;
             cAutoInvert.Enabled = v;
             cBlastCooldown.Enabled = v;
-            cIceTraps.Enabled = v;
-            cIceTrapsAppearance.Enabled = v;
+            cTrapAmount.Enabled = v;
+            cTrapsAppearance.Enabled = v;
             cHideClock.Enabled = v;
             cUnderwaterOcarina.Enabled = v;
             cSunsSong.Enabled = v;
@@ -2742,11 +2825,6 @@ namespace MMR.UI.Forms
         private void cChestGameMinimap_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.ChestGameMinimap = (ChestGameMinimapState)cChestGameMinimap.SelectedIndex);
-        }
-
-        private void cBombTraps_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.BombTraps = (BombTraps)cBombTraps.SelectedIndex);
         }
 
         private void cRainbowTunic_CheckedChanged(object sender, EventArgs e)

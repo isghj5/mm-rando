@@ -5895,12 +5895,12 @@ namespace MMR.Randomizer
         }
 
         /// <summary>
-        /// Write data related to ice traps to ROM.
+        /// Write data related to traps to ROM.
         /// </summary>
-        public void WriteIceTraps()
+        public void WriteTraps()
         {
             // Add mimic graphic to graphic overrides table.
-            foreach (var item in _randomized.IceTraps)
+            foreach (var item in _randomized.Traps)
             {
                 var newLocation = item.NewLocation.Value;
                 if (newLocation.IsVisible())
@@ -6034,11 +6034,11 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(69, "Writing startup...");
                 WriteStartupStrings();
 
-                // Overwrite existing items with ice traps.
-                if (_randomized.Settings.LogicMode != LogicMode.Vanilla && _randomized.Settings.IceTraps != IceTraps.None)
+                // Overwrite existing items with traps.
+                if (_randomized.Settings.LogicMode != LogicMode.Vanilla && _randomized.Settings.TrapAmount != TrapAmount.None)
                 {
-                    progressReporter.ReportProgress(70, "Writing ice traps...");
-                    WriteIceTraps();
+                    progressReporter.ReportProgress(70, "Writing traps...");
+                    WriteTraps();
                 }
 
                 // Load Asm data from internal resource files and apply

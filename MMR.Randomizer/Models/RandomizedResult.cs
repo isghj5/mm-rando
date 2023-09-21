@@ -19,7 +19,7 @@ namespace MMR.Randomizer.Models
         public ReadOnlyCollection<Item> ImportantSongLocations { get; set; }
         public ReadOnlyCollection<Item> LocationsRequiredForMoonAccess { get; set; }
         public Dictionary<Item, LogicUtils.LogicPaths> CheckedImportanceLocations { get; set; }
-        public ReadOnlyCollection<ItemObject> IceTraps { get; set; }
+        public ReadOnlyCollection<ItemObject> Traps { get; set; }
         public List<ushort?> MessageCosts { get; set; }
         public List<Item> BlitzExtraItems { get; set; }
         public int FileSelectSkybox { get; internal set; }

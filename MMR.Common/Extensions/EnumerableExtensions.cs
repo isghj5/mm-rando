@@ -37,6 +37,12 @@ namespace MMR.Common.Extensions
             }
 
             var totalWeight = list.Sum(weight);
+
+            if (totalWeight == 0)
+            {
+                return list[random.Next(list.Count)];
+            }
+
             var selectedWeight = random.NextDouble() * totalWeight;
             double currentWeight = 0;
             

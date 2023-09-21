@@ -217,9 +217,9 @@ namespace MMR.Randomizer.Asm
         public bool ProgressiveUpgrades { get; set; } = true;
 
         /// <summary>
-        /// Whether or not ice traps should behave slightly differently from other items in certain situations.
+        /// Whether or not traps should behave slightly differently from other items in certain situations.
         /// </summary>
-        public bool IceTrapQuirks { get; set; }
+        public bool TrapQuirks { get; set; }
 
         /// <summary>
         /// Whether or not to allow using the ocarina underwater.
@@ -305,7 +305,7 @@ namespace MMR.Randomizer.Asm
             this.ArrowCycling = ((flags >> 22) & 1) == 1;
             this.ContinuousDekuHopping = ((flags >> 19) & 1) == 1;
             this.ProgressiveUpgrades = ((flags >> 18) & 1) == 1;
-            this.IceTrapQuirks = ((flags >> 17) & 1) == 1;
+            this.TrapQuirks = ((flags >> 17) & 1) == 1;
             this.EarlyMikau = ((flags >> 16) & 1) == 1;
             this.FairyChests = ((flags >> 15) & 1) == 1;
             this.TargetHealth = ((flags >> 14) & 1) == 1;
@@ -340,7 +340,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.ElegySpeedup ? (uint)1 : 0) << 20;
             flags |= (this.ContinuousDekuHopping ? (uint)1 : 0) << 19;
             flags |= (this.ProgressiveUpgrades ? (uint)1 : 0) << 18;
-            flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 17;
+            flags |= (this.TrapQuirks ? (uint)1 : 0) << 17;
             flags |= (this.EarlyMikau ? (uint)1 : 0) << 16;
             flags |= (this.FairyChests ? (uint)1 : 0) << 15;
             flags |= (this.TargetHealth ? (uint)1 : 0) << 14;

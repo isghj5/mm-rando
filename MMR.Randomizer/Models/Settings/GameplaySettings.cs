@@ -80,11 +80,11 @@ namespace MMR.Randomizer.Models.Settings
         }
 
         /// <summary>
-        /// Whether or not ice traps should behave slightly differently from other items in certain situations.
+        /// Whether or not traps should behave slightly differently from other items in certain situations.
         /// </summary>
-        public bool IceTrapQuirks {
-            get { return this.AsmOptions.MiscConfig.Flags.IceTrapQuirks; }
-            set { this.AsmOptions.MiscConfig.Flags.IceTrapQuirks = value; }
+        public bool TrapQuirks {
+            get { return this.AsmOptions.MiscConfig.Flags.TrapQuirks; }
+            set { this.AsmOptions.MiscConfig.Flags.TrapQuirks = value; }
         }
 
         /// <summary>
@@ -330,19 +330,19 @@ namespace MMR.Randomizer.Models.Settings
         public string CustomJunkLocationsString { get; set; } = "-------------------------200000-----400000--f000";
 
         /// <summary>
-        /// Defines number of ice traps.
+        /// Defines number of traps.
         /// </summary>
-        public IceTraps IceTraps { get; set; }
+        public TrapAmount TrapAmount { get; set; }
 
         /// <summary>
-        /// Defines number of bomb traps.
+        /// The weighting to give different types of traps.
         /// </summary>
-        public BombTraps BombTraps { get; set; }
+        public Dictionary<TrapType, int> TrapWeights { get; set; } = new Dictionary<TrapType, int>();
 
         /// <summary>
-        /// Defines appearance pool for visible ice traps.
+        /// Defines appearance pool for visible traps.
         /// </summary>
-        public IceTrapAppearance IceTrapAppearance { get; set; }
+        public TrapAppearance TrapAppearance { get; set; }
 
         #endregion
 
