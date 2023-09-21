@@ -154,7 +154,7 @@ namespace MMR.Randomizer.Asm
             }
 
             // Update gi-table for Extra Rupees
-            if (entry.ItemGained == 0xB1 && entry.Object == 0x13F && Indexes.Rupees != null)
+            if ((entry.ItemGained == 0xB1 || entry.ItemGained == 0xB5) && entry.Object == 0x13F && Indexes.Rupees != null)
             {
                 return (Indexes.Rupees.Value, entry.Index);
             }
@@ -552,10 +552,10 @@ namespace MMR.Randomizer.Asm
             //WriteByte(data, 0x4AC + 0xC0 + 0x20 * 3, 0xFF, 0xFF, 0xFF); // Purple Primary
             //WriteByte(data, 0x4B4 + 0xC0 + 0x20 * 3, 0xFF, 0xFF, 0xFF); // Purple Env
 
-            //WriteByte(data, 0x4AC + 0x20 * 4, 0xFF, 0xFF, 0xFF); // Silver Primary
-            //WriteByte(data, 0x4B4 + 0x20 * 4, 0xFF, 0xFF, 0xFF); // Silver Env
-            //WriteByte(data, 0x4AC + 0xC0 + 0x20 * 4, 0xFF, 0xFF, 0xFF); // Silver Primary
-            //WriteByte(data, 0x4B4 + 0xC0 + 0x20 * 4, 0xFF, 0xFF, 0xFF); // Silver Env
+            WriteByte(data, 0x4AC + 0x20 * 4, 0x0, 0x0, 0x0); // Silver Primary
+            WriteByte(data, 0x4B4 + 0x20 * 4, 0x0, 0x0, 0x0); // Silver Env
+            WriteByte(data, 0x4AC + 0xC0 + 0x20 * 4, 0x0, 0x0, 0x0); // Silver Primary
+            WriteByte(data, 0x4B4 + 0xC0 + 0x20 * 4, 0xFF, 0xFF, 0xFF); // Silver Env
 
             //WriteByte(data, 0x4AC + 0x20 * 5, 0xFF, 0xFF, 0xFF); // Gold Primary
             //WriteByte(data, 0x4B4 + 0x20 * 5, 0xFF, 0xFF, 0xFF); // Gold Env

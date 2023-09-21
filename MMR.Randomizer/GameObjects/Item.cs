@@ -11890,5 +11890,15 @@ namespace MMR.Randomizer.GameObjects
         [ExclusiveItemMessage(0x8FFF, "\u0017get rekt\u0018\u00BF")]
         BombTrap = -3,
 
+        [Repeatable]
+        [ItemName("Rupoor")]
+        [GossipItemHint("a sad surprise")]
+        [ShopText("This is worth -10 rupees.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ExclusiveItem(0xB5)]
+        [ExclusiveItemGraphic(0xAB, 0x13F)]
+        [ExclusiveItemMessage(0x8FFE, "\u0017You picked up a \u0007Rupoor\u0000!\u0018\u0011That means you've lost \u000110 Rupees\u0000.\u0011And that's a little bit sad.\u00BF")]
+        Rupoor = -4,
+
     }
 }

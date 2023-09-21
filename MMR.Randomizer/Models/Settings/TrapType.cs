@@ -11,5 +11,8 @@ namespace MMR.Randomizer.Models.Settings
 
         [Description("Bomb traps explode in the player's position, dealing damage and knocking them back.")]
         Bomb,
+
+        [Description("Rupoors take 10 rupees from your wallet.")]
+        Rupoor,
     }
 }

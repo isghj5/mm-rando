@@ -307,12 +307,12 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsJunk(Item item)
         {
-            return item == Item.RecoveryHeart || item == Item.IceTrap || JunkItems.Contains(item);
+            return item < 0 || JunkItems.Contains(item);
         }
 
         public static bool IsLogicallyJunk(Item item)
         {
-            return item == Item.RecoveryHeart || item == Item.IceTrap || LogicallyJunkItems.Contains(item);
+            return item < 0 || LogicallyJunkItems.Contains(item);
         }
 
         private static List<Item> HintedJunkLocations;
@@ -460,7 +460,7 @@ namespace MMR.Randomizer.Utils
             return !item.Name().Contains("Heart")
                 && !IsStrayFairy(item)
                 && !IsSkulltulaToken(item)
-                && item != Item.IceTrap;
+                && item >= 0;
         }
 
         public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult, bool anythingCanBeRequired = false)
@@ -471,7 +471,7 @@ namespace MMR.Randomizer.Utils
         public static bool IsImportant(Item item, Item locationForImportance, RandomizedResult randomizedResult)
         {
             return !item.Name().Contains("Heart")
-                && item != Item.IceTrap
+                && item >= 0
                 && randomizedResult.ImportantLocations?.Contains(locationForImportance) == true;
         }
 

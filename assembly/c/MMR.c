@@ -215,43 +215,44 @@ u16 MMR_CheckProgressiveUpgrades(u16 giIndex, bool grant) {
     return giIndex;
 }
 
-#define cycleRepeatableItemsLength 36
+#define cycleRepeatableItemsLength 37
 static u8 cycleRepeatableItems[cycleRepeatableItemsLength] = {
-    0x06, // 1 Bomb
-    0x07, // 10 Bombchu
-    0x08, // 1 Deku Stick
-    0x09, // 1 Deku Nut
-    0x0A, // 1 Magic Bean
-    0x0C, // Powder Keg
-    0x13, // Red Potion
-    0x14, // Green Potion
-    0x15, // Blue Potion
-    0x16, // Fairy
-    0x51, // Hero's Shield
-    0x79, // Magic Jar
-    0x7A, // Large Magic Jar
-    0x83, // 1 Heart
-    0x8B, // 5 Deku Sticks
-    0x8C, // 10 Deku Sticks
-    0x8D, // 5 Deku Nuts
-    0x8E, // 10 Deku Nuts
-    0x8F, // 5 Bombs
-    0x90, // 10 Bombs
-    0x91, // 20 Bombs
-    0x92, // 30 Bombs
-    0x93, // 10 Arrows
-    0x94, // 30 Arrows
-    0x95, // 40 Arrows
-    0x96, // 50 Arrows
-    0x97, // 20 Bombchu
-    0x98, // 10 Bombchu
-    0x99, // 1 Bombchu
-    0x9A, // 5 Bombchu
-    0x9F, // Chateau Romani
-    0xA0, // Milk
-    0xA1, // Gold Dust
-    0xB0, // Ice Trap
-    0xB3, // Bomb Trap
+    ITEM_BOMB,
+    ITEM_BOMBCHU,
+    ITEM_DEKU_STICK,
+    ITEM_DEKU_NUT,
+    ITEM_MAGIC_BEAN,
+    ITEM_POWDER_KEG,
+    ITEM_RED_POTION,
+    ITEM_GREEN_POTION,
+    ITEM_BLUE_POTION,
+    ITEM_FAIRY,
+    ITEM_HERO_SHIELD,
+    ITEM_MAGIC_JAR,
+    ITEM_MAGIC_JAR_LARGE,
+    ITEM_HEART,
+    ITEM_PICKUP_DEKU_STICKS_5,
+    ITEM_PICKUP_DEKU_STICKS_10,
+    ITEM_PICKUP_DEKU_NUTS_5,
+    ITEM_PICKUP_DEKU_NUTS_10,
+    ITEM_PICKUP_BOMBS_5,
+    ITEM_PICKUP_BOMBS_10,
+    ITEM_PICKUP_BOMBS_20,
+    ITEM_PICKUP_BOMBS_30,
+    ITEM_PICKUP_ARROWS_10,
+    ITEM_PICKUP_ARROWS_30,
+    ITEM_PICKUP_ARROWS_40,
+    ITEM_PICKUP_ARROWS_50,
+    ITEM_PICKUP_BOMBCHU_20,
+    ITEM_PICKUP_BOMBCHU_10,
+    ITEM_PICKUP_BOMBCHU_1,
+    ITEM_PICKUP_BOMBCHU_5,
+    ITEM_CHATEAU_ROMANI,
+    ITEM_MILK,
+    ITEM_GOLD_DUST,
+    CUSTOM_ITEM_ICE_TRAP,
+    CUSTOM_ITEM_BOMBTRAP,
+    CUSTOM_ITEM_RUPOOR,
     0xFF, // ? Stray Fairy ?
 };
 bool MMR_IsCycleRepeatable(u16 giIndex) {
@@ -409,7 +410,7 @@ u32 MMR_GetMinorItemSfxId(u8 item) {
     if (item >= ITEM_PICKUP_BOMBCHU_20 && item <= ITEM_PICKUP_BOMBCHU_5 && z2_IsItemKnown(ITEM_BOMBCHU) != 0xFF) {
         return 0x4824;
     }
-    if (item == ITEM_MAGIC_JAR || item == ITEM_MAGIC_JAR_LARGE || item == CUSTOM_ITEM_CRIMSON_RUPEE) {
+    if (item == ITEM_MAGIC_JAR || item == ITEM_MAGIC_JAR_LARGE || item == CUSTOM_ITEM_CRIMSON_RUPEE || item == CUSTOM_ITEM_RUPOOR) {
         return 0x4824;
     }
     if (item == CUSTOM_ITEM_ICE_TRAP) {

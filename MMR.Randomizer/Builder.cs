@@ -5903,7 +5903,7 @@ namespace MMR.Randomizer
             foreach (var item in _randomized.Traps)
             {
                 var newLocation = item.NewLocation.Value;
-                if (newLocation.IsVisible())
+                if (newLocation.IsVisible() && (item.Item != Item.Rupoor || newLocation.IsPurchaseable()))
                 {
                     var giIndex = item.NewLocation.Value.GetItemIndex().Value;
                     var graphic = item.Mimic.ResolveGraphic();
@@ -5912,14 +5912,9 @@ namespace MMR.Randomizer
             }
 
             // Add "You are a FOOL!" message to extra messages table.
-            var entry = new MessageEntry(
-                Item.IceTrap.ExclusiveItemEntry().Message,
-                Item.IceTrap.ExclusiveItemMessage());
-            _extraMessages.Add(entry);
-            var entry2 = new MessageEntry(
-                Item.BombTrap.ExclusiveItemEntry().Message,
-                Item.BombTrap.ExclusiveItemMessage());
-            _extraMessages.Add(entry2);
+            _extraMessages.Add(new MessageEntry(Item.IceTrap.ExclusiveItemEntry().Message, Item.IceTrap.ExclusiveItemMessage()));
+            _extraMessages.Add(new MessageEntry(Item.BombTrap.ExclusiveItemEntry().Message, Item.BombTrap.ExclusiveItemMessage()));
+            _extraMessages.Add(new MessageEntry(Item.Rupoor.ExclusiveItemEntry().Message, Item.Rupoor.ExclusiveItemMessage()));
         }
 
         public void MakeROM(OutputSettings outputSettings, IProgressReporter progressReporter)

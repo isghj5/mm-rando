@@ -23,6 +23,7 @@ enum CustomItem {
     CUSTOM_ITEM_NOTEBOOK_ENTRY     = 0xB2,
     CUSTOM_ITEM_BOMBTRAP           = 0xB3,
     CUSTOM_ITEM_FROG               = 0xB4,
+    CUSTOM_ITEM_RUPOOR             = 0xB5,
 };
 
 #endif // ITEMS_H

@@ -2794,13 +2794,14 @@ namespace MMR.Randomizer
             {
                 { TrapType.Ice, Item.IceTrap },
                 { TrapType.Bomb, Item.BombTrap },
+                { TrapType.Rupoor, Item.Rupoor },
             };
 
             var list = new List<ItemObject>();
             foreach (var item in items)
             {
                 // If check is visible (can be seen via world model), add "graphic override" for imitating other item.
-                var mimic = mimics[random.Next(mimics.Length)];
+                var mimic = mimics.Random(random);
 
                 var newLocation = item.NewLocation.Value;
 
@@ -2824,7 +2825,10 @@ namespace MMR.Randomizer
                 if (newLocation.IsVisible() || newLocation.IsPurchaseable())
                 {
                     // Store name override for logging in HTML tracker.
-                    item.NameOverride = $"{trapItem.Name()} ({mimic.Item.Name()})";
+                    if (trapItem != Item.Rupoor || newLocation.IsPurchaseable())
+                    {
+                        item.NameOverride = $"{trapItem.Name()} ({mimic.Item.Name()})";
+                    }
 
                     // If trap quirks enabled and placed as a shop item, use a fake shop item name.
                     if (_settings.TrapQuirks && newLocation.IsPurchaseable())

@@ -29,6 +29,9 @@ static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
         case CUSTOM_ITEM_CRIMSON_RUPEE:
             z2_AddRupees(30);
             break;
+        case CUSTOM_ITEM_RUPOOR:
+            z2_AddRupees(-10);
+            break;
         case CUSTOM_ITEM_SPIN_ATTACK:
             gSaveContext.perm.weekEventReg.hasGreatSpin = true;
             break;
