@@ -281,6 +281,8 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool GiantMaskAnywhere { get; set; }
 
+        public bool FewerHealthDrops { get; set; }
+
         public MiscFlags()
         {
         }
@@ -319,6 +321,7 @@ namespace MMR.Randomizer.Asm
             this.InstantTransform = ((flags >> 5) & 1) == 1;
             this.BombArrows = ((flags >> 4) & 1) == 1;
             this.GiantMaskAnywhere = ((flags >> 3) & 1) == 1;
+            this.FewerHealthDrops = ((flags >> 2) & 1) == 1;
         }
 
         /// <summary>
@@ -354,6 +357,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.InstantTransform ? (uint)1 : 0) << 5;
             flags |= (this.BombArrows ? (uint)1 : 0) << 4;
             flags |= (this.GiantMaskAnywhere ? (uint)1 : 0) << 3;
+            flags |= (this.FewerHealthDrops ? (uint)1 : 0) << 2;
             return flags;
         }
     }

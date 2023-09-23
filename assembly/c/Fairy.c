@@ -4,6 +4,7 @@
 #include "MMR.h"
 #include "BaseRupee.h"
 #include "Player.h"
+#include "Misc.h"
 
 // Number of FairyInst entries in table.
 #define FAIRY_INST_COUNT 12
@@ -102,7 +103,9 @@ bool Fairy_Constructor(ActorEnElf* actor, GlobalContext* ctxt) {
 void Fairy_GiveItem(ActorEnElf* actor, GlobalContext* ctxt) {
     u16 giIndex = Rupee_GetGiIndex(&actor->base);
     if (giIndex == 0) {
-        z2_Health_ChangeBy(ctxt, 0x80);
+        if (!MISC_CONFIG.flags.fewerHealthDrops) {
+            z2_Health_ChangeBy(ctxt, 0x80);
+        }
         gSaveContext.owl.jinxCounter = 0;
         // return false;
         return;
@@ -153,6 +156,10 @@ void Fairy_SetHealthAccumulator(ActorEnElf* actor, GlobalContext* ctxt) {
     // Displaced code:
     actor->unk_246++;
     // End displaced code
+
+    if (MISC_CONFIG.flags.fewerHealthDrops) {
+        return;
+    }
 
     u16 giIndex = Rupee_GetDrawGiIndex(&actor->base);
     if (giIndex == 0) {

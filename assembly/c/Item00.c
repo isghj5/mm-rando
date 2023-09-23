@@ -80,7 +80,7 @@ s16 Item00_GetAlteredDropId(s16 dropId) {
     }
 
     if (dropId == ITEM00_RECOVERY_HEART) {
-        if (((void)0, gSaveContext.perm.unk24.maxLife) == ((void)0, gSaveContext.perm.unk24.currentLife)) {
+        if (((void)0, gSaveContext.perm.unk24.maxLife) == ((void)0, gSaveContext.perm.unk24.currentLife) || MISC_CONFIG.flags.fewerHealthDrops) {
             return ITEM00_RUPEE_GREEN;
         }
     }

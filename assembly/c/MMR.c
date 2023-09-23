@@ -304,7 +304,9 @@ u16 MMR_GetNewGiIndex(GlobalContext* ctxt, Actor* actor, u16 giIndex, bool grant
     } else {
         bool isCycleRepeatable = MMR_IsCycleRepeatable(newGiIndex);
         if (!isCycleRepeatable) {
-            newGiIndex = 0x0A; // Recovery Heart
+            newGiIndex = MISC_CONFIG.flags.fewerHealthDrops
+                ? 0x01 // Green Rupee
+                : 0x0A; // Recovery Heart
         }
     }
     if (grant) {

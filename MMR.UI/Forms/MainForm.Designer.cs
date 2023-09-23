@@ -259,6 +259,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
+            this.cFewerHealthDrops = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -819,6 +820,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox11
             // 
+            this.groupBox11.Controls.Add(this.cFewerHealthDrops);
             this.groupBox11.Controls.Add(this.cDType);
             this.groupBox11.Controls.Add(this.lDType);
             this.groupBox11.Controls.Add(this.cDeathMoonCrash);
@@ -1097,7 +1099,7 @@ namespace MMR.UI.Forms
             this.cTrapAmount.TabIndex = 26;
             this.cTrapAmount.SelectedIndexChanged += new System.EventHandler(this.cIceTraps_SelectedIndexChanged);
             // 
-            // cIceTrapsAppearance
+            // cTrapsAppearance
             // 
             this.cTrapsAppearance.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -1109,7 +1111,7 @@ namespace MMR.UI.Forms
             "Anything"});
             this.cTrapsAppearance.Location = new System.Drawing.Point(7, 78);
             this.cTrapsAppearance.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTrapsAppearance.Name = "cIceTrapsAppearance";
+            this.cTrapsAppearance.Name = "cTrapsAppearance";
             this.cTrapsAppearance.Size = new System.Drawing.Size(160, 23);
             this.cTrapsAppearance.TabIndex = 27;
             this.cTrapsAppearance.SelectedIndexChanged += new System.EventHandler(this.cIceTrapsAppearance_SelectedIndexChanged);
@@ -3119,6 +3121,20 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
+            // cFewerHealthDrops
+            // 
+            this.cFewerHealthDrops.AutoSize = true;
+            this.cFewerHealthDrops.BackColor = System.Drawing.Color.Transparent;
+            this.cFewerHealthDrops.ForeColor = System.Drawing.Color.Black;
+            this.cFewerHealthDrops.Location = new System.Drawing.Point(7, 165);
+            this.cFewerHealthDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFewerHealthDrops.Name = "cFewerHealthDrops";
+            this.cFewerHealthDrops.Size = new System.Drawing.Size(129, 19);
+            this.cFewerHealthDrops.TabIndex = 26;
+            this.cFewerHealthDrops.Text = "Fewer Health Drops";
+            this.cFewerHealthDrops.UseVisualStyleBackColor = false;
+            this.cFewerHealthDrops.CheckedChanged += new System.EventHandler(this.cFewerHealthDrops_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3440,6 +3456,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cDisableFanfares;
         private System.Windows.Forms.CheckBox cGiantMaskAnywhere;
         private System.Windows.Forms.CheckBox cImprovedCamera;
+        private System.Windows.Forms.CheckBox cFewerHealthDrops;
     }
 }
 

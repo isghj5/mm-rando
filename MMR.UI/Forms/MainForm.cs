@@ -112,6 +112,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFDAnywhere, "Allow the Fierce Deity's Mask to be used anywhere. Also addresses some softlocks caused by Fierce Deity.");
             TooltipBuilder.SetTooltip(cByoAmmo, "Arrows, Bombs, and Bombchu will not be provided for minigames. You must bring your own. Logic Modes other than No Logic will account for this.");
             TooltipBuilder.SetTooltip(cDeathMoonCrash, "Dying causes the moon to crash, with all that that implies.");
+            TooltipBuilder.SetTooltip(cFewerHealthDrops, "Recovery Hearts will not drop, and re-acquiring random items will turn into Green Rupees instead. Fairies will not heal except on death.");
             TooltipBuilder.SetTooltip(cContinuousDekuHopping, "Press A while hopping across water to keep hopping.");
             TooltipBuilder.SetTooltip(cHookshotAnySurface, "Hookshot can hook to any surface.");
             TooltipBuilder.SetTooltip(cClimbMostSurfaces, "Link can climb most surfaces.");
@@ -1286,6 +1287,7 @@ namespace MMR.UI.Forms
             cFDAnywhere.Checked = _configuration.GameplaySettings.AllowFierceDeityAnywhere;
             cByoAmmo.Checked = _configuration.GameplaySettings.ByoAmmo;
             cDeathMoonCrash.Checked = _configuration.GameplaySettings.DeathMoonCrash;
+            cFewerHealthDrops.Checked = _configuration.GameplaySettings.FewerHealthDrops;
             cIceTrapQuirks.Checked = _configuration.GameplaySettings.TrapQuirks;
             cClockSpeed.SelectedIndex = (int)_configuration.GameplaySettings.ClockSpeed;
             cAutoInvert.SelectedIndex = (int)_configuration.GameplaySettings.AutoInvert;
@@ -1647,6 +1649,11 @@ namespace MMR.UI.Forms
         private void cDeathMoonCrash_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.DeathMoonCrash = cDeathMoonCrash.Checked);
+        }
+
+        private void cFewerHealthDrops_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.FewerHealthDrops = cFewerHealthDrops.Checked);
         }
 
         private void cIceTrapQuirks_CheckedChanged(object sender, EventArgs e)
@@ -2250,6 +2257,7 @@ namespace MMR.UI.Forms
             cFDAnywhere.Enabled = v;
             cByoAmmo.Enabled = v;
             cDeathMoonCrash.Enabled = v;
+            cFewerHealthDrops.Enabled = v;
             cIceTrapQuirks.Enabled = v;
             cHookshotAnySurface.Enabled = v;
             cClimbMostSurfaces.Enabled = v;
