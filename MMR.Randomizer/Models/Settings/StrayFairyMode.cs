@@ -18,8 +18,8 @@ namespace MMR.Randomizer.Models
         [Description("Randomization algorithm will place any randomized Stray Fairies into a location within the same region.")]
         KeepWithinTemples = 1 << 1,
 
-        [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinArea)]
-        [Description("Randomization algorithm will place any randomized Stray Fairies into a location in or near the temple they originate from.")]
+        [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepFairyWithinArea)]
+        [Description("Randomization algorithm will place any randomized Stray Fairies into a location in or near the fairy fountain they originate from.")]
         KeepWithinArea = 1 << 2,
 
         [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinOverworld)]
