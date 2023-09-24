@@ -199,8 +199,8 @@ namespace MMR.Randomizer.GameObjects
         [Description("Randomize Bombers' Notebook entries.")]
         NotebookEntries,
 
-        [Description("Randomize fairies summoned at Gossip Stones.")]
-        GossipFairies,
+        [Description("Randomize fairies summoned at Gossip Stones and free floating fairies.")]
+        Fairies,
 
         [Description("Randomize fairies that transform from butterflies.")]
         Butterflies,
@@ -277,8 +277,8 @@ namespace MMR.Randomizer.GameObjects
         [Description("Randomize Bombers' Notebook entries.")]
         NotebookEntries,
 
-        [Description("Randomize fairies summoned at Gossip Stones.")]
-        GossipFairies,
+        [Description("Randomize fairies summoned at Gossip Stones and free floating fairies.")]
+        Fairies,
 
         [Description("Randomize fairies that transform from butterflies.")]
         Butterflies,

@@ -166,3 +166,16 @@ void Fairy_SetHealthAccumulator(ActorEnElf* actor, GlobalContext* ctxt) {
         gSaveContext.extra.healthAccumulator = 0xA0;
     }
 }
+
+const static u16 sBaseGiIndex = 0x4D9;
+
+Actor* Fairy_SpawnFairyGroupMember(ActorContext* actorCtxt, GlobalContext* ctxt, s16 id, f32 x, f32 y, f32 z, s16 rx,
+                   s16 ry, s16 rz, s32 params, s32 count) {
+    Actor* fairy = z2_SpawnActor(actorCtxt, ctxt, id, x, y, z, rx, ry, rz, params);
+
+    u16 giIndex = sBaseGiIndex + count;
+
+    Rupee_CheckAndSetGiIndex(fairy, ctxt, giIndex);
+
+    return fairy;
+}

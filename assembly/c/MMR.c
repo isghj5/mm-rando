@@ -87,7 +87,10 @@ u8* MMR_GiFlag(u16 giIndex) {
     if (giIndex >= 0x460) {
         address += 4;
     }
-    // if (giIndex >= 0x4E0) { address += 4; } // next threshold is giIndex 0x4E0
+    if (giIndex >= 0x4E0) {
+        address += 4;
+    }
+    // if (giIndex >= 0x560) { address += 4; } // next threshold is giIndex 0x560
     address += (giIndex >> 3);
     return address;
 }

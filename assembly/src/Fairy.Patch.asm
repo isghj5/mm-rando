@@ -66,3 +66,22 @@
 .org 0x80408138 + 0x4861B0
     jal     Fairy_PlayItemSfx
     lw      a1, 0x0034 (sp)
+
+;==================================================================================================
+; Spawn of group of fairies
+;==================================================================================================
+
+; Replaces:
+;   SW      V1, 0x0040 (SP)
+.org 0x8088D278
+    sw      v1, 0x0028 (sp)
+
+; Replaces:
+;   JAL     0x800BAC60 ; Actor_Spawn
+.org 0x8088D28C
+    jal     Fairy_SpawnFairyGroupMember
+
+; Replaces:
+;   LW      V1, 0x0040 (SP)
+.org 0x8088D294
+    lw      v1, 0x0028 (sp)

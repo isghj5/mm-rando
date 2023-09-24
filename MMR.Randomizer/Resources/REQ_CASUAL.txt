@@ -622,7 +622,7 @@
           "Any Milk",
           "SettingClimbMostSurfaces",
           "Out of Bounds",
-          "MaskDeku",
+          "MaskDeku"
         ],
         [
           "SettingClimbMostSurfaces",
@@ -56861,7 +56861,7 @@
       "ConditionalItems": [
         [
           "OtherMagicBean",
-          "Water for Magic Bean",
+          "Water for Magic Bean"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -58199,6 +58199,174 @@
         "MaskDonGero"
       ],
       "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableWellFountainFairy1",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGibdo",
+        "BottleCatchBug",
+        "Any Blue Potion"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableWellFountainFairy2",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGibdo",
+        "BottleCatchBug",
+        "Any Blue Potion"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableWellFountainFairy3",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGibdo",
+        "BottleCatchBug",
+        "Any Blue Potion"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableWellFountainFairy4",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGibdo",
+        "BottleCatchBug",
+        "Any Blue Potion"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableWellFountainFairy5",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGibdo",
+        "BottleCatchBug",
+        "Any Blue Potion"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableWellFountainFairy6",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGibdo",
+        "BottleCatchBug",
+        "Any Blue Potion"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableWellFountainFairy7",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGibdo",
+        "BottleCatchBug",
+        "Any Blue Potion"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectableWellFountainFairy8",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGibdo",
+        "BottleCatchBug",
+        "Any Blue Potion"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",

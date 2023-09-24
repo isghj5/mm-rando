@@ -214,6 +214,11 @@ namespace MMR.Randomizer.LogicMigrator
                 AddSettings(logicObject);
             }
 
+            if (logicObject.Version < 19)
+            {
+                AddWellFairies(logicObject);
+            }
+
             return JsonSerializer.Serialize(logicObject);
         }
 
@@ -4501,6 +4506,50 @@ namespace MMR.Randomizer.LogicMigrator
             logicObject.Logic.RemoveAll(item => item.Id == null);
 
             logicObject.Version = 18;
+        }
+
+        private static void AddWellFairies(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1269;
+            var itemNames = new string[]
+            {
+                "CollectableWellFountainFairy1",
+                "CollectableWellFountainFairy2",
+                "CollectableWellFountainFairy3",
+                "CollectableWellFountainFairy4",
+                "CollectableWellFountainFairy5",
+                "CollectableWellFountainFairy6",
+                "CollectableWellFountainFairy7",
+                "CollectableWellFountainFairy8",
+            };
+
+            var reference = logicObject.Logic[270];
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name =>
+            {
+                var logicItem = new JsonFormatLogicItem
+                {
+                    Id = name,
+                    RequiredItems = reference.RequiredItems.ToList(),
+                    ConditionalItems = new List<List<string>>
+                    {
+                        new List<string>
+                        {
+                            "BottleCatchSpringWater"
+                        },
+                        new List<string>
+                        {
+                            "BottleCatchHotSpringWater"
+                        }
+                    },
+                    TimeAvailable = reference.TimeAvailable,
+                    TimeNeeded = reference.TimeNeeded,
+                    TimeSetup = reference.TimeSetup,
+                };
+
+                return logicItem;
+            }));
+            logicObject.Version = 19;
         }
 
         private class MigrationItem
