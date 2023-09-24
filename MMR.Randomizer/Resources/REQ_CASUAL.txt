@@ -145,6 +145,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -206,42 +209,13 @@
     {
       "Id": "ItemHookshot",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPFInteriorAccess"
       ],
       "ConditionalItems": [
         [
-          "MaskGoron",
           "OtherArrow"
         ],
         [
-          "MaskDeku",
-          "MaskGoron",
-          "Magic Meter"
-        ],
-        [
-          "ItemHookshot",
-          "OtherArrow"
-        ],
-        [
-          "MaskDeku",
-          "ItemHookshot",
-          "Magic Meter"
-        ],
-        [
-          "FD Jumps",
-          "OtherArrow"
-        ],
-        [
-          "FD Jumps",
-          "MaskDeku",
-          "Magic Meter"
-        ],
-        [
-          "SettingClimbMostSurfaces",
-          "OtherArrow"
-        ],
-        [
-          "SettingClimbMostSurfaces",
           "MaskDeku",
           "Magic Meter"
         ]
@@ -1095,7 +1069,9 @@
     },
     {
       "Id": "HeartPieceTerminaGossipStones",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "Destroy Normal Boulders"
+      ],
       "ConditionalItems": [
         [
           "MaskGoron",
@@ -1103,21 +1079,9 @@
         ],
         [
           "MaskDeku",
-          "Play Sonata of Awakening",
-          "OtherExplosive"
-        ],
-        [
-          "MaskDeku",
-          "MaskGoron",
           "Play Sonata of Awakening"
         ],
         [
-          "MaskZora",
-          "Play New Wave Bossa Nova",
-          "OtherExplosive"
-        ],
-        [
-          "MaskGoron",
           "MaskZora",
           "Play New Wave Bossa Nova"
         ]
@@ -2239,6 +2203,9 @@
           "OtherArrow",
           "Snowball Skip",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -2309,6 +2276,9 @@
         [
           "SettingClimbMostSurfaces",
           "Out of Bounds"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -2350,6 +2320,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -2384,6 +2357,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -2451,6 +2427,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -2474,6 +2453,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -2741,7 +2723,10 @@
     },
     {
       "Id": "SettingGiantMaskAnywhere",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskGiant",
+        "Magic Meter"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -3968,6 +3953,9 @@
         ],
         [
           "Swim to Zora Hall as Human"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -3986,6 +3974,9 @@
         ],
         [
           "Swim to Zora Hall as Human"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -4004,6 +3995,9 @@
         ],
         [
           "Swim to Zora Hall as Human"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -4197,18 +4191,18 @@
         ],
         [
           "Pinnacle Rock Access",
-          "SettingClimbMostSurfaces",
-          "MaskDeku",
-          "Magic Meter"
-        ],
-        [
-          "Pinnacle Rock Access",
           "ItemHookshot",
           "OtherArrow"
         ],
         [
           "Pinnacle Rock Access",
           "SettingClimbMostSurfaces",
+          "MaskDeku",
+          "Magic Meter"
+        ],
+        [
+          "Pinnacle Rock Access",
+          "SettingClimbMostSurfaces",
           "OtherArrow"
         ],
         [
@@ -4238,6 +4232,17 @@
           "FD Jumps",
           "OtherArrow",
           "PF Guard Room Rear Entry"
+        ],
+        [
+          "Pinnacle Rock Access",
+          "SettingGiantMaskAnywhere",
+          "MaskDeku",
+          "Magic Meter"
+        ],
+        [
+          "Pinnacle Rock Access",
+          "SettingGiantMaskAnywhere",
+          "OtherArrow"
         ],
         [
           "Pinnacle Rock Access",
@@ -4312,7 +4317,7 @@
       "Id": "ChestLensCavePurpleRupee",
       "RequiredItems": [
         "AreaNorthAccess",
-        "OtherExplosive"
+        "Destroy Large Boulders"
       ],
       "ConditionalItems": [
         [
@@ -4360,23 +4365,23 @@
       ],
       "ConditionalItems": [
         [
-          "OtherExplosive",
+          "Destroy Large Boulders",
           "BottleCatchHotSpringWater",
           "Play Song of Soaring"
         ],
         [
-          "OtherExplosive",
+          "Destroy Large Boulders",
           "BottleCatchHotSpringWater",
           "Hot Spring Water in Mountains",
           "SettingNotRandomizedBottleCatchHotSpringWater"
         ],
         [
           "AreaSnowheadTempleClear",
-          "OtherExplosive"
+          "Destroy Large Boulders"
         ],
         [
           "Use Fire Arrow",
-          "OtherExplosive"
+          "Destroy Large Boulders"
         ],
         [
           "Powder Kegs as Explosives",
@@ -4434,22 +4439,10 @@
     {
       "Id": "ChestPiratesFortressRedRupee1",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -4470,6 +4463,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -4521,6 +4517,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -4682,6 +4681,9 @@
         ],
         [
           "Difficult Goron Spike Rolls"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -4739,16 +4741,10 @@
     {
       "Id": "ChestGreatBayCapeGrotto",
       "RequiredItems": [
-        "AreaWestAccess"
+        "AreaWestAccess",
+        "Destroy Normal Boulders"
       ],
-      "ConditionalItems": [
-        [
-          "MaskGoron"
-        ],
-        [
-          "OtherExplosive"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -4832,6 +4828,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -4877,6 +4876,12 @@
           "Run Through Poisoned Water",
           "Take Damage",
           "Tall Character",
+          "Kill Big Octo"
+        ],
+        [
+          "Run Through Poisoned Water",
+          "Take Damage",
+          "SettingGiantMaskAnywhere",
           "Kill Big Octo"
         ],
         [
@@ -5082,6 +5087,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -5092,7 +5100,7 @@
     {
       "Id": "ChestToIkanaGrotto",
       "RequiredItems": [
-        "MaskGoron"
+        "Destroy Red Boulders"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -5326,6 +5334,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -5349,6 +5360,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -5424,6 +5438,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -5448,6 +5465,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -5478,6 +5498,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -5579,6 +5602,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -5612,6 +5638,9 @@
           "FD Jumps",
           "ItemHookshot",
           "ItemOcarina"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -5681,6 +5710,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -5796,6 +5828,10 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "MaskDeku"
         ]
       ],
       "TimeNeeded": "None",
@@ -5988,6 +6024,10 @@
         ],
         [
           "Recoil Flip"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "OtherExplosive"
         ]
       ],
       "TimeNeeded": "None",
@@ -41668,6 +41708,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -41698,6 +41741,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -41766,6 +41812,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -41809,6 +41858,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -41832,6 +41884,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -41927,6 +41982,9 @@
           "SettingClimbMostSurfaces"
         ],
         [
+          "SettingGiantMaskAnywhere"
+        ],
+        [
           "AreaMoonAccess"
         ]
       ],
@@ -42009,6 +42067,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -42031,6 +42092,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -42089,6 +42153,18 @@
         [
           "SettingClimbMostSurfaces",
           "OtherExplosive"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "OtherArrow"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "OtherExplosive"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -42134,6 +42210,18 @@
         [
           "SettingClimbMostSurfaces",
           "OtherExplosive"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "OtherArrow"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "OtherExplosive"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -42294,6 +42382,18 @@
         [
           "SettingClimbMostSurfaces",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Short Ranged Weapon"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "OtherExplosive"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -42371,6 +42471,10 @@
           "SettingClimbMostSurfaces",
           "MaskBlast",
           "Take Damage"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -42458,6 +42562,10 @@
           "SettingClimbMostSurfaces",
           "MaskBlast",
           "Take Damage"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -42513,6 +42621,10 @@
           "SettingClimbMostSurfaces",
           "MaskBlast",
           "Take Damage"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -42557,6 +42669,10 @@
           "SettingClimbMostSurfaces",
           "MaskBlast",
           "Take Damage"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -42612,6 +42728,10 @@
         [
           "MaskZora",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Short Ranged Weapon"
         ]
       ],
       "TimeNeeded": "None",
@@ -42634,6 +42754,10 @@
         [
           "MaskZora",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Short Ranged Weapon"
         ]
       ],
       "TimeNeeded": "None",
@@ -42666,6 +42790,14 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Short Ranged Weapon"
         ]
       ],
       "TimeNeeded": "None",
@@ -42684,6 +42816,14 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Short Ranged Weapon"
         ]
       ],
       "TimeNeeded": "None",
@@ -42705,6 +42845,14 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Short Ranged Weapon"
         ]
       ],
       "TimeNeeded": "None",
@@ -42726,6 +42874,14 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Short Ranged Weapon"
         ]
       ],
       "TimeNeeded": "None",
@@ -42749,6 +42905,10 @@
         [
           "Ocean Skulltulas without Fire Arrows",
           "Deku Stick Fighting"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -42800,21 +42960,33 @@
       "Id": "CollectibleOceanSpiderToken12",
       "RequiredItems": [
         "AreaWestAccess",
-        "OtherExplosive",
         "Exit Ocean Spider House"
       ],
       "ConditionalItems": [
         [
+          "OtherExplosive",
           "ItemHookshot"
         ],
         [
+          "OtherExplosive",
           "MaskZora"
         ],
         [
+          "OtherExplosive",
           "Fewer Item Requirements"
         ],
         [
+          "OtherExplosive",
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ],
+        [
+          "OtherExplosive",
+          "SettingGiantMaskAnywhere",
+          "Short Ranged Weapon"
         ]
       ],
       "TimeNeeded": "None",
@@ -42826,21 +42998,33 @@
       "Id": "CollectibleOceanSpiderToken13",
       "RequiredItems": [
         "AreaWestAccess",
-        "OtherExplosive",
         "Exit Ocean Spider House"
       ],
       "ConditionalItems": [
         [
+          "OtherExplosive",
           "ItemHookshot"
         ],
         [
+          "OtherExplosive",
           "MaskZora"
         ],
         [
+          "OtherExplosive",
           "Fewer Item Requirements"
         ],
         [
+          "OtherExplosive",
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ],
+        [
+          "OtherExplosive",
+          "SettingGiantMaskAnywhere",
+          "Short Ranged Weapon"
         ]
       ],
       "TimeNeeded": "None",
@@ -42901,6 +43085,14 @@
         [
           "SettingClimbMostSurfaces",
           "Use Fire Arrow"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Use Fire Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -42960,6 +43152,10 @@
         [
           "OtherArrow",
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Short Ranged Weapon"
         ]
       ],
       "TimeNeeded": "None",
@@ -42970,19 +43166,10 @@
     {
       "Id": "CollectibleOceanSpiderToken20",
       "RequiredItems": [
-        "Ocean Skulltulas"
+        "Ocean Skulltulas",
+        "Short Ranged Weapon"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskZora"
-        ],
-        [
-          "OtherArrow"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -43069,6 +43256,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -43115,6 +43305,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -43139,6 +43332,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -45223,6 +45419,9 @@
         ],
         [
           "Swim to Zora Hall as Human"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -45807,22 +46006,10 @@
     {
       "Id": "CollectablePiratesFortressInteriorWaterCurrentRoomPot1",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -45831,22 +46018,21 @@
     {
       "Id": "CollectablePiratesFortressInterior100RupeeEggRoomPot1",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
       "ConditionalItems": [
         [
           "ItemHookshot"
         ],
         [
-          "PF Guard Room Rear Entry",
-          "MaskGoron"
-        ],
-        [
-          "PF Guard Room Rear Entry",
-          "FD Jumps"
+          "PF Guard Room Rear Entry"
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -45872,6 +46058,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -45882,22 +46071,10 @@
     {
       "Id": "CollectablePiratesFortressInteriorTelescopeRoomPot1",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46096,6 +46273,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46152,6 +46332,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46181,6 +46364,9 @@
         ],
         [
           "Swim to Zora Hall as Human"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46217,6 +46403,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46253,6 +46442,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46398,6 +46590,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46416,6 +46611,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46434,6 +46632,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46507,6 +46708,10 @@
           "SettingClimbMostSurfaces",
           "MaskBlast",
           "Take Damage"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -46558,6 +46763,9 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46576,6 +46784,9 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46594,6 +46805,9 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46612,6 +46826,9 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46637,6 +46854,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46647,22 +46867,10 @@
     {
       "Id": "CollectablePiratesFortressInteriorTelescopeRoomItem1",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46671,22 +46879,10 @@
     {
       "Id": "CollectablePiratesFortressInteriorTelescopeRoomItem2",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46695,22 +46891,10 @@
     {
       "Id": "CollectablePiratesFortressInteriorTelescopeRoomItem3",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47046,6 +47230,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -47072,6 +47259,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -48066,6 +48256,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -48115,6 +48308,9 @@
         ],
         [
           "Swim to Zora Hall as Human"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -48178,22 +48374,10 @@
     {
       "Id": "CollectablePiratesFortressInteriorTelescopeRoomPot2",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49895,6 +50079,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -49992,6 +50179,9 @@
         ],
         [
           "Swim to Zora Hall as Human"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -50030,6 +50220,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -50056,6 +50249,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -50082,6 +50278,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -50321,6 +50520,10 @@
         [
           "SettingCharacterAdultLink",
           "Short Ranged Weapon"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -50826,6 +51029,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -50862,6 +51068,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -50898,6 +51107,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -50947,6 +51159,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -50984,6 +51199,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -51442,6 +51660,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -51489,6 +51710,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -51525,6 +51749,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -51561,6 +51788,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -51597,6 +51827,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -52001,6 +52234,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -52085,6 +52321,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -52212,6 +52451,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -52247,20 +52489,10 @@
     {
       "Id": "CollectableBeanGrottoSoftSoil1",
       "RequiredItems": [
-        "AreaSouthAccess",
+        "AreaDekuPalaceAccess",
         "BottleCatchBug"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -52281,6 +52513,10 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -52311,6 +52547,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -52395,10 +52634,7 @@
       ],
       "ConditionalItems": [
         [
-          "MaskGoron"
-        ],
-        [
-          "OtherExplosive"
+          "Destroy Normal Boulders"
         ],
         [
           "Fewer Item Requirements"
@@ -52463,6 +52699,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -53631,22 +53870,10 @@
     {
       "Id": "CollectablePiratesFortressHitTag1",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -53655,22 +53882,10 @@
     {
       "Id": "CollectablePiratesFortressHitTag2",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -53679,22 +53894,10 @@
     {
       "Id": "CollectablePiratesFortressHitTag3",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -53703,22 +53906,10 @@
     {
       "Id": "CollectablePiratesFortressHitTag4",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -53727,22 +53918,10 @@
     {
       "Id": "CollectablePiratesFortressHitTag5",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -53751,22 +53930,10 @@
     {
       "Id": "CollectablePiratesFortressHitTag6",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -53775,42 +53942,14 @@
     {
       "Id": "CollectablePiratesFortressInteriorHookshotRoomHitTag1",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
       "ConditionalItems": [
         [
-          "MaskGoron",
           "OtherArrow"
         ],
         [
-          "MaskDeku",
-          "MaskGoron",
-          "Magic Meter"
-        ],
-        [
-          "ItemHookshot",
-          "OtherArrow"
-        ],
-        [
-          "MaskDeku",
-          "ItemHookshot",
-          "Magic Meter"
-        ],
-        [
-          "FD Jumps",
-          "OtherArrow"
-        ],
-        [
-          "FD Jumps",
-          "MaskDeku",
-          "Magic Meter"
-        ],
-        [
-          "SettingClimbMostSurfaces",
-          "OtherArrow"
-        ],
-        [
-          "SettingClimbMostSurfaces",
           "MaskDeku",
           "Magic Meter"
         ]
@@ -53823,42 +53962,14 @@
     {
       "Id": "CollectablePiratesFortressInteriorHookshotRoomHitTag2",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
       "ConditionalItems": [
         [
-          "MaskGoron",
           "OtherArrow"
         ],
         [
-          "MaskDeku",
-          "MaskGoron",
-          "Magic Meter"
-        ],
-        [
-          "ItemHookshot",
-          "OtherArrow"
-        ],
-        [
-          "MaskDeku",
-          "ItemHookshot",
-          "Magic Meter"
-        ],
-        [
-          "FD Jumps",
-          "OtherArrow"
-        ],
-        [
-          "FD Jumps",
-          "MaskDeku",
-          "Magic Meter"
-        ],
-        [
-          "SettingClimbMostSurfaces",
-          "OtherArrow"
-        ],
-        [
-          "SettingClimbMostSurfaces",
           "MaskDeku",
           "Magic Meter"
         ]
@@ -53871,42 +53982,14 @@
     {
       "Id": "CollectablePiratesFortressInteriorHookshotRoomHitTag3",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
       "ConditionalItems": [
         [
-          "MaskGoron",
-          "OtherArrow"
+          "MaskGoron"
         ],
         [
-          "MaskDeku",
-          "MaskGoron",
-          "Magic Meter"
-        ],
-        [
-          "ItemHookshot",
-          "OtherArrow"
-        ],
-        [
-          "MaskDeku",
-          "ItemHookshot",
-          "Magic Meter"
-        ],
-        [
-          "FD Jumps",
-          "OtherArrow"
-        ],
-        [
-          "FD Jumps",
-          "MaskDeku",
-          "Magic Meter"
-        ],
-        [
-          "SettingClimbMostSurfaces",
-          "OtherArrow"
-        ],
-        [
-          "SettingClimbMostSurfaces",
           "MaskDeku",
           "Magic Meter"
         ]
@@ -54181,6 +54264,10 @@
           "SettingClimbMostSurfaces",
           "MaskBlast",
           "Take Damage"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -54222,6 +54309,10 @@
           "SettingClimbMostSurfaces",
           "MaskBlast",
           "Take Damage"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -54263,6 +54354,10 @@
           "SettingClimbMostSurfaces",
           "MaskBlast",
           "Take Damage"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -54653,6 +54748,10 @@
           "SettingClimbMostSurfaces",
           "MaskBlast",
           "Take Damage"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -54686,6 +54785,10 @@
           "SettingClimbMostSurfaces",
           "MaskBlast",
           "Take Damage"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -54719,6 +54822,10 @@
           "SettingClimbMostSurfaces",
           "MaskBlast",
           "Take Damage"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -54751,22 +54858,10 @@
     {
       "Id": "CollectablePiratesFortressInteriorHookshotRoomPot1",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54775,22 +54870,10 @@
     {
       "Id": "CollectablePiratesFortressInteriorHookshotRoomPot2",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaPiratesFortressAccess",
+        "AreaPFInteriorAccess"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps"
-        ],
-        [
-          "SettingClimbMostSurfaces"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54799,7 +54882,7 @@
     {
       "Id": "CollectableTerminaFieldRock1",
       "RequiredItems": [
-        "OtherExplosive"
+        "Destroy Large Boulders"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54810,7 +54893,7 @@
     {
       "Id": "CollectableTerminaFieldRock2",
       "RequiredItems": [
-        "OtherExplosive"
+        "Destroy Large Boulders"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54821,26 +54904,20 @@
     {
       "Id": "CollectableIkanaGraveyardIkanaGraveyardUpperRock1",
       "RequiredItems": [
-        "Ikana Graveyard Access"
+        "Ikana Graveyard Access",
+        "Pass Keeta"
       ],
       "ConditionalItems": [
         [
-          "Any Bomb Bag",
-          "Play Sonata of Awakening"
+          "Any Bomb Bag"
         ],
         [
           "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "Play Sonata of Awakening"
+          "ItemPowderKeg"
         ],
         [
-          "Any Bomb Bag",
-          "SettingClimbMostSurfaces"
-        ],
-        [
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "SettingClimbMostSurfaces"
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -54851,15 +54928,16 @@
     {
       "Id": "CollectableIkanaGraveyardIkanaGraveyardUpperRock2",
       "RequiredItems": [
-        "OtherExplosive",
-        "Ikana Graveyard Access"
+        "Ikana Graveyard Access",
+        "Pass Keeta"
       ],
       "ConditionalItems": [
         [
-          "Play Sonata of Awakening"
+          "OtherExplosive"
         ],
         [
-          "SettingClimbMostSurfaces"
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -54870,15 +54948,16 @@
     {
       "Id": "CollectableIkanaGraveyardIkanaGraveyardUpperRock3",
       "RequiredItems": [
-        "OtherExplosive",
-        "Ikana Graveyard Access"
+        "Ikana Graveyard Access",
+        "Pass Keeta"
       ],
       "ConditionalItems": [
         [
-          "Play Sonata of Awakening"
+          "OtherExplosive"
         ],
         [
-          "SettingClimbMostSurfaces"
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -54889,7 +54968,7 @@
     {
       "Id": "CollectableTerminaFieldRock3",
       "RequiredItems": [
-        "OtherExplosive"
+        "Destroy Large Boulders"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54900,7 +54979,7 @@
     {
       "Id": "CollectableTerminaFieldRock4",
       "RequiredItems": [
-        "OtherExplosive"
+        "Destroy Large Boulders"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54911,7 +54990,7 @@
     {
       "Id": "CollectableTerminaFieldRock5",
       "RequiredItems": [
-        "OtherExplosive"
+        "Destroy Large Boulders"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54922,7 +55001,7 @@
     {
       "Id": "CollectableTerminaFieldRock6",
       "RequiredItems": [
-        "OtherExplosive"
+        "Destroy Large Boulders"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54933,7 +55012,7 @@
     {
       "Id": "CollectableTerminaFieldRock7",
       "RequiredItems": [
-        "OtherExplosive"
+        "Destroy Large Boulders"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54944,26 +55023,20 @@
     {
       "Id": "CollectableIkanaGraveyardIkanaGraveyardUpperRock4",
       "RequiredItems": [
-        "Ikana Graveyard Access"
+        "Ikana Graveyard Access",
+        "Pass Keeta"
       ],
       "ConditionalItems": [
         [
-          "Any Bomb Bag",
-          "Play Sonata of Awakening"
+          "Any Bomb Bag"
         ],
         [
           "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "Play Sonata of Awakening"
+          "ItemPowderKeg"
         ],
         [
-          "Any Bomb Bag",
-          "SettingClimbMostSurfaces"
-        ],
-        [
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "SettingClimbMostSurfaces"
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -54974,26 +55047,20 @@
     {
       "Id": "CollectableIkanaGraveyardIkanaGraveyardUpperRock5",
       "RequiredItems": [
-        "Ikana Graveyard Access"
+        "Ikana Graveyard Access",
+        "Pass Keeta"
       ],
       "ConditionalItems": [
         [
-          "Any Bomb Bag",
-          "Play Sonata of Awakening"
+          "Any Bomb Bag"
         ],
         [
           "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "Play Sonata of Awakening"
+          "ItemPowderKeg"
         ],
         [
-          "Any Bomb Bag",
-          "SettingClimbMostSurfaces"
-        ],
-        [
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "SettingClimbMostSurfaces"
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -55004,7 +55071,7 @@
     {
       "Id": "CollectableTerminaFieldRock8",
       "RequiredItems": [
-        "OtherExplosive"
+        "Destroy Large Boulders"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -55015,7 +55082,7 @@
     {
       "Id": "CollectableTerminaFieldRock9",
       "RequiredItems": [
-        "OtherExplosive"
+        "Destroy Large Boulders"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -55582,6 +55649,10 @@
         [
           "Any Bomb Bag",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -55941,6 +56012,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -56406,6 +56480,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -56568,6 +56645,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -56604,6 +56684,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -56633,6 +56716,9 @@
         ],
         [
           "ItemHookshot"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -56680,6 +56766,9 @@
           "Long Jump",
           "Take Damage",
           "MaskBlast"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -56883,6 +56972,10 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -56934,6 +57027,9 @@
         ],
         [
           "Swim to Zora Hall as Human"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57045,6 +57141,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57216,6 +57315,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57294,6 +57396,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57317,6 +57422,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57340,6 +57448,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57363,6 +57474,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57386,6 +57500,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57417,6 +57534,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57448,6 +57568,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57479,6 +57602,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57510,6 +57636,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57541,6 +57670,9 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57582,6 +57714,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57627,6 +57762,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57672,6 +57810,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57717,6 +57858,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57874,15 +58018,10 @@
     },
     {
       "Id": "CollectableGrottosOceanGossipStonesButterflyFairy1",
-      "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "MaskGoron"
-        ],
-        [
-          "OtherExplosive"
-        ]
+      "RequiredItems": [
+        "Destroy Normal Boulders"
       ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -57902,6 +58041,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57933,6 +58075,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -58073,6 +58218,10 @@
         [
           "Jump Slash Take Downs",
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -58083,10 +58232,17 @@
     {
       "Id": "ItemTingleMapTownInCanyon",
       "RequiredItems": [
-        "AreaIkanaCanyonAccess",
-        "Short Ranged Weapon"
+        "AreaIkanaCanyonAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -58116,6 +58272,10 @@
           "Out of Bounds",
           "Magic Meter",
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -58137,6 +58297,10 @@
         [
           "Jump Slash Take Downs",
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -58156,6 +58320,10 @@
         [
           "SettingAllowFierceDeityAnywhere",
           "Jump Slash Take Downs"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -58187,6 +58355,10 @@
           "Out of Bounds",
           "Magic Meter",
           "SettingAllowFierceDeityAnywhere"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -58205,6 +58377,10 @@
           "FD Jumps",
           "Jump Slash Take Downs",
           "Out of Bounds"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -58224,6 +58400,10 @@
         [
           "SettingAllowFierceDeityAnywhere",
           "Jump Slash Take Downs"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -58234,10 +58414,17 @@
     {
       "Id": "ItemTingleMapGreatBayInOcean",
       "RequiredItems": [
-        "Long Ranged Weapon",
         "AreaWestAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Long Ranged Weapon"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -58254,6 +58441,10 @@
           "FD Jumps",
           "Jump Slash Take Downs",
           "Out of Bounds"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -58264,10 +58455,17 @@
     {
       "Id": "ItemTingleMapStoneTowerInCanyon",
       "RequiredItems": [
-        "AreaIkanaCanyonAccess",
-        "Short Ranged Weapon"
+        "AreaIkanaCanyonAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -58276,10 +58474,17 @@
     {
       "Id": "ItemTingleMapStoneTowerInOcean",
       "RequiredItems": [
-        "Long Ranged Weapon",
         "AreaWestAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Long Ranged Weapon"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -58620,6 +58825,9 @@
         ],
         [
           "FD Jumps"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -59077,6 +59285,9 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -59282,6 +59493,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -59357,6 +59571,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -59632,6 +59849,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -59882,6 +60102,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -60265,6 +60488,16 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "ItemHookshot",
+          "Any B Sword"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "ItemHookshot",
+          "Play Elegy of Emptiness"
         ]
       ],
       "TimeNeeded": "None",
@@ -60420,6 +60653,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -60855,6 +61091,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -61550,6 +61789,10 @@
         [
           "MaskGoron",
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -61834,6 +62077,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -61874,6 +62120,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -62023,6 +62272,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -62255,6 +62507,60 @@
       "TrickCategory": "Moderate"
     },
     {
+      "Id": "Destroy Normal Boulders",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "OtherExplosive"
+        ],
+        [
+          "MaskGoron"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Destroy Large Boulders",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "OtherExplosive"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Destroy Red Boulders",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskGoron"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
       "Id": "Destroy Large Snowballs",
       "RequiredItems": [],
       "ConditionalItems": [
@@ -62266,6 +62572,10 @@
         ],
         [
           "Use Fire Arrow"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -63956,6 +64266,9 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -63976,6 +64289,9 @@
           "Harder Long Jumps",
           "Take Damage",
           "Any Bomb Bag"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -64093,6 +64409,9 @@
         ],
         [
           "TradeItemPendant"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -64520,6 +64839,37 @@
         ],
         [
           "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "AreaPFInteriorAccess",
+      "RequiredItems": [
+        "AreaPiratesFortressAccess"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskZora",
+          "MaskGoron"
+        ],
+        [
+          "ItemHookshot"
+        ],
+        [
+          "FD Jumps"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -64604,6 +64954,10 @@
         ],
         [
           "Fewer Item Requirements"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -64658,6 +65012,10 @@
         ],
         [
           "Jump Slash WFT Gekko"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -64720,6 +65078,9 @@
         [
           "SettingClimbMostSurfaces",
           "Out of Bounds"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -64739,6 +65100,25 @@
         ],
         [
           "SettingAllowFierceDeityAnywhere"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Pass Keeta",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Play Sonata of Awakening"
+        ],
+        [
+          "SettingClimbMostSurfaces"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
         ]
       ],
       "TimeNeeded": "None",
