@@ -169,6 +169,7 @@
 .definelabel z2_load_scene, 0x801693D4
 .definelabel z2_Play_CreateSubCamera, 0x801694DC
 .definelabel z2_Play_CameraChangeStatus, 0x80169590
+.definelabel z2_Play_ClearCamera, 0x80169600
 .definelabel z2_Play_CameraSetAtEyeUp, 0x8016981C
 .definelabel z2_80169AFC, 0x80169AFC
 .definelabel z2_check_scene_pairs, 0x80169CBC

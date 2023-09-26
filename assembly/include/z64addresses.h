@@ -296,6 +296,7 @@ extern void ShrinkWindow_SetLetterboxTarget(s16 unkA0);
 extern s16 z2_80165690();
 extern s16 z2_Play_CreateSubCamera(GlobalContext* ctxt);
 extern void z2_Play_CameraChangeStatus(GlobalContext* ctxt, s16 camId, s16 status);
+extern void z2_Play_ClearCamera(GlobalContext* ctxt, s16 camId);
 extern void z2_Play_CameraSetAtEyeUp(GlobalContext* ctxt, s16 camId, Vec3f* at, Vec3f* eye, Vec3f* up);
 extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 

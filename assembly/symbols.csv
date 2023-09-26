@@ -161,6 +161,7 @@
 0x801693D4,z2_load_scene
 0x801694DC,z2_Play_CreateSubCamera
 0x80169590,z2_Play_CameraChangeStatus
+0x80169600,z2_Play_ClearCamera
 0x8016981C,z2_Play_CameraSetAtEyeUp
 0x80169AFC,z2_80169AFC
 0x80169CBC,z2_check_scene_pairs

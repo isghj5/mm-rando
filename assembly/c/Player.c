@@ -785,3 +785,11 @@ bool Player_CantBeGrabbed(GlobalContext* ctxt, ActorPlayer* player) {
 f32 Player_GetLinearVelocityForLimbRotation(ActorPlayer* player) {
     return player->linearVelocity * GiantMask_GetSimpleInvertedScaleModifier();
 }
+
+void Player_SetGiantMaskTransformationState(GlobalContext* ctxt, ActorPlayer* player) {
+    u32 newState = PLAYER_STATE1_TIME_STOP | PLAYER_STATE1_GIANT_MASK;
+    if (MISC_CONFIG.flags.giantMaskAnywhere && ctxt->sceneNum != SCENE_INISIE_BS) {
+        newState |= PLAYER_STATE1_SPECIAL_2;
+    }
+    player->stateFlags.state1 |= newState;
+}

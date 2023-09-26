@@ -313,6 +313,47 @@
     .dw 0x00000000
 
 ;==================================================================================================
+; Handle Giant Mask transformation states
+;==================================================================================================
+
+; Replaces:
+;   LW      A0, 0x001C (SP)
+;   LUI     AT, 0x2000
+;   ORI     AT, AT, 0x0100
+;   LW      T6, 0x0A6C (A0)
+;   OR      T7, T6, AT
+;   JAL     0x8082DAD4
+;   SW      T7, 0x0A6C (A0)
+.org 0x808389F4
+    lw      a0, 0x0018 (sp)
+    jal     Player_SetGiantMaskTransformationState
+    lw      a1, 0x001C (sp)
+    nop
+    nop
+    jal     0x8082DAD4
+    lw      a0, 0x001C (sp)
+
+; Replaces:
+;   LW      A0, 0x001C (SP)
+;   LUI     AT, 0x2000
+;   ORI     AT, AT, 0x0100
+;   LW      T6, 0x0A6C (A0)
+;   SB      R0, 0x0153 (A0)
+;   OR      T7, T6, AT
+;   JAL     0x8082DAD4
+;   SW      T7, 0x0A6C (A0)
+.org 0x80838A58
+    lw      a0, 0x0018 (sp)
+    jal     Player_SetGiantMaskTransformationState
+    lw      a1, 0x001C (sp)
+    nop
+    nop
+    lw      a0, 0x001C (sp)
+    jal     0x8082DAD4
+    sb      r0, 0x0153 (a0)
+
+
+;==================================================================================================
 ; Handle Giant Mask speed
 ;==================================================================================================
 
