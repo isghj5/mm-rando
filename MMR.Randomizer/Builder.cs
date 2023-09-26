@@ -1679,6 +1679,7 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.safer_glitches_fix_goron_bow);
                 hacks.Add(Resources.mods.safer_glitches_index_warp);
                 hacks.Add(Resources.mods.safer_glitches_fix_4thday_mayor);
+                hacks.Add(Resources.mods.safer_glitches_fix_4thday_gossip);
             }
 
             if (_randomized.Settings.BombchuDrops)
