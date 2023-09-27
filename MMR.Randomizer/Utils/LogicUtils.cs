@@ -75,7 +75,8 @@ namespace MMR.Randomizer.Utils
                     TrickTooltip = logicItem.TrickTooltip,
                     DependsOnItems = logicItem.RequiredItems.Select(item => (Item)logic.FindIndex(li => li.Id == item)).ToList(),
                     Conditionals = logicItem.ConditionalItems.Select(c => c.Select(item => (Item)logic.FindIndex(li => li.Id == item)).ToList()).ToList(),
-                    TrickCategory = logicItem.TrickCategory
+                    TrickCategory = logicItem.TrickCategory,
+                    TrickUrl = logicItem.TrickUrl,
                 });
             }
 

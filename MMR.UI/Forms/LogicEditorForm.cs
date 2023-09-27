@@ -193,6 +193,8 @@ namespace MMR.UI.Forms
             tTrickDescription.ForeColor = _logic.Logic[n].TrickTooltip != null ? SystemColors.WindowText : SystemColors.WindowFrame;
             tTrickCategory.Text = _logic.Logic[n].TrickCategory ?? "(optional category)";
             tTrickCategory.ForeColor = _logic.Logic[n].TrickCategory != null ? SystemColors.WindowText : SystemColors.WindowFrame;
+            tTrickUrl.Text = _logic.Logic[n].TrickUrl ?? "(optional YouTube link)";
+            tTrickUrl.ForeColor = _logic.Logic[n].TrickUrl != null ? SystemColors.WindowText : SystemColors.WindowFrame;
         }
 
         private void Reset()
@@ -208,6 +210,7 @@ namespace MMR.UI.Forms
                     TimeNeeded = TimeOfDay.None,
                     IsTrick = false,
                     TrickTooltip = string.Empty,
+                    TrickUrl = string.Empty,
                 }).ToList(),
             };
             _singleItemSelectorForm?.SetLogicFile(_logic);
@@ -257,6 +260,7 @@ namespace MMR.UI.Forms
             cTrick.Visible = isCustomItem;
             tTrickDescription.Visible = isCustomItem;
             tTrickCategory.Visible = isCustomItem;
+            tTrickUrl.Visible = isCustomItem;
 
             var isMultiLocation = _logic.Logic[n].IsMultiLocation;
             tMain.Enabled = !isMultiLocation;
@@ -541,6 +545,7 @@ namespace MMR.UI.Forms
 
         private const string DEFAULT_TRICK_TOOLTIP = "(optional tooltip)";
         private const string DEFAULT_CATEGORY_TOOLTIP = "(optional category)";
+        private const string DEFAULT_TRICK_URL = "(optional YouTube link)";
 
         private void tTrickDescription_TextChanged(object sender, EventArgs e)
         {
@@ -589,6 +594,7 @@ namespace MMR.UI.Forms
                 _logic.Logic[n].TimeNeeded = _itemsById[itemId].TimeNeeded;
                 _logic.Logic[n].TimeSetup = _itemsById[itemId].TimeSetup;
                 _logic.Logic[n].TrickTooltip = _itemsById[itemId].TrickTooltip;
+                _logic.Logic[n].TrickUrl = _itemsById[itemId].TrickUrl;
 
                 SetIndex(n);
                 //nItem.Value = itemIndex;
@@ -616,6 +622,40 @@ namespace MMR.UI.Forms
             {
                 tTrickCategory.Text = DEFAULT_CATEGORY_TOOLTIP;
                 tTrickCategory.ForeColor = SystemColors.WindowFrame;
+            }
+        }
+
+        private void tTrickUrl_TextChanged(object sender, EventArgs e)
+        {
+            _logic.Logic[n].TrickUrl = string.IsNullOrWhiteSpace(tTrickUrl.Text) || tTrickUrl.Text == DEFAULT_TRICK_URL
+                ? null
+                : tTrickUrl.Text;
+        }
+
+        private void tTrickUrl_Enter(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_logic.Logic[n].TrickUrl))
+            {
+                tTrickUrl.Text = string.Empty;
+                tTrickUrl.ForeColor = SystemColors.WindowText;
+            }
+        }
+
+        private void tTrickUrl_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_logic.Logic[n].TrickUrl))
+            {
+                tTrickUrl.Text = DEFAULT_TRICK_URL;
+                tTrickUrl.ForeColor = SystemColors.WindowFrame;
+            }
+            else if (!_logic.Logic[n].TrickUrl.IsValidTrickUrl())
+            {
+                tTrickUrl.ForeColor = Color.Red;
+                
+            }
+            else
+            {
+                tTrickUrl.ForeColor = SystemColors.WindowText;
             }
         }
     }

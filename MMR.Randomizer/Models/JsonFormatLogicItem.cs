@@ -15,6 +15,7 @@ namespace MMR.Randomizer.Models
 
         private string _trickTooltip;
         private string _trickCategory;
+        private string _trickUrl;
 
         public string TrickTooltip
         {
@@ -37,6 +38,18 @@ namespace MMR.Randomizer.Models
             set
             {
                 _trickCategory = value;
+            }
+        }
+
+        public string TrickUrl
+        {
+            get
+            {
+                return IsTrick ? _trickUrl : null;
+            }
+            set
+            {
+                _trickUrl = value;
             }
         }
 

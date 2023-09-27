@@ -88,6 +88,7 @@
             this.tTrickDescription = new System.Windows.Forms.TextBox();
             this.bCopy = new System.Windows.Forms.Button();
             this.tTrickCategory = new System.Windows.Forms.TextBox();
+            this.tTrickUrl = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.nItem)).BeginInit();
             this.tMain.SuspendLayout();
             this.tTimes.SuspendLayout();
@@ -871,11 +872,25 @@
             this.tTrickCategory.Enter += new System.EventHandler(this.tCategoryDescription_Enter);
             this.tTrickCategory.Leave += new System.EventHandler(this.tCategoryDescription_Leave);
             // 
+            // tTrickUrl
+            // 
+            this.tTrickUrl.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.tTrickUrl.Location = new System.Drawing.Point(536, 39);
+            this.tTrickUrl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tTrickUrl.Name = "tTrickUrl";
+            this.tTrickUrl.Size = new System.Drawing.Size(274, 23);
+            this.tTrickUrl.TabIndex = 13;
+            this.tTrickUrl.Text = "(optional YouTube link)";
+            this.tTrickUrl.TextChanged += new System.EventHandler(this.tTrickUrl_TextChanged);
+            this.tTrickUrl.Enter += new System.EventHandler(this.tTrickUrl_Enter);
+            this.tTrickUrl.Leave += new System.EventHandler(this.tTrickUrl_Leave);
+            // 
             // LogicEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(824, 622);
+            this.Controls.Add(this.tTrickUrl);
             this.Controls.Add(this.tTrickCategory);
             this.Controls.Add(this.bCopy);
             this.Controls.Add(this.tTrickDescription);
@@ -971,5 +986,6 @@
         private System.Windows.Forms.CheckBox cSDay1;
         private System.Windows.Forms.Label lTSetup;
         private System.Windows.Forms.TextBox tTrickCategory;
+        private System.Windows.Forms.TextBox tTrickUrl;
     }
 }
