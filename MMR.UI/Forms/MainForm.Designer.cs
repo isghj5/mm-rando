@@ -80,6 +80,7 @@ namespace MMR.UI.Forms
             this.pLocationCategories = new System.Windows.Forms.Panel();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.cFewerHealthDrops = new System.Windows.Forms.CheckBox();
             this.cDType = new System.Windows.Forms.ComboBox();
             this.lDType = new System.Windows.Forms.Label();
             this.cDeathMoonCrash = new System.Windows.Forms.CheckBox();
@@ -259,7 +260,6 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cFewerHealthDrops = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -562,10 +562,10 @@ namespace MMR.UI.Forms
             // 
             // bToggleTricks
             // 
-            this.bToggleTricks.Location = new System.Drawing.Point(349, 39);
+            this.bToggleTricks.Location = new System.Drawing.Point(328, 39);
             this.bToggleTricks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bToggleTricks.Name = "bToggleTricks";
-            this.bToggleTricks.Size = new System.Drawing.Size(96, 27);
+            this.bToggleTricks.Size = new System.Drawing.Size(96, 25);
             this.bToggleTricks.TabIndex = 19;
             this.bToggleTricks.Text = "Edit Tricks";
             this.bToggleTricks.UseVisualStyleBackColor = true;
@@ -584,7 +584,7 @@ namespace MMR.UI.Forms
             this.cMode.Location = new System.Drawing.Point(96, 40);
             this.cMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cMode.Name = "cMode";
-            this.cMode.Size = new System.Drawing.Size(245, 23);
+            this.cMode.Size = new System.Drawing.Size(224, 23);
             this.cMode.TabIndex = 1;
             this.cMode.SelectedIndexChanged += new System.EventHandler(this.cMode_SelectedIndexChanged);
             // 
@@ -617,7 +617,7 @@ namespace MMR.UI.Forms
             this.tbUserLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbUserLogic.Name = "tbUserLogic";
             this.tbUserLogic.ReadOnly = true;
-            this.tbUserLogic.Size = new System.Drawing.Size(349, 23);
+            this.tbUserLogic.Size = new System.Drawing.Size(328, 23);
             this.tbUserLogic.TabIndex = 18;
             // 
             // groupBox6
@@ -835,6 +835,20 @@ namespace MMR.UI.Forms
             this.groupBox11.TabIndex = 33;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Challenges";
+            // 
+            // cFewerHealthDrops
+            // 
+            this.cFewerHealthDrops.AutoSize = true;
+            this.cFewerHealthDrops.BackColor = System.Drawing.Color.Transparent;
+            this.cFewerHealthDrops.ForeColor = System.Drawing.Color.Black;
+            this.cFewerHealthDrops.Location = new System.Drawing.Point(7, 165);
+            this.cFewerHealthDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFewerHealthDrops.Name = "cFewerHealthDrops";
+            this.cFewerHealthDrops.Size = new System.Drawing.Size(129, 19);
+            this.cFewerHealthDrops.TabIndex = 26;
+            this.cFewerHealthDrops.Text = "Fewer Health Drops";
+            this.cFewerHealthDrops.UseVisualStyleBackColor = false;
+            this.cFewerHealthDrops.CheckedChanged += new System.EventHandler(this.cFewerHealthDrops_CheckedChanged);
             // 
             // cDType
             // 
@@ -3120,20 +3134,6 @@ namespace MMR.UI.Forms
             this.bSkip.UseVisualStyleBackColor = true;
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
-            // 
-            // cFewerHealthDrops
-            // 
-            this.cFewerHealthDrops.AutoSize = true;
-            this.cFewerHealthDrops.BackColor = System.Drawing.Color.Transparent;
-            this.cFewerHealthDrops.ForeColor = System.Drawing.Color.Black;
-            this.cFewerHealthDrops.Location = new System.Drawing.Point(7, 165);
-            this.cFewerHealthDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cFewerHealthDrops.Name = "cFewerHealthDrops";
-            this.cFewerHealthDrops.Size = new System.Drawing.Size(129, 19);
-            this.cFewerHealthDrops.TabIndex = 26;
-            this.cFewerHealthDrops.Text = "Fewer Health Drops";
-            this.cFewerHealthDrops.UseVisualStyleBackColor = false;
-            this.cFewerHealthDrops.CheckedChanged += new System.EventHandler(this.cFewerHealthDrops_CheckedChanged);
             // 
             // MainForm
             // 
