@@ -4412,7 +4412,7 @@ namespace MMR.Randomizer.LogicMigrator
                 ("SettingNotStrayFairyModeChestsOnly", null, null),
                 ("SettingNotRandomizedItemGreatBayBossKey", null, null),
                 ("SettingNotRandomizedBottleCatchHotSpringWater", "Unrandomized Bottled Contents", null),
-                ("SettingDamageModeDefault", null, null),
+                ("SettingDamageModeDefault", "Take Damage", null),
                 ("SettingNotDamageModeDouble", null, null),
                 ("SettingNotDamageModeQuadruple", null, null),
                 ("SettingNotDamageModeOHKO", null, null),

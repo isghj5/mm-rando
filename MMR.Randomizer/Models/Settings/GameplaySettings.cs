@@ -254,7 +254,6 @@ namespace MMR.Randomizer.Models.Settings
             "Pinnacle Rock without Seahorse",
             "Run Through Poisoned Water",
             "Scarecrow's Song",
-            "Take Damage",
             "WFT 2nd Floor Skip",
         };
 

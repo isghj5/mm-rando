@@ -63,14 +63,14 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "1 Snowhead Key",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Twin Block Room Climb",
           "OtherArrow"
         ],
@@ -79,7 +79,7 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Twin Block Room Climb",
           "SHT Bridge Room"
         ],
@@ -197,7 +197,7 @@
         ],
         [
           "Death Warp",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "OtherExplosive"
         ]
       ],
@@ -320,13 +320,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ]
       ],
@@ -367,13 +367,13 @@
         [
           "Clever Ice Platforms",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Clever Ice Platforms",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "MaskBlast"
@@ -386,14 +386,14 @@
           "GBT Iceless",
           "SettingAllowFierceDeityAnywhere",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "GBT Iceless",
           "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -777,12 +777,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -1108,12 +1108,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -1276,7 +1276,7 @@
         ],
         [
           "MaskBlast",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Fewer Item Requirements"
         ],
         [
@@ -1358,20 +1358,20 @@
         [
           "Run Through Poisoned Water",
           "FD Difficult Jumps",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "Run Through Poisoned Water",
           "SettingAllowFierceDeityAnywhere",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Run Through Poisoned Water",
           "SettingAllowFierceDeityAnywhere",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "FD Jumps"
@@ -1380,7 +1380,7 @@
           "Run Through Poisoned Water",
           "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -1389,7 +1389,7 @@
         ],
         [
           "SettingClimbMostSurfaces",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -1535,7 +1535,7 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -1886,14 +1886,14 @@
           "MaskZora",
           "Run Through Poisoned Water",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "MaskZora",
           "Run Through Poisoned Water",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -1901,14 +1901,14 @@
           "MaskZora",
           "Run Through Poisoned Water",
           "Harder Long Jumps",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "AreaSouthAccess",
           "Tall Character",
           "Run Through Poisoned Water",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -1916,7 +1916,7 @@
           "Tall Character",
           "Run Through Poisoned Water",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -1925,7 +1925,7 @@
           "Tall Character",
           "Run Through Poisoned Water",
           "Harder Long Jumps",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "AreaSouthAccess",
@@ -2070,57 +2070,57 @@
         [
           "Kill Big Octo",
           "Run Through Poisoned Water",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskZora"
         ],
         [
           "Kill Big Octo",
           "Run Through Poisoned Water",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Tall Character"
         ],
         [
           "Kill Big Octo",
           "Poisoned Water as Goron",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "Kill Big Octo",
           "SettingClimbMostSurfaces",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "Big Octo Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskDeku"
         ],
         [
           "Big Octo Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Poisoned Water as Goron",
           "Play Song of Soaring"
         ],
         [
           "Big Octo Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Run Through Poisoned Water",
           "FD Jumps",
           "Play Song of Soaring"
         ],
         [
           "Big Octo Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Run Through Poisoned Water",
           "FD Difficult Jumps"
         ],
         [
           "Big Octo Skip",
           "SettingClimbMostSurfaces",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "Big Octo Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Run Through Poisoned Water",
           "Recoil Flip",
           "Play Song of Soaring",
@@ -2233,13 +2233,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ]
       ],
@@ -2295,12 +2295,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Play Song of Soaring"
@@ -2308,14 +2308,14 @@
         [
           "FD Difficult Jumps",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag",
           "Play Song of Soaring"
         ],
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Play Song of Soaring"
         ],
         [
@@ -2395,14 +2395,14 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SettingAllowFierceDeityAnywhere",
           "Gainer",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SettingAllowFierceDeityAnywhere",
           "Gainer",
           "Powder Kegs as Explosives",
@@ -2413,14 +2413,14 @@
         [
           "SettingAllowFierceDeityAnywhere",
           "Any Bomb Bag",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Fewer Item Requirements"
         ],
         [
           "SettingAllowFierceDeityAnywhere",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Play Epona's Song",
           "Play Song of Soaring",
           "Fewer Item Requirements"
@@ -2511,7 +2511,7 @@
         ],
         [
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "Powder Kegs as Explosives",
@@ -3134,7 +3134,7 @@
         ],
         [
           "ItemHookshot",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "ItemHookshot",
@@ -3145,7 +3145,7 @@
         ],
         [
           "SettingClimbMostSurfaces",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -3195,7 +3195,7 @@
         ],
         [
           "ItemHookshot",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "ItemHookshot",
@@ -3206,7 +3206,7 @@
         ],
         [
           "SettingClimbMostSurfaces",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -3289,7 +3289,7 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -3316,17 +3316,17 @@
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Use Light Arrow"
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -3418,20 +3418,20 @@
         [
           "MaskZora",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "MaskZora",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
           "MaskZora",
           "Harder Long Jumps",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "MaskZora",
@@ -3502,13 +3502,13 @@
         [
           "Recoil Flip",
           "Death Warp",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Recoil Flip",
           "Death Warp",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -3530,13 +3530,13 @@
         [
           "FD Jumps",
           "Death Warp",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "FD Jumps",
           "Death Warp",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -3548,7 +3548,7 @@
           "STT Elegy Maze",
           "MaskZora",
           "Fewer Item Requirements",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Play Song of Soaring"
         ]
       ],
@@ -3671,13 +3671,13 @@
         [
           "Recoil Flip",
           "Death Warp",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Recoil Flip",
           "Death Warp",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -3692,7 +3692,7 @@
         [
           "FD Jumps",
           "Death Warp",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "OtherExplosive"
         ],
         [
@@ -4303,7 +4303,7 @@
         ],
         [
           "Death Warp",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "OtherExplosive",
           "Lensless Chests"
         ]
@@ -4328,7 +4328,7 @@
         ],
         [
           "Death Warp",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -4607,7 +4607,7 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ]
       ],
@@ -4670,12 +4670,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -4864,66 +4864,66 @@
         ],
         [
           "Run Through Poisoned Water",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskZora"
         ],
         [
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Kill Big Octo",
           "SettingClimbMostSurfaces"
         ],
         [
           "Run Through Poisoned Water",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Tall Character",
           "Kill Big Octo"
         ],
         [
           "Run Through Poisoned Water",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SettingGiantMaskAnywhere",
           "Kill Big Octo"
         ],
         [
           "Poisoned Water as Goron",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Kill Big Octo",
           "Long Jump"
         ],
         [
           "Poisoned Water as Goron",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Kill Big Octo",
           "Recoil Flip"
         ],
         [
           "Poisoned Water as Goron",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Big Octo Skip",
           "Long Jump",
           "Dungeon Entrance Return"
         ],
         [
           "Poisoned Water as Goron",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Big Octo Skip",
           "Recoil Flip",
           "Dungeon Entrance Return"
         ],
         [
           "Big Octo Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "FD Jumps",
           "Dungeon Entrance Return"
         ],
         [
           "Big Octo Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "FD Difficult Jumps"
         ],
         [
           "Big Octo Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SettingClimbMostSurfaces"
         ]
       ],
@@ -4966,14 +4966,14 @@
           "Run Through Poisoned Water",
           "SettingAllowFierceDeityAnywhere",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Run Through Poisoned Water",
           "SettingAllowFierceDeityAnywhere",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "FD Jumps"
@@ -4982,7 +4982,7 @@
           "Run Through Poisoned Water",
           "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -5189,7 +5189,7 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -5662,7 +5662,7 @@
         ],
         [
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "FD Jumps"
@@ -5690,20 +5690,20 @@
         [
           "SettingAllowFierceDeityAnywhere",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingAllowFierceDeityAnywhere",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
           "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "FD Difficult Jumps"
@@ -5744,14 +5744,14 @@
         [
           "FD Jumps",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag",
           "Use Fire Arrow"
         ],
         [
           "FD Jumps",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Use Fire Arrow"
@@ -5759,27 +5759,27 @@
         [
           "FD Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Use Fire Arrow"
         ],
         [
           "FD Jumps",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag",
           "Use Fire Arrow"
         ],
         [
           "FD Jumps",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Use Fire Arrow"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Jump along invisible platforms",
           "Goron Bomb Jump",
           "Any Bomb Bag",
@@ -5787,7 +5787,7 @@
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Jump along invisible platforms",
           "Goron Bomb Jump",
           "Powder Kegs as Explosives",
@@ -5797,7 +5797,7 @@
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Jump along invisible platforms",
           "Goron Bomb Jump",
           "Powder Kegs as Explosives",
@@ -5808,7 +5808,7 @@
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Jump along invisible platforms",
           "Goron Bomb Jump",
           "Powder Kegs as Explosives",
@@ -5818,7 +5818,7 @@
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Jump along invisible platforms",
           "Goron Bomb Jump",
           "Powder Kegs as Explosives",
@@ -6009,7 +6009,7 @@
         [
           "Tall Character",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -41732,13 +41732,13 @@
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -42019,7 +42019,7 @@
           "Use Light Arrow",
           "Hot Spring Water in Well",
           "SettingNotRandomizedBottleCatchHotSpringWater",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Fewer Item Requirements"
         ]
       ],
@@ -42063,7 +42063,7 @@
         ],
         [
           "Fewer Item Requirements",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -42088,7 +42088,7 @@
         ],
         [
           "Fewer Item Requirements",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -42470,7 +42470,7 @@
         [
           "SettingClimbMostSurfaces",
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -42561,7 +42561,7 @@
         [
           "SettingClimbMostSurfaces",
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -42620,7 +42620,7 @@
         [
           "SettingClimbMostSurfaces",
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -42668,7 +42668,7 @@
         [
           "SettingClimbMostSurfaces",
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -43244,7 +43244,7 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -43547,11 +43547,11 @@
         ],
         [
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "ItemHookshot",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Fewer Item Requirements"
         ],
         [
@@ -43580,7 +43580,7 @@
         ],
         [
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "FD Jumps"
@@ -43691,7 +43691,7 @@
         ],
         [
           "ItemHookshot",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskGreatFairy"
         ],
         [
@@ -43809,7 +43809,7 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Iced Stairwell",
           "SHT Jump to 3rd Locked Door",
           "MaskGreatFairy"
@@ -43819,7 +43819,7 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Twin Block Room Climb",
           "SHT Iced Stairwell",
           "SHT Jump to 3rd Locked Door",
@@ -43870,7 +43870,7 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Twin Block Room Climb",
           "OtherArrow"
         ],
@@ -43928,13 +43928,13 @@
         [
           "SHT Jump to Stray Fairies",
           "SHT Elevator Room Access",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Short Ranged Weapon"
         ],
         [
           "SHT Jump to Stray Fairies",
           "SHT Elevator Room Access",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -43962,7 +43962,7 @@
         [
           "MaskGreatFairy",
           "OtherArrow",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "MaskGreatFairy",
@@ -44060,14 +44060,14 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "1 Snowhead Key",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Twin Block Room Climb",
           "OtherArrow"
         ],
@@ -44076,7 +44076,7 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Twin Block Room Climb",
           "SHT Bridge Room"
         ],
@@ -44123,7 +44123,7 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Goron Bomb Jump",
           "OtherArrow"
         ],
@@ -44131,14 +44131,14 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Goron Bomb Jump",
           "SHT Bridge Room"
         ],
         [
           "1 Snowhead Key",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ]
@@ -44191,14 +44191,14 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "1 Snowhead Key",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Twin Block Room Climb"
         ],
         [
@@ -44273,13 +44273,13 @@
         [
           "SHT Fireless",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SHT Fireless",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "1 Snowhead Key"
@@ -44287,7 +44287,7 @@
         [
           "SHT Fireless",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Long Jump",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
@@ -44345,12 +44345,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -44492,7 +44492,7 @@
           "GBT Reverse Water Direction",
           "GBT Reverse Water Loop",
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "FD Jumps"
@@ -44548,14 +44548,14 @@
           "GBT Reverse Water Direction",
           "Use Fire Arrow",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "GBT Reverse Water Direction",
           "Use Fire Arrow",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -45912,7 +45912,7 @@
         ],
         [
           "Death Warp",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -45934,7 +45934,7 @@
         ],
         [
           "Death Warp",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -46324,13 +46324,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -46389,12 +46389,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -46428,12 +46428,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -46707,7 +46707,7 @@
           "Bio Baba Hive Luck",
           "SettingClimbMostSurfaces",
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -47109,14 +47109,14 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "1 Snowhead Key",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Twin Block Room Climb",
           "OtherArrow"
         ],
@@ -47125,7 +47125,7 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Twin Block Room Climb",
           "SHT Bridge Room"
         ],
@@ -47168,14 +47168,14 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "1 Snowhead Key",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Twin Block Room Climb",
           "OtherArrow"
         ],
@@ -47184,7 +47184,7 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Twin Block Room Climb",
           "SHT Bridge Room"
         ],
@@ -47223,12 +47223,12 @@
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -47252,12 +47252,12 @@
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -47850,14 +47850,14 @@
           "Run Through Poisoned Water",
           "SettingAllowFierceDeityAnywhere",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Run Through Poisoned Water",
           "SettingAllowFierceDeityAnywhere",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "FD Jumps"
@@ -47866,7 +47866,7 @@
           "Run Through Poisoned Water",
           "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ]
       ],
@@ -48248,13 +48248,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -48333,7 +48333,7 @@
         [
           "Jump along invisible platforms",
           "Ikana Castle Falling Ceiling Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Use Fire Arrow"
         ],
         [
@@ -48397,7 +48397,7 @@
         ],
         [
           "SettingClimbMostSurfaces",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -48516,7 +48516,7 @@
         ],
         [
           "SettingClimbMostSurfaces",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -49957,7 +49957,7 @@
         ],
         [
           "Death Warp",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -50071,13 +50071,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -50609,12 +50609,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "STT Bridge Crystal Chest"
@@ -50673,13 +50673,13 @@
         [
           "Use Light Arrow",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Use Light Arrow",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -50721,13 +50721,13 @@
         [
           "Use Light Arrow",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Use Light Arrow",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -50766,7 +50766,7 @@
         [
           "MaskDeku",
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "MaskDeku",
@@ -50788,7 +50788,7 @@
         [
           "ItemHookshot",
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "ItemHookshot",
@@ -50807,14 +50807,14 @@
           "OtherArrow",
           "FD Difficult Jumps",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "OtherArrow",
           "FD Difficult Jumps",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -50822,7 +50822,7 @@
           "OtherArrow",
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -50851,7 +50851,7 @@
         [
           "ItemHookshot",
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "ItemHookshot",
@@ -50870,14 +50870,14 @@
           "OtherArrow",
           "FD Difficult Jumps",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "OtherArrow",
           "FD Difficult Jumps",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -50885,7 +50885,7 @@
           "OtherArrow",
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -50954,7 +50954,7 @@
         [
           "Ikana Castle Falling Ceiling Skip",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Use Fire Arrow"
         ],
         [
@@ -50984,7 +50984,7 @@
         [
           "Ikana Castle Falling Ceiling Skip",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Use Fire Arrow"
         ],
         [
@@ -51018,12 +51018,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -51057,12 +51057,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -51093,12 +51093,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -51146,12 +51146,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Fewer Item Requirements"
         ],
         [
@@ -51186,12 +51186,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Fewer Item Requirements"
         ],
         [
@@ -51642,7 +51642,7 @@
         ],
         [
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag",
           "Tall Character"
         ],
@@ -51702,13 +51702,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -51741,13 +51741,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -51780,13 +51780,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -51819,13 +51819,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -51926,13 +51926,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ]
       ],
@@ -51958,13 +51958,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ]
       ],
@@ -51990,13 +51990,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ]
       ],
@@ -52022,13 +52022,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ]
       ],
@@ -52054,13 +52054,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ]
       ],
@@ -52086,13 +52086,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ]
       ],
@@ -52437,12 +52437,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -52516,7 +52516,7 @@
         ],
         [
           "SettingGiantMaskAnywhere",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -52685,12 +52685,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -54263,7 +54263,7 @@
         [
           "SettingClimbMostSurfaces",
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -54308,7 +54308,7 @@
         [
           "SettingClimbMostSurfaces",
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -54353,7 +54353,7 @@
         [
           "SettingClimbMostSurfaces",
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -54747,7 +54747,7 @@
         [
           "SettingClimbMostSurfaces",
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -54784,7 +54784,7 @@
         [
           "SettingClimbMostSurfaces",
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -54821,7 +54821,7 @@
         [
           "SettingClimbMostSurfaces",
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -55615,7 +55615,7 @@
         [
           "Zora Jar Game with Explosives",
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "Zora Jar Game with Explosives",
@@ -56007,7 +56007,7 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -56475,7 +56475,7 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -56525,7 +56525,7 @@
         [
           "Ikana Castle Falling Ceiling Skip",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Use Fire Arrow"
         ],
         [
@@ -56555,7 +56555,7 @@
         [
           "Ikana Castle Falling Ceiling Skip",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Use Fire Arrow"
         ],
         [
@@ -56758,13 +56758,13 @@
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingClimbMostSurfaces",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -56997,7 +56997,7 @@
         ],
         [
           "SettingClimbMostSurfaces",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -57121,20 +57121,20 @@
         [
           "SettingAllowFierceDeityAnywhere",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingAllowFierceDeityAnywhere",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
           "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "FD Difficult Jumps"
@@ -57304,12 +57304,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -57525,13 +57525,13 @@
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -57559,13 +57559,13 @@
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -57593,13 +57593,13 @@
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -57627,13 +57627,13 @@
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -57661,13 +57661,13 @@
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -58071,7 +58071,7 @@
         ],
         [
           "Fewer Item Requirements",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -58151,20 +58151,20 @@
         [
           "MaskZora",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "MaskZora",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
           "MaskZora",
           "Harder Long Jumps",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "GBT Reverse Water Direction",
@@ -58982,7 +58982,7 @@
         ],
         [
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "Tall Character",
@@ -59650,12 +59650,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -59719,20 +59719,20 @@
         [
           "SettingAllowFierceDeityAnywhere",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "SettingAllowFierceDeityAnywhere",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
           "SettingAllowFierceDeityAnywhere",
           "Harder Long Jumps",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "FD Difficult Jumps"
@@ -60013,7 +60013,7 @@
           "Use Fire Arrow",
           "Jump along invisible platforms",
           "Ikana Castle Falling Ceiling Skip",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -60258,12 +60258,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Dungeon Entrance Return"
@@ -60519,17 +60519,6 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Removes sword as requirement for fighting.",
-      "TrickCategory": "Easy"
-    },
-    {
-      "Id": "Take Damage",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "You might have to take damage.",
       "TrickCategory": "Easy"
     },
     {
@@ -60816,7 +60805,7 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -61216,7 +61205,7 @@
         ],
         [
           "Death Warp",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -61239,7 +61228,7 @@
         ],
         [
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "Inn Balcony Jump"
@@ -61605,7 +61594,7 @@
           "ItemWoodfallBossKey",
           "OtherArrow",
           "WFT 2nd Floor Skip",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "ItemWoodfallBossKey",
@@ -61617,7 +61606,7 @@
           "OtherArrow",
           "FD Difficult Jumps",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -61625,7 +61614,7 @@
           "OtherArrow",
           "FD Difficult Jumps",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -61634,20 +61623,20 @@
           "OtherArrow",
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "ItemWoodfallBossKey",
           "WFT Bow Skip",
           "WFT 2nd Floor Access",
           "MaskDeku",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "ItemWoodfallBossKey",
           "WFT Bow Skip",
           "WFT 2nd Floor Skip",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "ItemWoodfallBossKey",
@@ -61657,7 +61646,7 @@
         [
           "ItemWoodfallBossKey",
           "WFT Bow Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SettingClimbMostSurfaces"
         ]
       ],
@@ -61947,7 +61936,7 @@
         ],
         [
           "OtherArrow",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Fewer Item Requirements"
         ],
         [
@@ -62124,7 +62113,7 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Twin Block Room Climb",
           "OtherArrow"
         ]
@@ -62234,12 +62223,12 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -62276,7 +62265,7 @@
           "ItemPowderKeg",
           "UpgradeMirrorShield",
           "Ikana Castle Falling Ceiling Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Jump along invisible platforms"
         ],
         [
@@ -62308,41 +62297,41 @@
         ],
         [
           "Run Through Poisoned Water",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskZora"
         ],
         [
           "Run Through Poisoned Water",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Tall Character",
           "Kill Big Octo"
         ],
         [
           "Poisoned Water as Goron",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Kill Big Octo"
         ],
         [
           "Big Octo Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskDeku"
         ],
         [
           "Big Octo Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Poisoned Water as Goron",
           "Play Song of Soaring"
         ],
         [
           "Big Octo Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Run Through Poisoned Water",
           "FD Jumps",
           "Play Song of Soaring"
         ],
         [
           "Big Octo Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Recoil Flip",
           "Run Through Poisoned Water",
           "SettingCharacterAdultLink",
@@ -62350,7 +62339,7 @@
         ],
         [
           "Big Octo Skip",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Run Through Poisoned Water",
           "FD Difficult Jumps"
         ],
@@ -62361,12 +62350,12 @@
         [
           "SettingClimbMostSurfaces",
           "Kill Big Octo",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingClimbMostSurfaces",
           "Big Octo Skip",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -62427,7 +62416,7 @@
         [
           "GBT Hookless Exit",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -62493,7 +62482,7 @@
         ],
         [
           "SettingClimbMostSurfaces",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -62515,7 +62504,7 @@
         ],
         [
           "WFT 2nd Floor Skip",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "ItemHookshot",
@@ -62525,7 +62514,7 @@
           "ItemHookshot",
           "OtherArrow",
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "ItemHookshot",
@@ -62592,7 +62581,7 @@
         [
           "OtherArrow",
           "WFT 2nd Floor Skip",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "OtherArrow",
@@ -62601,7 +62590,7 @@
         [
           "WFT Bow Skip",
           "WFT 2nd Floor Access",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingClimbMostSurfaces",
@@ -62650,7 +62639,7 @@
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -62902,7 +62891,7 @@
           "Recoil Flip",
           "ISTT Updraft Recoil Flips",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -63008,17 +62997,17 @@
         ],
         [
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Dungeon Entrance Return"
@@ -63062,7 +63051,7 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -63242,7 +63231,7 @@
           "MaskGoron"
         ],
         [
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -63282,7 +63271,7 @@
         [
           "ItemHookshot",
           "Death Warp",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "Recoil Flip",
@@ -63296,7 +63285,7 @@
         [
           "Recoil Flip",
           "Death Warp",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "Fewer Item Requirements",
@@ -63310,7 +63299,7 @@
         [
           "Fewer Item Requirements",
           "Death Warp",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -63374,12 +63363,12 @@
         ],
         [
           "Death Warp",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Death Warp",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -63414,7 +63403,7 @@
         ],
         [
           "MaskBlast",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -63527,7 +63516,7 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -63595,7 +63584,7 @@
         ],
         [
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingAllowFierceDeityAnywhere"
@@ -63631,12 +63620,12 @@
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -63663,7 +63652,7 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -63717,23 +63706,23 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -63789,12 +63778,12 @@
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "MaskBlast"
         ],
         [
@@ -63880,7 +63869,7 @@
         [
           "SHT Bridge Room",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -63891,7 +63880,7 @@
         [
           "Use Fire Arrow",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -63899,7 +63888,7 @@
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "SHT Twin Block Room Climb"
         ],
         [
@@ -63907,7 +63896,7 @@
           "ItemPowderKeg",
           "Goron Bomb Jump",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "OtherArrow",
           "Dungeon Entrance Return"
         ],
@@ -63916,7 +63905,7 @@
           "ItemPowderKeg",
           "Goron Bomb Jump",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "OtherArrow",
           "SHT Fireless"
         ]
@@ -63957,7 +63946,7 @@
           "SHT Zora Jumps",
           "1 Snowhead Key",
           "Harder Long Jumps",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -64153,13 +64142,13 @@
         [
           "Clever Ice Platforms",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "Clever Ice Platforms",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
@@ -64219,7 +64208,7 @@
         [
           "GBT Iceless",
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -64244,20 +64233,20 @@
         [
           "MaskZora",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
           "MaskZora",
           "Long Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
           "Tall Character",
           "Harder Long Jumps",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "FD Jumps"
@@ -64319,7 +64308,7 @@
         ],
         [
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "Recoil Flip"
@@ -64455,7 +64444,7 @@
         [
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag"
         ],
         [
@@ -64686,7 +64675,7 @@
         ],
         [
           "Death Warp",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -64843,7 +64832,7 @@
         [
           "Kill Deku Shrine Big Octo",
           "OtherArrow",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "Kill Deku Shrine Big Octo",
@@ -64853,7 +64842,7 @@
         [
           "Kill Deku Shrine Big Octo",
           "MaskZora",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "Kill Deku Shrine Big Octo",
@@ -64863,7 +64852,7 @@
         [
           "Kill Deku Shrine Big Octo",
           "ItemHookshot",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -64888,7 +64877,7 @@
           "MaskZora",
           "Gainer",
           "Long Jump",
-          "Take Damage"
+          "SettingDamageModeDefault"
         ],
         [
           "MaskZora",
@@ -64897,24 +64886,24 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag",
           "Long Jump"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Any Bomb Bag",
           "Recoil Flip"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "FD Jumps"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Long Jump",
@@ -64922,7 +64911,7 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
           "Recoil Flip",
@@ -64931,13 +64920,13 @@
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Clever Ice Platforms",
           "Any Bomb Bag"
         ],
         [
           "Goron Bomb Jump",
-          "Take Damage",
+          "SettingDamageModeDefault",
           "Clever Ice Platforms",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
