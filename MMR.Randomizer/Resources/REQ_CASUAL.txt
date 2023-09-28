@@ -196,8 +196,7 @@
           "Lensless Jumping"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "OtherExplosive"
         ]
       ],
@@ -3501,14 +3500,12 @@
         ],
         [
           "Recoil Flip",
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "Any Bomb Bag"
         ],
         [
           "Recoil Flip",
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "MaskBlast"
         ],
         [
@@ -3529,14 +3526,12 @@
         ],
         [
           "FD Jumps",
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "Any Bomb Bag"
         ],
         [
           "FD Jumps",
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "MaskBlast"
         ],
         [
@@ -3670,14 +3665,12 @@
         ],
         [
           "Recoil Flip",
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "Any Bomb Bag"
         ],
         [
           "Recoil Flip",
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "MaskBlast"
         ],
         [
@@ -3691,8 +3684,7 @@
         ],
         [
           "FD Jumps",
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "OtherExplosive"
         ],
         [
@@ -4302,8 +4294,7 @@
           "Lensless Chests"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "OtherExplosive",
           "Lensless Chests"
         ]
@@ -4327,8 +4318,7 @@
           "Jump along invisible platforms"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ]
       ],
       "TimeNeeded": "None",
@@ -45911,8 +45901,7 @@
           "Fighting"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ]
       ],
       "TimeNeeded": "None",
@@ -45933,8 +45922,7 @@
           "Fighting"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ]
       ],
       "TimeNeeded": "None",
@@ -49956,8 +49944,7 @@
           "Fighting"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ]
       ],
       "TimeNeeded": "None",
@@ -61204,8 +61191,7 @@
           "SettingAllowFierceDeityAnywhere"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -63270,8 +63256,7 @@
         ],
         [
           "ItemHookshot",
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ],
         [
           "Recoil Flip",
@@ -63284,8 +63269,7 @@
         ],
         [
           "Recoil Flip",
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ],
         [
           "Fewer Item Requirements",
@@ -63298,8 +63282,7 @@
         ],
         [
           "Fewer Item Requirements",
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -63362,13 +63345,11 @@
           "Play Song of Soaring"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "Any Bomb Bag"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "MaskBlast"
         ],
         [
@@ -64656,17 +64637,6 @@
       "TrickCategory": "Hard"
     },
     {
-      "Id": "Death Warp",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Game over intentionally to return to the beginning of a dungeon, grotto, or building.",
-      "TrickCategory": "Easy"
-    },
-    {
       "Id": "Dungeon Entrance Return",
       "RequiredItems": [],
       "ConditionalItems": [
@@ -64674,8 +64644,7 @@
           "Play Song of Soaring"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ]
       ],
       "TimeNeeded": "None",

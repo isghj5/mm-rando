@@ -185,8 +185,7 @@
           "Lensless Jumping"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "OtherExplosive"
         ]
       ],
@@ -4621,8 +4620,7 @@
           "Lensless Chests"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "OtherExplosive",
           "Lensless Chests"
         ]
@@ -4646,8 +4644,7 @@
           "Jump along invisible platforms"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ]
       ],
       "TimeNeeded": "None",
@@ -4845,8 +4842,7 @@
         ],
         [
           "Remote Hookshot",
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ],
         [
           "Remote Hookshot",
@@ -5020,8 +5016,7 @@
         ],
         [
           "Remote Hookshot",
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ],
         [
           "Remote Hookshot",
@@ -45227,8 +45222,7 @@
         ],
         [
           "Weirdshot Off a Powder Keg Explosion",
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "MaskBlast"
         ],
         [
@@ -46438,8 +46432,7 @@
           "OtherArrow"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ]
       ],
       "TimeNeeded": "None",
@@ -46464,8 +46457,7 @@
           "OtherArrow"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ]
       ],
       "TimeNeeded": "None",
@@ -50515,8 +50507,7 @@
           "OtherArrow"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ]
       ],
       "TimeNeeded": "None",
@@ -64690,13 +64681,11 @@
           "Play Song of Soaring"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "Any Bomb Bag"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "MaskBlast"
         ],
         [
@@ -66024,17 +66013,6 @@
       "TrickCategory": "Hard"
     },
     {
-      "Id": "Death Warp",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Game over intentionally to return to the beginning of a dungeon, grotto, or building.",
-      "TrickCategory": "Easy"
-    },
-    {
       "Id": "Dungeon Entrance Return",
       "RequiredItems": [],
       "ConditionalItems": [
@@ -66042,8 +66020,7 @@
           "Play Song of Soaring"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ]
       ],
       "TimeNeeded": "None",
@@ -66619,8 +66596,7 @@
         [
           "Weirdshot",
           "Bomb Hovering",
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ],
         [
           "Weirdshot",
@@ -66630,8 +66606,7 @@
         [
           "Weirdshot",
           "FD Difficult Jumps",
-          "Death Warp",
-          "SettingDamageModeDefault"
+          "SettingNotDeathMoonCrash"
         ],
         [
           "Weirdshot Off a Powder Keg Explosion",
@@ -67718,13 +67693,11 @@
           "Play Song of Soaring"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "Any Bomb Bag"
         ],
         [
-          "Death Warp",
-          "SettingDamageModeDefault",
+          "SettingNotDeathMoonCrash",
           "MaskBlast"
         ],
         [

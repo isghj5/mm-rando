@@ -4442,7 +4442,7 @@ namespace MMR.Randomizer.LogicMigrator
                 ("SettingEnableSunsSong", null, null),
                 ("SettingAllowFierceDeityAnywhere", "Fierce Deity's Mask Anywhere", null),
                 ("SettingNotByoAmmo", null, null),
-                ("SettingNotDeathMoonCrash", null, null),
+                ("SettingNotDeathMoonCrash", "Death Warp", null),
                 ("SettingHookshotAnySurface", null, null),
                 ("SettingCharacterAdultLink", null, null),
                 ("SettingNotCharacterAdultLink", null, null),
@@ -4480,6 +4480,14 @@ namespace MMR.Randomizer.LogicMigrator
 
                 return logicItem;
             }).ToList());
+
+            foreach (var conditionals in logicObject.Logic.SelectMany(item => item.ConditionalItems))
+            {
+                if (conditionals.Contains("SettingNotDeathMoonCrash") && conditionals.Contains("SettingDamageModeDefault"))
+                {
+                    conditionals.Remove("SettingDamageModeDefault");
+                }
+            }
 
             foreach (var data in itemNames)
             {
