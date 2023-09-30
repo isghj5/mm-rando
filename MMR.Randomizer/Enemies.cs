@@ -1759,6 +1759,8 @@ namespace MMR.Randomizer
             /// so we have to disable it for any new dinofos spawns to avoid
             /// also other trouble actors that can take that cutscene and do things we dont want
 
+            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.ClockTowerInterior) return;
+
             var listTroubleActorsObj = new List<int> {
                 GameObjects.Actor.Dinofos.ObjectIndex(),
                 GameObjects.Actor.Scarecrow.ObjectIndex(),
@@ -1769,6 +1771,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.SkullKidPainting.ObjectIndex(),
                 GameObjects.Actor.LaundryPoolBell.ObjectIndex(),
                 GameObjects.Actor.AnjusGrandmaCredits.ObjectIndex(),
+                GameObjects.Actor.Japas.ObjectIndex(),
                 GameObjects.Actor.GoronWithGeroMask.ObjectIndex()
             };
 
@@ -1789,6 +1792,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.SkullKidPainting,
                 GameObjects.Actor.LaundryPoolBell,
                 GameObjects.Actor.AnjusGrandmaCredits,
+                GameObjects.Actor.Japas,
                 GameObjects.Actor.GoronWithGeroMask
             };
 
@@ -2000,7 +2004,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Tingle, GameObjects.Actor.Skulltula)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.LikeLike, GameObjects.Actor.MagicSlab)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.ZoraRaceRing)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.GateSoldier, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
+                if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Japas)) continue;
                 if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
@@ -3635,7 +3639,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 51.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 51.3\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
