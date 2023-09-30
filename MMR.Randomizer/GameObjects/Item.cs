@@ -1066,6 +1066,7 @@ namespace MMR.Randomizer.GameObjects
         OtherLimitlessBeans,
         OtherPlayDekuPlayground,
         OtherTimeTravel,
+        OtherInaccessible,
 
         [EntranceName("Odolwa's Lair"), Region(Region.WoodfallTemple)]
         [DungeonEntrance(DungeonEntrance.EntranceOdolwasLairFromWoodfallTemple)]

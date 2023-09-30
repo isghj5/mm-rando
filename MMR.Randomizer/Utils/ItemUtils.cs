@@ -449,11 +449,54 @@ namespace MMR.Randomizer.Utils
             return result;
         }
 
+        private static List<Item> SettingJunkLocations;
+
+        public static void PrepareTricksAndSettings(List<Item> initialJunkedLocations, ItemList itemList)
+        {
+            SettingJunkLocations = initialJunkedLocations;
+            IEnumerable<Item> filter(IEnumerable<Item> items)
+            {
+                return items.Where(item => item.IsFake());
+            }
+            bool updated;
+            do
+            {
+                updated = false;
+                foreach (var io in itemList)
+                {
+                    var location = (Item)io.ID;
+                    if (SettingJunkLocations.Contains(location))
+                    {
+                        continue;
+                    }
+
+                    var dependsOnItems = filter(io.DependsOnItems);
+                    var conditionals = io.Conditionals.Select(c => filter(c));
+                    if (dependsOnItems.Intersect(SettingJunkLocations).Any() || (conditionals.Any() && conditionals.All(c => c.Intersect(SettingJunkLocations).Any())))
+                    {
+                        if (location.IsBottleCatchContent() || location.CanBeStartedWith())
+                        {
+                            throw new Exception($"Unable to reach {location} given your current settings. Please check your logic file.");
+                        }
+                        SettingJunkLocations.Add(location);
+                        updated = true;
+                    }
+                    else
+                    {
+                        io.Conditionals.RemoveAll(c => filter(c).Intersect(SettingJunkLocations).Any());
+                    }
+                }
+            } while (updated);
+
+            SettingJunkLocations.RemoveAll(location => !location.Region(itemList).HasValue || location.Entrance() != null);
+        }
+
         public static bool IsLocationJunk(Item location, GameplaySettings settings)
         {
             return settings.CustomJunkLocations.Contains(location)
                 || (HintedJunkLocations?.Contains(location) == true)
-                || (BlitzJunkLocations?.Contains(location) == true);
+                || (BlitzJunkLocations?.Contains(location) == true)
+                || (SettingJunkLocations?.Contains(location) == true);
         }
 
         public static bool CanBeRequired(Item item)

@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 19;
+        public const int CurrentVersion = 20;
 
         public static string ApplyMigrations(string logic)
         {
@@ -217,6 +217,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 19)
             {
                 AddWellFairies(logicObject);
+            }
+
+            if (logicObject.Version < 20)
+            {
+                AddInaccessible(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -4558,6 +4563,28 @@ namespace MMR.Randomizer.LogicMigrator
                 return logicItem;
             }));
             logicObject.Version = 19;
+        }
+
+        private static void AddInaccessible(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 128;
+            var itemNames = new string[]
+            {
+                "OtherInaccessible",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name =>
+            {
+                var logicItem = new JsonFormatLogicItem
+                {
+                    Id = name,
+                    RequiredItems = new List<string>(),
+                    ConditionalItems = new List<List<string>>(),
+                };
+
+                return logicItem;
+            }));
+            logicObject.Version = 20;
         }
 
         private class MigrationItem

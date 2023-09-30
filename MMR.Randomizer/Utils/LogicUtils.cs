@@ -80,23 +80,6 @@ namespace MMR.Randomizer.Utils
                 });
             }
 
-            foreach (var io in itemList)
-            {
-                if (io.DependsOnItems.Any(item => itemList[item].IsTrick))
-                {
-                    throw new Exception($"Dependencies of {io.Name} are not valid. Cannot have tricks as Dependencies.");
-                }
-                if (io.DependsOnItems.Any(item => item.IsLogicSetting()))
-                {
-                    throw new Exception($"Dependencies of {io.Name} are not valid. Cannot have settings as Dependencies.");
-                }
-
-                if (io.Conditionals.Any() && io.Conditionals.All(c => c.Any(item => itemList[item].IsTrick || item.IsLogicSetting())))
-                {
-                    throw new Exception($"Conditionals of {io.Name} are not valid. Must have at least one conditional that isn't a trick or a setting.");
-                }
-            }
-
             return itemList;
         }
 

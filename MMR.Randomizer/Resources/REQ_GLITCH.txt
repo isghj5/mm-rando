@@ -1,5 +1,5 @@
 {
-  "Version": 19,
+  "Version": 20,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -752,11 +752,7 @@
     },
     {
       "Id": "UpgradeRoyalWallet",
-      "RequiredItems": [
-        "AreaMoonAccess",
-        "UpgradeGiantWallet",
-        "UpgradeAdultWallet"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -2845,6 +2841,15 @@
       "RequiredItems": [
         "Play Song of Time"
       ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherInaccessible",
+      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -42321,9 +42326,6 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "AreaMoonAccess"
-        ],
-        [
           "Bomb Hovering"
         ]
       ],
@@ -49315,9 +49317,6 @@
         "AreaDekuPalaceAccess"
       ],
       "ConditionalItems": [
-        [
-          "AreaMoonAccess"
-        ],
         [
           "Zora Boomerang Through Walls"
         ],
@@ -66455,9 +66454,6 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "AreaMoonAccess"
-        ],
-        [
           "Bomb Hovering",
           "Any Bombchu Pack"
         ],
@@ -66761,9 +66757,6 @@
         "BottleCatchHotSpringWater"
       ],
       "ConditionalItems": [
-        [
-          "AreaMoonAccess"
-        ],
         [
           "Equip Swap"
         ],

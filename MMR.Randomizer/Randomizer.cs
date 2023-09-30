@@ -441,29 +441,39 @@ namespace MMR.Randomizer
 
         private void UpdateLogicForSettings()
         {
+            var settingJunkedLocations = new List<Item>();
+
             foreach (var itemObject in ItemList)
             {
                 itemObject.DependsOnItems?.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
                 itemObject.Conditionals?.ForEach(c => c.RemoveAll(item => _settings.CustomStartingItemList.Contains(item)));
 
-                if (itemObject.Conditionals != null)
+                if (itemObject.Conditionals?.Any(c => !c.Any()) == true)
                 {
-                    itemObject.Conditionals.RemoveAll(c => c.Any(item => ItemList[item].IsTrick && !_settings.EnabledTricks.Contains(ItemList[item].Name)));
-                    itemObject.Conditionals.RemoveAll(c => c.Any(item => !item.IsLogicSettingEnabled(_settings)));
+                    itemObject.Conditionals.Clear();
                 }
 
                 if (itemObject.IsTrick && !_settings.EnabledTricks.Contains(itemObject.Name))
                 {
+                    settingJunkedLocations.Add(itemObject.Item);
                     itemObject.DependsOnItems?.Clear();
                     itemObject.Conditionals?.Clear();
                 }
 
                 if (!itemObject.Item.IsLogicSettingEnabled(_settings))
                 {
+                    settingJunkedLocations.Add(itemObject.Item);
                     itemObject.DependsOnItems?.Clear();
                     itemObject.Conditionals?.Clear();
                 }
             }
+
+            if (_settings.LogicMode != LogicMode.NoLogic)
+            {
+                settingJunkedLocations.Add(Item.OtherInaccessible);
+            }
+
+            ItemUtils.PrepareTricksAndSettings(settingJunkedLocations, ItemList);
 
             if (_settings.RequiredBossRemains < 4)
             {

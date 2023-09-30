@@ -1,5 +1,5 @@
 {
-  "Version": 19,
+  "Version": 20,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -750,11 +750,7 @@
     },
     {
       "Id": "UpgradeRoyalWallet",
-      "RequiredItems": [
-        "AreaMoonAccess",
-        "UpgradeGiantWallet",
-        "UpgradeAdultWallet"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -2590,6 +2586,15 @@
       "RequiredItems": [
         "Play Song of Time"
       ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherInaccessible",
+      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -41887,7 +41892,7 @@
     {
       "Id": "ChestPreClocktownDekuNut",
       "RequiredItems": [
-        "AreaMoonAccess"
+        "OtherInaccessible"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -41973,9 +41978,6 @@
         ],
         [
           "SettingGiantMaskAnywhere"
-        ],
-        [
-          "AreaMoonAccess"
         ]
       ],
       "TimeNeeded": "None",
@@ -48651,9 +48653,6 @@
       "Id": "CollectableDekuPalaceWestInnerGardenItem7",
       "RequiredItems": [],
       "ConditionalItems": [
-        [
-          "AreaMoonAccess"
-        ],
         [
           "AreaDekuPalaceAccess",
           "Zora Boomerang Through Walls"
