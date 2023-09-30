@@ -301,6 +301,7 @@ namespace MMR.Randomizer.Utils
                 .AsReadOnly();
             JunkItems = LogicallyJunkItems.Where(item => item != Item.CollectableIkanaGraveyardDay2Bats1
                                           && item.ItemCategory() != ItemCategory.Navigation
+                                          && item.ItemCategory() != ItemCategory.PiecesOfHeart
                                           && item.GetAttribute<ChestTypeAttribute>()?.Type == ChestTypeAttribute.ChestType.SmallWooden
                                       ).ToList().AsReadOnly();
         }
