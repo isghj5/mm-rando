@@ -3026,6 +3026,8 @@ namespace MMR.Randomizer.GameObjects
         [PathingVariants(0xFF00, 0x100)]
         [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)] //zzz
         [UnkillableAllVariants]
+        // TODO fix this later
+        [EnemizerScenesExcluded(Scene.RomaniRanch)] // if removed, and another romani teleports player, game is stuck
         RomaniWithBow = 0x1A4, // En_Ma4
 
         //[ActorizerEnabled] // none of the types will spawn out of minigame
