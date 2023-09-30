@@ -3801,8 +3801,15 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // pirate beehive cutscene
         GiantBeee = 0x204, // En_Bee
 
+        [ActorizerEnabled]
         [FileID(476)]
+        [CheckRestricted(Item.HeartPieceSeaHorse, Item.SongNewWaveBossaNova,
+            Item.ChestPinacleRockRedRupee1, Item.ChestPinacleRockRedRupee2,
+            Item.CollectablePinnacleRockPot1, Item.CollectablePinnacleRockPot2,
+            Item.CollectablePinnacleRockPot3, Item.CollectablePinnacleRockPot4)]
         [ObjectListIndex(0x1EC)]
+        [WaterVariants(0x2001)]
+        [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 3)] // 0x3F8
         Seahorse = 0x205, // En_Ot
 
