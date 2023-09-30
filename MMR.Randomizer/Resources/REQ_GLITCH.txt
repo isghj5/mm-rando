@@ -60482,7 +60482,14 @@
       "RequiredItems": [
         "ItemNotebook"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "SettingNotCharacterAdultLink"
+        ],
+        [
+          "MaskDeku"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "Day2, Night2, Day3, Night3",
       "TimeSetup": "None",
@@ -67318,7 +67325,14 @@
     {
       "Id": "Day 1 Grave Clip",
       "RequiredItems": [],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "SettingNotCharacterAdultLink"
+        ],
+        [
+          "MaskDeku"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
