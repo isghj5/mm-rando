@@ -209,7 +209,7 @@ namespace MMR.UI.Forms
 
             var settingToControlMapping = new Dictionary<Item, Control>
             {
-                { Item.SettingCloseCows, cCloseCows },
+                { Item.SettingCloseCows, null },
                 { Item.SettingContinuousDekuHopping, cContinuousDekuHopping },
                 { Item.SettingClimbMostSurfaces, cClimbMostSurfaces },
                 { Item.SettingFreeScarecrow, cFreeScarecrow },
