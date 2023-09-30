@@ -74,7 +74,10 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, 0x5A1E,
             0x0AFB, 0x099C)] // two free, the rest are gold invisible
-        //[GroundVariants(0x001F)] // testing
+                             //[GroundVariants(0x001F)] // testing
+        [WaterBottomVariants(0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
+            0x561E, 0x5C79, 0x5991, 0x5B58, 0x5A1E,
+            0x0AFB, 0x099C)] // two free, the rest are gold invisible
         [VariantsWithRoomMax(max: 1, variant: 0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, 0x5A1E,
             0x0AFB, 0x099C)] // brown, harder to see in perpheral vision, not invisible
@@ -99,7 +102,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(46)]
         [ActorInitVarOffset(0x2A60)]
         [ObjectListIndex(0x5)]
-        [WaterVariants(0xFF00)]
+        [WaterTopVariants(0xFF00)]
         [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.GreatBayTemple)]
         Octarok = 0x8, // En_Okuta
 
@@ -207,7 +210,7 @@ namespace MMR.Randomizer.GameObjects
         // FD is underground, FE can be both but now, for detection, FD is water only
         // FF does not exist in MM vanilla, red variety
         [GroundVariants(0xFFFD, 0xFFFF)] 
-        [WaterVariants(0xFFFE)]
+        [WaterTopVariants(0xFFFE)]
         Tektite = 0x12, // En_Tite
 
         Empty13 = 0x13,
@@ -424,7 +427,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1380)]
         [FileID(73)]
         [ObjectListIndex(0x30)]
+        // armos has no params, dont know why these are vanilla
         [GroundVariants(0xFFFF, 0x7F)]
+        [WaterBottomVariants(0x777)]
         [VariantsWithRoomMax(max: 7, variant: 0xFFFF, 0x7F)] // weirdly high cpu usage, not a low as other still enemies
         Armos = 0x32, // En_Am
 
@@ -657,6 +662,7 @@ namespace MMR.Randomizer.GameObjects
         // 0xFFFE is -2 = gibdo, does not stun
         // 0xFFFE is -3 = gibdo that rises out of the coffin, from OOT, does not stun and looks weird so we wont use until I find a way to combine with a fake chest
         [GroundVariants(0x7F07, 0x7F05, 0x7F06, 0x7F03, 0x7F04, 0x8005, 0x8006, 0x8007, 0x8003, 0xFFFE)]
+        [WaterBottomVariants(0x7F07, 0x7F05, 0x7F06, 0x7F03, 0x7F04, 0x8005, 0x8006, 0x8007, 0x8003, 0xFFFE)]
         [VariantsWithRoomMax(max: 3, variant: 0x7F07, 0x7F05, 0x7F06, 0x7F02, 0x8005, 0x8006, 0x8007, 0x7F04)]
         [VariantsWithRoomMax(max: 1, variant: 0x7F03, 0x8003, 0xFFFE)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)] // 0xFF00 is read, but only 0x7F of that gets set on death, never checked
@@ -670,12 +676,11 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7E, shift: 9)]
         //[GroundVariants(0)] // params are ignored, uses params as a variable for setting
         [FlyingVariants(0)]
-        //[WaterVariants(0)]
+        [WaterTopVariants(0)]
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [FlyingToGroundHeightAdjustment(200)]
-         
         [EnemizerScenesPlacementBlock(
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.PiratesFortressRooms, Scene.DekuPalace,
             Scene.DekuShrine, Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.GoronRacetrack,
@@ -849,7 +854,7 @@ namespace MMR.Randomizer.GameObjects
         // works on ground too but cannot add ground without ground enemies showing up in fish tank
         // there is a bug sometimes on ground it loses its collider (in a small scene)
         //[GroundVariants]
-        [WaterVariants(0)]
+        [WaterBottomVariants(0)]
         Shellblade = 0x64, // En_Sb
 
         // miniboss
@@ -888,7 +893,7 @@ namespace MMR.Randomizer.GameObjects
         // 200 does not spawn? 400 is slightly tilted to one side (might be the leever actually)
         // 800 also does not spawn
         //[GroundVariants(0x0A00)]//(0x7E00)]
-        [WaterVariants(0)]
+        [WaterBottomVariants(0)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
@@ -908,7 +913,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(112)]
         [ObjectListIndex(0xAB)]
         // 2 is ocean bottom, 0 is one in shallow shore water, 3 is land and one in shallow water
-        [WaterVariants(0, 2)]
+        [WaterBottomVariants(0, 2)]
         [GroundVariants(3)]
         [VariantsWithRoomMax(max: 3, variant: 0, 2)]
         [VariantsWithRoomMax(max: 6, variant: 3)]
@@ -1147,7 +1152,7 @@ namespace MMR.Randomizer.GameObjects
            0x0114, 0x0115, 0x0116, 0x0117, 0x0118, 
            0x8003, 0x807F )]
         [FlyingVariants(0x44, 0x8044)] // does not exist, for fun placement
-        [WaterVariants( 0x07F, // exists under a sign in the deku palace
+        [WaterBottomVariants( 0x07F, // exists under a sign in the deku palace
             0x8077)] // does not exist, used for the bottom of the ocean signs in pinnacle rock (hack)
         [VariantsWithRoomMax(max: 3, variant: 0x807F, 0x8004)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
         [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: -1,
@@ -1171,6 +1176,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0, 0x20, 0x1, 0x43, 0x14, 0x5)]
         // TODO get wall rotations working so I can just set some on the wall, wall crystal switches make sense
         [WallVariants(0x2)]
+        [WaterBottomVariants(0x0, 0x1, 0x3, 0x4)]
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple)]
@@ -1368,7 +1374,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x1F2 you get bugs if you pick it up, best version
         // A1 is boulder type (1) and A drop table
         [GroundVariants(0x1F2, 0xA1)]
-        [WaterVariants(0xFE01, // silver boulder
+        [WaterBottomVariants(0xFE01, // silver boulder
             0xFEF0)] // regular small rock (like in pinaccle)
         [VariantsWithRoomMax(max: 10, variant: 0xA1, 0xFE01)]
         [BlockingVariants(0xA1, 0xFE01)]
@@ -1434,7 +1440,7 @@ namespace MMR.Randomizer.GameObjects
         // unused water vortex from water temple
         //[ActorizerEnabled] // we have a modified fix one now, adjusts height to water
         [FileID(163)]
-        [WaterVariants(0)]
+        [WaterTopVariants(0)]
         [ObjectListIndex(0x106)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
@@ -1465,7 +1471,7 @@ namespace MMR.Randomizer.GameObjects
         // 0 does nothing just stands there and stares at you
         // 1 is climbing in the tree trying to get rups
         [GroundVariants(0)]
-        [WaterVariants(0)] // more fun
+        [WaterBottomVariants(0)] // more fun
         //[WallVariants(1)] // facing the wrong way and no bonk, so not that interesting
         [VariantsWithRoomMax(max: 3, variant: 0)]
         //[EnemizerScenesPlacementBlock(Scene.RomaniRanch, Scene.Woodfall, Scene.DekuShrine)] // standing variant has really large collider
@@ -1478,6 +1484,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // warp addresses are offsets, dangerous until we can hard code
         [FileID(167)]
         [ObjectListIndex(0x271)]
+        //[WaterBottomVariants()] // think this would be funny
         [PathingVariants(0x11, 0x422, 0x833, 0xC44)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [VariantsWithRoomMax(max: 1, variant: 0x11, 0x422, 0x833, 0xC44)]
@@ -1513,7 +1520,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x5C)]
         //[GroundVariants(0)]
         [FlyingVariants(0)]
-        //[WaterVariants(0)]
+        [WaterTopVariants(0)]
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [BlockingVariantsAll]
@@ -1857,7 +1864,7 @@ namespace MMR.Randomizer.GameObjects
         // hmm, params are 0x7E00 >> 9 and thats it. path?
         // looks like -1 (7E) works as a path disable for this actor too
         [GroundVariants(0x7E00)]
-        [WaterVariants(0x7E00)]
+        [WaterBottomVariants(0x7E00)]
         [PathingVariants(0x0)]
         [PathingTypeVarsPlacement(mask: 0x7F00, shift: 9)]
         [OnlyOneActorPerRoom]
@@ -1884,7 +1891,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(233)]
         [ObjectListIndex(0x2)]
-        [WaterVariants(0)]
+        [WaterBottomVariants(0)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [BlockingVariantsAll]
         BronzeBoulder = 0xFC, // Obj_Hamishi
@@ -1895,11 +1902,13 @@ namespace MMR.Randomizer.GameObjects
         // cutscene actor of some sort, if it doesnt crash it loads a tpose skullkid with missing model parts
         Unused_En_Zl4 = 0xFD, // En_Zl4
 
-        //[ActorizerEnabled] // we dont want as an actual actor, we want as a companion
+        [ActorizerEnabled] // we dont want as an actual actor, we want as a companion
         // why is the letter of all things in gameplay_keep? maybe its the same texture of LTK?
         [FileID(235)]
         [ObjectListIndex(0x1CB)] // gameplay_keep obj 1, but I dont want it everywhere, I just want with mailbox
-        [GroundVariants(0)]
+        //[GroundVariants(0)]
+        [WaterBottomVariants(0)]
+        [VariantsWithRoomMax(max:5, variant:0)]
         [UnkillableAllVariants]
         LetterToPostman = 0xFE,
 
@@ -1941,6 +1950,7 @@ namespace MMR.Randomizer.GameObjects
         // oh no z rotation is a parameter.... and there appear to be at least two based on xz rotation
         // 0x7E parameter is switch flag... for what I have no idea, but it seems we cannot set it without triggering a sfx at least
         [GroundVariants(0x7E)]
+        [WaterBottomVariants(0x77)]
         [VariantsWithRoomMax(max: 4, variant: 0x7E)] // 11 overloaded gorman race track
         [UnkillableAllVariants]
         [BlockingVariantsAll]
@@ -2201,7 +2211,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x15E)]
         // 0x1 is the one that hangs from the ceiling in GBT
         // TODO if I get wall sideways working with dexihand, do it for baba too
-        [WaterVariants(04, 02, 0)]
+        [WaterTopVariants(04, 02, 0)]
         [EnemizerScenesExcluded(Scene.GreatBayTemple)] // need their lilipads to reach compass chest and fairy chest
         BioDekuBaba = 0x12D, // Boss_05
 
@@ -2439,6 +2449,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled]
         [FileID(303)]
         [ObjectListIndex(0x14B)]
+        [WaterBottomVariants(0)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [EnemizerScenesPlacementBlock(Scene.MountainVillageSpring)] // her new actor plays flute, this can break frog choir if close enough
@@ -2837,7 +2848,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(351)]
         [ObjectListIndex(0xBB)]
-        [WaterVariants(0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x200B, 0x200C, 0x200D)]
+        [WaterBottomVariants(0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x200B, 0x200C, 0x200D)]
         //[FlyingVariants(0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // loads more, think there are flags here
         // if I had a hanging from cieling thing like spiders this would work fine
         //[WallVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
@@ -2874,6 +2885,7 @@ namespace MMR.Randomizer.GameObjects
 
         Empty189 = 0x189,
         Empty18A = 0x18A,
+
 
         [FileID(355)]
         [ObjectListIndex(0x1)]
@@ -3024,7 +3036,7 @@ namespace MMR.Randomizer.GameObjects
         // cremia shows up if you repel the aliens even if romani is gone
         [CheckRestricted(Item.SongEpona, Item.ItemBottleAliens)]
         [PathingVariants(0xFF00, 0x100)]
-        [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)] //zzz
+        [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)]
         [UnkillableAllVariants]
         // TODO fix this later
         [EnemizerScenesExcluded(Scene.RomaniRanch)] // if removed, and another romani teleports player, game is stuck
@@ -3369,7 +3381,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(424)]
         [ObjectListIndex(0x1B3)]
         [GroundVariants(0x101, 0x201)]
-        [WaterVariants(0x1)] // dont normally show up down there but its fine
+        [WaterBottomVariants(0x1)] // dont normally show up down there but its fine
         [SwitchFlagsPlacement(mask: 0xF00, shift: 8)]
         [UnkillableAllVariants] // I think...?
         [BlockingVariantsAll]
@@ -3457,7 +3469,6 @@ namespace MMR.Randomizer.GameObjects
         [BlockingVariantsAll]
         GibdoWell = 0x1DA, // En_Talk_Gibud
 
-        
         //[ActorizerEnabled] // had to modify him to make him more interesting, is now an MMRA
         [FileID(436)]
         [ObjectListIndex(0x1B8)]
@@ -3525,6 +3536,7 @@ namespace MMR.Randomizer.GameObjects
         // only one 0x600 can exist without crashing
         //[GroundVariants(0xFFFF, 0x600, 0x702, 0x801)]
         [GroundVariants(0xFF00, 0xFF02, 0xFF01)]
+        [WaterBottomVariants(0xFF00, 0xFF02, 0xFF01)]
         //[VariantsWithRoomMax(max:1, 0xFFFF, 0x600, 0x702, 0x801)]
         [OnlyOneActorPerRoom] // issue: three on redead in stonetower is crash, but not two, not worth issue
         [UnkillableAllVariants] // actually I'm not sure, it has health
@@ -3641,7 +3653,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1CB)]
         // for now, with no entrando, just randomize all but one
         //[CheckRestricted(Item.TradeItemMamaLetter, Item.MaskKeaton, Item.HeartPiecePostBox, Item.MaskCouple)]
-        [GroundVariants(0, 1, 2, 3)]
+        [GroundVariants(0, 1, 2, 3, 4)]
+        [WaterBottomVariants(-0, -1, -2, -3, -4)] // I want to put them on the bottom, but I dont want the game to think they are vanilla water either..
         [CompanionActor(LetterToPostman, ourVariant: -1, variant: 0)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
@@ -3657,6 +3670,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x00FF)]
         // FF is in the game, in OOT 02 was a composer brother, but in MM 0-6 are the same as FF
         [GroundVariants(0x00FF)]
+        [WaterBottomVariants(0x00FF)]
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         // uhhh what else
         //[CheckRestricted(Scene.InvertedStoneTowerTemple, variant:-1,  Item.MundaneItemCuriosityShopBlueRupee)]
@@ -3675,7 +3689,7 @@ namespace MMR.Randomizer.GameObjects
         // 2000 is hookshot room, 1A00 is twin barrel, 0x1E00 is barrel room, 1C00 is last room
         // the three at pinnacle rock are 0x1400, 0x1600, 0x1800
         // 0 loaded fine, what happens if we load smaller values? can we have 3 or more?
-        [WaterVariants(0x0, 0x1000, 0x1200, 0x1300, 0x1500, 0x1700, // non-vanilla
+        [WaterBottomVariants(0x0, 0x1000, 0x1200, 0x1300, 0x1500, 0x1700, // non-vanilla
             0x1400, 0x1600, 0x1800, // pinnacle
             0x1C00, 0x1A00, 0x1E00, 0x2000)] // pirates
         [VariantsWithRoomMax(max: 1, variant: 0x0, 0x1000, 0x1200, 0x1300, 0x1500, 0x1700)]
@@ -3708,7 +3722,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(467)]
         [ObjectListIndex(0x1D2)]
+        // no params, again with the weird vanilla param data
         [GroundVariants(0xFF)]
+        [WaterBottomVariants(0x77)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [CheckRestricted(Item.MaskGoron, Item.ChestHotSpringGrottoRedRupee,
@@ -3739,8 +3755,14 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         SnowheadBiggoron = 0x1FD, // En_Dai
 
+        // TODO try placing places
+        [ActorizerEnabled]
         [FileID(470)]
         [ObjectListIndex(0x1D3)]
+        // 0 starts the cutscene, 1 is after cutscene
+        [WaterTopVariants(0x1)]
+        [UnkillableAllVariants]
+        [OnlyOneActorPerRoom]
         GoronHotSpringWater = 0x1FE, // Bg_Goron_Oyu
 
         //todo
@@ -3808,7 +3830,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectablePinnacleRockPot1, Item.CollectablePinnacleRockPot2,
             Item.CollectablePinnacleRockPot3, Item.CollectablePinnacleRockPot4)]
         [ObjectListIndex(0x1EC)]
-        [WaterVariants(0x2001)]
+        [WaterBottomVariants(0x2001)]
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 3)] // 0x3F8
         Seahorse = 0x205, // En_Ot
@@ -3911,12 +3933,14 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(487)]
         [ObjectListIndex(0x1F5)]
+        // only 3FC is used, some sort of flag
         [WallVariants(0x3F)] // 3F has no cutscene, no camera concerns
-        [GroundVariants(0x3F)] // kinda silly
+        [GroundVariants(0x803F)] // kinda silly
+        [WaterBottomVariants(0x803F)] // kinda silly
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // object is shared with multiple actors in this scene, breaks whole area to remove
         [TreasureFlagsPlacement(mask: 0x7F, shift: 2)]
-        SkullKidPainting = 0x210, // En_Kin2_Picture
+        SkullKidPainting = 0x210, // Bg_Kin2_Picture
 
         [FileID(488)]
         [ObjectListIndex(0x1F5)]
@@ -4096,7 +4120,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(507)]
         [ObjectListIndex(0x206)]
         [CheckRestricted(Item.MaskZora)]
-        [WaterVariants(0x80F, 0xC0F, 0x100F)]
+        [WaterTopVariants(0x80F, 0xC0F, 0x100F)]
         [VariantsWithRoomMax(max:0, variant: 0x80F, 0xC0F, 0x100F)]
         [UnkillableAllVariants]
         Mikau = 0x224, // En_Zog
@@ -4128,7 +4152,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x13/14/15 is jamming at the jazz session cutscene
         // 0x140A is near the entrance
         // removed 0xFC07 because I cannot right now stop them being placed and randoed at the same time (creeper)
-        [WaterVariants(0xFC00, 0xFC08, 0xFC06, 0xFC13, 0xFC14, 0xFC15)] // no reason we cant talk to them underwater I dont think
+        [WaterBottomVariants(0xFC00, 0xFC08, 0xFC06, 0xFC13, 0xFC14, 0xFC15)] // no reason we cant talk to them underwater I dont think
         [GroundVariants(0xFC06, 0xFC08, 0xFC0C, 0xFC0D, 0xFC0E, 0xFC0F, 0xFC10, 0xFC11, 0xFC13, 0xFC14, 0xFC15)]
         // TODO finish making these both underwater and above water where possible
         [PathingVariants(0x140A, 0xFC05, 0x2, 0x3, 0x4)]
@@ -4160,7 +4184,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingToGroundHeightAdjustment(15)]
         [FlyingVariants(0x0)]
         [GroundVariants(0x0)]
-        //[WaterVariants(0x0)]
+        [WaterTopVariants(0x0)]
         [VariantsWithRoomMax(variant: 0, max: 1)]
         [EnemizerScenesPlacementBlock(Scene.StoneTower, Scene.IkanaGraveyard, // too much dyna
             Scene.SouthernSwamp, Scene.SouthernSwampClear,
@@ -4207,7 +4231,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(520)]
         [ObjectListIndex(0x211)]
         [GroundVariants(0)]
-        [WaterVariants(0)]
+        [WaterBottomVariants(0)]
         [UnkillableAllVariants]
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)] // FIRE AND DARKNESS
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
@@ -4286,7 +4310,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(527)]
         [ObjectListIndex(0x216)]
         [GroundVariants(0xFE0F)]
-        [WaterVariants(0xFE0F, 0xFE02, 0xFE01)]
+        [WaterBottomVariants(0xFE0F, 0xFE02, 0xFE01)]
         [OnlyOneActorPerRoom]
         [BlockingVariantsAll]
         [UnkillableAllVariants]
@@ -4369,7 +4393,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x220)]
         [CheckRestricted(Item.HeartPieceEvan)]
         [GroundVariants(0xFE01, 0xFE02, 0xFE0F)]
-        //[WaterVariants(0xFE01, 0xFE02, 0xFE0F)] // also, do not put regular variant as water our typing system is dumb, doesnt know which is which
+        [WaterBottomVariants(0xFE01, 0xFE02, 0xFE0F)] // also, do not put regular variant as water our typing system is dumb, doesnt know which is which
         [VariantsWithRoomMax(max:0, variant:0xFE21, 0xFE02, 0xFE0F)]
         // no limits for now, don't know what his actor does
         [UnkillableAllVariants]
@@ -4410,6 +4434,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         Jugglers = 0x244, // En_Ja
 
+        /// ?? TODO
         [FileID(540)]
         [ObjectListIndex(0x5C)]
         [SwitchFlagsPlacement(mask: 0xFE, shift: 9)]
@@ -4505,7 +4530,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.MundaneItemLuluBadPictographBlueRupee, Item.MundaneItemLuluGoodPictographRedRupee)]
         // E01 is rehersal
         [GroundVariants(0xFE0F)]
-        [WaterVariants(0xFE0F)]
+        [WaterBottomVariants(0xFE0F)]
         [VariantsWithRoomMax(max:0, variant:0xE01)] // failure to spawn
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
@@ -4600,7 +4625,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(567)]
         [ObjectListIndex(0xD0)]
-        [WaterVariants(0,1)]
+        [WaterTopVariants(0,1)]
         [UnkillableAllVariants]
         SwimmingZora = 0x260, // En_Zow
 
@@ -4849,7 +4874,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x24F)]
         [CheckRestricted(Item.HeartPieceNotebookHand)]
         [GroundVariants(0)]
-        [WaterVariants(0)]
+        [WaterBottomVariants(0)]
         [UnkillableAllVariants]
         MysteryHand = 0x27D, // En_Bjt
 
@@ -5208,10 +5233,12 @@ namespace MMR.Randomizer.GameObjects
     public enum ActorType
     {
         Unset   = 0,
-        Water   = 1,
-        Ground  = 2,
-        Flying  = 3,
-        Wall    = 4,
-        Pathing = 5,
+        Water,
+        WaterTop,       // added in 52
+        WaterBottom,    // added in 52
+        Ground,
+        Flying,
+        Wall,
+        Pathing,
     }
 }

@@ -99,6 +99,8 @@ namespace MMR.Randomizer.Models.Rom
             this.AllVariants = new List<List<int>>()
             {
                 injected.waterVariants,
+                new List<int>(),
+                new List<int>(),
                 injected.groundVariants,
                 injected.flyingVariants,
                 new List<int>(),
@@ -119,6 +121,10 @@ namespace MMR.Randomizer.Models.Rom
             // creates a list of lists of variants per type from attributes in the enumerator
             var wattr = actor.GetAttribute<WaterVariantsAttribute>();
             var wlist = (wattr == null) ? new List<int>() : wattr.Variants;
+            var wtattr = actor.GetAttribute<WaterTopVariantsAttribute>();
+            var wtlist = (wtattr == null) ? new List<int>() : wtattr.Variants;
+            var wbattr = actor.GetAttribute<WaterBottomVariantsAttribute>();
+            var wblist = (wbattr == null) ? new List<int>() : wbattr.Variants;
             var gattr = actor.GetAttribute<GroundVariantsAttribute>();
             var glist = ((gattr == null) ? new List<int>() : gattr.Variants);
             var fattr = actor.GetAttribute<FlyingVariantsAttribute>();
@@ -130,6 +136,8 @@ namespace MMR.Randomizer.Models.Rom
             var newList = new List<List<int>>()
             {
                 wlist,
+                wtlist,
+                wblist,
                 glist,
                 flist,
                 wllist,

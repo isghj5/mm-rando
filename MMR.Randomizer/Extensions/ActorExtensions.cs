@@ -75,6 +75,16 @@ namespace MMR.Randomizer.Extensions
             {
                 variants.AddRange(attrW.Variants);
             }
+            var wtattr = actor.GetAttribute<WaterTopVariantsAttribute>();
+            if (wtattr != null)
+            {
+                variants.AddRange(wtattr.Variants);
+            }
+            var wbattr = actor.GetAttribute<WaterBottomVariantsAttribute>();
+            if (wbattr != null)
+            {
+                variants.AddRange(wbattr.Variants);
+            }
             var attrG = actor.GetAttribute<GroundVariantsAttribute>();
             if (attrG != null)
             {

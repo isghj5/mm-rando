@@ -469,7 +469,6 @@ namespace MMR.Randomizer
             //goronVillageWinter.Maps[0].Objects[7] = GameObjects.Actor.GoGoron.ObjectIndex(); // square signpost
 
             FixKafeiPlacements();
-
         }
 
         #region Static Enemizer Changes and Fixes
@@ -1251,6 +1250,20 @@ namespace MMR.Randomizer
                 SceneUtils.UpdateScene(ikanaCanyon);
             }
 
+        }
+
+        public static void FixWaterPostboxes(SceneEnemizerData thisSceneData)
+        {
+            /// makes underwater post boxes have the correct vars
+            /// this probably shouldnt be its own code I just want underwater postboxes without the vanilla vars thinking they can be water
+            /// and un-willing right now to re-write the parameter system to specify vanilla or not
+
+            if ( ! thisSceneData.Objects.Contains(GameObjects.Actor.Postbox.ObjectIndex())) return;
+
+            foreach (var box in thisSceneData.Actors.FindAll(a => a.ActorId == (int)GameObjects.Actor.Postbox))
+            {
+                box.Variants[0] = -box.Variants[0];
+            }
         }
 
         public static void FixWoodfallTempleGekkoMiniboss()
@@ -2108,7 +2121,9 @@ namespace MMR.Randomizer
             for (int objectIndex = 0; objectIndex < thisSceneData.Objects.Count; objectIndex++)
             {
                 // get a list of all enemies (in this room) that have the same OBJECT as our object that have an actor we also have
-                var currentTargetActors = thisSceneData.Actors.FindAll(act => act.OldObjectId == thisSceneData.Objects[objectIndex]);
+                var objId = thisSceneData.Objects[objectIndex];
+                var currentTargetActors = thisSceneData.Actors.FindAll(act => act.OldObjectId == objId);
+                Debug.Assert(currentTargetActors.Count > 0);
                 thisSceneData.ActorsPerObject.Add(currentTargetActors);
                 // we want to detect if this scene/actor combo can drop fairies early
                 var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(act => act.ObjectIndex() == thisSceneData.Objects[objectIndex]);
@@ -2168,7 +2183,8 @@ namespace MMR.Randomizer
             // this could be per-enemy, but right now its only used where enemies and objects match,
             // so to save cpu cycles do it once per object not per enemy
             // TODO: this only removes one actor, if one object can have multiple actors we should check all ofthem
-            var blockedReplacementActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(oldActors[0].OldActorEnum);
+            var oldactor = oldActors[0].OldActorEnum;
+            var blockedReplacementActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(oldactor);
             for (var e = 0; e < blockedReplacementActors.Count; e++)
             {
                 var blockedActor = blockedReplacementActors[e];
@@ -3015,6 +3031,7 @@ namespace MMR.Randomizer
             FixRedeadSpawnScew(thisSceneData); // redeads don't like x/z rotation
             FixBrokenActorSpawnCutscenes(thisSceneData); // some actors dont like having bad cutscenes
             FixGroundToFlyingActorHeights(thisSceneData, flagLog); // putting flying actors on ground spawns can be weird
+            FixWaterPostboxes(thisSceneData);
 
             // print debug actor locations
             WriteOutput("####################################################### ");
@@ -3618,12 +3635,12 @@ namespace MMR.Randomizer
                 var previousThreadPriority = Thread.CurrentThread.Priority;
                 Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
 
-                Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
-                //foreach (var scene in newSceneList) // sequential for debugging only
+                //Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
+                foreach (var scene in newSceneList) // sequential for debugging only
                 {
                     SwapSceneEnemies(settings, scene, seed);
-                });
-                //}
+                //});
+                }
 
                 Thread.CurrentThread.Priority = previousThreadPriority;
 

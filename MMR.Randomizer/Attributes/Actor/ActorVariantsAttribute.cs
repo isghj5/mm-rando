@@ -69,6 +69,16 @@ namespace MMR.Randomizer.Attributes.Actor
         public WaterVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
     }
 
+    public class WaterTopVariantsAttribute : ActorVariantsAttribute
+    {
+        public WaterTopVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
+    }
+
+    public class WaterBottomVariantsAttribute : ActorVariantsAttribute
+    {
+        public WaterBottomVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
+    }
+
     public class WallVariantsAttribute : ActorVariantsAttribute
     {
         public WallVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
