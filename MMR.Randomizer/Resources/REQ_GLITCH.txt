@@ -3872,6 +3872,7 @@
         [
           "AreaInvertedStoneTowerTempleAccess",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "Long Bomb Hovers"
         ]
       ],
@@ -3892,12 +3893,14 @@
           "AreaInvertedStoneTowerTempleAccess",
           "STT Sun Block Clip",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "Bomb Hovering"
         ],
         [
           "AreaInvertedStoneTowerTempleAccess",
           "Use Light Arrow",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "Bomb Hovering"
         ]
       ],
@@ -4085,6 +4088,7 @@
         [
           "AreaStoneTowerTempleAccess",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "Bomb Hovering"
         ]
       ],
@@ -45331,6 +45335,7 @@
         ],
         [
           "Open Upside-Down Chests",
+          "MaskZora",
           "Weirdshot"
         ],
         [
@@ -45382,8 +45387,14 @@
         [
           "AreaStoneTowerTempleAccess",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "ItemHookshot",
           "Long Bomb Hovers"
+        ],
+        [
+          "AreaStoneTowerTempleAccess",
+          "Open Upside-Down Chests",
+          "Extremely Long Bomb Hovers"
         ]
       ],
       "TimeNeeded": "None",
@@ -45489,6 +45500,7 @@
           "AreaStoneTowerTempleAccess",
           "STT Compass Sun Block",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "Long Bomb Hovers",
           "Use Fire Arrow"
         ],
@@ -45496,6 +45508,7 @@
           "AreaStoneTowerTempleAccess",
           "STT Compass Sun Block",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "Long Bomb Hovers",
           "Unlimited Hot Spring Water"
         ],
@@ -45503,6 +45516,7 @@
           "AreaStoneTowerTempleAccess",
           "STT Compass Sun Block",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "SettingClimbMostSurfaces",
           "Use Fire Arrow"
         ],
@@ -45510,6 +45524,7 @@
           "AreaStoneTowerTempleAccess",
           "STT Compass Sun Block",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "SettingClimbMostSurfaces",
           "Unlimited Hot Spring Water"
         ]
@@ -45590,12 +45605,14 @@
         [
           "AreaInvertedStoneTowerTempleAccess",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "Long Bomb Hovers",
           "ItemHookshot"
         ],
         [
           "AreaInvertedStoneTowerTempleAccess",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "Long Bomb Hovers",
           "SettingClimbMostSurfaces"
         ],
@@ -45668,6 +45685,7 @@
         [
           "AreaInvertedStoneTowerTempleAccess",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "Long Bomb Hovers",
           "ItemHookshot"
         ]
@@ -45714,11 +45732,13 @@
         [
           "AreaInvertedStoneTowerTempleAccess",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "Long Bomb Hovers"
         ],
         [
           "AreaInvertedStoneTowerTempleAccess",
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "SettingClimbMostSurfaces"
         ]
       ],
@@ -66711,6 +66731,7 @@
         ],
         [
           "Open Upside-Down Chests",
+          "SettingNotCharacterAdultLink",
           "ItemHookshot",
           "Long Bomb Hovers"
         ]
