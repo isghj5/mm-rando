@@ -311,6 +311,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1319)]
         [SceneInternalId(0x32)]
+        [EnemizerSceneBlockSensitive(Actor.GoronSGoro, -1)] // ice block can block shop
         GoronShrine = 0x2F,
 
         [FileID(1322)]
