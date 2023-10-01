@@ -170,95 +170,6 @@ namespace MMR.Randomizer.Extensions
             return unplacable;
         }
 
-        // depreciated for the actor type, rather than this actor enum version
-        /*
-        public static List<int> CompatibleVariants(this Actor actor, Actor otherActor, Random rng, int oldActorVariant)
-        {
-            // with mixed types, typing could be messy, keep it hidden here
-            // EG. like like can spawn on the sand (land), but also on the bottom of GBC (water floor)
-
-            // I'm sure theres a cleaner way, but everything I tried C# said no
-            //var listOfVariants = new List<int>() { 1, 2, 3, 4 };
-            var listOfVariants = Enum.GetValues(typeof(ActorType)).Cast<ActorType>().ToList();
-            listOfVariants = listOfVariants.OrderBy(u => rng.Next()).ToList(); // random sort in case it has multiple types
-            foreach( var randomVariant in listOfVariants)
-            {
-                ActorVariantsAttribute ourAttr = null;
-                ActorVariantsAttribute otherAttr = null;
-                if (randomVariant == ActorType.Water)
-                {
-                    ourAttr = actor.GetAttribute < WaterVariantsAttribute >();
-                    otherAttr = otherActor.GetAttribute< WaterVariantsAttribute >();
-                }
-                if (randomVariant == ActorType.Ground)
-                {
-                    ourAttr = actor.GetAttribute<GroundVariantsAttribute>();
-                    otherAttr = otherActor.GetAttribute<GroundVariantsAttribute>();
-                }
-                if (randomVariant == ActorType.Flying)
-                {
-                    ourAttr = actor.GetAttribute<FlyingVariantsAttribute>();
-                    otherAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
-                }
-                if (randomVariant == ActorType.Wall)
-                {
-                    ourAttr = actor.GetAttribute<WallVariantsAttribute>();
-                    otherAttr = otherActor.GetAttribute<WallVariantsAttribute>();
-                }
-                if (randomVariant == ActorType.Pathing)
-                {
-                    ourAttr = actor.GetAttribute<PathingVariantsAttribute>();
-                    otherAttr = otherActor.GetAttribute<PathingVariantsAttribute>();
-                }
-
-                var waterTest = actor.GetAttribute<WaterVariantsAttribute>();
-                // if enemy type is ground or flying, we can put them on wall or ground or flying or pathing, just not water
-                /*if ((randomVariant == ActorType.Ground || randomVariant == ActorType.Flying) && otherAttr != null && waterTest == null) {
-                    otherAttr = actor.GetAttribute<FlyingVariantsAttribute>();
-                    if (ourAttr == null)
-                    {
-                        ourAttr = actor.GetAttribute<GroundVariantsAttribute>();
-                    }
-                }
-
-                // large chance of pathing enemies allowing ground or flying
-                if (randomVariant == ActorType.Pathing &&  ourAttr != null && otherAttr == null && rng.Next(100) < 80)
-                {
-                    otherAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
-                    if (otherAttr == null)
-                    {
-                        otherAttr = otherActor.GetAttribute<GroundVariantsAttribute>();
-                    }
-                }
-
-                // small chance of ground enemies allowing flying
-                if (randomVariant == ActorType.Ground && ourAttr != null && otherAttr == null && rng.Next(100) < 30)
-                {
-                    otherAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
-                }
-
-
-                if ((ourAttr != null && otherAttr != null) // both have same type
-                    )//|| ((randomVariant == ActorType.Ground || randomVariant == ActorType.Wall) && ourAttr != null)) // small chance of wall or ground enemies becoming flying
-                {
-                    var compatibleVariants = otherAttr.Variants;
-
-                    // make sure their variants aren't un-placable either
-                    var zeroPlacementVarieties = GetUnPlacableVariants(otherActor);
-                    compatibleVariants = compatibleVariants.FindAll(u => ! zeroPlacementVarieties.Contains(u));
-
-                    // our old actor variant was this type
-                    if (compatibleVariants.Count > 0 && ourAttr.Variants.Count > 0 
-                        && ourAttr.Variants.Contains(oldActorVariant)) // old actor had to actually be this attribute
-                    {
-                        return compatibleVariants;
-                    }
-                }
-            }
-
-            return null;
-        }
-*/
 
         public static ActorType GetType(this Actor actor, int variant)
         {
@@ -298,6 +209,9 @@ namespace MMR.Randomizer.Extensions
             }
 
             ActorVariantsAttribute waterVariants = actor.GetAttribute<WaterVariantsAttribute>();
+            ActorVariantsAttribute waterTVariants = actor.GetAttribute<WaterTopVariantsAttribute>();
+            ActorVariantsAttribute waterBVariants = actor.GetAttribute<WaterBottomVariantsAttribute>();
+
             if (waterVariants != null)
             {
                 // if their variant is in this list, return type
@@ -306,6 +220,23 @@ namespace MMR.Randomizer.Extensions
                     return ActorType.Water;
                 }
             }
+            if (waterTVariants != null)
+            {
+                // if their variant is in this list, return type
+                if (waterTVariants.Variants.Contains(variant))
+                {
+                    return ActorType.Water;
+                }
+            }
+            if (waterBVariants != null)
+            {
+                // if their variant is in this list, return type
+                if (waterBVariants.Variants.Contains(variant))
+                {
+                    return ActorType.Water;
+                }
+            }
+
 
             ActorVariantsAttribute GroundVariants = actor.GetAttribute<GroundVariantsAttribute>();
             if (GroundVariants != null)

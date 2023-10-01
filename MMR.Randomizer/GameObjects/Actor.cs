@@ -237,12 +237,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         Insect = 0x16, // En_Insect
 
-        //[ActorizerEnabled] // not sure what to believe anymore, labfish is a different actor, school of fish is different, lets turn this off
+        //[ActorizerEnabled] // this is just one fish, if you want a school summon a differemnt mure actor
         [FileID(120)]
-        [ObjectListIndex(0x16B)] // gameplay keep obj 1
+        //[ObjectListIndex(0x16B)] // gameplay keep obj 1
+        // zero is swimming, one is dropped from a bottle, -1 is just a differnt color I think
+        // 2 doesnt draw at first, it might be the one in the lab being eaten
         [WaterVariants(0)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.MarineLab)]
         Fish = 0x17, // En_Fish
 
         // a door type actor
@@ -260,8 +261,12 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.SecretShrine)] // issue: spawn is too high, needs to be lowered
         Dinofos = 0x19, // En_Dinofos
 
+        // Used in snowhead and gorman race
+        [ActorizerEnabled]
         [FileID(59)]
         [ObjectListIndex(0x5F)]
+        [GroundVariants(0)]
+        [UnkillableAllVariants]
         Flagpole = 0x1A, // En_Hata
 
         // empty actor, does nothing
@@ -847,6 +852,7 @@ namespace MMR.Randomizer.GameObjects
 
         Empty63 = 0x63,
 
+        // tag: clam
         [EnemizerEnabled]
         [ActorInitVarOffset(0xF00)]
         [FileID(106)]
@@ -869,6 +875,7 @@ namespace MMR.Randomizer.GameObjects
         // 0 is weird, unattackable just spins forever
         // 1 is stiff stick, 2 is mini
         [GroundVariants(0, 1, 2)] // both stiff and mini
+        [VariantsWithRoomMax(max:0, variant: 0x0)]
         [RespawningAllVariants] // they grow back, dont count as killable
         DekuBabaWithered = 0x66, // En_Karebaba
 
@@ -1002,6 +1009,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesPlacementBlock(Scene.TerminaField)] // it would always get placed in termina field, bad
         Item_Etcetera = 0x80, // Item_Etcetera
 
+        //todo
         //[ActorizerEnabledFreeOnly] // not sure this works with object 1, will test later
         [FileID(125)]
         [ObjectListIndex(1)]
@@ -1036,6 +1044,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(127)]
         [ObjectListIndex(0xD8)]
         [GroundVariants(0xFF03, 0xFF02, 0xFF01)]
+        [WaterBottomVariants(0xFF03, 0xFF02, 0xFF01)]
         [VariantsWithRoomMax(max: 2, 0xFF03, 0xFF02, 0xFF01)]
         IronKnuckle = 0x84, // En_Ik
 
@@ -1307,9 +1316,13 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.CuccoShack)]
         Grog = 0xA6, // En_Hs
 
-        // TODO
+        [ActorizerEnabled]
         [FileID(153)]
         [ObjectListIndex(0x17F)]
+        //[] path are 0xFF, bleh, paths, hope they dont crash without ANY path
+        [WaterTopVariants(0x01)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.SouthernSwamp)]
         SwampBoat = 0xA7, // Bg_Ingate
 
         // I'm not testing every single value, only taking vanilla for now
@@ -1317,6 +1330,14 @@ namespace MMR.Randomizer.GameObjects
         [FileID(154)]
         [ObjectListIndex(0xFC)]
         [GroundVariants(0x5, 0x13, 0x14, 0x15, 0x19, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20, // north
+           0x17, 0x18, 0x4, // spring village
+           0x3D, 0x11, 0x2, // , NCT, ranch
+           0x3C, // termina field
+           0x21, 0x22, 0x23, 0x25, 0x26, 0x27, 0x28, 0x12, 0x2A, 0x2B, // great ocean
+           0x7, 0x9, 0xB, 0xC, 0xE, 0x2A, 0x38, 0x3A, // swamp
+           0x2E, 0x2F, 0x30, 0x31, 0x32, 0x33, 0x34 // ikana
+            )]
+        [WaterBottomVariants(0x5, 0x13, 0x14, 0x15, 0x19, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20, // north
            0x17, 0x18, 0x4, // spring village
            0x3D, 0x11, 0x2, // , NCT, ranch
            0x3C, // termina field
@@ -1412,6 +1433,7 @@ namespace MMR.Randomizer.GameObjects
         // 801, opening scene grass, 0x1FXX are ranch and TF
         // 0402 is ikana graveyard rock circle
         [GroundVariants(0x801, 0x1F02, 0x1F00, 0x0402)]
+        [WaterBottomVariants(0x0402)]
         [AlignedCompanionActor(Shiro, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0)] // shiro likes his rock friends
         [AlignedCompanionActor(BugsFishButterfly, CompanionAlignment.Above, ourVariant: -1,
@@ -1568,6 +1590,7 @@ namespace MMR.Randomizer.GameObjects
         // trading post version is 1
         // wish I could spawn the ones that dance so they are always dancing when the player gets there
         [GroundVariants(1, 0x2800, 0x11D)]
+        [WaterBottomVariants(1,0x2800, 0x11D)]
         [VariantsWithRoomMax(max: 1, variant: 1)]
         [VariantsWithRoomMax(max: 0, variant: 0x11D)]
         [VariantsWithRoomMax(max: 0, variant: 0x2800)] // below ground to replace, we want above ground placement only
@@ -1786,6 +1809,12 @@ namespace MMR.Randomizer.GameObjects
             0x3BE3, 0x3BF6, 0x3BF6, 0x3716, 0x3BC2, 0x3722,
             0xCF, 0xE4,
             0x25, 0x46, 0x67, 0xFF, 0x86, 0x95, 0x55)]
+        [WaterBottomVariants(0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62,
+            0xEE, 0xE8, 0xC9, 0xAA, 0x80, 0x6B, 0x51, 0xB4, 0xCC, 0xED, 0xF0, 0xF3, 0xF2,
+            0x3BF0, 0x3C01, 0x3BD7,
+            0x3BE3, 0x3BF6, 0x3BF6, 0x3716, 0x3BC2, 0x3722,
+            0xCF, 0xE4,
+            0x25, 0x46, 0x67, 0xFF, 0x86, 0x95, 0x55)]
         // might need to come up with a version of this where we just say "each version can show up only once" without being explicit
         [VariantsWithRoomMax(max: 1, 0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62,
             0xEE, 0xE8, 0xC9, 0xAA, 0x80, 0x6B, 0x51, 0xB4, 0xCC, 0xED, 0xF0, 0xF3, 0xF2,
@@ -1927,8 +1956,10 @@ namespace MMR.Randomizer.GameObjects
         // params: 1000 uses alt object instead of dangeon, 0x700 determins minor color, 0x7F is switch flag
         // rotz is used as a unknown param
         [GroundVariants(0x000, 0x100, 0x200, 0x300, 0x400, 0x500, 0x600, 0x700)]
+        [WaterBottomVariants(0x000, 0x100, 0x200, 0x300, 0x400, 0x500, 0x600, 0x700)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
-        [OnlyOneActorPerRoom]
+        //[OnlyOneActorPerRoom]
+        [VariantsWithRoomMax(max:1, variant: 0x000, 0x100, 0x200, 0x300, 0x400, 0x500, 0x600, 0x700)]
         [BlockingVariantsAll]
         [UnkillableAllVariants]
         PuzzleBlock = 0x102, // Obj_Pzlblock
@@ -1962,6 +1993,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(240)]
         [ObjectListIndex(0x14F)]
         [GroundVariants(0x0)]
+        [WaterBottomVariants(0x0)]
         [VariantsWithRoomMax(max: 5, variant: 0)] // culling distance is too long
         //[EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall)]
         [UnkillableAllVariants]
@@ -2033,9 +2065,13 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x2243)]
         Garo = 0x113, // En_Jso
 
-        // unused, untested, todo
+        // not that interesting, but usual zelda calapsing bridge
+        [ActorizerEnabled]
         [FileID(249)]
         [ObjectListIndex(0xED)]
+        [FlyingVariants(0)]
+        [UnkillableAllVariants]
+        [OnlyOneActorPerRoom]
         FallingBlocks = 0x114, // Obj_Chikuwa
 
         // TODO would not spawn because I mistyped the ID try again
@@ -2055,6 +2091,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x03C0 is unknown, it must be set to max for it to work, non-x just shows a tatl spot and does nothing else
         // 0x3F is scene exit list index
         [GroundVariants(0x3C0)] // zero index, always safe
+        [WaterBottomVariants(0x3C0)]
         [EnemizerScenesExcluded(Scene.GoronTrial)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
@@ -2068,13 +2105,13 @@ namespace MMR.Randomizer.GameObjects
         // these are empty actors, they do nothing
         [FileID(253)]
         [ObjectListIndex(0x1)]
-        En_Boj_01 = 0x118, // En_Boj_01
+        Unused_En_Boj_01 = 0x118, // En_Boj_01
         [FileID(254)]
         [ObjectListIndex(0x1)]
-        En_Boj_02 = 0x119, // En_Boj_02
+        Unused_En_Boj_02 = 0x119, // En_Boj_02
         [FileID(255)]
         [ObjectListIndex(0x1)]
-        En_Boj_03 = 0x11A, // En_Boj_03
+        Unused_En_Boj_03 = 0x11A, // En_Boj_03
 
         [FileID(256)]
         [ObjectListIndex(0x1)]
@@ -2531,6 +2568,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x173)]
         // spreadsheet thinks 0x206 could be it
         [GroundVariants(0)]
+        [WaterBottomVariants(0)]
         [VariantsWithRoomMax(max: 1, variant: 0)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
@@ -3182,8 +3220,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1A4)]
         ClockTowerDoorAndStairs = 0x1B8, // Obj_Tokei_Step
 
+        [ActorizerEnabled]
         [FileID(405)]
         [ObjectListIndex(0x1A5)]
+        // params is == 0 and else
+        [WaterTopVariants(0,1)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.SouthernSwamp /* , Scene.SouthernSwampClear */)]
         Lilypad = 0x1B9, // Bg_Lotus
 
         [EnemizerEnabled]
@@ -4107,6 +4150,7 @@ namespace MMR.Randomizer.GameObjects
         //5 is milk road, 6 is woodfall, 7 is southern swamp, 8 is ikana canyon, 9 is stonetower
         // F is WCT, is also found in woodfall, cleared swamp?
         [GroundVariants(0, 1, 3, 2, 6, 5, 7, 8, 9, 0xF)]
+        [WaterBottomVariants(0, 1, 3, 2, 6, 5, 7, 8, 9, 0xF)] // already have vanilla replacement blocked
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
@@ -4197,16 +4241,26 @@ namespace MMR.Randomizer.GameObjects
         [FileID(514)]
         [ObjectListIndex(0x20E)]
         PiratesFortressSlidingGate = 0x22B, // Obj_Y2shutter
-        
+
+        // REQUIRES path, because if the player gets on it starts following path, requires fix
         [FileID(515)]
         [ObjectListIndex(0x20E)]
         Obj_Boat = 0x22C, // Obj_Boat
 
         // ignored because of how borring it is, need way to restrict these
+        // enabling only for underwater adventure
+        [ActorizerEnabled]
         [FileID(516)]
         [ObjectListIndex(0x250)]
+        // params:
+        // vanilla: 0x7F3F,
+        // oh god params are crraz
+        // for dropping barrels, drop random item, 0x3F becomes drop index values
+        // 0x1FF is a PF door
+        [WaterBottomVariants(0x8710, 0x8711)] // 16 is flexible, 17 is big fairy
         // switch flags
-        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        //[SwitchFlagsPlacement(mask: 0x7F, shift: 0)] // this is only for half of the barrels, lets hand pick these and hope for the best
+        [TreasureFlagsPlacement(0x7F, shift:8)]
         WoodenBarrel = 0x22D, // Obj_Taru
         
         [FileID(517)]
@@ -4225,7 +4279,7 @@ namespace MMR.Randomizer.GameObjects
         // ?
         [FileID(519)]
         [ObjectListIndex(0x87)]
-        MirrorShildandglow = 0x230, // Mir_Ray3
+        MirrorShieldAndGlow = 0x230, // Mir_Ray3
 
         [ActorizerEnabled] // BUG: do not teach him song or cursed
         [FileID(520)]
@@ -4333,6 +4387,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xA1)]
         [CheckRestricted(check: Item.MaskDonGero)]
         [GroundVariants(0x0)]
+        [WaterBottomVariants(0x0)]
         //[VariantsWithRoomMax]
         //[OnlyOneActorPerRoom]
         [VariantsWithRoomMax(max:0, variant:0)] // issue: hardlock if you put a bomb/keg near him
@@ -4656,9 +4711,13 @@ namespace MMR.Randomizer.GameObjects
         BombbagStolenBySakon = 0x264, // En_Nimotsu
 
         // I want to put these everywhere as an empty actor you can hit by accident, but that adds a lot of colliders
+        // you idiot, you can just make them one per room, thats fine
+        [ActorizerEnabled]
         [FileID(572)]
         [ObjectListIndex(0x1)]
+        [WallVariants(0xFE00)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
+        [OnlyOneActorPerRoom]
         HitSpot = 0x265, // En_Hit_Tag
 
         [ActorizerEnabled]
@@ -4681,7 +4740,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // spawned for me, but not streamers? weird time dependencies?
         [FileID(574)]
         [ObjectListIndex(0x23F)]
+        // params is number of gulls
+        // exception: 0x100 is following player
         [FlyingVariants(7, 5)]
+        [WaterTopVariants(4,6)] // non-vanilla
         [UnkillableAllVariants]
         [FlyingToGroundHeightAdjustment(200)]
         [VariantsWithRoomMax(max: 2, variant: 7, 5)] // > severe lag over 10
@@ -4767,7 +4829,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(583)]
         [ObjectListIndex(0x243)]
         [UnkillableAllVariants]
+        // params doesnt seem to be used
         [GroundVariants(0xF)] // only one toof
+        [WaterBottomVariants(0xE)]
         [VariantsWithRoomMax(max: 10, variant: 0xF)]
         [EnemizerScenesExcluded(Scene.LaundryPool)]
         LaundryPoolBell = 0x270, // En_Cha

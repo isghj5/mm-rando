@@ -99,8 +99,8 @@ namespace MMR.Randomizer.Models.Rom
             this.AllVariants = new List<List<int>>()
             {
                 injected.waterVariants,
-                new List<int>(),
-                new List<int>(),
+                injected.waterTopVariants,
+                injected.waterBottomVariants,
                 injected.groundVariants,
                 injected.flyingVariants,
                 new List<int>(),
@@ -301,7 +301,7 @@ namespace MMR.Randomizer.Models.Rom
 
                 bool ourVariantMatches = ourVariants.Contains(this.OldVariant);
 
-                // large chance of pathing enemies allowing ground or flying replacements
+                // large chance of pathing enemies allowing ground or flying replacements for pathing
                 if (randomVariantType == ActorType.Pathing  && ourVariantMatches && theirVariants.Count == 0 && rng.Next(100) < 80)
                 {
                     var possibleReplacementTypeList = new List<ActorType> { ActorType.Flying, ActorType.Ground };
@@ -317,16 +317,29 @@ namespace MMR.Randomizer.Models.Rom
 
                 // some chance of ground enemies allowing flying replacements
                 if (randomVariantType == ActorType.Ground
-                    && ourVariantMatches && rng.Next(100) < 40)
+                    && ourVariantMatches && rng.Next(100) < 45)
                 {
                     var theirFlyingVariants = otherActor.AllVariants[(int)ActorType.Flying - 1];
-                    if (theirVariants.Count != 0)
+                    if (theirFlyingVariants.Count != 0)
                     {
                         theirVariants.AddRange(theirFlyingVariants);
                     }
                 }
 
-                // if we dont have the required variants still, even with optional substitution above
+                // we allow regular old water types on bottom or top, fish can swim at any level for instance
+                // TODO we should allow top and bottom most of the time, we just need to height adjust
+                if ((randomVariantType == ActorType.WaterBottom || randomVariantType == ActorType.WaterTop)
+                    && ourVariantMatches)
+                {
+                    var theirWaterVariants = otherActor.AllVariants[(int)ActorType.Water - 1];
+                    if (theirWaterVariants.Count != 0)
+                    {
+                        theirVariants.AddRange(theirWaterVariants);
+                    }
+                }
+
+
+                // if we dont have the required variants still, even with optional substitution above, we skip to next type
                 if (ourVariants.Count == 0 && theirVariants.Count == 0) continue;
                 
                 var compatibleVariants = theirVariants;

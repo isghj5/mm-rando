@@ -34,6 +34,7 @@ namespace MMR.Randomizer
         public int ChosenV; // Copy of NewV, first pass result, but we might change NewV to something else if duplicate
     }
 
+    // this probably should either be in its own file or actor.cs
     [System.Diagnostics.DebuggerDisplay("[{filename}] 0x{ActorId.ToString(\"X3\")}:{fileID}")]
     public class InjectedActor
     {
@@ -52,6 +53,8 @@ namespace MMR.Randomizer
         public List<int> groundVariants = new List<int>();
         public List<int> flyingVariants = new List<int>();
         public List<int> waterVariants = new List<int>();
+        public List<int> waterTopVariants = new List<int>();
+        public List<int> waterBottomVariants = new List<int>();
         public List<int> respawningVariants = new List<int>();
         // variants with max
         public List<VariantsWithRoomMax> limitedVariants = new List<VariantsWithRoomMax>();
@@ -2017,7 +2020,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Tingle, GameObjects.Actor.Skulltula)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.LikeLike, GameObjects.Actor.MagicSlab)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.ZoraRaceRing)) continue;
-                if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Japas)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Japas)) continue;
                 if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
@@ -2320,6 +2323,8 @@ namespace MMR.Randomizer
                     }
                 }
 
+                Debug.Assert(roomActors.Count > 0);
+
                 // for now until I can be sure the code after this is working, always reserve one
                 if (removedCount == 0)
                 {
@@ -2327,6 +2332,8 @@ namespace MMR.Randomizer
                     trimCandidates.RemoveAt(randomChoice);
                     removedCount += 1;
                 }
+
+                Debug.Assert(roomActors.Count > 0);
 
                 // remove random enemies until max for variant is reached
                 int extraCullCapacity = (trimCandidates.Count >= 1) ? (trimCandidates.Count - 1) : (0);
@@ -2336,6 +2343,9 @@ namespace MMR.Randomizer
                     trimCandidates.Remove(trimCandidates[thisSceneData.RNG.Next(trimCandidates.Count)]);
                 }
 
+                Debug.Assert(roomActors.Count > 0);
+
+
                 // if the actor being trimmed is a free actor, remove from possible replacements
                 // TODO this should really already happen before we get this far? can we assume we will never cross dip?
                 var freeActorSearch = roomFreeActors.Find(act => act.ActorId == actorType.ActorId);
@@ -2343,6 +2353,8 @@ namespace MMR.Randomizer
                 {
                     roomFreeActors.Remove(freeActorSearch);
                 }
+
+                Debug.Assert(roomActors.Count > 0);
 
                 // kill the rest since max is reached
                 // we want to limit replacements here above the per-actor function to save re-doing it
@@ -3118,6 +3130,22 @@ namespace MMR.Randomizer
                     newInjectedActor.waterVariants = newWaterVariantsShort;
                     continue;
                 }
+                if (command == "watertop_variants")
+                {
+                    var newWaterVariants = valueStr.Split(",").ToList();
+                    var newWaterVariantsShort = newWaterVariants.Select(variant => Convert.ToInt32(variant.Trim(), 16)).ToList();
+
+                    newInjectedActor.waterVariants = newWaterVariantsShort;
+                    continue;
+                }
+                if (command == "waterbottom_variants")
+                {
+                    var newWaterVariants = valueStr.Split(",").ToList();
+                    var newWaterVariantsShort = newWaterVariants.Select(variant => Convert.ToInt32(variant.Trim(), 16)).ToList();
+
+                    newInjectedActor.waterVariants = newWaterVariantsShort;
+                    continue;
+                }
                 if (command == "variant_with_max")
                 {
                     var newLimitedVariant = valueStr.Split(",").ToList();
@@ -3533,9 +3561,9 @@ namespace MMR.Randomizer
                 GameObjects.Actor.UnusedClockTowerSpotlight.FileListIndex(),
                 GameObjects.Actor.Obj_Ocarinalift.FileListIndex(),
                 GameObjects.Actor.UnusedStoneTowerPlatform.FileListIndex(),
-                GameObjects.Actor.En_Boj_01.FileListIndex(),  // empty actors with nothing in them
-                GameObjects.Actor.En_Boj_02.FileListIndex(),
-                GameObjects.Actor.En_Boj_03.FileListIndex(),
+                GameObjects.Actor.Unused_En_Boj_01.FileListIndex(),  // empty actors with nothing in them
+                GameObjects.Actor.Unused_En_Boj_02.FileListIndex(),
+                GameObjects.Actor.Unused_En_Boj_03.FileListIndex(),
                 GameObjects.Actor.En_Boj_04.FileListIndex(),
                 GameObjects.Actor.En_Boj_05.FileListIndex(),
                 //GameObjects.Actor.En_Stream.FileListIndex(), // is this really unused? we now use it in actorizer
@@ -3635,12 +3663,12 @@ namespace MMR.Randomizer
                 var previousThreadPriority = Thread.CurrentThread.Priority;
                 Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
 
-                //Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
-                foreach (var scene in newSceneList) // sequential for debugging only
+                Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
+                //foreach (var scene in newSceneList) // sequential for debugging only
                 {
                     SwapSceneEnemies(settings, scene, seed);
-                //});
-                }
+                });
+                //}
 
                 Thread.CurrentThread.Priority = previousThreadPriority;
 
