@@ -152,6 +152,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo,
             Actor.GibdoWell, Actor.DeathArmos // Rarely Killable
             /*Actor.RegularIceBlock, Actor.Bombiwa, Actor.ClocktowerGearsAndOrgan */)] // blocking
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DragonFly,
+            Actor.GiantBeee)] // issue being that the one that spins around and doesnt agro hard requires a ranged weapon because the spawn is so high
         [EnemizerSceneBlockSensitive(Actor.Bo, -1)]
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper,
         //    Actor.WarpDoor, Actor.ClocktowerGearsAndOrgan)] // Snapper spawns just on top of its chest, its possible a non-killable actor is placed int he wya
