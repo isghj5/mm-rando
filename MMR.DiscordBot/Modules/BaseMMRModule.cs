@@ -22,6 +22,7 @@ namespace MMR.DiscordBot.Modules
         public UserSeedRepository UserSeedRepository { get; set; }
         public GuildModRepository GuildModRepository { get; set; }
         public TournamentChannelRepository TournamentChannelRepository { get; set; }
+        public TournamentSeedRepository TournamentSeedRepository { get; set; }
         public LogChannelRepository LogChannelRepository { get; set; }
 
         private readonly MMRBaseService _mmrService;
@@ -85,7 +86,9 @@ namespace MMR.DiscordBot.Modules
 
             if (await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
             {
-                commands.Add("seed (<settingName>)? (<@user>){2,}", "Generate a seed. Optionall provide a setting name. The patch and hashIcons will be sent in a direct message to the tagged users. The spoiler log will be sent to you.");
+                commands.Add("seed (<settingName>)? (<@user>){2,}", "Generate a seed. Optionally provide a setting name. The patch and hashIcons will be sent in a direct message to the tagged users. The spoiler log will be sent to you.");
+                commands.Add("prepare (<settingName>)?", "Generate a seed. Optionally provide a setting name. The patch, hashIcons and spoiler log will be stored until send by the `send` command.");
+                commands.Add("send (<@user>){2,}", "Send a prepared seed. The patch and hashIcons will be sent in a direct message to the tagged users. The spoiler log will be sent to you.");
             }
             else
             {
@@ -126,9 +129,104 @@ namespace MMR.DiscordBot.Modules
             await ReplyNoTagAsync("List of commands: (all commands begin with \"!mmr\")\n" + string.Join('\n', commands.Select(kvp => $"`{kvp.Key}` - {kvp.Value}")));
         }
 
+        private async Task PrepareTournamentSeed(string settingPath)
+        {
+            var now = DateTime.UtcNow;
+            var tournamentSeedEntity = new TournamentSeedEntity
+            {
+                UserId = Context.User.Id,
+                DateTime = now
+            };
+            await TournamentSeedRepository.Save(tournamentSeedEntity);
+            var tournamentSeedReply = await ReplyNoTagAsync("Generating seed...");
+            await LogToDiscord($"User {Context.User.Username} requested to prepare a tournament seed.");
+            new Thread(async () =>
+            {
+                try
+                {
+                    var (patchPath, hashIconPath, spoilerLogPath, version) = await _mmrService.GenerateSeed(now, settingPath, async (i) =>
+                    {
+                        if (i < 0)
+                        {
+                            await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "Generating seed...");
+                        }
+                        else
+                        {
+                            await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = $"You are number {i + 1} in the queue.");
+                        }
+                    });
+                    if (File.Exists(patchPath) && File.Exists(hashIconPath) && File.Exists(spoilerLogPath))
+                    {
+                        tournamentSeedEntity.Version = version;
+                        await TournamentSeedRepository.Save(tournamentSeedEntity);
+                        await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "Success.");
+                        await LogToDiscord($"User {Context.User.Username} tournament seed successfully prepared.");
+                    }
+                    else
+                    {
+                        throw new Exception("MMR.CLI succeeded, but output files not found.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await TournamentSeedRepository.DeleteById(Context.User.Id);
+                    await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "An error occurred.");
+                    await LogToDiscord($"User {Context.User.Username} tournament seed failed to generate. Error: {ex.Message}");
+                }
+            }).Start();
+        }
+
+        private async Task SendPreparedTournamentSeed(DateTime dateTime, string version, IUser[] users)
+        {
+            if (users.Any(u => u.Id == Context.User.Id))
+            {
+                await ReplyNoTagAsync("Cannot send a seed to yourself.");
+                return;
+            }
+            if (users.Count() < 2)
+            {
+                await ReplyNoTagAsync("Must mention at least two users.");
+                return;
+            }
+
+            var tournamentSeedReply = await ReplyNoTagAsync("Sending seed...");
+            await LogToDiscord($"User {Context.User.Username} requested to send a prepared tournament seed.");
+            var (_, patchPath, hashIconPath, spoilerLogPath, _) = _mmrService.GetSeedPaths(dateTime, version);
+            try
+            {
+                if (File.Exists(patchPath) && File.Exists(hashIconPath) && File.Exists(spoilerLogPath))
+                {
+                    foreach (var user in users)
+                    {
+                        await user.SendFileAsync(patchPath, "Here is your tournament match seed! Please be sure your Hash matches and let an organizer know if you have any issues before you begin.");
+                        await user.SendFileAsync(hashIconPath);
+                    }
+                    await Context.User.SendFileAsync(spoilerLogPath);
+                    await Context.User.SendFileAsync(hashIconPath);
+                    await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "Success.");
+                    await LogToDiscord($"User {Context.User.Username} successfully sent a prepared tournament seed.");
+                }
+                else
+                {
+                    throw new Exception("Files not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "An error occurred.");
+                await LogToDiscord($"User {Context.User.Username} failed to send a prepared tournament seed. Error: {ex.Message}");
+            }
+            finally
+            {
+                File.Delete(spoilerLogPath);
+                File.Delete(patchPath);
+                File.Delete(hashIconPath);
+                await TournamentSeedRepository.DeleteById(Context.User.Id);
+            }
+        }
+
         private async Task TournamentSeed(string settingPath, IUser[] users)
         {
-            // Tournament seed
             if (users.Any(u => u.Id == Context.User.Id))
             {
                 await ReplyNoTagAsync("Cannot generate a seed for yourself.");
@@ -178,7 +276,7 @@ namespace MMR.DiscordBot.Modules
                 }
                 catch (Exception ex)
                 {
-                    await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "An error occured.");
+                    await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "An error occurred.");
                     await LogToDiscord($"User {Context.User.Username} tournament seed failed to generate. Error: {ex.Message}");
                 }
             }).Start();
@@ -282,6 +380,64 @@ namespace MMR.DiscordBot.Modules
 
             await ReplyNoTagAsync("Setting not found.");
             return (null, false);
+        }
+
+        [Command("prepare")]
+        public async Task PrepareSeed(string settingName = null)
+        {
+            if (!await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
+            {
+                return;
+            }
+
+            var (settingPath, success) = await GetSettingPath(settingName);
+            if (!success)
+            {
+                return;
+            }
+
+            var tournamentSeed = await TournamentSeedRepository.GetById(Context.User.Id);
+            if (tournamentSeed != null)
+            {
+                if (string.IsNullOrWhiteSpace(tournamentSeed.Version))
+                {
+                    await ReplyNoTagAsync("Seed is still generating.");
+                }
+                else
+                {
+                    await ReplyNoTagAsync("You already have a seed prepared.");
+                }
+            }
+            else
+            {
+                await PrepareTournamentSeed(settingPath);
+            }
+        }
+
+        [Command("send")]
+        public async Task SendSeed(params IUser[] users)
+        {
+            if (!await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
+            {
+                return;
+            }
+
+            var tournamentSeed = await TournamentSeedRepository.GetById(Context.User.Id);
+            if (tournamentSeed != null)
+            {
+                if (string.IsNullOrWhiteSpace(tournamentSeed.Version))
+                {
+                    await ReplyNoTagAsync("Seed is still generating.");
+                }
+                else
+                {
+                    await SendPreparedTournamentSeed(tournamentSeed.DateTime, tournamentSeed.Version, users);
+                }
+            }
+            else
+            {
+                await ReplyNoTagAsync("You do not have a seed prepared.");
+            }
         }
 
         [Command("seed")]

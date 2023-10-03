@@ -86,6 +86,7 @@ namespace MMR.DiscordBot
                 .AddSingleton<UserSeedRepository>()
                 .AddSingleton<GuildModRepository>()
                 .AddSingleton<TournamentChannelRepository>()
+                .AddSingleton<TournamentSeedRepository>()
                 .AddSingleton<LogChannelRepository>()
                 .AddSingleton<ConnectionFactory>()
                 .BuildServiceProvider();
