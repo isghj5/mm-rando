@@ -8,9 +8,36 @@ static bool gEnable = true;
 
 // Gold Skulltula HUD icon.
 static Sprite gSkulltulaIcon = {
-    NULL, 24, 18, 1,
+    NULL, 24, 24, 1,
     G_IM_FMT_RGBA, G_IM_SIZ_32b, 4
 };
+
+// Dungeon stray fairy icons.
+static Sprite gSpriteFairy = {
+    NULL, 32, 24, 4,
+    G_IM_FMT_RGBA, G_IM_SIZ_32b, 4
+};
+
+static void LoadAndDrawStrayFairyIconFlipped(DispBuf* db, Sprite* sprite, int tileIndex, int left, int top, int width, int height) {
+    const int widthFactor = (1<<10) * sprite->tileW / width;
+    const int heightFactor = (1<<10) * sprite->tileH / height;
+    gDPLoadTextureTile(db->p++,
+            sprite->buf + (tileIndex * Sprite_GetBytesPerTile(sprite)),
+            sprite->imFmt, sprite->imSiz,
+            sprite->tileW, sprite->tileH,
+            0, 0,
+            sprite->tileW - 1, sprite->tileH - 1,
+            0,
+            G_TX_MIRROR, G_TX_CLAMP,
+            5, G_TX_NOMASK,
+            G_TX_NOLOD, G_TX_NOLOD);
+    gSPTextureRectangle(db->p++,
+            left<<2, top<<2,
+            (left + width)<<2, (top + height)<<2,
+            0,
+            32<<5, 0,
+            widthFactor, heightFactor);
+}
 
 // Clock Town stray fairy icon image buffer, written to by randomizer.
 u8 TOWN_FAIRY_BYTES[0xC00] = { 0 };
@@ -36,7 +63,7 @@ static struct DungeonEntry gDungeons[7] = {
     { 0, 0x5D, 1, 1, 0, "Woodfall" },
     { 1, 0x5E, 1, 1, 0, "Snowhead" },
     { 2, 0x5F, 1, 1, 0, "GreatBay" },
-    { 3, 0x60, 1, 1, 0, "StnTower" },
+    { 3, 0x60, 1, 1, 0, "StoneTwr" },
     { 4, 0,    0, 1, 0, "ClockTwn" },
     { 5, 0,    0, 0, 1, "Swamp" },
     { 6, 0,    0, 0, 2, "Ocean" },
@@ -119,6 +146,7 @@ void OverlayMenu_Draw(GlobalContext* ctxt) {
     gSpriteIcon.buf = ctxt->pauseCtx.iconItemStatic;
     gSpriteIcon24.buf = ctxt->pauseCtx.iconItem24;
     gSkulltulaIcon.buf = (u8*)ctxt->interfaceCtx.parameterStatic +0x31E0;
+    gSpriteFairy.buf = (u8*)ctxt->interfaceCtx.parameterStatic +0x8998;
 
     // Draw background.
     gDPSetCombineMode(db->p++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
@@ -239,8 +267,7 @@ void OverlayMenu_Draw(GlobalContext* ctxt) {
         if (d->hasFairies) {
             // Draw dungeon fairy icons (32-bit RGBA). Otherwise, draw Clock Town fairy icon.
             if (d->isDungeon) {
-                Sprite_Load(db, &gSpriteFairy, d->index, 1);
-                Sprite_Draw(db, &gSpriteFairy, 0, left, top, 20, 15);
+                LoadAndDrawStrayFairyIconFlipped(db, &gSpriteFairy, d->index, left, top, 20, 15);
             } else {
                 // Draw Clock Town fairy icon.
                 Sprite_Load(db, &gTownFairyIcon, 0, 1);
@@ -249,7 +276,7 @@ void OverlayMenu_Draw(GlobalContext* ctxt) {
         } else if (d->hasTokens) {
             // Draw skulltula token icon.
             Sprite_Load(db, &gSkulltulaIcon, 0, 1);
-            Sprite_Draw(db, &gSkulltulaIcon, 0, left + 2, top, 16, 12);
+            Sprite_DrawCropped(db, &gSkulltulaIcon, 0, left + 2, top, 16, 12, CROP(0, 6));
         }
     }
     left += 20 + padding;

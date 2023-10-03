@@ -5,6 +5,13 @@
 
 extern Gfx gSetupDb[];
 
+typedef struct Crop {
+    u16 top;
+    u16 bottom;
+} Crop;
+
+#define CROP(_top, _bottom) ((Crop){ .top = (_top), .bottom = (_bottom) })
+
 typedef struct {
     u8* buf;
     u16 tileW;
@@ -19,9 +26,9 @@ extern Sprite gSpriteDpad;
 extern Sprite gSpriteFont;
 extern Sprite gSpriteIcon;
 extern Sprite gSpriteIcon24;
-extern Sprite gSpriteFairy;
 
 void Sprite_Draw(DispBuf* db, Sprite* sprite, int tileIndex, int left, int top, int width, int height);
+void Sprite_DrawCropped(DispBuf* db, Sprite* sprite, int tileIndex, int left, int top, int width, int height, Crop crop);
 int Sprite_GetBytesTotal(Sprite* sprite);
 int Sprite_GetBytesPerTile(Sprite* sprite);
 Sprite* Sprite_GetItemTexturesSprite(void);
