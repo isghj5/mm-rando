@@ -763,6 +763,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)] // no vanilla params at all
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
+        [EnemizerScenesPlacementBlock(Scene.RomaniRanch)] // skin crash, not sure why I thought I fic
         En_Horse_Link_Child = 0x54, // En_Horse_Link_Child
 
         [ActorizerEnabled]
@@ -3874,6 +3875,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectablePinnacleRockPot3, Item.CollectablePinnacleRockPot4)]
         [ObjectListIndex(0x1EC)]
         [WaterBottomVariants(0x2001)]
+        [VariantsWithRoomMax(max: 0, variant: 0x2001)] // placement gets conflicated TODO figure out
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 3)] // 0x3F8
         Seahorse = 0x205, // En_Ot
