@@ -3698,7 +3698,7 @@ namespace MMR.Randomizer.GameObjects
         // for now, with no entrando, just randomize all but one
         //[CheckRestricted(Item.TradeItemMamaLetter, Item.MaskKeaton, Item.HeartPiecePostBox, Item.MaskCouple)]
         [GroundVariants(0, 1, 2, 3, 4)]
-        [WaterBottomVariants(-0, -1, -2, -3, -4)] // I want to put them on the bottom, but I dont want the game to think they are vanilla water either..
+        [WaterBottomVariants(-1, -2, -3, -4)] // I want to put them on the bottom, but I dont want the game to think they are vanilla water either..
         [CompanionActor(LetterToPostman, ourVariant: -1, variant: 0)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
@@ -4244,7 +4244,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x20E)]
         PiratesFortressSlidingGate = 0x22B, // Obj_Y2shutter
 
-        // REQUIRES path, because if the player gets on it starts following path, requires fix
+        // REQUIRES path, because if the player gets on it starts following path
+        // using mmra instead
         [FileID(515)]
         [ObjectListIndex(0x20E)]
         Obj_Boat = 0x22C, // Obj_Boat

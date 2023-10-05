@@ -1261,11 +1261,14 @@ namespace MMR.Randomizer
             /// this probably shouldnt be its own code I just want underwater postboxes without the vanilla vars thinking they can be water
             /// and un-willing right now to re-write the parameter system to specify vanilla or not
 
-            if ( ! thisSceneData.Objects.Contains(GameObjects.Actor.Postbox.ObjectIndex())) return;
+            //if ( ! thisSceneData.Objects.Contains(GameObjects.Actor.Postbox.ObjectIndex())) return;
+            // that doesnt work if we are borrowing a vanilla un-touched object
+            // lets skip short circuit, it's not that much faster to search all objects when we can search all actors, most areas have small lists
 
-            foreach (var box in thisSceneData.Actors.FindAll(a => a.ActorId == (int)GameObjects.Actor.Postbox))
+            foreach (var box in thisSceneData.Actors.FindAll(a => a.ActorId == (int) GameObjects.Actor.Postbox))
             {
-                box.Variants[0] = -box.Variants[0];
+                if (box.Variants[0] < 0)
+                    box.Variants[0] = -box.Variants[0];
             }
         }
 
@@ -2013,12 +2016,12 @@ namespace MMR.Randomizer
                     return false;
                 }
                  
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.En_Horse_Link_Child)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.PoeSisters)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
+                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Obj_Boat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Tingle, GameObjects.Actor.Skulltula)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.LikeLike, GameObjects.Actor.MagicSlab)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.LikeLike, GameObjects.Actor.Obj_Boat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.ZoraRaceRing)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Japas)) continue;
                 if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
@@ -2762,6 +2765,7 @@ namespace MMR.Randomizer
             public List<Actor> Actors;
             public List<Actor> SceneFreeActors;
             public List<int> Objects;
+            public List<List<int>> AllObjects;
             public List<ValueSwap> ChosenReplacementObjects;
             public List<List<int>> ChosenReplacementObjectsPerMap;
             public List<Actor> AcceptableCandidates;
@@ -2942,7 +2946,7 @@ namespace MMR.Randomizer
                 // enemizer is not smart enough if the new chosen objects are copies, and the game allows objects to load twice
                 // for now remove them here after objects are chosen, to reduce object size
                 StringBuilder objectReplacementLog = new StringBuilder();
-                TrimObjectList(thisSceneData, objectReplacementLog);
+                thisSceneData.AllObjects = TrimObjectList(thisSceneData, objectReplacementLog);
                 WriteOutput($" object trim time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                 // check if objects fits now, because the rest can take awhile and at least for termina field we can check this waaaaay earlier
@@ -3684,7 +3688,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 52.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 52.1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
