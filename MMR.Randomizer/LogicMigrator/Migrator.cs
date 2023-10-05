@@ -4413,6 +4413,7 @@ namespace MMR.Randomizer.LogicMigrator
                 ("SettingBombchuDrops", null, null),
                 ("SettingInstantTransform", null, null),
                 ("SettingBombArrows", null, null),
+                ("SettingNotFewerHealthDrops", null, null),
                 ("SettingNotRandomizeEnemies", null, null),
                 ("SettingStrayFairyModeChestsOnly", null, null),
                 ("SettingNotStrayFairyModeChestsOnly", null, null),

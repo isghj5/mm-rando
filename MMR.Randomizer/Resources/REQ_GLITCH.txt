@@ -3026,6 +3026,15 @@
       "IsTrick": false
     },
     {
+      "Id": "SettingNotFewerHealthDrops",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
       "Id": "SettingNotRandomizeEnemies",
       "RequiredItems": [],
       "ConditionalItems": [],

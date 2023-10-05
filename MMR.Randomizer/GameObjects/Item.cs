@@ -1119,6 +1119,9 @@ namespace MMR.Randomizer.GameObjects
         [LogicSetting(nameof(GameplaySettings.BombArrows), true)]
         SettingBombArrows,
 
+        [LogicSetting(nameof(GameplaySettings.FewerHealthDrops), false)]
+        SettingNotFewerHealthDrops,
+
         [LogicSetting(nameof(GameplaySettings.RandomizeEnemies), false)]
         SettingNotRandomizeEnemies,
 
