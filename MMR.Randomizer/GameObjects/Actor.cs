@@ -763,7 +763,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)] // no vanilla params at all
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        [EnemizerScenesPlacementBlock(Scene.RomaniRanch)] // skin crash, not sure why I thought I fic
+        [EnemizerScenesPlacementBlock(Scene.RomaniRanch, // skin crash, not sure why I thought I fixed that
+            Scene.GormanTrack)] // skeleton update crash... why
         En_Horse_Link_Child = 0x54, // En_Horse_Link_Child
 
         [ActorizerEnabled]
