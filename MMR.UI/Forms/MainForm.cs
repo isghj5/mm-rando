@@ -114,6 +114,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cDeathMoonCrash, "Dying causes the moon to crash, with all that that implies.");
             TooltipBuilder.SetTooltip(cFewerHealthDrops, "Recovery Hearts will not drop, and re-acquiring random items will turn into Green Rupees instead. Fairies will not heal except on death.");
             TooltipBuilder.SetTooltip(cContinuousDekuHopping, "Press A while hopping across water to keep hopping.");
+            TooltipBuilder.SetTooltip(cIronGoron, "Goron Link will sink in water instead of drowning.");
             TooltipBuilder.SetTooltip(cHookshotAnySurface, "Hookshot can hook to any surface.");
             TooltipBuilder.SetTooltip(cClimbMostSurfaces, "Link can climb most surfaces.");
             TooltipBuilder.SetTooltip(cIceTrapQuirks, "Ice traps will behave slightly differently from other items in certain situations.");
@@ -211,6 +212,7 @@ namespace MMR.UI.Forms
             {
                 { Item.SettingCloseCows, null },
                 { Item.SettingContinuousDekuHopping, cContinuousDekuHopping },
+                { Item.SettingIronGoron, cIronGoron },
                 { Item.SettingClimbMostSurfaces, cClimbMostSurfaces },
                 { Item.SettingFreeScarecrow, cFreeScarecrow },
                 { Item.SettingGiantMaskAnywhere, cGiantMaskAnywhere },
@@ -1382,6 +1384,7 @@ namespace MMR.UI.Forms
             cQuestItemStorage.Checked = _configuration.GameplaySettings.QuestItemStorage;
             cQuestItemKeep.Checked = _configuration.GameplaySettings.KeepQuestTradeThroughTime;
             cContinuousDekuHopping.Checked = _configuration.GameplaySettings.ContinuousDekuHopping;
+            cIronGoron.Checked = _configuration.GameplaySettings.IronGoron;
             cHookshotAnySurface.Checked = _configuration.GameplaySettings.HookshotAnySurface;
             cClimbMostSurfaces.Checked = _configuration.GameplaySettings.ClimbMostSurfaces;
             cUnderwaterOcarina.Checked = _configuration.GameplaySettings.OcarinaUnderwater;
@@ -1730,6 +1733,11 @@ namespace MMR.UI.Forms
         private void cContinuousDekuHopping_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.ContinuousDekuHopping = cContinuousDekuHopping.Checked);
+        }
+
+        private void cIronGoron_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.IronGoron = cIronGoron.Checked);
         }
 
         private void cHookshotAnySurface_CheckedChanged(object sender, EventArgs e)

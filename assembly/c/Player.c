@@ -17,20 +17,41 @@ bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
     return Icetrap_Give(player, ctxt);
 }
 
-PlayerActionFunc sPlayer_Falling = NULL;
-PlayerActionFunc sPlayer_BackwalkBraking = NULL;
-PlayerUpperActionFunc sPlayer_UpperAction_CarryAboveHead = NULL;
+static bool sFuncPointersInitialized = false;
+static PlayerActionFunc sPlayer_BackwalkBraking = NULL;
+static PlayerActionFunc sPlayer_Falling = NULL;
+static PlayerActionFunc sPlayer_Action_43 = NULL;
+static PlayerActionFunc sPlayer_Action_54 = NULL;
+static PlayerActionFunc sPlayer_Action_55 = NULL;
+static PlayerActionFunc sPlayer_Action_56 = NULL;
+static PlayerActionFunc sPlayer_Action_57 = NULL;
+static PlayerActionFunc sPlayer_Action_58 = NULL;
+static PlayerActionFunc sPlayer_Action_59 = NULL;
+static PlayerActionFunc sPlayer_Action_60 = NULL;
+static PlayerActionFunc sPlayer_Action_62 = NULL;
+static PlayerActionFunc sPlayer_Action_61 = NULL;
+static PlayerActionFunc sPlayer_Action_82 = NULL;
+static PlayerUpperActionFunc sPlayer_UpperAction_CarryAboveHead = NULL;
 
 void Player_InitFuncPointers() {
-    if (sPlayer_Falling == NULL) {
-        sPlayer_Falling = z2_Player_func_8084C16C;
+    if (sFuncPointersInitialized) {
+        return;
     }
-    if (sPlayer_BackwalkBraking == NULL) {
-        sPlayer_BackwalkBraking = z2_Player_func_8084A884;
-    }
-    if (sPlayer_UpperAction_CarryAboveHead == NULL) {
-        sPlayer_UpperAction_CarryAboveHead = z2_Player_UpperAction_CarryAboveHead;
-    }
+    sPlayer_BackwalkBraking = z2_Player_Action_8;
+    sPlayer_Falling = z2_Player_Action_25;
+    sPlayer_Action_43 = z2_Player_Action_43;
+    sPlayer_Action_54 = z2_Player_Action_54;
+    sPlayer_Action_55 = z2_Player_Action_55;
+    sPlayer_Action_56 = z2_Player_Action_56;
+    sPlayer_Action_57 = z2_Player_Action_57;
+    sPlayer_Action_58 = z2_Player_Action_58;
+    sPlayer_Action_59 = z2_Player_Action_59;
+    sPlayer_Action_60 = z2_Player_Action_60;
+    sPlayer_Action_62 = z2_Player_Action_62;
+    sPlayer_Action_61 = z2_Player_Action_61;
+    sPlayer_Action_82 = z2_Player_Action_82;
+    sPlayer_UpperAction_CarryAboveHead = z2_Player_UpperAction_CarryAboveHead;
+    sFuncPointersInitialized = true;
 }
 
 void Player_PreventDangerousStates(ActorPlayer* player) {
@@ -198,9 +219,8 @@ bool Player_ShouldIceVoidZora(ActorPlayer* player, GlobalContext* ctxt) {
 /**
  * Hook function called to determine if swim state should be prevented from being restored.
  **/
-bool Player_ShouldPreventRestoringSwimState(ActorPlayer* player, GlobalContext* ctxt, void* function) {
-    void* handleFrozen = Reloc_ResolvePlayerOverlay(&s801D0B70.playerActor, 0x808546D0); // Offset: 0x26C40
-    return function == handleFrozen;
+bool Player_ShouldPreventRestoringSwimState(ActorPlayer* player, GlobalContext* ctxt, PlayerActionFunc function) {
+    return function == sPlayer_Action_82;
 }
 
 static u32 lastClimbFrame = 0;
@@ -646,6 +666,11 @@ bool Player_ShouldCheckItemUsabilityWhileSwimming(ActorPlayer* player, u8 item) 
         return false;
     }
 
+    // Goron Mask is 0x4F for some reason
+    if (item == 0x4F && MISC_CONFIG.flags.ironGoron && (!isGiant || player->mask != 0x14)) {
+        return false;
+    }
+
     // Giant's Mask is 0x4D for some reason
     if (item == 0x4D && isGiant && player->form == PLAYER_FORM_HUMAN && MISC_CONFIG.flags.giantMaskAnywhere) {
         return false;
@@ -792,4 +817,52 @@ void Player_SetGiantMaskTransformationState(GlobalContext* ctxt, ActorPlayer* pl
         newState |= PLAYER_STATE1_SPECIAL_2;
     }
     player->stateFlags.state1 |= newState;
+}
+
+static u8* sAudioBaseFilter = (u8*)0x801D66E0;
+
+void Player_HandleIronGoronLand(GlobalContext* ctxt, ActorPlayer* player) {
+    if (player->base.id != 0) {
+        return;
+    }
+
+    if (player->form == PLAYER_FORM_GORON && MISC_CONFIG.flags.ironGoron && *sAudioBaseFilter == 0x20) {
+        player->stateFlags.state2 &= ~PLAYER_STATE2_DIVING_2;
+        z2_PerformEnterWaterEffects(ctxt, player);
+        z2_Player_SetBootData(ctxt, player);
+    }
+
+    // Displaced code
+    z2_801A3E38(0);
+}
+
+s8 Player_HandleGoronInWater(GlobalContext* ctxt, ActorPlayer* player) {
+    if (player->form == PLAYER_FORM_GORON) {
+        if (MISC_CONFIG.flags.ironGoron) {
+            if (!(player->stateFlags.state2 & PLAYER_STATE2_DIVING_2)) {
+                if ((sPlayer_Action_43 != player->actionFunc) && (sPlayer_Action_61 != player->actionFunc) &&
+                    (sPlayer_Action_62 != player->actionFunc) && (sPlayer_Action_54 != player->actionFunc) &&
+                    (sPlayer_Action_57 != player->actionFunc) && (sPlayer_Action_58 != player->actionFunc) &&
+                    (sPlayer_Action_59 != player->actionFunc) && (sPlayer_Action_60 != player->actionFunc) &&
+                    (sPlayer_Action_55 != player->actionFunc) && (sPlayer_Action_56 != player->actionFunc)) {
+                    z2_Player_func_8083B930(ctxt, player);
+                    player->stateFlags.state1 &= ~PLAYER_STATE1_SWIM;
+                }
+            }
+            return 1;
+        }
+        return 0;
+    }
+    return -1;
+}
+
+bool Player_ShouldResetUnderwaterTimer(GlobalContext* ctxt, ActorPlayer* player) {
+    if (player->form == PLAYER_FORM_GORON && (player->stateFlags.state1 & PLAYER_STATE1_SWIM) && MISC_CONFIG.flags.ironGoron) {
+        player->stateFlags.state1 &= ~PLAYER_STATE1_SWIM;
+    }
+
+    // Displaced code
+    z2_801A3E38(0x20);
+
+    return player->form == PLAYER_FORM_ZORA || (player->form == PLAYER_FORM_GORON && MISC_CONFIG.flags.ironGoron);
 }

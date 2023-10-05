@@ -1095,6 +1095,9 @@ namespace MMR.Randomizer.GameObjects
         [LogicSetting(nameof(GameplaySettings.ContinuousDekuHopping), true)]
         SettingContinuousDekuHopping,
 
+        [LogicSetting(nameof(GameplaySettings.IronGoron), true)]
+        SettingIronGoron,
+
         [LogicSetting(nameof(GameplaySettings.ClimbMostSurfaces), true)]
         SettingClimbMostSurfaces,
 

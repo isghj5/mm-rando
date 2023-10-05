@@ -260,6 +260,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
+            this.cIronGoron = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -935,6 +936,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox10
             // 
+            this.groupBox10.Controls.Add(this.cIronGoron);
             this.groupBox10.Controls.Add(this.cClimbMostSurfaces);
             this.groupBox10.Controls.Add(this.cHookshotAnySurface);
             this.groupBox10.Controls.Add(this.cFloors);
@@ -946,7 +948,7 @@ namespace MMR.UI.Forms
             this.groupBox10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox10.Size = new System.Drawing.Size(190, 193);
+            this.groupBox10.Size = new System.Drawing.Size(190, 211);
             this.groupBox10.TabIndex = 32;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Movement";
@@ -1151,11 +1153,11 @@ namespace MMR.UI.Forms
             this.groupBox1.Controls.Add(this.cClockSpeed);
             this.groupBox1.Controls.Add(this.lClockSpeed);
             this.groupBox1.Controls.Add(this.cHideClock);
-            this.groupBox1.Location = new System.Drawing.Point(7, 206);
+            this.groupBox1.Location = new System.Drawing.Point(7, 221);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Size = new System.Drawing.Size(190, 145);
+            this.groupBox1.Size = new System.Drawing.Size(190, 130);
             this.groupBox1.TabIndex = 30;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Clock";
@@ -1168,7 +1170,7 @@ namespace MMR.UI.Forms
             "Never",
             "First Cycle",
             "Always"});
-            this.cAutoInvert.Location = new System.Drawing.Point(7, 82);
+            this.cAutoInvert.Location = new System.Drawing.Point(7, 77);
             this.cAutoInvert.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cAutoInvert.Name = "cAutoInvert";
             this.cAutoInvert.Size = new System.Drawing.Size(176, 23);
@@ -1178,7 +1180,7 @@ namespace MMR.UI.Forms
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 66);
+            this.label3.Location = new System.Drawing.Point(4, 61);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(68, 15);
@@ -1196,7 +1198,7 @@ namespace MMR.UI.Forms
             "2x",
             "3x",
             "6x"});
-            this.cClockSpeed.Location = new System.Drawing.Point(7, 40);
+            this.cClockSpeed.Location = new System.Drawing.Point(7, 35);
             this.cClockSpeed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cClockSpeed.Name = "cClockSpeed";
             this.cClockSpeed.Size = new System.Drawing.Size(176, 23);
@@ -1206,7 +1208,7 @@ namespace MMR.UI.Forms
             // lClockSpeed
             // 
             this.lClockSpeed.AutoSize = true;
-            this.lClockSpeed.Location = new System.Drawing.Point(4, 24);
+            this.lClockSpeed.Location = new System.Drawing.Point(4, 19);
             this.lClockSpeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lClockSpeed.Name = "lClockSpeed";
             this.lClockSpeed.Size = new System.Drawing.Size(39, 15);
@@ -1218,7 +1220,7 @@ namespace MMR.UI.Forms
             this.cHideClock.AutoSize = true;
             this.cHideClock.BackColor = System.Drawing.Color.Transparent;
             this.cHideClock.ForeColor = System.Drawing.Color.Black;
-            this.cHideClock.Location = new System.Drawing.Point(6, 111);
+            this.cHideClock.Location = new System.Drawing.Point(6, 106);
             this.cHideClock.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHideClock.Name = "cHideClock";
             this.cHideClock.Size = new System.Drawing.Size(65, 19);
@@ -3135,6 +3137,20 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
+            // cIronGoron
+            // 
+            this.cIronGoron.AutoSize = true;
+            this.cIronGoron.BackColor = System.Drawing.Color.Transparent;
+            this.cIronGoron.ForeColor = System.Drawing.Color.Black;
+            this.cIronGoron.Location = new System.Drawing.Point(7, 185);
+            this.cIronGoron.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cIronGoron.Name = "cIronGoron";
+            this.cIronGoron.Size = new System.Drawing.Size(83, 19);
+            this.cIronGoron.TabIndex = 29;
+            this.cIronGoron.Text = "Iron Goron";
+            this.cIronGoron.UseVisualStyleBackColor = false;
+            this.cIronGoron.CheckedChanged += new System.EventHandler(this.cIronGoron_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3457,6 +3473,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cGiantMaskAnywhere;
         private System.Windows.Forms.CheckBox cImprovedCamera;
         private System.Windows.Forms.CheckBox cFewerHealthDrops;
+        private System.Windows.Forms.CheckBox cIronGoron;
     }
 }
 

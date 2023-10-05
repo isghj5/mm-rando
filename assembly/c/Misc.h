@@ -62,7 +62,8 @@ typedef struct {
     u32 bombArrows          : 1;
     u32 giantMaskAnywhere   : 1;
     u32 fewerHealthDrops    : 1;
-    u32                     : 2;
+    u32 ironGoron           : 1;
+    u32                     : 1;
 } MiscFlags;
 
 typedef union {

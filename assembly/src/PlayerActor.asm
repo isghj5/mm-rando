@@ -583,3 +583,26 @@ Player_GetLinearVelocityForLimbRotation_Hook:
     lw      ra, 0x0014 (sp)
     jr      ra
     addiu   sp, sp, 0x18
+
+Player_HandleGoronInWater_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a0, 0x0018 (sp)
+    sw      a1, 0x001C (sp)
+
+    jal     Player_HandleGoronInWater
+    sw      v0, 0x0010 (sp)
+
+    or      at, v0, r0
+
+    lw      v0, 0x0010 (sp)
+
+    lui     a2, 0x0401
+    addiu   a2, a2, 0xDFE8
+
+    lw      a1, 0x001C (sp)
+    lw      a0, 0x0018 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+

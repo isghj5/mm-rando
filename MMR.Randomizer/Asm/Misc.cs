@@ -206,6 +206,8 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool ContinuousDekuHopping { get; set; } = false;
 
+        public bool IronGoron { get; set; } = false;
+
         /// <summary>
         /// Whether or not to enable shop models.
         /// </summary>
@@ -322,6 +324,7 @@ namespace MMR.Randomizer.Asm
             this.BombArrows = ((flags >> 4) & 1) == 1;
             this.GiantMaskAnywhere = ((flags >> 3) & 1) == 1;
             this.FewerHealthDrops = ((flags >> 2) & 1) == 1;
+            this.IronGoron = ((flags >> 1) & 1) == 1;
         }
 
         /// <summary>
@@ -358,6 +361,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.BombArrows ? (uint)1 : 0) << 4;
             flags |= (this.GiantMaskAnywhere ? (uint)1 : 0) << 3;
             flags |= (this.FewerHealthDrops ? (uint)1 : 0) << 2;
+            flags |= (this.IronGoron ? (uint)1 : 0) << 1;
             return flags;
         }
     }

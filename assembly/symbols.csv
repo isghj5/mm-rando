@@ -190,6 +190,7 @@
 0x8019F230,z2_PlaySfxCancel
 0x801A153C,z2_Audio_PlayObjSoundBgm
 0x801A3098,z2_SetBGM2
+0x801A3E38,z2_801A3E38
 0x801A8A50,z2_AudioSeq_GetActiveSeqId
 0x800B9010,z2_PlayLoopingSfxAtActor
 0x8012697C,z2_Player_DrawGetItem

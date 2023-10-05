@@ -4405,6 +4405,7 @@ namespace MMR.Randomizer.LogicMigrator
             {
                 ("SettingCloseCows", "Close Cows", null),
                 ("SettingContinuousDekuHopping", null, null),
+                ("SettingIronGoron", null, null),
                 ("SettingClimbMostSurfaces", null, null),
                 ("SettingFreeScarecrow", null, null),
                 ("SettingGiantMaskAnywhere", null, null),

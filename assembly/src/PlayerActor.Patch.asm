@@ -1293,3 +1293,61 @@
 .org 0x8083C91C
     jal     Player_GetLinearVelocityForLimbRotation_Hook
     or      a0, s0, r0
+
+;==================================================================================================
+; Iron Goron
+;==================================================================================================
+
+; Replaces:
+;   ADDIU   A0, R0, 0x0020
+.org 0x8083BB68
+    nop
+
+; Replaces:
+;   OR      A0, R0, R0
+.org 0x8083BB90
+    nop
+
+; Replaces:
+;   JAL     0x801A3E38
+.org 0x8083BBAC
+    jal     Player_HandleIronGoronLand
+
+; Replaces:
+;   JAL     0x801A3E38
+;   SWC1    F0, 0x001C (SP)
+;   LW      A1, 0x0024 (SP)
+;   ADDIU   AT, R0, 0x0002
+;   LWC1    F0, 0x001C (SP)
+;   LBU     T1, 0x014B (A1)
+;   BEQ     T1, AT, .+0x20
+.org 0x8083BBC0
+    jal     Player_ShouldResetUnderwaterTimer
+    swc1    f0, 0x001C (sp)
+    bnez    v0, .+0x30
+    lw      a1, 0x0024 (sp)
+    lwc1    f0, 0x001C (sp)
+    nop
+    nop
+
+; Replaces:
+;   LBU     V1, 0x014B (A1)
+;   ADDIU   AT, R0, 0x0001
+;   LW      A0, 0x0020 (SP)
+;   BNE     V1, AT, .+0x30
+;   LUI     A2, 0x0401
+;   ADDIU   A2, A2, 0xDFE8
+.org 0x8083BC84
+    jal     Player_HandleGoronInWater_Hook
+    lw      a0, 0x0020 (sp)
+    bgtzl   at, .+0x2BC
+    lw      ra, 0x0014 (sp)
+    bltz    at, .+0x2C
+    nop
+
+; Replaces:
+;   ADDIU   AT, R0, 0x0005
+;   BNEL    T5, AT, .+0x60
+.org 0x8083D2FC
+    slti    at, t5, 0x0005
+    bnezl   at, .+0x60

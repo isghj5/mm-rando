@@ -200,4 +200,5 @@
 .definelabel z2_PlaySfxCancel, 0x8019F230
 .definelabel z2_Audio_PlayObjSoundBgm, 0x801A153C
 .definelabel z2_SetBGM2, 0x801A3098
+.definelabel z2_801A3E38, 0x801A3E38
 .definelabel z2_AudioSeq_GetActiveSeqId, 0x801A8A50

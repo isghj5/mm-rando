@@ -271,6 +271,7 @@ extern void z2_UnloadRoom(GlobalContext* ctxt, RoomContext* roomCtxt);
 // Function Prototypes (Sound).
 extern void z2_Audio_PlayObjSoundBgm(Vec3f* pos, s8 seqId);
 extern void z2_SetBGM2(u16 bgmId);
+extern void z2_801A3E38(u8 arg0);
 extern u16 z2_AudioSeq_GetActiveSeqId(u8 seqPlayerIndex);
 
 // Function Prototypes (Text).
@@ -313,9 +314,105 @@ extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 #define z2_PlayerWaitForGiantMask_VRAM   0x80838A20
 #define z2_Player_func_8083692C_VRAM     0x8083692C
 #define z2_Player_func_80838A90_VRAM     0x80838A90
-#define z2_Player_func_80849FE0_VRAM     0x80849FE0
-#define z2_Player_func_8084A884_VRAM     0x8084A884
-#define z2_Player_func_8084C16C_VRAM     0x8084C16C
+#define z2_Player_func_8083B930_VRAM     0x8083B930
+
+#define z2_Player_Action_0_VRAM          0x808496AC
+#define z2_Player_Action_1_VRAM          0x808497A0
+#define z2_Player_Action_2_VRAM          0x80849A9C
+#define z2_Player_Action_3_VRAM          0x80849DD0
+#define z2_Player_Action_4_VRAM          0x80849FE0
+#define z2_Player_Action_5_VRAM          0x8084A26C
+#define z2_Player_Action_6_VRAM          0x8084A5C0
+#define z2_Player_Action_7_VRAM          0x8084A794
+#define z2_Player_Action_8_VRAM          0x8084A884
+#define z2_Player_Action_9_VRAM          0x8084A8E8
+#define z2_Player_Action_10_VRAM         0x8084AB4C
+#define z2_Player_Action_11_VRAM         0x8084AC84
+#define z2_Player_Action_12_VRAM         0x8084AEEC
+#define z2_Player_Action_13_VRAM         0x8084AF9C
+#define z2_Player_Action_14_VRAM         0x8084B0EC
+#define z2_Player_Action_15_VRAM         0x8084B288
+#define z2_Player_Action_16_VRAM         0x8084B3B8
+#define z2_Player_Action_17_VRAM         0x8084B4A8
+#define z2_Player_Action_18_VRAM         0x8084B5C0
+#define z2_Player_Action_19_VRAM         0x8084BAA4
+#define z2_Player_Action_20_VRAM         0x8084BBF0
+#define z2_Player_Action_21_VRAM         0x8084BC64
+#define z2_Player_Action_22_VRAM         0x8084BE40
+#define z2_Player_Action_23_VRAM         0x8084BF28
+#define z2_Player_Action_24_VRAM         0x8084BFDC
+#define z2_Player_Action_25_VRAM         0x8084C16C
+#define z2_Player_Action_26_VRAM         0x8084C6EC
+#define z2_Player_Action_27_VRAM         0x8084C94C
+#define z2_Player_Action_28_VRAM         0x8084CA24
+#define z2_Player_Action_29_VRAM         0x8084CB58
+#define z2_Player_Action_30_VRAM         0x8084CCEC
+#define z2_Player_Action_31_VRAM         0x8084CE84
+#define z2_Player_Action_32_VRAM         0x8084D18C
+#define z2_Player_Action_33_VRAM         0x8084D4EC
+#define z2_Player_Action_34_VRAM         0x8084D770
+#define z2_Player_Action_35_VRAM         0x8084D820
+#define z2_Player_Action_36_VRAM         0x8084E034
+#define z2_Player_Action_37_VRAM         0x8084E25C
+#define z2_Player_Action_38_VRAM         0x8084E334
+#define z2_Player_Action_39_VRAM         0x8084E434
+#define z2_Player_Action_40_VRAM         0x8084E4E4
+#define z2_Player_Action_41_VRAM         0x8084E58C
+#define z2_Player_Action_42_VRAM         0x8084E65C
+#define z2_Player_Action_43_VRAM         0x8084E724
+#define z2_Player_Action_44_VRAM         0x8084E980
+#define z2_Player_Action_45_VRAM         0x8084ED9C
+#define z2_Player_Action_46_VRAM         0x8084EE50
+#define z2_Player_Action_47_VRAM         0x8084EF9C
+#define z2_Player_Action_48_VRAM         0x8084F1B8
+#define z2_Player_Action_49_VRAM         0x8084F3DC
+#define z2_Player_Action_50_VRAM         0x8084F4E8
+#define z2_Player_Action_51_VRAM         0x8084FC0C
+#define z2_Player_Action_52_VRAM         0x8084FE7C
+#define z2_Player_Action_53_VRAM         0x808505D0
+#define z2_Player_Action_54_VRAM         0x808508C8
+#define z2_Player_Action_55_VRAM         0x80850B18
+#define z2_Player_Action_56_VRAM         0x80850D68
+#define z2_Player_Action_57_VRAM         0x808513EC
+#define z2_Player_Action_58_VRAM         0x80851588
+#define z2_Player_Action_59_VRAM         0x808516B4
+#define z2_Player_Action_60_VRAM         0x808519FC
+#define z2_Player_Action_61_VRAM         0x80851B58
+#define z2_Player_Action_62_VRAM         0x80851BD4
+#define z2_Player_Action_63_VRAM         0x8085269C
+#define z2_Player_Action_64_VRAM         0x80852B28
+#define z2_Player_Action_65_VRAM         0x80852C04
+#define z2_Player_Action_66_VRAM         0x80852FD4
+#define z2_Player_Action_67_VRAM         0x80853194
+#define z2_Player_Action_68_VRAM         0x808534C0
+#define z2_Player_Action_69_VRAM         0x80853754
+#define z2_Player_Action_70_VRAM         0x80853850
+#define z2_Player_Action_71_VRAM         0x80853A5C
+#define z2_Player_Action_72_VRAM         0x80853CC0
+#define z2_Player_Action_73_VRAM         0x80853D68
+#define z2_Player_Action_74_VRAM         0x80854010
+#define z2_Player_Action_75_VRAM         0x808540A0
+#define z2_Player_Action_76_VRAM         0x80854118
+#define z2_Player_Action_77_VRAM         0x8085421C
+#define z2_Player_Action_78_VRAM         0x8085437C
+#define z2_Player_Action_79_VRAM         0x8085439C
+#define z2_Player_Action_80_VRAM         0x80854430
+#define z2_Player_Action_81_VRAM         0x80854614
+#define z2_Player_Action_82_VRAM         0x808546D0
+#define z2_Player_Action_83_VRAM         0x80854800
+#define z2_Player_Action_84_VRAM         0x808548B8
+#define z2_Player_Action_85_VRAM         0x80854C70
+#define z2_Player_Action_86_VRAM         0x808553F4
+#define z2_Player_Action_87_VRAM         0x80855818
+#define z2_Player_Action_88_VRAM         0x80855A7C
+#define z2_Player_Action_89_VRAM         0x80855AF4
+#define z2_Player_Action_90_VRAM         0x80855B9C
+#define z2_Player_Action_91_VRAM         0x80855C28
+#define z2_Player_Action_92_VRAM         0x80855E08
+#define z2_Player_Action_93_VRAM         0x808561B0
+#define z2_Player_Action_94_VRAM         0x80856918
+#define z2_Player_Action_95_VRAM         0x808573A4
+#define z2_Player_Action_96_VRAM         0x80857BE8
 
 // Relocatable Data (player_actor).
 #define z2_D_80862B4C_VRAM               0x80862B4C
@@ -339,5 +436,6 @@ typedef void (*z2_PlayerWaitForGiantMask_Func)(GlobalContext* ctxt, ActorPlayer*
 typedef s32 (*z2_Player_ItemToActionParam_Func)(ActorPlayer* player, s32 itemId);
 typedef bool (*z2_Player_func_8083692C_Func)(ActorPlayer* player, GlobalContext* ctxt);
 typedef bool (*z2_Player_func_80838A90_Func)(ActorPlayer* player, GlobalContext* ctxt);
+typedef bool (*z2_Player_func_8083B930_Func)(GlobalContext* ctxt, ActorPlayer* player);
 
 #endif

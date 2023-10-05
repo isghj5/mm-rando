@@ -2708,6 +2708,15 @@
       "IsTrick": false
     },
     {
+      "Id": "SettingIronGoron",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
       "Id": "SettingClimbMostSurfaces",
       "RequiredItems": [],
       "ConditionalItems": [],

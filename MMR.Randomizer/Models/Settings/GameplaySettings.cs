@@ -120,6 +120,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.ContinuousDekuHopping = value; }
         }
 
+        public bool IronGoron
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.IronGoron; }
+            set { this.AsmOptions.MiscConfig.Flags.IronGoron = value; }
+        }
+
         /// <summary>
         /// Updates shop models and text
         /// </summary>

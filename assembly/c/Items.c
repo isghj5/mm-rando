@@ -145,5 +145,8 @@ bool Items_ShouldCheckItemUsabilityWhileSwimming(GlobalContext* ctxt, u8 item) {
     if (item == ITEM_GIANT_MASK && isGiant && player->form == PLAYER_FORM_HUMAN && MISC_CONFIG.flags.giantMaskAnywhere) {
         return false;
     }
+    if (item == ITEM_GORON_MASK && MISC_CONFIG.flags.ironGoron) {
+        return false;
+    }
     return true;
 }
