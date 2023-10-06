@@ -75,6 +75,15 @@ namespace MMR.Randomizer
             // songtest filename token allows music makers and users to force a song into a MMR seed for recording/testing
             SequenceUtils.CheckSongTest(unassigned, log);
 
+            // music plando, user has selected they want an easier time specifying where and what songs are placed in specific spots
+            var plandoPlacements = PlandoUtils.GetRandomizedSongPlacements(random, log);
+            foreach ((var song, var slot) in plandoPlacements)
+            {
+                SequenceUtils.AssignSequenceSlot(slot, song, unassigned, "PLANDO", log);
+                RomData.TargetSequences.Remove(slot);
+            }
+
+            // songforce filename token places music in a higher priority, check for songs with songforce here
             SequenceUtils.CheckSongForce(unassigned, log, random);
 
             foreach (var targetSlot in RomData.TargetSequences)
