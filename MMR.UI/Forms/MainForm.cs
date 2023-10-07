@@ -1839,17 +1839,14 @@ namespace MMR.UI.Forms
                                 "Pinnacle Rock without Seahorse",
                                 "Run Through Poisoned Water",
                                 "Scarecrow's Song",
-                                "Take Damage",
                                 "WFT 2nd Floor Skip",
                             };
                             break;
                         case LogicMode.Glitched:
                             tricksToAdd = new List<string>
                             {
-                                "Take Damage",
                                 "Scarecrow's Song",
                                 "Lensless Chests",
-                                "Hit Switches Through Walls",
                                 "Long Jump",
                                 "Run Through Poisoned Water",
                                 "Poisoned Water as Goron",
@@ -1857,7 +1854,6 @@ namespace MMR.UI.Forms
                                 "Brute Force OSH Code",
                                 "Climb Stone Tower with One Transformation",
                                 "Deku Playground Rupee Displacement",
-                                "Death Warp",
                                 "Bomb Hovering",
                                 "Lensless Jumping",
                                 "Goron Roll Item Grabs",
@@ -1891,7 +1887,7 @@ namespace MMR.UI.Forms
                                 "Ocean Skulltulas without Fire Arrows",
                                 "SHT Jump to Stray Fairies",
                                 "Clever Ice Platforms",
-                                "Inn Balcony as Zora",
+                                "Inn Balcony Jump",
                                 "Shoot Goht",
                                 "STT Water Tunnel as Human",
                                 "Clever Bombchu Usage",
@@ -1903,7 +1899,7 @@ namespace MMR.UI.Forms
                                 "Ocarina Items",
                                 "Action Swap",
                                 "Long Bomb Hovers",
-                                "Stun Keeta with Bombs",
+                                "Keeta with Minimal Items",
                                 "Time Stop",
                                 "Blast Mask Hovers",
                                 "Path to Snowhead without Magic",
