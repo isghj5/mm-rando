@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <z64.h>
 
-#define ITEM_OVERRIDE_ENTRY_COUNT 0x4E0
+#define ITEM_OVERRIDE_ENTRY_COUNT 0x500
 
 struct ItemOverrideEntry {
     u16 graphic;
