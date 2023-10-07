@@ -3228,7 +3228,12 @@ namespace MMR.Randomizer.GameObjects
         // params is == 0 and else
         [WaterTopVariants(0,1)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.SouthernSwamp /* , Scene.SouthernSwampClear */)]
+        // this could work but is a headache, we need to make sure all checks that are reachable by deku and nut are included...
+        //[CheckRestricted(Scene.DekuPalace, -1, Item.MaskScents)]
+        [CheckRestricted(Scene.Woodfall , -1, Item.ChestWoodfallBlueRupee, Item.ChestWoodfallRedRupee,
+            Item.CollectableWoodfallItem1, Item.CollectableWoodfallPot1, Item.CollectableWoodfallPot2)]
+        [EnemizerScenesExcluded(Scene.SouthernSwamp, // no easy way to identify if we need deku hopping
+            Scene.DekuPalace)] // see above
         Lilypad = 0x1B9, // Bg_Lotus
 
         [EnemizerEnabled]
