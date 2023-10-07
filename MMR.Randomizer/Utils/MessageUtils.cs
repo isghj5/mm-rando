@@ -107,16 +107,16 @@ namespace MMR.Randomizer.Utils
                             continue;
                         }
                     }
+                }
 
-                    if (ItemUtils.IsLocationHinted(item.NewLocation.Value, randomizedResult.Settings))
-                    {
-                        continue;
-                    }
+                if (ItemUtils.IsLocationHinted(item.NewLocation.Value, randomizedResult.Settings))
+                {
+                    continue;
+                }
 
-                    if (ItemUtils.IsLocationJunk(item.NewLocation.Value, randomizedResult.Settings))
-                    {
-                        continue;
-                    }
+                if (ItemUtils.IsLocationJunk(item.NewLocation.Value, randomizedResult.Settings))
+                {
+                    continue;
                 }
 
                 if (!hintableItems.Contains(item))
@@ -300,6 +300,10 @@ namespace MMR.Randomizer.Utils
 
                 unusedItems.Clear();
             }
+            else
+            {
+                itemsToCombineWith = hintableItems;
+            }
 
             List<MessageEntry> finalHints = new List<MessageEntry>();
 
@@ -451,8 +455,6 @@ namespace MMR.Randomizer.Utils
         {
             ushort soundEffectId = 0x690C; // grandma curious
             var itemNames = new List<string>();
-            var combined = new List<ItemObject>();
-            combined.Add(item);
 
             var article = randomizedResult.Settings.ProgressiveUpgrades && item.Item.HasAttribute<ProgressiveAttribute>() ? "a " : GetArticle(item.Item);
             var color = TextCommands.ColorPink;
@@ -469,40 +471,42 @@ namespace MMR.Randomizer.Utils
             }
             itemNames.Add(article + color + item.Item.ProgressiveUpgradeName(randomizedResult.Settings.ProgressiveUpgrades) + TextCommands.ColorWhite + importance);
             var locationName = item.NewLocation.Value.Location(randomizedResult.ItemList);
-            if (hintStyle != GossipHintStyle.Relevant)
+
+            var combineInfo = ItemUtils.ItemCombinableHints.GetValueOrDefault(item.NewLocation.Value);
+            var otherItems = combineInfo.locations ?? Enumerable.Empty<Item>();
+            var combined = itemsToCombineWith.Where(io => otherItems.Contains(io.NewLocation.Value) == true).ToList();
+            if (combined.Any())
             {
-                var combineInfo = ItemUtils.ItemCombinableHints.GetValueOrDefault(item.NewLocation.Value);
-                var otherItems = combineInfo.locations ?? Enumerable.Empty<Item>();
-                combined = itemsToCombineWith.Where(io => otherItems.Contains(io.NewLocation.Value) == true).ToList();
-                if (combined.Any())
+                if (!combined.Contains(item))
                 {
                     combined.Add(item);
-                    combined = combined.OrderBy(io => combineInfo.locations.IndexOf(io.NewLocation.Value)).ToList();
-                    locationName = combineInfo.name;
-                    itemNames.Clear();
-                    itemNames.AddRange(combined.Select(io =>
+                }
+                combined = combined.OrderBy(io => combineInfo.locations.IndexOf(io.NewLocation.Value)).ToList();
+                locationName = combineInfo.name;
+                itemNames.Clear();
+                itemNames.AddRange(combined.Select(io =>
+                {
+                    article = randomizedResult.Settings.ProgressiveUpgrades && io.Item.HasAttribute<ProgressiveAttribute>() ? "a " : GetArticle(io.Item);
+                    color = TextCommands.ColorPink;
+                    importance = "";
+                    if (randomizedResult.Settings.HintsIndicateImportance && shouldIndicateImportance?.Invoke(io) == true)
                     {
-                        article = randomizedResult.Settings.ProgressiveUpgrades && io.Item.HasAttribute<ProgressiveAttribute>() ? "a " : GetArticle(io.Item);
-                        color = TextCommands.ColorPink;
-                        importance = "";
-                        if (randomizedResult.Settings.HintsIndicateImportance && shouldIndicateImportance?.Invoke(io) == true)
+                        var locationForImportance = io.Item.MainLocation().HasValue ? io.Item : io.NewLocation.Value;
+                        var isRequired = ItemUtils.IsRequired(io.Item, locationForImportance, randomizedResult, true);
+                        if (!ItemUtils.IsLogicallyJunk(io.Item))
                         {
-                            var locationForImportance = io.Item.MainLocation().HasValue ? io.Item : io.NewLocation.Value;
-                            var isRequired = ItemUtils.IsRequired(io.Item, locationForImportance, randomizedResult, true);
-                            if (!ItemUtils.IsLogicallyJunk(io.Item))
-                            {
-                                importance = isRequired ? " (required)" : " (not required)";
-                            }
-                            color = isRequired ? TextCommands.ColorYellow : TextCommands.ColorSilver;
+                            importance = isRequired ? " (required)" : " (not required)";
                         }
-                        return article + color + io.Item.ProgressiveUpgradeName(randomizedResult.Settings.ProgressiveUpgrades) + TextCommands.ColorWhite + importance;
-                    }));
-                }
-                else
-                {
-                    combined.Add(item);
-                }
+                        color = isRequired ? TextCommands.ColorYellow : TextCommands.ColorSilver;
+                    }
+                    return article + color + io.Item.ProgressiveUpgradeName(randomizedResult.Settings.ProgressiveUpgrades) + TextCommands.ColorWhite + importance;
+                }));
             }
+            else
+            {
+                combined.Add(item);
+            }
+
             string clearMessage = null;
             if (itemNames.Any())
             {
