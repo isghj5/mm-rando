@@ -216,6 +216,7 @@ extern void z2_GiveItem(GlobalContext* ctxt, u8 itemId);
 extern u8 z2_IsItemKnown(u8 itemId);
 extern bool z2_HasEmptyBottle();
 extern void z2_GiveMap(u32 mapIndex);
+extern s16 z2_Inventory_GetSkullTokenCount(s16 sceneIndex);
 extern s32 z2_Health_ChangeBy(GlobalContext* ctxt, s16 healthChange);
 extern void z2_AddRupees(s32 amount);
 extern void z2_Inventory_ChangeAmmo(s16 item, s16 ammoChange);

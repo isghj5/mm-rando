@@ -475,6 +475,9 @@
   <data name="short_cutscenes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\short-cutscenes;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="skulltula_token_npc_hint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\skulltula-token-npc-hint.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="speedup_babycucco_minimap" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\speedup-babycucco-minimap.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

@@ -457,15 +457,32 @@ u8 Message_BeforeCharacterProcess(GlobalContext* ctxt, MessageCharacterProcessVa
                 } while (giIndex != 0xFFFF);
 
                 if (count > 0) {
-                    // TODO handle counts above 19
+                    s16 digits[4];
+                    digits[0] = digits[1] = 0;
+                    digits[2] = count;
+
+                    while (digits[2] >= 100) {
+                        digits[0]++;
+                        digits[2] -= 100;
+                    }
+                    while (digits[2] >= 10) {
+                        digits[1]++;
+                        digits[2] -= 10;
+                    }
+
                     u8 fairyCharIndex = 0;
                     gMessageExtensionState.tempStrayFairyCount[fairyCharIndex++] = 1; // Red color
-                    if (count >= 10) {
-                        gMessageExtensionState.tempStrayFairyCount[fairyCharIndex++] = '1';
-                        count -= 10;
+
+                    bool loadChar = false;
+                    for (u8 i = 0; i < 3; i++) {
+                        if ((i == 2) || (digits[i] != 0)) {
+                            loadChar = true;
+                        }
+                        if (loadChar) {
+                            gMessageExtensionState.tempStrayFairyCount[fairyCharIndex++] = '0' + digits[i];
+                        }
                     }
-                    gMessageExtensionState.tempStrayFairyCount[fairyCharIndex++] = '0' + count;
-                    gMessageExtensionState.tempStrayFairyCount[fairyCharIndex++] = 5; // Light Blue color
+
                     gMessageExtensionState.currentReplacement = gMessageExtensionState.tempStrayFairyCount;
                     gMessageExtensionState.currentReplacementLength = fairyCharIndex;
                     gMessageExtensionState.currentChar = 0;

@@ -674,7 +674,7 @@ namespace MMR.Randomizer.Models.Rom
                 .RuntimeGenericStop();
         }
 
-        public static MessageEntryBuilder.MessageBuilder RuntimeStrayFairyLocations(this MessageEntryBuilder.MessageBuilder @this, Region region, params Item[] locations)
+        public static MessageEntryBuilder.MessageBuilder RuntimeStrayFairyLocations(this MessageEntryBuilder.MessageBuilder @this, char color, string message, Region region, params Item[] locations)
         {
             var regionPreposition = region.Preposition();
             var regionName = region.Name();
@@ -685,9 +685,12 @@ namespace MMR.Randomizer.Models.Rom
 
             return @this
                 .RuntimeStrayFairyLocationsStart(locations)
-                .RuntimeWrap(() =>
+                .TextColor(color, () =>
                 {
-                    @this.Text(" trapped ").Text(regionPreposition ?? "").Red(regionName).Text(".");
+                    @this.RuntimeWrap(() =>
+                    {
+                        @this.Text($" {message} ").Text(regionPreposition ?? "").Red(regionName).Text(".");
+                    });
                 })
                 .EndTextBox()
                 .RuntimeGenericStop();

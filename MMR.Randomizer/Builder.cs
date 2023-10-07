@@ -3444,6 +3444,8 @@ namespace MMR.Randomizer
                 }
 
                 var strayFairyRegionLocations = ItemUtils.DungeonStrayFairies()
+                    .Union(ItemUtils.SwampSkulltulaTokens())
+                    .Union(ItemUtils.OceanSkulltulaTokens())
                     .Where(item => _randomized.ItemList[item].Item == item)
                     .GroupBy(fairy => fairy.Region(_randomized.ItemList).Value)
                     .ToDictionary(g => g.Key, g =>
@@ -3515,8 +3517,8 @@ namespace MMR.Randomizer
 
                             foreach (var kvp in strayFairyRegionLocations[Region.WoodfallTemple])
                             {
-                                it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
-                        }
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
 
                             it.Text("Please save the fairies so I can").NewLine()
                             .Text("be returned to my former shape!")
@@ -3566,8 +3568,8 @@ namespace MMR.Randomizer
 
                             foreach (var kvp in strayFairyRegionLocations[Region.SnowheadTemple])
                             {
-                                it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
-                        }
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
 
                             it.Text("Please bring them back here so").NewLine()
                             .Text("I can be returned to my former").NewLine()
@@ -3618,8 +3620,8 @@ namespace MMR.Randomizer
 
                             foreach (var kvp in strayFairyRegionLocations[Region.GreatBayTemple])
                             {
-                                it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
-                        }
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
 
                             it.Text("Please save them and bring them").NewLine()
                             .Text("back here!")
@@ -3669,8 +3671,8 @@ namespace MMR.Randomizer
 
                             foreach (var kvp in strayFairyRegionLocations[Region.StoneTowerTemple])
                             {
-                                it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
-                        }
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
 
                             it.Text("Please save them and bring them").NewLine()
                             .Text("back here so I can be returned").NewLine()
@@ -3680,6 +3682,93 @@ namespace MMR.Randomizer
                         .ExcludeFromQuickText()
                         .Build()
                     );
+                }
+
+                if (strayFairyRegionLocations.ContainsKey(Region.SwampSpiderHouseItems) && ItemUtils.SwampSkulltulaTokens().Any(token => _randomized.ItemList[token].IsRandomized))
+                {
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x911)
+                        .Message(it =>
+                        {
+                            it.CompileTimeWrap((wrapped) =>
+                            {
+                                wrapped.Text("I beg of you...To lift the curse...Find them all...The ").Red("golden spider tokens").Text("...");
+                            })
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x912)
+                        .Message(it =>
+                        {
+                            it.Text("There should still be...")
+                            .EndTextBox();
+
+                            foreach (var kvp in strayFairyRegionLocations[Region.SwampSpiderHouseItems])
+                            {
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                            it
+                            .Text("Please hurry...")
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .ExcludeFromQuickText()
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x914)
+                        .Header(h => h.Y(0).Icon(0x52))
+                        .Message(it =>
+                        {
+                            it.Text("Please...There should still be...")
+                            .EndTextBox();
+
+                            foreach (var kvp in strayFairyRegionLocations[Region.SwampSpiderHouseItems])
+                            {
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                            it
+                            .Text("Please hurry...")
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .ExcludeFromQuickText()
+                        .Build()
+                    );
+                }
+
+                if (strayFairyRegionLocations.ContainsKey(Region.OceanSpiderHouseItems) && ItemUtils.OceanSkulltulaTokens().Any(token => _randomized.ItemList[token].IsRandomized))
+                {
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x1135)
+                        .Header(h => h.Y(0).Icon(0x52))
+                        .Message(it =>
+                        {
+                            it.Text("I beg you! Lift the curse on this").NewLine()
+                            .Text("place! There should still be...")
+                            .EndTextBox();
+
+                            foreach (var kvp in strayFairyRegionLocations[Region.OceanSpiderHouseItems])
+                            {
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                            it.Text("If you lift the curse, I'll buy").NewLine()
+                            .Text("this place off you! Please hurry...")
+                            .EndFinalTextBox();
+                        })
+                        .ExcludeFromQuickText()
+                        .Build()
+                    );
+
+                    ResourceUtils.ApplyHack(Resources.mods.skulltula_token_npc_hint);
                 }
 
                 var remains = ItemUtils.BossRemains().Where(r => _randomized.ItemList[r].Item == r);

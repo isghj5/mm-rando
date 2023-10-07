@@ -145,6 +145,7 @@
 .definelabel z2_LoadRoom, 0x8012E96C
 .definelabel z2_UnloadRoom, 0x8012EBF8
 .definelabel z2_GiveMap, 0x8012EF0C
+.definelabel z2_Inventory_GetSkullTokenCount, 0x8012F22C
 .definelabel z2_object_spawn, 0x8012F2E0
 .definelabel z2_load_objects, 0x8012F4FC
 .definelabel z2_GetObjectIndex, 0x8012F608

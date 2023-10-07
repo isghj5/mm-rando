@@ -100,6 +100,7 @@
 .include "SongState.Patch.asm"
 .include "Speedups.Patch.asm"
 .include "SpinAttackEffect.Patch.asm"
+.include "Sth.Patch.asm"
 .include "StrayFairyGroup.Patch.asm"
 .include "SwordSchoolGong.Patch.asm"
 .include "SyatekiMan.Patch.asm"

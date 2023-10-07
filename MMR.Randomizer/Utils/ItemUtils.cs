@@ -178,6 +178,16 @@ namespace MMR.Randomizer.Utils
             return Enumerable.Range((int)Item.CollectibleStrayFairyWoodfall1, 60).Cast<Item>();
         }
 
+        public static IEnumerable<Item> SwampSkulltulaTokens()
+        {
+            return Enumerable.Range((int)Item.CollectibleSwampSpiderToken1, 30).Cast<Item>();
+        }
+
+        public static IEnumerable<Item> OceanSkulltulaTokens()
+        {
+            return Enumerable.Range((int)Item.CollectibleOceanSpiderToken1, 30).Cast<Item>();
+        }
+
         public static IEnumerable<Item> DungeonNavigation()
         {
             return new List<Item>
