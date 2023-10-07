@@ -4932,7 +4932,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x24A)]
         [CheckRestricted(Item.MaskKamaro)]
         [GroundVariants(0xF)]
-        [OnlyOneActorPerRoom] // for now, limit to one instead of limit to none for the rare chance of finding themsomehwere
+        [VariantsWithRoomMax(max:0, variant:0xF)] // night only actor, placing just means an empty placement
+        //[OnlyOneActorPerRoom] // for now, limit to one instead of limit to none for the rare chance of finding themsomehwere
         [UnkillableAllVariants]
         Kamaro = 0x27A, // En_Yb
 
