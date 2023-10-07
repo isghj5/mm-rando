@@ -2775,10 +2775,18 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         PirateTelescope = 0x178, // En_Warp_Uzu
 
+        [ActorizerEnabled]
         // flying ice platforms leading to lens cave
-        // bad choice for putting in the world because they are default invisible, player wont even see them
         [FileID(339)]
         [ObjectListIndex(0x187)]
+        [CheckRestricted(Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
+        // parameters unknown, they are not even and not time (time of spawn is a different parameter)
+        [FlyingVariants(0x1FFE, 0x1FFD, 0x1000, 0x1004)]
+        // TODO should we consider putting them on water top?
+        // BLEH uses xrot as unknown parameter
+        // bad choice for putting in the world because they are default invisible, player wont even see them
+        [VariantsWithRoomMax(max: 0, variant: 0x1FFE, 0x1FFD, 0x1000, 0x1004)]
+        [UnkillableAllVariants]
         FlyingIcePlatform = 0x179, // Obj_Driftice
 
         [EnemizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
@@ -4395,11 +4403,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(529)]
         [ObjectListIndex(0xA1)]
         [CheckRestricted(check: Item.MaskDonGero)]
+        // does not have or use params, separate for water
         [GroundVariants(0x0)]
-        [WaterBottomVariants(0x0)]
-        //[VariantsWithRoomMax]
-        //[OnlyOneActorPerRoom]
-        [VariantsWithRoomMax(max:0, variant:0)] // issue: hardlock if you put a bomb/keg near him
+        [WaterBottomVariants(0x1)]
+        [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         GoronWithGeroMask = 0x23A, // En_Geg : HungryGoron
 
@@ -4504,10 +4511,17 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0xFE, shift: 9)]
         [BlockingVariantsAll]
         StoneTowerBlock = 0x245, // Bg_F40_Block
-        
+
+        // todo switches
+        [ActorizerEnabled]
         [FileID(541)]
         [ObjectListIndex(0x222)]
         [SwitchFlagsPlacement(mask: 0xFE, shift: 9)]
+        // we dont want to remove vanilla, use 0 as variant
+        [GroundVariants(0)]
+        [VariantsWithRoomMax(max:3, variant:0)] // limit because of dyna (untested)
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.StoneTower, Scene.InvertedStoneTower)]
         ElegyStatueSwitch = 0x246, // Bg_F40_Switch
 
         // probably only cutscene actor in this game
