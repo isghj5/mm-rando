@@ -144,6 +144,7 @@ PAYLOAD_START:
 .include "Item00.asm"
 .include "Items.asm"
 .include "Knight.asm"
+.include "Message.asm"
 .include "MessageTable.asm"
 .include "Mikau.asm"
 .include "Misc.asm"

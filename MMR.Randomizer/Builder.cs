@@ -3509,6 +3509,7 @@ namespace MMR.Randomizer
 
                     newMessages.Add(new MessageEntryBuilder()
                         .Id(0x584)
+                        .Header(h => h.Icon(0x11))
                         .Message(it =>
                         {
                             it.PlaySoundEffect(0x6938).StartLightBlueText()
@@ -3560,6 +3561,7 @@ namespace MMR.Randomizer
 
                     newMessages.Add(new MessageEntryBuilder()
                         .Id(0x587)
+                        .Header(h => h.Icon(0x11))
                         .Message(it =>
                         {
                             it.PlaySoundEffect(0x6938).StartLightBlueText()
@@ -3612,6 +3614,7 @@ namespace MMR.Randomizer
 
                     newMessages.Add(new MessageEntryBuilder()
                         .Id(0x58A)
+                        .Header(h => h.Icon(0x11))
                         .Message(it =>
                         {
                             it.PlaySoundEffect(0x6938).StartLightBlueText()
@@ -3663,6 +3666,7 @@ namespace MMR.Randomizer
 
                     newMessages.Add(new MessageEntryBuilder()
                         .Id(0x58D)
+                        .Header(h => h.Icon(0x11))
                         .Message(it =>
                         {
                             it.PlaySoundEffect(0x6938).StartLightBlueText()
@@ -5537,7 +5541,7 @@ namespace MMR.Randomizer
 
             var dungeonItemIcons = new byte[]
             {
-                0x3C, 0x3D, 0x3E, 0x3F, 0xFE
+                0x3C, 0x3D, 0x3E, 0x3F, 0x11
             };
 
             for (var i = 0; i < dungeonItemMessageIds.Length; i++)

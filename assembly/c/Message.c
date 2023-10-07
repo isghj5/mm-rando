@@ -542,3 +542,14 @@ u8 Message_BeforeCharacterProcess(GlobalContext* ctxt, MessageCharacterProcessVa
     ctxt->msgCtx.currentMessageDisplayed[args->outputIndex] = currentCharacter;
     return currentCharacter;
 }
+
+u16 Message_GetStrayFairyIconColorIndex(MessageContext* msgCtx) {
+    u16 id = msgCtx->currentMessageId;
+    if (id >= 0x74 && id <= 0x77) {
+        return id - 0x74;
+    }
+    if (id >= 0x584 && id <= 0x58D) {
+        return (id - 0x584) / 3;
+    }
+    return gSaveContext.dungeonIndex;
+}

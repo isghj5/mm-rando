@@ -1512,7 +1512,9 @@ typedef struct {
     /* 0x100C */ SaveContextOwl owl;
     /* 0x3CA0 */ SaveContextExtra extra;
     // Todo: Move these fields later?
-    /* 0x48C8 */ UNK_TYPE1 pad48C8[0x1010];
+    /* 0x48C8 */ u16 dungeonIndex;                      // "scene_id_mix"
+    /* 0x48CA */ u8 masksGivenOnMoon[27];               // bit-packed, masks given away on the Moon. "mask_mask_bit"
+    /* 0x48E5 */ UNK_TYPE1 pad48E5[0xFF3];
     /* 0x58D8 */ ColorRGB16 heartDdBeatingRgb;
     /* 0x58DE */ UNK_TYPE1 pad58DE[0x12];
     /* 0x58F0 */ ColorRGB16 heartDdRgb;
