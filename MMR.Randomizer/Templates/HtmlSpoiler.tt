@@ -368,7 +368,14 @@
         checkLocations(locationsToCheck);
     }
 
-    var startingLocations = [0, 97, 332, 333, 334, 335];
+    var startingLocations = [
+        <#= (int)MMR.Randomizer.GameObjects.Item.MaskDeku #>,
+        <#= (int)MMR.Randomizer.GameObjects.Item.SongHealing #>,
+        <#= (int)MMR.Randomizer.GameObjects.Item.StartingSword #>,
+        <#= (int)MMR.Randomizer.GameObjects.Item.StartingShield #>,
+        <#= (int)MMR.Randomizer.GameObjects.Item.StartingHeartContainer1 #>,
+        <#= (int)MMR.Randomizer.GameObjects.Item.StartingHeartContainer2 #>
+    ];
     for (var id of startingLocations) {
         logic[id].Checked = true;
         var row = document.querySelector("tr[data-newlocationid='" + id + "']");
