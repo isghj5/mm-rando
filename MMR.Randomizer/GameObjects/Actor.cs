@@ -4264,6 +4264,7 @@ namespace MMR.Randomizer.GameObjects
         // using mmra instead
         [FileID(515)]
         [ObjectListIndex(0x20E)]
+        [UnkillableAllVariants]
         Obj_Boat = 0x22C, // Obj_Boat
 
         // ignored because of how borring it is, need way to restrict these

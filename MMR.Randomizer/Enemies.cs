@@ -2077,7 +2077,7 @@ namespace MMR.Randomizer
                 if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.Takkuri)) continue;
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Obj_Boat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Tingle, GameObjects.Actor.Skulltula)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.LikeLike, GameObjects.Actor.Obj_Boat)) continue;
+                if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.Shellblade, GameObjects.Actor.Obj_Boat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.ZoraRaceRing)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Japas)) continue;
                 if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
@@ -3195,7 +3195,7 @@ namespace MMR.Randomizer
                     var newWaterVariants = valueStr.Split(",").ToList();
                     var newWaterVariantsShort = newWaterVariants.Select(variant => Convert.ToInt32(variant.Trim(), 16)).ToList();
 
-                    newInjectedActor.waterVariants = newWaterVariantsShort;
+                    newInjectedActor.waterTopVariants = newWaterVariantsShort;
                     continue;
                 }
                 if (command == "waterbottom_variants")
@@ -3203,7 +3203,7 @@ namespace MMR.Randomizer
                     var newWaterVariants = valueStr.Split(",").ToList();
                     var newWaterVariantsShort = newWaterVariants.Select(variant => Convert.ToInt32(variant.Trim(), 16)).ToList();
 
-                    newInjectedActor.waterVariants = newWaterVariantsShort;
+                    newInjectedActor.waterBottomVariants = newWaterVariantsShort;
                     continue;
                 }
                 if (command == "variant_with_max")
