@@ -319,11 +319,6 @@ namespace MMR.Randomizer.Extensions
 
         public static bool IsLogicSettingEnabled(this Item item, GameplaySettings settings)
         {
-            if (settings.LogicMode == LogicMode.NoLogic)
-            {
-                return true;
-            }
-
             var logicSettingAttribute = item.GetAttribute<LogicSettingAttribute>();
             if (logicSettingAttribute == null)
             {
