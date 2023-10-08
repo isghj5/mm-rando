@@ -72,26 +72,28 @@ namespace MMR.Randomizer.GameObjects
         // gomess is 0x27BE, which does not spawn util you kill him, so obviously the top byte is NOT that simple in MM, snowhead is 27BE
         // dont use CM as reference, rando changes how the chests work for item rando to work
         [GroundVariants(0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
-            0x561E, 0x5C79, 0x5991, 0x5B58, 0x5A1E,
+            0x561E, 0x5C79, 0x5991, 0x5B58, //0x5A1E,
+            0xBAEE, // Invisible with switch activation, this one should be rare (0x10--(large gold) + 0x--11(spawn on switch clear))
             0x0AFB, 0x099C)] // two free, the rest are gold invisible
                              //[GroundVariants(0x001F)] // testing
         [WaterBottomVariants(0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
-            0x561E, 0x5C79, 0x5991, 0x5B58, 0x5A1E,
+            0x561E, 0x5C79, 0x5991, 0x5B58, //0x5A1E,
+            0xBA1E, // switch activated
             0x0AFB, 0x099C)] // two free, the rest are gold invisible
         [VariantsWithRoomMax(max: 1, variant: 0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, 0x5A1E,
             0x0AFB, 0x099C)] // brown, harder to see in perpheral vision, not invisible
+        //[VariantsWithRoomMax(max: 1, variant: )] // vanilla we do not want to re-place in the world
         [UnkillableAllVariants]
         //[AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
         //    variant: 0x3F5F)] // can place around chests
         //[AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
         //    variant: 2, 9)] // fairies around chests make sense, just not a full fairy fountain
         [EnemizerScenesExcluded(Scene.InvertedStoneTower)]
-        // these were here because we didnt have switch flag detection, now we do
-        //[EnemizerScenesPlacementBlock(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         [SwitchFlagsPlacementZRot]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
-        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear)] // asummed dyna crash
+        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
+            Scene.StoneTower)] 
         TreasureChest = 0x6, // En_Box
 
         [FileID(45)]
@@ -4508,7 +4510,7 @@ namespace MMR.Randomizer.GameObjects
         /// ?? TODO
         [FileID(540)]
         [ObjectListIndex(0x5C)]
-        [SwitchFlagsPlacement(mask: 0xFE, shift: 9)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         [BlockingVariantsAll]
         StoneTowerBlock = 0x245, // Bg_F40_Block
 
@@ -4516,7 +4518,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(541)]
         [ObjectListIndex(0x222)]
-        [SwitchFlagsPlacement(mask: 0xFE, shift: 9)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         // we dont want to remove vanilla, use 0 as variant
         [GroundVariants(0)]
         [VariantsWithRoomMax(max:3, variant:0)] // limit because of dyna (untested)

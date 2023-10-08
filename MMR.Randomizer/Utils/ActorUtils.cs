@@ -222,12 +222,15 @@ namespace MMR.Randomizer.Utils
             // the flags are stored as actual rotation
             if (actor.ActorEnum.GetAttribute<SwitchFlagsPlacementXRotAttribute>() != null)
             {
-                actor.Rotation.x = (short)MergeRotationAndFlags(switchFlags, flags: actor.Rotation.x);
+                // wait what the fuck, have these been wrong this whole time??
+                //actor.Rotation.x = (short)MergeRotationAndFlags(switchFlags, flags: actor.Rotation.x);
+                actor.Rotation.x = switchFlags;
                 return;
             }
             if (actor.ActorEnum.GetAttribute<SwitchFlagsPlacementZRotAttribute>() != null)
             {
-                actor.Rotation.z = (short)MergeRotationAndFlags(switchFlags, flags: actor.Rotation.z);
+                //actor.Rotation.z = (short)MergeRotationAndFlags(switchFlags, flags: actor.Rotation.z);
+                actor.Rotation.z = switchFlags;
                 return;
             }
 

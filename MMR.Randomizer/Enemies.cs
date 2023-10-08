@@ -1866,18 +1866,14 @@ namespace MMR.Randomizer
             //thisSceneData.Log.AppendLine(" ---------- ");
         }
 
-        // TODO: change these so they only print out the "== MAP" stuff if themap actually has something we changed
         public static void FixSwitchFlagVars(SceneEnemizerData thisSceneData, StringBuilder log)
         {
-            /// New actors can have switch flags, these are normally tailored to the scene so one actor could step on another
+            /// New actors can have switch flags, these are normally tailored to the scene so new actors could step on vanilla actors
 
-            //thisSceneData.Log.AppendLine($"------------------------------------------------- ");
-            //thisSceneData.Log.AppendLine($"  Switch flags: ");
 
             List<int> claimedSwitchFlags = new List<int>();
             for (int mapIndex = 0; mapIndex < thisSceneData.Scene.Maps.Count; ++mapIndex)
             {
-                //thisSceneData.Log.AppendLine($" ======( MAP {mapIndex.ToString("X2")} )======");
                 for (int actorNumber = 0; actorNumber < thisSceneData.Scene.Maps[mapIndex].Actors.Count; ++actorNumber)
                 {
                     var mapActor = thisSceneData.Scene.Maps[mapIndex].Actors[actorNumber];
@@ -1885,7 +1881,6 @@ namespace MMR.Randomizer
                     if (flags >= 0)
                     {
                         claimedSwitchFlags.Add(flags);
-                        //thisSceneData.Log.AppendLine($"  [{actorNumber}][{mapActor.ActorEnum}] has flags: [{flags}]");
                     }
 
                 }
@@ -1901,30 +1896,88 @@ namespace MMR.Randomizer
                 }
             }
 
-
-            // change all new actors with switch flags to some flag not yet used
             var usableSwitches = new List<int>();
-            usableSwitches.AddRange(Enumerable.Range(1, 0x7E)); // 0x7F is popular
+            usableSwitches.AddRange(Enumerable.Range(1, 0x7E)); // 0x7F is popular non-valid value
             usableSwitches.RemoveAll(sflag => claimedSwitchFlags.Contains(sflag));
             usableSwitches.Reverse(); // we want to start at 0x7F and decend, under the assumption that they always used lower values
 
-            for (int actorIndex = 0; actorIndex < thisSceneData.Actors.Count; actorIndex++)
+
+            var actorsWithSwitchFlags = thisSceneData.Actors.ToList();
+
+            // if there is both new chests and a new switching actor
+            var switchingActors = new List<GameObjects.Actor> // too lazy to add a rarely used attribute for just this
             {
-                var actor = thisSceneData.Actors[actorIndex];
-                var switchFlags = ActorUtils.GetActorSwitchFlags(actor, (short)actor.Variants[0]);
-
-                if (switchFlags == -1) continue; // some actors can set th switch flag to -1 and ignore
-
-                if (usableSwitches.Contains(switchFlags)) // not used yet, claim
+                GameObjects.Actor.ElegyStatueSwitch,
+                GameObjects.Actor.SunSwitch,
+                GameObjects.Actor.GoronLinkPoundSwitch,
+                GameObjects.Actor.ObjSwitch
+            };
+            var newSwitchActors = thisSceneData.Actors.FindAll(a => switchingActors.Contains(a.ActorEnum));
+            var newChestActors = thisSceneData.Actors.FindAll(a => a.ActorEnum == GameObjects.Actor.TreasureChest);
+            var switchChestFlag = -1;
+            if (newSwitchActors.Count > 0 && newChestActors.Count > 0) // pretest
+            {
+                for(int roomNum = 0; roomNum < thisSceneData.Scene.Maps.Count; roomNum++)
                 {
-                    usableSwitches.Remove(switchFlags);
+                    
+                    var roomChests = newChestActors.FindAll(a => a.Room == roomNum);
+                    var roomSwitches = newSwitchActors.FindAll(a => a.Room == roomNum);
+                    if (roomChests.Count > 0 && roomSwitches.Count > 0)
+                    {
+                        var randomChest = roomChests.Random(thisSceneData.RNG);
+                        randomChest.Variants[0] &= 0x0FFF; // changing type to switch to activate
+                        randomChest.Variants[0] |= 0x3000;
+                        // in case this actor's last slot only spawned at night or something stupid, set it to always spawn
+                        randomChest.Rotation.x = ActorUtils.MergeRotationAndFlags(randomChest.Rotation.x, 0x7F);
+                        randomChest.Rotation.z = ActorUtils.MergeRotationAndFlags(randomChest.Rotation.z, 0x7F);
+                        //switchChestFlag = usableSwitches[0]; // grab a usable switch flag
+                        switchChestFlag = usableSwitches.Find(u => u == 0x66); // grab a usable switch flag
+                        ActorUtils.SetActorSwitchFlags(randomChest, (short) switchChestFlag);
+                        usableSwitches.Remove(switchChestFlag);
+                        log.AppendLine($" +++ WE FOUND SWITCH CHEST in room [{roomNum}], had switch flags modified to [{randomChest.Rotation.z.ToString("X4")}] +++");
+                        actorsWithSwitchFlags.Remove(randomChest);
+                        randomChest.ActorIdFlags |= 0x2000; // do not convert z rotation, we need it for chests
+                        randomChest.Rotation.y |= 0x7F; // set cutscene value to -1 to allow the chest to appear without a working cutscene
+
+                        foreach (var switchActor in roomSwitches)
+                        {
+                            ActorUtils.SetActorSwitchFlags(switchActor, (short)switchChestFlag);
+                            log.AppendLine($" +++ [{switchActor.ActorId}][{switchActor.ActorEnum}] had switch flags matched to [{switchChestFlag}] +++");
+                            actorsWithSwitchFlags.Remove(switchActor);
+                        }
+                    }
                 }
-                else // we have switch flag and we have a collision, we need to change it
+            }
+
+            { // else; assign to unused switch per area
+
+                // change all new actors with switch flags to some flag not yet used
+
+                for (int actorIndex = 0; actorIndex < actorsWithSwitchFlags.Count; actorIndex++)
                 {
-                    var newSwitch = usableSwitches[0];
-                    ActorUtils.SetActorSwitchFlags(actor, (short)newSwitch);
-                    usableSwitches.Remove(newSwitch);
-                    log.AppendLine($" +++ [{actorIndex}][{actor.ActorEnum}] had switch flags modified to [{newSwitch}] +++");
+                    var actor = actorsWithSwitchFlags[actorIndex];
+                    var switchFlags = ActorUtils.GetActorSwitchFlags(actor, (short)actor.Variants[0]);
+
+                    if (switchFlags == -1) continue; // some actors can set th switch flag to -1 and ignore
+
+                    if (usableSwitches.Contains(switchFlags)) // not used yet, claim
+                    {
+                        usableSwitches.Remove(switchFlags);
+                    }
+                    else // we have switch flag and we have a collision, we need to change it
+                    {
+                        //if (switchChestFlag != -1)
+                        //{
+                         //   ActorUtils.SetActorSwitchFlags(actor, (short)switchChestFlag);
+                        //} else
+                        {
+                            var newSwitch = usableSwitches[0];
+                            ActorUtils.SetActorSwitchFlags(actor, (short)newSwitch);
+                            usableSwitches.Remove(newSwitch);
+                            log.AppendLine($" +++ [{actorIndex}][{actor.ActorEnum}] had switch flags modified to [{newSwitch}] +++");
+                        }
+
+                    }
                 }
             }
         }
@@ -2019,7 +2072,7 @@ namespace MMR.Randomizer
                     return false;
                 }
                  
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.PoeSisters)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.ElegyStatueSwitch)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.Takkuri)) continue;
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Obj_Boat)) continue;
