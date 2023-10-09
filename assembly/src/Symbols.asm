@@ -165,8 +165,8 @@
 .definelabel z2_Message_ContinueTextbox, 0x80151938
 .definelabel z2_GetMessageState, 0x80152498
 .definelabel ShrinkWindow_SetLetterboxTarget, 0x80160C00
-.definelabel z2_8016566C, 0x8016566C
-.definelabel z2_80165690, 0x80165690
+.definelabel z2_Play_EnableMotionBlur, 0x8016566C
+.definelabel z2_Play_DisableMotionBlur, 0x80165690
 .definelabel z2_801660B8, 0x801660B8
 .definelabel z2_load_scene, 0x801693D4
 .definelabel z2_Play_CreateSubCamera, 0x801694DC

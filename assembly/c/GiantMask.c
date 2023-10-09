@@ -3,6 +3,7 @@
 #include "macro.h"
 #include "controller.h"
 #include "Reloc.h"
+#include "Camera.h"
 
 static void GiantMask_FormProperties_Grow(PlayerFormProperties* formProperties) {
     formProperties->unk_00 *= 10.0;
@@ -87,8 +88,9 @@ static void GiantMask_DisableTransformationFlash(GlobalContext* globalCtx) {
 /* 0x1D58 */ static f32 sSubCamUpRotZScale;
 /* 0x1D5C */ static f32 sSubCamAtVel;
 /* 0x1D64 */ static f32 sSubCamDistZFromPlayer;
-/* 0x1D68 */ static f32 sSubCamEyeOffsetY;
+/* 0x1D68 */ const f32 sSubCamEyeOffsetY = 10.0f;
 /* 0x1D6C */ static f32 sSubCamAtOffsetY;
+             static f32 sSubCamAtOffsetTargetY;
 /* 0x1D70 */ static f32 sPlayerScale = 0.01f;
 /* 0x1D78 */ static u8 sGiantsMaskCsFlashState;
 /* 0x1D7A */ static s16 sGiantsMaskCsFlashAlpha;
@@ -130,18 +132,19 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
                 sGiantsMaskCsTimer = 0;
                 sSubCamAtVel = 0.0f;
                 sSubCamUpRotZScale = 0.0f;
+                f32 playerHeight = Camera_PlayerGetHeight(player);
                 if (!sIsInGiantMode) {
                     sGiantsMaskCsState = 1;
-                    sSubCamEyeOffsetY = 10.0f;
                     sSubCamDistZFromPlayer = 60.0f;
-                    sSubCamAtOffsetY = 23.0f;
+                    sSubCamAtOffsetY = playerHeight * 0.53f; // 23.0f;
+                    sSubCamAtOffsetTargetY = playerHeight * 6.2f; // 273.0f;
                     sPlayerScale = 0.01f;
                     goto maskOn;
                 } else {
                     sGiantsMaskCsState = 10;
-                    sSubCamEyeOffsetY = 10.0f;
                     sSubCamDistZFromPlayer = 200.0f;
-                    sSubCamAtOffsetY = 273.0f;
+                    sSubCamAtOffsetY = playerHeight * 0.62f; // 273.0f;
+                    sSubCamAtOffsetTargetY = playerHeight * 0.053f; // 23.0f;
                     sPlayerScale = 0.1f;
                     goto maskOff;
                 }
@@ -162,7 +165,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
                         z2_PlaySfx(0x9C5); // NA_SE_PL_TRANSFORM_GIANT
                     }
                     Math_ApproachF(&sSubCamDistZFromPlayer, 200.0f, 0.1f, sSubCamAtVel * 640.0f);
-                    Math_ApproachF(&sSubCamAtOffsetY, 273.0f, 0.1f, sSubCamAtVel * 150.0f);
+                    Math_ApproachF(&sSubCamAtOffsetY, sSubCamAtOffsetTargetY, 0.1f, sSubCamAtVel * 150.0f);
                     Math_ApproachF(&sPlayerScale, 0.1f, 0.2f, sSubCamAtVel * 0.1f);
                     Math_ApproachF(&sSubCamAtVel, 1.0f, 1.0f, 0.001f);
                 } else {
@@ -212,7 +215,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
                     z2_PlaySfx(0x9C6); // NA_SE_PL_TRANSFORM_NORMAL
                 }
                 Math_ApproachF(&sSubCamDistZFromPlayer, 60.0f, 0.1f, sSubCamAtVel * 640.0f);
-                Math_ApproachF(&sSubCamAtOffsetY, 23.0f, 0.1f, sSubCamAtVel * 150.0f);
+                Math_ApproachF(&sSubCamAtOffsetY, sSubCamAtOffsetTargetY, 0.1f, sSubCamAtVel * 150.0f);
                 Math_ApproachF(&sPlayerScale, 0.01f, 0.1f, 0.003f);
                 Math_ApproachF(&sSubCamAtVel, 2.0f, 1.0f, 0.01f);
             }
