@@ -1047,9 +1047,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x26EC)]
         [FileID(127)]
         [ObjectListIndex(0xD8)]
+        // 0xFF(decrement) is armor type, the upper byte is completely unused and is even cleared
         [GroundVariants(0xFF03, 0xFF02, 0xFF01)]
-        [WaterBottomVariants(0xFF03, 0xFF02, 0xFF01)]
-        [VariantsWithRoomMax(max: 2, 0xFF03, 0xFF02, 0xFF01)]
+        [WaterBottomVariants(0x7703, 0x7702, 0x7701)] // non vanilla
+        [VariantsWithRoomMax(max: 2, 0xFF03, 0xFF02, 0xFF01, 0x7703, 0x7702, 0x7701)]
         IronKnuckle = 0x84, // En_Ik
 
         Empty85 = 0x85,
