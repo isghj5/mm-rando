@@ -1010,10 +1010,12 @@ namespace MMR.Randomizer.Asm
             // ID 0x61, replaces unused bottled seahorse model, blue frog
             ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116430, 0x800EF054);
             ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116434, 0x06000030);
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116438, 0);
 
             // ID 0x62, replaces unused bottled loach model, white frog
             ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116454, 0x800EF054);
             ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x116458, 0x06000040);
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x11645C, 0);
         }
 
         #endregion
