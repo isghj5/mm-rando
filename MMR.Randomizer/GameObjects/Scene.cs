@@ -99,6 +99,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1171)]
         [SceneInternalId(0x14)]
+        // TODO come up with a way to make sure that one spot isn't blocking without hardcoding
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PatrollingPirate,
+            Actor.Obj_Iceblock)] // can block the stairs
         PiratesFortress = 0x11,
 
         [FileID(1173)]
@@ -150,7 +153,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula, 
             Actor.BigPoe)] // I think this was an issue? other than being annoying I mean
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo,
-            Actor.GibdoWell, Actor.DeathArmos // Rarely Killable
+            Actor.GibdoWell, Actor.DeathArmos, // Rarely Killable
+            Actor.Keese // can bug out and fly out-of-bounds, difficult to kill
             /*Actor.RegularIceBlock, Actor.Bombiwa, Actor.ClocktowerGearsAndOrgan */)] // blocking
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DragonFly,
             Actor.GiantBeee)] // issue being that the one that spins around and doesnt agro hard requires a ranged weapon because the spawn is so high
@@ -341,7 +345,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1332)]
         [SceneInternalId(0x38)]
         [EnemizerSceneEnemyReplacementBlock(Actor.LikeLike,
-                    Actor.Japas)] // small blocking
+                    Actor.Japas, Actor.Bombiwa, Actor.BronzeBoulder)] // small blocking
          //    Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo,
         //    Actor.Bombiwa, Actor.BronzeBoulder, Actor.CircleOfFire,
         //    Actor.RegularZora, Actor.SwimmingZora, Actor.WarpDoor)]
