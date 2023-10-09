@@ -3460,8 +3460,11 @@ namespace MMR.Randomizer.GameObjects
         [FileID(426)]
         [ObjectListIndex(0x1B5)]
         // dont know what the differences are
-        [WallVariants(0x1932, 0x3FFF)] // dont know what the differences are
-        [GroundVariants(0x1932, 0x3FFF, 0x191E)]
+        [WaterVariants(0x3FA8)] // stt (underwater wall)
+        [WallVariants(0x1932, // greatbay
+            0x3FFF)] // istt hanging from wall
+        [GroundVariants(
+            0x191E)] // below well
         [VariantsWithRoomMax(max: 8, variant: 0x1932, 0x3FFF)]
         //[EnemizerScenesExcluded(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GoronRacetrack)]

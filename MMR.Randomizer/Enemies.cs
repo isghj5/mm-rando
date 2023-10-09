@@ -416,7 +416,7 @@ namespace MMR.Randomizer
 
         #endregion
 
-        private static void EnemizerEarlyFixes()
+        private static void EnemizerEarlyFixes(Random rng)
         {
             /// Changes before randomization
 
@@ -456,6 +456,7 @@ namespace MMR.Randomizer
             FixInjuredKoume();
             RandomizePinnacleRockSigns();
             RandomizeDekuPalaceBombiwaSigns();
+            ChangeHotwaterGrottoDekuBabaIntoSomethingElse(rng);
 
             Shinanigans();
             ObjectIsItemBlocked();
@@ -1208,6 +1209,42 @@ namespace MMR.Randomizer
             // actual bombiwa are really low in the water, raise to just below surface
             dekuPalaceActors[19].Position.y = -40;
             dekuPalaceActors[20].Position.y = -40;
+        }
+
+        public static void ChangeHotwaterGrottoDekuBabaIntoSomethingElse(Random rng)
+        {
+            /// I want more variety, so I want the hot spring water grotto to have a different actor in it than regular grottos
+            // using likelike as a replacement, sometimes rando will put water and sometimes land
+
+            // we want both ground or water types, so we are going to use multiple actors
+            var randomActorCandidates = new List<(GameObjects.Actor actor, short vars)>
+            {
+                (GameObjects.Actor.LikeLike, 0x2), // water bottom type
+                (GameObjects.Actor.GoGoron, 0x7FC1) // ground type (race track goron, stretching)
+            };
+            int coinFlip = rng.Next(1);
+            var coinTossResultActor = randomActorCandidates[coinFlip];
+
+            var grottosScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Grottos.FileID());
+            var hotspringDekuBaba = grottosScene.Maps[14].Actors.FindAll(a => a.ActorEnum == GameObjects.Actor.DekuBabaWithered);
+            foreach(var baba in hotspringDekuBaba)
+            {
+                baba.ChangeActor(coinTossResultActor.actor, vars: coinTossResultActor.vars, modifyOld:true);
+                baba.OldName = "HotSpringBaba";
+            }
+
+            // move them into water
+            hotspringDekuBaba[0].Position = new vec16(6936, -22, 824);  
+            hotspringDekuBaba[1].Position = new vec16(6935, -24, 1072 );
+            hotspringDekuBaba[2].Position = new vec16(7160, -24, 916);
+
+            // baba have no face, so they don't get a rotation normally, they would all face the same direction
+            hotspringDekuBaba[0].Rotation.y = ActorUtils.MergeRotationAndFlags(210, flags: hotspringDekuBaba[0].Rotation.y);
+            hotspringDekuBaba[1].Rotation.y = ActorUtils.MergeRotationAndFlags(135, flags: hotspringDekuBaba[1].Rotation.y);
+            hotspringDekuBaba[2].Rotation.y = ActorUtils.MergeRotationAndFlags(105, flags: hotspringDekuBaba[2].Rotation.y);
+
+            // change object in the room to match new fake actors
+            grottosScene.Maps[14].Objects[2] = (coinTossResultActor.actor).ObjectIndex();
         }
 
         public static void FixKafeiPlacements()
@@ -2075,9 +2112,9 @@ namespace MMR.Randomizer
                 if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.ElegyStatueSwitch)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.Takkuri)) continue;
-                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Obj_Boat)) continue;
+                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.TreasureChest)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Tingle, GameObjects.Actor.Skulltula)) continue;
-                if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.Shellblade, GameObjects.Actor.Obj_Boat)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.Shellblade, GameObjects.Actor.Obj_Boat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.ZoraRaceRing)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Japas)) continue;
                 if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
@@ -3701,7 +3738,7 @@ namespace MMR.Randomizer
                 SceneUtils.GetMaps();
                 SceneUtils.GetMapHeaders();
                 SceneUtils.GetActors();
-                EnemizerEarlyFixes();
+                EnemizerEarlyFixes(seedrng);
                 ScanForMMRA(directory: "actors");
                 InjectNewActors();
 
