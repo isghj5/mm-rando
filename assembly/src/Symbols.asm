@@ -42,6 +42,7 @@
 .definelabel z2_SetActorSize, 0x800B67E0
 .definelabel z2_ActorDtor, 0x800B6948
 .definelabel z2_Actor_OffsetOfPointInActorCoords, 0x800B6E6C
+.definelabel z2_Player_GetHeight_WithoutEpona, 0x800B6FE4
 .definelabel z2_PreDraw2, 0x800B8050
 .definelabel z2_PreDraw1, 0x800B8118
 .definelabel z2_800B84D0, 0x800B84D0

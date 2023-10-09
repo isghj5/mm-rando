@@ -4,19 +4,21 @@
 
 .headersize G_CODE_DELTA
 
+; Replaces:
+;   LW      T6, 0x0A6C (A0)
+;   LUI     AT, 0x4200
+;   SLL     T7, T6, 8
+;   BGEZL   T7, .+0x18
+;   MTC1    R0, F2
+;   MTC1    AT, F2
+;   B       .+0x14
 .org 0x800B6FC8
     addiu   sp, sp, -0x18
     sw      ra, 0x0014 (sp)
-
-    jal     Camera_PlayerGetExtraHeight
+    jal     Camera_PlayerGetHeight
     nop
-
-    mov.s   f2, f0
-    nop
-    nop
-    nop
-
     lw      ra, 0x0014 (sp)
+    jr      ra
     addiu   sp, sp, 0x18
 
 ; Replaces:
