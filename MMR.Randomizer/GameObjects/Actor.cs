@@ -2782,15 +2782,14 @@ namespace MMR.Randomizer.GameObjects
         // flying ice platforms leading to lens cave
         [FileID(339)]
         [ObjectListIndex(0x187)]
-        [CheckRestricted(Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
+        [CheckRestricted(Item.MaskGoron, Item.ChestHotSpringGrottoRedRupee, Item.UpgradeRazorSword, Item.UpgradeRazorSword)]
         // parameters unknown, they are not even and not time (time of spawn is a different parameter)
-        [FlyingVariants(0x1FFE, 0x1FFD, 0x1000, 0x1004)]
+        [WaterTopVariants(0x1FFE, 0x1FFD, 0x1000, 0x1004)]
         // TODO should we consider putting them on water top?
-        // BLEH uses xrot as unknown parameter
-        // bad choice for putting in the world because they are default invisible, player wont even see them
-        [VariantsWithRoomMax(max: 0, variant: 0x1FFE, 0x1FFD, 0x1000, 0x1004)]
+        // don't put too many in the world might run into BG issues
+        [VariantsWithRoomMax(max: 2, variant: 0x1FFE, 0x1FFD, 0x1000, 0x1004)]
         [UnkillableAllVariants]
-        FlyingIcePlatform = 0x179, // Obj_Driftice
+        IceWaterPlatforms = 0x179, // Obj_Driftice
 
         [EnemizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
         [FileID(340)]
@@ -3280,9 +3279,14 @@ namespace MMR.Randomizer.GameObjects
 
         Empty1BF = 0x1BF,
 
+        [ActorizerEnabled]
         [FileID(411)]
         [ObjectListIndex(0x1A8)]
-        Obj_Visiblock = 0x1C0, // Obj_Visiblock
+        [CheckRestricted(Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
+        [FlyingVariants(0x0)]
+        [VariantsWithRoomMax(max:0, variant:0x0)] // invisible, not even seen just looks empty, unless I can move actors to sit ontop of them or something
+        [UnkillableAllVariants]
+        FlyingLensCavePlatforms = 0x1C0, // Obj_Visiblock
 
         [ActorizerEnabled]
         [FileID(412)]
