@@ -157,8 +157,8 @@
 0x80151938,z2_Message_ContinueTextbox
 0x80152498,z2_GetMessageState
 0x80160C00,ShrinkWindow_SetLetterboxTarget
-0x8016566C,z2_8016566C
-0x80165690,z2_80165690
+0x8016566C,z2_Play_EnableMotionBlur
+0x80165690,z2_Play_DisableMotionBlur
 0x801660B8,z2_801660B8
 0x801693D4,z2_load_scene
 0x801694DC,z2_Play_CreateSubCamera

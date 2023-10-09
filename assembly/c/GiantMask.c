@@ -77,28 +77,28 @@ static void GiantMask_DisableTransformationFlash(GlobalContext* globalCtx) {
     MREG(64) = 0;
 }
 
-/* 0x1D14 */ static u32 _cutsceneCounter;
-/* 0x1D18 */ static s16 _transformationState;
-/* 0x1D22 */ static s16 _transformationCameraId;
-/* 0x1D24 */ static Vec3f _unk_1D24;
-/* 0x1D30 */ static Vec3f _unk_1D30;
-/* 0x1D3C */ static Vec3f _unk_1D3C;
-/* 0x1D54 */ static f32 _unk_1D54;
-/* 0x1D58 */ static f32 _unk_1D58;
-/* 0x1D5C */ static f32 _unk_1D5C;
-/* 0x1D64 */ static f32 _unk_1D64;
-/* 0x1D68 */ static f32 _unk_1D68;
-/* 0x1D6C */ static f32 _unk_1D6C;
-/* 0x1D70 */ static f32 _scale = 0.01f;
-/* 0x1D78 */ static u8 _transformationFlashState;
-/* 0x1D7A */ static s16 _transformationFlashCounter;
+/* 0x1D14 */ static u32 sGiantsMaskCsTimer;
+/* 0x1D18 */ static s16 sGiantsMaskCsState;
+/* 0x1D22 */ static s16 sSubCamId;
+/* 0x1D24 */ static Vec3f sSubCamEye;
+/* 0x1D30 */ static Vec3f sSubCamAt;
+/* 0x1D3C */ static Vec3f sSubCamUp;
+/* 0x1D54 */ static f32 sSubCamUpRotZ;
+/* 0x1D58 */ static f32 sSubCamUpRotZScale;
+/* 0x1D5C */ static f32 sSubCamAtVel;
+/* 0x1D64 */ static f32 sSubCamDistZFromPlayer;
+/* 0x1D68 */ static f32 sSubCamEyeOffsetY;
+/* 0x1D6C */ static f32 sSubCamAtOffsetY;
+/* 0x1D70 */ static f32 sPlayerScale = 0.01f;
+/* 0x1D78 */ static u8 sGiantsMaskCsFlashState;
+/* 0x1D7A */ static s16 sGiantsMaskCsFlashAlpha;
 
-static bool _hasSeenGrowCutscene;
-static bool _hasSeenShrinkCutscene;
-static bool _isGiant;
-static f32 _nextScaleFactor = 10.0f;
+static bool sHasSeenGrowCutscene;
+static bool sHasSeenShrinkCutscene;
+static bool sIsInGiantMode;
+static f32 sNextScaleFactor = 10.0f;
 
-static bool _shouldReset = false;
+static bool sShouldReset = false;
 
 void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
     if (!MISC_CONFIG.flags.giantMaskAnywhere) {
@@ -110,162 +110,162 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
     }
 
     s16 i;
-    Vec3f sp58;
-    u8 sp57 = 0;
-    s16 transformationFlashOpacity;
+    Vec3f subCamEyeOffset;
+    bool performMainSwitch = false;
+    s16 alpha;
 
-    _cutsceneCounter++;
+    sGiantsMaskCsTimer++;
 
-    switch (_transformationState) {
+    switch (sGiantsMaskCsState) {
         case 0:
             if (player->stateFlags.state1 & PLAYER_STATE1_GIANT_MASK) {
                 if (!(player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP)) {
                     z2_PlayerWaitForGiantMask(globalCtx, player);
                 }
                 // z2_800EA0D4(globalCtx, &globalCtx->csCtx);
-                _transformationCameraId = z2_Play_CreateSubCamera(globalCtx);
-                z2_Play_CameraChangeStatus(globalCtx, 0, 1);
-                z2_Play_CameraChangeStatus(globalCtx, _transformationCameraId, 7);
-                z2_8016566C(150); // enable motion blur
-                _cutsceneCounter = 0;
-                _unk_1D5C = 0.0f;
-                _unk_1D58 = 0.0f;
-                if (!_isGiant) {
-                    _transformationState = 1;
-                    _unk_1D68 = 10.0f;
-                    _unk_1D64 = 60.0f;
-                    _unk_1D6C = 23.0f;
-                    _scale = 0.01f;
-                    goto label1;
+                sSubCamId = z2_Play_CreateSubCamera(globalCtx);
+                z2_Play_CameraChangeStatus(globalCtx, 0, 1); // CAM_ID_MAIN, CAM_STATUS_WAIT
+                z2_Play_CameraChangeStatus(globalCtx, sSubCamId, 7); // CAM_STATUS_ACTIVE
+                z2_Play_EnableMotionBlur(150); // enable motion blur
+                sGiantsMaskCsTimer = 0;
+                sSubCamAtVel = 0.0f;
+                sSubCamUpRotZScale = 0.0f;
+                if (!sIsInGiantMode) {
+                    sGiantsMaskCsState = 1;
+                    sSubCamEyeOffsetY = 10.0f;
+                    sSubCamDistZFromPlayer = 60.0f;
+                    sSubCamAtOffsetY = 23.0f;
+                    sPlayerScale = 0.01f;
+                    goto maskOn;
                 } else {
-                    _transformationState = 10;
-                    _unk_1D68 = 10.0f;
-                    _unk_1D64 = 200.0f;
-                    _unk_1D6C = 273.0f;
-                    _scale = 0.1f;
-                    goto label2;
+                    sGiantsMaskCsState = 10;
+                    sSubCamEyeOffsetY = 10.0f;
+                    sSubCamDistZFromPlayer = 200.0f;
+                    sSubCamAtOffsetY = 273.0f;
+                    sPlayerScale = 0.1f;
+                    goto maskOff;
                 }
             }
             break;
 
         case 1:
-            if ((_cutsceneCounter < 80U) && _hasSeenGrowCutscene &&
+            if ((sGiantsMaskCsTimer < 80U) && sHasSeenGrowCutscene &&
                 CHECK_BTN_ANY(CONTROLLER1(globalCtx)->pressEdge.buttons.value,
                               BTN_A | BTN_B | BTN_CUP | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT)) {
-                _transformationState++;
-                _transformationFlashState = 1;
-                _cutsceneCounter = 0;
+                sGiantsMaskCsState++;
+                sGiantsMaskCsFlashState = 1;
+                sGiantsMaskCsTimer = 0;
             } else {
-            label1:
-                if (_cutsceneCounter >= 50U) {
-                    if (_cutsceneCounter == (u32)(BREG(43) + 60)) {
+            maskOn:
+                if (sGiantsMaskCsTimer >= 50U) {
+                    if (sGiantsMaskCsTimer == (u32)(BREG(43) + 60)) {
                         z2_PlaySfx(0x9C5); // NA_SE_PL_TRANSFORM_GIANT
                     }
-                    Math_ApproachF(&_unk_1D64, 200.0f, 0.1f, _unk_1D5C * 640.0f);
-                    Math_ApproachF(&_unk_1D6C, 273.0f, 0.1f, _unk_1D5C * 150.0f);
-                    Math_ApproachF(&_scale, 0.1f, 0.2f, _unk_1D5C * 0.1f);
-                    Math_ApproachF(&_unk_1D5C, 1.0f, 1.0f, 0.001f);
+                    Math_ApproachF(&sSubCamDistZFromPlayer, 200.0f, 0.1f, sSubCamAtVel * 640.0f);
+                    Math_ApproachF(&sSubCamAtOffsetY, 273.0f, 0.1f, sSubCamAtVel * 150.0f);
+                    Math_ApproachF(&sPlayerScale, 0.1f, 0.2f, sSubCamAtVel * 0.1f);
+                    Math_ApproachF(&sSubCamAtVel, 1.0f, 1.0f, 0.001f);
                 } else {
-                    Math_ApproachF(&_unk_1D64, 30.0f, 0.1f, 1.0f);
+                    Math_ApproachF(&sSubCamDistZFromPlayer, 30.0f, 0.1f, 1.0f);
                 }
 
-                if (_cutsceneCounter > 50U) {
-                    Math_ApproachZeroF(&_unk_1D58, 1.0f, 0.06f);
+                if (sGiantsMaskCsTimer > 50U) {
+                    Math_ApproachZeroF(&sSubCamUpRotZScale, 1.0f, 0.06f);
                 } else {
-                    Math_ApproachF(&_unk_1D58, 0.4f, 1.0f, 0.02f);
+                    Math_ApproachF(&sSubCamUpRotZScale, 0.4f, 1.0f, 0.02f);
                 }
 
-                if (_cutsceneCounter == 107U) {
-                    _transformationFlashState = 1;
+                if (sGiantsMaskCsTimer == 107U) {
+                    sGiantsMaskCsFlashState = 1;
                 }
 
-                if (_cutsceneCounter < 121U) {
+                if (sGiantsMaskCsTimer < 121U) {
                     break;
                 }
 
-                sp57 = 1;
-                _hasSeenGrowCutscene = true;
-                goto block_38;
+                performMainSwitch = true;
+                sHasSeenGrowCutscene = true;
+                goto done;
             }
             break;
 
         case 2:
-            if (_cutsceneCounter < 8U) {
+            if (sGiantsMaskCsTimer < 8U) {
                 break;
             }
-            sp57 = 1;
-            goto block_38;
+            performMainSwitch = true;
+            goto done;
 
         case 10:
-            if ((_cutsceneCounter < 30U) && _hasSeenShrinkCutscene &&
+            if ((sGiantsMaskCsTimer < 30U) && sHasSeenShrinkCutscene &&
                 CHECK_BTN_ANY(CONTROLLER1(globalCtx)->pressEdge.buttons.value,
                               BTN_A | BTN_B | BTN_CUP | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT)) {
-                _transformationState++;
-                _transformationFlashState = 1;
-                _cutsceneCounter = 0;
+                sGiantsMaskCsState++;
+                sGiantsMaskCsFlashState = 1;
+                sGiantsMaskCsTimer = 0;
                 break;
             }
 
-        label2:
-            if (_cutsceneCounter != 0U) {
-                if (_cutsceneCounter == (u32)(BREG(44) + 10)) {
+        maskOff:
+            if (sGiantsMaskCsTimer != 0U) {
+                if (sGiantsMaskCsTimer == (u32)(BREG(44) + 10)) {
                     z2_PlaySfx(0x9C6); // NA_SE_PL_TRANSFORM_NORMAL
                 }
-                Math_ApproachF(&_unk_1D64, 60.0f, 0.1f, _unk_1D5C * 640.0f);
-                Math_ApproachF(&_unk_1D6C, 23.0f, 0.1f, _unk_1D5C * 150.0f);
-                Math_ApproachF(&_scale, 0.01f, 0.1f, 0.003f);
-                Math_ApproachF(&_unk_1D5C, 2.0f, 1.0f, 0.01f);
+                Math_ApproachF(&sSubCamDistZFromPlayer, 60.0f, 0.1f, sSubCamAtVel * 640.0f);
+                Math_ApproachF(&sSubCamAtOffsetY, 23.0f, 0.1f, sSubCamAtVel * 150.0f);
+                Math_ApproachF(&sPlayerScale, 0.01f, 0.1f, 0.003f);
+                Math_ApproachF(&sSubCamAtVel, 2.0f, 1.0f, 0.01f);
             }
 
-            if (_cutsceneCounter == 42U) {
-                _transformationFlashState = 1;
+            if (sGiantsMaskCsTimer == 42U) {
+                sGiantsMaskCsFlashState = 1;
             }
 
-            if (_cutsceneCounter > 50U) {
-                sp57 = 1;
-                _hasSeenShrinkCutscene = true;
-                goto block_38;
+            if (sGiantsMaskCsTimer > 50U) {
+                performMainSwitch = true;
+                sHasSeenShrinkCutscene = true;
+                goto done;
             }
             break;
 
         case 11:
-            if (_cutsceneCounter < 8U) {
+            if (sGiantsMaskCsTimer < 8U) {
                 break;
             }
-            sp57 = 1;
+            performMainSwitch = true;
 
-        block_38:
+        done:
         case 20:
-            // _transformationState = 0;
-            _transformationState = 21;
-            z2_80169AFC(globalCtx, _transformationCameraId, 0);
-            _transformationCameraId = 0;
+            // sGiantsMaskCsState = 0;
+            sGiantsMaskCsState = 21;
+            z2_80169AFC(globalCtx, sSubCamId, 0);
+            sSubCamId = 0;
             // z2_800EA0EC(globalCtx, &globalCtx->csCtx);
             //actor.flags |= 1;
             player->stateFlags.state1 &= ~PLAYER_STATE1_GIANT_MASK;
-            //_scale = 0.01f;
-            z2_80165690(); // disable motion blur
+            //sPlayerScale = 0.01f;
+            z2_Play_DisableMotionBlur();
             break;
         case 21:
-            _transformationState = 0;
-            if (_isGiant) {
+            sGiantsMaskCsState = 0;
+            if (sIsInGiantMode) {
                 GiantMask_Reg_Grow();
             }
             break;
     }
 
-    if (sp57) {
-        _isGiant = !_isGiant;
-        if (!_isGiant) {
-            _scale = 0.01f;
-            _nextScaleFactor = 10.0f;
+    if (performMainSwitch) {
+        sIsInGiantMode = !sIsInGiantMode;
+        if (!sIsInGiantMode) {
+            sPlayerScale = 0.01f;
+            sNextScaleFactor = 10.0f;
         } else {
-            _scale = 0.1f;
-            _nextScaleFactor = 0.1f;
+            sPlayerScale = 0.1f;
+            sNextScaleFactor = 0.1f;
         }
     }
 
-    if (_isGiant) {
+    if (sIsInGiantMode) {
         if (player->mask == 0x14 && player->currentBoots == 1) {
             player->currentBoots = 2;
             z2_Player_SetBootData(globalCtx, player);
@@ -280,88 +280,88 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             GiantMask_Reg_Grow();
         }
     }
-    if (!_isGiant && player->formProperties->unk_00 >= 200.0) {
+    if (!sIsInGiantMode && player->formProperties->unk_00 >= 200.0) {
         GiantMask_FormProperties_Shrink(player->formProperties);
     }
 
     if (player->form == PLAYER_FORM_FIERCE_DEITY) {
-        z2_SetActorSize(&player->base, _scale * 1.5f);
+        z2_SetActorSize(&player->base, sPlayerScale * 1.5f);
     } else {
-        z2_SetActorSize(&player->base, _scale);
+        z2_SetActorSize(&player->base, sPlayerScale);
     }
 
-    switch (_transformationFlashState) {
+    switch (sGiantsMaskCsFlashState) {
         case 0:
             break;
 
         case 1:
-            _transformationFlashCounter = 0;
+            sGiantsMaskCsFlashAlpha = 0;
             GiantMask_SetTransformationFlash(globalCtx, 255, 255, 255, 0);
-            _transformationFlashState = 2;
+            sGiantsMaskCsFlashState = 2;
             z2_PlaySfx(0x484F); // NA_SE_SY_TRANSFORM_MASK_FLASH
 
         case 2:
-            _transformationFlashCounter += 40;
-            if (_transformationFlashCounter >= 400) {
-                _transformationFlashState = 3;
+            sGiantsMaskCsFlashAlpha += 40;
+            if (sGiantsMaskCsFlashAlpha >= 400) {
+                sGiantsMaskCsFlashState = 3;
             }
-            transformationFlashOpacity = _transformationFlashCounter;
-            if (transformationFlashOpacity > 255) {
-                transformationFlashOpacity = 255;
+            alpha = sGiantsMaskCsFlashAlpha;
+            if (alpha > 255) {
+                alpha = 255;
             }
-            GiantMask_SetTransformationFlashAlpha(globalCtx, transformationFlashOpacity);
+            GiantMask_SetTransformationFlashAlpha(globalCtx, alpha);
             break;
 
         case 3:
-            _transformationFlashCounter -= 40;
-            if (_transformationFlashCounter <= 0) {
-                _transformationFlashCounter = 0;
-                _transformationFlashState = 0;
+            sGiantsMaskCsFlashAlpha -= 40;
+            if (sGiantsMaskCsFlashAlpha <= 0) {
+                sGiantsMaskCsFlashAlpha = 0;
+                sGiantsMaskCsFlashState = 0;
                 GiantMask_DisableTransformationFlash(globalCtx);
             } else {
-                transformationFlashOpacity = _transformationFlashCounter;
-                if (transformationFlashOpacity > 255) {
-                    transformationFlashOpacity = 255;
+                alpha = sGiantsMaskCsFlashAlpha;
+                if (alpha > 255) {
+                    alpha = 255;
                 }
-                GiantMask_SetTransformationFlashAlpha(globalCtx, transformationFlashOpacity);
+                GiantMask_SetTransformationFlashAlpha(globalCtx, alpha);
             }
             break;
     }
 
-    if ((_transformationState != 0) && (_transformationCameraId != 0)) {
+    if ((sGiantsMaskCsState != 0) && (sSubCamId != 0)) {
         z2_Matrix_RotateY(player->base.shape.rot.y, 0); // MTXMODE_NEW
-        z2_Matrix_GetStateTranslationAndScaledZ(_unk_1D64, &sp58);
+        z2_Matrix_GetStateTranslationAndScaledZ(sSubCamDistZFromPlayer, &subCamEyeOffset);
 
-        _unk_1D24.x = player->base.currPosRot.pos.x + sp58.x;
-        _unk_1D24.y = player->base.currPosRot.pos.y + sp58.y + _unk_1D68;
-        _unk_1D24.z = player->base.currPosRot.pos.z + sp58.z;
+        sSubCamEye.x = player->base.currPosRot.pos.x + subCamEyeOffset.x;
+        sSubCamEye.y = player->base.currPosRot.pos.y + subCamEyeOffset.y + sSubCamEyeOffsetY;
+        sSubCamEye.z = player->base.currPosRot.pos.z + subCamEyeOffset.z;
 
-        _unk_1D30.x = player->base.currPosRot.pos.x;
-        _unk_1D30.y = player->base.currPosRot.pos.y + _unk_1D6C;
-        _unk_1D30.z = player->base.currPosRot.pos.z;
+        sSubCamAt.x = player->base.currPosRot.pos.x;
+        sSubCamAt.y = player->base.currPosRot.pos.y + sSubCamAtOffsetY;
+        sSubCamAt.z = player->base.currPosRot.pos.z;
 
-        _unk_1D54 = z2_Math_SinS(_cutsceneCounter * 1512) * _unk_1D58;
-        z2_Matrix_InsertZRotation_f(_unk_1D54, 1); // MTXMODE_APPLY
-        z2_Matrix_GetStateTranslationAndScaledY(1.0f, &_unk_1D3C);
-        z2_Play_CameraSetAtEyeUp(globalCtx, _transformationCameraId, &_unk_1D30, &_unk_1D24, &_unk_1D3C);
+        sSubCamUpRotZ = z2_Math_SinS(sGiantsMaskCsTimer * 1512) * sSubCamUpRotZScale;
+        z2_Matrix_InsertZRotation_f(sSubCamUpRotZ, 1); // MTXMODE_APPLY
+        z2_Matrix_GetStateTranslationAndScaledY(1.0f, &sSubCamUp);
+        z2_Play_CameraSetAtEyeUp(globalCtx, sSubCamId, &sSubCamAt, &sSubCamEye, &sSubCamUp);
         ShrinkWindow_SetLetterboxTarget(0x1B);
     }
 }
 
 f32 GiantMask_GetScaleModifier() {
-    return _scale * 100.0f;
+    return sPlayerScale * 100.0f;
 }
 
 f32 GiantMask_GetSimpleScaleModifier() {
-    return _isGiant ? 10.0f : 1.0f;
+    return sIsInGiantMode ? 10.0f : 1.0f;
 }
 
 f32 GiantMask_GetSimpleInvertedScaleModifier() {
-    return _isGiant ? 0.1f : 1.0f;
+    return sIsInGiantMode ? 0.1f : 1.0f;
 }
 
 f32 GiantMask_GetNextScaleFactor() {
-    return _nextScaleFactor;
+    return sNextScaleFactor;
 }
 
 f32 GiantMask_GetFloorHeightCheckDelta(GlobalContext* globalCtx, Actor* actor, Vec3f* pos, s32 flags) {
@@ -418,31 +418,31 @@ void GiantMask_AdjustSpinAttackHeight(Actor* actor, ColCylinder* collider) {
 }
 
 bool GiantMask_IsGiant() {
-    return _isGiant;
+    return sIsInGiantMode;
 }
 
 void GiantMask_MarkReset() {
-    _shouldReset = true;
+    sShouldReset = true;
 }
 
 void GiantMask_TryReset() {
-    if (_shouldReset) {
-        _scale = 0.01f;
-        _isGiant = false;
-        _nextScaleFactor = 10.0f;
-        _shouldReset = false;
+    if (sShouldReset) {
+        sPlayerScale = 0.01f;
+        sIsInGiantMode = false;
+        sNextScaleFactor = 10.0f;
+        sShouldReset = false;
     }
 }
 
 void GiantMask_ClearState() {
-    _transformationState = 0;
-    _transformationCameraId = 0;
-    _scale = _isGiant ? 0.1f : 0.01f;
+    sGiantsMaskCsState = 0;
+    sSubCamId = 0;
+    sPlayerScale = sIsInGiantMode ? 0.1f : 0.01f;
 }
 
 f32 GiantMask_GetHitDistance(Vec3f* position, Actor* hittingActor) {
     if (hittingActor->id == ACTOR_PLAYER) {
-        if (_isGiant) {
+        if (sIsInGiantMode) {
             return 0.0f;
         }
     }
