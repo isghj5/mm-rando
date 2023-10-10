@@ -819,7 +819,7 @@ void Player_SetGiantMaskTransformationState(GlobalContext* ctxt, ActorPlayer* pl
     player->stateFlags.state1 |= newState;
 }
 
-static u8* sAudioBaseFilter = (u8*)0x801D66E0;
+static const u8* sAudioBaseFilter = (u8*)0x801D66E0;
 
 void Player_HandleIronGoronLand(GlobalContext* ctxt, ActorPlayer* player) {
     if (player->base.id != 0) {

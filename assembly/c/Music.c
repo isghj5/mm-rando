@@ -39,6 +39,8 @@ static void LoadMuteMask() {
     }
 }
 
+static const u8* sAudioBaseFilter = (u8*)0x801D66E0;
+
 static u16 CalculateCurrentState() {
     u16 state;
     ActorPlayer* player = GET_PLAYER(&gGlobalContext);
@@ -57,7 +59,7 @@ static u16 CalculateCurrentState() {
         if (player->stateFlags.state1 & PLAYER_STATE1_EPONA) {
             state = musicState.cumulativeStates.epona ? state | SEQUENCE_PLAY_STATE_EPONA : SEQUENCE_PLAY_STATE_EPONA;
         }
-        if (player->stateFlags.state1 & PLAYER_STATE1_SWIM || player->stateFlags.state3 & PLAYER_STATE3_ZORA_SWIM) {
+        if (player->stateFlags.state1 & PLAYER_STATE1_SWIM || player->stateFlags.state3 & PLAYER_STATE3_ZORA_SWIM || *sAudioBaseFilter == 0x20) {
             state = musicState.cumulativeStates.swimming ? state | SEQUENCE_PLAY_STATE_SWIM : SEQUENCE_PLAY_STATE_SWIM;
         }
         if (player->stateFlags.state3 & PLAYER_STATE3_GORON_SPIKE) {
