@@ -1343,7 +1343,7 @@
     bgtzl   at, .+0x2BC
     lw      ra, 0x0014 (sp)
     bltz    at, .+0x2C
-    nop
+    lbu     v1, 0x014B (A1)
 
 ; Replaces:
 ;   ADDIU   AT, R0, 0x0005
