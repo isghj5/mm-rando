@@ -3827,8 +3827,8 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         SnowheadBiggoron = 0x1FD, // En_Dai
 
-        // TODO try placing places
-        [ActorizerEnabled]
+        // visible glitch when clashing with existing water means seizure like effect, bad until I can remove that
+        //[ActorizerEnabled]
         [FileID(470)]
         [ObjectListIndex(0x1D3)]
         // 0 starts the cutscene, 1 is after cutscene
