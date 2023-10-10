@@ -1324,8 +1324,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(153)]
         [ObjectListIndex(0x17F)]
+        [CheckRestricted(scene:Scene.SouthernSwampClear, variant:-1, Item.HeartPieceBoatArchery)]
+        // problem being we would have to check ALL checks after too many
+        //[CheckRestricted(scene: Scene.SouthernSwamp, variant: -1, Item.)]
         //[] path are 0xFF, bleh, paths, hope they dont crash without ANY path
-        [WaterTopVariants(0x01)]
+        [WaterTopVariants(0x01)] // only vanilla version
+        [VariantsWithRoomMax(max:0, variant:0x01)] // TODO try making version without paths as mmra
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.SouthernSwamp)]
         SwampBoat = 0xA7, // Bg_Ingate
