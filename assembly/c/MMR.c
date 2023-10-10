@@ -344,13 +344,14 @@ void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex, bool continueTextbox) {
     }
     u8 soundType = entry->type & 0x0F;
     if (MUSIC_CONFIG.flags.disableFanfares && soundType > 1) {
-        soundType = 0;
-    }
-    u16 fanfare = gFanfares[soundType];
-    if (soundType < 2) {
-        z2_PlaySfx(fanfare);
+        z2_PlaySfx(0x4824); // NA_SE_SY_GET_ITEM
     } else {
-        z2_SetBGM2(fanfare);
+        u16 fanfare = gFanfares[soundType];
+        if (soundType < 2) {
+            z2_PlaySfx(fanfare);
+        } else {
+            z2_SetBGM2(fanfare);
+        }
     }
     z2_GiveItem(ctxt, entry->item);
 }

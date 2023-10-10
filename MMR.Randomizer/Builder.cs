@@ -194,6 +194,23 @@ namespace MMR.Randomizer
             if (_cosmeticSettings.DisableFanfares)
             {
                 ResourceUtils.ApplyHack(Resources.mods.remove_fanfares);
+
+                // if Skulltulas do not reset with song of time (therefore not randomized)
+                if (ReadWriteUtils.ReadU32(0xBDA9DC) != 0)
+                {
+                    ReadWriteUtils.WriteU32ToROM(0xDFF8B8, 0x0C067C32); // JAL    PlaySfx
+                    ReadWriteUtils.WriteU32ToROM(0xDFF8BC, 0x24044824); // ADDIU  A0, R0, 0x4824 // NA_SE_SY_GET_ITEM
+
+                    ReadWriteUtils.WriteU32ToROM(0xDFF8D4, 0x0C067C32); // JAL    PlaySfx
+                    ReadWriteUtils.WriteU32ToROM(0xDFF8D8, 0x24044824); // ADDIU  A0, R0, 0x4824 // NA_SE_SY_GET_ITEM
+                }
+
+                // if stray fairies still play the fanfare when you collect them all
+                if (ReadWriteUtils.ReadU32(0xF32F24) != 0)
+                {
+                    ReadWriteUtils.WriteU32ToROM(0xF32F24, 0x0C067C32); // JAL    PlaySfx
+                    ReadWriteUtils.WriteU32ToROM(0xF32F28, 0x24044824); // ADDIU  A0, R0, 0x4824 // NA_SE_SY_GET_ITEM
+                }
             }
         }
 
