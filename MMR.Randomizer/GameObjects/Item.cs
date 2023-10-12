@@ -10777,7 +10777,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Fairy"), LocationName("Ikana Canyon Grass 4"), Region(Region.IkanaCanyon)]
+        [ItemName("Fairy"), LocationName("Ikana Canyon Cleared Grass 4"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("an ancient plant"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10787,7 +10787,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Fairy"), LocationName("Ikana Canyon Grass 5"), Region(Region.IkanaCanyon)]
+        [ItemName("Fairy"), LocationName("Ikana Canyon Grass 4"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("an ancient plant"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
