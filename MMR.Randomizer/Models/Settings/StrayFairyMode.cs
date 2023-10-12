@@ -15,7 +15,7 @@ namespace MMR.Randomizer.Models
         ChestsOnly = 1,
 
         [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinTemples)]
-        [Description("Randomization algorithm will place any randomized Stray Fairies into a location within the same region.")]
+        [Description("Randomization algorithm will place any randomized Stray Fairies into any temple.")]
         KeepWithinTemples = 1 << 1,
 
         [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepFairyWithinArea)]
