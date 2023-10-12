@@ -10868,7 +10868,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Fairy"), LocationName("Snowhead Small Snowball"), Region(Region.Snowhead)]
+        [ItemName("Fairy"), LocationName("Snowhead Small Snowball 4"), Region(Region.Snowhead)]
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
