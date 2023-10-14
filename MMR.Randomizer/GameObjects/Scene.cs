@@ -346,7 +346,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1332)]
         [SceneInternalId(0x38)]
         [EnemizerSceneEnemyReplacementBlock(Actor.LikeLike,
-                    Actor.Japas, Actor.Bombiwa, Actor.BronzeBoulder)] // small blocking
+                    Actor.Japas, Actor.Bombiwa, Actor.BronzeBoulder, Actor.Mimi, Actor.TreasureChest)] // small blocking
          //    Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo,
         //    Actor.Bombiwa, Actor.BronzeBoulder, Actor.CircleOfFire,
         //    Actor.RegularZora, Actor.SwimmingZora, Actor.WarpDoor)]
