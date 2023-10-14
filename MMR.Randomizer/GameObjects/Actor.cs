@@ -3726,7 +3726,8 @@ namespace MMR.Randomizer.GameObjects
         // for now, with no entrando, just randomize all but one
         //[CheckRestricted(Item.TradeItemMamaLetter, Item.MaskKeaton, Item.HeartPiecePostBox, Item.MaskCouple)]
         [GroundVariants(0, 1, 2, 3, 4)]
-        [WaterBottomVariants(-1, -2, -3, -4)] // I want to put them on the bottom, but I dont want the game to think they are vanilla water either..
+        //[WaterBottomVariants(-1, -2, -3, -4)] // I want to put them on the bottom, but I dont want the game to think they are vanilla water either..
+        [WaterBottomVariants(0x101, 0x102, 0x103, 0x104)] // I want to put them on the bottom, but I dont want the game to think they are vanilla water either..
         [CompanionActor(LetterToPostman, ourVariant: -1, variant: 0)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]

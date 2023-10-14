@@ -1304,8 +1304,10 @@ namespace MMR.Randomizer
 
             foreach (var box in thisSceneData.Actors.FindAll(a => a.ActorId == (int) GameObjects.Actor.Postbox))
             {
-                if (box.Variants[0] < 0)
-                    box.Variants[0] = -box.Variants[0];
+                var oldVariant = box.Variants[0];
+                if (box.Variants[0] > 4)
+                    box.Variants[0] &= 0x4;
+                Debug.Assert(box.Variants[0] <= 0x04 && box.Variants[0] >=0);
             }
         }
 
@@ -2113,9 +2115,9 @@ namespace MMR.Randomizer
                 if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.Takkuri)) continue;
-                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.SwampBoat)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.SwampBoat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Tingle, GameObjects.Actor.Skulltula)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.Shellblade, GameObjects.Actor.Obj_Boat)) continue;
+                if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.SpikedMine, GameObjects.Actor.Postbox)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.ZoraRaceRing)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Japas)) continue;
                 if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
@@ -2391,7 +2393,7 @@ namespace MMR.Randomizer
             List<Actor> trimCandidates;
             if (actorType.OnlyOnePerRoom != null)
             {
-                trimCandidates = roomActors; // all of variants of this actor are valid for trimming as one pool
+                trimCandidates = roomActors.ToList(); // all of variants of this actor are valid for trimming as one pool
             }
             else
             {
@@ -3782,7 +3784,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 53.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 53.2\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
