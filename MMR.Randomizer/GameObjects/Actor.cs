@@ -3468,16 +3468,16 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1FD0)]
         [FileID(426)]
         [ObjectListIndex(0x1B5)]
-        // dont know what the differences are
+        // dont know what the differences are in the params
         [WaterVariants(0x3FA8)] // stt (underwater wall)
         [WallVariants(0x1932, // greatbay
             0x3FFF)] // istt hanging from wall
         [GroundVariants(
             0x191E)] // below well
         [VariantsWithRoomMax(max: 8, variant: 0x1932, 0x3FFF)]
-        //[EnemizerScenesExcluded(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)]
+        [EnemizerScenesExcluded(Scene.StoneTowerTemple)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GoronRacetrack)]
-        Dexihand = 0x1D1, // En_WdHand ???'s water logged brother
+        Dexihand = 0x1D1, // En_WdHand : ???'s water logged brother
 
         [FileID(427)]
         [ObjectListIndex(0x1)]
