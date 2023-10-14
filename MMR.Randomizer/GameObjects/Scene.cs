@@ -315,9 +315,10 @@ namespace MMR.Randomizer.GameObjects
 
         // Unused = 0x2E,
 
+        // inside of the goron village main building, with the goron shop and merrygoround
         [FileID(1319)]
         [SceneInternalId(0x32)]
-        [EnemizerSceneBlockSensitive(Actor.GoronSGoro, -1)] // ice block can block shop
+        [EnemizerSceneBlockSensitive(Actor.GoGoron, -1)] // ice block can block shop
         GoronShrine = 0x2F,
 
         [FileID(1322)]
