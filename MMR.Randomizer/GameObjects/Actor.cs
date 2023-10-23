@@ -105,6 +105,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2A60)]
         [ObjectListIndex(0x5)]
         [WaterTopVariants(0xFF00)]
+        //[WaterBottomVariants(0xFF01)] // not safe check the params for safe params first
         [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.GreatBayTemple)]
         Octarok = 0x8, // En_Okuta
 
