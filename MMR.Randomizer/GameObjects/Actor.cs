@@ -2931,7 +2931,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(354)]
         [ObjectListIndex(0x18F)]
-        [CheckRestricted(Item.ShopItemWitchBluePotion, Item.ShopItemWitchGreenPotion, Item.ShopItemWitchRedPotion, Item.ItemBottleWitch, Item.MundaneItemKotakeMushroomSaleRedRupee)]
+        [CheckRestricted(Item.ShopItemWitchBluePotion, Item.ShopItemWitchGreenPotion, Item.ShopItemWitchRedPotion,
+            Item.ItemBottleWitch,
+            Item.MundaneItemKotakeMushroomSaleRedRupee)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(0, 0)] // no collider no interaction
         [UnkillableAllVariants]
@@ -3222,14 +3224,17 @@ namespace MMR.Randomizer.GameObjects
             Scene.StoneTower, Scene.DekuPlayground)] // dyna crash possible
         ClocktowerGearsAndOrgan = 0x1B6, // Bg_Ctower_Gear
 
-        // [ActorizerEnabled] // disabled since talking is softlock, need to figure that out
+        [ActorizerEnabled] 
         [FileID(403)]
         [ObjectListIndex(0x18F)]
+        [CheckRestricted(Item.ItemBottleWitch)]
         // nothing in the other params other than path, the starting animation and stuff are all hardcoded to entrance
         [PathingVariants(0x2400, 0x2000)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
+        // disabled since talking is softlock, need to figure that out
+        [VariantsWithRoomMax(max:0, variant: 0x2400, 0x2000)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.WoodsOfMystery, Scene.SouthernSwamp)]
+        //[EnemizerScenesExcluded(Scene.WoodsOfMystery, Scene.SouthernSwamp)]
         KotakeOnBroom = 0x1B7, // En_Trt2
 
         [FileID(404)]
