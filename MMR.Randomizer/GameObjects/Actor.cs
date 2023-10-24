@@ -268,7 +268,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(59)]
         [ObjectListIndex(0x5F)]
-        [GroundVariants(0)]
+        [GroundVariants(0x0)]
+        [VariantsWithRoomMax(max:2, variant:0x0)] // Dyna
         [UnkillableAllVariants]
         Flagpole = 0x1A, // En_Hata
 
@@ -577,7 +578,7 @@ namespace MMR.Randomizer.GameObjects
             0x7)] // yellow tree, fall colors? dying?
         [VariantsWithRoomMax(max: 0, variant: 0xFF0D)] // 0xFF0D crashes TF do not use (is from the cucco shack)
         [VariantsWithRoomMax(max: 1, variant: 0xA1A, 0xFF1A)] // has EnAni, more than one is odd
-        [VariantsWithRoomMax(max: 1, variant: 0xA)] // UGLY
+        [VariantsWithRoomMax(max: 1, variant: 0xA)] // UGLY is also BG
         //[GroundVariants(0xFF01, 0xFF1A)] //testing
         [UnkillableAllVariants]
         [BlockingVariantsAll]
@@ -2672,8 +2673,11 @@ namespace MMR.Randomizer.GameObjects
         [FileID(326)]
         [ObjectListIndex(0x40)] // 1? nah it uses something else
         // 0x2 is smaller scrub that surrounds link in the cutscene
-        // & 3 are separate params, but wont spawn? weird
+        // params 0x3C nad 0x3 are main params
+        //  0x3 is the object it uses
+        //  one is the regular leaves pkmn, one is the old hint one from OOT reused for yellow flower, one is the tall one
         // 0x6 is big one in nightmare cutscene that link waves to
+
         [GroundVariants(0x2, 0x6)]
         [VariantsWithRoomMax(max: 1, variant: 0x6, 0x2)]
         // crash on transition to witches area in swamp and secretary room in mayor's residence
