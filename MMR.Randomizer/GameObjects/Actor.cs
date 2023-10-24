@@ -3262,6 +3262,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1A5)]
         // params is == 0 and else
         [WaterTopVariants(0,1)]
+        [CheckRestricted(Item.HeartPieceBoatArchery)]
         [UnkillableAllVariants]
         // this could work but is a headache, we need to make sure all checks that are reachable by deku and nut are included...
         //[CheckRestricted(Scene.DekuPalace, -1, Item.MaskScents)]
