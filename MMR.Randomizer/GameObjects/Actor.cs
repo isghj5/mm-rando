@@ -393,9 +393,18 @@ namespace MMR.Randomizer.GameObjects
 
         Empty29 = 0x29,
 
+        [ActorizerEnabled]
         [FileID(70)]
-        [ObjectListIndex(0x1)]
-        Ossan = 0x2A, // En_Ossan
+        // dual object actor
+        [ObjectListIndex(0x1AB)] // regular OSN, the other one is ANI
+        [CheckRestricted(Item.ShopItemTradingPostArrow30, Item.ShopItemTradingPostArrow50,
+            Item.ShopItemTradingPostFairy, Item.ShopItemTradingPostGreenPotion,
+            Item.ShopItemTradingPostNut10, Item.ShopItemTradingPostRedPotion,
+            Item.ShopItemTradingPostShield, Item.ShopItemTradingPostStick)]
+        [GroundVariants(0, 1)]
+        [VariantsWithRoomMax(max:0, variant:0, 1)]
+        [UnkillableAllVariants]
+        TradingPostShop = 0x2A, // En_Ossan
 
         Empty2B = 0x2B,
         Empty2C = 0x2C,

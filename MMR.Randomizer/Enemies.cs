@@ -473,6 +473,7 @@ namespace MMR.Randomizer
             //goronVillageWinter.Maps[0].Objects[7] = GameObjects.Actor.GoGoron.ObjectIndex(); // square signpost
 
             FixKafeiPlacements();
+            MoveOssanIfRandomized();
         }
 
         #region Static Enemizer Changes and Fixes
@@ -1255,6 +1256,16 @@ namespace MMR.Randomizer
 
             // change object in the room to match new fake actors
             grottosScene.Maps[14].Objects[2] = (coinTossResultActor.actor).ObjectIndex();
+        }
+
+        public static void MoveOssanIfRandomized()
+        {
+            /// if ossan in trading post was randomized we want to move one of them, as there are two of the, assumed for late night
+            var tradingpostScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TradingPost.FileID());
+            var secondOssan = tradingpostScene.Maps[0].Actors[1];
+            if (secondOssan.ActorEnum != GameObjects.Actor.TradingPostShop) {
+                secondOssan.Position = new vec16(-35, 25, -154);
+            }
         }
 
         public static void FixKafeiPlacements()
