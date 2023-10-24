@@ -472,7 +472,6 @@ namespace MMR.Randomizer.GameObjects
         // uh oh, this one might be the biggest reason yet to have multiple object actors
         //[ActorizerEnabled]
         [FileID(77)]
-        // another cursed multi-object actor
         // I wanted the mailman bag on the wall for wall variants, but their position is deep into the shower/closet, bad for placment
         // good candidate for new actor
         //[ObjectListIndex(0x208)]
@@ -2800,7 +2799,10 @@ namespace MMR.Randomizer.GameObjects
         // flying ice platforms leading to lens cave
         [FileID(339)]
         [ObjectListIndex(0x187)]
-        [CheckRestricted(Item.MaskGoron, Item.ChestHotSpringGrottoRedRupee, Item.UpgradeRazorSword, Item.UpgradeRazorSword)]
+        [CheckRestricted(Item.MaskGoron,
+            Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
+            Item.ChestHotSpringGrottoRedRupee,
+            Item.UpgradeRazorSword, Item.UpgradeRazorSword)]
         // parameters unknown, they are not even and not time (time of spawn is a different parameter)
         [WaterTopVariants(0x1FFE, 0x1FFD, 0x1000, 0x1004)]
         // TODO should we consider putting them on water top?
@@ -4629,8 +4631,12 @@ namespace MMR.Randomizer.GameObjects
 
         // likely wont spawn without the flag
         // TODO make a version that will spawn without the flag
+        [ActorizerEnabled]
         [FileID(551)]
         [ObjectListIndex(0x22A)]
+        [CheckRestricted(Item.MaskGibdo)]
+        [GroundVariants(0xFF00)] // vanilla params even tho we dont have vanilla params for him
+        [VariantsWithRoomMax(max:0, variant:0xFF00)]
         PamelasFatherCured = 0x250, // En_Hg
         
         [FileID(552)]
