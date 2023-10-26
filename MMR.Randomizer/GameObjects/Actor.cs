@@ -2092,6 +2092,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.StoneTower)] // dyna crash
         FallingBlocks = 0x114, // Obj_Chikuwa
 
         // TODO would not spawn because I mistyped the ID try again
@@ -3828,6 +3829,7 @@ namespace MMR.Randomizer.GameObjects
             Item.ItemPowderKeg)]
         [OnlyOneActorPerRoom] // dyna crash hazard
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.SouthernSwampClear)] // dyna crash
         DarmaniGrave = 0x1FB, // Obj_Ghaka
 
         [ActorizerEnabled]
@@ -4631,19 +4633,19 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x229)]
         TurtleWave = 0x24F, // Eff_Kamejima_Wave
 
-        // likely wont spawn without the flag
-        // TODO make a version that will spawn without the flag
-        [ActorizerEnabled]
+        // shared object with below
         [FileID(551)]
+        [ObjectListIndex(0x22A)]
+        PamelasFatherCursed = 0x250, // En_Hg
+
+        // cannot place without mmra
+        [ActorizerEnabled]
+        [FileID(552)]
         [ObjectListIndex(0x22A)]
         [CheckRestricted(Item.MaskGibdo)]
         [GroundVariants(0xFF00)] // vanilla params even tho we dont have vanilla params for him
-        [VariantsWithRoomMax(max:0, variant:0xFF00)]
-        PamelasFatherCured = 0x250, // En_Hg
-        
-        [FileID(552)]
-        [ObjectListIndex(0x22A)]
-        PamelasFatherCursed = 0x251, // En_Hgo
+        [VariantsWithRoomMax(max: 0, variant: 0xFF00)] // don't place it wont spawn, need replacement mmra for placement
+        PamelasFatherCured = 0x251, // En_Hgo
 
         [ActorizerEnabled]
         [FileID(553)]
