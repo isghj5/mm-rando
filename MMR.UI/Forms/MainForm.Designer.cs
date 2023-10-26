@@ -261,6 +261,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
+            this.cEasyFrameByFrame = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1980,6 +1981,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cEasyFrameByFrame);
             this.groupBox7.Controls.Add(this.cImprovedCamera);
             this.groupBox7.Controls.Add(this.cGossipsTolerant);
             this.groupBox7.Controls.Add(this.cQuestItemKeep);
@@ -3151,6 +3153,18 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
+            // cEasyFrameByFrame
+            // 
+            this.cEasyFrameByFrame.AutoSize = true;
+            this.cEasyFrameByFrame.Location = new System.Drawing.Point(172, 313);
+            this.cEasyFrameByFrame.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cEasyFrameByFrame.Name = "cEasyFrameByFrame";
+            this.cEasyFrameByFrame.Size = new System.Drawing.Size(137, 19);
+            this.cEasyFrameByFrame.TabIndex = 51;
+            this.cEasyFrameByFrame.Text = "Easy Frame By Frame";
+            this.cEasyFrameByFrame.UseVisualStyleBackColor = true;
+            this.cEasyFrameByFrame.CheckedChanged += new System.EventHandler(this.cEasyFrameByFrame_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3474,6 +3488,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cImprovedCamera;
         private System.Windows.Forms.CheckBox cFewerHealthDrops;
         private System.Windows.Forms.CheckBox cIronGoron;
+        private System.Windows.Forms.CheckBox cEasyFrameByFrame;
     }
 }
 

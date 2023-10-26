@@ -131,6 +131,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFreeHints, "Enable reading gossip stone hints without requiring the Mask of Truth.");
             TooltipBuilder.SetTooltip(cFreeGaroHints, "Enable fighting Garos by speaking to Tatl instead of wearing the Garo's Mask.");
             TooltipBuilder.SetTooltip(cGossipsTolerant, "The angle at which Gossip Stones can be read will be more tolerant.");
+            TooltipBuilder.SetTooltip(cEasyFrameByFrame, "Hold Start while unpausing to pause again after one frame passes.");
             TooltipBuilder.SetTooltip(cMixGaroWithGossip, "Garo hints distribution and gossip hint distribution will be mixed together.");
             TooltipBuilder.SetTooltip(cClearHints, "Gossip stone hints will give clear item and location names.");
             TooltipBuilder.SetTooltip(cClearGaroHints, "Garo hints will give clear item and location names.");
@@ -1251,6 +1252,7 @@ namespace MMR.UI.Forms
             cFreeHints.Checked = _configuration.GameplaySettings.FreeHints;
             cFreeGaroHints.Checked = _configuration.GameplaySettings.FreeGaroHints;
             cGossipsTolerant.Checked = _configuration.GameplaySettings.TolerantGossipStones;
+            cEasyFrameByFrame.Checked = _configuration.GameplaySettings.EasyFrameByFrame;
             cMixGaroWithGossip.Checked = _configuration.GameplaySettings.MixGossipAndGaroHints;
             cClearHints.Checked = _configuration.GameplaySettings.ClearHints;
             cClearGaroHints.Checked = _configuration.GameplaySettings.ClearGaroHints;
@@ -1553,6 +1555,11 @@ namespace MMR.UI.Forms
         private void cGossipsTolerant_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.TolerantGossipStones = cGossipsTolerant.Checked);
+        }
+
+        private void cEasyFrameByFrame_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.EasyFrameByFrame = cEasyFrameByFrame.Checked);
         }
 
         private void cMixGaroWithGossip_CheckedChanged(object sender, EventArgs e)
@@ -2171,6 +2178,7 @@ namespace MMR.UI.Forms
             cFreeHints.Enabled = v;
             cFreeGaroHints.Enabled = v;
             cGossipsTolerant.Enabled = v;
+            cEasyFrameByFrame.Enabled = v;
             cClearHints.Enabled = v;
             cGaroHint.Enabled = v;
             cClearGaroHints.Enabled = v;

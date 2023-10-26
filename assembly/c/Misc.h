@@ -63,7 +63,7 @@ typedef struct {
     u32 giantMaskAnywhere   : 1;
     u32 fewerHealthDrops    : 1;
     u32 ironGoron           : 1;
-    u32                     : 1;
+    u32 easyFrameByFrame    : 1;
 } MiscFlags;
 
 typedef union {

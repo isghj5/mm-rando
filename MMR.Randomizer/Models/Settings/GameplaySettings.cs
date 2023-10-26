@@ -231,6 +231,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.FewerHealthDrops = value; }
         }
 
+        public bool EasyFrameByFrame
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.EasyFrameByFrame; }
+            set { this.AsmOptions.MiscConfig.Flags.EasyFrameByFrame = value; }
+        }
+
         /// <summary>
         /// How many boss remains are required to proceed through the final Giants cutscene.
         /// </summary>

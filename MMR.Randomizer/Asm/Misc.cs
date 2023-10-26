@@ -285,6 +285,8 @@ namespace MMR.Randomizer.Asm
 
         public bool FewerHealthDrops { get; set; }
 
+        public bool EasyFrameByFrame { get; set; }
+
         public MiscFlags()
         {
         }
@@ -325,6 +327,7 @@ namespace MMR.Randomizer.Asm
             this.GiantMaskAnywhere = ((flags >> 3) & 1) == 1;
             this.FewerHealthDrops = ((flags >> 2) & 1) == 1;
             this.IronGoron = ((flags >> 1) & 1) == 1;
+            this.EasyFrameByFrame = ((flags >> 0) & 1) == 1;
         }
 
         /// <summary>
@@ -362,6 +365,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.GiantMaskAnywhere ? (uint)1 : 0) << 3;
             flags |= (this.FewerHealthDrops ? (uint)1 : 0) << 2;
             flags |= (this.IronGoron ? (uint)1 : 0) << 1;
+            flags |= (this.EasyFrameByFrame ? (uint)1 : 0) << 0;
             return flags;
         }
     }
