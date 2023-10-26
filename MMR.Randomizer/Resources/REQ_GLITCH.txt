@@ -752,7 +752,11 @@
     },
     {
       "Id": "UpgradeRoyalWallet",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "AreaMoonAccess",
+        "UpgradeGiantWallet",
+        "UpgradeAdultWallet"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
