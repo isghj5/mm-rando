@@ -21,5 +21,11 @@ namespace MMR.Randomizer.Models
         [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinOverworld)]
         [Description("Randomization algorithm will place any randomized Dungeon Maps and Compasses into an overworld location.")]
         KeepWithinOverworld = 1 << 3,
+
+        [Description("Finding a Dungeon Map will tell you the location of the dungeon.")]
+        MapRevealsLocation = 1 << 4,
+
+        [Description("Finding a Compass will tell you which boss is in the dungeon.")]
+        CompassRevealsBoss = 1 << 5,
     }
 }

@@ -5547,6 +5547,22 @@ namespace MMR.Randomizer
                 (TextCommands.ColorYellow, "Stone Tower Temple"),
             };
 
+            var dungeonLocations = new string[]
+            {
+                _randomized.ItemList[Item.AreaWoodFallTempleAccess].NewLocation?.Entrance(),
+                _randomized.ItemList[Item.AreaSnowheadTempleAccess].NewLocation?.Entrance(),
+                _randomized.ItemList[Item.AreaGreatBayTempleAccess].NewLocation?.Entrance(),
+                _randomized.ItemList[Item.AreaInvertedStoneTowerTempleAccess].NewLocation?.Entrance(),
+            };
+
+            var dungeonBosses = new string[]
+            {
+                _randomized.ItemList.FirstOrDefault(io => io.NewLocation == Item.AreaOdolwasLair)?.Item.Entrance(),
+                _randomized.ItemList.FirstOrDefault(io => io.NewLocation == Item.AreaGohtsLair)?.Item.Entrance(),
+                _randomized.ItemList.FirstOrDefault(io => io.NewLocation == Item.AreaGyorgsLair)?.Item.Entrance(),
+                _randomized.ItemList.FirstOrDefault(io => io.NewLocation == Item.AreaTwinmoldsLair)?.Item.Entrance(),
+            };
+
             var dungeonItemNames = new (string article, string itemName)[]
             {
                 ("a ", "Small Key"),
@@ -5588,7 +5604,23 @@ namespace MMR.Randomizer
                             .Text("!")
                             ;
                         });
-                        if (itemTypeIndex == 4)
+                        if (itemTypeIndex == 2 && _randomized.Settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.MapRevealsLocation) && dungeonLocations[dungeonIndex] != null)
+                        {
+                            it.PauseText(0x10).NewLine()
+                            .CompileTimeWrap((wrapped) =>
+                            {
+                                wrapped.Text("The entrance is at ").Red(dungeonLocations[dungeonIndex]).Text(".");
+                            });
+                        }
+                        else if (itemTypeIndex == 3 && _randomized.Settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.CompassRevealsBoss) && dungeonBosses[dungeonIndex] != null)
+                        {
+                            it.PauseText(0x10).NewLine()
+                            .CompileTimeWrap((wrapped) =>
+                            {
+                                wrapped.Text("It points at ").Red(dungeonBosses[dungeonIndex]).Text(".");
+                            });
+                        }
+                        else if (itemTypeIndex == 4)
                         {
                             it.PauseText(0x10).NewLine()
                             .Text("This is your ").Red(() => { it.StrayFairyCount(); }).Text(" one!")
