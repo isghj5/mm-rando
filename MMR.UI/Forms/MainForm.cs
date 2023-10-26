@@ -208,71 +208,42 @@ namespace MMR.UI.Forms
                 itemList = LogicUtils.PopulateItemListWithoutLogic();
             }
 
-            var settingToControlMapping = new Dictionary<Item, Control>
+            var settingToControlMapping2 = new Dictionary<Control, (Type declaringType, string propertyName)>
             {
-                { Item.SettingCloseCows, null },
-                { Item.SettingContinuousDekuHopping, cContinuousDekuHopping },
-                { Item.SettingIronGoron, cIronGoron },
-                { Item.SettingClimbMostSurfaces, cClimbMostSurfaces },
-                { Item.SettingFreeScarecrow, cFreeScarecrow },
-                { Item.SettingGiantMaskAnywhere, cGiantMaskAnywhere },
-                // { Item.SettingSaferGlitches, cSaferGlitches },
-                { Item.SettingBombchuDrops, cAddBombchuDrops },
-                { Item.SettingInstantTransform, cInstantTransformations },
-                { Item.SettingBombArrows, cBombArrows },
-                { Item.SettingNotRandomizeEnemies, cEnemy },
-                { Item.SettingStrayFairyModeChestsOnly, null },
-                { Item.SettingNotStrayFairyModeChestsOnly, null },
-                { Item.SettingNotRandomizedItemGreatBayBossKey, null },
-                { Item.SettingNotRandomizedBottleCatchHotSpringWater, null },
-                { Item.SettingDamageModeDefault, lDMult },
-                { Item.SettingNotDamageModeDouble, lDMult },
-                { Item.SettingNotDamageModeQuadruple, lDMult },
-                { Item.SettingNotDamageModeOHKO, lDMult },
-                { Item.SettingNotDamageModeDoom, lDMult },
-                { Item.SettingDamageEffectDefault, lDType },
-                { Item.SettingNotDamageEffectFire, lDType },
-                { Item.SettingNotDamageEffectIce, lDType },
-                { Item.SettingNotDamageEffectShock, lDType },
-                { Item.SettingNotDamageEffectKnockdown, lDType },
-                { Item.SettingNotDamageEffectRandom, lDType },
-                { Item.SettingMovementModeDefault, lGravity },
-                { Item.SettingMovementModeSuperLowGravity, lGravity },
-                { Item.SettingMovementModeLowGravity, lGravity },
-                { Item.SettingNotMovementModeHighSpeed, lGravity },
-                { Item.SettingNotMovementModeHighGravity, lGravity },
-                { Item.SettingFloorTypeDefault, lFloors },
-                { Item.SettingNotFloorTypeSand, lFloors },
-                { Item.SettingNotFloorTypeIce, lFloors },
-                { Item.SettingNotFloorTypeSnow, lFloors },
-                { Item.SettingNotFloorTypeRandom, lFloors },
-                { Item.SettingClockSpeedDefault, lClockSpeed },
-                { Item.SettingNotClockSpeedFast, lClockSpeed },
-                { Item.SettingNotClockSpeedVeryFast, lClockSpeed },
-                { Item.SettingNotClockSpeedSuperFast, lClockSpeed },
-                { Item.SettingBlastMaskCooldownInstant, lBlastMask },
-                { Item.SettingBlastMaskCooldownVeryShort, lBlastMask },
-                { Item.SettingEnableSunsSong, cSunsSong },
-                { Item.SettingAllowFierceDeityAnywhere, cFDAnywhere },
-                { Item.SettingNotByoAmmo, cByoAmmo },
-                { Item.SettingNotDeathMoonCrash, cDeathMoonCrash },
-                { Item.SettingHookshotAnySurface, cHookshotAnySurface },
-                { Item.SettingCharacterAdultLink, null },
-                { Item.SettingNotCharacterAdultLink, null },
-                { Item.SettingNotFixEponaSword, null },
-                // { Item.SettingSpeedupBank, null },
-                // { Item.SettingNotSpeedupBank, null },
+                { lGravity, (typeof(GameplaySettings), nameof(GameplaySettings.MovementMode)) },
+                { lFloors, (typeof(GameplaySettings), nameof(GameplaySettings.FloorType)) },
+                { cContinuousDekuHopping, (typeof(GameplaySettings), nameof(GameplaySettings.ContinuousDekuHopping)) },
+                { cHookshotAnySurface, (typeof(GameplaySettings), nameof(GameplaySettings.HookshotAnySurface)) },
+                { cClimbMostSurfaces, (typeof(GameplaySettings), nameof(GameplaySettings.ClimbMostSurfaces)) },
+                { cIronGoron, (typeof(GameplaySettings), nameof(GameplaySettings.IronGoron)) },
+                { lClockSpeed, (typeof(GameplaySettings), nameof(GameplaySettings.ClockSpeed)) },
+                { lAutoInvert, (typeof(GameplaySettings), nameof(GameplaySettings.AutoInvert)) },
+                { cHideClock, (typeof(GameplaySettings), nameof(GameplaySettings.HideClock)) },
+                { lTrapAmount, (typeof(GameplaySettings), nameof(GameplaySettings.TrapAmount)) },
+                { lTrapsAppearance, (typeof(GameplaySettings), nameof(GameplaySettings.TrapAppearance)) },
+                { lTrapWeightings, (typeof(GameplaySettings), nameof(GameplaySettings.TrapWeights)) },
+                { lDMult, (typeof(GameplaySettings), nameof(GameplaySettings.DamageMode)) },
+                { lDType, (typeof(GameplaySettings), nameof(GameplaySettings.DamageEffect)) },
+                { cDeathMoonCrash, (typeof(GameplaySettings), nameof(GameplaySettings.DeathMoonCrash)) },
+                { cByoAmmo, (typeof(GameplaySettings), nameof(GameplaySettings.ByoAmmo)) },
+                { cFewerHealthDrops, (typeof(GameplaySettings), nameof(GameplaySettings.FewerHealthDrops)) },
+                { lBlastMask, (typeof(GameplaySettings), nameof(GameplaySettings.BlastMaskCooldown)) },
+                { lNutAndStickDrops, (typeof(GameplaySettings), nameof(GameplaySettings.NutandStickDrops)) },
+                { cUnderwaterOcarina, (typeof(GameplaySettings), nameof(GameplaySettings.OcarinaUnderwater)) },
+                { cSunsSong, (typeof(GameplaySettings), nameof(GameplaySettings.EnableSunsSong)) },
+                { cFreeScarecrow, (typeof(GameplaySettings), nameof(GameplaySettings.FreeScarecrow)) },
+                { cFDAnywhere, (typeof(GameplaySettings), nameof(GameplaySettings.AllowFierceDeityAnywhere)) },
+                { cGiantMaskAnywhere, (typeof(GameplaySettings), nameof(GameplaySettings.GiantMaskAnywhere)) },
+                { cInstantTransformations, (typeof(GameplaySettings), nameof(GameplaySettings.InstantTransform)) },
+                { cBombArrows, (typeof(GameplaySettings), nameof(GameplaySettings.BombArrows)) },
             };
 
-            foreach (var (setting, control) in settingToControlMapping)
+            foreach (var (control, settingInfo) in settingToControlMapping2)
             {
-                if (control != null)
+                control.Text = Regex.Replace(control.Text, "\\*$", "");
+                if (itemList.Any(io => !string.IsNullOrWhiteSpace(io.SettingExpression) && LogicUtils.ParseSettingExpression(io.SettingExpression).VisitsMember(settingInfo.declaringType, settingInfo.propertyName)))
                 {
-                    control.Text = Regex.Replace(control.Text, "\\*$", "");
-                    if (itemList.Any(io => io.DependsOnItems.Contains(setting) || io.Conditionals.Any(c => c.Contains(setting))))
-                    {
-                        control.Text += "*";
-                    }
+                    control.Text += "*";
                 }
             }
         }

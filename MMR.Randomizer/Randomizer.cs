@@ -460,7 +460,7 @@ namespace MMR.Randomizer
                     itemObject.Conditionals?.Clear();
                 }
 
-                if (!itemObject.Item.IsLogicSettingEnabled(_settings))
+                if (!LogicUtils.IsSettingEnabled(_settings, itemObject.SettingExpression))
                 {
                     settingJunkedLocations.Add(itemObject.Item);
                     itemObject.DependsOnItems?.Clear();
@@ -3101,7 +3101,7 @@ namespace MMR.Randomizer
                             var isFake = item.IsFake() && (!item.Region(ItemList).HasValue || item.Entrance() != null);
                             if (isFake
                                 && (!ItemList[itemLogic.ItemId].IsTrick || _settings.EnabledTricks.Contains(ItemList[itemLogic.ItemId].Name))
-                                && item.IsLogicSettingEnabled(_settings)
+                                && LogicUtils.IsSettingEnabled(_settings, ItemList[itemLogic.ItemId].SettingExpression)
                                 && !itemLogic.RequiredItemIds.Any()
                                 && !itemLogic.ConditionalItemIds.Any())
                             {

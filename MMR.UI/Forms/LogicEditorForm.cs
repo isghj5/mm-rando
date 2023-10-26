@@ -11,6 +11,8 @@ using System.Windows.Forms;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models;
 using MMR.Common.Utils;
+using MMR.Randomizer.Utils;
+using DynamicExpresso.Exceptions;
 
 namespace MMR.UI.Forms
 {
@@ -188,13 +190,35 @@ namespace MMR.UI.Forms
 
         private void FillTrick(int n)
         {
-            cTrick.Checked = _logic.Logic[n].IsTrick;
-            tTrickDescription.Text = _logic.Logic[n].TrickTooltip ?? "(optional tooltip)";
+            var isCustomItem = n >= _defaultItemCount;
+            var isTrick = _logic.Logic[n].IsTrick;
+            cTrick.Checked = isTrick;
+            tTrickDescription.Text = _logic.Logic[n].TrickTooltip ?? DEFAULT_TRICK_TOOLTIP;
             tTrickDescription.ForeColor = _logic.Logic[n].TrickTooltip != null ? SystemColors.WindowText : SystemColors.WindowFrame;
-            tTrickCategory.Text = _logic.Logic[n].TrickCategory ?? "(optional category)";
+            tTrickCategory.Text = _logic.Logic[n].TrickCategory ?? DEFAULT_CATEGORY_TOOLTIP;
             tTrickCategory.ForeColor = _logic.Logic[n].TrickCategory != null ? SystemColors.WindowText : SystemColors.WindowFrame;
-            tTrickUrl.Text = _logic.Logic[n].TrickUrl ?? "(optional YouTube link)";
+            tTrickUrl.Text = _logic.Logic[n].TrickUrl ?? DEFAULT_TRICK_URL;
             tTrickUrl.ForeColor = _logic.Logic[n].TrickUrl != null ? SystemColors.WindowText : SystemColors.WindowFrame;
+
+            cTrick.Visible = isCustomItem;
+            tTrickDescription.Visible = isCustomItem && isTrick;
+            tTrickCategory.Visible = isCustomItem && isTrick;
+            tTrickUrl.Visible = isCustomItem && isTrick;
+        }
+
+        private void FillSettings(int n)
+        {
+            var isCustomItem = n >= _defaultItemCount;
+            var isTrick = _logic.Logic[n].IsTrick;
+            var settingExpression = _logic.Logic[n].SettingExpression;
+            var isSetting = settingExpression != null;
+            cSetting.Checked = isSetting && !isTrick;
+            tSettingExpression.Text = settingExpression ?? DEFAULT_SETTING_EXPRESSION;
+            tSettingExpression.ForeColor = settingExpression != null ? SystemColors.WindowText : SystemColors.WindowFrame;
+            tSettingExpression.Visible = isCustomItem && isSetting && !isTrick;
+
+            cSetting.Visible = isCustomItem;
+            cSetting.Enabled = !isTrick;
         }
 
         private void Reset()
@@ -253,14 +277,11 @@ namespace MMR.UI.Forms
             FillConditional(n);
             FillTime(n);
             FillTrick(n);
+            FillSettings(n);
 
-            var isCustomItem = index >= _defaultItemCount;
+            var isCustomItem = n >= _defaultItemCount;
             bRenameItem.Visible = isCustomItem;
             bDeleteItem.Visible = isCustomItem;
-            cTrick.Visible = isCustomItem;
-            tTrickDescription.Visible = isCustomItem;
-            tTrickCategory.Visible = isCustomItem;
-            tTrickUrl.Visible = isCustomItem;
 
             var isMultiLocation = _logic.Logic[n].IsMultiLocation;
             tMain.Enabled = !isMultiLocation;
@@ -546,6 +567,7 @@ namespace MMR.UI.Forms
         private const string DEFAULT_TRICK_TOOLTIP = "(optional tooltip)";
         private const string DEFAULT_CATEGORY_TOOLTIP = "(optional category)";
         private const string DEFAULT_TRICK_URL = "(optional YouTube link)";
+        private const string DEFAULT_SETTING_EXPRESSION = "(e.g. settings.RandomizeEnemies == false)";
 
         private void tTrickDescription_TextChanged(object sender, EventArgs e)
         {
@@ -563,9 +585,18 @@ namespace MMR.UI.Forms
             }
         }
 
+        private void cSetting_CheckedChanged(object sender, EventArgs e)
+        {
+            tSettingExpression.Visible = cSetting.Checked;
+            cTrick.Enabled = !cSetting.Checked;
+        }
+
         private void cTrick_CheckedChanged(object sender, EventArgs e)
         {
             _logic.Logic[n].IsTrick = cTrick.Checked;
+            cSetting.Enabled = !cTrick.Checked;
+            FillTrick(n);
+            //FillSettings(n);
         }
 
         private void tTrickDescription_Leave(object sender, EventArgs e)
@@ -656,6 +687,45 @@ namespace MMR.UI.Forms
             else
             {
                 tTrickUrl.ForeColor = SystemColors.WindowText;
+            }
+        }
+
+        private void tSettingExpression_TextChanged(object sender, EventArgs e)
+        {
+            _logic.Logic[n].SettingExpression = string.IsNullOrWhiteSpace(tSettingExpression.Text) || tSettingExpression.Text == DEFAULT_SETTING_EXPRESSION
+                ? null
+                : tSettingExpression.Text;
+        }
+
+        private void tSettingExpression_Enter(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_logic.Logic[n].SettingExpression))
+            {
+                tSettingExpression.Text = string.Empty;
+                tSettingExpression.ForeColor = SystemColors.WindowText;
+            }
+        }
+
+        private void tSettingExpression_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_logic.Logic[n].SettingExpression))
+            {
+                tSettingExpression.Text = DEFAULT_SETTING_EXPRESSION;
+                tSettingExpression.ForeColor = SystemColors.WindowFrame;
+            }
+            else
+            {
+                try
+                {
+                    var expression = LogicUtils.ParseSettingExpression(tSettingExpression.Text);
+                    tSettingExpression.ForeColor = Color.Green;
+                }
+                catch (Exception ex)
+                {
+                    var message = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                    tSettingExpression.ForeColor = Color.Red;
+                    MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

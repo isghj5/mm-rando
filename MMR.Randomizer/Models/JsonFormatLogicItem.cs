@@ -12,6 +12,7 @@ namespace MMR.Randomizer.Models
         public TimeOfDay TimeAvailable { get; set; }
         public TimeOfDay TimeSetup { get; set; }
         public bool IsTrick { get; set; }
+        public string SettingExpression { get; set; }
 
         private string _trickTooltip;
         private string _trickCategory;

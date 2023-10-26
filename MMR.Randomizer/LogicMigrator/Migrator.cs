@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 20;
+        public const int CurrentVersion = 21;
 
         public static string ApplyMigrations(string logic)
         {
@@ -222,6 +222,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 20)
             {
                 AddInaccessible(logicObject);
+            }
+
+            if (logicObject.Version < 21)
+            {
+                ReplaceSettingsWithExpressions(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -4589,6 +4594,85 @@ namespace MMR.Randomizer.LogicMigrator
             logicObject.Version = 20;
         }
 
+        private static void ReplaceSettingsWithExpressions(JsonFormatLogic logicObject)
+        {
+            var mapping = new Dictionary<string, string>
+            {
+                { "SettingCloseCows", "settings.CloseCows" },
+                { "SettingContinuousDekuHopping", "settings.ContinuousDekuHopping" },
+                { "SettingIronGoron", "settings.IronGoron" },
+                { "SettingClimbMostSurfaces", "settings.ClimbMostSurfaces" },
+                { "SettingFreeScarecrow", "settings.FreeScarecrow" },
+                { "SettingGiantMaskAnywhere", "settings.GiantMaskAnywhere" },
+                { "SettingBombchuDrops", "settings.BombchuDrops" },
+                { "SettingInstantTransform", "settings.InstantTransform" },
+                { "SettingBombArrows", "settings.BombArrows" },
+                { "SettingNotFewerHealthDrops", "!settings.FewerHealthDrops" },
+                { "SettingNotRandomizeEnemies", "!settings.RandomizeEnemies" },
+                { "SettingStrayFairyModeChestsOnly", "settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly)" },
+                { "SettingNotStrayFairyModeChestsOnly", "!settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly)" },
+                { "SettingNotRandomizedItemGreatBayBossKey", "!settings.CustomItemList.Contains(Item.ItemGreatBayBossKey)" },
+                { "SettingNotRandomizedBottleCatchHotSpringWater", "!settings.CustomItemList.Contains(Item.BottleCatchHotSpringWater)" },
+                { "SettingDamageModeDefault", "settings.DamageMode == DamageMode.Default" },
+                { "SettingNotDamageModeDouble", "settings.DamageMode != DamageMode.Double" },
+                { "SettingNotDamageModeQuadruple", "settings.DamageMode != DamageMode.Quadruple" },
+                { "SettingNotDamageModeOHKO", "settings.DamageMode != DamageMode.OHKO" },
+                { "SettingNotDamageModeDoom", "settings.DamageMode != DamageMode.Doom" },
+                { "SettingDamageEffectDefault", "settings.DamageEffect == DamageEffect.Default" },
+                { "SettingNotDamageEffectFire", "settings.DamageEffect != DamageEffect.Fire" },
+                { "SettingNotDamageEffectIce", "settings.DamageEffect != DamageEffect.Ice" },
+                { "SettingNotDamageEffectShock", "settings.DamageEffect != DamageEffect.Shock" },
+                { "SettingNotDamageEffectKnockdown", "settings.DamageEffect != DamageEffect.Knockdown" },
+                { "SettingNotDamageEffectRandom", "settings.DamageEffect != DamageEffect.Random" },
+                { "SettingMovementModeDefault", "settings.MovementMode == MovementMode.Default" },
+                { "SettingMovementModeSuperLowGravity", "settings.MovementMode == MovementMode.SuperLowGravity" },
+                { "SettingMovementModeLowGravity", "settings.MovementMode == MovementMode.LowGravity" },
+                { "SettingNotMovementModeHighSpeed", "settings.MovementMode != MovementMode.HighSpeed" },
+                { "SettingNotMovementModeHighGravity", "settings.MovementMode != MovementMode.HighGravity" },
+                { "SettingFloorTypeDefault", "settings.FloorType == FloorType.Default" },
+                { "SettingNotFloorTypeSand", "settings.FloorType != FloorType.Sand" },
+                { "SettingNotFloorTypeIce", "settings.FloorType != FloorType.Ice" },
+                { "SettingNotFloorTypeSnow", "settings.FloorType != FloorType.Snow" },
+                { "SettingNotFloorTypeRandom", "settings.FloorType != FloorType.Random" },
+                { "SettingClockSpeedDefault", "settings.ClockSpeed == ClockSpeed.Default" },
+                { "SettingNotClockSpeedFast", "settings.ClockSpeed != ClockSpeed.Fast" },
+                { "SettingNotClockSpeedVeryFast", "settings.ClockSpeed != ClockSpeed.VeryFast" },
+                { "SettingNotClockSpeedSuperFast", "settings.ClockSpeed != ClockSpeed.SuperFast" },
+                { "SettingBlastMaskCooldownInstant", "settings.BlastMaskCooldown == BlastMaskCooldown.Instant" },
+                { "SettingBlastMaskCooldownVeryShort", "settings.BlastMaskCooldown == BlastMaskCooldown.VeryShort" },
+                { "SettingEnableSunsSong", "settings.EnableSunsSong" },
+                { "SettingAllowFierceDeityAnywhere", "settings.AllowFierceDeityAnywhere" },
+                { "SettingNotByoAmmo", "!settings.ByoAmmo" },
+                { "SettingNotDeathMoonCrash", "!settings.DeathMoonCrash" },
+                { "SettingHookshotAnySurface", "settings.HookshotAnySurface" },
+                { "SettingCharacterAdultLink", "settings.Character == Character.AdultLink" },
+                { "SettingNotCharacterAdultLink", "settings.Character != Character.AdultLink" },
+                { "SettingNotFixEponaSword", "!settings.FixEponaSword" },
+            };
+
+            foreach (var (oldSetting, expression) in mapping)
+            {
+                if (logicObject.Logic.Any(x => x.RequiredItems.Contains(oldSetting) || x.ConditionalItems.Any(c => c.Contains(oldSetting))))
+                {
+                    var reference = logicObject.Logic.Single(x => x.Id == oldSetting);
+                    logicObject.Logic.Add(new JsonFormatLogicItem
+                    {
+                        Id = oldSetting,
+                        RequiredItems = reference.RequiredItems.ToList(),
+                        ConditionalItems = reference.ConditionalItems.Select(c => c.ToList()).ToList(),
+                        TimeAvailable = reference.TimeAvailable,
+                        TimeNeeded = reference.TimeNeeded,
+                        TimeSetup = reference.TimeSetup,
+                        SettingExpression = expression,
+                    });
+                }
+            }
+
+            logicObject.Logic.RemoveRange(137, mapping.Count);
+
+            logicObject.Version = 21;
+        }
+
         private class MigrationItem
         {
             public int ID;
@@ -4614,6 +4698,7 @@ namespace MMR.Randomizer.LogicMigrator
             public bool IsTrick { get; set; }
             public string TrickTooltip { get; set; }
             public string TrickCategory { get; set; }
+            public string SettingExpression { get; set; }
         }
 
         [Flags]

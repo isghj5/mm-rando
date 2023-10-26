@@ -88,6 +88,7 @@ namespace MMR.UI.Forms
             this.cDMult = new System.Windows.Forms.ComboBox();
             this.lDMult = new System.Windows.Forms.Label();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.cIronGoron = new System.Windows.Forms.CheckBox();
             this.cClimbMostSurfaces = new System.Windows.Forms.CheckBox();
             this.cHookshotAnySurface = new System.Windows.Forms.CheckBox();
             this.cFloors = new System.Windows.Forms.ComboBox();
@@ -97,14 +98,14 @@ namespace MMR.UI.Forms
             this.cContinuousDekuHopping = new System.Windows.Forms.CheckBox();
             this.gTraps = new System.Windows.Forms.GroupBox();
             this.lTrapWeightings = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lTrapsAppearance = new System.Windows.Forms.Label();
             this.lTrapAmount = new System.Windows.Forms.Label();
             this.cTrapAmount = new System.Windows.Forms.ComboBox();
             this.cTrapsAppearance = new System.Windows.Forms.ComboBox();
             this.cIceTrapQuirks = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cAutoInvert = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lAutoInvert = new System.Windows.Forms.Label();
             this.cClockSpeed = new System.Windows.Forms.ComboBox();
             this.lClockSpeed = new System.Windows.Forms.Label();
             this.cHideClock = new System.Windows.Forms.CheckBox();
@@ -260,7 +261,6 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cIronGoron = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -953,6 +953,20 @@ namespace MMR.UI.Forms
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Movement";
             // 
+            // cIronGoron
+            // 
+            this.cIronGoron.AutoSize = true;
+            this.cIronGoron.BackColor = System.Drawing.Color.Transparent;
+            this.cIronGoron.ForeColor = System.Drawing.Color.Black;
+            this.cIronGoron.Location = new System.Drawing.Point(7, 185);
+            this.cIronGoron.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cIronGoron.Name = "cIronGoron";
+            this.cIronGoron.Size = new System.Drawing.Size(83, 19);
+            this.cIronGoron.TabIndex = 29;
+            this.cIronGoron.Text = "Iron Goron";
+            this.cIronGoron.UseVisualStyleBackColor = false;
+            this.cIronGoron.CheckedChanged += new System.EventHandler(this.cIronGoron_CheckedChanged);
+            // 
             // cClimbMostSurfaces
             // 
             this.cClimbMostSurfaces.AutoSize = true;
@@ -1052,7 +1066,7 @@ namespace MMR.UI.Forms
             // gTraps
             // 
             this.gTraps.Controls.Add(this.lTrapWeightings);
-            this.gTraps.Controls.Add(this.label2);
+            this.gTraps.Controls.Add(this.lTrapsAppearance);
             this.gTraps.Controls.Add(this.lTrapAmount);
             this.gTraps.Controls.Add(this.cTrapAmount);
             this.gTraps.Controls.Add(this.cTrapsAppearance);
@@ -1076,15 +1090,15 @@ namespace MMR.UI.Forms
             this.lTrapWeightings.TabIndex = 32;
             this.lTrapWeightings.Text = "Trap Weightings";
             // 
-            // label2
+            // lTrapsAppearance
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 62);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 15);
-            this.label2.TabIndex = 30;
-            this.label2.Text = "Appearance";
+            this.lTrapsAppearance.AutoSize = true;
+            this.lTrapsAppearance.Location = new System.Drawing.Point(7, 62);
+            this.lTrapsAppearance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lTrapsAppearance.Name = "lTrapsAppearance";
+            this.lTrapsAppearance.Size = new System.Drawing.Size(70, 15);
+            this.lTrapsAppearance.TabIndex = 30;
+            this.lTrapsAppearance.Text = "Appearance";
             // 
             // lTrapAmount
             // 
@@ -1149,7 +1163,7 @@ namespace MMR.UI.Forms
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.cAutoInvert);
-            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.lAutoInvert);
             this.groupBox1.Controls.Add(this.cClockSpeed);
             this.groupBox1.Controls.Add(this.lClockSpeed);
             this.groupBox1.Controls.Add(this.cHideClock);
@@ -1177,15 +1191,15 @@ namespace MMR.UI.Forms
             this.cAutoInvert.TabIndex = 18;
             this.cAutoInvert.SelectedIndexChanged += new System.EventHandler(this.cAutoInvert_SelectedIndexChanged);
             // 
-            // label3
+            // lAutoInvert
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 61);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 15);
-            this.label3.TabIndex = 19;
-            this.label3.Text = "Auto-invert";
+            this.lAutoInvert.AutoSize = true;
+            this.lAutoInvert.Location = new System.Drawing.Point(4, 61);
+            this.lAutoInvert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lAutoInvert.Name = "lAutoInvert";
+            this.lAutoInvert.Size = new System.Drawing.Size(68, 15);
+            this.lAutoInvert.TabIndex = 19;
+            this.lAutoInvert.Text = "Auto-invert";
             // 
             // cClockSpeed
             // 
@@ -3137,20 +3151,6 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // cIronGoron
-            // 
-            this.cIronGoron.AutoSize = true;
-            this.cIronGoron.BackColor = System.Drawing.Color.Transparent;
-            this.cIronGoron.ForeColor = System.Drawing.Color.Black;
-            this.cIronGoron.Location = new System.Drawing.Point(7, 185);
-            this.cIronGoron.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cIronGoron.Name = "cIronGoron";
-            this.cIronGoron.Size = new System.Drawing.Size(83, 19);
-            this.cIronGoron.TabIndex = 29;
-            this.cIronGoron.Text = "Iron Goron";
-            this.cIronGoron.UseVisualStyleBackColor = false;
-            this.cIronGoron.CheckedChanged += new System.EventHandler(this.cIronGoron_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3396,7 +3396,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.GroupBox gTraps;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lTrapsAppearance;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TabControl tOtherCustomizations;
         private System.Windows.Forms.TabPage tOtherCustomization;
@@ -3417,7 +3417,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cDoubleArcheryRewards;
         private System.Windows.Forms.CheckBox cFillWallet;
         private System.Windows.Forms.ComboBox cAutoInvert;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lAutoInvert;
         private System.Windows.Forms.CheckBox cInvisSparkle;
         private System.Windows.Forms.Panel pClassicItemPool;
         private System.Windows.Forms.CheckBox cItemPoolAdvanced;

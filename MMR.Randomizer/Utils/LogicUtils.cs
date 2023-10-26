@@ -1,4 +1,6 @@
-﻿using MMR.Common.Extensions;
+﻿using DynamicExpresso;
+using MMR.Common.Extensions;
+using MMR.Randomizer.Asm;
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
@@ -6,10 +8,12 @@ using MMR.Randomizer.LogicMigrator;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -77,6 +81,7 @@ namespace MMR.Randomizer.Utils
                     Conditionals = logicItem.ConditionalItems.Select(c => c.Select(item => (Item)logic.FindIndex(li => li.Id == item)).ToList()).ToList(),
                     TrickCategory = logicItem.TrickCategory,
                     TrickUrl = logicItem.TrickUrl,
+                    SettingExpression = logicItem.SettingExpression,
                 });
             }
 
@@ -323,6 +328,69 @@ namespace MMR.Randomizer.Utils
                 checkedLocations[location] = result;
             }
             return result;
+        }
+
+        public static Expression<Func<GameplaySettings, bool>> ParseSettingExpression(string expression)
+        {
+            return Interpreter.ParseAsExpression<Func<GameplaySettings, bool>>(expression, "settings");
+        }
+
+        public static bool IsSettingEnabled(GameplaySettings settings, string expression)
+        {
+            if (string.IsNullOrWhiteSpace(expression))
+            {
+                return true;
+            }
+            return ParseSettingExpression(expression).Compile()(settings);
+        }
+
+        private static Interpreter Interpreter;
+
+        static LogicUtils()
+        {
+            Interpreter = new Interpreter()
+                .EnableAssignment(AssignmentOperators.None);
+
+            ReferenceEnums(Interpreter, typeof(GameplaySettings));
+        }
+
+        private static void ReferenceEnums(Interpreter interpreter, Type type)
+        {
+            void ProcessPropertyType(Type propertyType)
+            {
+                if (propertyType == typeof(string) || propertyType == typeof(AsmOptionsGameplay))
+                {
+
+                }
+                else if (propertyType.IsGenericType)
+                {
+                    if (propertyType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                    {
+                        var keyType = propertyType.GetGenericArguments()[0];
+                        var valueType = propertyType.GetGenericArguments()[1];
+                        ProcessPropertyType(keyType);
+                        ProcessPropertyType(valueType);
+                    }
+                    else if (propertyType.IsAssignableTo(typeof(IEnumerable)))
+                    {
+                        var itemType = propertyType.GetGenericArguments()[0];
+                        ProcessPropertyType(itemType);
+                    }
+                }
+                else if (propertyType.IsEnum)
+                {
+                    interpreter.Reference(propertyType);
+                }
+                else if (propertyType.IsClass)
+                {
+                    ReferenceEnums(interpreter, propertyType);
+                }
+            }
+
+            foreach (var property in type.GetProperties())
+            {
+                ProcessPropertyType(property.PropertyType);
+            }
         }
     }
 }

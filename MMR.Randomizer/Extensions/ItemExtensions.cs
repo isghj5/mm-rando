@@ -311,21 +311,5 @@ namespace MMR.Randomizer.Extensions
         {
             return item.HasAttribute<BlockBombTrapPlacementAttribute>();
         }
-
-        public static bool IsLogicSetting(this Item item)
-        {
-            return item >= Item.SettingCloseCows && item <= Item.SettingNotFixEponaSword;
-        }
-
-        public static bool IsLogicSettingEnabled(this Item item, GameplaySettings settings)
-        {
-            var logicSettingAttribute = item.GetAttribute<LogicSettingAttribute>();
-            if (logicSettingAttribute == null)
-            {
-                return true;
-            }
-
-            return logicSettingAttribute.Condition(settings);
-        }
     }
 }

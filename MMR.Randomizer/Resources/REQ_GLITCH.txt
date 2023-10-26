@@ -1,5 +1,5 @@
 {
-  "Version": 20,
+  "Version": 21,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -2942,462 +2942,6 @@
       "RequiredItems": [
         "Kill Twinmold"
       ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingCloseCows",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingContinuousDekuHopping",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingIronGoron",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingClimbMostSurfaces",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingFreeScarecrow",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingGiantMaskAnywhere",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingBombchuDrops",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingInstantTransform",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingBombArrows",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotFewerHealthDrops",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotRandomizeEnemies",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingStrayFairyModeChestsOnly",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotStrayFairyModeChestsOnly",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotRandomizedItemGreatBayBossKey",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotRandomizedBottleCatchHotSpringWater",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingDamageModeDefault",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotDamageModeDouble",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotDamageModeQuadruple",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotDamageModeOHKO",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotDamageModeDoom",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingDamageEffectDefault",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotDamageEffectFire",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotDamageEffectIce",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotDamageEffectShock",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotDamageEffectKnockdown",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotDamageEffectRandom",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingMovementModeDefault",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingMovementModeSuperLowGravity",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingMovementModeLowGravity",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotMovementModeHighSpeed",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotMovementModeHighGravity",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingFloorTypeDefault",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotFloorTypeSand",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotFloorTypeIce",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotFloorTypeSnow",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotFloorTypeRandom",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingClockSpeedDefault",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotClockSpeedFast",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotClockSpeedVeryFast",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotClockSpeedSuperFast",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingBlastMaskCooldownInstant",
-      "RequiredItems": [
-        "MaskBlast"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingBlastMaskCooldownVeryShort",
-      "RequiredItems": [
-        "MaskBlast"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingEnableSunsSong",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingAllowFierceDeityAnywhere",
-      "RequiredItems": [
-        "MaskFierceDeity"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotByoAmmo",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotDeathMoonCrash",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingHookshotAnySurface",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingCharacterAdultLink",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotCharacterAdultLink",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "SettingNotFixEponaSword",
-      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -68515,6 +68059,100 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false
+    },
+    {
+      "Id": "SettingClimbMostSurfaces",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "settings.ClimbMostSurfaces"
+    },
+    {
+      "Id": "SettingNotRandomizeEnemies",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "!settings.RandomizeEnemies"
+    },
+    {
+      "Id": "SettingNotRandomizedBottleCatchHotSpringWater",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "!settings.CustomItemList.Contains(Item.BottleCatchHotSpringWater)"
+    },
+    {
+      "Id": "SettingDamageModeDefault",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "settings.DamageMode == DamageMode.Default"
+    },
+    {
+      "Id": "SettingBlastMaskCooldownInstant",
+      "RequiredItems": [
+        "MaskBlast"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "settings.BlastMaskCooldown == BlastMaskCooldown.Instant"
+    },
+    {
+      "Id": "SettingAllowFierceDeityAnywhere",
+      "RequiredItems": [
+        "MaskFierceDeity"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "settings.AllowFierceDeityAnywhere"
+    },
+    {
+      "Id": "SettingNotDeathMoonCrash",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "!settings.DeathMoonCrash"
+    },
+    {
+      "Id": "SettingCharacterAdultLink",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "settings.Character == Character.AdultLink"
+    },
+    {
+      "Id": "SettingNotCharacterAdultLink",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "settings.Character != Character.AdultLink"
     }
   ]
 }

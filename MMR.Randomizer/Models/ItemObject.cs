@@ -23,6 +23,8 @@ namespace MMR.Randomizer.Models
         public string TrickCategory { get; set; }
         public string TrickUrl { get; set; }
 
+        public string SettingExpression { get; set; }
+
         public bool IsRandomized { get; set; }
 
         /// <summary>
