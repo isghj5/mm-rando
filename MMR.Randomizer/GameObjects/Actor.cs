@@ -147,7 +147,7 @@ namespace MMR.Randomizer.GameObjects
         // params type: 0 is fire, 2 is normal, 3 is perched, 4 is ice
         // 0x8000 is invisible
         [FlyingVariants(0x0, 0x2, 0x04, 0x8000, 0x8002, 0x8004)] // which ones are fire and ice?
-        [WallVariants(0x8003, 0x3)]
+        [WallVariants(0x8003, 0x3)] // will take off and attack within 120 units distance (xz)
         [FlyingToGroundHeightAdjustment(150)]
         Keese = 0xC, // En_Firefly
 
@@ -3686,6 +3686,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(449)]
         [ObjectListIndex(0x1C6)]
         [GroundVariants(0, 0x0101)]
+        [EnemizerScenesPlacementBlock(Scene.TownShootingGallery)]
         Hiploop = 0x1E9, // Charging beetle in Woodfall
 
         [FileID(450)]

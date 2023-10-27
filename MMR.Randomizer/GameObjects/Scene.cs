@@ -183,8 +183,8 @@ namespace MMR.Randomizer.GameObjects
         // tag: archery
         [FileID(1239)]
         [SceneInternalId(0x20)]
-        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Clock,
-        //    Actor.Keese, Actor.Takkuri)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Clock,
+            Actor.Keese, Actor.Takkuri)]
         TownShootingGallery = 0x1D,
 
         [FileID(1241)]
@@ -228,8 +228,8 @@ namespace MMR.Randomizer.GameObjects
         // tag: archery
         [FileID(1276)]
         [SceneInternalId(0x24)]
-        //[EnemizerSceneEnemyReplacementBlock( originalEnemy: Actor.Clock,
-        //    Actor.Keese, Actor.Takkuri)]
+        [EnemizerSceneEnemyReplacementBlock( originalEnemy: Actor.Clock,
+            Actor.Keese, Actor.Takkuri)]
         SwampShootingGallery = 0x21,
 
         [FileID(1276)]
