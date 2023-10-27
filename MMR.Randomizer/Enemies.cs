@@ -3565,7 +3565,7 @@ namespace MMR.Randomizer
             ///  we just move the new larger files to the end and leave a hole behind for now
 
             //const uint theEndOfTakenVRAM = 0x80C27000; // 0x80C260A0 <- actual
-            const uint theEndOfTakenVRAM = 0x80CA0000; // changed NOTHING
+            const uint theEndOfTakenVRAM = 0x80CA0000; // TODO change back to lower
             const int  theEndOfTakenVROM = 0x03100000; // 0x02EE7XXX <- actual
 
             int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);

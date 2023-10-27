@@ -416,6 +416,8 @@ namespace MMR.Randomizer.GameObjects
         //    Actor.Peahat, Actor.LikeLike, Actor.Freezard)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.DragonFly, // blocks deku flying 
         //    Actor.UnusedStoneTowerPlatform, Actor.UnusedPirateElevator)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Octarok, 
+            Actor.Obj_Boat, Actor.SwampBoat)] // dyna crashing from just one boat and nothing else
         [EnemizerSceneBlockSensitive(Actor.DragonFly, -1)]
         SouthernSwamp = 0x42,
 
@@ -641,6 +643,8 @@ namespace MMR.Randomizer.GameObjects
         //    Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
             Actor.LikeLike)] // If you start with one heart this can be a softlock
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BombersYouChase,
+            Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, Actor.UnusedFallingBlocks)]
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
         WestClockTown = 0x6A,
 

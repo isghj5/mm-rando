@@ -2085,15 +2085,16 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x2243)]
         Garo = 0x113, // En_Jso
 
-        // not that interesting, but usual zelda calapsing bridge
+        // not that interesting, cutscene calapsing bridge
         [ActorizerEnabled]
         [FileID(249)]
         [ObjectListIndex(0xED)]
+        [BlockingVariantsAll]
         [FlyingVariants(0)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.StoneTower)] // dyna crash
-        FallingBlocks = 0x114, // Obj_Chikuwa
+        UnusedFallingBlocks = 0x114, // Obj_Chikuwa
 
         // TODO would not spawn because I mistyped the ID try again
         //[EnemizerEnabled] // wont spawn, just spawns green tatl points but no actual knight
