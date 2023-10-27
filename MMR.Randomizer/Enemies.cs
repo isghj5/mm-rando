@@ -836,33 +836,44 @@ namespace MMR.Randomizer
         {
             Scene southernswampScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthernSwamp.FileID());
 
-            // because this room is already borderline lag fest, turn one into a lillypad
+            // because this room is already borderline lag fest, turn one into a lilypad
             // actor 7 is the furthest back in the cave, unreachable
-            var newLilyPad = southernswampScene.Maps[0].Actors[6];
-            newLilyPad.ChangeActor(GameObjects.Actor.Lilypad, vars: 0, modifyOld: true);
-            newLilyPad.Position = new vec16(561, 0, 790); // placement: toward back wall behind tourist center
+            //var newLilyPad = southernswampScene.Maps[0].Actors[6];
+            //newLilyPad.ChangeActor(GameObjects.Actor.Lilypad, vars: 0, modifyOld: true);
+            //newLilyPad.Position = new vec16(561, 0, 790); // placement: toward back wall behind tourist center
+            // because of dyna limits, going to stop changing this to lily and instead leave as actor but still move
+            var movedToFlower = southernswampScene.Maps[0].Actors[6];
+            movedToFlower.Position = new vec16(2781, 57, 2390);
+            movedToFlower.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 45, flags: movedToFlower.Rotation.y);
 
             var movedToTree = southernswampScene.Maps[0].Actors[4];
             movedToTree.Position = new vec16(2020, 22, 300); // placement: to the right as you approach witches, next to tree
             // rotation normal to wall behind it, turn to the right 90deg
-            movedToTree.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: southernswampScene.Maps[0].Actors[4].Rotation.y);
+            movedToTree.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: movedToTree.Rotation.y);
+
+            // this actor normally faces the big oct, have them face away from the wall
+            var nearSoaringStone = southernswampScene.Maps[0].Actors[44];
+            nearSoaringStone.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 90, flags: nearSoaringStone.Rotation.y);
+
 
             // witch area babas
             var movedToGrass = southernswampScene.Maps[2].Actors[2];
             movedToGrass.Position = new vec16(2910, 14, -1075); // placement: between the bushes along the wall
             // rotation normal to wall behind it, turn to the left 90deg
-            movedToGrass.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 90, flags: southernswampScene.Maps[2].Actors[2].Rotation.y);
+            movedToGrass.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 90, flags: movedToGrass.Rotation.y);
 
             var movedToWaterFall = southernswampScene.Maps[2].Actors[3];
             movedToWaterFall.Position = new vec16(4240, -2, -1270); // placement: near waterfall
 
+            // moving the clear swamp versions
             Scene clearSwampScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthernSwampClear.FileID());
             clearSwampScene.Maps[0].Actors[4].Position = new vec16(1686, 23, 416); // moved to pier
             clearSwampScene.Maps[0].Actors[6].Position = new vec16(1663, 5, -103); // moved out front a big
+            // witch room
             clearSwampScene.Maps[2].Actors[2].Position = new vec16(3001, 8, -1070);
             clearSwampScene.Maps[2].Actors[3].Position = new vec16(4288, 11, -1312);
 
-            //if (rng.Next() % 100 >= 50)
+            //if (rng.Next() % 100 >= 50) // chance of watersurface vs waterbottom
             {
                 // move the southern swamp octorok to the surface 
                 southernswampScene.Maps[0].Actors[3].Position.y = 0; // set to water height
@@ -2137,7 +2148,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.Takkuri)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.SwampBoat)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Tingle, GameObjects.Actor.Skulltula)) continue;
+                if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.SpikedMine, GameObjects.Actor.Postbox)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.ZoraRaceRing)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Japas)) continue;

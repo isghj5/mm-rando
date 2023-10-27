@@ -180,8 +180,11 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x1F)]
         OdolwasLair = 0x1C,
 
+        // tag: archery
         [FileID(1239)]
         [SceneInternalId(0x20)]
+        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Clock,
+        //    Actor.Keese, Actor.Takkuri)]
         TownShootingGallery = 0x1D,
 
         [FileID(1241)]
@@ -222,8 +225,11 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.ZoraEgg, -1)]
         PiratesFortressRooms = 0x20, // tag: Sewer
 
+        // tag: archery
         [FileID(1276)]
         [SceneInternalId(0x24)]
+        //[EnemizerSceneEnemyReplacementBlock( originalEnemy: Actor.Clock,
+        //    Actor.Keese, Actor.Takkuri)]
         SwampShootingGallery = 0x21,
 
         [FileID(1276)]
