@@ -301,7 +301,7 @@ namespace MMR.Randomizer.Utils
 
         public static ReadOnlyCollection<Item> JunkItems { get; private set; }
         public static ReadOnlyCollection<Item> LogicallyJunkItems { get; private set; }
-        public static void PrepareJunkItems(List<ItemObject> itemList)
+        public static void PrepareJunkItems(GameplaySettings settings, List<ItemObject> itemList)
         {
             BlitzJunkLocations = new List<Item>();
             LogicallyJunkItems = itemList
@@ -309,8 +309,20 @@ namespace MMR.Randomizer.Utils
                 .Select(io => io.Item)
                 .ToList()
                 .AsReadOnly();
-            JunkItems = LogicallyJunkItems.Where(item => item != Item.CollectableIkanaGraveyardDay2Bats1
-                                          && item.ItemCategory() != ItemCategory.Navigation
+
+            IEnumerable<Item> getUniqueItems(IEnumerable<Item> items)
+            {
+                return items
+                    .Where(item => item.Name() != null)
+                    .GroupBy(item => item.Name())
+                    .Where(g => g.Count() == 1)
+                    .Select(g => g.Single());
+            }
+
+            var uniqueItems = getUniqueItems(settings.CustomItemList)
+                .Union(getUniqueItems(Enum.GetValues<Item>()))
+                .ToList();
+            JunkItems = LogicallyJunkItems.Where(item => !uniqueItems.Contains(item)
                                           && item.ItemCategory() != ItemCategory.PiecesOfHeart
                                           && item.GetAttribute<ChestTypeAttribute>()?.Type == ChestTypeAttribute.ChestType.SmallWooden
                                       ).ToList().AsReadOnly();

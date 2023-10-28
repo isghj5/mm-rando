@@ -1025,7 +1025,7 @@ namespace MMR.Randomizer
             UpdateLogicForSettings();
 
             ItemUtils.PrepareHintedJunkLocations(_settings, Random);
-            ItemUtils.PrepareJunkItems(ItemList);
+            ItemUtils.PrepareJunkItems(_settings, ItemList);
             _randomized.BlitzExtraItems = new List<Item>();
             if (_settings.CustomJunkLocations.Count > ItemUtils.JunkItems.Count) // TODO also account for HintedJunkLocations and BlitzJunkLocations
             {
