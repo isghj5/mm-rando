@@ -11821,5 +11821,15 @@ namespace MMR.Randomizer.GameObjects
         [ExclusiveItemMessage(0x8FFE, "\u0017You picked up a \u0007Rupoor\u0000!\u0018\u0011That means you've lost \u000110 Rupees\u0000.\u0011And that's a little bit sad.\u00BF")]
         Rupoor = -4,
 
+        [Repeatable]
+        [ItemName("Nothing")]
+        [GossipItemHint("nothing")]
+        [ShopText("Literally nothing.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ExclusiveItem(0xB6, type: 2)]
+        [ExclusiveItemGraphic(0, 0)]
+        [ExclusiveItemMessage(0x8FFD, "\u0017You found \u0001literally nothing\u0000!\u0018\u00BF")]
+        Nothing = -5,
+
     }
 }

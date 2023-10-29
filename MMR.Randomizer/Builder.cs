@@ -6055,7 +6055,7 @@ namespace MMR.Randomizer
             foreach (var item in _randomized.Traps)
             {
                 var newLocation = item.NewLocation.Value;
-                if (newLocation.IsVisible() && (item.Item != Item.Rupoor || newLocation.IsPurchaseable()))
+                if (newLocation.IsVisible() && (item.Item != Item.Rupoor || newLocation.IsPurchaseable()) && (item.Item != Item.Nothing))
                 {
                     var giIndex = item.NewLocation.Value.GetItemIndex().Value;
                     var graphic = item.Mimic.ResolveGraphic();
@@ -6067,6 +6067,7 @@ namespace MMR.Randomizer
             _extraMessages.Add(new MessageEntry(Item.IceTrap.ExclusiveItemEntry().Message, Item.IceTrap.ExclusiveItemMessage()));
             _extraMessages.Add(new MessageEntry(Item.BombTrap.ExclusiveItemEntry().Message, Item.BombTrap.ExclusiveItemMessage()));
             _extraMessages.Add(new MessageEntry(Item.Rupoor.ExclusiveItemEntry().Message, Item.Rupoor.ExclusiveItemMessage()));
+            _extraMessages.Add(new MessageEntry(Item.Nothing.ExclusiveItemEntry().Message, Item.Nothing.ExclusiveItemMessage()));
         }
 
         public void MakeROM(OutputSettings outputSettings, IProgressReporter progressReporter)

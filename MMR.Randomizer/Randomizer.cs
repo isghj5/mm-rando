@@ -2912,21 +2912,24 @@ namespace MMR.Randomizer
             // Dynamically generate appearance set for traps.
             // Only mimic items if they are included in the main randomization pool (not in their own pool).
             var mimics = TrapUtils.BuildTrapMimicSet(ItemList, appearance, (item) => item.IsPlacementHighlyRestricted(_settings))
-                .ToArray();
+                .ToList();
+
+            if (trapWeights.GetValueOrDefault(TrapType.Nothing) > 0)
+            {
+                mimics.Add(new MimicItem(Item.Nothing));
+            }
 
             var trapTypeItems = new Dictionary<TrapType, Item>
             {
                 { TrapType.Ice, Item.IceTrap },
                 { TrapType.Bomb, Item.BombTrap },
                 { TrapType.Rupoor, Item.Rupoor },
+                { TrapType.Nothing, Item.Nothing },
             };
 
             var list = new List<ItemObject>();
             foreach (var item in items)
             {
-                // If check is visible (can be seen via world model), add "graphic override" for imitating other item.
-                var mimic = mimics.Random(random);
-
                 var newLocation = item.NewLocation.Value;
 
                 var allowedTrapTypes = trapTypeItems.Keys.ToList();
@@ -2943,10 +2946,17 @@ namespace MMR.Randomizer
                 var trapType = allowedTrapTypes.Random(random, t => trapWeights.GetValueOrDefault(t));
                 var trapItem = trapTypeItems[trapType];
 
+                // If check is visible (can be seen via world model), add "graphic override" for imitating other item.
+                var mimic = trapType switch
+                {
+                    TrapType.Nothing => new MimicItem(Item.Nothing),
+                    _ => mimics.Random(random)
+                };
+
                 item.ItemOverride = trapItem;
                 item.Mimic = mimic;
 
-                if (newLocation.IsVisible() || newLocation.IsPurchaseable())
+                if (trapItem != Item.Nothing && (newLocation.IsVisible() || newLocation.IsPurchaseable()))
                 {
                     // Store name override for logging in HTML tracker.
                     if (trapItem != Item.Rupoor || newLocation.IsPurchaseable())

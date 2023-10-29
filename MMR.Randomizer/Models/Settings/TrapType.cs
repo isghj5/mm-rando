@@ -14,5 +14,8 @@ namespace MMR.Randomizer.Models.Settings
 
         [Description("Rupoors take 10 rupees from your wallet.")]
         Rupoor,
+
+        [Description("Literally nothing.")]
+        Nothing,
     }
 }

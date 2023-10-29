@@ -218,7 +218,7 @@ u16 MMR_CheckProgressiveUpgrades(u16 giIndex, bool grant) {
     return giIndex;
 }
 
-#define cycleRepeatableItemsLength 37
+#define cycleRepeatableItemsLength 38
 static u8 cycleRepeatableItems[cycleRepeatableItemsLength] = {
     ITEM_BOMB,
     ITEM_BOMBCHU,
@@ -256,6 +256,7 @@ static u8 cycleRepeatableItems[cycleRepeatableItemsLength] = {
     CUSTOM_ITEM_ICE_TRAP,
     CUSTOM_ITEM_BOMBTRAP,
     CUSTOM_ITEM_RUPOOR,
+    CUSTOM_ITEM_NOTHING,
     0xFF, // ? Stray Fairy ?
 };
 bool MMR_IsCycleRepeatable(u16 giIndex) {
