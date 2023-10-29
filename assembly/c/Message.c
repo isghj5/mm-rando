@@ -17,6 +17,7 @@ struct MessageExtensionState {
     s8 lastSpaceIndex;
     f32 lastSpaceCursorPosition;
 
+    ItemInfo greenRupee;
     ItemInfo recoveryHeart;
     ItemInfo redPotion;
     ItemInfo chateauRomani;
@@ -71,6 +72,15 @@ static struct MessageExtensionState gMessageExtensionState = {
     .isWrapping = false,
     .lastSpaceIndex = -1,
     .lastSpaceCursorPosition = 0,
+
+    .greenRupee = {
+        .name = "Green Rupee",
+        .description = "This is worth 1 rupee.",
+        .article = articleIndefinite,
+        .pronoun = pronounSingular,
+        .amount = amountSingular,
+        .verb = verbSingular,
+    },
 
     .recoveryHeart = {
         .name = "Recovery Heart",
@@ -343,7 +353,9 @@ u8 Message_BeforeCharacterProcess(GlobalContext* ctxt, MessageCharacterProcessVa
                 if (newGiIndex != giIndex) {
                     ItemInfo item;
                     bool itemSet = true;
-                    if (newGiIndex == 0x0A) {
+                    if (newGiIndex == 0x01) {
+                        item = gMessageExtensionState.greenRupee;
+                    } else if (newGiIndex == 0x0A) {
                         item = gMessageExtensionState.recoveryHeart;
                     } else if (newGiIndex == 0x5B) {
                         item = gMessageExtensionState.redPotion;
