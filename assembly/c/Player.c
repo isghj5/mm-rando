@@ -637,14 +637,12 @@ void Player_AfterUpdateCollisionCylinder(ActorPlayer* player) {
 
 u8 Player_GetMaskOnLoad(ActorPlayer* player, GlobalContext* ctxt) {
     u8 result = gSaveContext.perm.mask;
+    s32 voidFlag = gSaveContext.extra.voidFlag;
     if (result == 0x14) {
         if (MISC_CONFIG.flags.giantMaskAnywhere) {
-            s32 voidFlag = gSaveContext.extra.voidFlag;
             if (ctxt->sceneNum == SCENE_INISIE_BS || voidFlag == -5) {
                 gSaveContext.perm.mask = 0;
                 result = 0;
-                GiantMask_MarkReset();
-                GiantMask_TryReset();
             } else {
                 gSaveContext.extra.magicConsumeState = 0x0C;
             }
@@ -652,9 +650,15 @@ u8 Player_GetMaskOnLoad(ActorPlayer* player, GlobalContext* ctxt) {
             gSaveContext.perm.mask = 0;
             result = 0;
         }
-    } else if (MISC_CONFIG.flags.giantMaskAnywhere) {
+    }
+
+    if (MISC_CONFIG.flags.giantMaskAnywhere) {
+        if (ctxt->sceneNum == SCENE_INISIE_BS || voidFlag == -5) {
+            GiantMask_MarkReset();
+        }
         GiantMask_TryReset();
     }
+
     return result;
 }
 
