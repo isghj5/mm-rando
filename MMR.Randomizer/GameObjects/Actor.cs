@@ -5035,6 +5035,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
         )]
         [GroundVariants(0x0B11, 0x0B22, 0x50F, 0x0513, 0x0910)]
+        [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         BombersYouChase = 0x27F, // En_Bomjimb
 
@@ -5062,6 +5063,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
             )]
         [GroundVariants(0x0)]
+        [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         BomberHideoutGuard = 0x281, // En_Bombers2
