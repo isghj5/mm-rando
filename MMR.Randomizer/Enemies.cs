@@ -502,14 +502,6 @@ namespace MMR.Randomizer
             southDekubaba = terminafieldScene.Maps[0].Actors[44];
             southDekubaba.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: southDekubaba.Rotation.y); // fixes the leever spawn is too low (bombchu explode)
 
-            // the two wolfos spawn in twin islands spawn off scew, 
-            //   redead falls through the floor when you approach them with this skew
-            // made redead flat code world wide, leaving this for notes right now
-            //var twinislandsRoom0FID = GameObjects.Scene.TwinIslands.FileID() + 1;
-            //var twinislandsScene = RomData.SceneList.Find(scene => sceneu.File == GameObjects.Scene.TwinIslands.FileID());
-            //ActorUtils.FlattenPitchRoll(twinislandsScene.Maps[0].Actors[26]);
-            //ActorUtils.FlattenPitchRoll(twinislandsScene.Maps[0].Actors[27]);
-
             // in STT, move the bombchu in the first room 
             //   backward several feet from the chest, so replacement cannot block the chest
             var stonetowertempleScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.StoneTowerTemple.FileID());
@@ -563,7 +555,6 @@ namespace MMR.Randomizer
                 var swampSpiderHouseScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SwampSpiderHouse.FileID());
                 swampSpiderHouseScene.Maps[3].Actors[3].Position.x = -480;
 
-
                 var dekuPalace = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuPalace.FileID());
                 // the torches are really close to the hole, we can spread them wider a bit
                 dekuPalace.Maps[1].Actors[26].Position.z -= 10; // left
@@ -584,7 +575,6 @@ namespace MMR.Randomizer
                 dekuPalace.Maps[2].Actors[30].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: dekuPalace.Maps[2].Actors[30].Rotation.y);
                 dekuPalace.Maps[2].Actors[31].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: dekuPalace.Maps[2].Actors[31].Rotation.y);
                 dekuPalace.Maps[2].Actors[32].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: dekuPalace.Maps[2].Actors[32].Rotation.y);
-
 
                 // Jim the bomber actually spawns within the tree to the north... move is spawn over a bit
                 var northClockTown = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.NorthClockTown.FileID());
@@ -613,36 +603,36 @@ namespace MMR.Randomizer
                 tradingPost.Maps[0].Actors[4].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 210, flags: tradingPost.Maps[0].Actors[2].Rotation.y);
 
                 // we cannot randomize gorman brothers without randomizing their chasing horse counterparts
-                // except, this scene has an almost unused object: kanban, for the square sign you can only access if you go through the second fense
-                // what if we turn tht into the same actor as the tree, and turn the second object into a second ingo
+                // except, this scene has an almost unused object: kanban, for the square sign you can only access if you go through the second fence
+                // what if we turn that into the same actor as the tree, and turn the second object into a second ingo
                 var gormanTrack = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GormanTrack.FileID());
                 gormanTrack.Maps[0].Objects[11] = GameObjects.Actor.GormanBros.ObjectIndex();
                 gormanTrack.Maps[0].Actors[75].ChangeActor(GameObjects.Actor.Treee, vars: 0xFF02, modifyOld: true);
-
-
 
             }
         }
 
         private static void Shinanigans()
         {
+            // the peahat grass drops NOTHING, this has bothered me for ages, here I change it
             var grottosScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Grottos.FileID());
-            grottosScene.Maps[13].Actors[1].Variants[0] = 1; // change the grass in peahat grotto to drop items like TF grass
+            grottosScene.Maps[13].Actors[1].Variants[0] = 0x0001; // change the grass in peahat grotto to drop items like TF grass
 
             if (ACTORSENABLED)
             {
                 //turn around this torch, because if its bean man hes facing into the wall and it hurts me
                 var laundryPoolScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.LaundryPool.FileID());
-                laundryPoolScene.Maps[0].Actors[2].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 135, flags: 0x7F);
-                laundryPoolScene.Maps[0].Actors[2].Rotation.x = 0x7F;
-                laundryPoolScene.Maps[0].Actors[2].Rotation.z = 0x7F;
+                var laundryPoolTorch = laundryPoolScene.Maps[0].Actors[2];
+                laundryPoolTorch.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 135, flags: 0x7F);
+                laundryPoolTorch.Rotation.x = 0x7F;
+                laundryPoolTorch.Rotation.z = 0x7F;
                 //laundryPoolScene.Maps[0].Actors[1].Rotation.z = ActorUtils.MergeRotationAndFlags(rotation: laundryPoolScene.Maps[0].Actors[1].Rotation.z, flags: 0x7F);
 
                 // it was two torches, turn the other into a secret grotto, at least for now
                 var randomGrotto = new List<ushort> { 0x6033, 0x603B, 0x6018, 0x605C, 0x8000, 0xA000, 0x7000, 0xC000, 0xE000, 0xF000, 0xD000 };
                 var hiddenGrottos = new List<ushort> { 0x6233, 0x623B, 0x6218, 0x625C, 0x8200, 0xA200, 0x7200, 0xC200, 0xE200, 0xF200, 0xD200 };
                 laundryPoolScene.Maps[0].Actors[1].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[seedrng.Next(randomGrotto.Count)], modifyOld: true);
-                laundryPoolScene.Maps[0].Actors[1].Rotation = new vec16(0x7f, 0x7f, 0x7f);
+                laundryPoolScene.Maps[0].Actors[1].Rotation = new vec16(0x7F, 0x7F, 0x7F);
                 laundryPoolScene.Maps[0].Actors[1].Position = new vec16(-1502, 35, 555); // old: new vec16(-1872, -120, 229);
 
                 // winter village has a gossip stone actor, but no object, lets use the non-used flying darmani ghost object and add it to enemizer
@@ -650,11 +640,12 @@ namespace MMR.Randomizer
                 winterVillage.Maps[0].Objects[5] = GameObjects.Actor.GossipStone.ObjectIndex();
                 winterVillage.Maps[0].Actors[57].Variants[0] = 0x67; // the vars is for milkroad, change to a moon vars so it gets randomized
                 winterVillage.Maps[0].Actors[57].Position.y = -15; // floating a bit in the air, lower to ground
+                // note: if we need to add the ghost back in, the scene is using 13 objects so we can add one more back in
 
                 // now that darmani ghost is gone, lets re=use the actor for secret grotto
-                winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[seedrng.Next(randomGrotto.Count)] & 0xFCFF, modifyOld: true);
-                //winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: 0x4000, modifyOld:true);
-                winterVillage.Maps[0].Actors[2].Position = new vec16(504, 365, 800);
+                var newGrotto = winterVillage.Maps[0].Actors[2];
+                newGrotto.ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[seedrng.Next(randomGrotto.Count)] & 0xFCFF, modifyOld: true);
+                newGrotto.Position = new vec16(504, 365, 800);
 
                 var terminafieldScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TerminaField.FileID());
                 var elf6grotto = terminafieldScene.Maps[0].Actors[2];
@@ -674,9 +665,25 @@ namespace MMR.Randomizer
                 ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE214, val: 0x00000000); // 
                 ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE220, val: 0x00000000); //
 
-                // no water restrictions
-                var codeFile = RomData.MMFileList[31].Data;
-                //ReadWriteUtils.Arr_WriteU32(codeFile, Dest: 0x06AEF0, val: 0x00000000); // nop the store byte FF which would disable the buttons
+                if (seedrng.Next() % 10 >= 5)
+                {
+                    // I like secrets
+                    var twinislandsScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TwinIslands.FileID());
+                    //twinislandsScene.Maps[0].Actors[1].Position = new vec16(-583, 140, -20); // place: next to tree, testing
+                    twinislandsScene.Maps[0].Actors[1].Position = new vec16(349, -196, 970); // place: under the ice, sneaky like teh crabb
+                                                                                             //twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x60CB; // set to unk check
+                                                                                             // 300 is back to mountain village
+                                                                                             // 303 is empty, it takes us to mayors office, which might mean we can put an address tehre 
+                    twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x0303; // set to spring goron race?
+                                                                             //twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x7200; // invisible
+
+                    // spring has ONE exit, which means pad space is free realestate
+                    RomUtils.CheckCompressed(GameObjects.Scene.TwinIslands.FileID());
+                    var twinislandsSceneData = RomData.MMFileList[GameObjects.Scene.TwinIslands.FileID()].Data;
+                    twinislandsSceneData[0xD6] = 0xAE;
+                    twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall 
+                }
+
 
                 // for now, remove all form restrictions to see what works and what does not work anymore
                 /*
@@ -709,45 +716,15 @@ namespace MMR.Randomizer
                 }
                 int i = 4; */
             }
-
-            // testing why zrotation can be so broken for grottos
-            /* 
-            var testScene = GameObjects.Scene.TerminaField;
-            var grottoSceneIndex = RomData.SceneList.FindIndex(scene => scene.File == testScene.FileID());
-            var grottoSceneActorAddr = RomData.SceneList[grottoSceneIndex].Maps[0].ActorAddr;
-            int actorNumber = 211;
-            // set actor value
-            //RomData.MMFileList[grottoRoom0FID].Data[grottoSceneActorAddr + (actorNumber * 16) + 1] = 0x55; // set actor to grotto
-            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].ActorEnum = GameObjects.Actor.GrottoHole;
-            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].ActorId = (int)GameObjects.Actor.GrottoHole;
-            //RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Variants[0] = 0x625C; // working, hidden generic grotto with mystery woods grotto chest
-            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Variants[0] = 0x8200; // hidden jgrotto
-
-            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Rotation.z = 0x0200; // ignored if top nibble is set to > 0
-            // */
-
-            // I like secrets
-            var twinislandsScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TwinIslands.FileID());
-            //twinislandsScene.Maps[0].Actors[1].Position = new vec16(-583, 140, -20); // place: next to tree, testing
-            twinislandsScene.Maps[0].Actors[1].Position = new vec16(349, -196, 970); // place: under the ice, sneaky like teh crabb
-            //twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x60CB; // set to unk check
-            // 300 is back to mountain village
-            // 303 is empty, it takes us to mayors office, which might mean we can put an address tehre 
-            twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x0303; // set to spring goron race?
-            //twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x7200; // invisible
-
-            // spring has ONE exit, which means pad space is free realestate
-            RomUtils.CheckCompressed(GameObjects.Scene.TwinIslands.FileID());
-            var twinislandsSceneData = RomData.MMFileList[GameObjects.Scene.TwinIslands.FileID()].Data;
-            twinislandsSceneData[0xD6] = 0xAE;
-            twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall 
+          
 
             // attempt faster breman march, testing
             //glabel D_8085E5A0
             // 030B10 8085E5A0 3ECCCCCD  .float 0.4
             RomUtils.CheckCompressed(38);
             var playerCodeFile = RomData.MMFileList[38].Data;
-            ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x030B10, val: 0x40000000); // change to 2.0, double running speed
+            // 0x40000000, 
+            ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x030B10, val: 0x3FF33333); // change to 1.9, almost double running speed
 
             // can we remove an object from ikana to increase object budget to have more stuff?
             var ikanaScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaCanyon.FileID());
