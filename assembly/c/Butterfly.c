@@ -3,10 +3,7 @@
 
 const static u16 sBaseGiIndex = 0x4D1;
 
-ActorEnElf* Butterfly_FairySpawn(ActorEnButte* actor, GlobalContext* ctxt, s16 actorId, f32 posX, f32 posY, f32 posZ, s16 rotX,
-                   s16 rotY, s16 rotZ, s32 params) {
-    ActorEnElf* fairy = (ActorEnElf*)z2_SpawnActor(&ctxt->actorCtx, ctxt, actorId, posX, posY, posZ, rotX, rotY, rotZ, params);
-
+u16 Bufferfly_GetGiIndex(ActorEnButte* actor, GlobalContext* ctxt) {
     u16 giIndex = 0;
 
     switch (ctxt->sceneNum) {
@@ -44,6 +41,15 @@ ActorEnElf* Butterfly_FairySpawn(ActorEnButte* actor, GlobalContext* ctxt, s16 a
             giIndex = sBaseGiIndex + 7;
             break;
     }
+
+    return giIndex;
+}
+
+ActorEnElf* Butterfly_FairySpawn(ActorEnButte* actor, GlobalContext* ctxt, s16 actorId, f32 posX, f32 posY, f32 posZ, s16 rotX,
+                   s16 rotY, s16 rotZ, s32 params) {
+    ActorEnElf* fairy = (ActorEnElf*)z2_SpawnActor(&ctxt->actorCtx, ctxt, actorId, posX, posY, posZ, rotX, rotY, rotZ, params);
+
+    u16 giIndex = Bufferfly_GetGiIndex(actor, ctxt);
 
     if (giIndex > 0) {
         Rupee_CheckAndSetGiIndex(&fairy->base, ctxt, giIndex);

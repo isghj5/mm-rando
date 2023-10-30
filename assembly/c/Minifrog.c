@@ -12,6 +12,13 @@ static u16 giIndices[] = {
     0, 0x466, 0x46D, 0x46F, 0x473
 };
 
+u16 Minifrog_GetGiIndex(ActorEnMinifrog* this, GlobalContext* ctxt) {
+    if (this->frogIndex > 0 && this->frogIndex < ARRAY_COUNT(giIndices)) {
+        return giIndices[this->frogIndex];
+    }
+    return 0;
+}
+
 void Minifrog_GiveReward(Actor* actor, GlobalContext* ctxt, s16 frogIndex) {
     if (frogIndex <= 0 || frogIndex >= ARRAY_COUNT(giIndices)) {
         return;

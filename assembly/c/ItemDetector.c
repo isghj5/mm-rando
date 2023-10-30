@@ -6,6 +6,9 @@
 #include "Scopecoin.h"
 #include "SoftSoilPrize.h"
 #include "KeatonGrassCluster.h"
+#include "GossipStone.h"
+#include "Minifrog.h"
+#include "Butterfly.h"
 
 #define SkulltulaSoundTimerPtr(actor) ((s8*)(&actor->shape.pad16))
 
@@ -116,6 +119,9 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             ProcessActorGiIndex(actor, ctxt, 0x43); // Pictograph Box
             ProcessActorGiIndex(actor, ctxt, 0xA8); // Boat Archery
             break;
+        case ACTOR_EN_ELF: // Fairy
+            ProcessActorGiIndex(actor, ctxt, Rupee_GetGiIndex(actor));
+            break;
         case ACTOR_EN_ELFORG: // Stray Fairy
             if (StrayFairyGivesItem(actor, ctxt)) {
                 if ((actor->params & 0xF) == 3) {
@@ -145,10 +151,16 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
         case ACTOR_EN_MA4: // Romani
             ProcessActorGiIndex(actor, ctxt, 0x60);
             ProcessActorGiIndex(actor, ctxt, 0x71);
+            ProcessActorGiIndex(actor, ctxt, 0x454); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x46B); // Notebook: Romani's Game
+            ProcessActorGiIndex(actor, ctxt, 0x46C); // Notebook: Aliens
             break;
         case ACTOR_EN_GK: // Goron Elder's Son
             ProcessActorGiIndex(actor, ctxt, 0x6A);
             ProcessActorGiIndex(actor, ctxt, 0x74);
+            break;
+        case ACTOR_EN_JG: // Goron Elder
+            ProcessActorGiIndex(actor, ctxt, 0x44E);
             break;
         case ACTOR_EN_AZ: // Beaver Bros
             ProcessActorGiIndex(actor, ctxt, 0x5A);
@@ -157,9 +169,17 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
         case ACTOR_EN_AL: // Madame Aroma
             ProcessActorGiIndex(actor, ctxt, 0x6F);
             ProcessActorGiIndex(actor, ctxt, 0x8F);
+            ProcessActorGiIndex(actor, ctxt, 0x457); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x472); // Notebook: Letter to Mama
+            ProcessActorGiIndex(actor, ctxt, 0x47B); // Notebook: Kafei's Mask
+            break;
+        case ACTOR_EN_TOTO: // Toto
+            ProcessActorGiIndex(actor, ctxt, 0x458); // Notebook Meeting
             break;
         case ACTOR_EN_BOMJIMA: // Bomber Jim
             ProcessActorGiIndex(actor, ctxt, 0x50);
+            ProcessActorGiIndex(actor, ctxt, 0x44F); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x474); // Notebook: Hide and Seed
             break;
         case ACTOR_EN_KBT: // Zubora
             ProcessActorGiIndex(actor, ctxt, 0x38);
@@ -220,13 +240,22 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
                     break;
             }
             break;
-        case ACTOR_EN_AN: // Anju
-            if (gSaveContext.perm.day%5 == 1 && gSaveContext.perm.time < 0xAC68) {
-                ProcessActorGiIndex(actor, ctxt, 0xA0); // Room Key
+        case ACTOR_EN_AN:; // Anju
+            bool anjuIsDrawn = *(((u8*)actor)+0x200) || *(((u32*)actor)+0x3B0);
+            if (anjuIsDrawn) {
+                if (gSaveContext.perm.day%5 == 1 && gSaveContext.perm.time < 0xAC68) {
+                    ProcessActorGiIndex(actor, ctxt, 0xA0); // Room Key
+                }
+                // TODO specify circumstances
+                ProcessActorGiIndex(actor, ctxt, 0xAA); // Letter to Kafei
+                ProcessActorGiIndex(actor, ctxt, 0x85); // Couple's Mask
+                ProcessActorGiIndex(actor, ctxt, 0x450); // Notebook Meeting
+                ProcessActorGiIndex(actor, ctxt, 0x463); // Notebook: Inn Reservation
+                ProcessActorGiIndex(actor, ctxt, 0x464); // Notebook: Setting up Midnight Meeting
+                ProcessActorGiIndex(actor, ctxt, 0x465); // Notebook: Midnight Meeting
+                ProcessActorGiIndex(actor, ctxt, 0x469); // Notebook: Deliver the Pendant of Memories
+                ProcessActorGiIndex(actor, ctxt, 0x481); // Notebook: Couple's Mask
             }
-            // TODO specify circumstances
-            ProcessActorGiIndex(actor, ctxt, 0xAA); // Letter to Kafei
-            ProcessActorGiIndex(actor, ctxt, 0x85); // Couple's Mask
             break;
         case ACTOR_EN_IG: // Link the Goron
             if (gSaveContext.perm.day%5 == 1 && gSaveContext.perm.time >= 0xAC68) {
@@ -234,41 +263,68 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             }
             break;
         case ACTOR_EN_TEST3: // Kafei
-            ProcessActorGiIndex(actor, ctxt, 0x85); // Couple's Mask
-            ProcessActorGiIndex(actor, ctxt, 0xAB); // Pendant of Memories
-            // TODO only while wearing Keaton Mask
-            ProcessActorGiIndex(actor, ctxt, 0x80); // Keaton Mask
+            if (actor->draw) {
+                ProcessActorGiIndex(actor, ctxt, 0x85); // Couple's Mask
+                ProcessActorGiIndex(actor, ctxt, 0xAB); // Pendant of Memories
+                // TODO only while wearing Keaton Mask
+                ProcessActorGiIndex(actor, ctxt, 0x80); // Keaton Mask
+                ProcessActorGiIndex(actor, ctxt, 0x451); // Notebook Meeting
+                ProcessActorGiIndex(actor, ctxt, 0x468); // Notebook: Receive Pendant
+                ProcessActorGiIndex(actor, ctxt, 0x481); // Notebook: Couple's Mask
+            }
+            break;
+        case ACTOR_OBJ_NOZOKI:; // Sakon's Hideout Objects
+            bool isSunMask = *(((u8*)actor)+0x15C) == 1;
+            if (isSunMask) {
+                ProcessActorGiIndex(actor, ctxt, 0x46A); // Notebook: Escaping Sakon's Hideout
+            }
             break;
         case ACTOR_EN_FSN: // Curiosity Shop Man
             if (actor->params == 1) { // Back Room
                 ProcessActorGiIndex(actor, ctxt, 0xA1); // Letter to Mama
                 ProcessActorGiIndex(actor, ctxt, 0x80); // Keaton Mask
+                ProcessActorGiIndex(actor, ctxt, 0x470); // Notebook: Keaton Mask
+                ProcessActorGiIndex(actor, ctxt, 0x471); // Notebook: Letter to Mama
             } else {
                 ProcessActorGiIndex(actor, ctxt, 0x1C7);
                 ProcessActorGiIndex(actor, ctxt, 0x1C8);
                 ProcessActorGiIndex(actor, ctxt, 0x1C9);
                 ProcessActorGiIndex(actor, ctxt, 0x1CA);
             }
+            ProcessActorGiIndex(actor, ctxt, 0x452); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x47C); // Notebook: All-Night Mask Purchase
             break;
         case ACTOR_EN_DT: // Mayor
             ProcessActorGiIndex(actor, ctxt, 0x03);
+            ProcessActorGiIndex(actor, ctxt, 0x456); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x475); // Notebook Reward
             break;
         case ACTOR_EN_PM:; // Postman
             u8 postmanIsDrawn = *(((u8*)actor)+0x258);
             if (postmanIsDrawn) {
                 ProcessActorGiIndex(actor, ctxt, 0xCE);
                 ProcessActorGiIndex(actor, ctxt, 0x84);
+                ProcessActorGiIndex(actor, ctxt, 0x45A); // Notebook Meeting
+                ProcessActorGiIndex(actor, ctxt, 0x47A); // Notebook: Postman's Game
+                ProcessActorGiIndex(actor, ctxt, 0x480); // Notebook: Freedom
             }
             break;
         case ACTOR_EN_RZ: // Rosa Sisters
             ProcessActorGiIndex(actor, ctxt, 0x2B);
+            ProcessActorGiIndex(actor, ctxt, 0x45B); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x476); // Notebook Reward
             break;
         case ACTOR_EN_BJT: // Toilet Hand
             ProcessActorGiIndex(actor, ctxt, 0x2C);
+            ProcessActorGiIndex(actor, ctxt, 0x45C); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x477); // Notebook Reward
             break;
         case ACTOR_EN_NB: // Anju's Grandmother
             ProcessActorGiIndex(actor, ctxt, 0x2D);
             ProcessActorGiIndex(actor, ctxt, 0x2F);
+            ProcessActorGiIndex(actor, ctxt, 0x45D); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x478); // Notebook: Short Story
+            ProcessActorGiIndex(actor, ctxt, 0x479); // Notebook: Long Story
             break;
         case ACTOR_EN_KUSA2: // Keaton Grass
             if (!(actor->params & 1)) { // Not grass, but the grouping
@@ -300,11 +356,13 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             break;
         case ACTOR_EN_PST: // Postbox
             ProcessActorGiIndex(actor, ctxt, 0xA2);
+            ProcessActorGiIndex(actor, ctxt, 0x467); // Notebook: Depositing the Letter to Kafei
             break;
         case ACTOR_EN_GS: // Gossip Stone
             if (actor->params == 0x1800) {
                 ProcessActorGiIndex(actor, ctxt, 0xA3);
             }
+            ProcessActorGiIndex(actor, ctxt, GossipStone_GetGiIndex((ActorEnGs*)actor, ctxt));
             break;
         case ACTOR_EN_SCOPENUTS: // Business Scrub
             if (actor->params == 0x1F) {
@@ -316,10 +374,11 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             ProcessActorGiIndex(actor, ctxt, 0x188);
             ProcessActorGiIndex(actor, ctxt, 0x18F);
             break;
-        case ACTOR_EN_MINIFROG: // Frog
-        case ACTOR_EN_PAMETFROG: // Gekko
-            // TODO check if Gekko in GBT works
-            ProcessActorGiIndex(actor, ctxt, 0xAC);
+        case ACTOR_EN_PAMETFROG: // Gekko in WFT
+            ProcessActorGiIndex(actor, ctxt, 0x466);
+            break;
+        case ACTOR_EN_BIGSLIME: // Gekko in GBT
+            ProcessActorGiIndex(actor, ctxt, 0x46D);
             break;
         case ACTOR_EN_OT: // Seahorse
             ProcessActorGiIndex(actor, ctxt, 0xAE);
@@ -349,6 +408,8 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             break;
         case ACTOR_EN_BABA: // Bomb Shop Proprietor's Mother
             ProcessActorGiIndex(actor, ctxt, 0x8D);
+            ProcessActorGiIndex(actor, ctxt, 0x453); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x482); // Notebook Reward
             if (ctxt->sceneNum == SCENE_BACKTOWN && (gSaveContext.perm.entrance.value != 0xD670 || gSaveContext.perm.weekEventReg.bytes[33] & 8)) {
                 ProcessActorGiIndex(actor, ctxt, 0x1C); // Big Bomb Bag
             }
@@ -361,12 +422,18 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             break;
         case ACTOR_EN_STONE_HEISHI: // Shiro
             ProcessActorGiIndex(actor, ctxt, 0x8B);
+            ProcessActorGiIndex(actor, ctxt, 0x461); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x484); // Notebook Reward
             break;
         case ACTOR_EN_GURUGURU: // Guru Guru
             ProcessActorGiIndex(actor, ctxt, 0x8C);
+            ProcessActorGiIndex(actor, ctxt, 0x462); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x485); // Notebook Reward
             break;
         case ACTOR_EN_HS: // Grog
             ProcessActorGiIndex(actor, ctxt, 0x7F);
+            ProcessActorGiIndex(actor, ctxt, 0x45F); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x47D); // Notebook Reward
             break;
         case ACTOR_EN_GEG: // Hungry Goron
             ProcessActorGiIndex(actor, ctxt, 0x88);
@@ -376,12 +443,18 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             break;
         case ACTOR_EN_MA_YTO: // Cremia
             ProcessActorGiIndex(actor, ctxt, 0x82);
+            ProcessActorGiIndex(actor, ctxt, 0x455); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x46E); // Notebook: Protect Milk Delivery
             break;
         case ACTOR_EN_GM: // Gorman
             ProcessActorGiIndex(actor, ctxt, 0x83);
+            ProcessActorGiIndex(actor, ctxt, 0x459); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x47F); // Notebook Reward
             break;
         case ACTOR_EN_YB: // Kamaro
             ProcessActorGiIndex(actor, ctxt, 0x89);
+            ProcessActorGiIndex(actor, ctxt, 0x45E); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x483); // Notebook Reward
             break;
         case ACTOR_EN_HG: // Pamela's Father
         case ACTOR_EN_HGO: // Pamela's Father
@@ -390,6 +463,8 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
         case ACTOR_EN_IN: // Gorman Bros
             ProcessActorGiIndex(actor, ctxt, 0x81);
             ProcessActorGiIndex(actor, ctxt, 0x1A0);
+            ProcessActorGiIndex(actor, ctxt, 0x460); // Notebook Meeting
+            ProcessActorGiIndex(actor, ctxt, 0x47E); // Notebook Reward
             break;
         case ACTOR_EN_GG: // Darmani's Ghost
         case ACTOR_EN_GG2: // Darmani's Ghost
@@ -667,6 +742,17 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             break;
         case ACTOR_DM_HINA: // Boss Remains
             ProcessActorGiIndex(actor, ctxt, 0x448 + actor->params);
+            break;
+        case ACTOR_EN_MINIFROG:; // Small Frog
+            ActorEnMinifrog* minifrog = (ActorEnMinifrog*)actor;
+            if (minifrog->frogIndex == 0) {
+                ProcessActorGiIndex(actor, ctxt, 0xAC); // Frog Choir
+            } else {
+                ProcessActorGiIndex(actor, ctxt, Minifrog_GetGiIndex(minifrog, ctxt));
+            }
+            break;
+        case ACTOR_EN_BUTTE: // Butterfly
+            ProcessActorGiIndex(actor, ctxt, Bufferfly_GetGiIndex((ActorEnButte*)actor, ctxt));
             break;
         default:
             *SkulltulaSoundTimerPtr(actor) = -1;
