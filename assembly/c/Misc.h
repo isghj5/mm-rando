@@ -64,9 +64,9 @@ typedef struct {
     u32 fewerHealthDrops    : 1;
     u32 ironGoron           : 1;
     u32 easyFrameByFrame    : 1;
-    //u32 fairyMaskShimmer    : 1;
-    //u32 skullTokenSounds    : 1;
-    //u32                     : 30;
+    u32 fairyMaskShimmer    : 1;
+    u32 skullTokenSounds    : 1;
+    u32                     : 30;
 } MiscFlags;
 
 typedef union {
@@ -134,12 +134,12 @@ struct MiscConfig {
     /* 0x04 */ u32 version;
     /* 0x08 */ MiscHash hash;
     /* 0x18 */ MiscFlags flags;
-    /* 0x1C */ MiscInternal internal;
-    /* 0x20 */ MiscSpeedups speedups;
-    /* 0x24 */ MiscShorts shorts;
-    /* 0x28 */ MiscBytes MMRbytes;
-    /* 0x2C */ MiscDrawFlags drawFlags;
-    /* 0x30 */ MiscSmithyModel smithyModels[10];
+    /* 0x20 */ MiscInternal internal;
+    /* 0x24 */ MiscSpeedups speedups;
+    /* 0x28 */ MiscShorts shorts;
+    /* 0x2C */ MiscBytes MMRbytes;
+    /* 0x30 */ MiscDrawFlags drawFlags;
+    /* 0x34 */ MiscSmithyModel smithyModels[10];
 }; // size = 0x34
 
 extern struct MiscConfig MISC_CONFIG;

@@ -3,7 +3,6 @@
 #include "MMR.h"
 #include "Items.h"
 #include "BaseRupee.h"
-#include "Item00.h"
 #include "Scopecoin.h"
 #include "SoftSoilPrize.h"
 #include "KeatonGrassCluster.h"
@@ -472,7 +471,7 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
                 if (actor->params & 0x3F == 0x11) { // Stray Fairy
                     ProcessStrayFairyFlag(actor, ctxt, objCombFlag);
                 } else {
-                    ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(objCombFlag));
+                    ProcessActorGiIndex(actor, ctxt, Rupee_CollectableFlagToGiIndex(objCombFlag));
                 }
             }
             break;
@@ -547,7 +546,7 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
                 if (actor->params & 0x3F == 0x11) { // Stray Fairy
                     ProcessStrayFairyFlag(actor, ctxt, tsuboFlag);
                 } else {
-                    ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(tsuboFlag));
+                    ProcessActorGiIndex(actor, ctxt, Rupee_CollectableFlagToGiIndex(tsuboFlag));
                 }
             }
             break;
@@ -562,7 +561,7 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
                 if (actor->params & 0x3F == 0x11) { // Stray Fairy
                     ProcessStrayFairyFlag(actor, ctxt, kibako2Flag);
                 } else {
-                    ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(kibako2Flag));
+                    ProcessActorGiIndex(actor, ctxt, Rupee_CollectableFlagToGiIndex(kibako2Flag));
                 }
             }
             break;
@@ -595,7 +594,7 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
         case ACTOR_EN_KUSA: // Grass
             if (actor->params & 3 == 3) {
                 u16 kusaFlag = (actor->params >> 8) & 0x7F;
-                ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(kusaFlag));
+                ProcessActorGiIndex(actor, ctxt, Rupee_CollectableFlagToGiIndex(kusaFlag));
             }
             break;
         case ACTOR_OBJ_SNOWBALL: // Large Snowball
@@ -607,7 +606,7 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             if (actor->params & 0x3F == 0x11) { // Stray Fairy
                 ProcessStrayFairyFlag(actor, ctxt, collectibleFlag);
             } else {
-                ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(collectibleFlag));
+                ProcessActorGiIndex(actor, ctxt, Rupee_CollectableFlagToGiIndex(collectibleFlag));
             }
             break;
         case ACTOR_EN_INVISIBLE_RUPPE:; // Invisible Rupee
@@ -661,7 +660,7 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             break;
         case ACTOR_EN_ISHI:; // Small Rock
             u16 ishiFlag = (actor->params >> 9) & 0x7F;
-            ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(ishiFlag));
+            ProcessActorGiIndex(actor, ctxt, Rupee_CollectableFlagToGiIndex(ishiFlag));
             break;
         case ACTOR_EN_TK: // Dampe
             ProcessActorGiIndex(actor, ctxt, 0x446);

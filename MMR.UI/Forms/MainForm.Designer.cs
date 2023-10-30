@@ -163,6 +163,7 @@ namespace MMR.UI.Forms
             this.lLink = new System.Windows.Forms.Label();
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cEasyFrameByFrame = new System.Windows.Forms.CheckBox();
             this.cImprovedCamera = new System.Windows.Forms.CheckBox();
             this.cGossipsTolerant = new System.Windows.Forms.CheckBox();
             this.cQuestItemKeep = new System.Windows.Forms.CheckBox();
@@ -171,6 +172,8 @@ namespace MMR.UI.Forms
             this.lChestGame = new System.Windows.Forms.Label();
             this.cChestGameMinimap = new System.Windows.Forms.ComboBox();
             this.cSaferGlitches = new System.Windows.Forms.CheckBox();
+            this.cSkulltulaTokenSounds = new System.Windows.Forms.CheckBox();
+            this.cFairyMaskShimmer = new System.Windows.Forms.CheckBox();
             this.cInvisSparkle = new System.Windows.Forms.CheckBox();
             this.cFillWallet = new System.Windows.Forms.CheckBox();
             this.cTargetHealth = new System.Windows.Forms.CheckBox();
@@ -261,9 +264,6 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cEasyFrameByFrame = new System.Windows.Forms.CheckBox();
-            this.cFairyMaskShimmer = new System.Windows.Forms.CheckBox();
-            this.cSkulltulaTokenSounds = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -2020,10 +2020,22 @@ namespace MMR.UI.Forms
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
             // 
+            // cEasyFrameByFrame
+            // 
+            this.cEasyFrameByFrame.AutoSize = true;
+            this.cEasyFrameByFrame.Location = new System.Drawing.Point(10, 267);
+            this.cEasyFrameByFrame.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cEasyFrameByFrame.Name = "cEasyFrameByFrame";
+            this.cEasyFrameByFrame.Size = new System.Drawing.Size(137, 19);
+            this.cEasyFrameByFrame.TabIndex = 51;
+            this.cEasyFrameByFrame.Text = "Easy Frame By Frame";
+            this.cEasyFrameByFrame.UseVisualStyleBackColor = true;
+            this.cEasyFrameByFrame.CheckedChanged += new System.EventHandler(this.cEasyFrameByFrame_CheckedChanged);
+            // 
             // cImprovedCamera
             // 
             this.cImprovedCamera.AutoSize = true;
-            this.cImprovedCamera.Location = new System.Drawing.Point(10, 265);
+            this.cImprovedCamera.Location = new System.Drawing.Point(10, 245);
             this.cImprovedCamera.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cImprovedCamera.Name = "cImprovedCamera";
             this.cImprovedCamera.Size = new System.Drawing.Size(121, 19);
@@ -2035,7 +2047,7 @@ namespace MMR.UI.Forms
             // cGossipsTolerant
             // 
             this.cGossipsTolerant.AutoSize = true;
-            this.cGossipsTolerant.Location = new System.Drawing.Point(172, 289);
+            this.cGossipsTolerant.Location = new System.Drawing.Point(172, 267);
             this.cGossipsTolerant.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cGossipsTolerant.Name = "cGossipsTolerant";
             this.cGossipsTolerant.Size = new System.Drawing.Size(140, 19);
@@ -2048,7 +2060,7 @@ namespace MMR.UI.Forms
             // 
             this.cQuestItemKeep.AutoSize = true;
             this.cQuestItemKeep.BackColor = System.Drawing.Color.Transparent;
-            this.cQuestItemKeep.Location = new System.Drawing.Point(172, 193);
+            this.cQuestItemKeep.Location = new System.Drawing.Point(172, 179);
             this.cQuestItemKeep.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cQuestItemKeep.Name = "cQuestItemKeep";
             this.cQuestItemKeep.Size = new System.Drawing.Size(162, 19);
@@ -2060,7 +2072,7 @@ namespace MMR.UI.Forms
             // cUpdateNpcText
             // 
             this.cUpdateNpcText.AutoSize = true;
-            this.cUpdateNpcText.Location = new System.Drawing.Point(172, 97);
+            this.cUpdateNpcText.Location = new System.Drawing.Point(172, 91);
             this.cUpdateNpcText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cUpdateNpcText.Name = "cUpdateNpcText";
             this.cUpdateNpcText.Size = new System.Drawing.Size(115, 19);
@@ -2072,7 +2084,7 @@ namespace MMR.UI.Forms
             // cAddBombchuDrops
             // 
             this.cAddBombchuDrops.AutoSize = true;
-            this.cAddBombchuDrops.Location = new System.Drawing.Point(172, 265);
+            this.cAddBombchuDrops.Location = new System.Drawing.Point(172, 245);
             this.cAddBombchuDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cAddBombchuDrops.Name = "cAddBombchuDrops";
             this.cAddBombchuDrops.Size = new System.Drawing.Size(137, 19);
@@ -2112,7 +2124,7 @@ namespace MMR.UI.Forms
             // cSaferGlitches
             // 
             this.cSaferGlitches.AutoSize = true;
-            this.cSaferGlitches.Location = new System.Drawing.Point(10, 241);
+            this.cSaferGlitches.Location = new System.Drawing.Point(10, 223);
             this.cSaferGlitches.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cSaferGlitches.Name = "cSaferGlitches";
             this.cSaferGlitches.Size = new System.Drawing.Size(97, 19);
@@ -2121,10 +2133,34 @@ namespace MMR.UI.Forms
             this.cSaferGlitches.UseVisualStyleBackColor = true;
             this.cSaferGlitches.CheckedChanged += new System.EventHandler(this.cSaferGlitches_CheckedChanged);
             // 
+            // cSkulltulaTokenSounds
+            // 
+            this.cSkulltulaTokenSounds.AutoSize = true;
+            this.cSkulltulaTokenSounds.Location = new System.Drawing.Point(172, 311);
+            this.cSkulltulaTokenSounds.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSkulltulaTokenSounds.Name = "cSkulltulaTokenSounds";
+            this.cSkulltulaTokenSounds.Size = new System.Drawing.Size(147, 19);
+            this.cSkulltulaTokenSounds.TabIndex = 44;
+            this.cSkulltulaTokenSounds.Text = "Detect Skulltula Tokens";
+            this.cSkulltulaTokenSounds.UseVisualStyleBackColor = true;
+            this.cSkulltulaTokenSounds.CheckedChanged += new System.EventHandler(this.cSkulltulaTokenSounds_CheckedChanged);
+            // 
+            // cFairyMaskShimmer
+            // 
+            this.cFairyMaskShimmer.AutoSize = true;
+            this.cFairyMaskShimmer.Location = new System.Drawing.Point(172, 289);
+            this.cFairyMaskShimmer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFairyMaskShimmer.Name = "cFairyMaskShimmer";
+            this.cFairyMaskShimmer.Size = new System.Drawing.Size(125, 19);
+            this.cFairyMaskShimmer.TabIndex = 43;
+            this.cFairyMaskShimmer.Text = "Detect Stray Fairies";
+            this.cFairyMaskShimmer.UseVisualStyleBackColor = true;
+            this.cFairyMaskShimmer.CheckedChanged += new System.EventHandler(this.cFairyMaskShimmer_CheckedChanged);
+            // 
             // cInvisSparkle
             // 
             this.cInvisSparkle.AutoSize = true;
-            this.cInvisSparkle.Location = new System.Drawing.Point(10, 217);
+            this.cInvisSparkle.Location = new System.Drawing.Point(10, 201);
             this.cInvisSparkle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cInvisSparkle.Name = "cInvisSparkle";
             this.cInvisSparkle.Size = new System.Drawing.Size(147, 19);
@@ -2136,7 +2172,7 @@ namespace MMR.UI.Forms
             // cFillWallet
             // 
             this.cFillWallet.AutoSize = true;
-            this.cFillWallet.Location = new System.Drawing.Point(10, 193);
+            this.cFillWallet.Location = new System.Drawing.Point(10, 179);
             this.cFillWallet.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFillWallet.Name = "cFillWallet";
             this.cFillWallet.Size = new System.Drawing.Size(139, 19);
@@ -2148,7 +2184,7 @@ namespace MMR.UI.Forms
             // cTargetHealth
             // 
             this.cTargetHealth.AutoSize = true;
-            this.cTargetHealth.Location = new System.Drawing.Point(10, 169);
+            this.cTargetHealth.Location = new System.Drawing.Point(10, 157);
             this.cTargetHealth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cTargetHealth.Name = "cTargetHealth";
             this.cTargetHealth.Size = new System.Drawing.Size(116, 19);
@@ -2160,7 +2196,7 @@ namespace MMR.UI.Forms
             // cLenientGoronSpikes
             // 
             this.cLenientGoronSpikes.AutoSize = true;
-            this.cLenientGoronSpikes.Location = new System.Drawing.Point(10, 145);
+            this.cLenientGoronSpikes.Location = new System.Drawing.Point(10, 135);
             this.cLenientGoronSpikes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cLenientGoronSpikes.Name = "cLenientGoronSpikes";
             this.cLenientGoronSpikes.Size = new System.Drawing.Size(137, 19);
@@ -2172,7 +2208,7 @@ namespace MMR.UI.Forms
             // cImprovedPictobox
             // 
             this.cImprovedPictobox.AutoSize = true;
-            this.cImprovedPictobox.Location = new System.Drawing.Point(10, 121);
+            this.cImprovedPictobox.Location = new System.Drawing.Point(10, 113);
             this.cImprovedPictobox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cImprovedPictobox.Name = "cImprovedPictobox";
             this.cImprovedPictobox.Size = new System.Drawing.Size(127, 19);
@@ -2184,7 +2220,7 @@ namespace MMR.UI.Forms
             // cElegySpeedups
             // 
             this.cElegySpeedups.AutoSize = true;
-            this.cElegySpeedups.Location = new System.Drawing.Point(172, 241);
+            this.cElegySpeedups.Location = new System.Drawing.Point(172, 223);
             this.cElegySpeedups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cElegySpeedups.Name = "cElegySpeedups";
             this.cElegySpeedups.Size = new System.Drawing.Size(107, 19);
@@ -2196,7 +2232,7 @@ namespace MMR.UI.Forms
             // cCloseCows
             // 
             this.cCloseCows.AutoSize = true;
-            this.cCloseCows.Location = new System.Drawing.Point(10, 97);
+            this.cCloseCows.Location = new System.Drawing.Point(10, 91);
             this.cCloseCows.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cCloseCows.Name = "cCloseCows";
             this.cCloseCows.Size = new System.Drawing.Size(87, 19);
@@ -2208,7 +2244,7 @@ namespace MMR.UI.Forms
             // cArrowCycling
             // 
             this.cArrowCycling.AutoSize = true;
-            this.cArrowCycling.Location = new System.Drawing.Point(172, 217);
+            this.cArrowCycling.Location = new System.Drawing.Point(172, 201);
             this.cArrowCycling.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cArrowCycling.Name = "cArrowCycling";
             this.cArrowCycling.Size = new System.Drawing.Size(99, 19);
@@ -2220,7 +2256,7 @@ namespace MMR.UI.Forms
             // cFreestanding
             // 
             this.cFreestanding.AutoSize = true;
-            this.cFreestanding.Location = new System.Drawing.Point(172, 73);
+            this.cFreestanding.Location = new System.Drawing.Point(172, 69);
             this.cFreestanding.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFreestanding.Name = "cFreestanding";
             this.cFreestanding.Size = new System.Drawing.Size(139, 19);
@@ -2232,7 +2268,7 @@ namespace MMR.UI.Forms
             // cFastPush
             // 
             this.cFastPush.AutoSize = true;
-            this.cFastPush.Location = new System.Drawing.Point(10, 73);
+            this.cFastPush.Location = new System.Drawing.Point(10, 69);
             this.cFastPush.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFastPush.Name = "cFastPush";
             this.cFastPush.Size = new System.Drawing.Size(132, 19);
@@ -2246,7 +2282,7 @@ namespace MMR.UI.Forms
             this.cQText.AutoSize = true;
             this.cQText.BackColor = System.Drawing.Color.Transparent;
             this.cQText.ForeColor = System.Drawing.Color.Black;
-            this.cQText.Location = new System.Drawing.Point(10, 49);
+            this.cQText.Location = new System.Drawing.Point(10, 47);
             this.cQText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cQText.Name = "cQText";
             this.cQText.Size = new System.Drawing.Size(80, 19);
@@ -2274,7 +2310,7 @@ namespace MMR.UI.Forms
             this.cEponaSword.AutoSize = true;
             this.cEponaSword.BackColor = System.Drawing.Color.Transparent;
             this.cEponaSword.ForeColor = System.Drawing.Color.Black;
-            this.cEponaSword.Location = new System.Drawing.Point(172, 145);
+            this.cEponaSword.Location = new System.Drawing.Point(172, 135);
             this.cEponaSword.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cEponaSword.Name = "cEponaSword";
             this.cEponaSword.Size = new System.Drawing.Size(112, 19);
@@ -2288,7 +2324,7 @@ namespace MMR.UI.Forms
             this.cUpdateChests.AutoSize = true;
             this.cUpdateChests.BackColor = System.Drawing.Color.Transparent;
             this.cUpdateChests.ForeColor = System.Drawing.Color.Black;
-            this.cUpdateChests.Location = new System.Drawing.Point(172, 49);
+            this.cUpdateChests.Location = new System.Drawing.Point(172, 47);
             this.cUpdateChests.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cUpdateChests.Name = "cUpdateChests";
             this.cUpdateChests.Size = new System.Drawing.Size(100, 19);
@@ -2314,7 +2350,7 @@ namespace MMR.UI.Forms
             // 
             this.cQuestItemStorage.AutoSize = true;
             this.cQuestItemStorage.BackColor = System.Drawing.Color.Transparent;
-            this.cQuestItemStorage.Location = new System.Drawing.Point(172, 169);
+            this.cQuestItemStorage.Location = new System.Drawing.Point(172, 157);
             this.cQuestItemStorage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cQuestItemStorage.Name = "cQuestItemStorage";
             this.cQuestItemStorage.Size = new System.Drawing.Size(155, 19);
@@ -2328,7 +2364,7 @@ namespace MMR.UI.Forms
             this.cNoDowngrades.AutoSize = true;
             this.cNoDowngrades.BackColor = System.Drawing.Color.Transparent;
             this.cNoDowngrades.ForeColor = System.Drawing.Color.Black;
-            this.cNoDowngrades.Location = new System.Drawing.Point(172, 121);
+            this.cNoDowngrades.Location = new System.Drawing.Point(172, 113);
             this.cNoDowngrades.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cNoDowngrades.Name = "cNoDowngrades";
             this.cNoDowngrades.Size = new System.Drawing.Size(110, 19);
@@ -3156,42 +3192,6 @@ namespace MMR.UI.Forms
             this.bSkip.UseVisualStyleBackColor = true;
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
-            // 
-            // cEasyFrameByFrame
-            // 
-            this.cEasyFrameByFrame.AutoSize = true;
-            this.cEasyFrameByFrame.Location = new System.Drawing.Point(172, 313);
-            this.cEasyFrameByFrame.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cEasyFrameByFrame.Name = "cEasyFrameByFrame";
-            this.cEasyFrameByFrame.Size = new System.Drawing.Size(137, 19);
-            this.cEasyFrameByFrame.TabIndex = 51;
-            this.cEasyFrameByFrame.Text = "Easy Frame By Frame";
-            this.cEasyFrameByFrame.UseVisualStyleBackColor = true;
-            this.cEasyFrameByFrame.CheckedChanged += new System.EventHandler(this.cEasyFrameByFrame_CheckedChanged);
-            // 
-            // cFairyMaskShimmer
-            // 
-            this.cFairyMaskShimmer.AutoSize = true;
-            this.cFairyMaskShimmer.Location = new System.Drawing.Point(10, 259);
-            this.cFairyMaskShimmer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cFairyMaskShimmer.Name = "cFairyMaskShimmer";
-            this.cFairyMaskShimmer.Size = new System.Drawing.Size(125, 19);
-            this.cFairyMaskShimmer.TabIndex = 43;
-            this.cFairyMaskShimmer.Text = "Detect Stray Fairies";
-            this.cFairyMaskShimmer.UseVisualStyleBackColor = true;
-            this.cFairyMaskShimmer.CheckedChanged += new System.EventHandler(this.cFairyMaskShimmer_CheckedChanged);
-            // 
-            // cSkulltulaTokenSounds
-            // 
-            this.cSkulltulaTokenSounds.AutoSize = true;
-            this.cSkulltulaTokenSounds.Location = new System.Drawing.Point(10, 285);
-            this.cSkulltulaTokenSounds.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cSkulltulaTokenSounds.Name = "cSkulltulaTokenSounds";
-            this.cSkulltulaTokenSounds.Size = new System.Drawing.Size(147, 19);
-            this.cSkulltulaTokenSounds.TabIndex = 44;
-            this.cSkulltulaTokenSounds.Text = "Detect Skulltula Tokens";
-            this.cSkulltulaTokenSounds.UseVisualStyleBackColor = true;
-            this.cSkulltulaTokenSounds.CheckedChanged += new System.EventHandler(this.cSkulltulaTokenSounds_CheckedChanged);
             // 
             // MainForm
             // 

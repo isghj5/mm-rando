@@ -1,8 +1,10 @@
 ﻿using Be.IO;
 using MMR.Common.Extensions;
+using MMR.Common.Utils;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -295,7 +297,7 @@ namespace MMR.Randomizer.Asm
         {
         }
 
-        public MiscFlags(uint flags)
+        public MiscFlags(byte[] flags)
         {
             Load(flags);
         }
@@ -304,69 +306,81 @@ namespace MMR.Randomizer.Asm
         /// Load from a <see cref="uint"/> integer.
         /// </summary>
         /// <param name="flags">Flags integer</param>
-        void Load(uint flags)
+        void Load(byte[] flags)
         {
-            this.CritWiggle = (CritWiggleState)(flags >> 30);
-            this.DrawHash = ((flags >> 29) & 1) == 1;
-            this.FastPush = ((flags >> 28) & 1) == 1;
-            this.OcarinaUnderwater = ((flags >> 27) & 1) == 1;
-            this.QuestItemStorage = ((flags >> 26) & 1) == 1;
-            this.CloseCows = ((flags >> 25) & 1) == 1;
-            this.ArrowCycling = ((flags >> 22) & 1) == 1;
-            this.ContinuousDekuHopping = ((flags >> 19) & 1) == 1;
-            this.ProgressiveUpgrades = ((flags >> 18) & 1) == 1;
-            this.TrapQuirks = ((flags >> 17) & 1) == 1;
-            this.EarlyMikau = ((flags >> 16) & 1) == 1;
-            this.FairyChests = ((flags >> 15) & 1) == 1;
-            this.TargetHealth = ((flags >> 14) & 1) == 1;
-            this.ClimbAnything = ((flags >> 13) & 1) == 1;
-            this.FreeScarecrow = ((flags >> 12) & 1) == 1;
-            this.FillWallet = ((flags >> 11) & 1) == 1;
-            this.AutoInvert = (AutoInvertState)((flags >> 9) & 3);
-            this.HiddenRupeesSparkle = ((flags >> 8) & 1) == 1;
-            this.SaferGlitches = ((flags >> 7) & 1) == 1;
-            this.BombchuDrops = ((flags >> 6) & 1) == 1;
-            this.InstantTransform = ((flags >> 5) & 1) == 1;
-            this.BombArrows = ((flags >> 4) & 1) == 1;
-            this.FewerHealthDrops = ((flags >> 2) & 1) == 1;
-            this.EasyFrameByFrame = ((flags >> 0) & 1) == 1;
+            var bitUnpacker = new BitUnpacker(flags);
+            CritWiggle = (CritWiggleState)bitUnpacker.ReadS32(2);
+            DrawHash = bitUnpacker.ReadBool();
+            FastPush = bitUnpacker.ReadBool();
+            OcarinaUnderwater = bitUnpacker.ReadBool();
+            QuestItemStorage = bitUnpacker.ReadBool();
+            CloseCows = bitUnpacker.ReadBool();
+            bitUnpacker.ReadS32(2); // QuestConsume
+            ArrowCycling = bitUnpacker.ReadBool();
+            bitUnpacker.ReadBool(); // ArrowMagic
+            ElegySpeedup = bitUnpacker.ReadBool();
+            ContinuousDekuHopping = bitUnpacker.ReadBool();
+            ProgressiveUpgrades = bitUnpacker.ReadBool();
+            TrapQuirks = bitUnpacker.ReadBool();
+            EarlyMikau = bitUnpacker.ReadBool();
+            FairyChests = bitUnpacker.ReadBool();
+            TargetHealth = bitUnpacker.ReadBool();
+            ClimbAnything = bitUnpacker.ReadBool();
+            FreeScarecrow = bitUnpacker.ReadBool();
+            FillWallet = bitUnpacker.ReadBool();
+            AutoInvert = (AutoInvertState)bitUnpacker.ReadS32(2);
+            HiddenRupeesSparkle = bitUnpacker.ReadBool();
+            SaferGlitches = bitUnpacker.ReadBool();
+            BombchuDrops = bitUnpacker.ReadBool();
+            InstantTransform = bitUnpacker.ReadBool();
+            BombArrows = bitUnpacker.ReadBool();
+            GiantMaskAnywhere = bitUnpacker.ReadBool();
+            FewerHealthDrops = bitUnpacker.ReadBool();
+            IronGoron = bitUnpacker.ReadBool();
+            EasyFrameByFrame = bitUnpacker.ReadBool();
+            FairyMaskShimmer = bitUnpacker.ReadBool();
+            SkulltulaTokenSounds = bitUnpacker.ReadBool();
         }
 
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
         /// <returns>Integer</returns>
-        public uint ToInt()
+        public byte[] ToByteArray()
         {
-            uint flags = 0;
-            flags |= (((uint)this.CritWiggle) & 3) << 30;
-            flags |= (this.DrawHash ? (uint)1 : 0) << 29;
-            flags |= (this.FastPush ? (uint)1 : 0) << 28;
-            flags |= (this.OcarinaUnderwater ? (uint)1 : 0) << 27;
-            flags |= (this.QuestItemStorage ? (uint)1 : 0) << 26;
-            flags |= (this.CloseCows ? (uint)1 : 0) << 25;
-            flags |= (((uint)this.QuestConsume) & 3) << 23;
-            flags |= (this.ArrowCycling ? (uint)1 : 0) << 22;
-            flags |= (this.ArrowMagic ? (uint)1 : 0) << 21;
-            flags |= (this.ElegySpeedup ? (uint)1 : 0) << 20;
-            flags |= (this.ContinuousDekuHopping ? (uint)1 : 0) << 19;
-            flags |= (this.ProgressiveUpgrades ? (uint)1 : 0) << 18;
-            flags |= (this.TrapQuirks ? (uint)1 : 0) << 17;
-            flags |= (this.EarlyMikau ? (uint)1 : 0) << 16;
-            flags |= (this.FairyChests ? (uint)1 : 0) << 15;
-            flags |= (this.TargetHealth ? (uint)1 : 0) << 14;
-            flags |= (this.ClimbAnything ? (uint)1 : 0) << 13;
-            flags |= (this.FreeScarecrow ? (uint)1 : 0) << 12;
-            flags |= (this.FillWallet ? (uint)1 : 0) << 11;
-            flags |= (((uint)this.AutoInvert) & 3) << 9;
-            flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 8;
-            flags |= (this.SaferGlitches ? (uint)1 : 0) << 7;
-            flags |= (this.BombchuDrops ? (uint)1 : 0) << 6;
-            flags |= (this.InstantTransform ? (uint)1 : 0) << 5;
-            flags |= (this.BombArrows ? (uint)1 : 0) << 4;
-            flags |= (this.FewerHealthDrops ? (uint)1 : 0) << 2;
-            flags |= (this.EasyFrameByFrame ? (uint)1 : 0) << 0;
-            return flags;
+            var bitPacker = new BitPacker();
+            bitPacker.Write((int)CritWiggle, 2);
+            bitPacker.Write(DrawHash);
+            bitPacker.Write(FastPush);
+            bitPacker.Write(OcarinaUnderwater);
+            bitPacker.Write(QuestItemStorage);
+            bitPacker.Write(CloseCows);
+            bitPacker.Write((int)QuestConsume, 2);
+            bitPacker.Write(ArrowCycling);
+            bitPacker.Write(ArrowMagic);
+            bitPacker.Write(ElegySpeedup);
+            bitPacker.Write(ContinuousDekuHopping);
+            bitPacker.Write(ProgressiveUpgrades);
+            bitPacker.Write(TrapQuirks);
+            bitPacker.Write(EarlyMikau);
+            bitPacker.Write(FairyChests);
+            bitPacker.Write(TargetHealth);
+            bitPacker.Write(ClimbAnything);
+            bitPacker.Write(FreeScarecrow);
+            bitPacker.Write(FillWallet);
+            bitPacker.Write((int)AutoInvert, 2);
+            bitPacker.Write(HiddenRupeesSparkle);
+            bitPacker.Write(SaferGlitches);
+            bitPacker.Write(BombchuDrops);
+            bitPacker.Write(InstantTransform);
+            bitPacker.Write(BombArrows);
+            bitPacker.Write(GiantMaskAnywhere);
+            bitPacker.Write(FewerHealthDrops);
+            bitPacker.Write(IronGoron);
+            bitPacker.Write(EasyFrameByFrame);
+            bitPacker.Write(FairyMaskShimmer);
+            bitPacker.Write(SkulltulaTokenSounds);
+            return bitPacker.ToByteArray();
         }
     }
 
@@ -551,7 +565,7 @@ namespace MMR.Randomizer.Asm
     {
         public uint Version;
         public byte[] Hash;
-        public uint Flags;
+        public byte[] Flags;
         public uint InternalFlags;
         public uint Speedups;
         public uint Shorts;
@@ -572,7 +586,7 @@ namespace MMR.Randomizer.Asm
 
                 // Version 0
                 writer.WriteBytes(this.Hash);
-                writer.WriteUInt32(this.Flags);
+                writer.Write(this.Flags);
 
                 // Version 1
                 if (this.Version >= 1)
@@ -688,11 +702,15 @@ namespace MMR.Randomizer.Asm
         {
             var hash = ReadWriteUtils.CopyBytes(this.Hash, 0x10);
 
+            var flags = this.Flags.ToByteArray();
+            var padding = 4 - flags.Length % 4;
+            Array.Resize(ref flags, flags.Length + padding);
+
             return new MiscConfigStruct
             {
                 Version = version,
                 Hash = hash,
-                Flags = this.Flags.ToInt(),
+                Flags = flags,
                 InternalFlags = this.InternalFlags.ToInt(),
                 Speedups = this.Speedups.ToInt(),
                 Shorts = this.Shorts.ToInt(),
