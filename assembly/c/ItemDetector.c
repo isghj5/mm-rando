@@ -241,7 +241,7 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             }
             break;
         case ACTOR_EN_AN:; // Anju
-            bool anjuIsDrawn = *(((u8*)actor)+0x200) || *(((u32*)actor)+0x3B0);
+            bool anjuIsDrawn = *(((u8*)actor)+0x200) || *(u32*)(((u8*)actor)+0x3B0);
             if (anjuIsDrawn) {
                 if (gSaveContext.perm.day%5 == 1 && gSaveContext.perm.time < 0xAC68) {
                     ProcessActorGiIndex(actor, ctxt, 0xA0); // Room Key
@@ -258,8 +258,10 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             }
             break;
         case ACTOR_EN_IG: // Link the Goron
-            if (gSaveContext.perm.day%5 == 1 && gSaveContext.perm.time >= 0xAC68) {
-                ProcessActorGiIndex(actor, ctxt, 0xA0); // Room Key
+            if (*(((u8*)actor)+0x298)) { // scheduleResult
+                if (gSaveContext.perm.day%5 == 1 && gSaveContext.perm.time >= 0xAC68) {
+                    ProcessActorGiIndex(actor, ctxt, 0xA0); // Room Key
+                }
             }
             break;
         case ACTOR_EN_TEST3: // Kafei
@@ -406,12 +408,15 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             ProcessActorGiIndex(actor, ctxt, 0x1C5);
             ProcessActorGiIndex(actor, ctxt, 0x1C6);
             break;
-        case ACTOR_EN_BABA: // Bomb Shop Proprietor's Mother
-            ProcessActorGiIndex(actor, ctxt, 0x8D);
-            ProcessActorGiIndex(actor, ctxt, 0x453); // Notebook Meeting
-            ProcessActorGiIndex(actor, ctxt, 0x482); // Notebook Reward
-            if (ctxt->sceneNum == SCENE_BACKTOWN && (gSaveContext.perm.entrance.value != 0xD670 || gSaveContext.perm.weekEventReg.bytes[33] & 8)) {
-                ProcessActorGiIndex(actor, ctxt, 0x1C); // Big Bomb Bag
+        case ACTOR_EN_BABA:; // Bomb Shop Proprietor's Mother
+            u16 babaFlags = *(u16*)(((u8*)actor) + 0x40A);
+            if (babaFlags & 2) { // visible
+                ProcessActorGiIndex(actor, ctxt, 0x8D);
+                ProcessActorGiIndex(actor, ctxt, 0x453); // Notebook Meeting
+                ProcessActorGiIndex(actor, ctxt, 0x482); // Notebook Reward
+                if (ctxt->sceneNum == SCENE_BACKTOWN && (gSaveContext.perm.entrance.value != 0xD670 || gSaveContext.perm.weekEventReg.bytes[33] & 8) && !(babaFlags & 4)) {
+                    ProcessActorGiIndex(actor, ctxt, 0x1C); // Big Bomb Bag
+                }
             }
             break;
         case ACTOR_EN_SUTTARI:; // Sakon
@@ -447,9 +452,11 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             ProcessActorGiIndex(actor, ctxt, 0x46E); // Notebook: Protect Milk Delivery
             break;
         case ACTOR_EN_GM: // Gorman
-            ProcessActorGiIndex(actor, ctxt, 0x83);
-            ProcessActorGiIndex(actor, ctxt, 0x459); // Notebook Meeting
-            ProcessActorGiIndex(actor, ctxt, 0x47F); // Notebook Reward
+            if (*(((u8*)actor)+0x258)) { // scheduleResult
+                ProcessActorGiIndex(actor, ctxt, 0x83);
+                ProcessActorGiIndex(actor, ctxt, 0x459); // Notebook Meeting
+                ProcessActorGiIndex(actor, ctxt, 0x47F); // Notebook Reward
+            }
             break;
         case ACTOR_EN_YB: // Kamaro
             ProcessActorGiIndex(actor, ctxt, 0x89);
@@ -468,7 +475,6 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             break;
         case ACTOR_EN_GG: // Darmani's Ghost
         case ACTOR_EN_GG2: // Darmani's Ghost
-            // TODO fix Darmani's Ghost checking for Goron Mask in inventory
             ProcessActorGiIndex(actor, ctxt, 0x79);
             break;
         case ACTOR_EN_ZOG: // Mikau
@@ -738,7 +744,9 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             ProcessActorGiIndex(actor, ctxt, Rupee_CollectableFlagToGiIndex(ishiFlag));
             break;
         case ACTOR_EN_TK: // Dampe
-            ProcessActorGiIndex(actor, ctxt, 0x446);
+            if (actor->draw) {
+                ProcessActorGiIndex(actor, ctxt, 0x446);
+            }
             break;
         case ACTOR_DM_HINA: // Boss Remains
             ProcessActorGiIndex(actor, ctxt, 0x448 + actor->params);
