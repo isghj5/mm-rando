@@ -1168,6 +1168,8 @@ namespace MMR.Randomizer.GameObjects
             check: Item.HeartPieceTerminaGossipStones, Item.HeartPieceZoraGrotto, Item.CollectableGrottosOceanHeartPieceGrottoBeehive1)]
         [CheckRestricted(Scene.Grottos, variant: -1,
             check: Item.ChestHotSpringGrottoRedRupee)]
+        [CheckRestricted(Scene.SwampSpiderHouse, variant: -1,
+            check: Item.CollectibleSwampSpiderToken13)]
         // 0x0114-8 are the bombable rocks in hotspring water
         // params: 0x100 is the big bombable one only, no goron punch
         // 0x8000 creates a Good Job jingle when you break it
