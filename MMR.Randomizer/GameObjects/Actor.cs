@@ -704,7 +704,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.DekuShrine, Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.GoronRacetrack,
             Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard, Scene.DampesHouse,
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse,
-            Scene.StockPotInn, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
+            Scene.StockPotInn, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall, Scene.TradingPost,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
             Scene.SouthernSwamp, // dyna crash, remove if we get dyna overload detection working
             Scene.BeneathTheWell, Scene.IkanaGraveyard, Scene.StoneTower)]
@@ -1570,9 +1570,10 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.DekuPalace,
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
             Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
-            Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
+            Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall, 
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
-            Scene.StockPotInn, Scene.BeneathTheWell, Scene.IkanaGraveyard, Scene.StoneTower)]
+            Scene.StockPotInn, Scene.TradingPost,
+            Scene.BeneathTheWell, Scene.IkanaGraveyard, Scene.StoneTower)]
         [SwitchFlagsPlacement(mask: 0xFF, shift: 0)]
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
@@ -2093,8 +2094,9 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
-        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.StoneTower)] // dyna crash
-        UnusedFallingBlocks = 0x114, // Obj_Chikuwa
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.StoneTower, // dyna crash
+            Scene.TradingPost)]  // might block door?
+        UnusedFallingBridge = 0x114, // Obj_Chikuwa
 
         // TODO would not spawn because I mistyped the ID try again
         //[EnemizerEnabled] // wont spawn, just spawns green tatl points but no actual knight
