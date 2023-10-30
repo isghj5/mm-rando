@@ -3313,7 +3313,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(411)]
         [ObjectListIndex(0x1A8)]
-        [CheckRestricted(Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
+        [CheckRestricted(Scene.GoronVillage, variant: -1, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
+        [CheckRestricted(Scene.PathToSnowhead, variant: -1, Item.HeartPieceToSnowhead)]
         [FlyingVariants(0x0)]
         [VariantsWithRoomMax(max:0, variant:0x0)] // invisible, not even seen just looks empty, unless I can move actors to sit ontop of them or something
         [UnkillableAllVariants]
