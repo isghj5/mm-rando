@@ -19,6 +19,8 @@ namespace MMR.DiscordBot.Data
                 }
                 db.CreateTableIfNotExists<GuildModEntity>();
                 db.CreateTableIfNotExists<TournamentChannelEntity>();
+                db.CreateTableIfNotExists<LogChannelEntity>();
+                db.CreateTableIfNotExists<TournamentSeedEntity>();
             }
         }
     }

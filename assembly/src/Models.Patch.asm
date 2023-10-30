@@ -567,3 +567,248 @@
     nop
     nop
     nop
+
+;==================================================================================================
+; Freestanding Models (Mountain Smithy)
+;==================================================================================================
+
+.headersize G_EN_KGY_DELTA
+; Replaces:
+;    lw     t6, 0x002C (sp)
+;    lw     a0, 0x0000 (t6)
+;    jal    0x8012C28C
+;    sw     a0, 0x001C (sp)
+
+.org 0x80B43084
+    lw      t6, 0x0000 (a1)
+    jal     Models_DrawSmithyItem
+    sw      t6, 0x001C (sp)
+    bnez    v0, 0x80B431C0
+
+;==================================================================================================
+; Freestanding Models (Keaton Mask)
+;==================================================================================================
+
+.headersize G_EN_TEST3_DELTA
+
+; After limb functions
+; Replaces:
+;   lb      t4, 0x0d5c (s0)
+;   lw      t5, 0x0060 (sp)
+.org 0x80A414DC
+    jal     Models_DrawKeatonMask_Hook
+    nop
+
+;==================================================================================================
+; Freestanding Models (Pendant of Memories)
+;==================================================================================================
+
+.headersize G_EN_TEST3_DELTA
+
+; Replaces:
+;   lui     t9, 0xDE00
+;   lw      a0, 0x0000 (t7)
+;   lw      v1, 0x02B0 (t7)
+;   lui     t1, 0x0601
+;   addiu   t1, t1, 0xCB60
+;   addiu   t8, v1, 0x0008
+;   sw      t8, 0x02B0 (a0)
+;   sw      t1, 0x0004 (v1)
+;   sw      t9, 0x0000 (v1)
+.org 0x80A41254 ;offset 0x2A74
+    or      a0, s1, r0
+    or      a1, s0, r0
+    jal     Models_DrawPendantOfMemories
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+
+; Replaces:
+;   jal     0x8012697C ;z2_Player_DrawGetItem
+.org 0x80A41510 ; offset 0x2D30
+    jal     Models_DrawPendantInHand
+
+;==================================================================================================
+; Freestanding Models (Don Gero's Mask)
+;==================================================================================================
+
+.headersize G_EN_GEG_DELTA
+
+; Replaces:
+;   lw      t7, 0x0048 (sp)
+;   jal     0x8012C28C
+;   lw      a0, 0x0000 (t7)
+;   lw      t8, 0x0048 (sp)
+;   lui     t0, 0xDE00
+;   lw      a0, 0x0000 (t8)
+;   lw      v1, 0x02B0 (a0)
+;   lui     t1, 0x0600
+;   addiu   t1, t1, 0x4DB0
+;   addiu   t9, v1, 0x0008
+;   sw      t9, 0x02B0 (a0)
+;   sw      t1, 0x0004 (v1)
+;   sw      t0, 0x0000 (v1)
+.org 0x80BB38F4
+    lw      a0, 0x0048 (sp)
+    jal     Models_DrawDonGeroMask
+    or      a1, s0, r0
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+
+;==================================================================================================
+; Freestanding Models (Postman's Hat)
+;==================================================================================================
+
+.headersize G_EN_PM_DELTA
+
+; Replaces:
+;   lw      v0, 0x0000 (a1)
+;   lui     t5, 0x0601
+;   addiu   t5, t5, 0x85C8
+;   addiu   t3, v0, 0x0008
+;   sw      t3, 0x0000 (a1)
+;   sw      t5, 0x0004 (v0)
+;   sw      t4, 0x0000 (v0)
+.org 0x80AF8920
+    addiu   a1, a1, 0xFFF8
+    lui     a2, 0x803E
+    jal     Models_DrawPostmanHat
+    ori     a2, a2, 0x6B20
+    nop
+    nop
+    nop
+
+;==================================================================================================
+; Freestanding Models (Mask of Truth)
+;==================================================================================================
+
+.headersize G_EN_SSH_DELTA ;; Cursed Skulltula Guy
+
+; Set up a matrix for an end of draw function getItem
+; Replaces:
+;   lw      t6, 0x0028 (sp)
+;   lhu     t7, 0x05C2 (t6)
+;   lui     t0, 0xDE00
+;   andi    t8, t7, 0x0020
+;   beqzl   t8, 0x80975F20
+.org 0x80975EE0
+    or      a1, s0, r0
+    jal     Models_SetEnSshMatrix
+    nop
+    lui     t0, 0xDE00
+    beqzl   v0, 0x80975F1C
+
+; Draw a getItem
+; Replaces
+;   lw      ra, 0x0024 (sp)
+;   lw      s0, 0x0020 (sp)
+;   addiu   sp, sp, 0x0038
+;   jr      ra
+;   nop
+.org 0x80975FFC
+    jal     Models_DrawEnSshMaskOfTruth_Hook
+    or      a1, s0, r0
+    lw      ra, 0x0024 (sp)
+    jr      ra
+    addiu   sp, sp, 0x0038
+
+.headersize G_EN_STH_DELTA ;;Healed Skulltula Guy
+
+; Replaces:
+;   lhu     t3, 0x029C (v0)
+;   lui     at, 0x0001
+;   lw      t0, 0x0000 (v1)
+;   andi    t4, t3, 0x0001
+;   beqz    t4, 0x80B6848C
+;   ori     at, at, 0x7D88
+;   lbu     a1, 0x029F (v0)
+;   sw      t0, 0x0020 (sp)
+;   jal     0x8012F668
+;   addu    a0, v1, at
+;   beqz    v0, 0x80B6848C
+;   lw      t0, 0x0020 (sp)
+.org 0x80B68388
+    or      a0, s1, r0
+    jal     Models_DrawEnSthMaskOfTruth
+    or      a1, s0, r0
+    lui     at, 0x0001
+    beqz    v0, 0x80B6848C
+    ori     at, at, 0x7D88
+    lbu     a1, 0x029F (s0)
+    lw      t0, 0x0000 (s1)
+
+.org 0x80B683AC
+    addu    a0, s1, at
+    beqz    v0, 0x80B6848C
+    sw      t0, 0x0020 (sp)
+
+;==================================================================================================
+; Freestanding Models (Garos Mask)
+;==================================================================================================
+
+.headersize G_EN_IN_DELTA
+
+; Toggle head mesh
+; Replaces:
+;   lui     t6, 0x0602
+;   addiu   t6, t6, 0xC528
+;   sw      t6, 0x0000 (a2)
+.org 0x808F654C
+    lui     t6, 0x0602
+    jal     Models_SetEnInHead
+    or      a0, a2, r0
+
+; Set a matrix
+; Replaces:
+;   lw      s0, 0x0070 (sp)
+;   or      a0, a3, r0
+;   sw      a2, 0x0064 (sp)
+;   addiu   a1, s0, 0x04B4
+.org 0x808F6868
+    jal     Models_SetEnInMatrix_Hook
+    addiu   a0, s0, 0x03D0
+
+; Replaces
+;   lw      ra, 0x0024 (sp)
+;   addiu   sp, sp, 0x30
+;   jr      ra
+;   nop
+;   nop
+;   nop
+;   nop
+.org 0x808F6A24
+    or      a0, s1, r0
+    jal     Models_DrawGaroMask
+    or      a1, s0, r0
+    lw      ra, 0x0024 (sp)
+    addiu   sp, sp, 0x30
+    jr      ra
+    nop
+
+;==================================================================================================
+; Freestanding Models (Fairy)
+;==================================================================================================
+
+.headersize G_EN_ELF_DELTA
+
+; + 0x4861B0
+
+; Replaces:
+;   JAL     0x8012C94C
+;   SW      A0, 0x0058 (SP)
+;   LHU     A0, 0x025A (S0)
+.org 0x8040A4E8 + 0x4861B0
+    jal     Models_DrawFairy_Hook
+    sw      a0, 0x0058 (sp)
+    bnez    v0, 0x8040A70C + 0x4861B0

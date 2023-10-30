@@ -44,14 +44,14 @@
             this.label1.Location = new System.Drawing.Point(15, 15);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(429, 108);
+            this.label1.Size = new System.Drawing.Size(429, 127);
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             // 
             // bOK
             // 
             this.bOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.bOK.Location = new System.Drawing.Point(31, 554);
+            this.bOK.Location = new System.Drawing.Point(46, 554);
             this.bOK.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bOK.Name = "bOK";
             this.bOK.Size = new System.Drawing.Size(197, 27);
@@ -63,7 +63,7 @@
             // bCancel
             // 
             this.bCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.bCancel.Location = new System.Drawing.Point(235, 554);
+            this.bCancel.Location = new System.Drawing.Point(250, 554);
             this.bCancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(197, 27);
@@ -77,19 +77,20 @@
             this.tHintPriorities.AutoSize = true;
             this.tHintPriorities.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tHintPriorities.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tHintPriorities.ColumnCount = 6;
+            this.tHintPriorities.ColumnCount = 7;
             this.tHintPriorities.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tHintPriorities.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tHintPriorities.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tHintPriorities.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tHintPriorities.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tHintPriorities.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tHintPriorities.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tHintPriorities.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tHintPriorities.Controls.Add(this.bAddLevel, 3, 0);
             this.tHintPriorities.Location = new System.Drawing.Point(0, 0);
             this.tHintPriorities.Name = "tHintPriorities";
             this.tHintPriorities.RowCount = 1;
             this.tHintPriorities.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tHintPriorities.Size = new System.Drawing.Size(426, 31);
+            this.tHintPriorities.Size = new System.Drawing.Size(459, 31);
             this.tHintPriorities.TabIndex = 4;
             // 
             // bAddLevel
@@ -106,16 +107,16 @@
             // 
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.tHintPriorities);
-            this.panel1.Location = new System.Drawing.Point(15, 126);
+            this.panel1.Location = new System.Drawing.Point(15, 145);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(429, 422);
+            this.panel1.Size = new System.Drawing.Size(461, 403);
             this.panel1.TabIndex = 5;
             // 
             // CustomizeHintPrioritiesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(458, 594);
+            this.ClientSize = new System.Drawing.Size(489, 594);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.bCancel);
             this.Controls.Add(this.bOK);

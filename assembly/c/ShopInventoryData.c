@@ -98,7 +98,7 @@ u8 ShopInventoryData_CheckPurchase(GlobalContext* ctxt, ActorEnGirlA* actor) {
         return 4;
     }
 
-    if (MISC_CONFIG.flags.shopModels) {
+    if (MISC_CONFIG.drawFlags.shopModels) {
         u16 giIndex = MMR_GetNewGiIndex(ctxt, NULL, actor->giIndex, false);
         GetItemEntry* giEntry = MMR_GetGiEntry(giIndex);
         u8 item = giEntry->item;

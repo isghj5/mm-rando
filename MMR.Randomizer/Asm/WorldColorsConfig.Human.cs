@@ -1,4 +1,5 @@
 ﻿using MMR.Randomizer.Extensions;
+using MMR.Randomizer.Models.Settings;
 using SixLabors.ImageSharp.ColorSpaces;
 using SixLabors.ImageSharp.ColorSpaces.Conversion;
 using System;
@@ -68,6 +69,15 @@ namespace MMR.Randomizer.Asm
             Colors.SwordChargeSparksRed = redAdjusted;
 
             static float Increase(float input, float mult = 3f) => Math.Min(input * mult, 1f);
+        }
+
+        void SetWorldColorTunics(CosmeticSettings settings)
+        {
+            Colors.HumanTunic = settings.TunicColors[GameObjects.TransformationForm.Human];
+            Colors.FierceDeityTunic = settings.TunicColors[GameObjects.TransformationForm.FierceDeity];
+            Colors.GoronTunic = settings.TunicColors[GameObjects.TransformationForm.Goron];
+            Colors.ZoraTunic = settings.TunicColors[GameObjects.TransformationForm.Zora];
+            Colors.DekuTunic = settings.TunicColors[GameObjects.TransformationForm.Deku];
         }
     }
 }

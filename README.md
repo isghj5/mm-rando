@@ -1,6 +1,6 @@
 Majora's Mask Randomizer is a Windows application that randomizes item locations, music, and more for Majora's Mask, presenting millions of combinations and new ways to replay the game.
 
-A video tutorial of setting up MMR is found here: https://www.youtube.com/watch?v=D0n829cYzl4
+A video tutorial of setting up MMR is found here: https://www.youtube.com/watch?v=4woEtyg7GyM
 
 Currently the UI is only available on windows, it is broken in wine. The CLI version works if you install dotnet and run the CLI as "dotnet MMR.CLI.dll -input <MM.z64> [-seed *seed*]" but modifying the settings means modifying the settings.json by hand. A replacement webui is in development which will supply a UI on all platforms.
 

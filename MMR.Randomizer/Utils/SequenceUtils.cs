@@ -12,6 +12,7 @@ using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Models;
 using MMR.Common.Utils;
 using MMR.Randomizer.Asm;
+using System.Text.RegularExpressions;
 
 namespace MMR.Randomizer.Utils
 {
@@ -28,8 +29,8 @@ namespace MMR.Randomizer.Utils
                                                                    0x72, 0x0E, 0x29, 0x2D,
                                                                    0x2E, 0x7B, 0x73, 0x70, 0x7D, 0x50 };
 
-        public static int MAX_BGM_BUDGET            = 0x3800; // vanilla: 0x3800
-        public static int MAX_COMBAT_BUDGET         = 0x3800; // unk
+        public static int MAX_BGM_BUDGET            = 0x6000; // vanilla: 0x3800
+        public static int MAX_COMBAT_BUDGET         = 0x6000; // unk
         public static int MAX_TYPE2_MUSIC_BUDGET    = 0x6000; // vanilla: 0x4100
 
         public static int New_AudioBankTable = 0; // for mmfilelist
@@ -39,8 +40,8 @@ namespace MMR.Randomizer.Utils
 
         public static void ResetBudget()
         {
-            MAX_BGM_BUDGET          = 0x3800;
-            MAX_COMBAT_BUDGET       = 0x3800;
+            MAX_BGM_BUDGET          = 0x6000;
+            MAX_COMBAT_BUDGET       = 0x6000;
             MAX_TYPE2_MUSIC_BUDGET  = 0x6000;
         }
 
@@ -203,7 +204,7 @@ namespace MMR.Randomizer.Utils
                 var codeFile = RomData.MMFileList[codeFID];
                 int audioseqIndexTableOffset = Addresses.SeqTable - codeFile.Addr;
 
-                int entryaddr = audioseqIndexTableOffset + (seq.Replaces * 16);
+                int entryaddr = audioseqIndexTableOffset + (seq.MM_seq * 16);
                 var size = (int) ReadWriteUtils.Arr_ReadU32(codeFile.Data, entryaddr + 4);
                 return RoundTo16(size);
             }
@@ -305,9 +306,22 @@ namespace MMR.Randomizer.Utils
                             {
                                 delimitingChar = '\n';
                             }
+
                             foreach (var line in categoryData.Split(delimitingChar))
                             {
-                                categoriesList.Add(Convert.ToInt32(line.Trim(), 16));
+                                if (line == null || line.Length == 0) continue; // They probably left an extra comma at the end, not an error just ignore
+
+                                try
+                                {
+                                    categoriesList.Add(Convert.ToInt32(line.Trim(), 16));
+                                }
+                                catch // empty line wont convert or bad category value, ignore
+                                {
+                                    #if RELEASE
+                                    continue; // Release ignores music bugs and keeps going
+                                    #endif
+                                    throw new Exception($"Error: Categories cannot be read: {currentSong.Name}");
+                                }
                             }
                             currentSong.Type = categoriesList;
                         }
@@ -398,7 +412,29 @@ namespace MMR.Randomizer.Utils
                                     // playState is configured in the file as "play in these states", but in the code it's "mute in these states"
                                     // so we need to reverse it
                                     var playState = JsonSerializer.Deserialize<SequencePlayState[]>(formMaskJson);
-                                    zSeq.FormMask = playState.Cast<byte>().ToArray();
+
+                                    // ensure backwards compatibility with 1.15 sequences
+                                    if (!playState.Any(s => s.HasFlag(SequencePlayState.FierceDeity) && !s.HasFlag(SequencePlayState.Human)))
+                                    {
+                                        for (var i = 0; i < playState.Length; i++)
+                                        {
+                                            if (playState[i].HasFlag(SequencePlayState.Human))
+                                            {
+                                                playState[i] |= SequencePlayState.FierceDeity;
+                                            }
+                                        }
+                                    }
+
+                                    // ensure unused cumulative states don't cause music to get muted in those states
+                                    foreach (var cumulativeState in Enum.GetValues<SequencePlayState>().Where(s => s > SequencePlayState.All))
+                                    {
+                                        if (!playState.Any(s => s.HasFlag(cumulativeState)))
+                                        {
+                                            playState[0x10] |= cumulativeState;
+                                        }
+                                    }
+                                    
+                                    zSeq.FormMask = ConvertUtils.U16ArrayToBytes(playState.Cast<ushort>().ToArray());
                                 }
                                 catch (Exception e)
                                 {
@@ -474,7 +510,6 @@ namespace MMR.Randomizer.Utils
                 ConvertSequenceSlotToPointer(0x70, 0x0B); // point call the giants( cutscene confronting skullkid) at healed
                 ConvertSequenceSlotToPointer(0x7B, 0x0D); // point maskreveal, the song that plays when the mask shows its alive during moon cutscene, at aliens
                 ConvertSequenceSlotToPointer(0x7D, 0x05); // point reunion at clocktower
-                ConvertSequenceSlotToPointer(0x0B, 0x05); // point healing cutscene at clocktower
             }
 
             // if ocarina is NOT randomized, pointerize skullkid's seq since it gets used nowhere
@@ -531,7 +566,7 @@ namespace MMR.Randomizer.Utils
 
 
         // gets passed RomData.SequenceList in Builder.cs::WriteAudioSeq
-        public static void RebuildAudioSeq(List<SequenceInfo> sequenceList, int? sequenceMaskFileIndex)
+        public static void RebuildAudioSeq(List<SequenceInfo> sequenceList, int? sequenceMaskFileIndex, int? sequenceNamesFileIndex)
         {
             // spoiler log output DEBUG
             StringBuilder log = new StringBuilder();
@@ -722,6 +757,7 @@ namespace MMR.Randomizer.Utils
                 }
 
                 byte[] formMask = null;
+                string name = null;
 
                 if (j != -1)
                 {
@@ -731,18 +767,44 @@ namespace MMR.Randomizer.Utils
                     {
                         formMask = sequenceList[j].SequenceBinaryList?.FirstOrDefault()?.FormMask;
                     }
+
+                    if (sequenceNamesFileIndex.HasValue)
+                    {
+                        name = Path.GetFileNameWithoutExtension(sequenceList[j].Name);
+                        if (Path.GetExtension(sequenceList[j].Name) == ".zseq")
+                        {
+                            name = name.Split('_')[0];
+                        }
+                        if (name.Contains("songforce"))
+                        {
+                            name = Regex.Replace(name, "(\\W|^)songforce\\W", string.Empty);
+                            name = name.Replace("songforce", string.Empty);
+                        }
+                    }
                 }
 
                 if (sequenceMaskFileIndex.HasValue)
                 {
                     if (formMask == null)
                     {
-                        formMask = Enumerable.Repeat<byte>(0xFF, 16).ToArray();
+                        formMask = Enumerable.Repeat<byte>(0xFF, 0x20).ToArray();
                     }
                     Array.Resize(ref formMask, MusicConfig.SEQUENCE_DATA_SIZE);
                     ReadWriteUtils.Arr_Insert(formMask, 0, MusicConfig.SEQUENCE_DATA_SIZE, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * MusicConfig.SEQUENCE_DATA_SIZE);
                 }
 
+                if (sequenceNamesFileIndex.HasValue)
+                {
+                    name ??= "";
+                    if (name.Length > MusicConfig.SEQUENCE_NAME_MAX_SIZE - 1)
+                    {
+                        name = name.Substring(0, MusicConfig.SEQUENCE_NAME_MAX_SIZE - 4) + "...";
+                    }
+                    name += "\0";
+                    var nameBytes = Encoding.ASCII.GetBytes(name);
+                    Array.Resize(ref nameBytes, MusicConfig.SEQUENCE_NAME_MAX_SIZE);
+                    ReadWriteUtils.Arr_Insert(nameBytes, 0, MusicConfig.SEQUENCE_NAME_MAX_SIZE, RomData.MMFileList[sequenceNamesFileIndex.Value].Data, i * MusicConfig.SEQUENCE_NAME_MAX_SIZE);
+                }
             }
 
             //// DEBUG spoiler log output
@@ -935,9 +997,7 @@ namespace MMR.Randomizer.Utils
             if (replacementSong != null)
             {
                 log.AppendLine(" * generalized replacement with " + replacementSong.Name + " song, with categories: " + String.Join(", ", replacementSong.Type.Select(x => "0x" + x.ToString("X2"))));
-                replacementSong.Replaces = targetSlot.Replaces;
-                log.AppendLine($"{targetSlot.Name,-50} {"APROX",+10} -> " + replacementSong.Name);
-                unassignedSequences.Remove(replacementSong);
+                AssignSequenceSlot(targetSlot, replacementSong, unassignedSequences, "APROX", log);
                 return;
             }
 
@@ -972,7 +1032,7 @@ namespace MMR.Randomizer.Utils
                 log.AppendLine(" * [" + RemainingSong.Name + "] with categories [" + String.Join(",", RemainingSong.Type) + "]");
             }
             WriteSongLog(log, settings);
-            throw new Exception("Cannot randomize music on this seed with available music: " + targetSlot.PreviousSlot.ToString("X"));
+            throw new Exception($"Cannot randomize music on this seed with available music: \nSlot Name:[{targetSlot.Name}] PreviousSlot: [{targetSlot.Replaces.ToString("X")}]");
         }
 
         public static void WriteSongLog(StringBuilder log, OutputSettings settings)
@@ -1000,7 +1060,7 @@ namespace MMR.Randomizer.Utils
 
         public static void AssignSequenceSlot(SequenceInfo slotSequence, SequenceInfo replacementSequence, List<SequenceInfo> remainingSequences, string debugString, StringBuilder log)
         {
-            // if the song has a custom instrument set, lock the sequence, update inst set value, debug output
+            // if the song has a custom instrument set: lock the sequence, update inst set value, debug output
             if (replacementSequence.SequenceBinaryList != null && replacementSequence.SequenceBinaryList[0] != null && replacementSequence.SequenceBinaryList[0].InstrumentSet != null)
             {
                 if (replacementSequence.SequenceBinaryList[0].InstrumentSet.BankSlot == CurrentFreeBank)
@@ -1021,6 +1081,7 @@ namespace MMR.Randomizer.Utils
                 }
                 replacementSequence.SequenceBinaryList = new List<SequenceBinaryData> { replacementSequence.SequenceBinaryList[0] }; // lock the one we want
             }
+
             replacementSequence.Replaces = slotSequence.Replaces; // tells the rando later what song to put into slot_seq
             //the -40 and +10 pad out the text to allign on the same middle section for visual clarity
             log.AppendLine($"{slotSequence.Name,-40} {debugString,+10} -> " + replacementSequence.Name);

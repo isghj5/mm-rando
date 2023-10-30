@@ -63,3 +63,19 @@ PauseMenu_BeforeUpdate_Hook:
     j       PauseMenu_BeforeUpdate
     ; Displaced code
     or      s0, a0, r0
+
+PauseMenu_SetupUpdate_HasPressedStart_Hook:
+    addiu   sp, sp, -0x20
+    sw      ra, 0x0014 (sp)
+    sw      v1, 0x0018 (sp)
+    sw      a2, 0x0028 (sp)
+
+    jal     PauseMenu_SetupUpdate_HasPressedStart
+    sw      a3, 0x002C (sp)
+
+    lw      a3, 0x002C (sp)
+    lw      a2, 0x0028 (sp)
+    lw      v1, 0x0018 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x20

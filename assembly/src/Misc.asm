@@ -55,3 +55,18 @@ Misc_UnderwaterOcarinaCheck_Hook:
 @@return:
     jr      ra
     nop
+
+Misc_AfterDeath_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+
+    jal     Misc_AfterDeath
+    nop
+
+    ; Displaced code
+    jal     0x8013EE24
+    nop
+
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18

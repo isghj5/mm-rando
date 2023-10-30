@@ -17,7 +17,6 @@ namespace MMR.Randomizer.GameObjects
 
         // That which was acquired in Ikana Castle shall open the way to Stone Tower. That is all I know.
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongElegy)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.SongElegy)]
         [GossipStone(Item.HintGaroWithIgosDefeated)]
         GaroWithIgosDefeated = 0x139C,
 

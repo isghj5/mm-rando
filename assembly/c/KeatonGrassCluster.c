@@ -4,13 +4,13 @@
 u16 KeatonGrassCluster_GetGiIndex(GlobalContext* ctxt, u16 count) {
     s8 multiplier = -1;
     switch (ctxt->sceneNum) {
-        case 0x22: // Milk Road
+        case SCENE_ROMANYMAE: // Milk Road
             multiplier = 0;
             break;
-        case 0x6E: // North Clock Town
+        case SCENE_BACKTOWN: // North Clock Town
             multiplier = 1;
             break;
-        case 0x5A: // Mountain Village (Spring)
+        case SCENE_10YUKIYAMANOMURA2: // Mountain Village (Spring)
             multiplier = 2;
             break;
     }

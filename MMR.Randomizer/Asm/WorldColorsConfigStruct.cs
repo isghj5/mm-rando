@@ -13,6 +13,7 @@ namespace MMR.Randomizer.Asm
     {
         public uint Version;
         public Color[] Colors;
+        public uint Flags;
 
         /// <summary>
         /// Convert to bytes.
@@ -29,6 +30,7 @@ namespace MMR.Randomizer.Asm
                 {
                     writer.WriteBytes(color.ToBytesRGB(0));
                 }
+                writer.WriteUInt32(this.Flags);
                 return memoryStream.ToArray();
             }
         }

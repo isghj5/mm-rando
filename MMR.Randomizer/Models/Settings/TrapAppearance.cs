@@ -1,9 +1,9 @@
 ﻿namespace MMR.Randomizer.Models.Settings
 {
     /// <summary>
-    /// Ice traps appearance setting.
+    /// Traps appearance setting.
     /// </summary>
-    public enum IceTrapAppearance
+    public enum TrapAppearance
     {
         MajorItems,
         JunkItems,

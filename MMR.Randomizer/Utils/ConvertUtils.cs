@@ -84,5 +84,38 @@ namespace MMR.Randomizer.Utils
             bytes[3] = (byte)(value & 0xFF);
             return bytes;
         }
+
+        /// <summary>
+        /// Convert shorts to a byte array (big-endian).
+        /// </summary>
+        /// <param name="shorts">Shorts</param>
+        /// <returns>Bytes</returns>
+        public static byte[] U16ArrayToBytes(ushort[] shorts)
+        {
+            using (var memoryStream = new MemoryStream())
+            using (var writer = new BinaryWriter(memoryStream))
+            {
+                foreach (var value in shorts)
+                {
+                    var bytes = UShortToBytes(value);
+                    writer.Write(bytes);
+                }
+
+                return memoryStream.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Convert a short to bytes (big-endian).
+        /// </summary>
+        /// <param name="value">Short</param>
+        /// <returns>Bytes</returns>
+        public static byte[] UShortToBytes(ushort value)
+        {
+            var bytes = new byte[2];
+            bytes[0] = (byte)((value >> 8) & 0xFF);
+            bytes[1] = (byte)(value & 0xFF);
+            return bytes;
+        }
     }
 }

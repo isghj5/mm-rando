@@ -11,20 +11,20 @@ u16 SoftSoilPrize_GetGiIndex(GlobalContext* ctxt, Actor* actor) {
     if (!MISC_CONFIG.internal.vanillaLayout) {
         u8 flag = actor->params & 0x7F;
         switch (ctxt->sceneNum) {
-            case 0x07: // Grottos
+            case SCENE_KAKUSIANA: // Grottos
                 giIndex = 0x35E; // Bean Grotto
                 break;
-            case 0x27: // Swamp Spider House
+            case SCENE_KINSTA1: // Swamp Spider House
                 if (flag == 0) {
                     giIndex = 0x37A; // Rock
                 } else {
                     giIndex = 0x379; // Gold Room
                 }
                 break;
-            case 0x2B: // Deku Palace
+            case SCENE_22DEKUCITY: // Deku Palace
                 giIndex = 0x36C;
                 break;
-            case 0x2D: // Termina Field
+            case SCENE_00KEIKOKU: // Termina Field
                 if (flag == 0xE) {
                     giIndex = 0x37B; // Stump
                 } else if (flag == 0x5) {
@@ -35,27 +35,27 @@ u16 SoftSoilPrize_GetGiIndex(GlobalContext* ctxt, Actor* actor) {
                     giIndex = 0x37E; // Pillar
                 }
                 break;
-            case 0x35: // Romani Ranch
+            case SCENE_F01: // Romani Ranch
                 if (gSaveContext.perm.day <= 1) {
                     giIndex = 0x376;
                 } else {
                     giIndex = 0x370;
                 }
                 break;
-            case 0x37: // Great Bay Coast
+            case SCENE_30GYOSON: // Great Bay Coast
                 giIndex = 0x36E;
                 break;
-            case 0x41: // Doggy Racetrack
+            case SCENE_F01_B: // Doggy Racetrack
                 giIndex = 0x36D;
                 break;
-            case 0x59: // Stone Tower (Inverted)
+            case SCENE_F41: // Stone Tower (Inverted)
                 if (flag == 0) {
                     giIndex = 0x377; // Lower
                 } else {
                     giIndex = 0x378; // Upper
                 }
                 break;
-            case 0x60: // Secret Shrine
+            case SCENE_RANDOM: // Secret Shrine
                 giIndex = 0x36F;
                 break;
         }
@@ -82,7 +82,7 @@ ActorEnItem00* SoftSoilPrize_ItemSpawn(GlobalContext* ctxt, Actor* actor, u16 ty
     }
     if (giIndex > 0) {
         Rupee_CheckAndSetGiIndex(&item->base, ctxt, giIndex);
-        if (MISC_CONFIG.flags.freestanding) {
+        if (MISC_CONFIG.drawFlags.freestanding) {
             z2_SetActorSize(&item->base, 0.015);
             item->targetSize = 0.015;
             z2_SetShape(&item->base.shape, 750, (void*)0x800B3FC0, 6);

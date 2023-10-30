@@ -24,7 +24,7 @@ typedef struct {
 } ColCommonInit; // size = 0x6
 
 typedef struct {
-    /* 0x0 */ u32 collidesWith;
+    /* 0x0 */ u32 dmgFlags;
     /* 0x4 */ u8 unk4;
     /* 0x5 */ u8 damage;
 } ColTouch; // size = 0x8
@@ -45,10 +45,10 @@ typedef struct {
 } ColBodyInfoInit; // size = 0x18
 
 typedef struct {
-    /* 0x0 */ u32 collidesWith;
-    /* 0x4 */ u8 unk4;
-    /* 0x5 */ u8 unk5;
-    /* 0x6 */ Vec3s unk6;
+    /* 0x0 */ u32 dmgFlags;
+    /* 0x4 */ u8 effect;
+    /* 0x5 */ u8 defense;
+    /* 0x6 */ Vec3s hitPos;
 } ColBump; // size = 0xC
 
 typedef struct {
@@ -179,14 +179,14 @@ typedef struct {
 typedef struct ColBodyInfo_t {
     /* 0x00 */ ColTouch toucher;
     /* 0x08 */ ColBump bumper;
-    /* 0x14 */ u8 unk14;
-    /* 0x15 */ u8 unk15; // bit 0: can be toucher in AT-AC collision
-    /* 0x16 */ u8 unk16; // bit 0: can be bumper in AT-AC collision
-    /* 0x17 */ u8 unk17;
-    /* 0x18 */ ColCommon* unk18;
-    /* 0x1C */ ColCommon* unk1C;
-    /* 0x20 */ struct ColBodyInfo_t* unk20;
-    /* 0x24 */ struct ColBodyInfo_t* unk24;
+    /* 0x14 */ u8 elemType;
+    /* 0x15 */ u8 toucherFlags; // bit 0: can be toucher in AT-AC collision
+    /* 0x16 */ u8 bumperFlags; // bit 0: can be bumper in AT-AC collision
+    /* 0x17 */ u8 ocElemFlags;
+    /* 0x18 */ ColCommon* atHit;
+    /* 0x1C */ ColCommon* acHit;
+    /* 0x20 */ struct ColBodyInfo_t* atHitInfo;
+    /* 0x24 */ struct ColBodyInfo_t* acHitInfo;
 } ColBodyInfo; // size = 0x28
 
 typedef struct {

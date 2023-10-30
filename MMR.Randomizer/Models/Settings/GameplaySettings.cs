@@ -80,19 +80,19 @@ namespace MMR.Randomizer.Models.Settings
         }
 
         /// <summary>
-        /// Whether or not ice traps should behave slightly differently from other items in certain situations.
+        /// Whether or not traps should behave slightly differently from other items in certain situations.
         /// </summary>
-        public bool IceTrapQuirks {
-            get { return this.AsmOptions.MiscConfig.Flags.IceTrapQuirks; }
-            set { this.AsmOptions.MiscConfig.Flags.IceTrapQuirks = value; }
+        public bool TrapQuirks {
+            get { return this.AsmOptions.MiscConfig.Flags.TrapQuirks; }
+            set { this.AsmOptions.MiscConfig.Flags.TrapQuirks = value; }
         }
 
         /// <summary>
         /// Whether or not to enable freestanding models.
         /// </summary>
         public bool UpdateWorldModels {
-            get { return this.AsmOptions.MiscConfig.Flags.FreestandingModels; }
-            set { this.AsmOptions.MiscConfig.Flags.FreestandingModels = value; }
+            get { return this.AsmOptions.MiscConfig.DrawFlags.FreestandingModels; }
+            set { this.AsmOptions.MiscConfig.DrawFlags.FreestandingModels = value; }
         }
 
         /// <summary>
@@ -120,13 +120,19 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.ContinuousDekuHopping = value; }
         }
 
+        public bool IronGoron
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.IronGoron; }
+            set { this.AsmOptions.MiscConfig.Flags.IronGoron = value; }
+        }
+
         /// <summary>
         /// Updates shop models and text
         /// </summary>
         public bool UpdateShopAppearance
         {
-            get { return this.AsmOptions.MiscConfig.Flags.ShopModels; }
-            set { this.AsmOptions.MiscConfig.Flags.ShopModels = value; }
+            get { return this.AsmOptions.MiscConfig.DrawFlags.ShopModels; }
+            set { this.AsmOptions.MiscConfig.DrawFlags.ShopModels = value; }
         }
 
         /// <summary>
@@ -171,6 +177,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.AutoInvert = value; }
         }
 
+        public bool GiantMaskAnywhere
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.GiantMaskAnywhere; }
+            set { this.AsmOptions.MiscConfig.Flags.GiantMaskAnywhere = value; }
+        }
+
         public bool DoubleArcheryRewards
         {
             get { return this.AsmOptions.MiscConfig.Speedups.DoubleArcheryRewards; }
@@ -181,6 +193,48 @@ namespace MMR.Randomizer.Models.Settings
         {
             get { return this.AsmOptions.MiscConfig.Flags.HiddenRupeesSparkle; }
             set { this.AsmOptions.MiscConfig.Flags.HiddenRupeesSparkle = value; }
+        }
+
+        public ChestGameMinimapState ChestGameMinimap
+        {
+            get { return this.AsmOptions.MiscConfig.Speedups.ChestGameMinimap; }
+            set { this.AsmOptions.MiscConfig.Speedups.ChestGameMinimap = value; }
+        }
+
+        public bool SaferGlitches
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.SaferGlitches; }
+            set { this.AsmOptions.MiscConfig.Flags.SaferGlitches = value; }
+        }
+
+        public bool BombchuDrops
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.BombchuDrops; }
+            set { this.AsmOptions.MiscConfig.Flags.BombchuDrops = value; }
+        }
+
+        public bool InstantTransform
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.InstantTransform; }
+            set { this.AsmOptions.MiscConfig.Flags.InstantTransform = value; }
+        }
+
+        public bool BombArrows
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.BombArrows; }
+            set { this.AsmOptions.MiscConfig.Flags.BombArrows = value; }
+        }
+
+        public bool FewerHealthDrops
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.FewerHealthDrops; }
+            set { this.AsmOptions.MiscConfig.Flags.FewerHealthDrops = value; }
+        }
+
+        public bool EasyFrameByFrame
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.EasyFrameByFrame; }
+            set { this.AsmOptions.MiscConfig.Flags.EasyFrameByFrame = value; }
         }
 
         public bool FairyMaskShimmer
@@ -195,6 +249,15 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.SkulltulaTokenSounds = value; }
         }
 
+        /// <summary>
+        /// How many boss remains are required to proceed through the final Giants cutscene.
+        /// </summary>
+        public byte RequiredBossRemains
+        {
+            get { return this.AsmOptions.MiscConfig.MMRBytes.RequiredBossRemains; }
+            set { this.AsmOptions.MiscConfig.MMRBytes.RequiredBossRemains = value; }
+        }
+
         #endregion
 
         #region Random Elements
@@ -204,7 +267,7 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public LogicMode LogicMode { get; set; }
 
-        public bool BespokeItemPlacementOrder { get; set; } = true;
+        public ItemPlacement ItemPlacement { get; set; } = ItemPlacement.Bespoke;
 
         public HashSet<string> EnabledTricks { get; set; } = new HashSet<string>
         {
@@ -214,9 +277,7 @@ namespace MMR.Randomizer.Models.Settings
             "Lensless Walls/Ceilings",
             "Pinnacle Rock without Seahorse",
             "Run Through Poisoned Water",
-            "Quest Item Extra Storage",
             "Scarecrow's Song",
-            "Take Damage",
             "WFT 2nd Floor Skip",
         };
 
@@ -229,6 +290,11 @@ namespace MMR.Randomizer.Models.Settings
         /// Randomize which dungeon you appear in when entering one
         /// </summary>
         public bool RandomizeDungeonEntrances { get; set; }
+
+        /// <summary>
+        /// Randomize which boss room you appear in when entering one
+        /// </summary>
+        public bool RandomizeBossRooms { get; set; }
 
         /// <summary>
         /// (Beta) Randomize enemies
@@ -250,6 +316,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public PriceMode PriceMode { get; set; }
 
+        public DungeonNavigationMode DungeonNavigationMode { get; set; }
+
 
         /// <summary>
         ///  Custom item list selections
@@ -266,7 +334,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom item list string
         /// </summary>
-        public string CustomItemListString { get; set; } = "--------------------40c-80000000----21ffff-ffffffff-ffffffff-f0000000-7bbeeffa-7fffffff-e6f1fffe-ffffffff";
+        public string CustomItemListString { get; set; } = "-------------------------40c-80000000----21ffff-ffffffff-ffffffff-f0000000-7bbeeffa-7fffffff-e6f1fffe-ffffffff";
 
         /// <summary>
         ///  Custom starting item list selections
@@ -277,7 +345,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom starting item list string
         /// </summary>
-        public string CustomStartingItemListString { get; set; } = "1fbfc-5800000-";
+        public string CustomStartingItemListString { get; set; } = "--1fbfc-5800000-";
 
         /// <summary>
         /// List of locations that must be randomized to junk
@@ -288,17 +356,22 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom junk location string
         /// </summary>
-        public string CustomJunkLocationsString { get; set; } = "-------------------------200000-----400000--f000";
+        public string CustomJunkLocationsString { get; set; } = "------------------------------200000-----400000--f000";
 
         /// <summary>
-        /// Defines number of ice traps.
+        /// Defines number of traps.
         /// </summary>
-        public IceTraps IceTraps { get; set; }
+        public TrapAmount TrapAmount { get; set; }
 
         /// <summary>
-        /// Defines appearance pool for visible ice traps.
+        /// The weighting to give different types of traps.
         /// </summary>
-        public IceTrapAppearance IceTrapAppearance { get; set; }
+        public Dictionary<TrapType, int> TrapWeights { get; set; } = new Dictionary<TrapType, int>();
+
+        /// <summary>
+        /// Defines appearance pool for visible traps.
+        /// </summary>
+        public TrapAppearance TrapAppearance { get; set; }
 
         #endregion
 
@@ -405,6 +478,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public bool ClearGaroHints { get; set; }
 
+        public bool TolerantGossipStones { get; set; } = true;
+
         public bool HintsIndicateImportance { get; set; }
 
         public int? OverrideNumberOfRequiredGossipHints { get; set; }
@@ -423,6 +498,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public HashSet<int> OverrideImportanceIndicatorTiers { get; set; }
 
+        public List<int> OverrideHintItemCaps { get; set; }
+
         /// <summary>
         /// Prevent downgrades
         /// </summary>
@@ -432,6 +509,11 @@ namespace MMR.Randomizer.Models.Settings
         /// Updates chest appearance to match contents
         /// </summary>
         public bool UpdateChests { get; set; }
+
+        /// <summary>
+        /// Updates NPC Text when referring to items and locations
+        /// </summary>
+        public bool UpdateNPCText { get; set; }
 
         /// <summary>
         /// Change epona B button behavior to prevent player losing sword if they don't have a bow.
@@ -444,6 +526,10 @@ namespace MMR.Randomizer.Models.Settings
         public bool EnablePictoboxSubject { get; set; } = true;
 
         public bool LenientGoronSpikes { get; set; }
+
+        public bool KeepQuestTradeThroughTime { get; set; }
+
+        public bool ImprovedCamera { get; set; }
 
         #endregion
 
@@ -474,6 +560,11 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool SpeedupBank { get; set; } = true;
 
+        /// <summary>
+        /// Show the baby cuccos on the minimap.
+        /// </summary>
+        public bool SpeedupBabyCuccos { get; set; }
+
         #endregion
 
         #region Functions
@@ -500,6 +591,14 @@ namespace MMR.Randomizer.Models.Settings
             if (CustomJunkLocations == null)
             {
                 return "Invalid junk locations list.";
+            }
+            if (KeepQuestTradeThroughTime && !QuestItemStorage)
+            {
+                return $"Must enable '{nameof(QuestItemStorage)}' if '{nameof(KeepQuestTradeThroughTime)}' is enabled.";
+            }
+            if (RequiredBossRemains < 1 || RequiredBossRemains > 4)
+            {
+                return $"{nameof(RequiredBossRemains)} must be between 1 and 4.";
             }
             return null;
         }
