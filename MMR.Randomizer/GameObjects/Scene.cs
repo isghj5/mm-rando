@@ -16,6 +16,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.Secretary,
             Actor.LikeLike)] // big one can block you from reaching mother, cycle 0 check
         [EnemizerSceneEnemyReplacementBlock(Actor.Gorman,
+            Actor.ClocktowerGearsAndOrgan, // can block access to madam
             Actor.LikeLike)] // likelike can grab and spit you before you can face it
         MayorsResidence = 0x00,
 
@@ -650,7 +651,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
             Actor.LikeLike)] // If you start with one heart this can be a softlock
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BombersYouChase,
-            Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, Actor.UnusedFallingBlocks)]
+            Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform)]
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
         WestClockTown = 0x6A,
 
