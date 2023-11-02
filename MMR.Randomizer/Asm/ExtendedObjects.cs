@@ -1,5 +1,6 @@
 ﻿using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
+using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Utils;
 using System;
@@ -14,20 +15,20 @@ namespace MMR.Randomizer.Asm
     /// </summary>
     public class ObjectIndexes
     {
-        public short? RoyalWallet;
-        public short? DoubleDefense;
-        public short? MagicPower;
-        public short? Fairies;
-        public short? Skulltula;
-        public short? MusicNotes;
-        public short? Rupees;
-        public short? Milk;
-        public short? BossKeys;
-        public short? SmallKeys;
-        public short? Compasses;
-        public short? DungeonMaps;
-        public short? NotebookPage;
-        public short? Frogs;
+        public ushort? RoyalWallet;
+        public ushort? DoubleDefense;
+        public ushort? MagicPower;
+        public ushort? Fairies;
+        public ushort? Skulltula;
+        public ushort? MusicNotes;
+        public ushort? Rupees;
+        public ushort? Milk;
+        public ushort? BossKeys;
+        public ushort? SmallKeys;
+        public ushort? Compasses;
+        public ushort? DungeonMaps;
+        public ushort? NotebookPage;
+        public ushort? Frogs;
     }
 
     /// <summary>
@@ -48,7 +49,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Next index to use when adding an extended object.
         /// </summary>
-        public short LatestIndex { get; private set; } = 0x283;
+        public ushort LatestIndex { get; private set; } = 0x283;
 
         /// <summary>
         /// Object indexes.
@@ -62,101 +63,101 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         /// <param name="entry"></param>
         /// <returns>Object Id if resolved.</returns>
-        public (short objectId, byte graphicId)? ResolveGraphics(GetItemEntry entry)
+        public ItemGraphic? ResolveGraphics(GetItemEntry entry)
         {
             // Notebook Pages
             if (entry.ItemGained == 0xB2 && entry.Object == 0x253 && Indexes.NotebookPage.HasValue)
             {
-                return (Indexes.NotebookPage.Value, 0xC);
+                return new ItemGraphic(Indexes.NotebookPage.Value, 0xC);
             }
 
             // Royal Wallet.
             if (entry.ItemGained == 0xA4 && entry.Object == 0xA8 && Indexes.RoyalWallet.HasValue)
             {
-                return (Indexes.RoyalWallet.Value, 0x22);
+                return new ItemGraphic(Indexes.RoyalWallet.Value, 0x22);
             }
 
             // Milk Refill
             if (entry.ItemGained == 0xA0 && entry.Object == 0xB6 && Indexes.Milk.HasValue)
             {
-                return (Indexes.Milk.Value, 0x31);
+                return new ItemGraphic(Indexes.Milk.Value, 0x31);
             }
 
             // Chateau Refill
             if (entry.ItemGained == 0x9F && entry.Object == 0x227 && Indexes.Milk.HasValue)
             {
-                return (Indexes.Milk.Value, 0x32);
+                return new ItemGraphic(Indexes.Milk.Value, 0x32);
             }
 
             // Boss Keys
             if (entry.ItemGained == 0x74 && entry.Object == 0x92 && Indexes.BossKeys.HasValue)
             {
                 var index = entry.Type >> 4;
-                return ((short)(Indexes.BossKeys.Value + index), entry.Index);
+                return new ItemGraphic((ushort)(Indexes.BossKeys.Value + index), entry.Index);
             }
 
             // Small Keys
             if (entry.ItemGained == 0x78 && entry.Object == 0x86 && Indexes.SmallKeys.HasValue)
             {
                 var index = entry.Type >> 4;
-                return ((short)(Indexes.SmallKeys.Value + index), entry.Index);
+                return new ItemGraphic((ushort)(Indexes.SmallKeys.Value + index), entry.Index);
             }
 
             // Compasses
             if (entry.ItemGained == 0x75 && entry.Object == 0x91 && Indexes.Compasses.HasValue)
             {
                 var index = entry.Type >> 4;
-                return ((short)(Indexes.Compasses.Value + index), entry.Index);
+                return new ItemGraphic((ushort)(Indexes.Compasses.Value + index), entry.Index);
             }
 
             // Dungeon Maps
             if (entry.ItemGained == 0x76 && entry.Object == 0xA0 && Indexes.DungeonMaps.HasValue)
             {
                 var index = entry.Type >> 4;
-                return ((short)(Indexes.DungeonMaps.Value + index), entry.Index);
+                return new ItemGraphic((ushort)(Indexes.DungeonMaps.Value + index), entry.Index);
             }
 
             // set DrawItem function for Spin Attack
             if (entry.ItemGained == 0xA6 && entry.Object == 0x148)
             {
-                return (0x148, 0x4B);
+                return new ItemGraphic(0x148, 0x4B);
             }
             // Update gi-table for Skulltula Tokens.
             if (entry.ItemGained == 0x6E && entry.Object == 0x125 && Indexes.Skulltula != null)
             {
                 var index = entry.Message == 0x51 ? 1 : 0;
-                return ((short)(Indexes.Skulltula.Value + index), entry.Index);
+                return new ItemGraphic((ushort)(Indexes.Skulltula.Value + index), entry.Index);
             }
 
             // Update gi-table for Stray Fairies.
             if (entry.ItemGained == 0xA8 && entry.Object == 0x13A && Indexes.Fairies != null)
             {
                 var index = entry.Type >> 4;
-                return ((short)(Indexes.Fairies.Value + index), entry.Index);
+                return new ItemGraphic((ushort)(Indexes.Fairies.Value + index), entry.Index);
             }
 
             // Update gi-table for Double Defense.
             if (entry.ItemGained == 0xA7 && entry.Object == 0x96 && Indexes.DoubleDefense != null)
             {
-                return (Indexes.DoubleDefense.Value, entry.Index);
+                return new ItemGraphic(Indexes.DoubleDefense.Value, entry.Index);
             }
 
             // Update gi-table for Notes.
             if (((entry.ItemGained >= 0x66 && entry.ItemGained <= 0x6C) || entry.ItemGained == 0x62 || entry.ItemGained == 0x73) && entry.Object == 0x8F && Indexes.MusicNotes != null)
             {
-                return (Indexes.MusicNotes.Value, entry.Index);
+                return new ItemGraphic(Indexes.MusicNotes.Value, entry.Index);
             }
 
             // Update gi-table for Magic Power
             if (entry.ItemGained == 0xA5 && entry.Object == 0xA4 && Indexes.MagicPower != null)
             {
-                return (Indexes.MagicPower.Value, entry.Index);
+                return new ItemGraphic(Indexes.MagicPower.Value, entry.Index);
             }
 
             // Update gi-table for Extra Rupees
             if ((entry.ItemGained == 0xB1 || entry.ItemGained == 0xB5) && entry.Object == 0x13F && Indexes.Rupees != null)
             {
-                return (Indexes.Rupees.Value, entry.Index);
+                return new ItemGraphic(Indexes.Rupees.Value, entry.Index);
             }
 
             // Frogs
@@ -170,7 +171,7 @@ namespace MMR.Randomizer.Asm
                     4 => 0x62,
                     _ => throw new NotImplementedException()
                 });
-                return (Indexes.Frogs.Value, index);
+                return new ItemGraphic(Indexes.Frogs.Value, index);
             }
 
             return null;
@@ -196,7 +197,7 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         /// <param name="amount">Amount to increment</param>
         /// <returns>Previous index value</returns>
-        short AdvanceIndex(short amount = 1)
+        ushort AdvanceIndex(ushort amount = 1)
         {
             var index = this.LatestIndex;
             this.LatestIndex += amount;
@@ -733,7 +734,16 @@ namespace MMR.Randomizer.Asm
             { 74, new int[] { 2 } }, // skip skulltula token flame
         };
 
-        ((uint, uint), MiscSmithyModel) AddSmithyItem(Item location) => AddSmithyItem(location.GetItemIndex().Value);
+        ((uint, uint), MiscSmithyModel) AddSmithyItem(Item item)
+        {
+            var index = item.GetItemIndex();
+            if (index.HasValue)
+            {
+                return AddSmithyItem(index.Value);
+            }
+            var getItem = item.ExclusiveItemEntry();
+            return AddSmithyItem(new ItemGraphic(getItem.Object, getItem.Index));
+        }
 
         ((uint, uint), MiscSmithyModel) AddSmithyItem(ushort giIndex)
         {
@@ -744,9 +754,17 @@ namespace MMR.Randomizer.Asm
             var graphics = ResolveGraphics(giEntry);
             if (graphics.HasValue)
             {
-                objectId = graphics.Value.objectId;
-                graphicId = graphics.Value.graphicId;
+                objectId = graphics.Value.ObjectId;
+                graphicId = graphics.Value.GraphicId;
             }
+
+            return AddSmithyItem(new ItemGraphic(objectId, graphicId));
+        }
+
+        ((uint, uint), MiscSmithyModel) AddSmithyItem(ItemGraphic itemGraphic)
+        {
+            var objectId = itemGraphic.ObjectId;
+            var graphicId = itemGraphic.GraphicId;
 
             var objectToLoad = objectId;
 
@@ -896,7 +914,7 @@ namespace MMR.Randomizer.Asm
                 result.AddRange(Enumerable.Repeat<byte>(0, 8));
             }
 
-            var smithyModel = new MiscSmithyModel(objectId, (byte)(graphicId + 1), AdvanceIndex(), displayListEntry);
+            var smithyModel = new MiscSmithyModel(objectId, (byte)(graphicId + 1), (ushort)AdvanceIndex(), displayListEntry);
 
             return (this.Bundle.Append(result.ToArray()), smithyModel);
         }

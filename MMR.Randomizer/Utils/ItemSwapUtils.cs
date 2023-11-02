@@ -70,8 +70,8 @@ namespace MMR.Randomizer.Utils
                     Flag = fileData[i + 1],
                     Index = fileData[i + 2],
                     Type = fileData[i + 3],
-                    Message = (short)((fileData[i + 4] << 8) | fileData[i + 5]),
-                    Object = (short)((fileData[i + 6] << 8) | fileData[i + 7])
+                    Message = (ushort)((fileData[i + 4] << 8) | fileData[i + 5]),
+                    Object = (ushort)((fileData[i + 6] << 8) | fileData[i + 7])
                 };
             }
         }
@@ -158,8 +158,8 @@ namespace MMR.Randomizer.Utils
             var graphics = extendedObjects.ResolveGraphics(newItem);
             if (graphics.HasValue)
             {
-                newItem.Object = graphics.Value.objectId;
-                newItem.Index = graphics.Value.graphicId;
+                newItem.Object = graphics.Value.ObjectId;
+                newItem.Index = graphics.Value.GraphicId;
             }
 
             var data = new byte[]
@@ -188,8 +188,8 @@ namespace MMR.Randomizer.Utils
                 var refillGraphics = extendedObjects.ResolveGraphics(refillItem);
                 if (refillGraphics.HasValue)
                 {
-                    refillItem.Object = refillGraphics.Value.objectId;
-                    refillItem.Index = refillGraphics.Value.graphicId;
+                    refillItem.Object = refillGraphics.Value.ObjectId;
+                    refillItem.Index = refillGraphics.Value.GraphicId;
                 }
                 var refillData = new byte[]
                 {

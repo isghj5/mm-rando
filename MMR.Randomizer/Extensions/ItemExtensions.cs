@@ -286,8 +286,8 @@ namespace MMR.Randomizer.Extensions
                 Flag = item.GetAttribute<ExclusiveItemAttribute>().Flags,
                 Index = item.GetAttribute<ExclusiveItemGraphicAttribute>().Graphic,
                 Type = item.GetAttribute<ExclusiveItemAttribute>().Type,
-                Message = (short)item.GetAttribute<ExclusiveItemMessageAttribute>().Id,
-                Object = (short)item.GetAttribute<ExclusiveItemGraphicAttribute>().Object,
+                Message = item.GetAttribute<ExclusiveItemMessageAttribute>().Id,
+                Object = item.GetAttribute<ExclusiveItemGraphicAttribute>().Object,
             };
         }
 

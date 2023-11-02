@@ -35,7 +35,7 @@ namespace MMR.Randomizer.Models
         {
             var index = this.Item.GetItemIndex();
             var getItem = index.HasValue ? RomData.GetItemList[index.Value] : this.Item.ExclusiveItemEntry();
-            return new ItemGraphic(getItem.Index, (ushort)getItem.Object);
+            return new ItemGraphic(getItem.Object, getItem.Index);
         }
 
         public override int GetHashCode()

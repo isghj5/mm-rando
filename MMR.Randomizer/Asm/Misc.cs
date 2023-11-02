@@ -429,12 +429,12 @@ namespace MMR.Randomizer.Asm
     {
         public const int Size = 0xC;
 
-        private readonly short oldObjectId;
+        private readonly ushort oldObjectId;
         private readonly byte oldGraphicId;
-        private readonly short newObjectId;
+        private readonly ushort newObjectId;
         private readonly uint displayListOffset;
 
-        public MiscSmithyModel(short oldObjectId, byte oldGraphicId, short newObjectId, uint displayListOffset)
+        public MiscSmithyModel(ushort oldObjectId, byte oldGraphicId, ushort newObjectId, uint displayListOffset)
         {
             this.oldObjectId = oldObjectId;
             this.oldGraphicId = oldGraphicId;
@@ -445,9 +445,9 @@ namespace MMR.Randomizer.Asm
         public byte[] ToByteArray()
         {
             byte[] bytes = new byte[Size];
-            ReadWriteUtils.Arr_WriteU16(bytes, 0, (ushort)oldObjectId);
+            ReadWriteUtils.Arr_WriteU16(bytes, 0, oldObjectId);
             bytes[2] = oldGraphicId;
-            ReadWriteUtils.Arr_WriteU16(bytes, 4, (ushort)newObjectId);
+            ReadWriteUtils.Arr_WriteU16(bytes, 4, newObjectId);
             ReadWriteUtils.Arr_WriteU32(bytes, 8, displayListOffset);
             return bytes;
         }
