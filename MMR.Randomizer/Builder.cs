@@ -3297,7 +3297,7 @@ namespace MMR.Randomizer
                 .Id(0xF9)
                 .Header(it =>
                 {
-                    it.Standard2();
+                    it.Standard2().Icon(0x37);
                 })
                 .Message(it =>
                 {
