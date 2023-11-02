@@ -870,3 +870,14 @@ bool Player_ShouldResetUnderwaterTimer(GlobalContext* ctxt, ActorPlayer* player)
 
     return player->form == PLAYER_FORM_ZORA || (player->form == PLAYER_FORM_GORON && MISC_CONFIG.flags.ironGoron);
 }
+
+Actor* Player_GetGoronPunchCollisionActor(CollisionContext* colCtx, s32 bgId) {
+    Actor* actor = z2_DynaPoly_GetActor(colCtx, bgId);
+
+    // Let Iron Goron punch open the planks blocking Pirates Fortress Exterior.
+    if (MISC_CONFIG.flags.ironGoron && actor->id == ACTOR_OBJ_TARU && (actor->params & 0x80)) {
+        actor->initPosRot.rot.z = 1;
+    }
+
+    return actor;
+}

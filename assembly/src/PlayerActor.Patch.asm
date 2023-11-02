@@ -1351,3 +1351,8 @@
 .org 0x8083D2FC
     slti    at, t5, 0x0005
     bnezl   at, .+0x60
+
+; Replaces:
+;   JAL     0x800C6248 ; DynaPoly_GetActor
+.org 0x8084048C
+    jal     Player_GetGoronPunchCollisionActor

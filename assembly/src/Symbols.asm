@@ -62,6 +62,7 @@
 .definelabel z2_Actor_ChangeAnimation, 0x800BDC5C
 .definelabel z2_BgCheck_GetCollisionHeader, 0x800C3C2C
 .definelabel z2_BgCheck_EntityCheckCeiling, 0x800C4F84
+.definelabel z2_DynaPoly_GetActor, 0x800C6248
 .definelabel z2_GetFloorPhysicsType, 0x800C99D4
 .definelabel z2_Camera_IsHookArrival, 0x800CB7CC
 .definelabel z2_CollisionCheck_GetDamageAndEffectOnBumper, 0x800E0410
