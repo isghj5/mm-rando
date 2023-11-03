@@ -606,3 +606,12 @@ Player_HandleGoronInWater_Hook:
     jr      ra
     addiu   sp, sp, 0x20
 
+Player_Lib_IsBootDataSwimming_Hook:
+    lw      t4, 0x0A6C (a2)
+    lui     t5, 0x0800
+    and     t4, t4, t5
+    lw      t5, 0x0A70 (a2)
+    andi    t5, t5, 0x0400
+    jr      ra
+    or      t5, t5, t4
+
