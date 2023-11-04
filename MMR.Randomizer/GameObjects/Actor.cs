@@ -1318,7 +1318,9 @@ namespace MMR.Randomizer.GameObjects
         // TODO add all of the tiny rupees from secret shrine to this
         [CheckRestricted(Item.ItemMagicBean,
             Item.ChestTerminaStumpRedRupee,
-            Item.ChestInvertedStoneTowerBean, Item.ChestInvertedStoneTowerBombchu10, Item.ChestInvertedStoneTowerSilverRupee)]
+            Item.ChestInvertedStoneTowerBean, Item.ChestInvertedStoneTowerBombchu10, Item.ChestInvertedStoneTowerSilverRupee,
+            Item.MaskDeku,
+            Item.CollectibleSwampSpiderToken13)]
         [GroundVariants(0)]
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(Scene.Grottos)]
