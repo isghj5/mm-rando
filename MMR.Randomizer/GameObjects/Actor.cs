@@ -4081,10 +4081,10 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         BoatArcheryKoume = 0x214, // En_Tru_Mt
 
-        // todo 
+        // multi-object actor with annoying crashing characteristics, leave alone
         [FileID(492)]
         [ObjectListIndex(0x1FC)]
-        CremiaMilk = 0x215, // Obj_Um
+        CreamiaCariage = 0x215, // Obj_Um
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1C50)]
@@ -4189,13 +4189,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(503)]
         [ObjectListIndex(0xA7)]
-        [CheckRestricted(Scene.TerminaField, variant:0x40FF, Item.MaskRomani)]
+        [CheckRestricted(Scene.TerminaField, variant: 0x40FF, Item.MaskRomani)]
+        [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.MaskRomani)]
         [GroundVariants(0, // standing around day 1 is type 0
             0x40FF, // wedding
+            0x30FF, // standing in front of ranch, final night walking?
             0x00FF)] // bottom 0xFF is unknown, not used in code?
-        [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        [VariantsWithRoomMax(max:0, 0, 0x40FF, 0x00FF)]
+        [VariantsWithRoomMax(max:0, 0, 0x40FF, 0x00FF, 0x30FF)]
+        [OnlyOneActorPerRoom]
         Cremia = 0x220, // En_Ma_Yto
 
         [FileID(504)]

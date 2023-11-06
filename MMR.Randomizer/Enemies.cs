@@ -464,8 +464,7 @@ namespace MMR.Randomizer
 
         public static void EnemizerLateFixes()
         {
-            // changes after randomization, actors objects already written
-            // not currently needed, turns out all the old content here could be moved
+            /// changes after randomization, actors objects already written, at this point we can detect IF an actor was randomized
 
             // to avoid randomizing medigoron's object
             //var goronVillageWinter = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.GoronVillage);
@@ -551,9 +550,13 @@ namespace MMR.Randomizer
                 piratesExteriorScene.Maps[0].Actors[13].ChangeActor(GameObjects.Actor.Empty, modifyOld: true); // dangeon object so no grotto, empty for now
                 // todo: 14/16 are also torches, we dont really need both here
 
-                // this torch is too close to spider, constantly actors get stuck, just move the damn torch
+                // this torch is too close to spider, constantly actors get stuck, move slightly out of the way
                 var swampSpiderHouseScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SwampSpiderHouse.FileID());
                 swampSpiderHouseScene.Maps[3].Actors[3].Position.x = -480;
+
+                // one of the torches in swamp spider needs to be rotated to not face the wall
+                var spiderTorch2 = swampSpiderHouseScene.Maps[3].Actors[2];
+                spiderTorch2.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 135, flags: spiderTorch2.Rotation.y);
 
                 var dekuPalace = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuPalace.FileID());
                 // the torches are really close to the hole, we can spread them wider a bit
@@ -1260,7 +1263,24 @@ namespace MMR.Randomizer
             }
 
             // if we randomize the bombiwa in the swamp spiderhouse, replacements with colliders can block bugs
+            // for now, decided to just un-randomize
 
+            // if we randomize cremia in the branch, the uma cart can crash, we need to change its type from ranch to termina field
+            var romaniRanchScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.RomaniRanch.FileID());
+            var cremia = romaniRanchScene.Maps[0].Actors[2];
+            if (cremia.ActorEnum != GameObjects.Actor.Cremia)
+            {
+                var cariageHorse = romaniRanchScene.Maps[0].Actors[34];
+                //cariageHorse.Variants[0] = 0x0; // same as termina field, which doesnt have cremia on it
+                //cariageHorse.ChangeActor(GameObjects.Actor.Dog, vars: 0x3FF); // this DOES NOTHING its too late the actor has already been written idiot
+                var ranchRoom0Data = RomData.MMFileList[GameObjects.Scene.RomaniRanch.FileID() + 1].Data; // 1327
+                //have to erase this actor directly
+                ranchRoom0Data[0x2A4] = 0xFF; // this works, although would be cool if we could just change type
+                ranchRoom0Data[0x2A5] = 0xFF;
+                //ranchRoom0Data[0x2B2] = 0x0; // attempted change of variant type to zero, this does not work, best to remove the whole actor for now
+                //ranchRoom0Data[0x2B3] = 0x0;
+
+            }
         }
 
         public static void FixKafeiPlacements()
@@ -2127,7 +2147,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BombersYouChase)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.LinkTheGoro)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.Takkuri)) continue;
