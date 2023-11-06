@@ -1024,11 +1024,21 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesPlacementBlock(Scene.TerminaField)] // it would always get placed in termina field, bad
         Item_Etcetera = 0x80, // Item_Etcetera
 
-        //todo
-        //[ActorizerEnabledFreeOnly] // not sure this works with object 1, will test later
+        [ActorizerEnabled] // not sure this works with object 1, will test later
         [FileID(125)]
-        [ObjectListIndex(1)]
-        SmallCrate = 0x81, // Obj_Kibako
+        [ObjectListIndex(0x16F)] // multi-object, could be dangeon keep instead
+        [CheckRestricted(Scene.EastClockTown, variant: -1, Item.CollectableEastClockTownWoodenCrateSmall1)] //wasnt there a second one
+        [CheckRestricted(Scene.LaundryPool, variant: -1, Item.CollectableLaundryPoolWoodenCrateSmall1)]
+        [CheckRestricted(Scene.GreatBayTemple, variant: -1, Item.ItemIceArrow)] // in case we really want these for the fight
+        [GroundVariants(0x000B, 0x001E, 0x001F, 0x000F, 0x0015,  // stone tower
+            0x060B, 0x200B, // inverted stone tower
+            0xFF1F, // romani ranch
+            0xA002, // laundry pool
+            0x8181, 0x828A)] // east clock town
+        //[VariantsWithRoomMax(max: 5, variant: -1)] // might be dyna
+        //[VariantsWithRoomMax(max: 0, variant: 0xA002, 0x8181, 0x828A)] // items
+        [UnkillableAllVariants]
+        SmallWoodenBox = 0x81, // Obj_Kibako
 
         // MULTIPLE OBJECT ACTOR
         [ActorizerEnabled]
@@ -1397,9 +1407,17 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(Scene.MarineLab)]
         Scientist = 0xAE, // En_Mk
 
+        [ActorizerEnabled]
         [FileID(157)]
         [ObjectListIndex(0xFD)]
+        [CheckRestricted(Scene.GoronVillage, variant:-1, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
+        // // never going to put him anywhere I dont think, so just mark his spawn as flying
+        [FlyingVariants(0xF18B, // southern swamp // and clear swamp??? he was there??
+            0x2102, 0x1102, 0x0102)] // three different days of goron village
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        // pathing I think, but pathing flying types do not currently exist in this rando
+        [VariantsWithRoomMax(max:0, variant: 0xF18B, 0x2102, 0x1102, 0x0102)]
+        [UnkillableAllVariants]
         En_Owl = 0xAF, // En_Owl
 
         // MULTIPLE OBJECT ACTOR
