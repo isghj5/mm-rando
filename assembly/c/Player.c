@@ -638,7 +638,7 @@ void Player_AfterUpdateCollisionCylinder(ActorPlayer* player) {
 u8 Player_GetMaskOnLoad(ActorPlayer* player, GlobalContext* ctxt) {
     u8 result = gSaveContext.perm.mask;
     s32 voidFlag = gSaveContext.extra.voidFlag;
-    bool shouldResetGiantSize = ctxt->sceneNum == SCENE_INISIE_BS || voidFlag == -5 || voidFlag == 1;
+    bool shouldResetGiantSize = ctxt->sceneNum == SCENE_INISIE_BS || voidFlag == -5 || voidFlag == 1 || voidFlag == -7;
     if (result == 0x14) {
         if (MISC_CONFIG.flags.giantMaskAnywhere) {
             if (shouldResetGiantSize) {
@@ -881,4 +881,8 @@ Actor* Player_GetGoronPunchCollisionActor(CollisionContext* colCtx, s32 bgId) {
     }
 
     return actor;
+}
+
+bool Player_ShouldNotSetGlobalVoidFlag(CollisionContext* colCtx, BgPolygon* poly, s32 bgId) {
+    return gSaveContext.extra.voidFlag == -7 || z2_SurfaceType_IsWallDamage(colCtx, poly, bgId);
 }

@@ -61,6 +61,7 @@ extern BgMeshHeader* z2_BgCheck_GetCollisionHeader(CollisionContext* colCtx, s32
 extern bool z2_BgCheck_EntityCheckCeiling(CollisionContext* colCtx, f32* outY, Vec3f* pos, f32 checkHeight, BgPolygon** outPoly, s32* outBgId, Actor* actor);
 extern Actor* z2_DynaPoly_GetActor(CollisionContext* colCtx, s32 bgId);
 extern u32 z2_GetFloorPhysicsType(void* arg0, void* arg1, u8 arg2);
+extern bool z2_SurfaceType_IsWallDamage(CollisionContext* colCtx, BgPolygon* poly, s32 bgId);
 extern bool z2_Camera_IsHookArrival(Camera* camera);
 extern void z2_PushMatrixStackCopy();
 extern void z2_PopMatrixStack();
