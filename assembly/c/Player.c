@@ -638,9 +638,10 @@ void Player_AfterUpdateCollisionCylinder(ActorPlayer* player) {
 u8 Player_GetMaskOnLoad(ActorPlayer* player, GlobalContext* ctxt) {
     u8 result = gSaveContext.perm.mask;
     s32 voidFlag = gSaveContext.extra.voidFlag;
+    bool shouldResetGiantSize = ctxt->sceneNum == SCENE_INISIE_BS || voidFlag == -5 || voidFlag == 1;
     if (result == 0x14) {
         if (MISC_CONFIG.flags.giantMaskAnywhere) {
-            if (ctxt->sceneNum == SCENE_INISIE_BS || voidFlag == -5) {
+            if (shouldResetGiantSize) {
                 gSaveContext.perm.mask = 0;
                 result = 0;
             } else {
@@ -653,7 +654,7 @@ u8 Player_GetMaskOnLoad(ActorPlayer* player, GlobalContext* ctxt) {
     }
 
     if (MISC_CONFIG.flags.giantMaskAnywhere) {
-        if (ctxt->sceneNum == SCENE_INISIE_BS || voidFlag == -5) {
+        if (shouldResetGiantSize) {
             GiantMask_MarkReset();
         }
         GiantMask_TryReset();
