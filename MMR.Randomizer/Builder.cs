@@ -5287,9 +5287,10 @@ namespace MMR.Randomizer
                                 it.Text("And if you are not wearing the ")
                                 .Red("mask")
                                 .Text(" containing ")
-                                .Red("wandering spirits")
+                                .Red("wandering spirits...")
                                 ;
                             })
+                            .EndTextBox()
                             .RuntimeWrap(() =>
                             {
                                 it.Text("Which can be found ")
