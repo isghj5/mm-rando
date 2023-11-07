@@ -290,9 +290,9 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xE)] // object re-used in giants chamber DemoKankyo
         // There are no params, and this actor is unused in vanilla placement
         // This actor is modified by custom MMRA, type 0 is now random count, -1 is single
-        [FlyingVariants(-1)] // 0 works, but OOT used FFFF
-        [GroundVariants(-1)] // 0 works, but OOT used FFFF
-        [WaterTopVariants(-1)]  // 0 works, but OOT used FFFF
+        [FlyingVariants(0xFFFF)] // 0 works, but OOT used FFFF
+        [GroundVariants(0xFFFF)] // 0 works, but OOT used FFFF
+        [WaterTopVariants(0xFFFF)]  // 0 works, but OOT used FFFF
         Shabom = 0x1D, // En_Bubble, the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
         [FileID(63)]
