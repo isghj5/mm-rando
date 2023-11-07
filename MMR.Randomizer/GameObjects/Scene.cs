@@ -219,8 +219,11 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1258)]
         [SceneInternalId(0x23)]
         [ClearEnemyPuzzleRooms(0, 1, 2)] // three pirate minibosses
+        // TODO need to re-test this
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SpikedMine,
             Actor.LabFish)] // crash unknown reason, float math error
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PirateTelescope,
+            Actor.ClocktowerGearsAndOrgan)] // can block the player into the wall
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ZoraEgg,
         //    Actor.Tijo, Actor.Bombiwa, Actor.Bumper)] // blocking a chest
         [EnemizerSceneBlockSensitive(Actor.ZoraEgg, -1)]
