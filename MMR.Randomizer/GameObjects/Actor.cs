@@ -1029,6 +1029,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // not sure this works with object 1, will test later
         [FileID(125)]
         [ObjectListIndex(0x16F)] // multi-object, could be dangeon keep instead
+        [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.MaskRomani)] // this might be required for objUm weirdly...
         [CheckRestricted(Scene.EastClockTown, variant: -1, Item.CollectableEastClockTownWoodenCrateSmall1)] //wasnt there a second one
         [CheckRestricted(Scene.LaundryPool, variant: -1, Item.CollectableLaundryPoolWoodenCrateSmall1)]
         [CheckRestricted(Scene.GreatBayTemple, variant: -1, Item.ItemIceArrow)] // in case we really want these for the fight
