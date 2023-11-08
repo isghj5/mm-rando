@@ -94,7 +94,7 @@ namespace MMR.Randomizer.GameObjects
         //    variant: 0x3F5F)] // can place around chests
         //[AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
         //    variant: 2, 9)] // fairies around chests make sense, just not a full fairy fountain
-        [EnemizerScenesExcluded(Scene.InvertedStoneTower)]
+        [EnemizerScenesExcluded(Scene.InvertedStoneTower, Scene.TerminaField)]
         [SwitchFlagsPlacementZRot]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
         [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
