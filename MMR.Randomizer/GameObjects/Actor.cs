@@ -66,7 +66,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(44)]
         [ObjectListIndex(0xC)]
-        [CheckRestricted(Scene.RoadToIkana, variant:0x5080, Item.ChestToIkanaRedRupee)]
+        [CheckRestricted(Scene.RoadToIkana, variant: 0x5080, Item.ChestToIkanaRedRupee)]
+        [CheckRestricted(Scene.EastClockTown, variant: 0x50CA, Item.ChestEastClockTownSilverRupee)]
+        [CheckRestricted(Scene.SouthClockTown, variant: -1, Item.ChestSouthClockTownPurpleRupee, Item.ChestSouthClockTownRedRupee)]
         // these three are from inverted stone tower, however when placed in TF, 2/3 were invisible chests
         // type: 0x7 seems to be enemy clear, also type 1, 0x5 is woodentype, 0xC is switch activated
         // 0xF000 is type, 0x001F are chest flags, 0x0FE0 would be the item then
@@ -75,15 +77,17 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, //0x5A1E,
             0x5080, // road to ikana
+            0x50CA, // east clock town
+            0x50A1, // south clock town
             0xBAEE, // Invisible with switch activation, this one should be rare (0x10--(large gold) + 0x--11(spawn on switch clear))
             0x0AFB, 0x099C)] // two free, the rest are gold invisible
-                             //[GroundVariants(0x001F)] // testing
         [WaterBottomVariants(0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, //0x5A1E,
             0xBA1E, // switch activated
             0x0AFB, 0x099C)] // two free, the rest are gold invisible
         [VariantsWithRoomMax(max: 1, variant: 0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, 0x5A1E,
+            0x50CA, 0x50A1,
             0x0AFB, 0x099C)] // brown, harder to see in perpheral vision, not invisible
         [VariantsWithRoomMax(max:0,
             0x5080 // road to ikana
@@ -94,7 +98,8 @@ namespace MMR.Randomizer.GameObjects
         //    variant: 0x3F5F)] // can place around chests
         //[AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
         //    variant: 2, 9)] // fairies around chests make sense, just not a full fairy fountain
-        [EnemizerScenesExcluded(Scene.InvertedStoneTower, Scene.TerminaField)]
+        [EnemizerScenesExcluded(Scene.InvertedStoneTower,
+            Scene.TerminaField, Scene.PiratesFortressRooms, Scene.PiratesFortress, Scene.PiratesFortressExterior, Scene.TwinIslandsSpring, Scene.Woodfall)]
         [SwitchFlagsPlacementZRot]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
         [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
