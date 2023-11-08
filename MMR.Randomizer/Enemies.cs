@@ -2749,14 +2749,16 @@ namespace MMR.Randomizer
             }
         }
 
-        public static void MoveAlignedCompanionActors(List<Actor> changedEnemies, Random rng, StringBuilder log)
+        // thisSceneData.Actors, thisSceneData.RNG, thisSceneData.Log
+        //public static void MoveAlignedCompanionActors(List<Actor> changedEnemies, Random rng, StringBuilder log)
+        public static void MoveAlignedCompanionActors(SceneEnemizerData thisSceneData)
         {
             /// Companion actors can sometimes be alligned to their host, to increase immersion
             /// e.g: putting hidden grottos inside of a stone circle
             /// e.g 2: putting butterflies over bushes
 
-            var actorsWithCompanions = changedEnemies.FindAll(act => ((GameObjects.Actor) act.ActorId).HasOptionalCompanions())
-                                                     .OrderBy(act => rng.Next()) // randomize list
+            var actorsWithCompanions = thisSceneData.Actors.FindAll(act => ((GameObjects.Actor) act.ActorId).HasOptionalCompanions())
+                                                     .OrderBy(act => thisSceneData.RNG.Next()) // randomize list
                                                      .ToList();
 
             if (actorsWithCompanions.Count <= 2) return;
@@ -2768,24 +2770,31 @@ namespace MMR.Randomizer
                 var companions = mainActorEnum.GetAttributes<AlignedCompanionActorAttribute>().ToList();
                 foreach (var companion in companions)
                 {
-                    var actorEnum = companion.Companion;
+                    var companionEnum = companion.Companion;
                     // todo detection of ourVars too
                     // scan for companions that can be moved
                     // for now, assume all previously used companions must be left untouched, no shuffling
-                    var eligibleCompanions = changedEnemies.FindAll(act => act.ActorId == (int) actorEnum     // correct actor
-                                                            && act.previouslyMovedCompanion == false          // not already used
-                                                            && companion.Variants.Contains(act.Variants[0])); // correct variant
+                    var eligibleCompanions = thisSceneData.Actors.FindAll(act =>
+                                                               act.ActorId == (int) companionEnum               // correct actor
+                                                            && act.previouslyMovedCompanion == false            // not already used
+                                                            && companion.Variants.Contains(act.Variants[0]));   // correct variant
+
+                    if (mainActor.Blockable == false)
+                    {
+                        eligibleCompanions.RemoveAll(comp => comp.ActorEnum.IsBlockingActor(variant:comp.Variants[0])); // blocking actor sensitive spots
+                    }
 
                     if (eligibleCompanions != null && eligibleCompanions.Count > 0)
                     {
-                        var randomCompanion = eligibleCompanions[rng.Next(eligibleCompanions.Count)];
+                        var randomCompanion = eligibleCompanions[thisSceneData.RNG.Next(eligibleCompanions.Count)];
                         // first move on top, then adjust
                         randomCompanion.Position.x = mainActor.Position.x;
                         randomCompanion.Position.y = (short)(actorsWithCompanions[i].Position.y + companion.RelativePosition.y);
                         randomCompanion.Position.z = mainActor.Position.z;
 
                         // todo: use x and z, with actor rotation, to figure out where to move the actors to
-                        log.AppendLine(" Moved companion: [" + randomCompanion.ActorEnum.ToString()
+                        thisSceneData.Log.AppendLine(
+                                      " Moved companion: [" + randomCompanion.ActorEnum.ToString()
                                     + "][" + randomCompanion.Variants[0].ToString("X2")
                                     + "] to actor: [" + mainActor.ActorEnum.ToString()
                                     + "][" + randomCompanion.Variants[0].ToString("X2")
@@ -3207,7 +3216,7 @@ namespace MMR.Randomizer
             WriteOutput("####################################################### ");
 
             // realign all scene companion actors
-            MoveAlignedCompanionActors(thisSceneData.Actors, thisSceneData.RNG, thisSceneData.Log);
+            MoveAlignedCompanionActors(thisSceneData);
 
             SetSceneEnemyObjects(scene, thisSceneData.ChosenReplacementObjectsPerMap);
             SceneUtils.UpdateScene(scene); // writes scene actors back to binary

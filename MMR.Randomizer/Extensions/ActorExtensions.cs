@@ -388,7 +388,7 @@ namespace MMR.Randomizer.Extensions
             return true;
         }
 
-        public static bool IsBlockingActor(this Actor actor)
+        public static bool IsBlockingActor(this Actor actor, int variant = 0)
         {
             if (actor.GetAttribute<BlockingVariantsAll>() != null)
             {
@@ -396,6 +396,13 @@ namespace MMR.Randomizer.Extensions
             }
 
             // TODO implement finer specifics
+            var blockingVariants = actor.GetAttribute<BlockingVariantsAttribute>();
+            if (blockingVariants != null)
+            {
+                var allVariants = blockingVariants.Variants;
+                return allVariants.Contains(variant);
+            }
+
 
             return false;
         }
