@@ -23,7 +23,7 @@ f32 CollisionCheck_GetDamageAndEffectOnBumper(ColCommon* at, ColBodyInfo* atInfo
                 ActorDamageByte attack = damageTable->attack[i];
                 if (attack.damage) {
                     f32 checkMultiplier = damageMultipliers[attack.damage];
-                    if (checkMultiplier > highestMultiplier) {
+                    if (checkMultiplier > highestMultiplier || (checkMultiplier == highestMultiplier && *effect == 0)) {
                         highestMultiplier = checkMultiplier;
                         *effect = attack.effect;
                     }
