@@ -1852,6 +1852,14 @@ namespace MMR.Randomizer
                     {
                         overrideChestType = item.Item.IsTemporary(_randomized.Settings) ? ChestTypeAttribute.ChestType.SmallGold : ChestTypeAttribute.ChestType.LargeGold;
                     }
+                    if (item.Item.Name().Contains("Compass") && _randomized.Settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.CompassRevealsBoss))
+                    {
+                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
+                    }
+                    if (item.Item.Name().Contains("Map") && item.Item.ClassicCategory() == ClassicCategory.DungeonItems && _randomized.Settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.MapRevealsLocation))
+                    {
+                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
+                    }
                     ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType, messageTable, _extendedObjects);
                 }
             }
