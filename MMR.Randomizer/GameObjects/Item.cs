@@ -1308,7 +1308,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 0)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer, 0)]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0xBD), ItemPool(ItemCategory.Fairy, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemTradingPostFairy,
 
@@ -10571,7 +10571,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Ikana Castle Courtyard Pot"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x486), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xEBE)]
         CollectableAncientCastleOfIkanaCastleExteriorPot1,
 
@@ -10581,7 +10581,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Ikana Castle Hole Room Pot 3"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x487), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xECE)]
         CollectableAncientCastleOfIkanaHoleRoomPot3,
 
@@ -10591,7 +10591,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Ikana Castle Hole Room Pot 4"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x488), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xED0)]
         CollectableAncientCastleOfIkanaHoleRoomPot4,
 
@@ -10611,7 +10611,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Great Bay Temple Entrance Room Barrel"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x48A), ItemPool(ItemCategory.Fairy, LocationCategory.Barrels, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x24B3)]
         CollectableGreatBayTempleEntranceRoomBarrel1,
 
@@ -10621,7 +10621,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Ikana Canyon Cleared Grass 4"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("an ancient plant"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x48B), ItemPool(ItemCategory.Fairy, LocationCategory.Grass, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x9A3)]
         CollectableIkanaCanyonMainAreaGrass7,
 
@@ -10631,7 +10631,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Ikana Canyon Grass 4"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("an ancient plant"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x48C), ItemPool(ItemCategory.Fairy, LocationCategory.Grass, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x9C9)]
         CollectableIkanaCanyonMainAreaGrass8,
 
@@ -10641,7 +10641,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Milk Road Grass 3"), Region(Region.MilkRoad)]
         [GossipLocationHint("a roadside plant"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x48D), ItemPool(ItemCategory.Fairy, LocationCategory.Grass, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x1120)]
         CollectableMilkRoadGrass3,
 
@@ -10651,7 +10651,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Mountain Village Spring Pot"), Region(Region.MountainVillage)]
         [GossipLocationHint("a spring jar"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x48E), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2D26)]
         CollectableMountainVillageSpringPot1,
 
@@ -10661,7 +10661,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Mountain Village Spring Snowball 4"), Region(Region.MountainVillage)]
         [GossipLocationHint("a spring snowball"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x48F), ItemPool(ItemCategory.Fairy, LocationCategory.SmallSnowballs, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2D2B)]
         CollectableMountainVillageSpringSmallSnowball4,
 
@@ -10671,7 +10671,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Mountain Village Winter Pot"), Region(Region.MountainVillage)]
         [GossipLocationHint("a village jar"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x490), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2820)]
         CollectableMountainVillageWinterPot1,
 
@@ -10681,7 +10681,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Mountain Village Winter Small Snowball 6"), Region(Region.MountainVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x491), ItemPool(ItemCategory.Fairy, LocationCategory.SmallSnowballs, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2836)]
         CollectableMountainVillageWinterSmallSnowball8,
 
@@ -10691,7 +10691,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Road to Ikana Pot"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a jar on a rock"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x492), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x29A0)]
         CollectableRoadToIkanaPot1,
 
@@ -10701,7 +10701,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Secret Shrine Underwater Pot 5"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x493), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x307A)]
         CollectableSecretShrineMainRoomPot5,
 
@@ -10712,7 +10712,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Snowhead Small Snowball 4"), Region(Region.Snowhead)]
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x494), ItemPool(ItemCategory.Fairy, LocationCategory.SmallSnowballs, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2E22)]
         CollectableSnowheadSmallSnowball10,
 
@@ -10722,7 +10722,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Snowhead Main Room Pot"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x495), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x10A7)]
         CollectableSnowheadTempleMainRoomPot3,
 
@@ -10732,7 +10732,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Cleared Swamp Owl Grass 2"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("swamp grass"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x496), ItemPool(ItemCategory.Fairy, LocationCategory.Grass, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x27)]
         CollectableSouthernSwampClearCentralSwampGrass2,
 
@@ -10742,7 +10742,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Southern Swamp Owl Grass 2"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("swamp grass"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x497), ItemPool(ItemCategory.Fairy, LocationCategory.Grass, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x22AD)]
         CollectableSouthernSwampPoisonedCentralSwampGrass2,
 
@@ -10752,7 +10752,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Stone Tower Lower Scarecrow Pot 4"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x498), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2C23)]
         CollectableStoneTowerPot11,
 
@@ -10762,7 +10762,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Stone Tower Lower Scarecrow Pot 5"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x499), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2C25)]
         CollectableStoneTowerPot12,
 
@@ -10772,7 +10772,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Stone Tower Upper Scarecrow Pot 5"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x49A), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2C2C)]
         CollectableStoneTowerPot13,
 
@@ -10782,7 +10782,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Stone Tower Owl Pot 4"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x49B), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2C39)]
         CollectableStoneTowerPot14,
 
@@ -10792,7 +10792,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Inverted Stone Tower Pot 3"), Region(Region.StoneTower)]
         [GossipLocationHint("a sky below"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x49C), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2CB9)]
         CollectableStoneTowerInvertedStoneTowerFlippedPot3,
 
@@ -10804,7 +10804,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Stone Tower Temple Thin Bridge Pot"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x49E), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xB24)]
         CollectableStoneTowerTempleRoomAfterLightArrowsPot1,
 
@@ -10814,7 +10814,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Stone Tower Temple Wizzrobe Pot"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x49F), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xC21)]
         CollectableStoneTowerTempleInvertedWizzrobeRoomPot1,
 
@@ -10824,7 +10824,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Termina Field Pillar Pot"), Region(Region.TerminaField)]
         [GossipLocationHint("a jar on a pillar"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4A0), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x16A0)]
         CollectableTerminaFieldPot1,
 
@@ -10834,7 +10834,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Woodfall Pot 3"), Region(Region.Woodfall)]
         [GossipLocationHint("a poisoned platform"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4A1), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2321)]
         CollectableWoodfallPot3,
 
@@ -10844,7 +10844,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Woodfall Temple Entrance Pot"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4A2), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xDA1)]
         CollectableWoodfallTempleEntranceRoomPot1,
 
@@ -10854,7 +10854,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Zora Cape Owl Pot 4"), Region(Region.ZoraCape)]
         [GossipLocationHint("a cape jar"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4A3), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x1C24)]
         CollectableZoraCapePot5,
 
@@ -10865,7 +10865,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Cucco Shack Gossip Fairy"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4A4), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableCuccoShackGossipFairy1,
 
@@ -10875,7 +10875,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Doggy Racetrack Gossip Fairy"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4A5), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableDoggyRacetrackGossipFairy1,
 
@@ -10885,7 +10885,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Great Bay Coast Gossip Fairy"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4A6), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableGreatBayCoastGossipFairy1,
 
@@ -10895,7 +10895,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Gossip Grotto Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4A7), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableGrottosOceanGossipStonesGossipFairy1,
 
@@ -10905,7 +10905,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Ikana Canyon Dock Gossip Fairy"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4A8), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableIkanaCanyonMainAreaGossipFairy1,
 
@@ -10915,7 +10915,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Ikana Canyon Spirit House Gossip Fairy"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4A9), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableIkanaCanyonMainAreaGossipFairy2,
 
@@ -10925,7 +10925,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Ikana Canyon Ravine Gossip Fairy"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4AA), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableIkanaCanyonSakonSHideoutAreaGossipFairy1,
 
@@ -10935,7 +10935,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Milk Road Gossip Fairy"), Region(Region.MilkRoad)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4AB), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableMilkRoadGossipFairy1,
 
@@ -10945,7 +10945,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Mountain Village Spring Path Gossip Fairy"), Region(Region.MountainVillage)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4AC), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableMountainVillageSpringPathToGoronGraveyardGossipFairy1,
 
@@ -10955,7 +10955,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Mountain Village Spring Frog Gossip Fairy"), Region(Region.MountainVillage)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4AD), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableMountainVillageSpringGossipFairy1,
 
@@ -10965,7 +10965,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Path to Mountain Village Gossip Fairy"), Region(Region.MountainVillage)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4AE), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectablePathToMountainVillageGossipFairy1,
 
@@ -10975,7 +10975,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Road to Ikana Gossip Fairy"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4AF), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableRoadToIkanaGossipFairy1,
 
@@ -10985,7 +10985,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Road to Southern Swamp Gossip Fairy"), Region(Region.RoadToSouthernSwamp)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4B0), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableRoadToSouthernSwampGossipFairy1,
 
@@ -10995,7 +10995,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Ranch Entrance Gossip Fairy"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4B1), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableRomaniRanchGossipFairy1,
 
@@ -11005,7 +11005,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Ranch Tree Gossip Fairy"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4B2), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableRomaniRanchGossipFairy2,
 
@@ -11015,7 +11015,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Ranch Barn Gossip Fairy"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4B3), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableRomaniRanchGossipFairy3,
 
@@ -11025,7 +11025,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Southern Swamp Gossip Fairy"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4B4), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorGossipFairy1,
 
@@ -11035,7 +11035,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Swamp Spider House Gossip Fairy"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4B5), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableSwampSpiderHouseTreeRoomGossipFairy1,
 
@@ -11045,7 +11045,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Termina Field Observatory Gossip Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4B6), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTerminaFieldGossipFairy1,
 
@@ -11055,7 +11055,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Termina Field East Gossip Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4B7), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTerminaFieldGossipFairy2,
 
@@ -11065,7 +11065,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Termina Field South Gossip Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4B8), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTerminaFieldGossipFairy3,
 
@@ -11075,7 +11075,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Termina Field North Gossip Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4B9), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTerminaFieldGossipFairy4,
 
@@ -11085,7 +11085,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Termina Field West Gossip Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4BA), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTerminaFieldGossipFairy5,
 
@@ -11095,7 +11095,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Termina Field Milk Gossip Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4BB), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTerminaFieldGossipFairy6,
 
@@ -11105,7 +11105,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Deku Trial Left Closer Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4BC), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonDekuTrialDekuTrialGossipFairy1,
 
@@ -11115,7 +11115,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Deku Trial Right Closer Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4BD), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonDekuTrialDekuTrialGossipFairy2,
 
@@ -11125,7 +11125,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Deku Trial Left Middle Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4BE), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonDekuTrialDekuTrialGossipFairy3,
 
@@ -11135,7 +11135,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Deku Trial Right Middle Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4BF), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonDekuTrialDekuTrialGossipFairy4,
 
@@ -11145,7 +11145,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Deku Trial Right Further Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4C0), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonDekuTrialDekuTrialGossipFairy5,
 
@@ -11155,7 +11155,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Goron Trial End Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4C1), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonGoronTrialGoronTrialGossipFairy1,
 
@@ -11165,7 +11165,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Goron Trial Second Set Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4C2), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonGoronTrialGoronTrialGossipFairy2,
 
@@ -11175,7 +11175,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Goron Trial Second Set Gossip Fairy 2"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4C3), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonGoronTrialGoronTrialGossipFairy3,
 
@@ -11185,7 +11185,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Goron Trial First Set Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4C4), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonGoronTrialGoronTrialGossipFairy4,
 
@@ -11195,7 +11195,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Goron Trial First Set Gossip Fairy 2"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4C5), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonGoronTrialGoronTrialGossipFairy5,
 
@@ -11205,7 +11205,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Link Trial First Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4C6), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonLinkTrialGossipStoneRoom1GossipFairy1,
 
@@ -11215,7 +11215,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Link Trial Second Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4C7), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonLinkTrialGossipStoneRoom2GossipFairy1,
 
@@ -11225,7 +11225,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Link Trial Iron Knuckle Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4C8), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonLinkTrialIronKnuckleBattleGossipFairy1,
 
@@ -11235,7 +11235,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Link Trial Iron Knuckle Fairy 2"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4C9), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonLinkTrialIronKnuckleBattleGossipFairy2,
 
@@ -11245,7 +11245,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Link Trial Last Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4CA), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonLinkTrialPieceOfHeartRoomGossipFairy1,
 
@@ -11255,7 +11255,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4CB), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonZoraTrialZoraTrialGossipFairy1,
 
@@ -11265,7 +11265,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy 2"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4CC), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonZoraTrialZoraTrialGossipFairy2,
 
@@ -11275,7 +11275,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy 3"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4CD), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonZoraTrialZoraTrialGossipFairy3,
 
@@ -11285,7 +11285,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy 4"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4CE), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonZoraTrialZoraTrialGossipFairy4,
 
@@ -11295,7 +11295,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy 5"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4CF), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableTheMoonZoraTrialZoraTrialGossipFairy5,
 
@@ -11305,7 +11305,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Zora Cape Gossip Fairy"), Region(Region.ZoraCape)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4D0), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableZoraCapeGossipFairy1,
 
@@ -11315,7 +11315,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Great Bay Coast Butterfly Fairy"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4D1), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
         CollectableGreatBayCoastButterflyFairy1,
 
@@ -11325,7 +11325,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Termina Field West Gossip Grotto Butterfly Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4D2), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
         CollectableGrottosOceanGossipStonesButterflyFairy1,
 
@@ -11335,7 +11335,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Bean Man Butterfly Fairy"), Region(Region.DekuPalace)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4D3), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
         CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1,
 
@@ -11345,7 +11345,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Termina Field Cow Grotto Butterfly Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4D4), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
         CollectableGrottosCowGrottoButterflyFairy1,
 
@@ -11355,7 +11355,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Great Bay Coast Cow Grotto Butterfly Fairy"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4D5), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
         CollectableGrottosCowGrottoButterflyFairy2,
 
@@ -11365,7 +11365,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Mountain Village Spring Butterfly Fairy"), Region(Region.MountainVillage)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4D6), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
         CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1,
 
@@ -11375,7 +11375,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Mountain Village Spring Butterfly Fairy 2"), Region(Region.MountainVillage)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4D7), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
         CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2,
 
@@ -11385,7 +11385,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Near Peahat Grotto Butterfly Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4D8), ItemPool(ItemCategory.Fairy, LocationCategory.Butterflies, ClassicCategory.Butterflies), NullableItem]
         CollectableTerminaFieldButterflyFairy1,
 
@@ -11431,7 +11431,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 1"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4D9), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy1,
 
@@ -11440,7 +11440,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 2"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4DA), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy2,
 
@@ -11449,7 +11449,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 3"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4DB), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy3,
 
@@ -11458,7 +11458,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 4"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4DC), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy4,
 
@@ -11467,7 +11467,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 5"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4DD), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy5,
 
@@ -11476,7 +11476,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 6"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4DE), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy6,
 
@@ -11485,7 +11485,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 7"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4DF), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy7,
 
@@ -11494,7 +11494,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 8"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x4E0), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy8,
 
