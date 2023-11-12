@@ -11824,7 +11824,7 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable]
         [ItemName("Nothing")]
         [GossipItemHint("nothing")]
-        [ShopText("Literally nothing.")]
+        [ShopText("Literally nothing.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [ExclusiveItem(0xB6, type: 2)]
         [ExclusiveItemGraphic(0, 0)]
