@@ -498,7 +498,9 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             }
             break;
         case ACTOR_EN_ZORAEGG: // Zora Egg
-            ProcessActorGiIndex(actor, ctxt, 0x75);
+            if (actor->draw) {
+                ProcessActorGiIndex(actor, ctxt, 0x75);
+            }
             break;
         case ACTOR_EN_KNIGHT: // Igos
             ProcessActorGiIndex(actor, ctxt, 0x1CB);
