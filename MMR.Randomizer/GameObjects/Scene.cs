@@ -429,6 +429,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.Octarok, 
             Actor.Obj_Boat, Actor.SwampBoat)] // dyna crashing from just one boat and nothing else
         [EnemizerSceneBlockSensitive(Actor.DragonFly, -1)]
+        [EnemizerSceneBlockSensitive(Actor.En_Owl, -1)]
         SouthernSwamp = 0x42,
 
         [FileID(1362)]
