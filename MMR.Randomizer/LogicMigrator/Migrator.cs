@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 22;
+        public const int CurrentVersion = 23;
 
         public static string ApplyMigrations(string logic)
         {
@@ -232,6 +232,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 22)
             {
                 AddOtherCredits(logicObject);
+            }
+
+            if (logicObject.Version < 23)
+            {
+                RemoveStoneTowerTemplePot(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -4701,6 +4706,12 @@ namespace MMR.Randomizer.LogicMigrator
                 return logicItem;
             }));
             logicObject.Version = 22;
+        }
+
+        private static void RemoveStoneTowerTemplePot(JsonFormatLogic logicObject)
+        {
+            logicObject.Logic.RemoveAt(1160);
+            logicObject.Version = 23;
         }
 
         private class MigrationItem

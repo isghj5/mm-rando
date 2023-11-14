@@ -1,5 +1,5 @@
 {
-  "Version": 22,
+  "Version": 23,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -57601,19 +57601,6 @@
           "SettingClimbMostSurfaces"
         ]
       ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "CollectableStoneTowerTempleRoomAfterLightArrowsPot1",
-      "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
-        "STT Garo Master Access",
-        "STT Thin Bridge Exit"
-      ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",

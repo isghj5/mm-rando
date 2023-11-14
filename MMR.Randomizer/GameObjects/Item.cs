@@ -10800,14 +10800,7 @@ namespace MMR.Randomizer.GameObjects
         // [GetItemIndex(0x49D)] // Removed
 
 
-        [Visible]
-        [Repeatable]
-        [ItemName("Fairy"), LocationName("Stone Tower Temple Thin Bridge Pot"), Region(Region.StoneTowerTemple)]
-        [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a winged friend", "a healer")]
-        [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x49E), ItemPool(ItemCategory.Fairy, LocationCategory.Jars, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0xB24)]
-        CollectableStoneTowerTempleRoomAfterLightArrowsPot1,
+        // [GetItemIndex(0x49E)] // Removed
 
 
         [Visible]
