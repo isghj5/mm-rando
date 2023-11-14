@@ -522,7 +522,7 @@ namespace MMR.Randomizer
                     ItemList[Item.OtherCredits].DependsOnItems.Add(requiredSkulltulas.Item);
                 }
 
-                if (_settings.VictoryMode.HasFlag(VictoryMode.NonTransformMasks))
+                if (_settings.VictoryMode.HasFlag(VictoryMode.NonTransformationMasks))
                 {
                     var requiredMasks = new ItemObject
                     {
@@ -534,13 +534,13 @@ namespace MMR.Randomizer
                     ItemList[Item.OtherCredits].DependsOnItems.Add(requiredMasks.Item);
                 }
 
-                if (_settings.VictoryMode.HasFlag(VictoryMode.AllMasks))
+                if (_settings.VictoryMode.HasFlag(VictoryMode.TransformationMasks))
                 {
                     var requiredMasks = new ItemObject
                     {
                         ID = ItemList.Count,
                         TimeAvailable = 63,
-                        DependsOnItems = Enumerable.Range((int)Item.MaskPostmanHat, 22).Cast<Item>().Append(Item.MaskDeku).Append(Item.MaskFierceDeity).ToList(),
+                        DependsOnItems = new List<Item> { Item.MaskDeku, Item.MaskGoron, Item.MaskZora, Item.MaskFierceDeity },
                     };
                     ItemList.Add(requiredMasks);
                     ItemList[Item.OtherCredits].DependsOnItems.Add(requiredMasks.Item);
@@ -558,7 +558,7 @@ namespace MMR.Randomizer
                     ItemList[Item.OtherCredits].DependsOnItems.Add(requiredNotebookEntries.Item);
                 }
 
-                if (_settings.VictoryMode.HasFlag(VictoryMode.AllHearts))
+                if (_settings.VictoryMode.HasFlag(VictoryMode.Hearts))
                 {
                     var requiredHearts = new ItemObject
                     {

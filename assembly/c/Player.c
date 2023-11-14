@@ -100,9 +100,9 @@ bool Player_HasCustomVictoryCondition() {
     return MISC_CONFIG.internal.victoryFairies
         || MISC_CONFIG.internal.victorySkullTokens
         || MISC_CONFIG.internal.victoryNonTransformMasks
-        || MISC_CONFIG.internal.victoryAllMasks
+        || MISC_CONFIG.internal.victoryTransformMasks
         || MISC_CONFIG.internal.victoryNotebook
-        || MISC_CONFIG.internal.victoryAllHearts;
+        || MISC_CONFIG.internal.victoryHearts;
 }
 
 bool Player_CheckVictory() {
@@ -129,8 +129,8 @@ bool Player_CheckVictory() {
             }
         }
     }
-    if (MISC_CONFIG.internal.victoryAllMasks) {
-        for (u32 i = 0; i < ARRAY_COUNT(gSaveContext.perm.inv.masks); i++) {
+    if (MISC_CONFIG.internal.victoryTransformMasks) {
+        for (u32 i = 5; i < ARRAY_COUNT(gSaveContext.perm.inv.masks); i += 6) {
             if (gSaveContext.perm.inv.masks[i] == 0xFF) {
                 return false;
             }
@@ -153,7 +153,7 @@ bool Player_CheckVictory() {
             }
         }
     }
-    if (MISC_CONFIG.internal.victoryAllHearts) {
+    if (MISC_CONFIG.internal.victoryHearts) {
         if (gSaveContext.perm.unk24.maxLife < 0x140) {
             return false;
         }

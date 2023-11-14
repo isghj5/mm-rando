@@ -82,9 +82,9 @@ typedef struct {
     u32 victoryFairies            : 1;
     u32 victorySkullTokens        : 1;
     u32 victoryNonTransformMasks  : 1;
-    u32 victoryAllMasks           : 1;
+    u32 victoryTransformMasks     : 1;
     u32 victoryNotebook           : 1;
-    u32 victoryAllHearts          : 1;
+    u32 victoryHearts             : 1;
     u32                           : 24;
 } MiscInternal;
 

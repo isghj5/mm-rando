@@ -19,15 +19,15 @@ namespace MMR.Randomizer.Models
         SkullTokens = 1 << 2,
 
         [Description("Have all 20 non-transformation masks.")]
-        NonTransformMasks = 1 << 3,
+        NonTransformationMasks = 1 << 3,
 
-        [Description("Have all 24 masks.")]
-        AllMasks = 1 << 4,
+        [Description("Have all 4 transformation masks.")]
+        TransformationMasks = 1 << 4,
 
         [Description("Have all the notebook entries.")]
         Notebook = 1 << 5,
 
         [Description("Have all 20 hearts.")]
-        AllHearts = 1 << 6,
+        Hearts = 1 << 6,
     }
 }

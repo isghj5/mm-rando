@@ -396,10 +396,10 @@ namespace MMR.Randomizer.Asm
         public bool VictoryDirectToCredits { get; set; }
         public bool VictoryFairies { get; set; }
         public bool VictorySkullTokens { get; set; }
-        public bool VictoryNonTransformMasks { get; set; }
-        public bool VictoryAllMasks { get; set; }
+        public bool VictoryNonTransformationMasks { get; set; }
+        public bool VictoryTransformationMasks { get; set; }
         public bool VictoryNotebook { get;  set; }
-        public bool VictoryAllHearts { get;  set; }
+        public bool VictoryHearts { get;  set; }
 
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
@@ -412,10 +412,10 @@ namespace MMR.Randomizer.Asm
             bitPacker.Write(VictoryDirectToCredits);
             bitPacker.Write(VictoryFairies);
             bitPacker.Write(VictorySkullTokens);
-            bitPacker.Write(VictoryNonTransformMasks);
-            bitPacker.Write(VictoryAllMasks);
+            bitPacker.Write(VictoryNonTransformationMasks);
+            bitPacker.Write(VictoryTransformationMasks);
             bitPacker.Write(VictoryNotebook);
-            bitPacker.Write(VictoryAllHearts);
+            bitPacker.Write(VictoryHearts);
             return bitPacker.ToByteArray(4);
         }
     }
@@ -706,10 +706,10 @@ namespace MMR.Randomizer.Asm
             this.InternalFlags.VictoryDirectToCredits = settings.VictoryMode.HasFlag(VictoryMode.DirectToCredits);
             this.InternalFlags.VictoryFairies = settings.VictoryMode.HasFlag(VictoryMode.Fairies);
             this.InternalFlags.VictorySkullTokens = settings.VictoryMode.HasFlag(VictoryMode.SkullTokens);
-            this.InternalFlags.VictoryNonTransformMasks = settings.VictoryMode.HasFlag(VictoryMode.NonTransformMasks);
-            this.InternalFlags.VictoryAllMasks = settings.VictoryMode.HasFlag(VictoryMode.AllMasks);
+            this.InternalFlags.VictoryNonTransformationMasks = settings.VictoryMode.HasFlag(VictoryMode.NonTransformationMasks);
+            this.InternalFlags.VictoryTransformationMasks = settings.VictoryMode.HasFlag(VictoryMode.TransformationMasks);
             this.InternalFlags.VictoryNotebook = settings.VictoryMode.HasFlag(VictoryMode.Notebook);
-            this.InternalFlags.VictoryAllHearts = settings.VictoryMode.HasFlag(VictoryMode.AllHearts);
+            this.InternalFlags.VictoryHearts = settings.VictoryMode.HasFlag(VictoryMode.Hearts);
             this.Shorts.CollectableTableFileIndex = ItemSwapUtils.COLLECTABLE_TABLE_FILE_INDEX;
             this.MMRBytes.NpcKafeiReplaceMask = MaskConfigUtils.NpcKafeiDrawMask;
         }
