@@ -200,6 +200,7 @@ extern void z2_SkelAnime_DrawFlexLod(GlobalContext* ctxt, void** skeleton, Vec3s
 extern void z2_801660B8(GlobalContext* ctxt, Gfx* gfx);
 
 // Function Prototypes (File Loading).
+extern void z2_Sram_SaveSpecialNewDay(GlobalContext* ctxt);
 extern s32 z2_RomToRam(u32 src, void* dst, u32 length);
 extern s16 z2_GetFileNumber(u32 vromAddr);
 extern u32 z2_GetFilePhysAddr(u32 vromAddr);

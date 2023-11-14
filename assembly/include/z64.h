@@ -1494,7 +1494,8 @@ typedef struct {
     /* 0x292 */ s16 magicConsumeCost;
     /* 0x294 */ UNK_TYPE1 pad294[0x6];
     /* 0x29A */ u16 minigameCounter[2];
-    /* 0x29E */ UNK_TYPE1 pad29E[0xE];
+    /* 0x29E */ UNK_TYPE1 pad29E[0xC];
+    /* 0x2AA */ u16 nextCutsceneIndex;                 // "next_daytime"
     /* 0x2AC */ u8 cutsceneTrigger;
     /* 0x2AD */ UNK_TYPE1 pad2AD[0x5];
     /* 0x2B2 */ u16 environmentTime;

@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 21;
+        public const int CurrentVersion = 22;
 
         public static string ApplyMigrations(string logic)
         {
@@ -227,6 +227,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 21)
             {
                 ReplaceSettingsWithExpressions(logicObject);
+            }
+
+            if (logicObject.Version < 22)
+            {
+                AddOtherCredits(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -4671,6 +4676,31 @@ namespace MMR.Randomizer.LogicMigrator
             logicObject.Logic.RemoveRange(137, mapping.Count);
 
             logicObject.Version = 21;
+        }
+
+        private static void AddOtherCredits(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 277;
+            var itemNames = new string[]
+            {
+                "OtherCredits",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name =>
+            {
+                var logicItem = new JsonFormatLogicItem
+                {
+                    Id = name,
+                    RequiredItems = new List<string>()
+                    {
+                        "AreaMoonAccess"
+                    },
+                    ConditionalItems = new List<List<string>>(),
+                };
+
+                return logicItem;
+            }));
+            logicObject.Version = 22;
         }
 
         private class MigrationItem

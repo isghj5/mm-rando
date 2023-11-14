@@ -341,8 +341,8 @@ namespace MMR.UI.Forms
 
         private void InitializeDungeonModeSettings()
         {
-            //var dungeonModeSettings = new List<Type> { typeof(SmallKeyMode), typeof(BossKeyMode), typeof(StrayFairyMode) };
             var properties = new List<PropertyInfo>();
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.VictoryMode)));
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.PriceMode)));
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.BossRemainsMode)));
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.BossKeyMode)));
@@ -1271,7 +1271,7 @@ namespace MMR.UI.Forms
             cNoDowngrades.Checked = _configuration.GameplaySettings.PreventDowngrades;
             cShopAppearance.Checked = _configuration.GameplaySettings.UpdateShopAppearance;
             cStartingItems.SelectedIndex = (int)_configuration.GameplaySettings.StartingItemMode;
-            cRequiredBossRemains.SelectedIndex = _configuration.GameplaySettings.RequiredBossRemains - 1;
+            cRequiredBossRemains.SelectedIndex = _configuration.GameplaySettings.RequiredBossRemains;
             cEponaSword.Checked = _configuration.GameplaySettings.FixEponaSword;
             cUpdateChests.Checked = _configuration.GameplaySettings.UpdateChests;
             cUpdateNpcText.Checked = _configuration.GameplaySettings.UpdateNPCText;
@@ -1653,7 +1653,7 @@ namespace MMR.UI.Forms
 
         private void cRequiredBossRemains_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.RequiredBossRemains = (byte)(cRequiredBossRemains.SelectedIndex + 1));
+            UpdateSingleSetting(() => _configuration.GameplaySettings.RequiredBossRemains = (byte)(cRequiredBossRemains.SelectedIndex));
         }
 
         private void cQText_CheckedChanged(object sender, EventArgs e)

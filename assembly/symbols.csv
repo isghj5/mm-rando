@@ -152,6 +152,7 @@
 0x80133F28,z2_SkelAnime_DrawLimb2
 0x801343C0,z2_SkelAnime_DrawLimb3
 0x8013A240,z2_UpdatePictoFlags
+0x80146F5C,z2_Sram_SaveSpecialNewDay
 0x80147564,z2_InitButtonNoteColors
 0x80147624,z2_MessageShouldAdvance
 0x801477B4,z2_MessageClose

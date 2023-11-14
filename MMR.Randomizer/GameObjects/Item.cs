@@ -2261,6 +2261,7 @@ namespace MMR.Randomizer.GameObjects
         OtherThreeMasks,
         OtherFourMasks,
         AreaMoonAccess,
+        OtherCredits,
 
         [Visible]
         [StartingItem(0xC5CE70, 0x10, true)]

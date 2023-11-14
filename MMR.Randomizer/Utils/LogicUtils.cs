@@ -183,7 +183,7 @@ namespace MMR.Randomizer.Utils
             var important = new List<Item>();
             if (locationLogic.RequiredItemIds != null && locationLogic.RequiredItemIds.Any())
             {
-                if (locationLogic.RequiredItemIds.Contains((int)Item.AreaMoonAccess))
+                if (locationLogic.RequiredItemIds.Contains((int)Item.OtherCredits))
                 {
                     return null;
                 }
@@ -203,7 +203,7 @@ namespace MMR.Randomizer.Utils
                         return null;
                     }
 
-                    if (logicPath[0] != Item.AreaMoonAccess || !requiredLocation.IsPlacementHighlyRestricted(settings) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !i.IsPlacementHighlyRestricted(settings)))
+                    if (logicPath[0] != Item.OtherCredits || !requiredLocation.IsPlacementHighlyRestricted(settings) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !i.IsPlacementHighlyRestricted(settings)))
                     {
                         required.Add(requiredLocation);
                     }
@@ -227,7 +227,7 @@ namespace MMR.Randomizer.Utils
                 var logicPaths = new List<LogicPaths>();
                 foreach (var conditions in locationLogic.ConditionalItemIds)
                 {
-                    if (conditions.Contains((int)Item.AreaMoonAccess))
+                    if (conditions.Contains((int)Item.OtherCredits))
                     {
                         continue;
                     }
@@ -252,7 +252,7 @@ namespace MMR.Randomizer.Utils
                             break;
                         }
 
-                        if (logicPath[0] != Item.AreaMoonAccess || !conditionalLocation.IsPlacementHighlyRestricted(settings) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !i.IsPlacementHighlyRestricted(settings)))
+                        if (logicPath[0] != Item.OtherCredits || !conditionalLocation.IsPlacementHighlyRestricted(settings) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !i.IsPlacementHighlyRestricted(settings)))
                         {
                             conditionalRequired.Add(conditionalLocation);
                         }

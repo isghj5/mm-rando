@@ -11,9 +11,15 @@ namespace MMR.Common.Utils
 
         private List<byte> data = new List<byte>();
 
-        public byte[] ToByteArray()
+        public byte[] ToByteArray(int align = 1)
         {
-            return data.ToArray();
+            var result = data.ToArray();
+            if (align > 1)
+            {
+                var padding = align - result.Length % align;
+                Array.Resize(ref result, result.Length + padding);
+            }
+            return result;
         }
 
         public void Write(bool value)

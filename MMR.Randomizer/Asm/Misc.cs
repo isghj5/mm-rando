@@ -380,7 +380,7 @@ namespace MMR.Randomizer.Asm
             bitPacker.Write(EasyFrameByFrame);
             bitPacker.Write(FairyMaskShimmer);
             bitPacker.Write(SkulltulaTokenSounds);
-            return bitPacker.ToByteArray();
+            return bitPacker.ToByteArray(4);
         }
     }
 
@@ -393,16 +393,30 @@ namespace MMR.Randomizer.Asm
         /// Whether or not Vanilla Layout is being used, which determines if certain mod files are included.
         /// </summary>
         public bool VanillaLayout { get; set; }
+        public bool VictoryDirectToCredits { get; set; }
+        public bool VictoryFairies { get; set; }
+        public bool VictorySkullTokens { get; set; }
+        public bool VictoryNonTransformMasks { get; set; }
+        public bool VictoryAllMasks { get; set; }
+        public bool VictoryNotebook { get;  set; }
+        public bool VictoryAllHearts { get;  set; }
 
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
         /// <returns>Integer</returns>
-        public uint ToInt()
+        public byte[] ToByteArray()
         {
-            uint flags = 0;
-            flags |= (this.VanillaLayout ? (uint)1 : 0) << 31;
-            return flags;
+            var bitPacker = new BitPacker();
+            bitPacker.Write(VanillaLayout);
+            bitPacker.Write(VictoryDirectToCredits);
+            bitPacker.Write(VictoryFairies);
+            bitPacker.Write(VictorySkullTokens);
+            bitPacker.Write(VictoryNonTransformMasks);
+            bitPacker.Write(VictoryAllMasks);
+            bitPacker.Write(VictoryNotebook);
+            bitPacker.Write(VictoryAllHearts);
+            return bitPacker.ToByteArray(4);
         }
     }
 
@@ -566,7 +580,7 @@ namespace MMR.Randomizer.Asm
         public uint Version;
         public byte[] Hash;
         public byte[] Flags;
-        public uint InternalFlags;
+        public byte[] InternalFlags;
         public uint Speedups;
         public uint Shorts;
         public uint MMRBytes;
@@ -591,7 +605,7 @@ namespace MMR.Randomizer.Asm
                 // Version 1
                 if (this.Version >= 1)
                 {
-                    writer.WriteUInt32(this.InternalFlags);
+                    writer.Write(this.InternalFlags);
                 }
 
                 // Version 3
@@ -689,6 +703,13 @@ namespace MMR.Randomizer.Asm
 
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;
+            this.InternalFlags.VictoryDirectToCredits = settings.VictoryMode.HasFlag(VictoryMode.DirectToCredits);
+            this.InternalFlags.VictoryFairies = settings.VictoryMode.HasFlag(VictoryMode.Fairies);
+            this.InternalFlags.VictorySkullTokens = settings.VictoryMode.HasFlag(VictoryMode.SkullTokens);
+            this.InternalFlags.VictoryNonTransformMasks = settings.VictoryMode.HasFlag(VictoryMode.NonTransformMasks);
+            this.InternalFlags.VictoryAllMasks = settings.VictoryMode.HasFlag(VictoryMode.AllMasks);
+            this.InternalFlags.VictoryNotebook = settings.VictoryMode.HasFlag(VictoryMode.Notebook);
+            this.InternalFlags.VictoryAllHearts = settings.VictoryMode.HasFlag(VictoryMode.AllHearts);
             this.Shorts.CollectableTableFileIndex = ItemSwapUtils.COLLECTABLE_TABLE_FILE_INDEX;
             this.MMRBytes.NpcKafeiReplaceMask = MaskConfigUtils.NpcKafeiDrawMask;
         }
@@ -702,16 +723,12 @@ namespace MMR.Randomizer.Asm
         {
             var hash = ReadWriteUtils.CopyBytes(this.Hash, 0x10);
 
-            var flags = this.Flags.ToByteArray();
-            var padding = 4 - flags.Length % 4;
-            Array.Resize(ref flags, flags.Length + padding);
-
             return new MiscConfigStruct
             {
                 Version = version,
                 Hash = hash,
-                Flags = flags,
-                InternalFlags = this.InternalFlags.ToInt(),
+                Flags = this.Flags.ToByteArray(),
+                InternalFlags = this.InternalFlags.ToByteArray(),
                 Speedups = this.Speedups.ToInt(),
                 Shorts = this.Shorts.ToInt(),
                 MMRBytes = this.MMRBytes.ToInt(),

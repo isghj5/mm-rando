@@ -78,7 +78,14 @@ typedef union {
 typedef struct {
     // Version 1 flags
     u32 vanillaLayout             : 1;
-    u32                           : 31;
+    u32 victoryDirectToCredits    : 1;
+    u32 victoryFairies            : 1;
+    u32 victorySkullTokens        : 1;
+    u32 victoryNonTransformMasks  : 1;
+    u32 victoryAllMasks           : 1;
+    u32 victoryNotebook           : 1;
+    u32 victoryAllHearts          : 1;
+    u32                           : 24;
 } MiscInternal;
 
 typedef struct {

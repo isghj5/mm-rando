@@ -318,6 +318,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public DungeonNavigationMode DungeonNavigationMode { get; set; }
 
+        public VictoryMode VictoryMode { get; set; }
+
 
         /// <summary>
         ///  Custom item list selections
@@ -596,9 +598,9 @@ namespace MMR.Randomizer.Models.Settings
             {
                 return $"Must enable '{nameof(QuestItemStorage)}' if '{nameof(KeepQuestTradeThroughTime)}' is enabled.";
             }
-            if (RequiredBossRemains < 1 || RequiredBossRemains > 4)
+            if (RequiredBossRemains < 0 || RequiredBossRemains > 4)
             {
-                return $"{nameof(RequiredBossRemains)} must be between 1 and 4.";
+                return $"{nameof(RequiredBossRemains)} must be between 0 and 4.";
             }
             return null;
         }

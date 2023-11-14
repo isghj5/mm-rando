@@ -96,6 +96,82 @@ void Player_PreventDangerousStates(ActorPlayer* player) {
     }
 }
 
+bool Player_HasCustomVictoryCondition() {
+    return MISC_CONFIG.internal.victoryFairies
+        || MISC_CONFIG.internal.victorySkullTokens
+        || MISC_CONFIG.internal.victoryNonTransformMasks
+        || MISC_CONFIG.internal.victoryAllMasks
+        || MISC_CONFIG.internal.victoryNotebook
+        || MISC_CONFIG.internal.victoryAllHearts;
+}
+
+bool Player_CheckVictory() {
+    if (MISC_CONFIG.internal.victoryFairies) {
+        if (!MISC_CONFIG.flags.fairyChests) {
+            if (gSaveContext.perm.inv.strayFairies[0] < 15
+                || gSaveContext.perm.inv.strayFairies[1] < 15
+                || gSaveContext.perm.inv.strayFairies[2] < 15
+                || gSaveContext.perm.inv.strayFairies[3] < 15) {
+                return false;
+            }
+        }
+    }
+    if (MISC_CONFIG.internal.victorySkullTokens) {
+        if (gSaveContext.perm.skullTokens[0] < 30
+            || gSaveContext.perm.skullTokens[1] < 30) {
+            return false;
+        }
+    }
+    if (MISC_CONFIG.internal.victoryNonTransformMasks) {
+        for (u32 i = 0; i < ARRAY_COUNT(gSaveContext.perm.inv.masks); i++) {
+            if (i%6 != 5 && gSaveContext.perm.inv.masks[i] == 0xFF) {
+                return false;
+            }
+        }
+    }
+    if (MISC_CONFIG.internal.victoryAllMasks) {
+        for (u32 i = 0; i < ARRAY_COUNT(gSaveContext.perm.inv.masks); i++) {
+            if (gSaveContext.perm.inv.masks[i] == 0xFF) {
+                return false;
+            }
+        }
+    }
+    if (MISC_CONFIG.internal.victoryNotebook) {
+        if (!gSaveContext.perm.inv.questStatus.bombersNotebook) {
+            return false;
+        }
+        u8 eventIndex = 66;
+        u8 eventBit = 0;
+        for (u8 i = 0; i < 0x37; i++) {
+            if (!(gSaveContext.perm.weekEventReg.bytes[eventIndex] & (1 << eventBit))) {
+                return false;
+            }
+            eventBit++;
+            if (eventBit > 7) {
+                eventBit = 0;
+                eventIndex++;
+            }
+        }
+    }
+    if (MISC_CONFIG.internal.victoryAllHearts) {
+        if (gSaveContext.perm.unk24.maxLife < 0x140) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void Player_CheckVictoryAndWarp(ActorPlayer* player, GlobalContext* ctxt) {
+    if (MISC_CONFIG.internal.victoryDirectToCredits
+        && !(player->stateFlags.state1 & 0x20000000) // TODO better state checking
+        && Player_HasCustomVictoryCondition()
+        && Player_CheckVictory()) {
+        ctxt->warpDestination = 0x5400;
+        gSaveContext.extra.nextCutsceneIndex = 0xFFF7;
+        ctxt->warpType = 20; // TRANS_TRIGGER_START
+    }
+}
+
 void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
     Player_InitFuncPointers();
     Dpad_BeforePlayerActorUpdate(player, ctxt);
@@ -105,6 +181,7 @@ void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
     DekuHop_Handle(player, ctxt);
     GiantMask_Handle(player, ctxt);
     Player_PreventDangerousStates(player);
+    Player_CheckVictoryAndWarp(player, ctxt);
 }
 
 bool Player_CanReceiveItem(GlobalContext* ctxt) {

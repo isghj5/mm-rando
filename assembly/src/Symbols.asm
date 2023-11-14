@@ -160,6 +160,7 @@
 .definelabel z2_SkelAnime_DrawLimb2, 0x80133F28
 .definelabel z2_SkelAnime_DrawLimb3, 0x801343C0
 .definelabel z2_UpdatePictoFlags, 0x8013A240
+.definelabel z2_Sram_SaveSpecialNewDay, 0x80146F5C
 .definelabel z2_InitButtonNoteColors, 0x80147564
 .definelabel z2_MessageShouldAdvance, 0x80147624
 .definelabel z2_MessageClose, 0x801477B4

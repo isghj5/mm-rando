@@ -1,5 +1,5 @@
 {
-  "Version": 21,
+  "Version": 22,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -41248,6 +41248,17 @@
         "RemainsGoht",
         "RemainsOdolwa",
         "Play Oath to Order"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherCredits",
+      "RequiredItems": [
+        "AreaMoonAccess"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",

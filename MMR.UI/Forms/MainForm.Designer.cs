@@ -396,6 +396,7 @@ namespace MMR.UI.Forms
             this.cRequiredBossRemains.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cRequiredBossRemains.FormattingEnabled = true;
             this.cRequiredBossRemains.Items.AddRange(new object[] {
+            "0",
             "1",
             "2",
             "3",

@@ -37,6 +37,7 @@
 .include "BgCheck.Patch.asm"
 .include "Bomb.Patch.asm"
 .include "BombersNotebook.Patch.asm"
+.include "Boss07.Patch.asm"
 .include "BugFixes.Patch.asm"
 .include "BusinessScrub.Patch.asm"
 .include "Butterfly.Patch.asm"

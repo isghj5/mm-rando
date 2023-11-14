@@ -478,14 +478,97 @@ namespace MMR.Randomizer
             if (_settings.RequiredBossRemains < 4)
             {
                 ItemList[Item.AreaMoonAccess].DependsOnItems.RemoveAll(ItemUtils.BossRemains().Contains);
-                var requiredBossRemains = new ItemObject
+                if (_settings.RequiredBossRemains > 0)
                 {
-                    ID = ItemList.Count,
-                    TimeAvailable = 63,
-                    Conditionals = ItemUtils.BossRemains().Combinations(_settings.RequiredBossRemains).Select(a => a.ToList()).ToList(),
-                };
-                ItemList.Add(requiredBossRemains);
-                ItemList[Item.AreaMoonAccess].DependsOnItems.Add(requiredBossRemains.Item);
+                    var requiredBossRemains = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        Conditionals = ItemUtils.BossRemains().Combinations(_settings.RequiredBossRemains).Select(a => a.ToList()).ToList(),
+                    };
+                    ItemList.Add(requiredBossRemains);
+                    ItemList[Item.AreaMoonAccess].DependsOnItems.Add(requiredBossRemains.Item);
+                }
+            }
+
+            if (_settings.VictoryMode != VictoryMode.Default)
+            {
+                if (_settings.VictoryMode.HasFlag(VictoryMode.DirectToCredits))
+                {
+                    ItemList[Item.OtherCredits].DependsOnItems.Remove(Item.AreaMoonAccess);
+                }
+
+                if (_settings.VictoryMode.HasFlag(VictoryMode.Fairies))
+                {
+                    var requiredFairies = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        DependsOnItems = ItemUtils.DungeonStrayFairies().ToList(),
+                    };
+                    ItemList.Add(requiredFairies);
+                    ItemList[Item.OtherCredits].DependsOnItems.Add(requiredFairies.Item);
+                }
+
+                if (_settings.VictoryMode.HasFlag(VictoryMode.SkullTokens))
+                {
+                    var requiredSkulltulas= new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        DependsOnItems = ItemUtils.OceanSkulltulaTokens().Union(ItemUtils.SwampSkulltulaTokens()).ToList(),
+                    };
+                    ItemList.Add(requiredSkulltulas);
+                    ItemList[Item.OtherCredits].DependsOnItems.Add(requiredSkulltulas.Item);
+                }
+
+                if (_settings.VictoryMode.HasFlag(VictoryMode.NonTransformMasks))
+                {
+                    var requiredMasks = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        DependsOnItems = Enumerable.Range((int)Item.MaskPostmanHat, 20).Cast<Item>().ToList(),
+                    };
+                    ItemList.Add(requiredMasks);
+                    ItemList[Item.OtherCredits].DependsOnItems.Add(requiredMasks.Item);
+                }
+
+                if (_settings.VictoryMode.HasFlag(VictoryMode.AllMasks))
+                {
+                    var requiredMasks = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        DependsOnItems = Enumerable.Range((int)Item.MaskPostmanHat, 22).Cast<Item>().Append(Item.MaskDeku).Append(Item.MaskFierceDeity).ToList(),
+                    };
+                    ItemList.Add(requiredMasks);
+                    ItemList[Item.OtherCredits].DependsOnItems.Add(requiredMasks.Item);
+                }
+
+                if (_settings.VictoryMode.HasFlag(VictoryMode.Notebook))
+                {
+                    var requiredNotebookEntries = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        DependsOnItems = Enumerable.Range((int)Item.NotebookMeetBombers, 51).Cast<Item>().ToList(),
+                    };
+                    ItemList.Add(requiredNotebookEntries);
+                    ItemList[Item.OtherCredits].DependsOnItems.Add(requiredNotebookEntries.Item);
+                }
+
+                if (_settings.VictoryMode.HasFlag(VictoryMode.AllHearts))
+                {
+                    var requiredHearts = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        DependsOnItems = Enum.GetValues<Item>().Where(item => item.ItemCategory() == ItemCategory.PiecesOfHeart || item.ItemCategory() == ItemCategory.HeartContainers).ToList(),
+                    };
+                    ItemList.Add(requiredHearts);
+                    ItemList[Item.OtherCredits].DependsOnItems.Add(requiredHearts.Item);
+                }
             }
 
             if (_settings.FreeHints)
@@ -3148,7 +3231,7 @@ namespace MMR.Randomizer
                         : logicForImportance;
 
                     var checkedLocations = new Dictionary<Item, LogicUtils.LogicPaths>();
-                    var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForImportance, checkedLocations: checkedLocations);
+                    var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.OtherCredits, logicForImportance, checkedLocations: checkedLocations);
                     var importantLocations = logicPaths?.Important.Where(item => item.Region(ItemList).HasValue && item.Entrance() == null).Distinct().ToHashSet();
                     var importantSongLocations = logicPaths?.ImportantSongLocations.ToList();
                     if (importantLocations == null)
@@ -3174,7 +3257,7 @@ namespace MMR.Randomizer
                             {
                                 return;
                             }
-                            var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, cts: cts, exclude: location);
+                            var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.OtherCredits, logicForRequiredItems, cts: cts, exclude: location);
                             if (checkPaths != null)
                             {
                                 locationsRequiredForMoonAccess.Remove(location, out bool _);
