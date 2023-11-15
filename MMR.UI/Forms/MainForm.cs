@@ -1124,6 +1124,7 @@ namespace MMR.UI.Forms
                 _configuration.GameplaySettings.UserLogicFileName = openLogic.FileName;
                 tbUserLogic.Text = Path.GetFileNameWithoutExtension(_configuration.GameplaySettings.UserLogicFileName);
             }
+            UpdateSettingLogicMarkers();
         }
 
         private void Randomize()
@@ -1913,6 +1914,11 @@ namespace MMR.UI.Forms
                     UpdateNumTricksEnabled();
                 }
                 _configuration.GameplaySettings.LogicMode = logicMode;
+                if (logicMode != LogicMode.UserLogic)
+                {
+                    _configuration.GameplaySettings.UserLogicFileName = string.Empty;
+                    tbUserLogic.Text = string.Empty;
+                }
                 UpdateSettingLogicMarkers();
             });
         }

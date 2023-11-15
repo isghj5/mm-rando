@@ -33,7 +33,7 @@ namespace MMR.Randomizer.Utils
             {
                 return LogicFile.FromJson(Properties.Resources.REQ_GLITCH);
             }
-            else if (mode == LogicMode.UserLogic)
+            else if (mode == LogicMode.UserLogic && File.Exists(userLogicFileName))
             {
                 using (StreamReader Req = new StreamReader(File.OpenRead(userLogicFileName)))
                 {
