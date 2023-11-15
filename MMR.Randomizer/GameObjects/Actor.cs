@@ -281,6 +281,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x5F)]
         [GroundVariants(0x0)]
         [VariantsWithRoomMax(max:2, variant:0x0)] // Dyna
+        [EnemizerScenesExcluded(Scene.Snowhead)]
         [UnkillableAllVariants]
         Flagpole = 0x1A, // En_Hata
 
