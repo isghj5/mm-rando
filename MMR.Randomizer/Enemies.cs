@@ -612,6 +612,11 @@ namespace MMR.Randomizer
                 gormanTrack.Maps[0].Objects[11] = GameObjects.Actor.GormanBros.ObjectIndex();
                 gormanTrack.Maps[0].Actors[75].ChangeActor(GameObjects.Actor.Treee, vars: 0xFF02, modifyOld: true);
 
+                // sakon in the curiosity shop can block the door, which must be avoided
+                var curiosityShop = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.CuriosityShop.FileID());
+                var sutari = curiosityShop.Maps[0].Actors[1];
+                sutari.Position = new vec16(51, 3, -17); // move over to the side of the talking grate
+                sutari.Rotation.y = ActorUtils.MergeRotationAndFlags(90 + 15, sutari.Rotation.y);
             }
         }
 
