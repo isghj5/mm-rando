@@ -507,7 +507,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1433)]
         [SceneInternalId(0x54)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.Clock,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Clock,
             Actor.BadBat, Actor.GoldSkulltula, Actor.RealBombchu)] // z-targetable can be annoying in the sword test
         SwordsmansSchool = 0x51,
 
@@ -525,7 +525,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1442)]
         [SceneInternalId(0x58)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.Beamos,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the whole assension
         StoneTower = 0x55,
 
@@ -544,13 +544,15 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1451)]
         [SceneInternalId(0x5C)]
-        [EnemizerSceneBlockSensitive(Actor.Flagpole, -1)] // ice block can stop access to the whole dungeon
+        [EnemizerSceneBlockSensitive(originalEnemy: Actor.Flagpole, -1)] // ice block can stop access to the whole dungeon
         [EnemizerSceneEnemyReplacementBlock(Actor.Bo,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the twisted path into snowhead
         Snowhead = 0x59,
 
         [FileID(1453)]
         [SceneInternalId(0x5D)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wolfos,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can be so wide they block the hot spring grotto
         TwinIslands = 0x5A,
 
         [FileID(1455)]
