@@ -522,10 +522,14 @@ namespace MMR.Randomizer.Utils
 
         public static bool CanBeRequired(Item item)
         {
-            return !item.Name().Contains("Heart")
-                && !IsStrayFairy(item)
-                && !IsSkulltulaToken(item)
-                && item >= 0;
+            var itemCategory = item.ItemCategory();
+            return item >= 0
+                && itemCategory != ItemCategory.StrayFairies
+                && itemCategory != ItemCategory.SkulltulaTokens
+                && itemCategory != ItemCategory.HeartContainers
+                && itemCategory != ItemCategory.PiecesOfHeart
+                && itemCategory != ItemCategory.RecoveryHearts
+                && itemCategory != ItemCategory.NotebookEntries;
         }
 
         public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult, bool anythingCanBeRequired = false)
