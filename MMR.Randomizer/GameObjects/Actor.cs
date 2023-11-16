@@ -99,7 +99,9 @@ namespace MMR.Randomizer.GameObjects
         //[AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
         //    variant: 2, 9)] // fairies around chests make sense, just not a full fairy fountain
         [EnemizerScenesExcluded(Scene.InvertedStoneTower,
-            Scene.TerminaField, Scene.PiratesFortressRooms, Scene.PiratesFortress, Scene.PiratesFortressExterior, Scene.TwinIslandsSpring, Scene.Woodfall)]
+            Scene.TerminaField, Scene.PiratesFortressRooms, Scene.PiratesFortress, Scene.PiratesFortressExterior, Scene.TwinIslandsSpring,
+            Scene.SouthClockTown, Scene.EastClockTown, Scene.RoadToIkana, // DO NOT RANDOMIZE: itemizer changes params, can fuck with replacement actor
+            Scene.Woodfall)]
         [SwitchFlagsPlacementZRot]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
         [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
