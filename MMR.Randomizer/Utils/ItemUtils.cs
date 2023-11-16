@@ -111,35 +111,6 @@ namespace MMR.Randomizer.Utils
             return false;
         }
 
-        public static bool IsLocationHinted(Item location, GameplaySettings settings)
-        {
-            if (settings.UpdateNPCText)
-            {
-                var npcTextHintedLocations = new List<Item>
-                {
-                    Item.UpgradeAdultWallet, // Hinted by the Banker
-                    Item.SongEpona, // Hinted by the Keaton Quiz. TODO Keaton Quiz might be locked by this check
-                    Item.ShopItemMilkBarChateau, // Hinted by the Keaton Quiz and by the Mr. Barten.
-                    Item.UpgradeBigBombBag, // Hinted by the Bomb Shop and by the Old Lady
-                    Item.ItemBottleBeavers, // Hinted by the Beavers and the Zora next to the jar game
-                    Item.HeartPieceBeaverRace, // Hinted by the Beavers
-                    Item.SongStorms, // Hinted by the grave
-                    Item.ItemBottleDampe, // Hinted by the grave
-                    Item.HeartPieceKnuckle, // Hinted by the grave
-                    Item.UpgradeGiantWallet, // Hinted by green shirt guy
-                    Item.MundaneItemOceanSpiderHouseDay2PurpleRupee, // Hinted by green shirt guy
-                    Item.MundaneItemOceanSpiderHouseDay3RedRupee, // Hinted by green shirt guy
-                };
-
-                if (npcTextHintedLocations.Contains(location))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         public static bool IsStartingLocation(Item location)
         {
             return location == Item.MaskDeku || location == Item.SongHealing
@@ -534,7 +505,7 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult, bool anythingCanBeRequired = false)
         {
-            return (anythingCanBeRequired || (CanBeRequired(item) && !IsItemHinted(item, randomizedResult.Settings) && !IsLocationHinted(locationForImportance, randomizedResult.Settings))) && randomizedResult.LocationsRequiredForMoonAccess?.Contains(locationForImportance) == true;
+            return (anythingCanBeRequired || (CanBeRequired(item) && !IsItemHinted(item, randomizedResult.Settings))) && randomizedResult.LocationsRequiredForMoonAccess?.Contains(locationForImportance) == true;
         }
 
         public static bool IsImportant(Item item, Item locationForImportance, RandomizedResult randomizedResult)

@@ -109,11 +109,6 @@ namespace MMR.Randomizer.Utils
                     }
                 }
 
-                if (ItemUtils.IsLocationHinted(item.NewLocation.Value, randomizedResult.Settings))
-                {
-                    continue;
-                }
-
                 if (ItemUtils.IsLocationJunk(item.NewLocation.Value, randomizedResult.Settings))
                 {
                     continue;

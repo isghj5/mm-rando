@@ -198,7 +198,7 @@ namespace MMR.Randomizer.GameObjects
 
         [StartingItemId(0x12)]
         [ItemName("Empty Bottle"), LocationName("Beaver Race #1"), Region(Region.ZoraCape)]
-        [GossipLocationHint("a river dweller"), GossipItemHint("an empty vessel", "a glass container"), GossipCompetitiveHint(-2)]
+        [GossipLocationHint("a river dweller"), GossipItemHint("an empty vessel", "a glass container"), GossipCompetitiveHint(-2, nameof(GameplaySettings.UpdateNPCText), false)]
         [ShopText("Carry various items in this.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x5A), ItemPool(ItemCategory.MainInventory, LocationCategory.Minigames, ClassicCategory.BaseItemPool)]
@@ -206,7 +206,7 @@ namespace MMR.Randomizer.GameObjects
 
         [StartingItemId(0x12)]
         [ItemName("Empty Bottle"), LocationName("Dampe Digging"), Region(Region.IkanaGraveyard)]
-        [GossipLocationHint("a fearful basement"), GossipItemHint("an empty vessel", "a glass container"), GossipCompetitiveHint]
+        [GossipLocationHint("a fearful basement"), GossipItemHint("an empty vessel", "a glass container"), GossipCompetitiveHint(0, nameof(GameplaySettings.UpdateNPCText), false)]
         [ShopText("Carry various items in this.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold), Chest(0x0261E000 + 0x1FE, ChestAttribute.AppearanceType.AppearsSwitch)]
         [GetItemIndex(0x64), ItemPool(ItemCategory.MainInventory, LocationCategory.BossFights, ClassicCategory.BaseItemPool)]
@@ -344,7 +344,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE6E, 0x20)]
         [Overwritable(OverwritableAttribute.ItemSlot.Wallet, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Giant Wallet"), LocationName("Ocean Spider House Day 1 Reward"), Region(Region.GreatBayCoast)]
-        [GossipLocationHint("a gold spider"), GossipItemHint("a coin case", "great wealth"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false)]
+        [GossipLocationHint("a gold spider"), GossipItemHint("a coin case", "great wealth"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false, nameof(GameplaySettings.UpdateNPCText), false)]
         [ShopText("This can hold up to a maximum of 500 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x09), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
@@ -3604,7 +3604,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Repeatable]
         [ItemName("Purple Rupee"), LocationName("Ocean Spider House Day 2 Reward"), Region(Region.GreatBayCoast)]
-        [GossipLocationHint("a gold spider"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false)]
+        [GossipLocationHint("a gold spider"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false, nameof(GameplaySettings.UpdateNPCText), false)]
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x134), ItemPool(ItemCategory.PurpleRupees, LocationCategory.NpcRewards, ClassicCategory.MundaneRewards)]
@@ -3612,7 +3612,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Ocean Spider House Day 3 Reward"), Region(Region.GreatBayCoast)]
-        [GossipLocationHint("a gold spider"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false)]
+        [GossipLocationHint("a gold spider"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false, nameof(GameplaySettings.UpdateNPCText), false)]
         [ShopText("This is worth 20 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x1A3), ItemPool(ItemCategory.RedRupees, LocationCategory.NpcRewards, ClassicCategory.MundaneRewards)]
