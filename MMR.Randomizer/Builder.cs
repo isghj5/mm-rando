@@ -1344,6 +1344,11 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Resources.mods.climb_most_surfaces);
             }
+
+            if (!_randomized.Settings.VanillaMoonTrialAccess)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.fix_moon_trial_access);
+            }
         }
 
         private void WriteSunsSong(MessageTable messageTable)

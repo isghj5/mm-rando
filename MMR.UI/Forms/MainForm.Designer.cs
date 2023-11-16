@@ -111,6 +111,7 @@ namespace MMR.UI.Forms
             this.cHideClock = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.cVanillaMoonTrials = new System.Windows.Forms.CheckBox();
             this.cBombArrows = new System.Windows.Forms.CheckBox();
             this.cGiantMaskAnywhere = new System.Windows.Forms.CheckBox();
             this.cInstantTransformations = new System.Windows.Forms.CheckBox();
@@ -1264,6 +1265,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox12
             // 
+            this.groupBox12.Controls.Add(this.cVanillaMoonTrials);
             this.groupBox12.Controls.Add(this.cBombArrows);
             this.groupBox12.Controls.Add(this.cGiantMaskAnywhere);
             this.groupBox12.Controls.Add(this.cInstantTransformations);
@@ -1283,6 +1285,20 @@ namespace MMR.UI.Forms
             this.groupBox12.TabIndex = 34;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Other";
+            // 
+            // cVanillaMoonTrials
+            // 
+            this.cVanillaMoonTrials.AutoSize = true;
+            this.cVanillaMoonTrials.BackColor = System.Drawing.Color.Transparent;
+            this.cVanillaMoonTrials.ForeColor = System.Drawing.Color.Black;
+            this.cVanillaMoonTrials.Location = new System.Drawing.Point(7, 285);
+            this.cVanillaMoonTrials.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cVanillaMoonTrials.Name = "cVanillaMoonTrials";
+            this.cVanillaMoonTrials.Size = new System.Drawing.Size(158, 19);
+            this.cVanillaMoonTrials.TabIndex = 30;
+            this.cVanillaMoonTrials.Text = "Vanilla Moon Trial Access";
+            this.cVanillaMoonTrials.UseVisualStyleBackColor = false;
+            this.cVanillaMoonTrials.CheckedChanged += new System.EventHandler(this.cVanillaMoonTrials_CheckedChanged);
             // 
             // cBombArrows
             // 
@@ -3520,6 +3536,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cEasyFrameByFrame;
         private System.Windows.Forms.CheckBox cSkulltulaTokenSounds;
         private System.Windows.Forms.CheckBox cFairyMaskShimmer;
+        private System.Windows.Forms.CheckBox cVanillaMoonTrials;
     }
 }
 

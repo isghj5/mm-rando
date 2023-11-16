@@ -438,6 +438,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public bool HookshotAnySurface { get; set; }
 
+        public bool VanillaMoonTrialAccess { get; set; }
+
         #endregion
 
         #region Comfort / Cosmetics

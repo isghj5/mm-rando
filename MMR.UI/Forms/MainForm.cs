@@ -120,6 +120,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cIceTrapQuirks, "Ice traps will behave slightly differently from other items in certain situations.");
             TooltipBuilder.SetTooltip(cInstantTransformations, "Transforming using Deku Mask, Goron Mask, Zora Mask and Fierce Deity's Mask will be almost instant. These items can no longer be used as \"cutscene items\".");
             TooltipBuilder.SetTooltip(cBombArrows, "Use a bomb while an arrow is out when using the bow to attach the bomb to the tip of the arrow.");
+            TooltipBuilder.SetTooltip(cVanillaMoonTrials, "Entering the trials on the Moon will require masks, as per the vanilla behavior, but this is not considered by logic. Without this enabled, the trials will not require any masks to enter.");
             TooltipBuilder.SetTooltip(cGiantMaskAnywhere, "Allows the Giant's Mask to be used anywhere with a high enough (or no) ceiling.");
 
             // Comforts/cosmetics
@@ -1381,6 +1382,7 @@ namespace MMR.UI.Forms
             cAddBombchuDrops.Checked = _configuration.GameplaySettings.BombchuDrops;
             cInstantTransformations.Checked = _configuration.GameplaySettings.InstantTransform;
             cBombArrows.Checked = _configuration.GameplaySettings.BombArrows;
+            cVanillaMoonTrials.Checked = _configuration.GameplaySettings.VanillaMoonTrialAccess;
             cChestGameMinimap.SelectedIndex = (int)_configuration.GameplaySettings.ChestGameMinimap;
             cFairyMaskShimmer.Checked = _configuration.GameplaySettings.FairyMaskShimmer;
             cSkulltulaTokenSounds.Checked = _configuration.GameplaySettings.SkulltulaTokenSounds;
@@ -2225,6 +2227,7 @@ namespace MMR.UI.Forms
             cAddBombchuDrops.Enabled = v;
             cInstantTransformations.Enabled = v;
             cBombArrows.Enabled = v;
+            cVanillaMoonTrials.Enabled = v;
             cChestGameMinimap.Enabled = v;
             cFairyMaskShimmer.Enabled = v;
             cSkulltulaTokenSounds.Enabled = v;
@@ -2721,6 +2724,11 @@ namespace MMR.UI.Forms
         private void cBombArrows_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.BombArrows = cBombArrows.Checked);
+        }
+
+        private void cVanillaMoonTrials_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.VanillaMoonTrialAccess = cVanillaMoonTrials.Checked);
         }
 
         private void cFairyMaskShimmer_CheckedChanged(object sender, EventArgs e)
