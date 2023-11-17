@@ -12,6 +12,7 @@
 #include "enums.h"
 #include "Util.h"
 #include "GiantMask.h"
+#include "SaveFile.h"
 
 bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
     return Icetrap_Give(player, ctxt);
@@ -163,9 +164,11 @@ bool Player_CheckVictory() {
 
 void Player_CheckVictoryAndWarp(ActorPlayer* player, GlobalContext* ctxt) {
     if (MISC_CONFIG.internal.victoryDirectToCredits
+        && !SAVE_FILE_CONFIG.flags.creditsSeen
         && !(player->stateFlags.state1 & 0x20000000) // TODO better state checking
         && Player_HasCustomVictoryCondition()
         && Player_CheckVictory()) {
+        SAVE_FILE_CONFIG.flags.creditsSeen = true;
         ctxt->warpDestination = 0x5400;
         gSaveContext.extra.nextCutsceneIndex = 0xFFF7;
         ctxt->warpType = 20; // TRANS_TRIGGER_START

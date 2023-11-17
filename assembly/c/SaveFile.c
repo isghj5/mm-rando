@@ -20,6 +20,7 @@ static void InitStruct(struct SaveFileConfig* config) {
     config->spentUpgrades.quiverSmall = 0;
     config->spentUpgrades.quiverLarge = 0;
     config->spentUpgrades.lullabyIntro = 0;
+    config->flags.creditsSeen = false;
     QuestItemStorage_Clear(&config->questStorage);
 }
 

@@ -26,7 +26,11 @@ struct SaveFileConfig {
                     /* 0x2A */ u16 quiverLarge;
                     /* 0x2C */ u16 lullabyIntro;
                 } spentUpgrades;
-}; // size = 0x2E
+    /* 0x2E */ struct {
+        u16 creditsSeen         : 1;
+        u16                     : 15;
+    } flags;
+}; // size = 0x30
 
 extern struct SaveFileConfig SAVE_FILE_CONFIG;
 
