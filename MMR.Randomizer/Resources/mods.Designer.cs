@@ -513,6 +513,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] fix_object_stk2_zbuffer {
+            get {
+                object obj = ResourceManager.GetObject("fix_object_stk2_zbuffer", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] fix_ocarina_checks {
             get {
                 object obj = ResourceManager.GetObject("fix_ocarina_checks", resourceCulture);

@@ -2062,6 +2062,39 @@ typedef struct ActorEnMinifrog {
     /* 0x2B8 */ ColCylinder collider;
 } ActorEnMinifrog; // size = 0x304
 
+struct ActorEnJs;
+
+typedef void (*EnJsActionFunc)(struct ActorEnJs*, GlobalContext*);
+
+typedef struct ActorEnJs {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ SkelAnime skelAnime;
+    /* 0x188 */ ColCylinder collider;
+    /* 0x1D4 */ Vec3s jointTable[18]; // MOONCHILD_LIMB_MAX
+    /* 0x240 */ Vec3s morphTable[18]; // MOONCHILD_LIMB_MAX
+    /* 0x2AC */ void* path; // TODO Path struct
+    /* 0x2B0 */ s32 unk_2B0;
+    /* 0x2B4 */ f32 unk_2B4;
+    /* 0x2B8 */ u16 unk_2B8;
+    /* 0x2BA */ s16 maskType;
+    /* 0x2BC */ s16 unk_2BC;
+    /* 0x2BE */ s16 csIdList[2];
+    /* 0x2C2 */ s16 csIdIndex;
+    /* 0x2C4 */ EnJsActionFunc actionFunc;
+} ActorEnJs; // size = 0x2C8
+
+struct ActorEffStk;
+
+typedef void (*EffStkActionFunc)(struct ActorEffStk*, GlobalContext*);
+
+typedef struct ActorEffStk {
+    /* 0x000 */ Actor actor;
+    /* 0x144 */ s16 unk144;
+    /* 0x146 */ s16 unk146;
+    /* 0x148 */ f32 unk148;
+    /* 0x14C */ EffStkActionFunc actionFunc;
+} ActorEffStk; // size = 0x150
+
 /// =============================================================
 /// Actor Cutscene
 /// =============================================================

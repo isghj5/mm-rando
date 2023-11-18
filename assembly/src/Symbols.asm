@@ -159,6 +159,9 @@
 .definelabel z2_SkelAnime_DrawLimb, 0x80133B3C
 .definelabel z2_SkelAnime_DrawLimb2, 0x80133F28
 .definelabel z2_SkelAnime_DrawLimb3, 0x801343C0
+.definelabel z2_PlayerAnimation_Update, 0x801360E0
+.definelabel z2_SkelAnime_Update, 0x80136CD0
+.definelabel z2_Animation_MorphToLoop, 0x80137594
 .definelabel z2_UpdatePictoFlags, 0x8013A240
 .definelabel z2_Sram_SaveSpecialNewDay, 0x80146F5C
 .definelabel z2_InitButtonNoteColors, 0x80147564

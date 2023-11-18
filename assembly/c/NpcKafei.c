@@ -81,7 +81,8 @@ bool NpcKafei_ProcessMask(GlobalContext* ctxt, ActorPlayer* actor, u8 mask, bool
 }
 
 void NpcKafei_CheckHand(GlobalContext* ctxt, ActorPlayer* actor) {
-    if ((actor->currentAnimation.id == 0xD0A8) || ((actor->stateFlags.state2 & PLAYER_STATE2_MASKHAND) != 0)) {
+    u16 currentAnimationId = (u32)actor->skelAnime.linkAnimetionSeg;
+    if ((currentAnimationId == 0xD0A8) || ((actor->stateFlags.state2 & PLAYER_STATE2_MASKHAND) != 0)) {
         if (actor->mask != 0) {
             bool skipMaskDraw;
 

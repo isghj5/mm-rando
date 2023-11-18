@@ -79,13 +79,14 @@ typedef struct {
     // Version 1 flags
     u32 vanillaLayout             : 1;
     u32 victoryDirectToCredits    : 1;
+    u32 victoryCantFightMajora    : 1;
     u32 victoryFairies            : 1;
     u32 victorySkullTokens        : 1;
     u32 victoryNonTransformMasks  : 1;
     u32 victoryTransformMasks     : 1;
     u32 victoryNotebook           : 1;
     u32 victoryHearts             : 1;
-    u32                           : 24;
+    u32                           : 23;
 } MiscInternal;
 
 typedef struct {

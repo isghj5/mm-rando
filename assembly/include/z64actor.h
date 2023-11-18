@@ -372,13 +372,13 @@ typedef struct ActorPlayer {
     /* 0x153 */ u8 mask;
     /* 0x154 */ u8 maskC; // C button index (starting at 1) of current/recently worn mask.
     /* 0x155 */ u8 previousMask;
-    /* 0x156 */ UNK_TYPE1 pad156[0xEB];
-    /* 0x241 */ u8 unk241;
-    /* 0x242 */ UNK_TYPE1 pad242[0x6];
-    /* 0x248 */ PlayerAnimation currentAnimation;
-    /* 0x24C */ UNK_TYPE1 pad24C[0xC];
-    /* 0x258 */ f32 animationCurrentFrame;
-    /* 0x25C */ UNK_TYPE1 pad25C[0xF0];
+    /* 0x156 */ UNK_TYPE1 pad156[0xEA];
+    /* 0x240 */ SkelAnime skelAnime;
+    /* 0x284 */ SkelAnime skelAnimeUpper;
+    /* 0x2C8 */ SkelAnime unk_2C8;
+    /* 0x30C */ Vec3s jointTable[5];
+    /* 0x32A */ Vec3s morphTable[5];
+    /* 0x348 */ UNK_TYPE4 blinkInfo; // BlinkInfo
     /* 0x34C */ Actor* heldActor;
     /* 0x350 */ UNK_TYPE1 pad350[0x18];
     /* 0x368 */ Vec3f unk368;

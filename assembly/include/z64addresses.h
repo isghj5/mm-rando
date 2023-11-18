@@ -258,6 +258,9 @@ extern void z2_AnimatedMat_Draw(GlobalContext* play, AnimatedTexture* matAnim);
 extern void z2_SkelAnime_DrawLimb(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, bool* overrideLimbDraw, void* postLimbDraw, Actor* actor);
 extern void z2_SkelAnime_DrawLimb2(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, Actor* actor);
 extern void z2_SkelAnime_DrawLimb3(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, void* unkDraw, Actor* actor);
+extern bool z2_PlayerAnimation_Update(GlobalContext* ctxt, SkelAnime* skelAnime);
+extern bool z2_SkelAnime_Update(SkelAnime* skelAnime);
+extern void z2_Animation_MorphToLoop(SkelAnime* skelAnime, AnimationHeader* animation, f32 morphFrames);
 
 // Function Prototypes (OS).
 extern void z2_memcpy(void* dest, const void* src, u32 size);
@@ -419,6 +422,9 @@ extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 #define z2_Player_Action_95_VRAM         0x808573A4
 #define z2_Player_Action_96_VRAM         0x80857BE8
 
+#define z2_Player_PlayAnimationOnce_VRAM 0x80858CC8
+#define z2_Player_PlayAnimationLoop_VRAM 0x80858D48
+
 // Relocatable Data (player_actor).
 #define z2_D_80862B4C_VRAM               0x80862B4C
 
@@ -442,5 +448,7 @@ typedef s32 (*z2_Player_ItemToActionParam_Func)(ActorPlayer* player, s32 itemId)
 typedef bool (*z2_Player_func_8083692C_Func)(ActorPlayer* player, GlobalContext* ctxt);
 typedef bool (*z2_Player_func_80838A90_Func)(ActorPlayer* player, GlobalContext* ctxt);
 typedef bool (*z2_Player_func_8083B930_Func)(GlobalContext* ctxt, ActorPlayer* player);
+typedef void (*z2_Player_PlayAnimationOnce_Func)(GlobalContext* ctxt, ActorPlayer* player, void* anim);
+typedef void (*z2_Player_PlayAnimationLoop_Func)(GlobalContext* ctxt, ActorPlayer* player, void* anim);
 
 #endif

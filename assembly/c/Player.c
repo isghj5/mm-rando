@@ -196,7 +196,8 @@ bool Player_CanReceiveItem(GlobalContext* ctxt) {
         return false;
     }
     bool result = false;
-    switch (player->currentAnimation.id) {
+    u16 currentAnimationId = (u32)player->skelAnime.linkAnimetionSeg;
+    switch (currentAnimationId) {
         case 0xE208: // rolling - Goron
             result = ctxt->state.input[0].current.buttons.a != 0;
             break;
@@ -272,7 +273,7 @@ void Player_BeforeHandleVoidingState(ActorPlayer* player, GlobalContext* ctxt) {
     HandleEnterWater(player, ctxt);
     // Note: Later in the function of this hook, is where the "frozen" player state flag is set.
     // Since we can't check the player state flags, do the same check this function does instead.
-    bool frozen = player->currentAnimation.value == 0;
+    bool frozen = player->skelAnime.linkAnimetionSeg == NULL;
     bool zora = player->form == 2;
     // If Zora is voiding (frozen) and swimming, should float in water.
     if (zora && frozen && InWater(player)) {

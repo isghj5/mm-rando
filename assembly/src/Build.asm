@@ -80,6 +80,7 @@
 .include "Misc.Patch.asm"
 .include "MMR.Patch.asm"
 .include "Models.Patch.asm"
+.include "MoonChild.Patch.asm"
 .include "Music.Patch.asm"
 .include "MusicStaff.Patch.asm"
 .include "NpcKafei.Patch.asm"

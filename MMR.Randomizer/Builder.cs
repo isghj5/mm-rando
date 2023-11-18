@@ -561,6 +561,39 @@ namespace MMR.Randomizer
             );
         }
 
+        private void WriteMoonChildDenialTextAndHack(MessageTable table)
+        {
+            table.UpdateMessages(new MessageEntryBuilder()
+                .Id(0x21FD)
+                .Header(it => it.FaintBlue().Y(1))
+                .Message(it =>
+                {
+                    it.Text("Oh, it seems you're not worthy...").NewLine()
+                    .Text("But I'll give you another chance...")
+                    .EndTextBox()
+                    .Text("Are you ready...to go back?").NewLine()
+                    .StartGreenText()
+                    .Text(" ").NewLine()
+                    .TwoChoices()
+                    .Text("Yes").NewLine()
+                    .Text("No")
+                    .EndFinalTextBox()
+                    ;
+                })
+                .Build()
+            );
+
+            RomUtils.CheckCompressed(1501); // The Moon - Room 00
+            var data = RomData.MMFileList[1501].Data.ToList();
+            data.RemoveRange(0x194, 4); // Reduce end padding from actor list. 8 bytes remaining
+            data.InsertRange(0x44, new byte[] { 0x01, 0xBE, 0x00, 0x00 }); // Add extra objects
+            data[0x29] += 1; // Increase object count by 1. 1 object slot remaining before needing to increase available space.
+            data[0x37] += 4; // Add 4 to the actor list address
+            RomData.MMFileList[1501].Data = data.ToArray();
+
+            ResourceUtils.ApplyHack(Resources.mods.fix_object_stk2_zbuffer);
+        }
+
         private void WriteMiscText(MessageTable messageTable)
         {
             messageTable.UpdateMessages(new MessageEntryBuilder()
@@ -6165,6 +6198,7 @@ namespace MMR.Randomizer
                 WriteArcheryDoubleRewardText(messageTable);
                 WriteBankPostRewardText(messageTable);
                 WriteRoyalWalletText(messageTable);
+                WriteMoonChildDenialTextAndHack(messageTable);
 
                 progressReporter.ReportProgress(61, "Writing quick text...");
                 WriteQuickText();

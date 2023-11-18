@@ -394,6 +394,7 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool VanillaLayout { get; set; }
         public bool VictoryDirectToCredits { get; set; }
+        public bool VictoryCantFightMajora { get; set; }
         public bool VictoryFairies { get; set; }
         public bool VictorySkullTokens { get; set; }
         public bool VictoryNonTransformationMasks { get; set; }
@@ -410,6 +411,7 @@ namespace MMR.Randomizer.Asm
             var bitPacker = new BitPacker();
             bitPacker.Write(VanillaLayout);
             bitPacker.Write(VictoryDirectToCredits);
+            bitPacker.Write(VictoryCantFightMajora);
             bitPacker.Write(VictoryFairies);
             bitPacker.Write(VictorySkullTokens);
             bitPacker.Write(VictoryNonTransformationMasks);
@@ -704,6 +706,7 @@ namespace MMR.Randomizer.Asm
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;
             this.InternalFlags.VictoryDirectToCredits = settings.VictoryMode.HasFlag(VictoryMode.DirectToCredits);
+            this.InternalFlags.VictoryCantFightMajora = settings.VictoryMode.HasFlag(VictoryMode.CantFightMajora);
             this.InternalFlags.VictoryFairies = settings.VictoryMode.HasFlag(VictoryMode.Fairies);
             this.InternalFlags.VictorySkullTokens = settings.VictoryMode.HasFlag(VictoryMode.SkullTokens);
             this.InternalFlags.VictoryNonTransformationMasks = settings.VictoryMode.HasFlag(VictoryMode.NonTransformationMasks);
