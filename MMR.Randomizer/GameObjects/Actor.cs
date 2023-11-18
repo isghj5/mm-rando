@@ -4579,7 +4579,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x4)]
         [CheckRestricted(Item.HeartPieceNotebookGran1, Item.HeartPieceNotebookGran2)]
         [GroundVariants(0)]
-        [VariantsWithRoomMax(max: 1, variant: 0)] // does not spawn, time varibles? second required object?
+        [VariantsWithRoomMax(max: 0, variant: 0)] // does not spawn, time varibles? second required object?
         [UnkillableAllVariants]
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         [EnemizerScenesExcluded(Scene.StockPotInn)]
