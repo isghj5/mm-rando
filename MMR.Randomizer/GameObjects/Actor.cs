@@ -2193,7 +2193,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
             Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
-            )]
+            )] // this is duplicated in multiple places
         [GroundVariants(0x510, 0x10)]
         [VariantsWithRoomMax(max: 0, variant: 0x510, 0x10)] // does not spawn except in cutscenes, dont place it will be empty
         [UnkillableAllVariants]
@@ -5060,7 +5060,16 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(597)]
         [ObjectListIndex(0x110)]
-        [CheckRestricted(Item.ItemNotebook)]
+        //[CheckRestricted(Item.ItemNotebook)]
+        [CheckRestricted(Item.ItemNotebook,
+            Item.ChestBomberHideoutSilverRupee,
+            Item.TradeItemMoonTear,
+            Item.CollectableTerminaFieldTelescopeGuay1,
+            Item.HeartPieceTerminaBusinessScrub,
+            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
+            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            )] // this is duplicated in multiple places
         [GroundVariants(0xFF00)]
         [VariantsWithRoomMax(max:0, variant: 0xFF00)] // assumption: cannot be placed in other places because he looks for the balloon
         [UnkillableAllVariants]
@@ -5077,7 +5086,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
             Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
-        )]
+            )] // this is duplicated in multiple places
         [GroundVariants(0x0B11, 0x0B22, 0x50F, 0x0513, 0x0910)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
@@ -5087,7 +5096,17 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(599)]
         [ObjectListIndex(0x110)]
-        [CheckRestricted(Item.ItemNotebook)]
+        // These are the requirements to randomize the regular bombers in the game, this guy shares the object
+        [CheckRestricted(Item.ItemNotebook,
+            Item.ChestBomberHideoutSilverRupee,
+            Item.TradeItemMoonTear,
+            Item.CollectableTerminaFieldTelescopeGuay1,
+            Item.HeartPieceTerminaBusinessScrub,
+            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
+            Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            )] // this is duplicated in multiple places
+
         [GroundVariants(0x0, 0x01, 0x2, 0x3, 0x4, 0x10, 0x11, 0x12, 0x13, 0x14)]
         [VariantsWithRoomMax(max:0 , // for some reason these guys can break the game's ability to draw certain things also crash
             variant: 0x0, 0x01, 0x2, 0x3, 0x4, 0x10, 0x11, 0x12, 0x13, 0x14)]
@@ -5123,7 +5142,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
             Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
-            )]
+            )] // this is duplicated in multiple places
         [FlyingVariants(0)]
         [FlyingToGroundHeightAdjustment(200)]
         [VariantsWithRoomMax(max:0, variant:0)] // because of the unpoppable without cutscene thing, cannot put places
