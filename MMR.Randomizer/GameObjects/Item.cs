@@ -2261,6 +2261,7 @@ namespace MMR.Randomizer.GameObjects
         OtherThreeMasks,
         OtherFourMasks,
         AreaMoonAccess,
+        OtherKillMajora,
         OtherCredits,
 
         [Visible]

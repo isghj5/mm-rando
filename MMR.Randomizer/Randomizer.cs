@@ -496,6 +496,7 @@ namespace MMR.Randomizer
                 if (_settings.VictoryMode.HasFlag(VictoryMode.DirectToCredits))
                 {
                     ItemList[Item.OtherCredits].DependsOnItems.Remove(Item.AreaMoonAccess);
+                    ItemList[Item.OtherCredits].DependsOnItems.Remove(Item.OtherKillMajora);
                 }
 
                 if (_settings.VictoryMode.HasFlag(VictoryMode.Fairies))
@@ -1562,11 +1563,54 @@ namespace MMR.Randomizer
             ConditionsChecked = new List<Item>();
             CheckConditionals(currentItem, target, dependencyPath);
 
-            if (currentItem == Item.SongTime && (target.Region(ItemList) != Region.TheMoon || target.Region(ItemList) != Region.ClockTowerRoof))
+            if (currentItem == Item.SongTime)
             {
-                foreach (var itemObject in ItemList.Where(io => (io.Item.Region(ItemList) == Region.TheMoon || io.Item.Region(ItemList) == Region.ClockTowerRoof)))
+                var targetRegion = target.Region(ItemList);
+                if (targetRegion != Region.ClockTowerRoof && targetRegion != Region.TheMoon)
                 {
-                    itemObject.DependsOnItems.Add(Item.SongTime);
+                    var returnFromTheMoon = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                    };
+                    if (!_settings.VictoryMode.HasFlag(VictoryMode.CantFightMajora))
+                    {
+                        returnFromTheMoon.Conditionals.Add(new List<Item> { Item.SongTime });
+                        returnFromTheMoon.Conditionals.Add(new List<Item> { Item.OtherKillMajora });
+                    }
+                    ItemList.Add(returnFromTheMoon);
+
+                    var returnFromTheRoof = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        Conditionals = new List<List<Item>>
+                        {
+                            new List<Item>()
+                            {
+                                Item.SongTime,
+                            },
+                            ItemList[Item.AreaMoonAccess].DependsOnItems
+                                .Where(ItemUtils.BossRemains().Contains)
+                                .Append(Item.SongOath)
+                                .Append(returnFromTheMoon.Item)
+                                .ToList(),
+                        }
+                    };
+                    ItemList.Add(returnFromTheRoof);
+
+                    foreach (var itemObject in ItemList)
+                    {
+                        var region = itemObject.Item.Region(ItemList);
+                        if (region == Region.ClockTowerRoof)
+                        {
+                            itemObject.DependsOnItems.Add(returnFromTheRoof.Item);
+                        }
+                        else if (region == Region.TheMoon)
+                        {
+                            itemObject.DependsOnItems.Add(returnFromTheMoon.Item);
+                        }
+                    }
                 }
             }
 

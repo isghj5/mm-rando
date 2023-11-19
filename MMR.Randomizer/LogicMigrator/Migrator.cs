@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 23;
+        public const int CurrentVersion = 24;
 
         public static string ApplyMigrations(string logic)
         {
@@ -237,6 +237,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 23)
             {
                 RemoveStoneTowerTemplePot(logicObject);
+            }
+
+            if (logicObject.Version < 24)
+            {
+                AddOtherKillMajora(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -4712,6 +4717,30 @@ namespace MMR.Randomizer.LogicMigrator
         {
             logicObject.Logic.RemoveAt(1160);
             logicObject.Version = 23;
+        }
+
+        private static void AddOtherKillMajora(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 277;
+            var itemNames = new string[]
+            {
+                "OtherKillMajora",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name =>
+            {
+                var logicItem = new JsonFormatLogicItem
+                {
+                    Id = name,
+                    RequiredItems = new List<string>(),
+                    ConditionalItems = new List<List<string>>(),
+                };
+
+                return logicItem;
+            }));
+
+            logicObject.Logic[278].RequiredItems.Add("OtherKillMajora");
+            logicObject.Version = 24;
         }
 
         private class MigrationItem

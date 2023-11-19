@@ -1,5 +1,5 @@
 {
-  "Version": 23,
+  "Version": 24,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -6104,9 +6104,19 @@
       "IsTrick": false
     },
     {
+      "Id": "OtherKillMajora",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
       "Id": "OtherCredits",
       "RequiredItems": [
-        "AreaMoonAccess"
+        "AreaMoonAccess",
+        "OtherKillMajora"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
