@@ -277,7 +277,6 @@ namespace MMR.Randomizer.Models.Settings
             "Lensless Walls/Ceilings",
             "Pinnacle Rock without Seahorse",
             "Run Through Poisoned Water",
-            "Scarecrow's Song",
             "WFT 2nd Floor Skip",
         };
 
