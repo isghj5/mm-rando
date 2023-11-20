@@ -2265,6 +2265,11 @@ namespace MMR.Randomizer
                 }
             }
 
+            if (_settings.GiantMaskAnywhere)
+            {
+                PlaceBespokeItem(Item.MaskGiant);
+            }
+
             if (Random.NextDouble() < 0.3)
             {
                 PlaceBespokeItem(Item.ItemNotebook);
