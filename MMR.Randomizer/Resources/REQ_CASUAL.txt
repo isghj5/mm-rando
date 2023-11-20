@@ -26690,7 +26690,7 @@
           "MaskZora"
         ],
         [
-          "MaskGiant",
+          "SettingGiantMaskAnywhere",
           "Any B Sword"
         ]
       ],
@@ -29375,7 +29375,9 @@
     },
     {
       "Id": "Skull Kid With FD",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "SettingAllowFierceDeityAnywhere"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -31493,7 +31495,7 @@
           "SettingClimbMostSurfaces"
         ],
         [
-          "ItemHookshot"
+          "SettingHookshotAnySurface"
         ]
       ],
       "TimeNeeded": "None",
@@ -32167,7 +32169,7 @@
         ],
         [
           "SettingGiantMaskAnywhere",
-          "Any Sword"
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
