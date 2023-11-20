@@ -40,6 +40,33 @@ namespace MMR.Randomizer.Models.Settings
         [Description("The dialog of the credits will proceed automatically.")]
         AutomaticCredits = 1 << 8,
 
+        [Description("The cutscene when delivering the Deku Princess will be skipped.")]
+        [HackContent(nameof(Resources.mods.shorten_cutscene_princess_delivery))]
+        PrincessDelivery = 1 << 9,
+
+        [Description("All chests will open using the short animation.")]
+        ShortChestOpening = 1 << 10,
+
+        [Description("Shorten various aspects of recovering the Sun Mask.")]
+        [HackContent(nameof(Resources.mods.shorten_cutscene_sun_mask))]
+        SunMask = 1 << 11,
+
+        [Description("You don't have to watch Tingle fall, and his text is shortened.")]
+        [HackContent(nameof(Resources.mods.shorten_cutscene_tingle))]
+        Tingle = 1 << 12,
+
+        [Description("You don't have to watch Jim run away after using the Bombers' code.")]
+        [HackContent(nameof(Resources.mods.shorten_cutscene_jim_running))]
+        JimRunning = 1 << 13,
+
+        [Description("You don't have to watch Kotake fly into the woods, and don't have to watch her fly away after giving you an item.")]
+        [HackContent(nameof(Resources.mods.shorten_cutscene_kotake))]
+        Kotake = 1 << 14,
+
+        [Description("Hold A to automatically advance text.")]
+        [HackContent(nameof(Resources.mods.shorten_cutscene_hold_a_auto_text))]
+        HoldAText = 1 << 15,
+
         [Description("Various cutscenes are skipped or otherwise shortened.")]
         [HackContent(nameof(Resources.mods.short_cutscenes))]
         EverythingElse = 1 << 31,

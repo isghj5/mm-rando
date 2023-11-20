@@ -18,8 +18,9 @@ namespace MMR.UI.Forms
     {
         public List<List<Item>> Result { get; private set; }
         public HashSet<int> ResultTiersIndicateImportance { get; private set; }
+        public List<int> ResultTiersCap { get; private set; }
 
-        public CustomizeHintPrioritiesForm(IEnumerable<List<Item>> overrideHintPriorities, IEnumerable<int> tiersIndicateImportance)
+        public CustomizeHintPrioritiesForm(IEnumerable<List<Item>> overrideHintPriorities, IEnumerable<int> tiersIndicateImportance, IEnumerable<int> tiersCap)
         {
             InitializeComponent();
 
@@ -27,18 +28,20 @@ namespace MMR.UI.Forms
 
             Result = overrideHintPriorities?.ToList() ?? new List<List<Item>>();
             ResultTiersIndicateImportance = tiersIndicateImportance?.ToHashSet() ?? new HashSet<int>();
+            ResultTiersCap = Enumerable.Repeat(0, Result.Count).ToList();
 
             if (Result != null)
             {
                 for (var i = 0; i < Result.Count; i++)
                 {
                     var list = Result[i];
-                    AddItems(list, ResultTiersIndicateImportance.Contains(i));
+                    ResultTiersCap[i] = tiersCap?.ElementAtOrDefault(i) ?? 0;
+                    AddItems(list, ResultTiersIndicateImportance.Contains(i), ResultTiersCap[i]);
                 }
             }
         }
 
-        private void AddItems(IEnumerable<Item> items, bool indicateImportance)
+        private void AddItems(IEnumerable<Item> items, bool indicateImportance, int cap)
         {
             var i = tHintPriorities.RowCount - 1;
             tHintPriorities.RowCount++;
@@ -83,19 +86,27 @@ namespace MMR.UI.Forms
             };
             tHintPriorities.Controls.Add(label, 3, i);
 
+            var capInput = new TextBox
+            {
+                Text = cap.ToString(),
+                AutoSize = true,
+            };
+            capInput.TextChanged += textCap_TextChanged;
+            tHintPriorities.Controls.Add(capInput, 4, i);
+
             var upButton = new Button
             {
                 Text = "^",
             };
             upButton.Click += upButton_Click;
-            tHintPriorities.Controls.Add(upButton, 4, i);
+            tHintPriorities.Controls.Add(upButton, 5, i);
 
             var downButton = new Button
             {
                 Text = "v",
             };
             downButton.Click += downButton_Click;
-            tHintPriorities.Controls.Add(downButton, 5, i);
+            tHintPriorities.Controls.Add(downButton, 6, i);
         }
 
         private void upButton_Click(object sender, EventArgs e)
@@ -108,6 +119,18 @@ namespace MMR.UI.Forms
                 var list = Result[index];
                 Result.Remove(list);
                 Result.Insert(index - 1, list);
+                var importances = new List<bool>();
+                for (var i = 0; i < Result.Count; i++)
+                {
+                    importances.Add(ResultTiersIndicateImportance.Contains(i));
+                }
+                var importance = importances[index];
+                importances.RemoveAt(index);
+                importances.Insert(index - 1, importance);
+                ResultTiersIndicateImportance = importances.Select((x, i) => new { x, i }).Where(a => a.x).Select(a => a.i).ToHashSet();
+                var cap = ResultTiersCap[index];
+                ResultTiersCap.RemoveAt(index);
+                ResultTiersCap.Insert(index - 1, cap);
                 foreach (Control c in tHintPriorities.Controls)
                 {
                     var row = tHintPriorities.GetRow(c);
@@ -134,6 +157,18 @@ namespace MMR.UI.Forms
                 var list = Result[index];
                 Result.Remove(list);
                 Result.Insert(index + 1, list);
+                var importances = new List<bool>();
+                for (var i = 0; i < Result.Count; i++)
+                {
+                    importances.Add(ResultTiersIndicateImportance.Contains(i));
+                }
+                var importance = importances[index];
+                importances.RemoveAt(index);
+                importances.Insert(index + 1, importance);
+                ResultTiersIndicateImportance = importances.Select((x, i) => new { x, i }).Where(a => a.x).Select(a => a.i).ToHashSet();
+                var cap = ResultTiersCap[index];
+                ResultTiersCap.RemoveAt(index);
+                ResultTiersCap.Insert(index + 1, cap);
                 foreach (Control c in tHintPriorities.Controls)
                 {
                     var row = tHintPriorities.GetRow(c);
@@ -176,6 +211,8 @@ namespace MMR.UI.Forms
         private void DeleteRow(int index)
         {
             Result.RemoveAt(index);
+            ResultTiersIndicateImportance.Remove(index);
+            ResultTiersCap.RemoveAt(index);
 
             tHintPriorities.SuspendLayout();
 
@@ -228,6 +265,20 @@ namespace MMR.UI.Forms
             }
         }
 
+        private void textCap_TextChanged(object sender, EventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            var index = tHintPriorities.GetRow(textBox);
+            if (int.TryParse(textBox.Text, out var cap))
+            {
+                ResultTiersCap[index] = cap;
+            }
+            else
+            {
+                ResultTiersCap[index] = 0;
+            }
+        }
+
         private void bOK_Click(object sender, EventArgs e)
         {
             if (Result?.Count == 0)
@@ -252,9 +303,10 @@ namespace MMR.UI.Forms
             if (form.DialogResult == DialogResult.OK && form.ReturnItems.Count > 0)
             {
                 Result.Add(form.ReturnItems);
+                ResultTiersCap.Add(0);
 
                 tHintPriorities.SuspendLayout();
-                AddItems(form.ReturnItems, false);
+                AddItems(form.ReturnItems, false, 0);
                 tHintPriorities.ResumeLayout();
             }
         }

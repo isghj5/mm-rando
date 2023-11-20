@@ -106,7 +106,7 @@ namespace MMR.Randomizer.Models.Settings
             { TransformationForm.Deku, Color.FromArgb(0x1E, 0x69, 0x1B) },
             { TransformationForm.Goron, Color.FromArgb(0x1E, 0x69, 0x1B) },
             { TransformationForm.Zora, Color.FromArgb(0x1E, 0x69, 0x1B) },
-            { TransformationForm.FierceDeity, Color.FromArgb(0x1E, 0x69, 0x1B) }
+            { TransformationForm.FierceDeity, Color.FromArgb(0xBD, 0xB5, 0xAD) }
         };
 
         public Dictionary<TransformationForm, Instrument> Instruments { get; set; } = new Dictionary<TransformationForm, Instrument>()
@@ -133,6 +133,45 @@ namespace MMR.Randomizer.Models.Settings
         public HudColors HudColors {
             get { return this.AsmOptions.HudColorsConfig.Colors; }
             set { this.AsmOptions.HudColorsConfig.Colors = value; }
+        }
+
+        public bool RainbowTunic
+        {
+            get { return this.AsmOptions.WorldColorsConfig.Flags.RainbowTunic; }
+            set { this.AsmOptions.WorldColorsConfig.Flags.RainbowTunic = value; }
+        }
+
+        public bool BombTrapsRandomizeTunicColor
+        {
+            get { return this.AsmOptions.WorldColorsConfig.Flags.BombTrapsRandomizeTunicColor; }
+            set { this.AsmOptions.WorldColorsConfig.Flags.BombTrapsRandomizeTunicColor = value; }
+        }
+
+        /// <summary>
+        /// Minor music such as indoors and grottos will not play. Background music that is already playing will instead continue.
+        /// </summary>
+        public bool RemoveMinorMusic
+        {
+            get { return this.AsmOptions.MusicConfig.Flags.RemoveMinorMusic; }
+            set { this.AsmOptions.MusicConfig.Flags.RemoveMinorMusic = value; }
+        }
+
+        /// <summary>
+        /// When a new track starts playing in-game, show the name of the track at the bottom left of the screen.
+        /// </summary>
+        public bool ShowTrackName
+        {
+            get { return this.AsmOptions.MusicConfig.Flags.ShowTrackName; }
+            set { this.AsmOptions.MusicConfig.Flags.ShowTrackName = value; }
+        }
+
+        /// <summary>
+        /// Replace item fanfares and swamp shooting gallery fanfares with sound effects.
+        /// </summary>
+        public bool DisableFanfares
+        {
+            get { return this.AsmOptions.MusicConfig.Flags.DisableFanfares; }
+            set { this.AsmOptions.MusicConfig.Flags.DisableFanfares = value; }
         }
 
         #endregion

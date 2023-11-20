@@ -13,7 +13,7 @@ namespace MMR.UI.Forms
     {
         private readonly List<Item> _junkLocations;
         private bool updating = false;
-        private const int ItemGroupCount = 33;
+        private readonly int ItemGroupCount;
 
         public string ExternalLabel { get; private set; }
         public List<Item> CustomJunkLocations { get; private set; } = new List<Item>();
@@ -24,6 +24,7 @@ namespace MMR.UI.Forms
             InitializeComponent();
 
             _junkLocations = ItemUtils.AllLocations().ToList();
+            ItemGroupCount = (int)Math.Ceiling((decimal)_junkLocations.Count / 32);
 
             PrintToListView();
 

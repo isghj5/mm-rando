@@ -148,6 +148,33 @@
   <data name="adult_obj_link" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>models\adult-obj-link.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="envcolour_adultlink_mod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>models\envcolour-adultlink-mod.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="envcolour_dekulink_mod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>models\envcolour-dekulink-mod.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="envcolour_fdlink_mod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>models\envcolour-fdlink-mod.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="envcolour_goronlink_mod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>models\envcolour-goronlink-mod.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="envcolour_humanlink_mod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>models\envcolour-humanlink-mod.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="envcolour_zoralink_mod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>models\envcolour-zoralink-mod.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gameplaykeep_fincolors" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>models\gameplaykeep-fincolors.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gameplay_keep_swordenvs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>models\gameplay_keep_swordenvs.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gi_frog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>models\gi-frog;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="gi_link_mask" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>models\gi-link-mask;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

@@ -40,15 +40,30 @@ void Chest_WriteGiIndex(ActorEnBox* actor, GlobalContext* ctxt) {
     }
 }
 
-/**
- * Hook function used to update the chest get-item index before opening.
- **/
-u32 Chest_GetNewGiIndex(ActorEnBox* actor, GlobalContext* ctxt, bool grant) {
-    if (!MISC_CONFIG.internal.vanillaLayout) {
-        // Resolve new gi-table index if not ice trap.
-        if (actor->giIndex != 0x76) {
-            return MMR_GetNewGiIndex(ctxt, &actor->base, actor->giIndex, grant);
-        }
+bool Chest_IsLongOpening(ActorEnBox* chest, GlobalContext* ctxt, GetItemEntry* giEntry) {
+    if (MISC_CONFIG.speedups.shortChestOpening) {
+        return false;
     }
-    return actor->giIndex;
+
+    if (MISC_CONFIG.internal.vanillaLayout) {
+        return giEntry->item != ITEM_NONE && (s8)(giEntry->graphic) >= 0 && z2_CheckItemObtainability(giEntry->item) == ITEM_NONE;
+    }
+
+    if (giEntry->item == ITEM_NONE && chest->giIndex != 0x76) {
+        return false;
+    }
+
+    if (chest->giIndex == 0x0A || MMR_GetGiFlag(chest->giIndex)) {
+        return false;
+    }
+
+    return chest->chestType & 0x8;
+}
+
+bool Chest_ShouldIceSmokeSpawn(ActorEnBox* actor) {
+    if (actor->animCounter > 0) {
+        return actor->animCounter >= 0x30;
+    } else {
+        return actor->skelanime.animCurrentFrame > 45;
+    }
 }

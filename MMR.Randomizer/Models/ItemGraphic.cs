@@ -5,16 +5,16 @@ namespace MMR.Randomizer.Models
     public struct ItemGraphic : IEquatable<ItemGraphic>
     {
         /// <summary>
-        /// Graphic index used for drawing.
-        /// </summary>
-        public byte GraphicId { get; }
-
-        /// <summary>
         /// Object Id used for drawing.
         /// </summary>
         public ushort ObjectId { get; }
 
-        public ItemGraphic(byte graphicId, ushort objectId)
+        /// <summary>
+        /// Graphic index used for drawing.
+        /// </summary>
+        public byte GraphicId { get; }
+
+        public ItemGraphic(ushort objectId, byte graphicId)
         {
             this.GraphicId = graphicId;
             this.ObjectId = objectId;

@@ -63,6 +63,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] add_bombchu_drops {
+            get {
+                object obj = ResourceManager.GetObject("add_bombchu_drops", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] byo_ammo {
             get {
                 object obj = ResourceManager.GetObject("byo_ammo", resourceCulture);
@@ -76,6 +86,16 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] chest_table {
             get {
                 object obj = ResourceManager.GetObject("chest_table", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] chestgame_minimap {
+            get {
+                object obj = ResourceManager.GetObject("chestgame_minimap", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -253,6 +273,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] faster_bank_text_restore_intro {
+            get {
+                object obj = ResourceManager.GetObject("faster_bank_text_restore_intro", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] fierce_deity_anywhere {
             get {
                 object obj = ResourceManager.GetObject("fierce_deity_anywhere", resourceCulture);
@@ -306,6 +336,16 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] fix_deku_drowning {
             get {
                 object obj = ResourceManager.GetObject("fix_deku_drowning", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] fix_deku_playground_softlock {
+            get {
+                object obj = ResourceManager.GetObject("fix_deku_playground_softlock", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -443,9 +483,39 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] fix_moon_trial_access {
+            get {
+                object obj = ResourceManager.GetObject("fix_moon_trial_access", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] fix_music {
             get {
                 object obj = ResourceManager.GetObject("fix_music", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] fix_notebook_madame_aroma {
+            get {
+                object obj = ResourceManager.GetObject("fix_notebook_madame_aroma", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] fix_object_stk2_zbuffer {
+            get {
+                object obj = ResourceManager.GetObject("fix_object_stk2_zbuffer", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -583,6 +653,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] fix_town_fairy_text {
+            get {
+                object obj = ResourceManager.GetObject("fix_town_fairy_text", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] floor_1 {
             get {
                 object obj = ResourceManager.GetObject("floor_1", resourceCulture);
@@ -646,6 +726,36 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] gi_table {
             get {
                 object obj = ResourceManager.GetObject("gi_table", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] giant_mask_anywhere {
+            get {
+                object obj = ResourceManager.GetObject("giant_mask_anywhere", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] gossip_hints_free {
+            get {
+                object obj = ResourceManager.GetObject("gossip_hints_free", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] gossip_hints_tolerant {
+            get {
+                object obj = ResourceManager.GetObject("gossip_hints_tolerant", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -763,6 +873,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] misc_changes_restore_swamp_owl {
+            get {
+                object obj = ResourceManager.GetObject("misc_changes_restore_swamp_owl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] moveaudiostatebytes {
             get {
                 object obj = ResourceManager.GetObject("moveaudiostatebytes", resourceCulture);
@@ -853,6 +973,26 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] remove_fanfares {
+            get {
+                object obj = ResourceManager.GetObject("remove_fanfares", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] remove_minor_music {
+            get {
+                object obj = ResourceManager.GetObject("remove_minor_music", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] remove_morning_music {
             get {
                 object obj = ResourceManager.GetObject("remove_morning_music", resourceCulture);
@@ -876,6 +1016,86 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] replace_gi_table {
             get {
                 object obj = ResourceManager.GetObject("replace_gi_table", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] safer_glitches_fierce_deity {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_fierce_deity", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] safer_glitches_fix_0thday_erase {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_fix_0thday_erase", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] safer_glitches_fix_4thday_gossip {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_fix_4thday_gossip", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] safer_glitches_fix_4thday_mayor {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_fix_4thday_mayor", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] safer_glitches_fix_goron_bow {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_fix_goron_bow", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] safer_glitches_index_warp {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_index_warp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] safer_glitches_sodt {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_sodt", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] safer_glitches_tatl_text_zero_fourth_day {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_tatl_text_zero_fourth_day", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -943,9 +1163,39 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] shorten_cutscene_hold_a_auto_text {
+            get {
+                object obj = ResourceManager.GetObject("shorten_cutscene_hold_a_auto_text", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] shorten_cutscene_igos_intro {
             get {
                 object obj = ResourceManager.GetObject("shorten_cutscene_igos_intro", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] shorten_cutscene_jim_running {
+            get {
+                object obj = ResourceManager.GetObject("shorten_cutscene_jim_running", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] shorten_cutscene_kotake {
+            get {
+                object obj = ResourceManager.GetObject("shorten_cutscene_kotake", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -973,6 +1223,36 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] shorten_cutscene_princess_delivery {
+            get {
+                object obj = ResourceManager.GetObject("shorten_cutscene_princess_delivery", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] shorten_cutscene_sun_mask {
+            get {
+                object obj = ResourceManager.GetObject("shorten_cutscene_sun_mask", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] shorten_cutscene_tingle {
+            get {
+                object obj = ResourceManager.GetObject("shorten_cutscene_tingle", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] shorten_cutscene_twinmold_intro {
             get {
                 object obj = ResourceManager.GetObject("shorten_cutscene_twinmold_intro", resourceCulture);
@@ -986,6 +1266,26 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] shorten_cutscene_wart_intro {
             get {
                 object obj = ResourceManager.GetObject("shorten_cutscene_wart_intro", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] skulltula_token_npc_hint {
+            get {
+                object obj = ResourceManager.GetObject("skulltula_token_npc_hint", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] speedup_babycucco_minimap {
+            get {
+                object obj = ResourceManager.GetObject("speedup_babycucco_minimap", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1053,9 +1353,29 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] tatl_remains_hint {
+            get {
+                object obj = ResourceManager.GetObject("tatl_remains_hint", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] title_screen {
             get {
                 object obj = ResourceManager.GetObject("title_screen", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] update_chest_cutscene {
+            get {
+                object obj = ResourceManager.GetObject("update_chest_cutscene", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1076,6 +1396,16 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] update_kafei_mask_icon {
             get {
                 object obj = ResourceManager.GetObject("update_kafei_mask_icon", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] update_remains_required {
+            get {
+                object obj = ResourceManager.GetObject("update_remains_required", resourceCulture);
                 return ((byte[])(obj));
             }
         }

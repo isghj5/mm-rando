@@ -216,6 +216,7 @@ namespace MMR.DiscordBot.Services
             processInfo.UseShellExecute = false;
             processInfo.RedirectStandardOutput = true;
             processInfo.RedirectStandardError = true;
+            processInfo.CreateNoWindow = true;
 
             var proc = Process.Start(processInfo);
             proc.ErrorDataReceived += (sender, errorLine) => { if (errorLine.Data != null) Trace.WriteLine(errorLine.Data); };

@@ -33,9 +33,9 @@ namespace MMR.Randomizer.Models
         /// <returns>Resolved item graphic.</returns>
         public ItemGraphic ResolveGraphic()
         {
-            var index = this.Item.GetItemIndex().Value;
-            var getItem = RomData.GetItemList[index];
-            return new ItemGraphic(getItem.Index, (ushort)getItem.Object);
+            var index = this.Item.GetItemIndex();
+            var getItem = index.HasValue ? RomData.GetItemList[index.Value] : this.Item.ExclusiveItemEntry();
+            return new ItemGraphic(getItem.Object, getItem.Index);
         }
 
         public override int GetHashCode()

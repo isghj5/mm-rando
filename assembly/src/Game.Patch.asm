@@ -26,3 +26,16 @@
 .org 0x80173F90
     j       Game_AfterPrepareDisplayBuffers_Hook
     addiu   sp, sp, 0x58
+
+;==================================================================================================
+; Overlay Display
+;==================================================================================================
+
+.headersize G_CODE_DELTA
+
+; Replaces:
+;   sw      a0, 0x0068 (sp)
+;   lw      t6, 0x0068 (sp)
+.org 0x80118898 ; In rom: 0xAFE8F8
+    jal     Game_DrawOverlay_Hook
+    sw      a0, 0x0068 (sp)

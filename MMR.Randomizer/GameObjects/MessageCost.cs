@@ -348,7 +348,7 @@ namespace MMR.Randomizer.GameObjects
             // Milk Bar Chateau
             new MessageCost
             {
-                MessageIds = { (11019, 1) },
+                MessageIds = { (11019, 1), (0x2AFA, 0) },
                 LocationsAffected = { Item.ShopItemMilkBarChateau },
                 SubtractPriceAddresses = { 0x10469EA, 0x104697E },
                 PriceAddresses = { 0x10469D4, 0x1046968 },
@@ -558,7 +558,7 @@ namespace MMR.Randomizer.GameObjects
             new MessageCost
             {
                 MessageIds = { (10713, 0), (10714, 0) },
-                LocationsAffected = { Item.MaskAllNight },
+                LocationsAffected = { Item.MaskAllNight, Item.NotebookPurchaseCuriosityShopItem },
             },
             new MessageCost
             {
