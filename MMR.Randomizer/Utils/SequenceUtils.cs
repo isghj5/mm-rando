@@ -1375,7 +1375,7 @@ namespace MMR.Randomizer.Utils
             return false;
         }
 
-        /* public static void ReassignSongSlots()
+        public static void ReassignSongSlots()
         {
             // read all assginement slots from json files
             var replacementSongSlots = new List<ReplacementSongSlot>();
@@ -1387,7 +1387,7 @@ namespace MMR.Randomizer.Utils
                     var filetext = File.ReadAllText(filePath);
                     // the json string enum converter lets us read strings as songnames instead of int(slots) for readability
                     // TODO fix this
-                    //var buildingList = JsonConvert.DeserializeObject<List<ReplacementSongSlot>>(filetext, new Newtonsoft.Json.Converters.StringEnumConverter());
+                    var buildingList = JsonSerializer.Deserialize<List<ReplacementSongSlot>>(filetext);
                     replacementSongSlots = replacementSongSlots.Concat(buildingList).ToList();
                 }
                 catch (IOException ex)

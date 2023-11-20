@@ -296,7 +296,7 @@ namespace MMR.Randomizer
             if (testActor == GameObjects.Actor.Postbox)
             {
                 GameObjects.Item[] checksPostBoxLeadsTo = { GameObjects.Item.TradeItemMamaLetter, GameObjects.Item.MaskKeaton, GameObjects.Item.HeartPiecePostBox, GameObjects.Item.MaskCouple };
-                if (_randomized.ImportantLocations.Union(checksPostBoxLeadsTo).Count() > 0)
+                if (_randomized.ImportantLocations!= null && _randomized.ImportantLocations.Union(checksPostBoxLeadsTo).Count() > 0)
                 {
                     // if we need a mailbox, keep one
                     var shortStrawPostbox = _randomized.Seed % 3;
