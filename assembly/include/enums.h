@@ -197,6 +197,7 @@ enum DamageEffect {
     DAMAGE_EFFECT_FLY_BACK_2, // Flies backwards.
     DAMAGE_EFFECT_FREEZE,     // Freezes.
     DAMAGE_EFFECT_ELECTRIC,   // Electrocutes.
+    DAMAGE_EFFECT_BOMBTRAP,   // Sets off a bomb.
 };
 
 enum FloorPhysicsType {
@@ -415,6 +416,7 @@ enum ItemValue {
 
     // 0x6D (Misc Equipment?)
     ITEM_BOMBER_NOTEBOOK,
+    ITEM_SKULLTULA_SPIRIT,
     ITEM_MAGIC_JAR = 0x79,
     ITEM_MAGIC_JAR_LARGE,
     ITEM_HEART_PIECE,
@@ -463,71 +465,108 @@ enum PlayerForm {
 };
 
 enum PlayerState1 {
-    PLAYER_STATE1_GROTTO_IN   = 0x80000000, // Link is entering a grotto.
+    PLAYER_STATE1_GROTTO_IN   = 0x80000000, // Link is entering a grotto. // Also voiding.
+    PLAYER_STATE1_TARGET_FAR  = 0x40000000, // Target is too far away, auto-untargetting.
     PLAYER_STATE1_TIME_STOP   = 0x20000000, // Time is stopped but Link & NPC animations continue.
     PLAYER_STATE1_SPECIAL_2   = 0x10000000, // Form transition, using ocarina.
     PLAYER_STATE1_SWIM        = 0x08000000, // Swimming.
     PLAYER_STATE1_DAMAGED     = 0x04000000, // Damaged.
+    PLAYER_STATE1_ZORA_FINS2  = 0x02000000, // Camera locked to thrown zora fins
     PLAYER_STATE1_ZORA_WEAPON = 0x01000000, // Zora fins are out, "Put Away" may be prompted.
     PLAYER_STATE1_EPONA       = 0x00800000, // On Epona.
     PLAYER_STATE1_SHIELD      = 0x00400000, // Shielding.
-    PLAYER_STATE1_ZORA_FINS   = 0x00200000, // Using Zora fins.
+    PLAYER_STATE1_LADDER      = 0x00200000, // Climbing a ladder.
     PLAYER_STATE1_AIM         = 0x00100000, // Aiming bow, hookshot, Zora fins, etc.
     PLAYER_STATE1_FALLING     = 0x00080000, // In the air (without jumping beforehand).
     PLAYER_STATE1_AIR         = 0x00040000, // In the air (with jumping beforehand).
     PLAYER_STATE1_Z_VIEW      = 0x00020000, // In Z-target view.
     PLAYER_STATE1_Z_CHECK     = 0x00010000, // Z-target check-able or speak-able.
     PLAYER_STATE1_Z_ON        = 0x00008000, // Z-target enabled.
+    PLAYER_STATE1_CLIMB_UP    = 0x00004000, // Getting up from climbing wall (not ladder)
     PLAYER_STATE1_LEDGE_HANG  = 0x00002000, // Hanging from ledge.
     PLAYER_STATE1_CHARGE_SPIN = 0x00001000, // Charging spin attack.
     PLAYER_STATE1_HOLD        = 0x00000800, // Hold above head.
     PLAYER_STATE1_GET_ITEM    = 0x00000400, // Hold new item over head.
     PLAYER_STATE1_TIME_STOP_2 = 0x00000200, // Time is stopped (does not affect Tatl, HUD animations).
+    PLAYER_STATE1_GIANT_MASK  = 0x00000100, // Equipping Giant's Mask
     PLAYER_STATE1_DEAD        = 0x00000080, // Dead.
+    PLAYER_STATE1_TALKING     = 0x00000040, // Talking with an acctor
     PLAYER_STATE1_MOVE_SCENE  = 0x00000020, // When walking in a cutscene? Used during Postman's minigame.
     PLAYER_STATE1_BARRIER     = 0x00000010, // Zora electric barrier.
     PLAYER_STATE1_ITEM_OUT    = 0x00000008, // Item is out, may later prompt "Put Away." Relevant to Bow, Hookshot, not Great Fairy Sword.
     PLAYER_STATE1_LEDGE_CLIMB = 0x00000004, // Climbing ledge.
     PLAYER_STATE1_TIME_STOP_3 = 0x00000002, // Everything stopped and Link is stuck in place.
+    PLAYER_STATE1_GROTTO_OUT  = 0x00000001, // Link is exiting a grotto
 };
 
 enum PlayerState2 {
-    PLAYER_STATE2_IDLE        = 0x10000000, // Idle animation.
-    PLAYER_STATE2_OCARINA     = 0x08000000, // Using ocarina? Maybe more.
-    PLAYER_STATE2_KAMARO      = 0x02000000, // Kamaro mask dance.
-    PLAYER_STATE2_CAN_DOWN    = 0x00400000, // Can get down from Epona.
-    PLAYER_STATE2_TATL_BUTTON = 0x00200000, // Tatl C up button prompt.
-    PLAYER_STATE2_TATL_OUT    = 0x00100000, // When tatl is out.
-    PLAYER_STATE2_Z_JUMP      = 0x00080000, // Z-target jumping (sidehop, backflip).
-    PLAYER_STATE2_SPIN_ATTACK = 0x00020000, // Spin attack.
-    PLAYER_STATE2_FROZEN      = 0x00004000, // Frozen, ends once ice cracks.
-    PLAYER_STATE2_CLIMB_STAY  = 0x00001000, // Stationary while climbing.
-    PLAYER_STATE2_DIVING      = 0x00000800, // Diving.
-    PLAYER_STATE2_DIVING_2    = 0x00000400, // Diving, swimming as Zora.
-    PLAYER_STATE2_GRABBING    = 0x00000100, // Grabbing onto a block.
-    PLAYER_STATE2_CLIMBING    = 0x00000040, // Climbing. Also occurs during: transforming, hanging from ledge, deku spinning, goron ball, sliding.
-    PLAYER_STATE2_MOVING      = 0x00000020, // Running / moving.
-    PLAYER_STATE2_PUSH_PULL   = 0x00000010, // Pushing or pulling a block.
-    PLAYER_STATE2_MOVING_2    = 0x00000008, // Is set for some movement frames.
-    PLAYER_STATE2_CHECK       = 0x00000002, // "Check" or "Speak" prompt may appear.
-    PLAYER_STATE2_MAY_GRAB    = 0x00000001, // "Grab" prompt may appear.
+    PLAYER_STATE2_VORTEX_VOID     = 0x80000000, // Vortex void
+    PLAYER_STATE2_LUNGE           = 0x40000000, // Lunge: small forward boost at the end of certain attack animations
+    PLAYER_STATE2_NO_PLAYER_DRAW  = 0x20000000, // Disable drawing player
+    PLAYER_STATE2_IDLE            = 0x10000000, // Idle animation.
+    PLAYER_STATE2_OCARINA         = 0x08000000, // Using ocarina? Maybe more.
+    PLAYER_STATE2_PLAYER_REFLECT  = 0x04000000, // Player reflection is enabled
+    PLAYER_STATE2_KAMARO          = 0x02000000, // Kamaro mask dance.
+    PLAYER_STATE2_MASKHAND        = 0x01000000, // Mask drawn in hand during form change.
+    PLAYER_STATE2_PASSING_DOOR    = 0x00800000, // Player is going through a door
+    PLAYER_STATE2_CAN_DOWN        = 0x00400000, // Can get down from Epona.
+    PLAYER_STATE2_TATL_BUTTON     = 0x00200000, // Tatl C up button prompt.
+    PLAYER_STATE2_TATL_OUT        = 0x00100000, // When tatl is out.
+    PLAYER_STATE2_Z_JUMP          = 0x00080000, // Z-target jumping (sidehop, backflip).
+    PLAYER_STATE2_00040000        = 0x00040000, // Something related to Kafei
+    PLAYER_STATE2_SPIN_ATTACK     = 0x00020000, // Spin attack.
+    PLAYER_STATE2_CAN_LIFT_ACTOR  = 0x00010000, // Player can pick up an actor
+    PLAYER_STATE2_00008000        = 0x00008000,
+    PLAYER_STATE2_FROZEN          = 0x00004000, // Frozen, ends once ice cracks.
+    PLAYER_STATE2_SWITCH_TARGET   = 0x00002000, // Switching targets in Switch-Target mode?
+    PLAYER_STATE2_CLIMB_STAY      = 0x00001000, // Stationary while climbing.
+    PLAYER_STATE2_DIVING          = 0x00000800, // Diving.
+    PLAYER_STATE2_DIVING_2        = 0x00000400, // Diving, swimming as Zora.
+    PLAYER_STATE2_00000200        = 0x00000200,
+    PLAYER_STATE2_GRABBING        = 0x00000100, // Grabbing onto a block.
+    PLAYER_STATE2_LIFT_ACTOR      = 0x00000080, // Picking up an actor
+    PLAYER_STATE2_CLIMBING        = 0x00000040, // Climbing. Also occurs during: transforming, hanging from ledge, deku spinning, goron ball, sliding.
+    PLAYER_STATE2_MOVING          = 0x00000020, // Running / moving.
+    PLAYER_STATE2_PUSH_PULL       = 0x00000010, // Pushing or pulling a block.
+    PLAYER_STATE2_MOVING_2        = 0x00000008, // Is set for some movement frames.
+    PLAYER_STATE2_CAN_CLIMB_ACTOR = 0x00000004, // Can climb actor
+    PLAYER_STATE2_CHECK           = 0x00000002, // "Check" or "Speak" prompt may appear.
+    PLAYER_STATE2_MAY_GRAB        = 0x00000001, // "Grab" prompt may appear.
 };
 
 enum PlayerState3 {
-    PLAYER_STATE3_BREMEN      = 0x20000000, // Bremen mask march.
-    PLAYER_STATE3_ROLLING     = 0x08000000, // Rolling (non-Goron).
-    PLAYER_STATE3_ATTACK      = 0x02000000, // Attacking with sword, B button weapon.
-    PLAYER_STATE3_DEKU_AIR_2  = 0x01000000, // Hover with flower petals? Maybe more.
-    PLAYER_STATE3_DEKU_HOP    = 0x00200000, // Deku hopping on water.
-    PLAYER_STATE3_GORON_SPIKE = 0x00080000, // Goron spike roll.
-    PLAYER_STATE3_TRANS_PART  = 0x00020000, // Transforming (latter-half).
-    PLAYER_STATE3_ZORA_SWIM   = 0x00008000, // Zora swimming/diving.
-    PLAYER_STATE3_DEKU_AIR    = 0x00002000, // Hover with flower petals.
-    PLAYER_STATE3_DEKU_RISE   = 0x00000200, // Jumping out of Deku flower.
-    PLAYER_STATE3_DEKU_DIVE   = 0x00000100, // Deku flower dive.
-    PLAYER_STATE3_PULL_BOW    = 0x00000040, // Pull back bow string.
-    PLAYER_STATE3_ATTACK_2    = 0x00000008, // Post-attack.
-    PLAYER_STATE3_JUMP_ATTACK = 0x00000002, // Beginning of jump attack.
+    PLAYER_STATE3_TARGET_ENEMY    = 0x80000000, // Targetting an enemy.
+    PLAYER_STATE3_PULL_ITEM       = 0x40000000, // Pulling out a held item.
+    PLAYER_STATE3_BREMEN          = 0x20000000, // Bremen mask march.
+    PLAYER_STATE3_DEKU_HOP_VOID   = 0x10000000, // Voding from deku hopping.
+    PLAYER_STATE3_ROLLING         = 0x08000000, // Rolling (non-Goron).
+    PLAYER_STATE3_OFFERING_ITEM   = 0x04000000, // Offering an item to an actor
+    PLAYER_STATE3_ATTACK          = 0x02000000, // Attacking with sword, B button weapon.
+    PLAYER_STATE3_DEKU_AIR_2      = 0x01000000, // Hover with flower petals? Maybe more.
+    PLAYER_STATE3_ZORA_FIN_DONE   = 0x00800000, // Set when zora fin is destroyed, not unset if not actively caught.
+    PLAYER_STATE3_HONEY_DARLING   = 0x00400000, // Honey and Darling in progress
+    PLAYER_STATE3_DEKU_HOP        = 0x00200000, // Deku hopping on water.
+    PLAYER_STATE3_DEKU_SPIN       = 0x00100000, // Deku spinning
+    PLAYER_STATE3_GORON_SPIKE     = 0x00080000, // Goron spike roll.
+    PLAYER_STATE3_FLOWERLESS_JUMP = 0x00040000, // Deku jump from dive with no Deku Flower
+    PLAYER_STATE3_TRANS_PART      = 0x00020000, // Transforming (latter-half).
+    PLAYER_STATE3_HOOK_ARRIVE_1   = 0x00010000, // Arriving after being pulled by hookshot
+    PLAYER_STATE3_ZORA_SWIM       = 0x00008000, // Zora swimming/diving.
+    PLAYER_STATE3_00004000        = 0x00004000,
+    PLAYER_STATE3_DEKU_AIR        = 0x00002000, // Hover with flower petals.
+    PLAYER_STATE3_GORON_ROLL      = 0x00001000, // Goron rolling
+    PLAYER_STATE3_SCOOPING        = 0x00000800, // Scooping with a bottle.
+    PLAYER_STATE3_MINIGAME_ARROWS = 0x00000400, // Has infinite minigame arrows
+    PLAYER_STATE3_DEKU_RISE       = 0x00000200, // Jumping out of Deku flower.
+    PLAYER_STATE3_DEKU_DIVE       = 0x00000100, // Deku flower dive.
+    PLAYER_STATE3_HOOK_FLYING     = 0x00000080, // Pulled by hookshot
+    PLAYER_STATE3_PULL_BOW        = 0x00000040, // Pull back bow string.
+    PLAYER_STATE3_AUTO_OCARINA    = 0x00000020, // Automatically pull out ocarina after conversation
+    PLAYER_STATE3_HOOK_ARRIVE_2   = 0x00000010, // After arriving at hookshot target?
+    PLAYER_STATE3_ATTACK_2        = 0x00000008, // Post-attack.
+    PLAYER_STATE3_00000004        = 0x00000004,
+    PLAYER_STATE3_JUMP_ATTACK     = 0x00000002, // Beginning of jump attack.
+    PLAYER_STATE3_NO_FLOOR_CLIP   = 0x00000001, // Ignore floor collision
 };
 
 enum SegmentID {
@@ -581,5 +620,98 @@ enum TimeSpeed {
     TIME_SPEED_INVERTED = -2,
     TIME_SPEED_STOPPED = -3,
 };
+
+enum BombersNotebookEvent {
+    /*  0 */ BOMBERS_NOTEBOOK_EVENT_MET_BOMBERS,
+    /*  1 */ BOMBERS_NOTEBOOK_EVENT_MET_ANJU,
+    /*  2 */ BOMBERS_NOTEBOOK_EVENT_MET_KAFEI,
+    /*  3 */ BOMBERS_NOTEBOOK_EVENT_MET_CURIOSITY_SHOP_MAN,
+    /*  4 */ BOMBERS_NOTEBOOK_EVENT_MET_BOMB_SHOP_LADY,
+    /*  5 */ BOMBERS_NOTEBOOK_EVENT_MET_ROMANI,
+    /*  6 */ BOMBERS_NOTEBOOK_EVENT_MET_CREMIA,
+    /*  7 */ BOMBERS_NOTEBOOK_EVENT_MET_MAYOR_DOTOUR,
+    /*  8 */ BOMBERS_NOTEBOOK_EVENT_MET_MADAOME_AROMA,
+    /*  9 */ BOMBERS_NOTEBOOK_EVENT_MET_TOTO,
+    /* 10 */ BOMBERS_NOTEBOOK_EVENT_MET_GORMAN,
+    /* 11 */ BOMBERS_NOTEBOOK_EVENT_MET_POSTMAN,
+    /* 12 */ BOMBERS_NOTEBOOK_EVENT_MET_ROSA_SISTERS,
+    /* 13 */ BOMBERS_NOTEBOOK_EVENT_MET_TOILET_HAND,
+    /* 14 */ BOMBERS_NOTEBOOK_EVENT_MET_ANJUS_GRANDMOTHER,
+    /* 15 */ BOMBERS_NOTEBOOK_EVENT_MET_KAMARO,
+    /* 16 */ BOMBERS_NOTEBOOK_EVENT_MET_GROG,
+    /* 17 */ BOMBERS_NOTEBOOK_EVENT_MET_GORMAN_BROTHERS,
+    /* 18 */ BOMBERS_NOTEBOOK_EVENT_MET_SHIRO,
+    /* 19 */ BOMBERS_NOTEBOOK_EVENT_MET_GURU_GUGU,
+    /* 20 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_ROOM_KEY,
+    /* 21 */ BOMBERS_NOTEBOOK_EVENT_PROMISED_MIDNIGHT_MEETING,
+    /* 22 */ BOMBERS_NOTEBOOK_EVENT_PROMISED_TO_MEET_KAFEI,
+    /* 23 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_LETTER_TO_KAFEI,
+    /* 24 */ BOMBERS_NOTEBOOK_EVENT_DEPOSITED_LETTER_TO_KAFEI,
+    /* 25 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_PENDANT_OF_MEMORIES,
+    /* 26 */ BOMBERS_NOTEBOOK_EVENT_DELIVERED_PENDANT_OF_MEMORIES,
+    /* 27 */ BOMBERS_NOTEBOOK_EVENT_ESCAPED_SAKONS_HIDEOUT,
+    /* 28 */ BOMBERS_NOTEBOOK_EVENT_PROMISED_TO_HELP_WITH_THEM,
+    /* 29 */ BOMBERS_NOTEBOOK_EVENT_DEFENDED_AGAINST_THEM,
+    /* 30 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_MILK_BOTTLE,
+    /* 31 */ BOMBERS_NOTEBOOK_EVENT_ESCORTED_CREMIA,
+    /* 32 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_ROMANIS_MASK,
+    /* 33 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_KEATON_MASK,
+    /* 34 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_PRIORITY_MAIL,
+    /* 35 */ BOMBERS_NOTEBOOK_EVENT_DELIVERED_PRIORITY_MAIL,
+    /* 36 */ BOMBERS_NOTEBOOK_EVENT_LEARNED_SECRET_CODE,
+    /* 37 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_BOMBERS_NOTEBOOK,
+    /* 38 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_MAYOR_HP,
+    /* 39 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_ROSA_SISTERS_HP,
+    /* 40 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_TOILET_HAND_HP,
+    /* 41 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_GRANDMA_SHORT_STORY_HP,
+    /* 42 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_GRANDMA_LONG_STORY_HP,
+    /* 43 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_POSTMAN_HP,
+    /* 44 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_KAFEIS_MASK,
+    /* 45 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_ALL_NIGHT_MASK,
+    /* 46 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_BUNNY_HOOD,
+    /* 47 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_GAROS_MASK,
+    /* 48 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_CIRCUS_LEADERS_MASK,
+    /* 49 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_POSTMANS_HAT,
+    /* 50 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_COUPLES_MASK,
+    /* 51 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_BLAST_MASK,
+    /* 52 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_KAMAROS_MASK,
+    /* 53 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_STONE_MASK,
+    /* 54 */ BOMBERS_NOTEBOOK_EVENT_RECEIVED_BREMEN_MASK,
+};
+
+typedef enum Item00Type {
+    /* 0x00 */ ITEM00_RUPEE_GREEN,
+    /* 0x01 */ ITEM00_RUPEE_BLUE,
+    /* 0x02 */ ITEM00_RUPEE_RED,
+    /* 0x03 */ ITEM00_RECOVERY_HEART,
+    /* 0x04 */ ITEM00_BOMBS_A,
+    /* 0x05 */ ITEM00_ARROWS_10,
+    /* 0x06 */ ITEM00_HEART_PIECE,
+    /* 0x07 */ ITEM00_HEART_CONTAINER,
+    /* 0x08 */ ITEM00_ARROWS_30,
+    /* 0x09 */ ITEM00_ARROWS_40,
+    /* 0x0A */ ITEM00_ARROWS_50,
+    /* 0x0B */ ITEM00_BOMBS_B,
+    /* 0x0C */ ITEM00_NUTS_1,
+    /* 0x0D */ ITEM00_STICK,
+    /* 0x0E */ ITEM00_MAGIC_LARGE,
+    /* 0x0F */ ITEM00_MAGIC_SMALL,
+    /* 0x10 */ ITEM00_MASK,
+    /* 0x11 */ ITEM00_SMALL_KEY,
+    /* 0x12 */ ITEM00_FLEXIBLE,
+    /* 0x13 */ ITEM00_RUPEE_HUGE,
+    /* 0x14 */ ITEM00_RUPEE_PURPLE,
+    /* 0x15 */ ITEM00_3_HEARTS,
+    /* 0x16 */ ITEM00_SHIELD_HERO,
+    /* 0x17 */ ITEM00_NUTS_10,
+    /* 0x18 */ ITEM00_NOTHING,
+    /* 0x19 */ ITEM00_BOMBS_0,
+    /* 0x1A */ ITEM00_BIG_FAIRY,
+    /* 0x1B */ ITEM00_MAP,
+    /* 0x1C */ ITEM00_COMPASS,
+    /* 0x1D */ ITEM00_MUSHROOM_CLOUD,
+
+    /* 0xFF */ ITEM00_NO_DROP = -1
+} Item00Type;
 
 #endif

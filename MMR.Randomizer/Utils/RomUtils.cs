@@ -228,8 +228,10 @@ namespace MMR.Randomizer.Utils
             var startTime = DateTime.Now;
 
             // sorting the list with .Where().ToList() => OrderByDescending().ToList only takes (~ 0.400 miliseconds) on Isghj's computer
-            var sortedCompressibleFiles = RomData.MMFileList.Where(file => file.IsCompressed && file.WasEdited).ToList();
-            sortedCompressibleFiles = sortedCompressibleFiles.OrderByDescending(file => file.Data.Length).ToList();
+            var sortedCompressibleFiles = RomData.MMFileList
+                .Where(file => file.IsCompressed && file.WasEdited)
+                .OrderByDescending(file => file.Data.Length)
+                .ToList();
 
             // Debug.WriteLine($" sort the list with Sort() : [{(DateTime.Now).Subtract(startTime).TotalMilliseconds} (ms)]");
 
@@ -241,6 +243,7 @@ namespace MMR.Randomizer.Utils
             {
                 //var yazTime = DateTime.Now;
                 file.Data = Yaz.EncodeAndCopy(file.Data);
+                file.WasEdited = false;
                 //Debug.WriteLine($" size: [{file.Data.Length}] time to complete compression : [{(DateTime.Now).Subtract(yazTime).TotalMilliseconds} (ms)]");
             });
             // this thread is borrowed, we don't want it to always be the lowest priority, return to previous state

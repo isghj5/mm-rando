@@ -5,6 +5,12 @@
 
 #define WORLD_COLOR_CONFIG_MAGIC 0x57524C44
 
+typedef struct {
+    u32 rainbowTunic        : 1;
+    u32 bombTrapTunicColor  : 1;
+    u32                     : 30;
+} WorldColorFlags;
+
 struct WorldColorConfig {
     u32 magic;
     u32 version;
@@ -28,10 +34,14 @@ struct WorldColorConfig {
     Color iceArrowEffectPri;
     Color lightArrowEffectEnv;
     Color lightArrowEffectPri;
+    Color formTunic[5];
+    WorldColorFlags flags;
 };
 
 extern struct WorldColorConfig WORLD_COLOR_CONFIG;
 
 void WorldColors_Init(void);
+void WorldColors_RandomizeTunic(ActorPlayer* actor);
+void WorldColors_CycleTunic(GlobalContext* ctxt);
 
 #endif // WORLD_COLORS_H

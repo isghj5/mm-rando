@@ -19,26 +19,30 @@
     lh      a1, 0x001C (s1)       ;; A1 = Actor Variable
 
 ;==================================================================================================
-; Update Get-Item Index Before/While Opening
+; Remove setting collectible flag
 ;==================================================================================================
 
 .headersize G_EN_BOX_DELTA
 
 ; Always branch to while-opening code (see below).
 ; Replaces:
-;   beq     v0, at, 0x80868E88
-;   lw      a0, 0x0084(sp)
-.org 0x80868E74
-    b       0x80868E88
+;   ADDIU   AT, R0, 0x000C
+;   BEQ     V0, AT, 0x80868E88
+;   LW      A0, 0x0084 (SP)
+;   ADDIU   AT, R0, 0x005A
+;   BNEL    V0, AT, .+0x14
+;   LH      A1, 0x001C (S0)
+;   JAL     0x800B5DB0 ; Flags_SetCollectible
+;   LW      A1, 0x0220 (S0)
+.org 0x80868E70
     nop
-
-; Called while opening to update flags.
-; Replaces:
-;   jal     0x800B5DB0      ;; Call: Actor_SetCollectibleFlag
-;   lw      a1, 0x0220(s0)  ;; Collectible flag index
-.org 0x80868E88
-    jal     Chest_UpdateGiIndexWhileOpening_Hook
-    or      a0, s0, r0      ;; A0 = Actor
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
 
 ; Always branch to before-opening code (see below).
 ; Replaces:
@@ -55,12 +59,12 @@
 ;   sw      v1, 0x021C(s0)         ;; If flag already set, replace gi-table index with hardcoded value: 0xA
 ;   lw      v0, 0x021C(s0)         ;;
 .org 0x80868F5C
-    or      a0, s0, r0             ;; A0 = Actor
-    lw      a1, 0x0084 (sp)        ;; A1 = GlobalContext
-    jal     Chest_GetNewGiIndex    ;; Call function to update gi-table index actor field.
-    or      a2, r0, r0             ;; A2 = false (do not update flags)
-    nop                            ;;
-    nop                            ;;
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
 
 ;==================================================================================================
 ; Fix Ice Trap Sound Effect
@@ -73,3 +77,24 @@
 ;   addiu   a1, r0, 0x31F1
 .org 0x80869344 ; Offset: 0x1774
     addiu   a1, r0, 0x31A4
+
+;==================================================================================================
+; Fix Large Chest Ice Trap
+;==================================================================================================
+
+.headersize G_EN_BOX_DELTA
+
+; Replaces:
+;   LUI     AT, 0x4234
+;   MTC1    AT, F4
+;   LWC1    F6, 0x0174 (S0)
+;   C.LT.S  F4, F6
+;   NOP
+;   BC1FL   0x808695D8
+.org 0x8086959C
+    nop
+    nop
+    nop
+    jal     Chest_ShouldIceSmokeSpawn
+    or      a0, s0, r0
+    beqz    v0, 0x808695D8

@@ -14,7 +14,7 @@ namespace MMR.UI.Forms
     {
         private readonly List<Item> _startingItems;
         private bool updating = false;
-        private const int ItemGroupCount = 3;
+        private const int ItemGroupCount = 5;
 
         public string ExternalLabel { get; private set; }
         public List<Item> CustomStartingItemList { get; private set; } = new List<Item>();
@@ -59,8 +59,8 @@ namespace MMR.UI.Forms
 
         private void UpdateString(List<Item> selections)
         {
-            int[] n = new int[3];
-            string[] ns = new string[3];
+            int[] n = new int[ItemGroupCount];
+            string[] ns = new string[ItemGroupCount];
             foreach (var item in selections)
             {
                 var i = _startingItems.IndexOf(item);
@@ -69,7 +69,7 @@ namespace MMR.UI.Forms
                 n[j] |= (int)(1 << k);
                 ns[j] = Convert.ToString(n[j], 16);
             }
-            tStartingItemsString.Text = ns[2] + "-" + ns[1] + "-" + ns[0];
+            tStartingItemsString.Text = string.Join('-', ns.Reverse());
             CustomStartingItemListString = tStartingItemsString.Text;
         }
 

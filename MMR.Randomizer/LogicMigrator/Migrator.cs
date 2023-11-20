@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 12;
+        public const int CurrentVersion = 24;
 
         public static string ApplyMigrations(string logic)
         {
@@ -182,6 +182,66 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 12)
             {
                 AddGaroHints(logicObject);
+            }
+
+            if (logicObject.Version < 13)
+            {
+                AddBossDoors(logicObject);
+            }
+
+            if (logicObject.Version < 14)
+            {
+                AddLullabyIntro(logicObject);
+            }
+
+            if (logicObject.Version < 15)
+            {
+                AddNotebookEntries(logicObject);
+            }
+
+            if (logicObject.Version < 16)
+            {
+                AddFairies(logicObject);
+            }
+
+            if (logicObject.Version < 17)
+            {
+                AddFrogs(logicObject);
+            }
+
+            if (logicObject.Version < 18)
+            {
+                AddSettings(logicObject);
+            }
+
+            if (logicObject.Version < 19)
+            {
+                AddWellFairies(logicObject);
+            }
+
+            if (logicObject.Version < 20)
+            {
+                AddInaccessible(logicObject);
+            }
+
+            if (logicObject.Version < 21)
+            {
+                ReplaceSettingsWithExpressions(logicObject);
+            }
+
+            if (logicObject.Version < 22)
+            {
+                AddOtherCredits(logicObject);
+            }
+
+            if (logicObject.Version < 23)
+            {
+                RemoveStoneTowerTemplePot(logicObject);
+            }
+
+            if (logicObject.Version < 24)
+            {
+                AddOtherKillMajora(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -3902,6 +3962,787 @@ namespace MMR.Randomizer.LogicMigrator
             logicObject.Version = 12;
         }
 
+        private static void AddBossDoors(JsonFormatLogic logicObject)
+        {
+            logicObject.Logic.RemoveRange(128, 5);
+
+            const int startIndex = 128;
+            var itemNames = new string[]
+            {
+                "AreaOdolwasLair",
+                "AreaGohtsLair",
+                "AreaGyorgsLair",
+                "AreaTwinmoldsLair",
+                "OtherKillOdolwa",
+                "OtherKillGoht",
+                "OtherKillGyorg",
+                "OtherKillTwinmold",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 13;
+        }
+
+        private static void AddLullabyIntro(JsonFormatLogic logicObject)
+        {
+            logicObject.Logic.Insert(1083, new JsonFormatLogicItem
+            {
+                Id = "SongLullabyIntro",
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>
+                {
+                    new List<string> { "SongLullabyIntroInMountainVillage" },
+                    new List<string> { "SongLullabyIntroInTwinIslands" },
+                },
+            });
+
+            const int startIndex = 1122;
+            var itemNames = new string[]
+            {
+                "SongLullabyIntroInMountainVillage",
+                "SongLullabyIntroInTwinIslands",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 14;
+        }
+
+        private static void AddNotebookEntries(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1084;
+            var itemNames = new string[]
+            {
+                "NotebookMeetBombers",
+                "NotebookMeetAnju",
+                "NotebookMeetKafei",
+                "NotebookMeetCuriosityShopMan",
+                "NotebookMeetOldLady",
+                "NotebookMeetRomani",
+                "NotebookMeetCremia",
+                "NotebookMeetMayorDotour",
+                "NotebookMeetMadameAroma",
+                "NotebookMeetToto",
+                "NotebookMeetGorman",
+                "NotebookMeetPostman",
+                "NotebookMeetRosaSisters",
+                "NotebookMeetToiletHand",
+                "NotebookMeetAnjusGrandmother",
+                "NotebookMeetKamaro",
+                "NotebookMeetGrog",
+                "NotebookMeetGormanBrothers",
+                "NotebookMeetShiro",
+                "NotebookMeetGuruGuru",
+                "NotebookInnReservation",
+                "NotebookPromiseAnjuMeeting",
+                "NotebookPromiseAnjuDelivery",
+                "NotebookDepositLetterToKafei",
+                "NotebookPromiseKafei",
+                "NotebookDeliverPendant",
+                "NotebookEscapeFromSakonSHideout",
+                "NotebookPromiseRomani",
+                "NotebookSaveTheCows",
+                "NotebookProtectMilkDelivery",
+                "NotebookCuriosityShopManSGift",
+                "NotebookPromiseCuriosityShopMan",
+                "NotebookDeliverLetterToMama",
+                "NotebookLearnBombersCode",
+                "NotebookDotoursThanks",
+                "NotebookRosaSistersThanks",
+                "NotebookToiletHandSThanks",
+                "NotebookGrandmaShortStory",
+                "NotebookGrandmaLongStory",
+                "NotebookPostmansGame",
+                "NotebookPromiseMadameAroma",
+                "NotebookPurchaseCuriosityShopItem",
+                "NotebookGrogsThanks",
+                "NotebookDefeatGormanBrothers",
+                "NotebookMovingGorman",
+                "NotebookPostmansFreedom",
+                "NotebookUniteAnjuAndKafei",
+                "NotebookSaveOldLady",
+                "NotebookPromiseKamaro",
+                "NotebookSaveInvisibleSoldier",
+                "NotebookGuruGuru",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+
+            const int startMultiLocaitonIndex = 1175;
+            itemNames = new string[]
+            {
+                "NotebookMeetBombersInNCT",
+                "NotebookMeetBombersInECT",
+                "NotebookMeetAnjuInInn",
+                "NotebookMeetAnjuInLaundryPool",
+                "NotebookMeetAnjuInRanch",
+                "NotebookMeetKafeiInLaundryPool",
+                "NotebookMeetKafeiInIkanaCanyon",
+                "NotebookMeetKafeiInInn",
+                "NotebookMeetCuriosityShopManInWCT",
+                "NotebookMeetCuriosityShopManInLaundryPool",
+                "NotebookMeetOldLadyInNCT",
+                "NotebookMeetOldLadyInWCT",
+                "NotebookMeetGormanInECT",
+                "NotebookMeetGormanInInn",
+                "NotebookMeetPostmanInWCT",
+                "NotebookMeetPostmanInSCT",
+                "NotebookMeetPostmanInNCT",
+                "NotebookMeetPostmanInECT",
+                "NotebookMeetPostmanInInn",
+                "NotebookMeetPostmanInLaundryPool",
+                "NotebookMeetRosaSistersInWCT",
+                "NotebookMeetRosaSistersInInn",
+                "NotebookMeetAnjusGrandmotherInInn",
+                "NotebookMeetAnjusGrandmotherInRanch",
+                "NotebookMeetGuruGuruInInn",
+                "NotebookMeetGuruGuruInLaundryPool",
+                "NotebookDepositLetterToKafeiInSCT",
+                "NotebookDepositLetterToKafeiInNCT",
+                "NotebookDepositLetterToKafeiInECT",
+                "NotebookLearnBombersCodeInNCT",
+                "NotebookLearnBombersCodeInECT",
+            };
+
+            logicObject.Logic.InsertRange(startMultiLocaitonIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 15;
+        }
+
+        private static void AddFairies(JsonFormatLogic logicObject)
+        {
+            void addFairySummon(JsonFormatLogicItem item)
+            {
+                item.RequiredItems.Add("Summon Fairy");
+            }
+
+            void addFairySummonAndRemoveMaskOfTruth(JsonFormatLogicItem item)
+            {
+                item.RequiredItems.Add("Summon Fairy");
+                item.RequiredItems.Remove("MaskTruth");
+            }
+
+            void removeGoronMask(JsonFormatLogicItem item)
+            {
+                item.RequiredItems.Remove("MaskGoron");
+            }
+
+            void removeEponasSong(JsonFormatLogicItem item)
+            {
+                if (!item.RequiredItems.Remove("Play Epona's Song"))
+                {
+                    item.RequiredItems.Remove("SongEpona");
+                    item.RequiredItems.Remove("ItemOcarina");
+                }
+            }
+
+            void addTodo(JsonFormatLogicItem item)
+            {
+                item.RequiredItems.Add("TODO");
+            }
+
+            void addRequiredIfExists(JsonFormatLogicItem item, string value)
+            {
+                if (logicObject.Logic.Any(x => x.Id == value))
+                {
+                    item.RequiredItems.Add(value);
+                }
+            }
+
+            void addConditional(JsonFormatLogicItem item, params string[] conditionals)
+            {
+                item.ConditionalItems.Add(conditionals.ToList());
+            }
+
+            bool addConditionalIfExists(JsonFormatLogicItem item, params string[] conditionals)
+            {
+                if (conditionals.All(c => logicObject.Logic.Any(x => x.Id == c)))
+                {
+                    addConditional(item, conditionals);
+                    return true;
+                }
+                return false;
+            }
+
+            bool removeConditional(JsonFormatLogicItem item, params string[] values)
+            {
+                return item.ConditionalItems.RemoveAll(c => c.SequenceEqual(values)) > 0;
+            }
+
+            void addDayOnly(JsonFormatLogicItem item)
+            {
+                item.TimeAvailable = TimeOfDay.Day1 | TimeOfDay.Day2 | TimeOfDay.Day3;
+                item.TimeSetup = TimeOfDay.Day1 | TimeOfDay.Day2 | TimeOfDay.Day3;
+            }
+
+            const int startIndex = 1135;
+            const int newItemCount = 82;
+            var itemNames = new (string name, int reference, Action<JsonFormatLogicItem> modify)[]
+            {
+                ("CollectableAncientCastleOfIkanaCastleExteriorPot1", 443, null),
+                ("CollectableAncientCastleOfIkanaHoleRoomPot3", 769, null),
+                ("CollectableAncientCastleOfIkanaHoleRoomPot4", 769, null),
+                ("CollectableGreatBayCoastPot11", 455, null),
+                ("CollectableGreatBayTempleEntranceRoomBarrel1", 507, null),
+                ("CollectableIkanaCanyonMainAreaGrass7", 480, null),
+                ("CollectableIkanaCanyonMainAreaGrass8", 480, null),
+                ("CollectableMilkRoadGrass3", 481, null),
+                ("CollectableMountainVillageSpringPot1", 482, (item) =>
+                {
+                    addConditional(item, "OtherArrow");
+                    addConditional(item, "MaskZora");
+                    addConditional(item, "ItemHookshot");
+                    addConditionalIfExists(item, "Clever Bombchu Usage");
+                    addConditionalIfExists(item, "Bomb Hovering");
+                    addConditionalIfExists(item, "Long Stick");
+                }),
+                ("CollectableMountainVillageSpringSmallSnowball4", 482, null),
+                ("CollectableMountainVillageWinterPot1", 483, (item) =>
+                {
+                    addConditional(item, "Short Ranged Weapon");
+                    addConditional(item, "Any Bomb Bag");
+                    addConditionalIfExists(item, "Powder Kegs as Explosives", "ItemPowderKeg");
+                    addConditionalIfExists(item, "Long Stick");
+                }),
+                ("CollectableMountainVillageWinterSmallSnowball8", 483, null),
+                ("CollectableRoadToIkanaPot1", 464, (item) =>
+                {
+                    addConditional(item, "OtherArrow");
+                    addConditional(item, "ItemHookshot");
+                    addConditionalIfExists(item, "Bomb Hovering");
+                    addConditionalIfExists(item, "Long Stick");
+                }),
+                ("CollectableSecretShrineMainRoomPot5", 471, null),
+                ("CollectableSnowheadSmallSnowball10", 487, null),
+                ("CollectableSnowheadTempleMainRoomPot3", 380, removeGoronMask),
+                ("CollectableSouthernSwampClearCentralSwampGrass2", 604, null),
+                ("CollectableSouthernSwampPoisonedCentralSwampGrass2", 605, null),
+                ("CollectableStoneTowerPot11", 831, null),
+                ("CollectableStoneTowerPot12", 831, null),
+                ("CollectableStoneTowerPot13", 475, null),
+                ("CollectableStoneTowerPot14", 488, null),
+                ("CollectableStoneTowerInvertedStoneTowerFlippedPot3", 590, null),
+                ("CollectableStoneTowerTempleRoomAfterLightArrowsPot1", 0, (item) =>
+                {
+                    item.RequiredItems.Add("AreaStoneTowerTempleAccess");
+                    addRequiredIfExists(item, "STT Garo Master Access");
+                    addRequiredIfExists(item, "STT Thin Bridge Exit");
+                }),
+                ("CollectableStoneTowerTempleInvertedWizzrobeRoomPot1", 408, (item) =>
+                {
+                    if (removeConditional(item, "ISTT Lightless", "ISTT Cross Poe Gap"))
+                    {
+                        addConditionalIfExists(item, "ISTT Lightless", "ISTT Cross Poe Gap", "OtherArrow");
+                        addConditionalIfExists(item, "ISTT Lightless", "ISTT Cross Poe Gap", "ItemHookshot");
+                        addConditionalIfExists(item, "ISTT Lightless", "ISTT Cross Poe Gap", "MaskZora", "Gainer");
+                        addConditionalIfExists(item, "ISTT Lightless", "ISTT Cross Poe Gap", "Fierce Deity's Mask Anywhere");
+                        addConditionalIfExists(item, "ISTT Lightless", "ISTT Cross Poe Gap", "Clever Bombchu Usage");
+                    }
+                    else
+                    {
+                        addTodo(item); // user must handle it themselves
+                    }
+                }),
+                ("CollectableTerminaFieldPot1", 0, (item) =>
+                {
+                    addConditional(item, "OtherMagicBean", "Water for Magic Bean");
+                    addConditional(item, "Short Ranged Weapon");
+                    addConditionalIfExists(item, "Clever Bombchu Usage");
+                    addConditionalIfExists(item, "Bomb Hovering");
+                    addConditionalIfExists(item, "Powder Kegs as Explosives", "ItemPowderKeg", "Fewer Item Requirements");
+                    addConditionalIfExists(item, "Long Stick");
+                    addConditionalIfExists(item, "FD Jumps", "Jump Slash Take Downs");
+                }
+                ),
+                ("CollectableWoodfallPot3", 596, null),
+                ("CollectableWoodfallTempleEntranceRoomPot1", 0, (item) => item.RequiredItems.Add("AreaWoodFallTempleAccess")),
+                ("CollectableZoraCapePot5", 489, null),
+                ("CollectableCuccoShackGossipFairy1", 448, addFairySummon),
+                ("CollectableDoggyRacetrackGossipFairy1", 497, addFairySummon),
+                ("CollectableGreatBayCoastGossipFairy1", 455, addFairySummon),
+                ("CollectableGrottosOceanGossipStonesGossipFairy1", 0, addFairySummon),
+                ("CollectableIkanaCanyonMainAreaGossipFairy1", 191, addFairySummon),
+                ("CollectableIkanaCanyonMainAreaGossipFairy2", 480, addFairySummon),
+                ("CollectableIkanaCanyonSakonSHideoutAreaGossipFairy1", 257, addFairySummon),
+                ("CollectableMilkRoadGossipFairy1", 0, addFairySummon),
+                ("CollectableMountainVillageSpringPathToGoronGraveyardGossipFairy1", 224, addFairySummon),
+                ("CollectableMountainVillageSpringGossipFairy1", 1055, addFairySummon),
+                ("CollectablePathToMountainVillageGossipFairy1", 1292 - newItemCount, addFairySummonAndRemoveMaskOfTruth),
+                ("CollectableRoadToIkanaGossipFairy1", 1294 - newItemCount, addFairySummonAndRemoveMaskOfTruth),
+                ("CollectableRoadToSouthernSwampGossipFairy1", 1305 - newItemCount, addFairySummonAndRemoveMaskOfTruth),
+                ("CollectableRomaniRanchGossipFairy1", 486, addFairySummon),
+                ("CollectableRomaniRanchGossipFairy2", 486, addFairySummon),
+                ("CollectableRomaniRanchGossipFairy3", 486, addFairySummon),
+                ("CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorGossipFairy1", 537, addFairySummon),
+                ("CollectableSwampSpiderHouseTreeRoomGossipFairy1", 301, addFairySummon),
+                ("CollectableTerminaFieldGossipFairy1", 1306 - newItemCount, addFairySummonAndRemoveMaskOfTruth),
+                ("CollectableTerminaFieldGossipFairy2", 0, addFairySummon),
+                ("CollectableTerminaFieldGossipFairy3", 0, addFairySummon),
+                ("CollectableTerminaFieldGossipFairy4", 0, addFairySummon),
+                ("CollectableTerminaFieldGossipFairy5", 0, addFairySummon),
+                ("CollectableTerminaFieldGossipFairy6", 0, addFairySummon),
+                ("CollectableTheMoonDekuTrialDekuTrialGossipFairy1", 276, addFairySummon),
+                ("CollectableTheMoonDekuTrialDekuTrialGossipFairy2", 276, addFairySummon),
+                ("CollectableTheMoonDekuTrialDekuTrialGossipFairy3", 276, addFairySummon),
+                ("CollectableTheMoonDekuTrialDekuTrialGossipFairy4", 276, addFairySummon),
+                ("CollectableTheMoonDekuTrialDekuTrialGossipFairy5", 276, addFairySummon),
+                ("CollectableTheMoonGoronTrialGoronTrialGossipFairy1", 277, addFairySummon),
+                ("CollectableTheMoonGoronTrialGoronTrialGossipFairy2", 277, addFairySummon),
+                ("CollectableTheMoonGoronTrialGoronTrialGossipFairy3", 277, addFairySummon),
+                ("CollectableTheMoonGoronTrialGoronTrialGossipFairy4", 277, addFairySummon),
+                ("CollectableTheMoonGoronTrialGoronTrialGossipFairy5", 277, addFairySummon),
+                ("CollectableTheMoonLinkTrialGossipStoneRoom1GossipFairy1", 731, addFairySummon),
+                ("CollectableTheMoonLinkTrialGossipStoneRoom2GossipFairy1", 281, addFairySummon),
+                ("CollectableTheMoonLinkTrialIronKnuckleBattleGossipFairy1", 279, addFairySummon),
+                ("CollectableTheMoonLinkTrialIronKnuckleBattleGossipFairy2", 279, addFairySummon),
+                ("CollectableTheMoonLinkTrialPieceOfHeartRoomGossipFairy1", 279, addFairySummon),
+                ("CollectableTheMoonZoraTrialZoraTrialGossipFairy1", 278, addFairySummon),
+                ("CollectableTheMoonZoraTrialZoraTrialGossipFairy2", 278, addFairySummon),
+                ("CollectableTheMoonZoraTrialZoraTrialGossipFairy3", 278, addFairySummon),
+                ("CollectableTheMoonZoraTrialZoraTrialGossipFairy4", 278, addFairySummon),
+                ("CollectableTheMoonZoraTrialZoraTrialGossipFairy5", 278, addFairySummon),
+                ("CollectableZoraCapeGossipFairy1", 836, addFairySummon),
+                ("CollectableGreatBayCoastButterflyFairy1", 207, null),
+                ("CollectableGrottosOceanGossipStonesButterflyFairy1", 0, (item) =>
+                {
+                    addConditionalIfExists(item, "Termina Field Boulder Clip");
+                    addConditional(item, "MaskGoron");
+                    addConditional(item, "OtherExplosive");
+                }),
+                ("CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1", 6, null),
+                ("CollectableGrottosCowGrottoButterflyFairy1", 292, removeEponasSong),
+                ("CollectableGrottosCowGrottoButterflyFairy2", 294, removeEponasSong),
+                ("CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1", 1055, addDayOnly),
+                ("CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2", 1055, addDayOnly),
+                ("CollectableTerminaFieldButterflyFairy1", 0, null),
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(data =>
+            {
+                var reference = logicObject.Logic[data.reference];
+
+                var logicItem = new JsonFormatLogicItem
+                {
+                    Id = data.name,
+                    RequiredItems = reference.RequiredItems.ToList(),
+                    ConditionalItems = reference.ConditionalItems.Select(c => c.ToList()).ToList(),
+                    TimeAvailable = reference.TimeAvailable,
+                    TimeNeeded = reference.TimeNeeded,
+                    TimeSetup = reference.TimeSetup,
+                };
+
+                if (data.modify != null)
+                {
+                    data.modify(logicItem);
+                }
+
+                return logicItem;
+            }).ToList());
+
+            logicObject.Logic.Add(new JsonFormatLogicItem
+            {
+                Id = "Summon Fairy",
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>
+                {
+                    new List<string>
+                    {
+                        "Play Epona's Song"
+                    },
+                    new List<string>
+                    {
+                        "Play Song of Healing"
+                    },
+                },
+            });
+
+            logicObject.Version = 16;
+        }
+
+        private static void AddFrogs(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1217;
+            var itemNames = new string[]
+            {
+                "FrogWoodfallTemple",
+                "FrogGreatBayTemple",
+                "FrogSwamp",
+                "FrogLaundryPool",
+            };
+
+            var frogChoirLogic = logicObject.Logic[59];
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Skip(2).Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string> { "MaskDonGero" },
+                ConditionalItems = new List<List<string>>(),
+            }));
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Take(2).Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = frogChoirLogic.RequiredItems,
+                ConditionalItems = frogChoirLogic.ConditionalItems,
+            }));
+
+            frogChoirLogic.RequiredItems = new List<string>
+            {
+                "AreaSnowheadTempleClear",
+                "MaskDonGero",
+                "FrogWoodfallTemple",
+                "FrogGreatBayTemple",
+                "FrogSwamp",
+                "FrogLaundryPool",
+            };
+            frogChoirLogic.ConditionalItems = new List<List<string>>();
+
+            logicObject.Version = 17;
+        }
+
+        private static void AddSettings(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 136;
+            var itemNames = new (string name, string referenceName, Action<JsonFormatLogicItem> modify)[]
+            {
+                ("SettingCloseCows", "Close Cows", null),
+                ("SettingContinuousDekuHopping", null, null),
+                ("SettingIronGoron", null, null),
+                ("SettingClimbMostSurfaces", null, null),
+                ("SettingFreeScarecrow", null, null),
+                ("SettingGiantMaskAnywhere", null, null),
+                //("SettingSaferGlitches", null, null),
+                ("SettingBombchuDrops", null, null),
+                ("SettingInstantTransform", null, null),
+                ("SettingBombArrows", null, null),
+                ("SettingNotFewerHealthDrops", null, null),
+                ("SettingNotRandomizeEnemies", null, null),
+                ("SettingStrayFairyModeChestsOnly", null, null),
+                ("SettingNotStrayFairyModeChestsOnly", null, null),
+                ("SettingNotRandomizedItemGreatBayBossKey", null, null),
+                ("SettingNotRandomizedBottleCatchHotSpringWater", "Unrandomized Bottled Contents", null),
+                ("SettingDamageModeDefault", "Take Damage", null),
+                ("SettingNotDamageModeDouble", null, null),
+                ("SettingNotDamageModeQuadruple", null, null),
+                ("SettingNotDamageModeOHKO", null, null),
+                ("SettingNotDamageModeDoom", null, null),
+                ("SettingDamageEffectDefault", null, null),
+                ("SettingNotDamageEffectFire", null, null),
+                ("SettingNotDamageEffectIce", null, null),
+                ("SettingNotDamageEffectShock", null, null),
+                ("SettingNotDamageEffectKnockdown", null, null),
+                ("SettingNotDamageEffectRandom", null, null),
+                ("SettingMovementModeDefault", null, null),
+                ("SettingMovementModeSuperLowGravity", null, null),
+                ("SettingMovementModeLowGravity", null, null),
+                ("SettingNotMovementModeHighSpeed", null, null),
+                ("SettingNotMovementModeHighGravity", null, null),
+                ("SettingFloorTypeDefault", null, null),
+                ("SettingNotFloorTypeSand", null, null),
+                ("SettingNotFloorTypeIce", null, null),
+                ("SettingNotFloorTypeSnow", null, null),
+                ("SettingNotFloorTypeRandom", null, null),
+                ("SettingClockSpeedDefault", null, null),
+                ("SettingNotClockSpeedFast", null, null),
+                ("SettingNotClockSpeedVeryFast", null, null),
+                ("SettingNotClockSpeedSuperFast", null, null),
+                ("SettingBlastMaskCooldownInstant", "Instant Blast Mask Cooldown", null),
+                ("SettingBlastMaskCooldownVeryShort", null, null),
+                ("SettingEnableSunsSong", null, null),
+                ("SettingAllowFierceDeityAnywhere", "Fierce Deity's Mask Anywhere", null),
+                ("SettingNotByoAmmo", null, null),
+                ("SettingNotDeathMoonCrash", "Death Warp", null),
+                ("SettingHookshotAnySurface", null, null),
+                ("SettingCharacterAdultLink", null, null),
+                ("SettingNotCharacterAdultLink", null, null),
+                ("SettingNotFixEponaSword", null, null)
+                //("SettingSpeedupBank", "Faster Bank", null),
+                //("SettingNotSpeedupBank", null, null),
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(data =>
+            {
+                var reference = logicObject.Logic.FirstOrDefault(item => item.Id == data.referenceName && item.IsTrick)
+                    ?? new JsonFormatLogicItem
+                    {
+                        RequiredItems = new List<string>(),
+                        ConditionalItems = new List<List<string>>(),
+                    };
+
+                // mark for deletion
+                reference.Id = null;
+
+                var logicItem = new JsonFormatLogicItem
+                {
+                    Id = data.name,
+                    RequiredItems = reference.RequiredItems.ToList(),
+                    ConditionalItems = reference.ConditionalItems.Select(c => c.ToList()).ToList(),
+                    TimeAvailable = reference.TimeAvailable,
+                    TimeNeeded = reference.TimeNeeded,
+                    TimeSetup = reference.TimeSetup,
+                };
+
+                if (data.modify != null)
+                {
+                    data.modify(logicItem);
+                }
+
+                return logicItem;
+            }).ToList());
+
+            foreach (var conditionals in logicObject.Logic.SelectMany(item => item.ConditionalItems))
+            {
+                if (conditionals.Contains("SettingNotDeathMoonCrash") && conditionals.Contains("SettingDamageModeDefault"))
+                {
+                    conditionals.Remove("SettingDamageModeDefault");
+                }
+            }
+
+            foreach (var data in itemNames)
+            {
+                if (data.referenceName != null)
+                {
+                    void replaceInList(List<string> list)
+                    {
+                        var index = list.FindIndex(x => x == data.referenceName);
+                        if (index != -1)
+                        {
+                            list[index] = data.name;
+                        }
+                    }
+
+                    foreach (var item in logicObject.Logic)
+                    {
+                        replaceInList(item.RequiredItems);
+                        item.ConditionalItems.ForEach(replaceInList);
+                    }
+                }
+            }
+
+            // delete entries marked for deletion
+            logicObject.Logic.RemoveAll(item => item.Id == null);
+
+            logicObject.Version = 18;
+        }
+
+        private static void AddWellFairies(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1269;
+            var itemNames = new string[]
+            {
+                "CollectableWellFountainFairy1",
+                "CollectableWellFountainFairy2",
+                "CollectableWellFountainFairy3",
+                "CollectableWellFountainFairy4",
+                "CollectableWellFountainFairy5",
+                "CollectableWellFountainFairy6",
+                "CollectableWellFountainFairy7",
+                "CollectableWellFountainFairy8",
+            };
+
+            var reference = logicObject.Logic[270];
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name =>
+            {
+                var logicItem = new JsonFormatLogicItem
+                {
+                    Id = name,
+                    RequiredItems = reference.RequiredItems.ToList(),
+                    ConditionalItems = new List<List<string>>
+                    {
+                        new List<string>
+                        {
+                            "BottleCatchSpringWater"
+                        },
+                        new List<string>
+                        {
+                            "BottleCatchHotSpringWater"
+                        }
+                    },
+                    TimeAvailable = reference.TimeAvailable,
+                    TimeNeeded = reference.TimeNeeded,
+                    TimeSetup = reference.TimeSetup,
+                };
+
+                return logicItem;
+            }));
+            logicObject.Version = 19;
+        }
+
+        private static void AddInaccessible(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 128;
+            var itemNames = new string[]
+            {
+                "OtherInaccessible",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name =>
+            {
+                var logicItem = new JsonFormatLogicItem
+                {
+                    Id = name,
+                    RequiredItems = new List<string>(),
+                    ConditionalItems = new List<List<string>>(),
+                };
+
+                return logicItem;
+            }));
+            logicObject.Version = 20;
+        }
+
+        private static void ReplaceSettingsWithExpressions(JsonFormatLogic logicObject)
+        {
+            var mapping = new Dictionary<string, string>
+            {
+                { "SettingCloseCows", "settings.CloseCows" },
+                { "SettingContinuousDekuHopping", "settings.ContinuousDekuHopping" },
+                { "SettingIronGoron", "settings.IronGoron" },
+                { "SettingClimbMostSurfaces", "settings.ClimbMostSurfaces" },
+                { "SettingFreeScarecrow", "settings.FreeScarecrow" },
+                { "SettingGiantMaskAnywhere", "settings.GiantMaskAnywhere" },
+                { "SettingBombchuDrops", "settings.BombchuDrops" },
+                { "SettingInstantTransform", "settings.InstantTransform" },
+                { "SettingBombArrows", "settings.BombArrows" },
+                { "SettingNotFewerHealthDrops", "!settings.FewerHealthDrops" },
+                { "SettingNotRandomizeEnemies", "!settings.RandomizeEnemies" },
+                { "SettingStrayFairyModeChestsOnly", "settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly)" },
+                { "SettingNotStrayFairyModeChestsOnly", "!settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly)" },
+                { "SettingNotRandomizedItemGreatBayBossKey", "!settings.CustomItemList.Contains(Item.ItemGreatBayBossKey)" },
+                { "SettingNotRandomizedBottleCatchHotSpringWater", "!settings.CustomItemList.Contains(Item.BottleCatchHotSpringWater)" },
+                { "SettingDamageModeDefault", "settings.DamageMode == DamageMode.Default" },
+                { "SettingNotDamageModeDouble", "settings.DamageMode != DamageMode.Double" },
+                { "SettingNotDamageModeQuadruple", "settings.DamageMode != DamageMode.Quadruple" },
+                { "SettingNotDamageModeOHKO", "settings.DamageMode != DamageMode.OHKO" },
+                { "SettingNotDamageModeDoom", "settings.DamageMode != DamageMode.Doom" },
+                { "SettingDamageEffectDefault", "settings.DamageEffect == DamageEffect.Default" },
+                { "SettingNotDamageEffectFire", "settings.DamageEffect != DamageEffect.Fire" },
+                { "SettingNotDamageEffectIce", "settings.DamageEffect != DamageEffect.Ice" },
+                { "SettingNotDamageEffectShock", "settings.DamageEffect != DamageEffect.Shock" },
+                { "SettingNotDamageEffectKnockdown", "settings.DamageEffect != DamageEffect.Knockdown" },
+                { "SettingNotDamageEffectRandom", "settings.DamageEffect != DamageEffect.Random" },
+                { "SettingMovementModeDefault", "settings.MovementMode == MovementMode.Default" },
+                { "SettingMovementModeSuperLowGravity", "settings.MovementMode == MovementMode.SuperLowGravity" },
+                { "SettingMovementModeLowGravity", "settings.MovementMode == MovementMode.LowGravity" },
+                { "SettingNotMovementModeHighSpeed", "settings.MovementMode != MovementMode.HighSpeed" },
+                { "SettingNotMovementModeHighGravity", "settings.MovementMode != MovementMode.HighGravity" },
+                { "SettingFloorTypeDefault", "settings.FloorType == FloorType.Default" },
+                { "SettingNotFloorTypeSand", "settings.FloorType != FloorType.Sand" },
+                { "SettingNotFloorTypeIce", "settings.FloorType != FloorType.Ice" },
+                { "SettingNotFloorTypeSnow", "settings.FloorType != FloorType.Snow" },
+                { "SettingNotFloorTypeRandom", "settings.FloorType != FloorType.Random" },
+                { "SettingClockSpeedDefault", "settings.ClockSpeed == ClockSpeed.Default" },
+                { "SettingNotClockSpeedFast", "settings.ClockSpeed != ClockSpeed.Fast" },
+                { "SettingNotClockSpeedVeryFast", "settings.ClockSpeed != ClockSpeed.VeryFast" },
+                { "SettingNotClockSpeedSuperFast", "settings.ClockSpeed != ClockSpeed.SuperFast" },
+                { "SettingBlastMaskCooldownInstant", "settings.BlastMaskCooldown == BlastMaskCooldown.Instant" },
+                { "SettingBlastMaskCooldownVeryShort", "settings.BlastMaskCooldown == BlastMaskCooldown.VeryShort" },
+                { "SettingEnableSunsSong", "settings.EnableSunsSong" },
+                { "SettingAllowFierceDeityAnywhere", "settings.AllowFierceDeityAnywhere" },
+                { "SettingNotByoAmmo", "!settings.ByoAmmo" },
+                { "SettingNotDeathMoonCrash", "!settings.DeathMoonCrash" },
+                { "SettingHookshotAnySurface", "settings.HookshotAnySurface" },
+                { "SettingCharacterAdultLink", "settings.Character == Character.AdultLink" },
+                { "SettingNotCharacterAdultLink", "settings.Character != Character.AdultLink" },
+                { "SettingNotFixEponaSword", "!settings.FixEponaSword" },
+            };
+
+            foreach (var (oldSetting, expression) in mapping)
+            {
+                if (logicObject.Logic.Any(x => x.RequiredItems.Contains(oldSetting) || x.ConditionalItems.Any(c => c.Contains(oldSetting))))
+                {
+                    var reference = logicObject.Logic.Single(x => x.Id == oldSetting);
+                    logicObject.Logic.Add(new JsonFormatLogicItem
+                    {
+                        Id = oldSetting,
+                        RequiredItems = reference.RequiredItems.ToList(),
+                        ConditionalItems = reference.ConditionalItems.Select(c => c.ToList()).ToList(),
+                        TimeAvailable = reference.TimeAvailable,
+                        TimeNeeded = reference.TimeNeeded,
+                        TimeSetup = reference.TimeSetup,
+                        SettingExpression = expression,
+                    });
+                }
+            }
+
+            logicObject.Logic.RemoveRange(137, mapping.Count);
+
+            logicObject.Version = 21;
+        }
+
+        private static void AddOtherCredits(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 277;
+            var itemNames = new string[]
+            {
+                "OtherCredits",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name =>
+            {
+                var logicItem = new JsonFormatLogicItem
+                {
+                    Id = name,
+                    RequiredItems = new List<string>()
+                    {
+                        "AreaMoonAccess"
+                    },
+                    ConditionalItems = new List<List<string>>(),
+                };
+
+                return logicItem;
+            }));
+            logicObject.Version = 22;
+        }
+
+        private static void RemoveStoneTowerTemplePot(JsonFormatLogic logicObject)
+        {
+            logicObject.Logic.RemoveAt(1160);
+            logicObject.Version = 23;
+        }
+
+        private static void AddOtherKillMajora(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 277;
+            var itemNames = new string[]
+            {
+                "OtherKillMajora",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name =>
+            {
+                var logicItem = new JsonFormatLogicItem
+                {
+                    Id = name,
+                    RequiredItems = new List<string>(),
+                    ConditionalItems = new List<List<string>>(),
+                };
+
+                return logicItem;
+            }));
+
+            logicObject.Logic[278].RequiredItems.Add("OtherKillMajora");
+            logicObject.Version = 24;
+        }
+
         private class MigrationItem
         {
             public int ID;
@@ -3927,6 +4768,7 @@ namespace MMR.Randomizer.LogicMigrator
             public bool IsTrick { get; set; }
             public string TrickTooltip { get; set; }
             public string TrickCategory { get; set; }
+            public string SettingExpression { get; set; }
         }
 
         [Flags]

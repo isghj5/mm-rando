@@ -2,32 +2,33 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Linq;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Constants;
+using MMR.Common.Utils;
 
 namespace MMR.Randomizer.Utils
 {
 
     public abstract class PlandoCombo
     {
-        public string Name;
-        public string Notes;
-        public int    ItemDrawCount = -1; // plural item list: how many items are randomly selected instead of all
-        public bool   SkipIfError = false;
+        public string Name { get; set; }
+        public string Notes { get; set; }
+        public int ItemDrawCount { get; set; } = -1; // plural item list: how many items are randomly selected instead of all
+        public bool SkipIfError { get; set; } = false;
     }
 
     public class PlandoItemCombo : PlandoCombo
     {
-        public List<Item>   ItemList;
-        public List<Item>   CheckList;
-        public bool         SkipLogic = false;
+        public List<Item> ItemList { get; set; }
+        public List<Item> CheckList { get; set; }
+        public bool SkipLogic { get; set; } = false;
 
         public static PlandoItemCombo Copy(PlandoItemCombo pic)
         {
-            return new PlandoItemCombo {
+            return new PlandoItemCombo
+            {
                 // to list makes a copy
                 ItemList = pic.ItemList.ToList(),
                 CheckList = pic.CheckList.ToList(),
@@ -41,8 +42,8 @@ namespace MMR.Randomizer.Utils
 
     public class PlandoMusicCombo : PlandoCombo
     {
-        public List<string> SongsList;
-        public List<string> SlotsList;
+        public List<string> SongsList { get; set; }
+        public List<string> SlotsList { get; set; }
     }
 
     // will allow you to select which hints you want
@@ -70,7 +71,7 @@ namespace MMR.Randomizer.Utils
                     string filetext = File.ReadAllText(fileName);
                     // the string enum converter reads the item enumerators as strings rather than their int values, so we can read item/checks by enum
                     // eg, the json can have ItemList: ["MaskBunnyHood"] instead of ItemList: [ 22 ]
-                    var workingList = JsonConvert.DeserializeObject<List<PlandoItemCombo>>(filetext, new Newtonsoft.Json.Converters.StringEnumConverter());
+                    var workingList = JsonSerializer.Deserialize<List<PlandoItemCombo>>(filetext);
                     // for item in workingList, get object reference from ItemList, beacuse we need to modify these later
                     foreach (PlandoItemCombo pic in workingList)
                     {
@@ -91,7 +92,7 @@ namespace MMR.Randomizer.Utils
                     }
                     itemPlandoList = itemPlandoList.Concat(workingList).ToList();
                 }
-                catch (Newtonsoft.Json.JsonReaderException e)
+                catch (System.Text.Json.JsonException e)
                 {
                     Debug.Print("Error: exception occurred reading plando file: " + e.ToString());
                     throw new Exception("The following plando file failed to parse:\n"
@@ -103,7 +104,7 @@ namespace MMR.Randomizer.Utils
                                       + "   or a missing \" character at the start/end of an item\n"
                                       + "Sometimes the line number of the error is below the actual issue\n\n"
                                       + "The location of the parse error was reported at\n"
-                                      + "line number: " + e.LineNumber + ", " + e.LinePosition + " characters deep.");
+                                      + "line number: " + e.LineNumber + ", " + e.BytePositionInLine + " characters deep.");
                 }
                 catch (Exception e)
                 {
@@ -122,7 +123,7 @@ namespace MMR.Randomizer.Utils
                 try
                 {
                     var fileText = File.ReadAllText(filePath);
-                    var workingList = JsonConvert.DeserializeObject<List<PlandoMusicCombo>>(fileText);
+                    var workingList = JsonSerializer.Deserialize<List<PlandoMusicCombo>>(fileText);
 
                     if (workingList == null)
                         throw new Exception($"MusicPlando: Plando file [{filePath}] failed to parse"); // not sure this one isnt an exception
@@ -146,9 +147,9 @@ namespace MMR.Randomizer.Utils
                 catch (Exception ex)
                 {
                     Debug.Print("Error: exception occurred reading plando file: " + ex.ToString());
-                    #if DEBUG
+#if DEBUG
                       throw new Exception($"plando file read error: " + ex.ToString() + " file: " + Path.GetFileName(filePath));
-                    #endif
+#endif
                 }
             }
             return musicPlandoList;
@@ -232,7 +233,7 @@ namespace MMR.Randomizer.Utils
         // remove items and checks already taken
         public static PlandoItemCombo CleanItemCombo(PlandoItemCombo itemCombo, Random random, List<Item> randomizerItemPool, ItemList randomizerItemList)
         {
-            PlandoItemCombo returnCombo = new PlandoItemCombo 
+            PlandoItemCombo returnCombo = new PlandoItemCombo
             {
                 ItemList = itemCombo.ItemList.OrderBy(x => random.Next()).ToList(),
                 CheckList = itemCombo.CheckList.OrderBy(x => random.Next()).ToList(),

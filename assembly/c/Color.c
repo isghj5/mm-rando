@@ -38,6 +38,13 @@ ColorRGB8 Color_RandomizeHue(ColorRGB8 color) {
     return Color_SetHue(color, hue);
 }
 
+double Color_GetHue(ColorRGB8 color) {
+    // Get HSV (float) values from RGB (int).
+    ColorRgbF temp = ByteToFloat(color);
+    ColorHsvF hsv = ColorConvert_RgbToHsv(temp);
+    return hsv.h;
+}
+
 ColorRGB8 Color_SetHue(ColorRGB8 color, double hue) {
     // Enforce hue boundary range.
     hue = EnforceHueBoundary(hue);

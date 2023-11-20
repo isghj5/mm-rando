@@ -409,6 +409,20 @@ namespace MMR.Randomizer.Utils
                 {
                     setupsaddr = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
                 }
+                else if (cmd == 0x1B)
+                {
+                    var count = RomData.MMFileList[f].Data[j + 1];
+                    setup.ActorCutscenes = new List<ActorCutscene>(count);
+                    var address = ReadWriteUtils.Arr_ReadS32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
+                    setup.ActorCutsceneListAddress = address;
+                    var entryLength = 0x10;
+                    for (var i = 0; i < count; i++)
+                    {
+                        var data = new byte[entryLength];
+                        ReadWriteUtils.Arr_Insert(RomData.MMFileList[f].Data, address + i * entryLength, entryLength, data, 0);
+                        setup.ActorCutscenes.Add(new ActorCutscene(data));
+                    }
+                }
                 else if (cmd == 0x14)
                 {
                     break;
@@ -524,5 +538,41 @@ namespace MMR.Randomizer.Utils
         }
 
         #endregion
+
+        public static void InsertLargeChestCutscene()
+        {
+            if (RomData.SceneList == null)
+            {
+                ReadSceneTable();
+                GetMaps();
+            }
+
+            foreach (var scene in RomData.SceneList)
+            {
+                var sceneFile = RomData.MMFileList[scene.File];
+                foreach (var setup in scene.Setups)
+                {
+                    // fairy revive cutscene data doesn't appear to be important :pray:
+                    var fairyReviveCutsceneIndex = setup.ActorCutscenes.FindIndex(ac => ac.CameraIndex == -9);
+                    if (fairyReviveCutsceneIndex >= 0)
+                    {
+                        RomUtils.CheckCompressed(scene.File);
+                        var fairyReviveCutscene = setup.ActorCutscenes[fairyReviveCutsceneIndex];
+                        fairyReviveCutscene.Unknown00 = 0x384;
+                        fairyReviveCutscene.Length = 0x87;
+                        fairyReviveCutscene.CameraIndex = -10;
+                        fairyReviveCutscene.CutsceneIndex = -1;
+                        //fairyReviveCutscene.AdditionalActorCutsceneIndex
+                        fairyReviveCutscene.Sound = 0;
+                        fairyReviveCutscene.Unknown0B = 1;
+                        fairyReviveCutscene.HUDFade = 0;
+                        fairyReviveCutscene.ReturnCameraType = 0;
+                        fairyReviveCutscene.Letterbox = 0x20;
+                        var data = fairyReviveCutscene.ToByteArray();
+                        ReadWriteUtils.Arr_Insert(data, 0, data.Length, sceneFile.Data, setup.ActorCutsceneListAddress.Value + fairyReviveCutsceneIndex * 0x10);
+                    }
+                }
+            }
+        }
     }
 }

@@ -8,11 +8,11 @@ using System.Text;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Security.Cryptography;
-using Newtonsoft.Json;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Models;
 using MMR.Common.Utils;
 using MMR.Randomizer.Asm;
+using System.Text.RegularExpressions;
 
 namespace MMR.Randomizer.Utils
 {
@@ -40,8 +40,8 @@ namespace MMR.Randomizer.Utils
         //                                                           0x72, 0x0E, 0x29, 0x2D,
         //                                                           0x2E, 0x7B, 0x73, 0x70, 0x7D, 0x50 };
 
-        public static int MAX_BGM_BUDGET            = 0x3800; // vanilla: 0x3800
-        public static int MAX_COMBAT_BUDGET         = 0x3800; // unk
+        public static int MAX_BGM_BUDGET            = 0x6000; // vanilla: 0x3800
+        public static int MAX_COMBAT_BUDGET         = 0x6000; // unk
         public static int MAX_TYPE2_MUSIC_BUDGET    = 0x6000; // vanilla: 0x4100
 
         public static int New_AudioBankTable = 0; // for mmfilelist
@@ -51,8 +51,8 @@ namespace MMR.Randomizer.Utils
 
         public static void ResetBudget()
         {
-            MAX_BGM_BUDGET          = 0x3800;
-            MAX_COMBAT_BUDGET       = 0x3800;
+            MAX_BGM_BUDGET          = 0x6000;
+            MAX_COMBAT_BUDGET       = 0x6000;
             MAX_TYPE2_MUSIC_BUDGET  = 0x6000;
         }
 
@@ -424,8 +424,30 @@ namespace MMR.Randomizer.Utils
                                 {
                                     // playState is configured in the file as "play in these states", but in the code it's "mute in these states"
                                     // so we need to reverse it
-                                    var playState = Common.Utils.JsonSerializer.Deserialize<SequencePlayState[]>(formMaskJson);
-                                    zSeq.FormMask = playState.Cast<byte>().ToArray();
+                                    var playState = JsonSerializer.Deserialize<SequencePlayState[]>(formMaskJson);
+
+                                    // ensure backwards compatibility with 1.15 sequences
+                                    if (!playState.Any(s => s.HasFlag(SequencePlayState.FierceDeity) && !s.HasFlag(SequencePlayState.Human)))
+                                    {
+                                        for (var i = 0; i < playState.Length; i++)
+                                        {
+                                            if (playState[i].HasFlag(SequencePlayState.Human))
+                                            {
+                                                playState[i] |= SequencePlayState.FierceDeity;
+                                            }
+                                        }
+                                    }
+
+                                    // ensure unused cumulative states don't cause music to get muted in those states
+                                    foreach (var cumulativeState in Enum.GetValues<SequencePlayState>().Where(s => s > SequencePlayState.All))
+                                    {
+                                        if (!playState.Any(s => s.HasFlag(cumulativeState)))
+                                        {
+                                            playState[0x10] |= cumulativeState;
+                                        }
+                                    }
+                                    
+                                    zSeq.FormMask = ConvertUtils.U16ArrayToBytes(playState.Cast<ushort>().ToArray());
                                 }
                                 catch (Exception e)
                                 {
@@ -557,7 +579,7 @@ namespace MMR.Randomizer.Utils
 
 
         // gets passed RomData.SequenceList in Builder.cs::WriteAudioSeq
-        public static void RebuildAudioSeq(List<SequenceInfo> sequenceList, int? sequenceMaskFileIndex)
+        public static void RebuildAudioSeq(List<SequenceInfo> sequenceList, int? sequenceMaskFileIndex, int? sequenceNamesFileIndex)
         {
             // spoiler log output DEBUG
             StringBuilder log = new StringBuilder();
@@ -748,6 +770,7 @@ namespace MMR.Randomizer.Utils
                 }
 
                 byte[] formMask = null;
+                string name = null;
 
                 if (j != -1)
                 {
@@ -757,18 +780,44 @@ namespace MMR.Randomizer.Utils
                     {
                         formMask = sequenceList[j].SequenceBinaryList?.FirstOrDefault()?.FormMask;
                     }
+
+                    if (sequenceNamesFileIndex.HasValue)
+                    {
+                        name = Path.GetFileNameWithoutExtension(sequenceList[j].Name);
+                        if (Path.GetExtension(sequenceList[j].Name) == ".zseq")
+                        {
+                            name = name.Split('_')[0];
+                        }
+                        if (name.Contains("songforce"))
+                        {
+                            name = Regex.Replace(name, "(\\W|^)songforce\\W", string.Empty);
+                            name = name.Replace("songforce", string.Empty);
+                        }
+                    }
                 }
 
                 if (sequenceMaskFileIndex.HasValue)
                 {
                     if (formMask == null)
                     {
-                        formMask = Enumerable.Repeat<byte>(0xFF, 16).ToArray();
+                        formMask = Enumerable.Repeat<byte>(0xFF, 0x20).ToArray();
                     }
                     Array.Resize(ref formMask, MusicConfig.SEQUENCE_DATA_SIZE);
                     ReadWriteUtils.Arr_Insert(formMask, 0, MusicConfig.SEQUENCE_DATA_SIZE, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * MusicConfig.SEQUENCE_DATA_SIZE);
                 }
 
+                if (sequenceNamesFileIndex.HasValue)
+                {
+                    name ??= "";
+                    if (name.Length > MusicConfig.SEQUENCE_NAME_MAX_SIZE - 1)
+                    {
+                        name = name.Substring(0, MusicConfig.SEQUENCE_NAME_MAX_SIZE - 4) + "...";
+                    }
+                    name += "\0";
+                    var nameBytes = Encoding.ASCII.GetBytes(name);
+                    Array.Resize(ref nameBytes, MusicConfig.SEQUENCE_NAME_MAX_SIZE);
+                    ReadWriteUtils.Arr_Insert(nameBytes, 0, MusicConfig.SEQUENCE_NAME_MAX_SIZE, RomData.MMFileList[sequenceNamesFileIndex.Value].Data, i * MusicConfig.SEQUENCE_NAME_MAX_SIZE);
+                }
             }
 
             //// DEBUG spoiler log output
@@ -1326,7 +1375,7 @@ namespace MMR.Randomizer.Utils
             return false;
         }
 
-        public static void ReassignSongSlots()
+        /* public static void ReassignSongSlots()
         {
             // read all assginement slots from json files
             var replacementSongSlots = new List<ReplacementSongSlot>();
@@ -1337,7 +1386,8 @@ namespace MMR.Randomizer.Utils
                 {
                     var filetext = File.ReadAllText(filePath);
                     // the json string enum converter lets us read strings as songnames instead of int(slots) for readability
-                    var buildingList = JsonConvert.DeserializeObject<List<ReplacementSongSlot>>(filetext, new Newtonsoft.Json.Converters.StringEnumConverter());
+                    // TODO fix this
+                    //var buildingList = JsonConvert.DeserializeObject<List<ReplacementSongSlot>>(filetext, new Newtonsoft.Json.Converters.StringEnumConverter());
                     replacementSongSlots = replacementSongSlots.Concat(buildingList).ToList();
                 }
                 catch (IOException ex)
@@ -1378,7 +1428,7 @@ namespace MMR.Randomizer.Utils
                     Debug.WriteLine("Error while converting an additional song slot to a sequence for music rando, slot: " + newslot.Name);
                 }
             }
-        }
+        } // */
 
         public static void ReadInstrumentSetList()
         {

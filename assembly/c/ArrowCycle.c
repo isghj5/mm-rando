@@ -267,7 +267,7 @@ void ArrowCycle_Handle(ActorPlayer* player, GlobalContext* ctxt) {
         if (curInfo->var == 2 && item != ITEM_BOW && gSaveContext.perm.inv.items[SLOT_BOW] == ITEM_BOW) {
             UpdateCButton(player, ctxt, &gArrows[0]);
         }
-        z2_PlaySfx(0x4806);
+        z2_PlaySfx(0x4806); // NA_SE_SY_ERROR
         return;
     }
 
@@ -276,7 +276,7 @@ void ArrowCycle_Handle(ActorPlayer* player, GlobalContext* ctxt) {
     // code file for one effect while an existing effect is still processing.
     // This also prevents from switching when Lens of Truth is activated.
     if (curInfo->item == ITEM_BOW && gSaveContext.extra.magicConsumeState != 0) {
-        z2_PlaySfx(0x4806);
+        z2_PlaySfx(0x4806); // NA_SE_SY_ERROR
         return;
     }
 

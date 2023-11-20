@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -49,6 +50,12 @@ namespace MMR.Randomizer.Extensions
         private static bool HasWidth(char c)
         {
             return !char.IsWhiteSpace(c) && !specialCharacters.Contains(c);
+        }
+
+        private static Regex trickUrlRegex = new Regex("^https://www.youtube.com/watch\\?v=[a-zA-Z0-9_-]{11}$");
+        public static bool IsValidTrickUrl(this string str)
+        {
+            return str != null && trickUrlRegex.IsMatch(str);
         }
     }
 }

@@ -267,7 +267,7 @@ namespace MMR.Randomizer.Utils
         /// </summary>
         /// <param name="index">File index.</param>
         /// <returns></returns>
-        static MMFile GetFile(FileIndex index)
+        public static MMFile GetFile(FileIndex index)
         {
             RomUtils.CheckCompressed((int)index);
             return RomData.MMFileList[(int)index];

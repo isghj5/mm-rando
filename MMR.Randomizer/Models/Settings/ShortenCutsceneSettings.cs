@@ -12,6 +12,12 @@
             | ShortenCutsceneGeneral.FasterBankText
             | ShortenCutsceneGeneral.GoronVillageOwl
             | ShortenCutsceneGeneral.AutomaticCredits
+            | ShortenCutsceneGeneral.PrincessDelivery
+            | ShortenCutsceneGeneral.SunMask
+            | ShortenCutsceneGeneral.Tingle
+            | ShortenCutsceneGeneral.JimRunning
+            | ShortenCutsceneGeneral.Kotake
+            | ShortenCutsceneGeneral.HoldAText
             | ShortenCutsceneGeneral.EverythingElse
             ;
 

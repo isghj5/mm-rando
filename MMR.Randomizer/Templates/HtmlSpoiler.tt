@@ -100,6 +100,14 @@
 <br/>
 <br/>
 <label><b>Spoiler Log State: </b></label><input id="spoilerLogState" type="text"/><br/>
+<# if (spoiler.BlitzExtraItems.Any()) { 
+#>
+<h2>Blitz Starting Items</h2>
+<#         foreach (var remains in spoiler.BlitzExtraItems) {
+#>
+<div><#= remains.Name() #></div>
+<# } #>
+<# } #>
 <# if (spoiler.DungeonEntrances.Any()) { 
 #>
 <h2>Dungeon Entrance Replacements</h2>
@@ -420,7 +428,14 @@
         checkLocations(locationsToCheck);
     }
 
-    var startingLocations = [0, 97, 281, 282, 283, 284];
+    var startingLocations = [
+        <#= (int)MMR.Randomizer.GameObjects.Item.MaskDeku #>,
+        <#= (int)MMR.Randomizer.GameObjects.Item.SongHealing #>,
+        <#= (int)MMR.Randomizer.GameObjects.Item.StartingSword #>,
+        <#= (int)MMR.Randomizer.GameObjects.Item.StartingShield #>,
+        <#= (int)MMR.Randomizer.GameObjects.Item.StartingHeartContainer1 #>,
+        <#= (int)MMR.Randomizer.GameObjects.Item.StartingHeartContainer2 #>
+    ];
     for (var id of startingLocations) {
         logic[id].Checked = true;
         var row = document.querySelector("tr[data-newlocationid='" + id + "']");

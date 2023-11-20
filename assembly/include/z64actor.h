@@ -6,6 +6,8 @@
 #include <unk.h>
 #include <z64math.h>
 #include <z64animation.h>
+#include <z64collision_check.h>
+#include <z64light.h>
 
 struct Actor;
 struct BgPolygon;
@@ -27,8 +29,8 @@ typedef void(*ActorFunc)(struct Actor *this, struct GlobalContext *ctxt);
 
 typedef union {
     struct {
-        u8 damage : 4;
         u8 effect : 4;
+        u8 damage : 4;
     };
     u8 value;
 } ActorDamageByte; // size = 0x1
@@ -61,7 +63,7 @@ typedef struct {
     /* 0x10 */ f32 scale;
     /* 0x14 */ u8 alphaScale; // 255 means always draw full opacity if visible
     /* 0x15 */ u8 feetFloorFlags; // Set if the actor's foot is clipped under the floor. & 1 is right foot, & 2 is left
-    /* 0x16 */ UNK_TYPE1 pad16;
+    /* 0x16 */ UNK_TYPE1 pad16; // Used by MMR for skulltula sound timer
     /* 0x17 */ UNK_TYPE1 pad17; // Used by MMR for storing MaxHealth
     /* 0x18 */ Vec3f feetPos[2]; // Update by using `Actor_SetFeetPos` in PostLimbDraw
 } ActorShape; // size = 0x30
@@ -203,12 +205,148 @@ typedef union {
 } PlayerStateFlags; // size = 0xC
 
 // See: ActorPlayer::heldItemActionParam
-typedef enum {
-    HELD_ITEM_BOW = 0x9,
-    HELD_ITEM_HOOKSHOT = 0xD,
-    HELD_ITEM_OCARINA = 0x14,
-    HELD_ITEM_BOTTLE = 0x15,
-} PlayerHeldItem;
+typedef enum PlayerItemAction {
+    /*   -1 */ PLAYER_IA_MINUS1 = -1,
+    /* 0x00 */ PLAYER_IA_NONE,
+    /* 0x01 */ PLAYER_IA_LAST_USED,
+    /* 0x02 */ PLAYER_IA_FISHING_ROD,
+    /* 0x03 */ PLAYER_IA_SWORD_KOKIRI,
+    /* 0x04 */ PLAYER_IA_SWORD_RAZOR,
+    /* 0x05 */ PLAYER_IA_SWORD_GILDED,
+    /* 0x06 */ PLAYER_IA_SWORD_GREAT_FAIRY,
+    /* 0x07 */ PLAYER_IA_STICK,
+    /* 0x08 */ PLAYER_IA_ZORA_FINS,
+    /* 0x09 */ PLAYER_IA_BOW,
+    /* 0x0A */ PLAYER_IA_BOW_FIRE,
+    /* 0x0B */ PLAYER_IA_BOW_ICE,
+    /* 0x0C */ PLAYER_IA_BOW_LIGHT,
+    /* 0x0D */ PLAYER_IA_HOOKSHOT,
+    /* 0x0E */ PLAYER_IA_BOMB,
+    /* 0x0F */ PLAYER_IA_POWDER_KEG,
+    /* 0x10 */ PLAYER_IA_BOMBCHU,
+    /* 0x11 */ PLAYER_IA_11,
+    /* 0x12 */ PLAYER_IA_NUT,
+    /* 0x13 */ PLAYER_IA_PICTO_BOX,
+    /* 0x14 */ PLAYER_IA_OCARINA,
+    /* 0x15 */ PLAYER_IA_BOTTLE,
+    /* 0x16 */ PLAYER_IA_BOTTLE_FISH,
+    /* 0x17 */ PLAYER_IA_BOTTLE_SPRING_WATER,
+    /* 0x18 */ PLAYER_IA_BOTTLE_HOT_SPRING_WATER,
+    /* 0x19 */ PLAYER_IA_BOTTLE_ZORA_EGG,
+    /* 0x1A */ PLAYER_IA_BOTTLE_DEKU_PRINCESS,
+    /* 0x1B */ PLAYER_IA_BOTTLE_GOLD_DUST,
+    /* 0x1C */ PLAYER_IA_BOTTLE_1C,
+    /* 0x1D */ PLAYER_IA_BOTTLE_SEAHORSE,
+    /* 0x1E */ PLAYER_IA_BOTTLE_MUSHROOM,
+    /* 0x1F */ PLAYER_IA_BOTTLE_HYLIAN_LOACH,
+    /* 0x20 */ PLAYER_IA_BOTTLE_BUG,
+    /* 0x21 */ PLAYER_IA_BOTTLE_POE,
+    /* 0x22 */ PLAYER_IA_BOTTLE_BIG_POE,
+    /* 0x23 */ PLAYER_IA_BOTTLE_POTION_RED,
+    /* 0x24 */ PLAYER_IA_BOTTLE_POTION_BLUE,
+    /* 0x25 */ PLAYER_IA_BOTTLE_POTION_GREEN,
+    /* 0x26 */ PLAYER_IA_BOTTLE_MILK,
+    /* 0x27 */ PLAYER_IA_BOTTLE_MILK_HALF,
+    /* 0x28 */ PLAYER_IA_BOTTLE_CHATEAU,
+    /* 0x29 */ PLAYER_IA_BOTTLE_FAIRY,
+    /* 0x2A */ PLAYER_IA_MOON_TEAR,
+    /* 0x2B */ PLAYER_IA_DEED_LAND,
+    /* 0x2C */ PLAYER_IA_ROOM_KEY,
+    /* 0x2D */ PLAYER_IA_LETTER_TO_KAFEI,
+    /* 0x2E */ PLAYER_IA_MAGIC_BEANS,
+    /* 0x2F */ PLAYER_IA_DEED_SWAMP,
+    /* 0x30 */ PLAYER_IA_DEED_MOUNTAIN,
+    /* 0x31 */ PLAYER_IA_DEED_OCEAN,
+    /* 0x32 */ PLAYER_IA_32,
+    /* 0x33 */ PLAYER_IA_LETTER_MAMA,
+    /* 0x34 */ PLAYER_IA_34,
+    /* 0x35 */ PLAYER_IA_35,
+    /* 0x36 */ PLAYER_IA_PENDANT_OF_MEMORIES,
+    /* 0x37 */ PLAYER_IA_37,
+    /* 0x38 */ PLAYER_IA_38,
+    /* 0x39 */ PLAYER_IA_39,
+    /* 0x3A */ PLAYER_IA_MASK_TRUTH,
+    /* 0x3B */ PLAYER_IA_MASK_KAFEIS_MASK,
+    /* 0x3C */ PLAYER_IA_MASK_ALL_NIGHT,
+    /* 0x3D */ PLAYER_IA_MASK_BUNNY,
+    /* 0x3E */ PLAYER_IA_MASK_KEATON,
+    /* 0x3F */ PLAYER_IA_MASK_GARO,
+    /* 0x40 */ PLAYER_IA_MASK_ROMANI,
+    /* 0x41 */ PLAYER_IA_MASK_CIRCUS_LEADER,
+    /* 0x42 */ PLAYER_IA_MASK_POSTMAN,
+    /* 0x43 */ PLAYER_IA_MASK_COUPLE,
+    /* 0x44 */ PLAYER_IA_MASK_GREAT_FAIRY,
+    /* 0x45 */ PLAYER_IA_MASK_GIBDO,
+    /* 0x46 */ PLAYER_IA_MASK_DON_GERO,
+    /* 0x47 */ PLAYER_IA_MASK_KAMARO,
+    /* 0x48 */ PLAYER_IA_MASK_CAPTAIN,
+    /* 0x49 */ PLAYER_IA_MASK_STONE,
+    /* 0x4A */ PLAYER_IA_MASK_BREMEN,
+    /* 0x4B */ PLAYER_IA_MASK_BLAST,
+    /* 0x4C */ PLAYER_IA_MASK_SCENTS,
+    /* 0x4D */ PLAYER_IA_MASK_GIANT,
+    /* 0x4E */ PLAYER_IA_MASK_FIERCE_DEITY,
+    /* 0x4F */ PLAYER_IA_MASK_GORON,
+    /* 0x50 */ PLAYER_IA_MASK_ZORA,
+    /* 0x51 */ PLAYER_IA_MASK_DEKU,
+    /* 0x52 */ PLAYER_IA_LENS,
+    /* 0x53 */ PLAYER_IA_MAX
+} PlayerItemAction;
+
+//80719238 human
+typedef struct {
+    /* 0x00 */ f32 unk_00; // ceiling collision height
+    /* 0x04 */ f32 unk_04; // initial shape scale // probably dont need to multiply
+    /* 0x08 */ f32 unk_08; // draw offset for some reason?
+    /* 0x0C */ f32 unk_0C; // ledge grab height
+    /* 0x10 */ f32 unk_10; // ledge climb distance out of water from swimming
+    /* 0x14 */ f32 unk_14; // ledge climb distance out of water from standing
+    /* 0x18 */ f32 unk_18; // ? related to climbing while in water ?
+    /* 0x1C */ f32 unk_1C; // ledge jump height
+    /* 0x20 */ f32 unk_20;
+    /* 0x24 */ f32 unk_24; // distance to floor when surfacing
+    /* 0x28 */ f32 unk_28; // water floating height
+    /* 0x2C */ f32 unk_2C; // water collision height
+    /* 0x30 */ f32 unk_30; // distance to re-surface?
+    /* 0x34 */ f32 unk_34; // drop off grab ledge height
+    /* 0x38 */ f32 unk_38; // terrain collision distance
+    /* 0x3C */ f32 unk_3C; // ? related to climbing
+    /* 0x40 */ f32 unk_40; // ? related to climbing
+    /* 0x44 */ Vec3s unk_44;
+    /* 0x4A */ Vec3s unk_4A[4];
+    /* 0x62 */ Vec3s unk_62[4];
+    /* 0x7A */ Vec3s unk_7A[4];
+    /* 0x92 */ u16 unk_92;
+    /* 0x94 */ u16 unk_94;
+    /* 0x98 */ f32 unk_98;
+    /* 0x9C */ f32 unk_9C;
+    /* 0xA0 */ LinkAnimetionEntry* unk_A0;
+    /* 0xA4 */ LinkAnimetionEntry* unk_A4;
+    /* 0xA8 */ LinkAnimetionEntry* unk_A8;
+    /* 0xAC */ LinkAnimetionEntry* unk_AC;
+    /* 0xB0 */ LinkAnimetionEntry* unk_B0;
+    /* 0xB4 */ LinkAnimetionEntry* unk_B4[4];
+    /* 0xC4 */ LinkAnimetionEntry* unk_C4[2];
+    /* 0xCC */ LinkAnimetionEntry* unk_CC[2];
+    /* 0xD4 */ LinkAnimetionEntry* unk_D4[2];
+} PlayerFormProperties; // size = 0xDC
+
+typedef struct {
+    /* 0x00 */ u32 maskDListEntry[24];
+} PlayerMaskDList; // size = 0x60
+
+typedef struct {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 alpha;
+    /* 0x04 */ z_Matrix mf;
+} struct_80122D44_arg1_unk_04; // size = 0x44
+
+typedef struct {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ s8 unk_01;
+    /* 0x02 */ char unk_02[2]; // probably alignment padding
+    /* 0x04 */ struct_80122D44_arg1_unk_04 unk_04[4];
+} struct_80122D44_arg1; // size >= 0x114
 
 struct ActorPlayer;
 
@@ -234,13 +372,13 @@ typedef struct ActorPlayer {
     /* 0x153 */ u8 mask;
     /* 0x154 */ u8 maskC; // C button index (starting at 1) of current/recently worn mask.
     /* 0x155 */ u8 previousMask;
-    /* 0x156 */ UNK_TYPE1 pad156[0xEB];
-    /* 0x241 */ u8 unk241;
-    /* 0x242 */ UNK_TYPE1 pad242[0x6];
-    /* 0x248 */ PlayerAnimation currentAnimation;
-    /* 0x24C */ UNK_TYPE1 pad24C[0xC];
-    /* 0x258 */ f32 animationCurrentFrame;
-    /* 0x25C */ UNK_TYPE1 pad25C[0xF0];
+    /* 0x156 */ UNK_TYPE1 pad156[0xEA];
+    /* 0x240 */ SkelAnime skelAnime;
+    /* 0x284 */ SkelAnime skelAnimeUpper;
+    /* 0x2C8 */ SkelAnime unk_2C8;
+    /* 0x30C */ Vec3s jointTable[5];
+    /* 0x32A */ Vec3s morphTable[5];
+    /* 0x348 */ UNK_TYPE4 blinkInfo; // BlinkInfo
     /* 0x34C */ Actor* heldActor;
     /* 0x350 */ UNK_TYPE1 pad350[0x18];
     /* 0x368 */ Vec3f unk368;
@@ -258,7 +396,13 @@ typedef struct ActorPlayer {
     /* 0x395 */ UNK_TYPE1 pad395[0x37];
     /* 0x3CC */ s16 unk3CC;
     /* 0x3CE */ s8 unk3CE;
-    /* 0x3CF */ UNK_TYPE1 pad3CF[0x361];
+    /* 0x3CF */ u8 unk_3CF;
+    /* 0x3D0 */ struct_80122D44_arg1 unk_3D0;
+    /* 0x4E4 */ UNK_TYPE1 unk_4E4[0x20];
+    /* 0x504 */ z_Light* lightNode;
+    /* 0x508 */ LightInfo lightInfo;
+    /* 0x518 */ ColCylinder collisionCylinder;
+    /* 0x564 */ UNK_TYPE1 pad564[0x1CC];
     /* 0x730 */ Actor* target;
     /* 0x734 */ char unk_734[4];
     /* 0x738 */ s32 unk_738;
@@ -269,7 +413,7 @@ typedef struct ActorPlayer {
     /* 0x88A */ u8 blendTableBuffer[PLAYER_LIMB_BUF_SIZE];
     /* 0x929 */ u8 unk_929[PLAYER_LIMB_BUF_SIZE];
     /* 0x9C8 */ u8 unk_9C8[PLAYER_LIMB_BUF_SIZE];
-    /* 0xA68 */ f32 *tableA68; // Transformation-dependant f32 array, [11] used for distance to begin swimming.
+    /* 0xA68 */ PlayerFormProperties* formProperties; // Transformation-dependant f32 array, [11] used for distance to begin swimming.
     /* 0xA6C */ PlayerStateFlags stateFlags;
     /* 0xA78 */ Actor* unk_A78;
     /* 0xA7C */ Actor* boomerangActor;
@@ -307,12 +451,16 @@ typedef struct ActorPlayer {
     /* 0xAE7 */ u8 animTimer; // Some animation timer? Relevant to: transformation masks.
     /* 0xAE8 */ u16 frozenTimer;
     /* 0xAEA */ UNK_TYPE1 padAEA[0x3E];
+    // B08 goron roll max speed?
     /* 0xB28 */ s16 unkB28;
     /* 0xB2A */ UNK_TYPE1 padB2A[0x36];
+    // B50 max speed?
+    // B54 // vertical distance to ledge?
     /* 0xB60 */ u16 blastMaskTimer;
     /* 0xB62 */ UNK_TYPE1 padB62[0x5];
     /* 0xB67 */ u8 dekuHopCounter;
-    /* 0xB68 */ UNK_TYPE1 padB68[0xA];
+    /* 0xB68 */ s16 unkB68;
+    /* 0xB6A */ UNK_TYPE1 padB6A[0x8];
     /* 0xB72 */ u16 floorType; // Determines sound effect used while walking.
     /* 0xB74 */ UNK_TYPE1 padB74[0x28];
     /* 0xB9C */ Vec3f unkB9C;

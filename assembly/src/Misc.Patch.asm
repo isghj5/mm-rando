@@ -53,3 +53,16 @@
 .org 0x80110914
     jal     Misc_UnderwaterOcarinaCheck_Hook
     andi    t7, a2, 0x00FF
+
+;==================================================================================================
+; After Death
+;==================================================================================================
+
+.headersize G_CODE_DELTA
+
+; Replaces:
+;   JAL     0x8013EE24
+;   NOP
+.org 0x801AA930
+    jal     Misc_AfterDeath_Hook
+    lw      a0, 0x0018 (sp)

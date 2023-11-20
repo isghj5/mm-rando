@@ -124,6 +124,12 @@
   <data name="dc_flagmask" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>addresses\dc-flagmask;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="d_boss_door" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>addresses\d-boss-door.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="d_boss_warp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>addresses\d-boss-warp.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="d_check" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>addresses\d-check;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

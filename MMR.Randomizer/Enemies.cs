@@ -282,7 +282,7 @@ namespace MMR.Randomizer
                     return true;
                 }
             }
-            if ((scene.SceneEnum == GameObjects.Scene.GoronVillage || scene.SceneEnum == GameObjects.Scene.GoronVillageSpring)
+            /* if ((scene.SceneEnum == GameObjects.Scene.GoronVillage || scene.SceneEnum == GameObjects.Scene.GoronVillageSpring)
                 && testActor == GameObjects.Actor.GoGoron) // smithy goron
             {
                 //var goronRaceIsBaren = ItemUtils.IsRequired(GameObjects.Item.ItemPowderKeg);//.Contains(GameObjects.Item.Race)
@@ -292,7 +292,7 @@ namespace MMR.Randomizer
                 {
                     return true;
                 }
-            }
+            }// */
             if (testActor == GameObjects.Actor.Postbox)
             {
                 GameObjects.Item[] checksPostBoxLeadsTo = { GameObjects.Item.TradeItemMamaLetter, GameObjects.Item.MaskKeaton, GameObjects.Item.HeartPiecePostBox, GameObjects.Item.MaskCouple };
