@@ -19,6 +19,7 @@ bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
 }
 
 static bool sFuncPointersInitialized = false;
+static PlayerActionFunc sPlayer_Idle = NULL;
 static PlayerActionFunc sPlayer_BackwalkBraking = NULL;
 static PlayerActionFunc sPlayer_Falling = NULL;
 static PlayerActionFunc sPlayer_Action_43 = NULL;
@@ -39,6 +40,7 @@ void Player_InitFuncPointers() {
     if (sFuncPointersInitialized) {
         return;
     }
+    sPlayer_Idle = z2_Player_Action_4;
     sPlayer_BackwalkBraking = z2_Player_Action_8;
     sPlayer_Falling = z2_Player_Action_25;
     sPlayer_Action_43 = z2_Player_Action_43;
@@ -384,7 +386,7 @@ bool Player_AfterTransformInit(ActorPlayer* this, GlobalContext* ctxt) {
         this->unkAA5 = 0;
     }
     if (MISC_CONFIG.flags.instantTransform && !(this->stateFlags.state2 & PLAYER_STATE2_CLIMBING)) {
-        if (this->actionFunc == sPlayer_BackwalkBraking || this->actionFunc == sPlayer_Action_96) {
+        if (this->actionFunc == sPlayer_BackwalkBraking || this->actionFunc == sPlayer_Action_96 || this->actionFunc == sPlayer_Idle) {
             z2_Player_func_8083692C(this, ctxt);
         }
         this->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
