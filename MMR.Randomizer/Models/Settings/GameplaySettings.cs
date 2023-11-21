@@ -603,6 +603,10 @@ namespace MMR.Randomizer.Models.Settings
             {
                 return $"{nameof(RequiredBossRemains)} must be between 0 and 4.";
             }
+            if (VictoryMode != VictoryMode.Default && VictoryMode < VictoryMode.Fairies)
+            {
+                return "Must set some victory conditions or disable all victory modes.";
+            }
             return null;
         }
 
