@@ -64,4 +64,4 @@
     sw      t6, 0x0000 (v1)
     lui     t9, 0x801D
     lui     t6, 0x072F
-    sll     t7, t8, 2
+    lui     ra, 0xF200

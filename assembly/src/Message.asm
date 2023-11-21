@@ -10,6 +10,7 @@ Message_GetStrayFairyIconColorIndex_Hook:
 
     or      t6, v0, r0
     or      t8, v0, r0
+    sll     t7, t8, 2
 
     lui     t3, 0x0700
     lui     t4, 0xE600
