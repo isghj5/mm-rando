@@ -32,6 +32,7 @@ static PlayerActionFunc sPlayer_Action_60 = NULL;
 static PlayerActionFunc sPlayer_Action_62 = NULL;
 static PlayerActionFunc sPlayer_Action_61 = NULL;
 static PlayerActionFunc sPlayer_Action_82 = NULL;
+static PlayerActionFunc sPlayer_Action_96 = NULL;
 static PlayerUpperActionFunc sPlayer_UpperAction_CarryAboveHead = NULL;
 
 void Player_InitFuncPointers() {
@@ -51,6 +52,7 @@ void Player_InitFuncPointers() {
     sPlayer_Action_62 = z2_Player_Action_62;
     sPlayer_Action_61 = z2_Player_Action_61;
     sPlayer_Action_82 = z2_Player_Action_82;
+    sPlayer_Action_96 = z2_Player_Action_96;
     sPlayer_UpperAction_CarryAboveHead = z2_Player_UpperAction_CarryAboveHead;
     sFuncPointersInitialized = true;
 }
@@ -382,7 +384,7 @@ bool Player_AfterTransformInit(ActorPlayer* this, GlobalContext* ctxt) {
         this->unkAA5 = 0;
     }
     if (MISC_CONFIG.flags.instantTransform && !(this->stateFlags.state2 & PLAYER_STATE2_CLIMBING)) {
-        if (this->actionFunc == sPlayer_BackwalkBraking) {
+        if (this->actionFunc == sPlayer_BackwalkBraking || this->actionFunc == sPlayer_Action_96) {
             z2_Player_func_8083692C(this, ctxt);
         }
         this->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
