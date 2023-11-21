@@ -373,6 +373,7 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
     this->base.update = (ActorFunc)0x8012301C;
     this->base.draw = NULL;
     this->animTimer = 1;
+    this->swordActive = 0;
 
     this->stateFlags.state1 |= PLAYER_STATE1_TIME_STOP_3;
 

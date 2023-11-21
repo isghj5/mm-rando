@@ -248,6 +248,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             player->stateFlags.state1 &= ~PLAYER_STATE1_GIANT_MASK;
             //sPlayerScale = 0.01f;
             z2_Play_DisableMotionBlur();
+            player->swordActive = 0;
             break;
         case 21:
             sGiantsMaskCsState = 0;
