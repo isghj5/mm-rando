@@ -345,7 +345,8 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
         || (this->talkActor != NULL && this->talkActor->flags & 0x10000)
         || (this->stateFlags.state1 & PLAYER_STATE1_TIME_STOP)
         || (this->stateFlags.state2 & PLAYER_STATE2_DIVING)
-        || (this->currentBoots == 4 && this->prevBoots == 5)) {
+        || (this->currentBoots == 4 && this->prevBoots == 5)
+        || ((u16)(u32)this->skelAnime.linkAnimetionSeg) == 0xE260 && this->skelAnime.animPlaybackSpeed != 2.0f/3.0f) {
         // Displaced code:
         this->heldItemActionParam = actionParam;
         this->unkAA5 = 5; // PLAYER_UNKAA5_5
