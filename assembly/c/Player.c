@@ -14,9 +14,8 @@
 #include "GiantMask.h"
 #include "SaveFile.h"
 
-bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
-    return Icetrap_Give(player, ctxt);
-}
+static bool sSwimmingTransformation = false;
+static u8 sInstantTranformTimer = 0;
 
 static bool sFuncPointersInitialized = false;
 static PlayerActionFunc sPlayer_Idle = NULL;
@@ -57,6 +56,10 @@ void Player_InitFuncPointers() {
     sPlayer_Action_96 = z2_Player_Action_96;
     sPlayer_UpperAction_CarryAboveHead = z2_Player_UpperAction_CarryAboveHead;
     sFuncPointersInitialized = true;
+}
+
+bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
+    return Icetrap_Give(player, ctxt);
 }
 
 void Player_PreventDangerousStates(ActorPlayer* player) {
@@ -189,6 +192,9 @@ void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
     GiantMask_Handle(player, ctxt);
     Player_PreventDangerousStates(player);
     Player_CheckVictoryAndWarp(player, ctxt);
+    if (sInstantTranformTimer) {
+        sInstantTranformTimer--;
+    }
 }
 
 bool Player_CanReceiveItem(GlobalContext* ctxt) {
@@ -335,8 +341,6 @@ u32 Player_GetCollisionType(ActorPlayer* player, GlobalContext* ctxt, u32 collis
     return collisionType;
 }
 
-static bool sSwimmingTransformation = false;
-
 void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actionParam) {
     if (!MISC_CONFIG.flags.instantTransform
         || actionParam < PLAYER_IA_MASK_FIERCE_DEITY
@@ -350,6 +354,10 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
         // Displaced code:
         this->heldItemActionParam = actionParam;
         this->unkAA5 = 5; // PLAYER_UNKAA5_5
+        return;
+    }
+
+    if (sInstantTranformTimer) {
         return;
     }
 
@@ -392,6 +400,7 @@ bool Player_AfterTransformInit(ActorPlayer* this, GlobalContext* ctxt) {
         }
         this->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
         this->animTimer = 0;
+        sInstantTranformTimer = 2;
         return true;
     }
     return false;
