@@ -25,6 +25,7 @@ namespace MMR.Common.Utils
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             WriteIndented = true,
             AllowTrailingCommas = true,
+            PropertyNameCaseInsensitive = true,
             Converters =
             {
                 new JsonColorConverter(),
