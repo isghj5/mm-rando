@@ -4,7 +4,7 @@
 #include "Misc.h"
 
 // TODO maybe find a better way to force an item to spawn.
-bool forceSpawn = false;
+extern bool gShouldForceItemSpawn;
 
 u16 SoftSoilPrize_GetGiIndex(GlobalContext* ctxt, Actor* actor) {
     u16 giIndex = 0;
@@ -71,12 +71,12 @@ ActorEnItem00* SoftSoilPrize_ItemSpawn(GlobalContext* ctxt, Actor* actor, u16 ty
         GetItemEntry* entry = MMR_GetGiEntry(giIndex);
         if (entry->message != 0) {
             // is randomized
-            forceSpawn = true;
+            gShouldForceItemSpawn = true;
         }
     }
 
     ActorEnItem00* item = z2_fixed_drop_spawn(ctxt, &actor->currPosRot.pos, type);
-    forceSpawn = false;
+    gShouldForceItemSpawn = false;
     if (item == NULL) {
         return item;
     }

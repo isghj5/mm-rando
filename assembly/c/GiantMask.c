@@ -88,7 +88,7 @@ static void GiantMask_DisableTransformationFlash(GlobalContext* globalCtx) {
 /* 0x1D58 */ static f32 sSubCamUpRotZScale;
 /* 0x1D5C */ static f32 sSubCamAtVel;
 /* 0x1D64 */ static f32 sSubCamDistZFromPlayer;
-/* 0x1D68 */ const f32 sSubCamEyeOffsetY = 10.0f;
+/* 0x1D68 */ const static f32 sSubCamEyeOffsetY = 10.0f;
 /* 0x1D6C */ static f32 sSubCamAtOffsetY;
              static f32 sSubCamAtOffsetTargetY;
 /* 0x1D70 */ static f32 sPlayerScale = 0.01f;

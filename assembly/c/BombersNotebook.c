@@ -3,7 +3,7 @@
 #include "MMR.h"
 #include "macro.h"
 
-const u16 baseGiIndex = 0x44F;
+const static u16 baseGiIndex = 0x44F;
 
 bool BombersNotebook_ShouldGrant(GlobalContext* ctxt, u8 notebookEntryIndex) {
     if (!gSaveContext.perm.inv.questStatus.bombersNotebook && notebookEntryIndex < 20) {
