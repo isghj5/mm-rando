@@ -570,6 +570,18 @@ namespace MMR.Randomizer
                     ItemList.Add(requiredHearts);
                     ItemList[Item.OtherCredits].DependsOnItems.Add(requiredHearts.Item);
                 }
+
+                if (_settings.VictoryMode.HasFlag(VictoryMode.BossRemains))
+                {
+                    var requiredBossRemains = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        DependsOnItems = ItemUtils.BossRemains().ToList(),
+                    };
+                    ItemList.Add(requiredBossRemains);
+                    ItemList[Item.OtherCredits].DependsOnItems.Add(requiredBossRemains.Item);
+                }
             }
 
             if (_settings.FreeHints)

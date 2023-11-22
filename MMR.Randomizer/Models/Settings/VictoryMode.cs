@@ -33,6 +33,9 @@ namespace MMR.Randomizer.Models
         [Description("Have all 20 hearts.")]
         Hearts = 1 << 7,
 
+        [Description("Have all the boss remain.")]
+        BossRemains = 1 << 8,
+
         // TODO MoonTrials
     }
 }

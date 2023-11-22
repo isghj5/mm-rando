@@ -414,9 +414,9 @@ namespace MMR.UI.Forms
             this.lRequiredRemains.AutoSize = true;
             this.lRequiredRemains.Location = new System.Drawing.Point(193, 61);
             this.lRequiredRemains.Name = "lRequiredRemains";
-            this.lRequiredRemains.Size = new System.Drawing.Size(129, 15);
+            this.lRequiredRemains.Size = new System.Drawing.Size(134, 15);
             this.lRequiredRemains.TabIndex = 29;
-            this.lRequiredRemains.Text = "Required Boss Remains";
+            this.lRequiredRemains.Text = "Boss Remains For Moon";
             // 
             // cShuffleBosses
             // 
