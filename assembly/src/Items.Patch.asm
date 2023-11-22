@@ -49,3 +49,44 @@
     jal     Items_ShouldCheckItemUsabilityWhileSwimming_Hook
     lw      a0, 0x0080 (sp)
     beqzl   v0, 0x801109B8
+
+;==================================================================================================
+; Check environment hazard
+;==================================================================================================
+
+.headersize G_CODE_DELTA
+
+; Replaces:
+;   LW      T8, 0x0A6C (V0)
+.org 0x80124318
+    nop
+
+; Replaces:
+;   LW      T8, 0x0A6C (V0)
+;   SLL     T9, T8, 4
+;   BGEZ    T9, 0x8012437C
+;   NOP
+;   BNE     A0, V1, 0x80124374
+;   NOP
+;   LB      T0, 0x0145 (V0)
+;   SLTI    AT, T0, 0x0005
+;   BNEZ    AT, 0x80124374
+;   NOP
+;   LHU     T1, 0x0090 (V0)
+;   ANDI    T2, T1, 0x0001
+;   BEQZ    T2, 0x80124374
+;   NOP
+;   B       0x80124384
+;   ADDIU   V1, R0, 0x0001
+;   B       0x80124384
+;   ADDIU   V1, R0, 0x0002
+;   B       0x80124410
+;   OR      V0, R0, R0
+.org 0x80124334
+.area 0x50, 0
+    nop
+    jal     Items_GetUnderwaterHazard
+    or      a0, v0, r0
+    b       0x80124410
+    nop
+.endarea

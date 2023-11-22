@@ -456,13 +456,34 @@ enum ItemValue {
     ITEM_NONE = 0xFF,
 };
 
-enum PlayerForm {
-    PLAYER_FORM_FIERCE_DEITY,
-    PLAYER_FORM_GORON,
-    PLAYER_FORM_ZORA,
-    PLAYER_FORM_DEKU,
-    PLAYER_FORM_HUMAN,
-};
+typedef enum PlayerTransformation {
+    /* 0 */ PLAYER_FORM_FIERCE_DEITY,
+    /* 1 */ PLAYER_FORM_GORON,
+    /* 2 */ PLAYER_FORM_ZORA,
+    /* 3 */ PLAYER_FORM_DEKU,
+    /* 4 */ PLAYER_FORM_HUMAN,
+    /* 5 */ PLAYER_FORM_MAX
+} PlayerTransformation;
+
+typedef enum {
+    /* 0 */ PLAYER_ENV_HAZARD_NONE,
+    /* 1 */ PLAYER_ENV_HAZARD_HOTROOM,
+    /* 2 */ PLAYER_ENV_HAZARD_UNDERWATER_FLOOR,
+    /* 3 */ PLAYER_ENV_HAZARD_SWIMMING,
+    /* 4 */ PLAYER_ENV_HAZARD_UNDERWATER_FREE
+} PlayerEnvHazard;
+
+typedef enum PlayerBoots {
+    /* 0 */ PLAYER_BOOTS_FIERCE_DEITY,
+    /* 1 */ PLAYER_BOOTS_HYLIAN,
+    /* 2 */ PLAYER_BOOTS_GIANT,
+    /* 3 */ PLAYER_BOOTS_DEKU,
+    /* 4 */ PLAYER_BOOTS_ZORA_LAND,
+    /* 5 */ PLAYER_BOOTS_ZORA_UNDERWATER,
+    /* 6 */ PLAYER_BOOTS_GORON,
+    /* 7 */ PLAYER_BOOTS_7,
+    /* 8 */ PLAYER_BOOTS_MAX
+} PlayerBoots;
 
 enum PlayerState1 {
     PLAYER_STATE1_GROTTO_IN   = 0x80000000, // Link is entering a grotto. // Also voiding.
