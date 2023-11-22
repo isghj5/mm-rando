@@ -1161,6 +1161,40 @@ bool Models_DrawFairy(ActorEnElf* actor, GlobalContext* ctxt) {
     return false;
 }
 
+static z_Matrix sBombShopKeeperHandMtx;
+
+void Models_SetBombShopkeeperHand(GlobalContext* ctxt, s32 limbIndex, Gfx** dList, Vec3s* rot, Actor* this) {
+    if (!MISC_CONFIG.drawFlags.shopModels) {
+        gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x06000970);
+    } else {
+        z2_CopyFromMatrixStackTop(&sBombShopKeeperHandMtx);
+    }
+}
+
+void Models_BombShopkeeperDrawBomb(Actor* this, GlobalContext* ctxt) {
+    if (MISC_CONFIG.drawFlags.shopModels) {
+        z2_CopyToMatrixStackTop(&sBombShopKeeperHandMtx);
+
+        Vec3f pos;
+        Vec3s rot;
+
+        pos.x = 768.0;
+        pos.y = 0.0;
+        pos.z = -1024.0;
+
+        rot.x = 0xC000;
+        rot.y = 0x0000;
+        rot.z = 0x0000;
+
+        z2_TransformMatrixStackTop(&pos, &rot);
+
+        struct Model model;
+        GetItemEntry* entry = PrepareGiEntry(&model, ctxt, 0xC5, false);
+        z2_CallSetupDList(ctxt->state.gfxCtx);
+        DrawModel(model, this, ctxt, 25.0);
+    }
+}
+
 void Models_AfterActorDtor(Actor* actor) {
     if (MISC_CONFIG.drawFlags.freestanding) {
         if (actor->id == ACTOR_EN_ELFORG) {
