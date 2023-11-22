@@ -4,6 +4,7 @@
 #include "controller.h"
 #include "Reloc.h"
 #include "Camera.h"
+#include "SaveFile.h"
 
 static void GiantMask_FormProperties_Grow(PlayerFormProperties* formProperties) {
     formProperties->unk_00 *= 10.0;
@@ -97,7 +98,6 @@ static void GiantMask_DisableTransformationFlash(GlobalContext* globalCtx) {
 
 static bool sHasSeenGrowCutscene;
 static bool sHasSeenShrinkCutscene;
-static bool sIsInGiantMode;
 static f32 sNextScaleFactor = 10.0f;
 
 static bool sShouldReset = false;
@@ -133,7 +133,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
                 sSubCamAtVel = 0.0f;
                 sSubCamUpRotZScale = 0.0f;
                 f32 playerHeight = Camera_PlayerGetHeight(player);
-                if (!sIsInGiantMode) {
+                if (!GiantMask_IsGiant()) {
                     sGiantsMaskCsState = 1;
                     sSubCamDistZFromPlayer = 60.0f;
                     sSubCamAtOffsetY = playerHeight * 0.53f; // 23.0f;
@@ -252,15 +252,15 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             break;
         case 21:
             sGiantsMaskCsState = 0;
-            if (sIsInGiantMode) {
+            if (GiantMask_IsGiant()) {
                 GiantMask_Reg_Grow();
             }
             break;
     }
 
     if (performMainSwitch) {
-        sIsInGiantMode = !sIsInGiantMode;
-        if (!sIsInGiantMode) {
+        GiantMask_SetIsGiant(!GiantMask_IsGiant());
+        if (!GiantMask_IsGiant()) {
             sPlayerScale = 0.01f;
             sNextScaleFactor = 10.0f;
         } else {
@@ -269,14 +269,16 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
         }
     }
 
-    if (sIsInGiantMode) {
-        if (player->mask == 0x14 && player->currentBoots == 1) {
-            player->currentBoots = 2;
-            z2_Player_SetBootData(globalCtx, player);
-        } else if (player->mask != 0x14 && player->currentBoots == 2) {
-            player->currentBoots = 1;
-            z2_Player_SetBootData(globalCtx, player);
-        }
+    if (player->mask == 0x14 && player->currentBoots == 1) {
+        gSaveContext.extra.magicConsumeState = 0xC;
+        player->currentBoots = 2;
+        z2_Player_SetBootData(globalCtx, player);
+    } else if (player->mask != 0x14 && player->currentBoots == 2) {
+        player->currentBoots = 1;
+        z2_Player_SetBootData(globalCtx, player);
+    }
+
+    if (GiantMask_IsGiant()) {
         if (player->formProperties->unk_00 < 200.0) {
             GiantMask_FormProperties_Grow(player->formProperties);
         }
@@ -284,7 +286,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             GiantMask_Reg_Grow();
         }
     }
-    if (!sIsInGiantMode && player->formProperties->unk_00 >= 200.0) {
+    else if (player->formProperties->unk_00 >= 200.0) {
         GiantMask_FormProperties_Shrink(player->formProperties);
     }
 
@@ -357,11 +359,11 @@ f32 GiantMask_GetScaleModifier() {
 }
 
 f32 GiantMask_GetSimpleScaleModifier() {
-    return sIsInGiantMode ? 10.0f : 1.0f;
+    return GiantMask_IsGiant() ? 10.0f : 1.0f;
 }
 
 f32 GiantMask_GetSimpleInvertedScaleModifier() {
-    return sIsInGiantMode ? 0.1f : 1.0f;
+    return GiantMask_IsGiant() ? 0.1f : 1.0f;
 }
 
 f32 GiantMask_GetNextScaleFactor() {
@@ -422,7 +424,11 @@ void GiantMask_AdjustSpinAttackHeight(Actor* actor, ColCylinder* collider) {
 }
 
 bool GiantMask_IsGiant() {
-    return sIsInGiantMode;
+    return SAVE_FILE_CONFIG.flags.isGiant;
+}
+
+void GiantMask_SetIsGiant(bool value) {
+    SAVE_FILE_CONFIG.flags.isGiant = value;
 }
 
 void GiantMask_MarkReset() {
@@ -432,7 +438,7 @@ void GiantMask_MarkReset() {
 void GiantMask_TryReset() {
     if (sShouldReset) {
         sPlayerScale = 0.01f;
-        sIsInGiantMode = false;
+        GiantMask_SetIsGiant(false);
         sNextScaleFactor = 10.0f;
         sShouldReset = false;
     }
@@ -441,12 +447,12 @@ void GiantMask_TryReset() {
 void GiantMask_ClearState() {
     sGiantsMaskCsState = 0;
     sSubCamId = 0;
-    sPlayerScale = sIsInGiantMode ? 0.1f : 0.01f;
+    sPlayerScale = GiantMask_IsGiant() ? 0.1f : 0.01f;
 }
 
 f32 GiantMask_GetHitDistance(Vec3f* position, Actor* hittingActor) {
     if (hittingActor->id == ACTOR_PLAYER) {
-        if (sIsInGiantMode) {
+        if (GiantMask_IsGiant()) {
             return 0.0f;
         }
     }
