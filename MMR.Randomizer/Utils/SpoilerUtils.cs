@@ -34,16 +34,6 @@ namespace MMR.Randomizer.Utils
                     randomized.ItemList
                 ));
 
-            randomized.Logic.ForEach((il) =>
-            {
-                if (il.ItemId >= 0)
-                {
-                    var io = randomized.ItemList[il.ItemId];
-                    il.IsFakeItem = !io.IsRandomized || (io.Item.IsFake() && io.Item.Entrance() == null);
-                    il.IsItemRemoved = io.ItemOverride.HasValue;
-                }
-            });
-
             Dictionary<Item, Item> dungeonEntrances = new Dictionary<Item, Item>();
             var entrances = new List<Item>();
             if (settings.RandomizeDungeonEntrances)

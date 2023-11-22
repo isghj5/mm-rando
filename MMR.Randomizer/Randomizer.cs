@@ -2265,6 +2265,11 @@ namespace MMR.Randomizer
                 }
             }
 
+            if (_settings.GiantMaskAnywhere)
+            {
+                PlaceBespokeItem(Item.MaskGiant);
+            }
+
             if (Random.NextDouble() < 0.3)
             {
                 PlaceBespokeItem(Item.ItemNotebook);
@@ -3296,13 +3301,13 @@ namespace MMR.Randomizer
                     }
                     while (updated);
 
-                    var logicForRequiredItems = _settings.LogicMode == LogicMode.Casual && _settings.GossipHintStyle == GossipHintStyle.Competitive
+                    var logicForRequiredItems = _settings.LogicMode == LogicMode.Casual && _settings.GossipHintStyle == GossipHintStyle.Competitive && !_settings.GiantMaskAnywhere
                         ? logicForImportance.Select(il =>
                         {
                             var itemLogic = new ItemLogic(il);
 
-                        // prevent Giant's Mask from being Way of the Hero.
-                        itemLogic.RequiredItemIds.Remove((int)Item.MaskGiant);
+                            // prevent Giant's Mask from being Way of the Hero.
+                            itemLogic.RequiredItemIds.Remove((int)Item.MaskGiant);
 
                             return itemLogic;
                         }).ToList()

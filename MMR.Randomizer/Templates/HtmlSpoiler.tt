@@ -330,11 +330,11 @@
             if (!newLocation) {
                 newLocation = location;
             }
-            if (!newLocation.Acquired && location.IsFakeItem && location.IsAvailable) {
+            if (!newLocation.Acquired && location.ShouldAutoAcquire && location.IsAvailable) {
                 newLocation.Acquired = true;
                 itemsToCheck.push(newLocation.ItemId);
             }
-            if (newLocation.Acquired && location.IsFakeItem && !location.IsAvailable) {
+            if (newLocation.Acquired && location.ShouldAutoAcquire && !location.IsAvailable) {
                 newLocation.Acquired = false;
                 itemsToCheck.push(newLocation.ItemId);
             }

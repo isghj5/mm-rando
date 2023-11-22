@@ -21,21 +21,18 @@ static Sprite gSpriteFairy = {
 static void LoadAndDrawStrayFairyIconFlipped(DispBuf* db, Sprite* sprite, int tileIndex, int left, int top, int width, int height) {
     const int widthFactor = (1<<10) * sprite->tileW / width;
     const int heightFactor = (1<<10) * sprite->tileH / height;
-    gDPLoadTextureTile(db->p++,
+    gDPLoadTextureBlock(db->p++,
             sprite->buf + (tileIndex * Sprite_GetBytesPerTile(sprite)),
             sprite->imFmt, sprite->imSiz,
             sprite->tileW, sprite->tileH,
-            0, 0,
-            sprite->tileW - 1, sprite->tileH - 1,
-            0,
-            G_TX_MIRROR, G_TX_CLAMP,
-            5, G_TX_NOMASK,
-            G_TX_NOLOD, G_TX_NOLOD);
+            0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK,
+            G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD
+    );
     gSPTextureRectangle(db->p++,
             left<<2, top<<2,
             (left + width)<<2, (top + height)<<2,
-            0,
-            32<<5, 0,
+            G_TX_RENDERTILE,
+            0, 0,
             widthFactor, heightFactor);
 }
 
