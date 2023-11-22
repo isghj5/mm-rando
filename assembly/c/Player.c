@@ -14,11 +14,11 @@
 #include "GiantMask.h"
 #include "SaveFile.h"
 
-bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
-    return Icetrap_Give(player, ctxt);
-}
+static bool sSwimmingTransformation = false;
+static u8 sInstantTranformTimer = 0;
 
 static bool sFuncPointersInitialized = false;
+static PlayerActionFunc sPlayer_Idle = NULL;
 static PlayerActionFunc sPlayer_BackwalkBraking = NULL;
 static PlayerActionFunc sPlayer_Falling = NULL;
 static PlayerActionFunc sPlayer_Action_43 = NULL;
@@ -32,12 +32,14 @@ static PlayerActionFunc sPlayer_Action_60 = NULL;
 static PlayerActionFunc sPlayer_Action_62 = NULL;
 static PlayerActionFunc sPlayer_Action_61 = NULL;
 static PlayerActionFunc sPlayer_Action_82 = NULL;
+static PlayerActionFunc sPlayer_Action_96 = NULL;
 static PlayerUpperActionFunc sPlayer_UpperAction_CarryAboveHead = NULL;
 
 void Player_InitFuncPointers() {
     if (sFuncPointersInitialized) {
         return;
     }
+    sPlayer_Idle = z2_Player_Action_4;
     sPlayer_BackwalkBraking = z2_Player_Action_8;
     sPlayer_Falling = z2_Player_Action_25;
     sPlayer_Action_43 = z2_Player_Action_43;
@@ -51,8 +53,13 @@ void Player_InitFuncPointers() {
     sPlayer_Action_62 = z2_Player_Action_62;
     sPlayer_Action_61 = z2_Player_Action_61;
     sPlayer_Action_82 = z2_Player_Action_82;
+    sPlayer_Action_96 = z2_Player_Action_96;
     sPlayer_UpperAction_CarryAboveHead = z2_Player_UpperAction_CarryAboveHead;
     sFuncPointersInitialized = true;
+}
+
+bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
+    return Icetrap_Give(player, ctxt);
 }
 
 void Player_PreventDangerousStates(ActorPlayer* player) {
@@ -103,7 +110,8 @@ bool Player_HasCustomVictoryCondition() {
         || MISC_CONFIG.internal.victoryNonTransformMasks
         || MISC_CONFIG.internal.victoryTransformMasks
         || MISC_CONFIG.internal.victoryNotebook
-        || MISC_CONFIG.internal.victoryHearts;
+        || MISC_CONFIG.internal.victoryHearts
+        || MISC_CONFIG.internal.victoryBossRemains;
 }
 
 bool Player_CheckVictory() {
@@ -159,6 +167,14 @@ bool Player_CheckVictory() {
             return false;
         }
     }
+    if (MISC_CONFIG.internal.victoryBossRemains) {
+        if (!(gSaveContext.perm.inv.questStatus.odolwasRemains
+            && gSaveContext.perm.inv.questStatus.gohtsRemains
+            && gSaveContext.perm.inv.questStatus.gyorgsRemains
+            && gSaveContext.perm.inv.questStatus.twinmoldsRemains)) {
+            return false;
+        }
+    }
     return true;
 }
 
@@ -185,6 +201,9 @@ void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
     GiantMask_Handle(player, ctxt);
     Player_PreventDangerousStates(player);
     Player_CheckVictoryAndWarp(player, ctxt);
+    if (sInstantTranformTimer) {
+        sInstantTranformTimer--;
+    }
 }
 
 bool Player_CanReceiveItem(GlobalContext* ctxt) {
@@ -331,8 +350,6 @@ u32 Player_GetCollisionType(ActorPlayer* player, GlobalContext* ctxt, u32 collis
     return collisionType;
 }
 
-static bool sSwimmingTransformation = false;
-
 void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actionParam) {
     if (!MISC_CONFIG.flags.instantTransform
         || actionParam < PLAYER_IA_MASK_FIERCE_DEITY
@@ -341,10 +358,15 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
         || (this->talkActor != NULL && this->talkActor->flags & 0x10000)
         || (this->stateFlags.state1 & PLAYER_STATE1_TIME_STOP)
         || (this->stateFlags.state2 & PLAYER_STATE2_DIVING)
-        || (this->currentBoots == 4 && this->prevBoots == 5)) {
+        || (this->currentBoots == 4 && this->prevBoots == 5)
+        || ((u16)(u32)this->skelAnime.linkAnimetionSeg) == 0xE260 && this->skelAnime.animPlaybackSpeed != 2.0f/3.0f) {
         // Displaced code:
         this->heldItemActionParam = actionParam;
         this->unkAA5 = 5; // PLAYER_UNKAA5_5
+        return;
+    }
+
+    if (sInstantTranformTimer) {
         return;
     }
 
@@ -360,6 +382,7 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
     this->base.update = (ActorFunc)0x8012301C;
     this->base.draw = NULL;
     this->animTimer = 1;
+    this->swordActive = 0;
 
     this->stateFlags.state1 |= PLAYER_STATE1_TIME_STOP_3;
 
@@ -382,11 +405,12 @@ bool Player_AfterTransformInit(ActorPlayer* this, GlobalContext* ctxt) {
         this->unkAA5 = 0;
     }
     if (MISC_CONFIG.flags.instantTransform && !(this->stateFlags.state2 & PLAYER_STATE2_CLIMBING)) {
-        if (this->actionFunc == sPlayer_BackwalkBraking) {
+        if (this->actionFunc == sPlayer_BackwalkBraking || this->actionFunc == sPlayer_Action_96 || this->actionFunc == sPlayer_Idle) {
             z2_Player_func_8083692C(this, ctxt);
         }
         this->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
         this->animTimer = 0;
+        sInstantTranformTimer = 2;
         return true;
     }
     return false;
@@ -397,6 +421,16 @@ bool Player_HandleCutsceneItem(ActorPlayer* this, GlobalContext* ctxt) {
         return true;
     }
     return z2_Player_func_80838A90(this, ctxt);
+}
+
+s32 Player_BeforeActionChange_13(ActorPlayer* this, GlobalContext* ctxt) {
+    if (MISC_CONFIG.flags.instantTransform && this->base.draw == NULL) {
+        return 1;
+    }
+    if (this->unkAA5 == 0) {
+        return -1;
+    }
+    return 0;
 }
 
 void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 actionParam) {

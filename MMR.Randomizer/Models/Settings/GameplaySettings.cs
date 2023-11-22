@@ -271,10 +271,10 @@ namespace MMR.Randomizer.Models.Settings
 
         public HashSet<string> EnabledTricks { get; set; } = new HashSet<string>
         {
-            "Exit Ocean Spider House without Goron",
+            "Exit OSH Without Goron",
             "Lensless Chests",
-            "Lensless Walking",
-            "Lensless Walls/Ceilings",
+            "Day 2 Grave Without Lens of Truth",
+            "SHT Lensless Walls/Ceilings",
             "Pinnacle Rock without Seahorse",
             "Run Through Poisoned Water",
             "WFT 2nd Floor Skip",

@@ -6,6 +6,8 @@
 #include "BaseRupee.h"
 #include "macro.h"
 
+bool gShouldForceItemSpawn = false;
+
 void Item00_Constructor(ActorEnItem00* actor, GlobalContext* ctxt) {
     if (actor->collectableFlag != 0) {
         u16 giIndex = Rupee_CollectableFlagToGiIndex(actor->collectableFlag);
@@ -52,10 +54,9 @@ void Item00_BeforeBeingPickedUp(ActorEnItem00* actor, GlobalContext* ctxt) {
     }
 }
 
-extern bool forceSpawn;
 s8 Item00_CanBeSpawned(u16 params) {
     s8 result = params & 0xFF;
-    if (forceSpawn) {
+    if (gShouldForceItemSpawn) {
         return result;
     }
     u16 collectableFlag = (params >> 8) & 0x7F;

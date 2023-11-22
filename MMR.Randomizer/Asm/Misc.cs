@@ -401,6 +401,7 @@ namespace MMR.Randomizer.Asm
         public bool VictoryTransformationMasks { get; set; }
         public bool VictoryNotebook { get;  set; }
         public bool VictoryHearts { get;  set; }
+        public bool VictoryBossRemains { get;  set; }
 
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
@@ -418,6 +419,7 @@ namespace MMR.Randomizer.Asm
             bitPacker.Write(VictoryTransformationMasks);
             bitPacker.Write(VictoryNotebook);
             bitPacker.Write(VictoryHearts);
+            bitPacker.Write(VictoryBossRemains);
             return bitPacker.ToByteArray(4);
         }
     }
@@ -713,6 +715,7 @@ namespace MMR.Randomizer.Asm
             this.InternalFlags.VictoryTransformationMasks = settings.VictoryMode.HasFlag(VictoryMode.TransformationMasks);
             this.InternalFlags.VictoryNotebook = settings.VictoryMode.HasFlag(VictoryMode.Notebook);
             this.InternalFlags.VictoryHearts = settings.VictoryMode.HasFlag(VictoryMode.Hearts);
+            this.InternalFlags.VictoryBossRemains = settings.VictoryMode.HasFlag(VictoryMode.BossRemains);
             this.Shorts.CollectableTableFileIndex = ItemSwapUtils.COLLECTABLE_TABLE_FILE_INDEX;
             this.MMRBytes.NpcKafeiReplaceMask = MaskConfigUtils.NpcKafeiDrawMask;
         }

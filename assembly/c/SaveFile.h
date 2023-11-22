@@ -28,7 +28,8 @@ struct SaveFileConfig {
                 } spentUpgrades;
     /* 0x2E */ struct {
         u16 creditsSeen         : 1;
-        u16                     : 15;
+        u16 isGiant             : 1;
+        u16                     : 14;
     } flags;
 }; // size = 0x30
 

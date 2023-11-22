@@ -812,3 +812,49 @@
     jal     Models_DrawFairy_Hook
     sw      a0, 0x0058 (sp)
     bnez    v0, 0x8040A70C + 0x4861B0
+
+;==================================================================================================
+; Freestanding Models (Bomb Shop Keeper Bomb)
+;==================================================================================================
+
+.headersize G_EN_SOB1_DELTA
+
+; Replaces:
+;   LW      A0, 0x02B0 (V0)
+;   LUI     T8, 0x0600
+;   ADDIU   T8, T8, 0x0970
+;   ADDIU   T6, A0, 0x0008
+;   SW      T6, 0x02B0 (V0)
+;   LUI     T7, 0xDE00
+;   SW      T7, 0x0000 (A0)
+;   SW      T8, 0x0004 (A0)
+.org 0x80A1031C
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    jal     Models_SetBombShopkeeperHand
+    nop
+    nop
+    nop
+    lw      ra, 0x0014 (sp)
+    addiu   sp, sp, 0x18
+
+; Replaces:
+;   LW      RA, 0x0044 (SP)
+;   LW      S0, 0x0038 (SP)
+;   LW      S1, 0x003C (SP)
+;   LW      S2, 0x0040 (SP)
+;   JR      RA
+;   ADDIU   SP, SP, 0x68
+;   NOP
+;   NOP
+;   NOP
+.org 0x80A1083C
+    lw      a0, 0x0038 (sp)
+    jal     Models_BombShopkeeperDrawBomb
+    lw      a1, 0x003C (sp)
+    lw      ra, 0x0044 (sp)
+    lw      s0, 0x0038 (sp)
+    lw      s1, 0x003C (sp)
+    lw      s2, 0x0040 (sp)
+    jr      ra
+    addiu   sp, sp, 0x68

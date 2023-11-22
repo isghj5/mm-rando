@@ -22,7 +22,7 @@ void Game_AfterPrepareDisplayBuffers(GraphicsContext* gfx) {
     Models_AfterPrepareDisplayBuffers(gfx);
 }
 
-const u16 respawnTextId = 0x9002;
+const static u16 respawnTextId = 0x9002;
 
 static void CheckRespawn(GlobalContext* ctxt) {
     if (ctxt->pauseCtx.state != 6 || ctxt->pauseCtx.switchingScreen) {

@@ -46,10 +46,16 @@ namespace MMR.UI.Forms
 
             }
 
+            var searchTerm = txtSearch.Text.ToLower();
+            Func<ItemObject, bool> searchPredicate = (io) => io.Name.ToLower().Contains(searchTerm) || io.TrickTooltip.ToLower().Contains(searchTerm);
+
             string currentCategory = string.Empty;
             foreach (var itemObject in tricks)
             {
-                if (!itemObject.Name.ToLower().Contains(txtSearch.Text.ToLower())) { continue; }
+                if (!searchPredicate(itemObject))
+                {
+                    continue;
+                }
                 if (itemObject.TrickCategory != null && currentCategory != itemObject.TrickCategory)
                 {
                     currentCategory = itemObject.TrickCategory;
@@ -59,7 +65,7 @@ namespace MMR.UI.Forms
                     cCategory.Size = new Size(pTricks.Width - 50, deltaY);
                     cCategory.CheckStateChanged += cTrick_CheckStateChanged;
                     cCategory.Tag = tricks
-                        .Where(io => io.TrickCategory == currentCategory && io.Name.ToLower().Contains(txtSearch.Text.ToLower()))
+                        .Where(io => io.TrickCategory == currentCategory && searchPredicate(io))
                         .Select(io => io.Name)
                         .ToHashSet();
                     pTricks.Controls.Add(cCategory);

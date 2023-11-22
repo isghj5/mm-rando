@@ -153,3 +153,23 @@ bool Items_ShouldCheckItemUsabilityWhileSwimming(GlobalContext* ctxt, u8 item) {
     }
     return true;
 }
+
+static const u8* sAudioBaseFilter = (u8*)0x801D66E0;
+
+s32 Items_GetUnderwaterHazard(ActorPlayer* player) {
+    if (player->stateFlags.state1 & PLAYER_STATE1_SWIM) {
+        if ((player->form == PLAYER_FORM_ZORA)
+            && (player->currentBoots >= PLAYER_BOOTS_ZORA_UNDERWATER)
+            && (player->base.bgcheckFlags & 1)) { // BGCHECKFLAG_GROUND
+            return PLAYER_ENV_HAZARD_UNDERWATER_FLOOR;
+        } else {
+            return PLAYER_ENV_HAZARD_SWIMMING;
+        }
+    } else if (player->form == PLAYER_FORM_GORON
+        && MISC_CONFIG.flags.ironGoron
+        && *sAudioBaseFilter == 0x20) {
+        return PLAYER_ENV_HAZARD_UNDERWATER_FLOOR;
+    } else {
+        return PLAYER_ENV_HAZARD_NONE;
+    }
+}
