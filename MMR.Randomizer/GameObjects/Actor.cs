@@ -911,10 +911,12 @@ namespace MMR.Randomizer.GameObjects
         DekuBabaWithered = 0x66, // En_Karebaba
 
         // TODO fix so we can spawn them in the world
+        // tag: the brothers
         [ActorizerEnabled]
         [FileID(109)]
         [ObjectListIndex(0x99)]
-        [CheckRestricted(Item.ShopItemGormanBrosMilk, Item.MaskGaro)]
+        [CheckRestricted(Item.ShopItemGormanBrosMilk, Item.MaskGaro,
+            Item.NotebookMeetGormanBrothers, Item.NotebookDefeatGormanBrothers)]
         [GroundVariants(0xFE03, 0xFE04)]
         [VariantsWithRoomMax(max: 0, 0xFE03, 0xFE04)] // inf loop if only one and not two
         //[EnemizerScenesExcluded(Scene.GormanTrack)] // if they are missing it crashes cremia game
@@ -1264,7 +1266,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0xF1)]
         [FileID(143)]
-        [CheckRestricted(Scene.MayorsResidence, variant:0, Item.HeartPieceNotebookMayor)]
+        [CheckRestricted(Scene.MayorsResidence, variant:0, Item.HeartPieceNotebookMayor, Item.NotebookMeetMayorDotour, Item.NotebookDotoursThanks)]
         // 1 scoffing at poster, 2 is shouting at the sky looker
         // 0x03 is a walking type
         [GroundVariants(1, 2,
@@ -1326,15 +1328,17 @@ namespace MMR.Randomizer.GameObjects
 
         EmptyA3 = 0xA3,
 
+        // TODO why am I not randomizing him in the bar?
         [ActorizerEnabled]
         [FileID(150)]
         [ObjectListIndex(0x248)]
         // FF is milkbar, 00 is walking through the reception area
         // 3 exists in granny's room in the inn, for title sequence.. so you can hear him walking toward the door???
         // 3 is also present in east clock town
+        //[Check restricted NotebookMeetGorman, moving gorman performance]
         [GroundVariants(3, 0xFF, 0)]
         // behavior too complicated, disable placement anywhere
-        [VariantsWithRoomMax(max: 0, variant: 3, 0xFF, 0)]
+        [VariantsWithRoomMax(max: 0, variant: 0, 3, 0xFF)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.MilkBar)]
         Gorman = 0xA4, // En_Gm
@@ -1356,7 +1360,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(152)]
         [ObjectListIndex(0xF5)]
-        [CheckRestricted(Item.MaskBunnyHood)]
+        [CheckRestricted(Item.MaskBunnyHood, Item.NotebookMeetGrog, Item.NotebookGrogsThanks)]
         [GroundVariants(0xFE01)] // vanilla, his actor doesnt use these though, might be garbage or might be used by some other actor
         [VariantsWithRoomMax(max: 1, variant: 0xFE01)]
         [UnkillableAllVariants]
@@ -2192,7 +2196,8 @@ namespace MMR.Randomizer.GameObjects
             Item.HeartPieceTerminaBusinessScrub,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
-            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode, Item.NotebookMeetBombersInNCT, Item.NotebookMeetBombersInECT, Item.NotebookLearnBombersCodeInNCT, Item.NotebookLearnBombersCodeInECT
             )] // this is duplicated in multiple places
         [GroundVariants(0x510, 0x10)]
         [VariantsWithRoomMax(max: 0, variant: 0x510, 0x10)] // does not spawn except in cutscenes, dont place it will be empty
@@ -2590,12 +2595,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(311)]
         [ObjectListIndex(0x1C)]
-        [CheckRestricted(Scene.IkanaCanyon, variant: -1, check: Item.MaskCouple)]
+        [CheckRestricted(Scene.IkanaCanyon, variant: -1, check: Item.MaskCouple, Item.NotebookMeetKafei)]
         [CheckRestricted(Scene.EastClockTown, variant: -1, check: Item.MaskCouple)]
         [CheckRestricted(Scene.SouthClockTown, variant: 0x1E3, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
         [CheckRestricted(Scene.LaundryPool, variant: -1, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
+        [CheckRestricted(Scene.CuriosityShop, variant:-1, Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter,
+            Item.NotebookMeetKafei, Item.NotebookUniteAnjuAndKafei, Item.NotebookPromiseKafei,
+            Item.NotebookMeetCuriosityShopManInLaundryPool, Item.NotebookCuriosityShopManSGift, Item.NotebookPromiseCuriosityShopMan)] // can't meet him without kafei I dont think
         // E2 is hidden in ikana somewhere?? since its path its prob running after final hours or something
-        [PathingVariants(0x100, 0x1E2, 0x1E3, 0x1E4)]
+        [PathingVariants(0x100, 0x1E2, 0x1E3, 0x1E4, 0x1E0)]
         [PathingTypeVarsPlacement(mask:0x1F, shift:0)]
         // assumed all are hardcoded to hell
         [VariantsWithRoomMax(max:0, variant: 0x100, 0x1E2, 0x1E3, 0x1E4)]
@@ -2884,7 +2892,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(343)]
         [ObjectListIndex(0x107)]
-        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat)]
+        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat,
+            Item.NotebookMeetPostman, Item.NotebookPostmansGame, Item.NotebookPostmansFreedom)]
         [GroundVariants(0)] // no params
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
@@ -3150,7 +3159,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(379)]
         [ObjectListIndex(0xB7)] // 100 and FF00
         // cremia shows up if you repel the aliens even if romani is gone
-        [CheckRestricted(Item.SongEpona, Item.ItemBottleAliens)]
+        [CheckRestricted(Item.SongEpona, Item.ItemBottleAliens, Item.NotebookPromiseRomani, Item.NotebookSaveTheCows)]
+        //[CheckRestricted(Scene.RanchBuildings, variant:-1, check: Item.Notebook)]
         [PathingVariants(0xFF00, 0x100)]
         [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)]
         [UnkillableAllVariants]
@@ -3395,18 +3405,13 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(415)]
         [ObjectListIndex(0x1AB)]
-        [CheckRestricted(Scene.CuriosityShop, variant: 0x1,
+        [CheckRestricted(Scene.CuriosityShop, variant: -1,
             Item.MaskKeaton, Item.TradeItemMamaLetter,
             Item.MaskAllNight,
-            Item.MundaneItemCuriosityShopBlueRupee, Item.MundaneItemCuriosityShopGoldRupee, Item.MundaneItemCuriosityShopPurpleRupee, Item.MundaneItemCuriosityShopRedRupee)]
-        [CheckRestricted(Scene.CuriosityShop, variant: 0x0,
-            Item.MaskKeaton, Item.TradeItemMamaLetter,
-            Item.MaskAllNight,
-            Item.MundaneItemCuriosityShopBlueRupee, Item.MundaneItemCuriosityShopGoldRupee, Item.MundaneItemCuriosityShopPurpleRupee, Item.MundaneItemCuriosityShopRedRupee)]
-        // zero is selling in the shop, 1 is giving behind the place
-        //[GroundVariants(0x1)] // wedding and standing around indoors
+            Item.MundaneItemCuriosityShopBlueRupee, Item.MundaneItemCuriosityShopGoldRupee, Item.MundaneItemCuriosityShopPurpleRupee, Item.MundaneItemCuriosityShopRedRupee,
+            Item.NotebookMeetCuriosityShopMan, Item.NotebookMeetCuriosityShopManInLaundryPool, Item.NotebookCuriosityShopManSGift, Item.NotebookPromiseCuriosityShopMan, Item.NotebookPurchaseCuriosityShopItem)]
         [GroundVariants(0x0, // inside of shop
-            0x1)] // wedding
+            0x1)] // wedding, and giving two items behind shop
         [OnlyOneActorPerRoom]
         [VariantsWithRoomMax(max:0, variant:0x0, 0x1)] // wedding version is the same as day 3, gives too many checks
         [UnkillableAllVariants]
@@ -3562,10 +3567,12 @@ namespace MMR.Randomizer.GameObjects
         SnowCoveredTrees = 0x1D4, // En_Snowwd
 
         // I suspect since he has so few vars that he will be hard coded, and req decomp to fix
+        // TODO add more options to randomize some but not all of them based on checks
         [ActorizerEnabled]
         [FileID(430)]
         [ObjectListIndex(0x107)]
-        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat)]
+        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat,
+            Item.NotebookMeetPostman, Item.NotebookPostmansFreedom)]
         [GroundVariants(0x0)] // 0: sitting in his room?
         //[VariantsWithRoomMax()]
         [UnkillableAllVariants]
@@ -3939,8 +3946,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x3C8)]
         [ObjectListIndex(0xE2)]
         // to nuke ONLY in stockpot, hardcoded
-        [CheckRestricted(Scene.StockPotInn, variant: 2, Item.TradeItemRoomKey, Item.TradeItemKafeiLetter, Item.MaskCouple)]
-        // 8001 is pathing to laundrypool
+        [CheckRestricted(Scene.StockPotInn, variant: 2,
+            Item.TradeItemRoomKey, Item.TradeItemKafeiLetter, Item.MaskCouple,
+            Item.NotebookMeetAnju, Item.NotebookInnReservation, Item.NotebookPromiseAnjuDelivery,
+            Item.NotebookPromiseAnjuMeeting, Item.NotebookDeliverPendant, Item.NotebookUniteAnjuAndKafei)]
+        [CheckRestricted(Scene.LaundryPool, variant: 0x8001,
+            Item.NotebookMeetAnjuInLaundryPool)]
+        [CheckRestricted(Scene.RanchBuildings, variant: 0x8001,
+            Item.NotebookMeetAnjuInRanch)]
+        // 8001 is pathing to laundrypool, also sitting on bed in ranch day 3
         [GroundVariants(2 // inn
             )]
         [PathingVariants(0x8001)] // really a pathing variant (walking through east/south to go see the laundry pool
@@ -4207,6 +4221,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // romani talking to cremia and dinner and sleeping in bed
         [FileID(502)]
         [ObjectListIndex(0xB7)]
+        //[CheckRestricted(Scene.RanchBuildings, variant:-1, check: Item.Notebook)]
         // 0xF000 is type, 0x00FF range is ignored by her actual code?
         // 0xF000 is just standing there, wont talk or do anything, it falls under "default"
         // 0x1000 is sitting at a table, we want to replace with the mmra version that comes with a box
@@ -4225,7 +4240,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(503)]
         [ObjectListIndex(0xA7)]
         [CheckRestricted(Scene.TerminaField, variant: 0x40FF, Item.MaskRomani)]
-        [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.MaskRomani)]
+        [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.MaskRomani,
+            Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
         [GroundVariants(0, // standing around day 1 is type 0
             0x40FF, // wedding
             0x30FF, // standing in front of ranch, final night walking?
@@ -4416,7 +4432,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(523)]
         [ObjectListIndex(0x23A)]
-        [CheckRestricted(Scene.MilkBar, variant:0x3FFF, Item.MaskCircusLeader)]
+        [CheckRestricted(Scene.MilkBar, variant:0x3FFF, Item.MaskCircusLeader, Item.NotebookMeetToto)]
+        [CheckRestricted(Scene.MayorsResidence, variant:-1, Item.NotebookMeetToto)]
         [GroundVariants(0x050B, 0x3FFF)] // sitting in mayors office
         [VariantsWithRoomMax(max:0, variant:0x050B, 0x3FFF)] // we dont want a sitting npc to be placed places, just replace, also talking to is softlock, and we cannot modify because rando needs this actor for things
         [UnkillableAllVariants]
@@ -4439,8 +4456,9 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled] // does not spawn outside of ikana
         [FileID(525)]
-        [CheckRestricted(Item.MaskBlast, Item.MaskAllNight)]
+        [CheckRestricted(Item.MaskBlast, Item.MaskAllNight, Item.NotebookMeetOldLady, Item.NotebookSaveOldLady)]
         [ObjectListIndex(0xDF)]
+        // hard coded to stand still in the shop, not a separate parameter
         [PathingVariants(0x2FF)]
         [PathingTypeVarsPlacement(mask: 0x3F00, shift: 8)]
         [VariantsWithRoomMax(max:0, variant: 0x2FF)] // probably time gated to hell
@@ -4577,7 +4595,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] 
         [FileID(538)]
         [ObjectListIndex(0x4)]
-        [CheckRestricted(Item.HeartPieceNotebookGran1, Item.HeartPieceNotebookGran2)]
+        [CheckRestricted(Scene.StockPotInn, variant: 0, Item.HeartPieceNotebookGran1, Item.HeartPieceNotebookGran2,
+            Item.NotebookMeetAnjusGrandmother, Item.NotebookGrandmaLongStory, Item.NotebookGrandmaShortStory)]
+        [CheckRestricted(Scene.RanchBuildings, variant: 0, Item.NotebookMeetAnjusGrandmother)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(max: 0, variant: 0)] // does not spawn, time varibles? second required object?
         [UnkillableAllVariants]
@@ -4619,7 +4639,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(543)]
         [ObjectListIndex(0xFF)]
-        [CheckRestricted(Scene.LaundryPool, variant:0x01, Item.MaskBremen)]
+        [CheckRestricted(Scene.LaundryPool, variant:0x01, Item.MaskBremen,
+            Item.NotebookMeetGuruGuru, Item.NotebookGuruGuru)]
         // 00 is the version from the inn, "dont talk to her shes thinking" meaning the rosa sister
         // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
         // 02 is the music-only one that spawns so you can hear him through the walls of the inn
@@ -4639,6 +4660,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(545)]
         [ObjectListIndex(0x1B6)]
+        // check restricted NotebookMeetShiro, NotebookSaveInvisibleSoldier
         [GroundVariants(0)] //unk
         [VariantsWithRoomMax(max: 1, variant:0)]
         [UnkillableAllVariants]
@@ -4805,7 +4827,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(569)]
         [ObjectListIndex(0xD)]
-        [CheckRestricted(Item.ItemBottleMadameAroma, Item.MaskKafei)]
+        [CheckRestricted(Item.ItemBottleMadameAroma, Item.MaskKafei,
+            Item.NotebookMeetMadameAroma, Item.NotebookPromiseMadameAroma, Item.NotebookDeliverLetterToMama)]
         [GroundVariants(0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
@@ -4891,7 +4914,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(578)]
         [ObjectListIndex(0xF0)]
-        [CheckRestricted(Item.HeartPieceNotebookMayor)]
+        [CheckRestricted(Item.HeartPieceNotebookMayor, Item.NotebookMeetMayorDotour, Item.NotebookDotoursThanks)]
         [GroundVariants(0,
             1)] // mayor version
         [UnkillableAllVariants]
@@ -4903,7 +4926,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(579)]
         [ObjectListIndex(0x247)]
-        [CheckRestricted(Item.HeartPieceNotebookMayor)]
+        [CheckRestricted(Item.HeartPieceNotebookMayor, Item.NotebookMeetMayorDotour, Item.NotebookDotoursThanks)]
         [GroundVariants(0, 0x1)] // mayors office
         [VariantsWithRoomMax(max:0, variant: 0, 0x1)]
         [UnkillableAllVariants]
@@ -4913,7 +4936,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(580)]
         [ObjectListIndex(0x1B6)]
-        [CheckRestricted(Item.HeartPieceNotebookMayor)]
+        [CheckRestricted(Item.HeartPieceNotebookMayor, Item.NotebookMeetMayorDotour, Item.NotebookDotoursThanks)]
         [GroundVariants(0, 0x1)]
         [VariantsWithRoomMax(max:0, variant:0, 0x1)]
         [UnkillableAllVariants]
@@ -4932,7 +4955,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(582)]
         [ObjectListIndex(0x241)]
-        [CheckRestricted(Item.HeartPieceNotebookMayor)]
+        [CheckRestricted(Item.HeartPieceNotebookMayor, Item.NotebookMeetMayorDotour, Item.NotebookDotoursThanks)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(0,0)] // talking to him without the rest of his group is crash
         [OnlyOneActorPerRoom]
@@ -5021,7 +5044,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(593)]
         [ObjectListIndex(0x24A)]
-        [CheckRestricted(Item.MaskKamaro)]
+        [CheckRestricted(Item.MaskKamaro, Item.NotebookMeetKamaro, Item.NotebookPromiseKamaro)]
         [GroundVariants(0xF)]
         [VariantsWithRoomMax(max:0, variant:0xF)] // night only actor, placing just means an empty placement
         //[OnlyOneActorPerRoom] // for now, limit to one instead of limit to none for the rare chance of finding themsomehwere
@@ -5031,7 +5054,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x24B)]
         [FileID(594)]
-        [CheckRestricted(Scene.WestClockTown, variant:0x7E02, Item.HeartPieceNotebookRosa)]
+        [CheckRestricted(Scene.WestClockTown, variant:0x7E02, Item.HeartPieceNotebookRosa, Item.NotebookMeetRosaSisters, Item.NotebookRosaSistersThanks)]
+        [CheckRestricted(Scene.StockPotInn, variant:-1, Item.NotebookMeetRosaSisters)]
         // 0xA00 is lobby pacing
         // params: 8000 is a talking flag, 0x7E00 >> 9 is pathing, 0x7E00 is non-pathing though, the one value
         [GroundVariants(0x7E01, 0xFE00, 0xFE01,
@@ -5051,7 +5075,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(596)]
         [ObjectListIndex(0x24F)]
-        [CheckRestricted(Item.HeartPieceNotebookHand)]
+        [CheckRestricted(Item.HeartPieceNotebookHand, Item.NotebookMeetToiletHand, Item.NotebookToiletHandSThanks)]
         [GroundVariants(0)]
         [WaterBottomVariants(0)]
         [UnkillableAllVariants]
@@ -5068,7 +5092,8 @@ namespace MMR.Randomizer.GameObjects
             Item.HeartPieceTerminaBusinessScrub,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
-            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode, Item.NotebookMeetBombersInNCT, Item.NotebookMeetBombersInECT, Item.NotebookLearnBombersCodeInNCT, Item.NotebookLearnBombersCodeInECT
             )] // this is duplicated in multiple places
         [GroundVariants(0xFF00)]
         [VariantsWithRoomMax(max:0, variant: 0xFF00)] // assumption: cannot be placed in other places because he looks for the balloon
@@ -5085,7 +5110,8 @@ namespace MMR.Randomizer.GameObjects
             Item.HeartPieceTerminaBusinessScrub,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
-            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode, Item.NotebookMeetBombersInNCT, Item.NotebookMeetBombersInECT, Item.NotebookLearnBombersCodeInNCT, Item.NotebookLearnBombersCodeInECT
             )] // this is duplicated in multiple places
         [GroundVariants(0x0B11, 0x0B22, 0x50F, 0x0513, 0x0910)]
         [OnlyOneActorPerRoom]
@@ -5104,7 +5130,8 @@ namespace MMR.Randomizer.GameObjects
             Item.HeartPieceTerminaBusinessScrub,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
-            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode, Item.NotebookMeetBombersInNCT, Item.NotebookMeetBombersInECT, Item.NotebookLearnBombersCodeInNCT, Item.NotebookLearnBombersCodeInECT
             )] // this is duplicated in multiple places
 
         [GroundVariants(0x0, 0x01, 0x2, 0x3, 0x4, 0x10, 0x11, 0x12, 0x13, 0x14)]
@@ -5141,7 +5168,8 @@ namespace MMR.Randomizer.GameObjects
             Item.HeartPieceTerminaBusinessScrub,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
-            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode, Item.NotebookMeetBombersInNCT, Item.NotebookMeetBombersInECT, Item.NotebookLearnBombersCodeInNCT, Item.NotebookLearnBombersCodeInECT
             )] // this is duplicated in multiple places
         [FlyingVariants(0)]
         [FlyingToGroundHeightAdjustment(200)]
