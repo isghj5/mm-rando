@@ -52,7 +52,6 @@ namespace MMR.Randomizer.Models
             RequiredItemIds = itemObject.DependsOnItems?.Cast<int>().ToList();
             ConditionalItemIds = itemObject.Conditionals?.Select(c => c.Cast<int>().ToList()).ToList();
             IsFakeItem = itemObject.Item.IsFake() && itemObject.Item.Entrance() == null;
-            ShouldAutoAcquire = !itemObject.IsRandomized || IsFakeItem;
             IsItemRemoved = itemObject.ItemOverride.HasValue;
 
             // Remove fake requirements
