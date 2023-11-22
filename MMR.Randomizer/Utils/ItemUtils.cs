@@ -437,7 +437,7 @@ namespace MMR.Randomizer.Utils
                     } while (updated);
                 }
             }
-            BlitzJunkLocations.RemoveAll(location => !location.Region(itemList).HasValue || location.Entrance() != null);
+            BlitzJunkLocations.RemoveAll(location => (location.Location() == null && location.MainLocation() == null) || location.Entrance() != null);
             return result;
         }
 
