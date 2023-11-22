@@ -351,6 +351,10 @@ u32 Player_GetCollisionType(ActorPlayer* player, GlobalContext* ctxt, u32 collis
 }
 
 void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actionParam) {
+    if (sInstantTranformTimer) {
+        return;
+    }
+
     if (!MISC_CONFIG.flags.instantTransform
         || actionParam < PLAYER_IA_MASK_FIERCE_DEITY
         || actionParam > PLAYER_IA_MASK_DEKU
@@ -359,14 +363,12 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
         || (this->stateFlags.state1 & PLAYER_STATE1_TIME_STOP)
         || (this->stateFlags.state2 & PLAYER_STATE2_DIVING)
         || (this->currentBoots == 4 && this->prevBoots == 5)
-        || ((u16)(u32)this->skelAnime.linkAnimetionSeg) == 0xE260 && this->skelAnime.animPlaybackSpeed != 2.0f/3.0f) {
+        || ((u16)(u32)this->skelAnime.linkAnimetionSeg) == 0xE260
+            && this->skelAnime.animPlaybackSpeed != 2.0f/3.0f
+            && this->skelAnime.animCurrentFrame == 1.5f) {
         // Displaced code:
         this->heldItemActionParam = actionParam;
         this->unkAA5 = 5; // PLAYER_UNKAA5_5
-        return;
-    }
-
-    if (sInstantTranformTimer) {
         return;
     }
 
