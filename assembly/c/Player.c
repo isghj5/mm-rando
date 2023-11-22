@@ -407,7 +407,9 @@ bool Player_AfterTransformInit(ActorPlayer* this, GlobalContext* ctxt) {
         this->unkAA5 = 0;
     }
     if (MISC_CONFIG.flags.instantTransform && !(this->stateFlags.state2 & PLAYER_STATE2_CLIMBING)) {
-        if (this->actionFunc == sPlayer_BackwalkBraking || this->actionFunc == sPlayer_Action_96 || this->actionFunc == sPlayer_Idle) {
+        if (this->actionFunc == sPlayer_BackwalkBraking
+            || this->actionFunc == sPlayer_Action_96
+            || (this->actionFunc == sPlayer_Idle && this->frozenTimer != 0)) {
             z2_Player_func_8083692C(this, ctxt);
         }
         this->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
