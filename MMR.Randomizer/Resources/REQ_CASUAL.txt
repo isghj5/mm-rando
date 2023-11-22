@@ -1337,7 +1337,7 @@
           "MaskCaptainHat"
         ],
         [
-          "Brute Force OSH Code"
+          "OSH Brute Force Code"
         ]
       ],
       "TimeNeeded": "None",
@@ -1358,7 +1358,7 @@
           "Use Lens of Truth"
         ],
         [
-          "Lensless Walking"
+          "Day 2 Grave Without Lens of Truth"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -2696,7 +2696,7 @@
           "OtherArrow"
         ],
         [
-          "Pass through false walls"
+          "SHT False Walls/Ceilings"
         ],
         [
           "SHT Goron Bomb Jumps",
@@ -4873,7 +4873,10 @@
           "TradeItemMountainDeed"
         ],
         [
-          "Zora Hall Scrub Ledge Climb"
+          "Lulu's Ledge as Zora"
+        ],
+        [
+          "Lulu's Ledge as Goron"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -5739,7 +5742,7 @@
         ],
         [
           "MaskDeku",
-          "Swamp Spider House With Explosives"
+          "SSH With Explosives"
         ],
         [
           "SSH Main Room Ceiling Skull as FD"
@@ -5750,7 +5753,7 @@
         ],
         [
           "SettingClimbMostSurfaces",
-          "Swamp Spider House With Explosives"
+          "SSH With Explosives"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -5758,14 +5761,14 @@
         ],
         [
           "SettingGiantMaskAnywhere",
-          "Swamp Spider House With Explosives"
+          "SSH With Explosives"
         ],
         [
           "SettingGiantMaskAnywhere",
           "Any B Sword"
         ],
         [
-          "Swamp Spider House With Blast Mask Climbing"
+          "SSH With Blast Mask and Climbing"
         ]
       ],
       "TimeNeeded": "None",
@@ -5798,7 +5801,7 @@
         ],
         [
           "SettingClimbMostSurfaces",
-          "Swamp Spider House With Explosives"
+          "SSH With Explosives"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -5806,14 +5809,14 @@
         ],
         [
           "SettingGiantMaskAnywhere",
-          "Swamp Spider House With Explosives"
+          "SSH With Explosives"
         ],
         [
           "SettingGiantMaskAnywhere",
           "Any B Sword"
         ],
         [
-          "Swamp Spider House With Blast Mask Climbing"
+          "SSH With Blast Mask and Climbing"
         ]
       ],
       "TimeNeeded": "None",
@@ -5968,7 +5971,7 @@
         ],
         [
           "SettingClimbMostSurfaces",
-          "Swamp Spider House With Explosives"
+          "SSH With Explosives"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -5976,14 +5979,14 @@
         ],
         [
           "SettingGiantMaskAnywhere",
-          "Swamp Spider House With Explosives"
+          "SSH With Explosives"
         ],
         [
           "SettingGiantMaskAnywhere",
           "Any B Sword"
         ],
         [
-          "Swamp Spider House With Blast Mask Climbing"
+          "SSH With Blast Mask and Climbing"
         ]
       ],
       "TimeNeeded": "None",
@@ -6045,15 +6048,15 @@
           "Short Ranged Weapon"
         ],
         [
-          "Swamp Spider House With Bombchu"
+          "SSH With Bombchu"
         ],
         [
-          "Swamp Spider House With Explosives",
+          "SSH With Explosives",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
-          "Swamp Spider House With Blast Mask Climbing"
+          "SSH With Blast Mask and Climbing"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -6132,15 +6135,15 @@
           "Short Ranged Weapon"
         ],
         [
-          "Swamp Spider House With Bombchu"
+          "SSH With Bombchu"
         ],
         [
-          "Swamp Spider House With Explosives",
+          "SSH With Explosives",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
-          "Swamp Spider House With Blast Mask Climbing"
+          "SSH With Blast Mask and Climbing"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -6184,15 +6187,15 @@
           "Short Ranged Weapon"
         ],
         [
-          "Swamp Spider House With Bombchu"
+          "SSH With Bombchu"
         ],
         [
-          "Swamp Spider House With Explosives",
+          "SSH With Explosives",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
-          "Swamp Spider House With Blast Mask Climbing"
+          "SSH With Blast Mask and Climbing"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -6225,15 +6228,15 @@
           "Short Ranged Weapon"
         ],
         [
-          "Swamp Spider House With Bombchu"
+          "SSH With Bombchu"
         ],
         [
-          "Swamp Spider House With Explosives",
+          "SSH With Explosives",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
-          "Swamp Spider House With Blast Mask Climbing"
+          "SSH With Blast Mask and Climbing"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -6288,14 +6291,14 @@
           "ItemHookshot"
         ],
         [
-          "Ocean Spider House as Zora"
+          "OSH as Zora"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "Deku Bubbles"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "OtherArrow"
         ]
       ],
@@ -6314,14 +6317,14 @@
           "ItemHookshot"
         ],
         [
-          "Ocean Spider House as Zora"
+          "OSH as Zora"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "Deku Bubbles"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "OtherArrow"
         ]
       ],
@@ -6354,15 +6357,15 @@
           "MaskZora"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "Deku Bubbles"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "OtherArrow"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "Any B Sword"
         ],
         [
@@ -6392,15 +6395,15 @@
           "MaskZora"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "Deku Bubbles"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "OtherArrow"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "Any B Sword"
         ]
       ],
@@ -6422,15 +6425,15 @@
           "MaskZora"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "Deku Bubbles"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "OtherArrow"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "Any B Sword"
         ],
         [
@@ -6460,15 +6463,15 @@
           "MaskZora"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "Deku Bubbles"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "OtherArrow"
         ],
         [
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "Any B Sword"
         ],
         [
@@ -6496,7 +6499,7 @@
           "ItemHookshot"
         ],
         [
-          "Ocean Skulltulas without Fire Arrows"
+          "OSH Fireless"
         ]
       ],
       "TimeNeeded": "None",
@@ -6524,7 +6527,7 @@
         ],
         [
           "SettingNotCharacterAdultLink",
-          "Ocean Spider House as Giant"
+          "OSH as Giant"
         ],
         [
           "SettingCharacterAdultLink",
@@ -6532,7 +6535,7 @@
         ],
         [
           "SettingCharacterAdultLink",
-          "Ocean Spider House as Zora"
+          "OSH as Zora"
         ],
         [
           "OSH Storage Room Behind Crate Skull as Adult With Hookshot"
@@ -6671,7 +6674,7 @@
           "ItemHookshot"
         ],
         [
-          "Ocean Spider House as Zora"
+          "OSH as Zora"
         ]
       ],
       "TimeNeeded": "None",
@@ -6698,12 +6701,12 @@
         ],
         [
           "OtherExplosive",
-          "Ocean Skulltulas without Fire Arrows",
+          "OSH Fireless",
           "ItemHookshot"
         ],
         [
           "OtherExplosive",
-          "Ocean Skulltulas without Fire Arrows",
+          "OSH Fireless",
           "MaskZora"
         ],
         [
@@ -6712,7 +6715,7 @@
         ],
         [
           "OtherExplosive",
-          "Ocean Spider House as Giant",
+          "OSH as Giant",
           "Any B Sword"
         ],
         [
@@ -6727,12 +6730,12 @@
         ],
         [
           "Enter Ocean Spider House as Giant",
-          "Ocean Skulltulas without Fire Arrows",
+          "OSH Fireless",
           "ItemHookshot"
         ],
         [
           "Enter Ocean Spider House as Giant",
-          "Ocean Skulltulas without Fire Arrows",
+          "OSH Fireless",
           "MaskZora"
         ],
         [
@@ -6741,7 +6744,7 @@
         ],
         [
           "Enter Ocean Spider House as Giant",
-          "Ocean Spider House as Giant"
+          "OSH as Giant"
         ],
         [
           "OSH Entrance Web Skull as Goron"
@@ -6885,7 +6888,7 @@
         ],
         [
           "Enter Ocean Spider House as Giant",
-          "Ocean Spider House as Giant"
+          "OSH as Giant"
         ],
         [
           "Enter Ocean Spider House as Giant",
@@ -7454,7 +7457,7 @@
         "AreaSnowheadTempleAccess",
         "Enter Snowhead Temple",
         "SHT Main Room Access",
-        "Pass through false walls"
+        "SHT False Walls/Ceilings"
       ],
       "ConditionalItems": [
         [
@@ -7579,7 +7582,7 @@
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
         "Enter Snowhead Temple",
-        "Pass through false walls",
+        "SHT False Walls/Ceilings",
         "SHT Pop Ceiling Bubble",
         "MaskGreatFairy"
       ],
@@ -7776,7 +7779,7 @@
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
         "Enter Snowhead Temple",
-        "Pass through false walls"
+        "SHT False Walls/Ceilings"
       ],
       "ConditionalItems": [
         [
@@ -7967,7 +7970,7 @@
       "Id": "CollectibleStrayFairySnowhead11",
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
-        "Pass through false walls",
+        "SHT False Walls/Ceilings",
         "Enter Snowhead Temple",
         "SHT Icicle Room Access"
       ],
@@ -7982,7 +7985,7 @@
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
         "Enter Snowhead Temple",
-        "Pass through false walls",
+        "SHT False Walls/Ceilings",
         "SHT Main Room Access"
       ],
       "ConditionalItems": [
@@ -10748,7 +10751,7 @@
           "OtherArrow"
         ],
         [
-          "Pass through false walls"
+          "SHT False Walls/Ceilings"
         ],
         [
           "SHT Goron Bomb Jumps",
@@ -10784,7 +10787,7 @@
           "OtherArrow"
         ],
         [
-          "Pass through false walls"
+          "SHT False Walls/Ceilings"
         ],
         [
           "SHT Goron Bomb Jumps",
@@ -10820,7 +10823,7 @@
           "OtherArrow"
         ],
         [
-          "Pass through false walls"
+          "SHT False Walls/Ceilings"
         ],
         [
           "SHT Goron Bomb Jumps",
@@ -16156,7 +16159,7 @@
           "Destroy Normal Boulders"
         ],
         [
-          "Swamp Spider House Boulderless-less"
+          "SSH Boulderless-less"
         ]
       ],
       "TimeNeeded": "None",
@@ -23764,6 +23767,17 @@
       "IsTrick": false
     },
     {
+      "Id": "Lensless Chests",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Open invisible chests without the Lens of Truth; there is one in Lens Cave, Mountain Village, and Beneath the Well.",
+      "TrickCategory": "Universal"
+    },
+    {
       "Id": "Bank Without Wallet Upgrades",
       "RequiredItems": [],
       "ConditionalItems": [],
@@ -23787,18 +23801,7 @@
       "IsTrick": false
     },
     {
-      "Id": "Lensless Chests",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Open invisible chests without the Lens of Truth; there is one in Lens Cave, Mountain Village, and Beneath the Well.",
-      "TrickCategory": "Universal"
-    },
-    {
-      "Id": "Exit Ocean Spider House without Goron",
+      "Id": "Exit OSH Without Goron",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -23806,7 +23809,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Backwalk up the slope to exit.",
-      "TrickCategory": "Great Bay Coast"
+      "TrickCategory": "Oceanside Spider House"
     },
     {
       "Id": "Run Through Poisoned Water",
@@ -23854,7 +23857,7 @@
       "TrickCategory": "Zora Hall"
     },
     {
-      "Id": "Brute Force OSH Code",
+      "Id": "OSH Brute Force Code",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -23862,7 +23865,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Removes Captain's Hat as requirement for Ocean Spider House mask code.",
-      "TrickCategory": "Great Bay Coast"
+      "TrickCategory": "Oceanside Spider House"
     },
     {
       "Id": "Climb Stone Tower",
@@ -23923,14 +23926,14 @@
       "TrickCategory": "Stone Tower"
     },
     {
-      "Id": "Lensless Walking",
+      "Id": "Day 2 Grave Without Lens of Truth",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Lens of Truth will not be required to walk on invisible walkways.",
+      "TrickTooltip": "Pass the false wall into Day 2 Grave, and cross the section with the invisible floor without Lens of Truth.",
       "TrickCategory": "Ikana Graveyard"
     },
     {
@@ -24178,7 +24181,7 @@
       "TrickCategory": "Road to Southern Swamp"
     },
     {
-      "Id": "Zora Hall Scrub Ledge Climb",
+      "Id": "Lulu's Ledge as Zora",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -24203,15 +24206,15 @@
       "TrickCategory": "Romani Ranch"
     },
     {
-      "Id": "Lensless Walls/Ceilings",
+      "Id": "SHT Lensless Walls/Ceilings",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Walk and shoot through false walls without Lens of Truth.",
-      "TrickCategory": "Universal"
+      "TrickTooltip": "Pass through false walls, and also collect Stray Fairies in false walls and ceilings, without Lens of Truth.",
+      "TrickCategory": "Snowhead Temple"
     },
     {
       "Id": "Termina Stump with No Items",
@@ -24340,7 +24343,7 @@
           "MaskGoron"
         ],
         [
-          "Exit Ocean Spider House without Goron"
+          "Exit OSH Without Goron"
         ],
         [
           "SettingAllowFierceDeityAnywhere"
@@ -24423,7 +24426,7 @@
       "TrickCategory": "Termina Field"
     },
     {
-      "Id": "Ocean Skulltulas without Fire Arrows",
+      "Id": "OSH Fireless",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -24431,18 +24434,17 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "At the entrance, simply hit the skulltula from a precise position. In the storage room, get on the boat, slash the skulltula, then jump slash to get the token.",
-      "TrickCategory": "Great Bay Coast"
+      "TrickCategory": "Oceanside Spider House"
     },
     {
-      "Id": "Pass through false walls",
+      "Id": "SHT False Walls/Ceilings",
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "ItemLens",
-          "Magic Meter"
+          "Use Lens of Truth"
         ],
         [
-          "Lensless Walls/Ceilings"
+          "SHT Lensless Walls/Ceilings"
         ]
       ],
       "TimeNeeded": "None",
@@ -24536,7 +24538,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "In the Ocean Spider House storage room, jump onto the boat and clip through the ceiling.",
-      "TrickCategory": "Great Bay Coast"
+      "TrickCategory": "Oceanside Spider House"
     },
     {
       "Id": "Any Healing Potion",
@@ -26544,7 +26546,7 @@
         [
           "ItemHookshot",
           "Scarecrow's Song",
-          "Pass through false walls"
+          "SHT False Walls/Ceilings"
         ]
       ],
       "TimeNeeded": "None",
@@ -26718,7 +26720,7 @@
       ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
-      "TimeSetup": "Day3",
+      "TimeSetup": "None",
       "IsTrick": false
     },
     {
@@ -26910,7 +26912,7 @@
           "Use Lens of Truth"
         ],
         [
-          "Snowhead Map Room Ledge Without Lens of Truth"
+          "SHT Lensless Map Room Ledge"
         ]
       ],
       "TimeNeeded": "None",
@@ -27821,7 +27823,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Shield the ice, then quickly climb up and drop hot spring water before the ice hits you again.",
-      "TrickCategory": "Goron Village"
+      "TrickCategory": "Racing Banned Tricks"
     },
     {
       "Id": "Goron Village Invisible Platforming Backwards",
@@ -29473,7 +29475,7 @@
           "OtherArrow"
         ],
         [
-          "Swamp Spider House With Explosives"
+          "SSH With Explosives"
         ]
       ],
       "TimeNeeded": "None",
@@ -29484,7 +29486,7 @@
       "TrickCategory": "Swamp Spider House"
     },
     {
-      "Id": "Swamp Spider House With Explosives",
+      "Id": "SSH With Explosives",
       "RequiredItems": [],
       "ConditionalItems": [
         [
@@ -29499,7 +29501,7 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Kill Swamp Skulltulas and beehives by throwing explosives at them.",
+      "TrickTooltip": "Kill Swamp Skulltulas and break beehives by throwing explosives at them.",
       "TrickCategory": "Swamp Spider House"
     },
     {
@@ -29540,7 +29542,7 @@
       "TrickCategory": "Swamp Spider House"
     },
     {
-      "Id": "Swamp Spider House With Bombchu",
+      "Id": "SSH With Bombchu",
       "RequiredItems": [
         "Any Bomb Bag",
         "Any Bombchu Pack"
@@ -29567,7 +29569,7 @@
       "TrickCategory": "Swamp Spider House"
     },
     {
-      "Id": "Swamp Spider House With Blast Mask Climbing",
+      "Id": "SSH With Blast Mask and Climbing",
       "RequiredItems": [
         "SettingClimbMostSurfaces",
         "MaskBlast"
@@ -29588,7 +29590,7 @@
       "TrickCategory": "Swamp Spider House"
     },
     {
-      "Id": "Swamp Spider House Boulderless-less",
+      "Id": "SSH Boulderless-less",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -29641,7 +29643,7 @@
       "TrickCategory": "Oceanside Spider House"
     },
     {
-      "Id": "Ocean Spider House as Zora",
+      "Id": "OSH as Zora",
       "RequiredItems": [
         "MaskZora"
       ],
@@ -29654,7 +29656,7 @@
       "TrickCategory": "Oceanside Spider House"
     },
     {
-      "Id": "Ocean Spider House as Giant",
+      "Id": "OSH as Giant",
       "RequiredItems": [
         "SettingGiantMaskAnywhere"
       ],
@@ -30085,7 +30087,7 @@
       "TrickCategory": "Ikana Castle"
     },
     {
-      "Id": "Snowhead Map Room Ledge Without Lens of Truth",
+      "Id": "SHT Lensless Map Room Ledge",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
