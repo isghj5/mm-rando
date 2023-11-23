@@ -2157,7 +2157,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Shabom)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.LinkTheGoro)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.Takkuri)) continue;
@@ -2419,6 +2419,7 @@ namespace MMR.Randomizer
 
                     if (problemActor.OnlyOnePerRoom != null)
                     {
+                        // all actors merged together into one list in the function
                         TrimSpecificActor(thisSceneData, problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom);
                     }
                     else
@@ -2426,6 +2427,7 @@ namespace MMR.Randomizer
                         var limitedVariants = problemActor.Variants.FindAll(act => problemActor.VariantMaxCountPerRoom(act) >= 0);
                         foreach (var variant in limitedVariants)
                         {
+                            // per actor/variant combo
                             TrimSpecificActor(thisSceneData, problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom, variant: variant);
                         }
                     }
@@ -2437,6 +2439,7 @@ namespace MMR.Randomizer
                                            bool roomIsClearPuzzleRoom, int variant = -1)
         {
             /// actors with maximum counts have their extras trimmed off, replaced with empty, or free/extra actors, depending on randomRate
+
 
             List<Actor> trimCandidates;
             if (actorType.OnlyOnePerRoom != null)
@@ -2461,10 +2464,11 @@ namespace MMR.Randomizer
                     trimCandidates.Remove(randomEnemy); // leave at least one enemy alone
                     removedCount++;
                 }
-                else // no clear puzzle room: protected enemies are fairy holding actors
+                else // not clear puzzle room: protected enemies are fairy holding actors
                 {
                     foreach (var protectedEnemy in trimCandidates.Where(act => act.MustNotRespawn == true).ToList())
                     {
+                        // do not trim "mustnotrepawn" placements
                         trimCandidates.Remove(protectedEnemy); // we cannot remove any, fairies are sacred
                         removedCount++;
                     }
@@ -2482,16 +2486,17 @@ namespace MMR.Randomizer
 
                 Debug.Assert(roomActors.Count > 0);
 
-                // remove random enemies until max for variant is reached
-                int extraCullCapacity = (trimCandidates.Count >= 1) ? (trimCandidates.Count - 1) : (0);
-                var extraCullChosen = thisSceneData.RNG.Next(0, extraCullCapacity);
-                for (int i = removedCount; (i + extraCullChosen < variantMax) && (i < trimCandidates.Count); ++i)
+                // we have a max to want to limit to, here we pick how many up to that max can be saved from trim
+                // we don't always want the max variant count, sometimes we want less, this is somewhat random
+                var randomizedVariation = thisSceneData.RNG.Next(0, variantMax);
+                //for (int i = removedCount; (i + extraCullChosen < variantMax) && (i < trimCandidates.Count); ++i)
+                for (int i = removedCount; (i  < randomizedVariation) && (i < trimCandidates.Count); ++i)
                 {
+                    // spare these actors from trim
                     trimCandidates.Remove(trimCandidates[thisSceneData.RNG.Next(trimCandidates.Count)]);
                 }
 
                 Debug.Assert(roomActors.Count > 0);
-
 
                 // if the actor being trimmed is a free actor, remove from possible replacements
                 // TODO this should really already happen before we get this far? can we assume we will never cross dip?

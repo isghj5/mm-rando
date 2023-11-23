@@ -5028,6 +5028,7 @@ namespace MMR.Randomizer.GameObjects
         //[ObjectListIndex(0x1E5)] // where did this come from?
         [ObjectListIndex(0x1D5)] // OBJECT_DAI same object as big goron
         [GroundVariants(0x4)] // all vanilla are 0x4, even though the actor checks 0xFF range
+        [VariantsWithRoomMax(max:0, variant:0x4)] // schedule locked, wont spawn in weird locations
         [UnkillableAllVariants]
         // do we need to stop him being randomized?
         LinkTheGoro = 0x276, // En_Ig
