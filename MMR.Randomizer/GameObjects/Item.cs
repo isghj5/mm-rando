@@ -10957,7 +10957,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Fairy"), LocationName("Path to Mountain Village Gossip Fairy"), Region(Region.MountainVillage)]
+        [ItemName("Fairy"), LocationName("Path to Mountain Village Gossip Fairy"), Region(Region.PathToMountainVillage)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -11027,7 +11027,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Fairy"), LocationName("Swamp Spider House Gossip Fairy"), Region(Region.SouthernSwamp)]
+        [ItemName("Fairy"), LocationName("Swamp Spider House Gossip Fairy"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
