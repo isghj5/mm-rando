@@ -335,7 +335,15 @@ static s16 forceProcessIndex = -1;
 static u16 lastProcessedGiIndex = 0;
 
 void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex, bool continueTextbox) {
+    // TODO ideally instead of forcing MMR_GetNewGiIndex to not set grant to false by temporarily
+    // setting the cutscene to 0, the `grant` parameter should be removed and assumed false in the function,
+    // and the granting functionality should be done here, since this grants the item for real even
+    // if `grant` is reset to false.
+    u32 tempCutscene = gSaveContext.perm.cutscene;
+    gSaveContext.perm.cutscene = 0;
     giIndex = MMR_GetNewGiIndex(ctxt, NULL, giIndex, true);
+    gSaveContext.perm.cutscene = tempCutscene;
+
     GetItemEntry* entry = MMR_GetGiEntry(giIndex);
     *MMR_GetItemEntryContext = *entry;
     if (continueTextbox) {
