@@ -339,7 +339,7 @@ namespace MMR.Randomizer
 
                 ItemList[entrance].NewLocation = targetEntrance;
                 ItemList[entrance].IsRandomized = true;
-                changesToMake[exit] = ItemList.FirstOrDefault(io => io.NewLocation == targetExit)?.Item ?? targetExit;
+                changesToMake[exit] = ItemList[targetExit].NewLocation ?? targetExit;
             }
 
             foreach (var kvp in changesToMake)
@@ -391,8 +391,8 @@ namespace MMR.Randomizer
                 var entrance = bossEntrances[fromIndex];
                 var targetEntrance = bossEntrances[toIndex];
 
-                var exit = bossExits[fromIndex];
-                var targetExit = bossExits[toIndex];
+                var exit = bossExits[toIndex];
+                var targetExit = bossExits[fromIndex];
 
                 var kill = bossKills[toIndex];
                 var targetKill = bossKills[fromIndex];
