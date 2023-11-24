@@ -1639,6 +1639,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(172)]
         [ActorInstanceSize(0x2A0)]
         [ObjectListIndex(0x11D)]
+        [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
+        [CheckRestricted(Scene.RoadToIkana, variant: -1, Item.CollectableRoadToIkanaPot1)]
+        [CheckRestricted(Scene.StoneTower, variant: -1, Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
         [CheckRestricted(Scene.TwinIslandsSpring, variant: -1, Item.ItemBottleGoronRace,
             Item.CollectableGoronRacetrackPot1, Item.CollectableGoronRacetrackPot2, Item.CollectableGoronRacetrackPot3,
             Item.CollectableGoronRacetrackPot4, Item.CollectableGoronRacetrackPot5, Item.CollectableGoronRacetrackPot6,
@@ -5090,8 +5094,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(596)]
         [ObjectListIndex(0x24F)]
         [CheckRestricted(Item.HeartPieceNotebookHand, Item.NotebookMeetToiletHand, Item.NotebookToiletHandSThanks)]
-        [GroundVariants(0)]
-        [WaterBottomVariants(0)]
+        [GroundVariants(0x0)]
+        [WaterBottomVariants(0x0)]
+        [VariantsWithRoomMax(max:0, variant:0x0)] // time gated is kind lame bruh
         [UnkillableAllVariants]
         MysteryHand = 0x27D, // En_Bjt
 

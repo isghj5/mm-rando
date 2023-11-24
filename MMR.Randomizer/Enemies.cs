@@ -2157,7 +2157,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.LinkTheGoro)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.LinkTheGoro)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.Takkuri)) continue;
@@ -2823,7 +2823,7 @@ namespace MMR.Randomizer
         private static void SplitSceneLikeLikesIntoTwoActorObjects(SceneEnemizerData thisSceneData)
         {
             /// Special case: likelikes need to be split into two objects because ground and water share one object 
-            /// but no other enemies work as dual replacement
+            /// but no other enemies work as dual replacement, so we want to split into two actor groups for replacement
 
             if ((thisSceneData.Scene.File == GameObjects.Scene.ZoraCape.FileID() || thisSceneData.Scene.File == GameObjects.Scene.GreatBayCoast.FileID())
                 && thisSceneData.Objects.Contains(GameObjects.Actor.LikeLike.ObjectIndex()))
@@ -2843,72 +2843,6 @@ namespace MMR.Randomizer
                 }
             }
         }
-
-        #region DeadFunctionCullOptionalActors 
-        private static void CullOptionalActors(Scene scene, List<ValueSwap> objList, int loopCount)
-        {
-            /// issue: sometimes some of the big scenes get stuck in a weird spot where they can't find any actor combos that fit
-            /// one day I will figure out this bug, for now, attempt to remove some actors/objects to make it fit
-            /// The actors we remove are all forgotten or forgettable, none of them can be required to beat a seed
-
-            // medium goron, unused object, size: 0x10
-            // alternative: tanron1 is also size 0x10
-
-            // road to ikana: there is a scarecrow that leads to a fairy pot unknown to most players, we can remove both
-            if (scene.SceneEnum == GameObjects.Scene.RoadToIkana)
-            {
-                scene.Maps[0].Actors[76].ChangeActor(GameObjects.Actor.Empty);
-                objList.Add(
-                    new ValueSwap()
-                    {
-                        OldV = 0x11D, // Scarecrow
-                        NewV = SMALLEST_OBJ
-                    }
-                );
-                scene.Maps[0].Actors[30].ChangeActor(GameObjects.Actor.Empty);
-                objList.Add(
-                    new ValueSwap()
-                    {
-                        OldV = 0xF9, // Clay pot
-                        NewV = SMALLEST_OBJ
-                    }
-                );
-            }
-
-            // mountain village spring: there is a scarecrow on top of the blacksmith leading to a clay fairy pot
-            if (scene.SceneEnum == GameObjects.Scene.MountainVillageSpring)
-            {
-                scene.Maps[0].Actors[3].ChangeActor(GameObjects.Actor.Empty);
-                objList.Add(
-                    new ValueSwap()
-                    {
-                        OldV = 0x11D, // Scarecrow
-                        NewV = SMALLEST_OBJ
-                    }
-                );
-                scene.Maps[0].Actors[46].ChangeActor(GameObjects.Actor.Empty);
-                objList.Add(
-                    new ValueSwap()
-                    {
-                        OldV = 0xF9, // Clay pot
-                        NewV = SMALLEST_OBJ
-                    }
-                );
-            }
-
-            // termina field: there is a single pot on a pilllar to the east with a fairy
-            if (scene.SceneEnum == GameObjects.Scene.TerminaField)
-            {
-                objList.Add(
-                    new ValueSwap()
-                    {
-                        OldV = 0xF9, // Jar
-                        NewV = SMALLEST_OBJ
-                    }
-                );
-            }
-        }
-        #endregion
 
         [System.Diagnostics.DebuggerDisplay("{Scene.SceneEnum.ToString()}")]
         public class SceneEnemizerData
