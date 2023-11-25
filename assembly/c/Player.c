@@ -325,6 +325,11 @@ bool Player_ShouldPreventRestoringSwimState(ActorPlayer* player, GlobalContext* 
 static u32 lastClimbFrame = 0;
 static u32 startClimbingTimer = 5;
 u32 Player_GetCollisionType(ActorPlayer* player, GlobalContext* ctxt, u32 collisionType) {
+    if (MISC_CONFIG.flags.instantTransform && player->base.draw == NULL) {
+        // Player is transforming, don't start climbing or the game will crash.
+        return 0;
+    }
+
     if (!MISC_CONFIG.flags.climbAnything) {
         return collisionType;
     }
@@ -359,7 +364,6 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
         || actionParam < PLAYER_IA_MASK_FIERCE_DEITY
         || actionParam > PLAYER_IA_MASK_DEKU
         || this->animTimer != 0
-        || this->base.bgcheckFlags & 0x200 // BGCHECKFLAG_PLAYER_WALL_INTERACT
         || (this->talkActor != NULL && this->talkActor->flags & 0x10000)
         || (this->stateFlags.state1 & PLAYER_STATE1_TIME_STOP)
         || (this->stateFlags.state2 & PLAYER_STATE2_DIVING)
