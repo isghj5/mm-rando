@@ -909,7 +909,7 @@ void Player_AfterCrushed(void) {
 
 s32 Player_GetWeaponDamageFlags(ActorPlayer* player, s32 dmgFlags) {
     if (GiantMask_IsGiant()) {
-        return 0xC0000100; // DMG_POWDER_KEG | DMG_GORON_PUNCH | DMG_UNK_0x1E // DMG_UNK_0x1E is used to trigger different damage calculation algorithm.
+        return 0xC0000108; // DMG_POWDER_KEG | DMG_EXPLOSIVES | DMG_GORON_PUNCH | DMG_UNK_0x1E // DMG_UNK_0x1E is used to trigger different damage calculation algorithm.
     }
     return dmgFlags;
 }
