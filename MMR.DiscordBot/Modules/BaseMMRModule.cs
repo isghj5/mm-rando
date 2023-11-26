@@ -516,7 +516,7 @@ namespace MMR.DiscordBot.Modules
             }
 
             var settingsFile = Context.Message.Attachments.Single();
-            if (settingsFile.Size > 10000) // kinda arbitrary
+            if (settingsFile.Size > 25 * 1024) // kinda arbitrary
             {
                 await ReplyNoTagAsync("File is too large.");
                 return;
