@@ -1508,6 +1508,9 @@
         ],
         [
           "Use Fire Arrow"
+        ],
+        [
+          "Rock Sirloin Fireless"
         ]
       ],
       "TimeNeeded": "None",
@@ -3541,18 +3544,23 @@
     {
       "Id": "ChestLensCavePurpleRupee",
       "RequiredItems": [
-        "AreaNorthAccess",
-        "Destroy Large Boulders"
+        "AreaNorthAccess"
       ],
       "ConditionalItems": [
         [
+          "Destroy Large Boulders",
           "Use Lens of Truth"
         ],
         [
+          "Destroy Large Boulders",
           "Dungeon Entrance Return"
         ],
         [
+          "Destroy Large Boulders",
           "Goron Village Invisible Platforming Backwards"
+        ],
+        [
+          "Lens Cave With Powder Keg Challenge"
         ]
       ],
       "TimeNeeded": "None",
@@ -6198,7 +6206,7 @@
           "ItemPowderKeg"
         ],
         [
-          "SSH With Blast Mask and Climbing"
+          "SSH Tree Room Beehive as FD"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -6237,9 +6245,6 @@
           "SSH With Explosives",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
-        ],
-        [
-          "SSH With Blast Mask and Climbing"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -9866,10 +9871,18 @@
     },
     {
       "Id": "CollectablePiratesFortressInteriorWaterCurrentRoomPot1",
-      "RequiredItems": [
-        "AreaPFInteriorAccess"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "AreaPFInteriorAccess"
+        ],
+        [
+          "AreaPiratesFortressAccess",
+          "Sewers With Explosives",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -27925,6 +27938,16 @@
         [
           "SettingIronGoron",
           "Sewers With Bombchu"
+        ],
+        [
+          "SettingIronGoron",
+          "Sewers With Explosives",
+          "Any Bomb Bag"
+        ],
+        [
+          "SettingIronGoron",
+          "Sewers With Explosives",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -28105,10 +28128,6 @@
           "Keg Trial Access"
         ],
         [
-          "SettingGiantMaskAnywhere",
-          "Any B Sword"
-        ],
-        [
           "Goron Racetrack Access as Giant"
         ],
         [
@@ -28118,6 +28137,10 @@
         [
           "Goron Racetrack Access With Hookshot/Climb Anywhere",
           "Out of Bounds"
+        ],
+        [
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -28530,7 +28553,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Mash jump slashes on the slopes on the left sides of the gaps.",
-      "TrickCategory": "Path to Snowhead"
+      "TrickCategory": "PROCEED WITH CAUTION"
     },
     {
       "Id": "AreaSnowheadAccess",
@@ -29747,7 +29770,7 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Blast the beehives and wall skulls with Blast Mask and the Climb Most Surfaces gimmick.",
+      "TrickTooltip": "Blast some beehives and wall skulls with Blast Mask and the Climb Most Surfaces gimmick.",
       "TrickCategory": "Swamp Spider House"
     },
     {
@@ -31102,7 +31125,7 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Long jump to the platform with the chest in the first room.",
+      "TrickTooltip": "Use a precise Long Jump to the platform with the chest in the first room. Aim for the Deku Flower to not fall down.",
       "TrickCategory": "Woodfall Temple"
     },
     {
@@ -34266,6 +34289,59 @@
       "IsTrick": true,
       "TrickTooltip": "Kill the Like-Like under the falls in Zora Cape from a distance, then dive for the item using Giant's Mask to grab it as if it was Ruto's Letter.",
       "TrickCategory": "Zora Cape"
+    },
+    {
+      "Id": "Rock Sirloin Fireless",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Get the Rock Sirloin without lighting the chandelier or the torches. Break the chandelier pot closest to the Baby Goron side with Goron Spikes to get the chandelier swaying slightly, then quickly break the chandelier pot with the Rock Sirloin inside with an extremely precise Goron Spike Roll.",
+      "TrickCategory": "PROCEED WITH CAUTION"
+    },
+    {
+      "Id": "SSH Tree Room Beehive as FD",
+      "RequiredItems": [
+        "SettingAllowFierceDeityAnywhere",
+        "Magic Meter",
+        "OtherExplosive"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Blow up the Gossip Stone in the tree room, then use the blast-off animation of the Gossip Stone to get an angle to hit the beehive with a Sword Beam.",
+      "TrickCategory": "Swamp Spider House"
+    },
+    {
+      "Id": "Lens Cave With Powder Keg Challenge",
+      "RequiredItems": [
+        "Keg Trial Access",
+        "MaskGoron"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Bring the Powder Keg from Medigoron across the invisible platforms and into Lone Peak Shrine to blow up the rock. Requires multiple outrageously precise Keg tosses on platforms that you probably can't see; good luck!",
+      "TrickCategory": "PROCEED WITH CAUTION"
+    },
+    {
+      "Id": "Sewers With Explosives",
+      "RequiredItems": [
+        "SettingDamageModeDefault"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Long Jump to the first crystal switch to raise the metal gate. With Blast Mask, you can also hit the second crystal switch to activate the water elevator while simultaneously performing a Long Jump/Recoil Flip to get to the water elevator in time.",
+      "TrickCategory": "Pirates' Fortress"
     }
   ]
 }
