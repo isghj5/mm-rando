@@ -16,6 +16,13 @@ f32 CollisionCheck_GetDamageAndEffectOnBumper(ColCommon* at, ColBodyInfo* atInfo
         *effect = 0;
         damage = z2_CollisionCheck_GetToucherDamage(at, atInfo, ac, acInfo);
 
+        u8 highPriorityEffect = 0xFF;
+        switch (ac->actor->id) {
+            case ACTOR_EN_BSB: // Keeta
+                highPriorityEffect = 0xD;
+                break;
+        }
+
         f32 highestMultiplier = 0;
 
         for (i = 0; i != ARRAY_COUNT(damageTable->attack); i++) {
@@ -23,7 +30,20 @@ f32 CollisionCheck_GetDamageAndEffectOnBumper(ColCommon* at, ColBodyInfo* atInfo
                 ActorDamageByte attack = damageTable->attack[i];
                 if (attack.damage) {
                     f32 checkMultiplier = damageMultipliers[attack.damage];
+                    bool shouldApply = false;
                     if (checkMultiplier > highestMultiplier || (checkMultiplier == highestMultiplier && *effect == 0)) {
+                        shouldApply = true;
+                    }
+
+                    if (highPriorityEffect != 0xFF) {
+                        if (*effect != highPriorityEffect && attack.effect == highPriorityEffect) {
+                            shouldApply = true;
+                        } else if (*effect == highPriorityEffect && attack.effect != highPriorityEffect) {
+                            shouldApply = false;
+                        }
+                    }
+
+                    if (shouldApply) {
                         highestMultiplier = checkMultiplier;
                         *effect = attack.effect;
                     }
