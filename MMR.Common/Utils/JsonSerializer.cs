@@ -32,5 +32,6 @@ namespace MMR.Common.Utils
                 new JsonStringEnumConverter(),
             }
         };
+
     }
 }

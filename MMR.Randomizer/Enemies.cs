@@ -321,9 +321,9 @@ namespace MMR.Randomizer
             //if (testActor == GameObjects.Actor.InjuredKoume)
             {
                 // need to check if red potion is NOT randomized
-                var itemRedPotion = _randomized.ItemList.Find(item => item.Item == GameObjects.Item.ShopItemWitchRedPotion);
+                //var itemRedPotion = _randomized.ItemList.Find(item => item.Item != null && item.Item == GameObjects.Item.ShopItemWitchRedPotion);
                 // does NOT work, shows false for no-logic, so thats an issue here
-                var isJunk = ItemUtils.IsJunk(itemRedPotion.Item); 
+                //var isJunk = ItemUtils.IsJunk(itemRedPotion.Item); 
 
                 //var isRequired = ItemUtils.IsRequired(itemRedPotion.Item, itemRedPotion.locationForImportance, randomizedResult
 
