@@ -741,20 +741,16 @@ namespace MMR.Randomizer
             ikanaScene.Maps[0].Objects[13] = SMALLEST_OBJ; // piece of heart, used in the east side but not here, we dont need here
             ikanaScene.Maps[0].Objects[18] = SMALLEST_OBJ; // flying scrub ( dont think it matters remove it from this area for most people)
 
-            // if we remove the woodfall object, we have more space for noticible actors and not a static backdrop woodfall
-            // so far this has been here over a month and nobody has noticed I removed woodfall
+            // if we remove the woodfall object from terminafield, we have more space for noticible actors and not a static backdrop woodfall
+            // so far this has been here over a month and nobody has noticed I removed woodfall lol
             var tfScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TerminaField.FileID());
             tfScene.Maps[0].Objects[0] = SMALLEST_OBJ;
 
-            // HEAVY BOM
+            // HEAVY BOMB
             // you idiot, this is both kegs and regular bombs, you need to set the flag for just kegs with a code change or bombs are heavy too
             //RomUtils.CheckCompressed(GameObjects.Actor.PowderKeg.FileListIndex());
             //var kegFile = RomData.MMFileList[GameObjects.Actor.PowderKeg.FileListIndex()].Data;
             //kegFile[0x1FF5] |= 0x02; // add ACTOR_FLAG_20000, makes it heavy 
-
-
-
-
 
             //PrintActorValues();
         }

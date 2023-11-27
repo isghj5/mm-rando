@@ -23,7 +23,7 @@ namespace MMR.Randomizer.Utils
     {
         public string          Name { get; set; }
         public string          Notes { get; set; }
-        public List<int>       SceneFIDToModify { get; set; }
+        public List<string>    SceneFIDToModify { get; set; } // String because we sometimes need to provide a scene layer offset to find the right header to change
         public List<string>    NewSongSlotCategories { get; set; } // string because they are base 16 which json cannot handle
     }
 
@@ -1357,16 +1357,34 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static bool SearchAndReplaceSceneBGM(int sceneFID, byte slotReplacement)
+        public static bool SearchAndReplaceSceneBGM(string sceneFIDStr, byte slotReplacement)
         {
             /// scan the files for the header that contains scene music (0x15 first byte)
             // 15xx0000 0000yyzz where zz is the sequence pointer byte
+
+            // however, the header data we want COULD be in a different scene layer and we want to be able to search from the offset into the file
+            int sceneFID = -1;
+            var strSplit = sceneFIDStr.Split(":");
+            if (int.TryParse(strSplit[0], out var sceneIntattempt))
+            {
+                sceneFID = sceneIntattempt;
+            }
+            if (sceneFID == -1) return false;
+
+            // if we are searching to replace a scene layer, we need to know the offset, it wont be at the start of the scene file
+            uint searchOffset = 0;
+            if (strSplit.Length > 1)
+            {
+                searchOffset = Convert.ToUInt32(strSplit[1], 16);
+
+            }
+
             RomUtils.CheckCompressed(sceneFID);
-            for (int b = 0; b < 0x10 * 70; b += 8)
+            for (int b = (int) searchOffset; b < searchOffset + (0x10 * 70); b += 8)
             {
                 if (RomData.MMFileList[sceneFID].Data[b] == 0x15)
                 {
-                    Debug.WriteLine("Replacing previous music index byte: " + RomData.MMFileList[sceneFID].Data[b + 0x7].ToString("X2"));
+                    Debug.WriteLine($"[{sceneFID}]Replacing previous music index byte: " + RomData.MMFileList[sceneFID].Data[b + 0x7].ToString("X2") +" at offset:" +b);
                     RomData.MMFileList[sceneFID].Data[b + 0x7] = slotReplacement;
 
                     return true;
@@ -1430,7 +1448,7 @@ namespace MMR.Randomizer.Utils
                 log.AppendLine("Attempting to add new song slot:" + newSongSlot.Name + " at previously unused location " + availableSlot.PreviousSlot.ToString("X2"));
                 availableSlots.RemoveAt(0);
 
-                foreach (int sceneFID in newSongSlot.SceneFIDToModify)
+                foreach (string sceneFID in newSongSlot.SceneFIDToModify)
                 {
                     bool result = SearchAndReplaceSceneBGM(sceneFID, (byte)availableSlot.PreviousSlot);
                     if (!result)
