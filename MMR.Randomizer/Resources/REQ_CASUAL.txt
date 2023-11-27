@@ -7932,10 +7932,16 @@
       "Id": "CollectibleStrayFairySnowhead9",
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
-        "SHT Main Room Access",
-        "MaskGoron"
+        "SHT Main Room Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskGoron"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
