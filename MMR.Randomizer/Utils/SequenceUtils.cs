@@ -1400,7 +1400,7 @@ namespace MMR.Randomizer.Utils
 
 
 
-        public static void ReassignSongSlots(StringBuilder log)
+        public static void ReassignSongSlots(StringBuilder log, Random rng)
         {
             // read all assginement slots from json files
             var replacementSongSlots = new List<ReplacementSongSlot>();
@@ -1433,6 +1433,9 @@ namespace MMR.Randomizer.Utils
 
             }
 
+            // randomize the order of the list, in case we run out of slots which ones get used will be random per seed
+            replacementSongSlots = replacementSongSlots.OrderBy(x => rng.Next()).ToList();
+
             // these are song slots that were previously pointed at a different slot to save space
             //  song slots that had songs we wanted to add to the pool, but because they are (nearly) unreachable in rando, putting music
             //  in those slots dooms the music to never be heard in the seed, it was increadibly common for me to want to listen to a song and it gets up here
@@ -1445,7 +1448,7 @@ namespace MMR.Randomizer.Utils
             {
                 ReplacementSongSlot newSongSlot = replacementSongSlots[i];
                 SequenceInfo availableSlot = availableSlots.ElementAt(0);
-                log.AppendLine("Attempting to add new song slot:" + newSongSlot.Name + " at previously unused location " + availableSlot.PreviousSlot.ToString("X2"));
+                log.AppendLine($"++ Adding a new song slot: [{newSongSlot.Name}] at previously unused slot [{availableSlot.PreviousSlot.ToString("X2")}]");
                 availableSlots.RemoveAt(0);
 
                 foreach (string sceneFID in newSongSlot.SceneFIDToModify)

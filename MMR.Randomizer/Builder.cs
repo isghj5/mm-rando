@@ -67,14 +67,15 @@ namespace MMR.Randomizer
             List<SequenceInfo> unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
             unassigned = unassigned.OrderBy(x => random.Next()).ToList();                           // random ordered songs
             RomData.TargetSequences = RomData.TargetSequences.OrderBy(x => random.Next()).ToList(); // random ordered slots
-            WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + unassigned.Count + " available songs:");
 
             // if we have lots of music, let's randomize skulltula house and ikana well to have something unique that isn't cave music
             if (RomData.SequenceList.Count > 80 &&RomData.SequenceList.FindAll(u => u.Type.Contains(2)).Count >= 8 + 2){ // tested by asking for all targetseq that have a category of 2, counted (8)
                 // this is currently broken, does not read the json correctly
-                SequenceUtils.ReassignSongSlots(log);
+                SequenceUtils.ReassignSongSlots(log, random);
             }
             SequenceUtils.ResetBudget();
+            WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + unassigned.Count + " available songs:");
+
 
             // songtest filename token allows music makers and users to force a song into a MMR seed for recording/testing
             SequenceUtils.CheckSongTest(unassigned, log);
