@@ -3601,6 +3601,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
                 }
@@ -3654,6 +3655,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
                 }
@@ -3706,6 +3708,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
                 }
@@ -3759,6 +3762,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
                 }
@@ -3797,6 +3801,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
 
@@ -3819,6 +3824,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
                 }
@@ -3844,6 +3850,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
 
@@ -6236,6 +6243,9 @@ namespace MMR.Randomizer
 
                 progressReporter.ReportProgress(68, "Writing messages...");
                 WriteGossipQuotes(messageTable);
+
+                var messagesToTransfer = messageTable.RemoveMessagesToTransfer();
+                _extraMessages.AddRange(messagesToTransfer);
 
                 MessageTable.WriteDefault(messageTable, _randomized.Settings.QuickTextEnabled);
 
