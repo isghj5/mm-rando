@@ -154,6 +154,12 @@ bool Items_ShouldCheckItemUsabilityWhileSwimming(GlobalContext* ctxt, u8 item) {
     return true;
 }
 
+bool Items_ShouldCheckBButtonUsabilityWhileSwimming() {
+    u8 currentForm = gSaveContext.perm.currentForm;
+    return !(currentForm == PLAYER_FORM_ZORA
+        || (MISC_CONFIG.flags.ironGoron && currentForm == PLAYER_FORM_GORON));
+}
+
 static const u8* sAudioBaseFilter = (u8*)0x801D66E0;
 
 s32 Items_GetUnderwaterHazard(ActorPlayer* player) {

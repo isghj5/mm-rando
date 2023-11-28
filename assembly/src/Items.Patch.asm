@@ -51,6 +51,41 @@
     beqzl   v0, 0x801109B8
 
 ;==================================================================================================
+; Check check B button usability while swimming
+;==================================================================================================
+
+.headersize G_CODE_DELTA
+
+; Replaces:
+;   LUI     T0, 0x801F
+;   SLTI    AT, V0, 0x0005
+;   ADDIU   T0, T0, 0xF670
+;   ADDIU   T2, R0, 0x0004
+;   BEQZ    AT, 0x80110A4C
+;   LH      T3, 0x0070 (SP)
+;   LBU     V0, 0x0020 (T0)
+;   BNEL    T2, V0, .+0x14
+;   OR      A2, V0, R0
+;   B       .+0xC
+;   OR      A2, R0, R0
+;   OR      A2, V0, R0
+;   ADDIU   AT, R0, 0x0002
+;   BEQL    A2, AT, 0x80110838
+;   LBU     T7, 0x3F18 (T0)
+.org 0x80110758
+.area 0x3C, 0
+    slti    at, v0, 0x0005
+    beqz    at, 0x80110A4C
+    lh      t3, 0x0070 (sp)
+    jal     Items_ShouldCheckBButtonUsabilityWhileSwimming
+    nop
+    lui     t0, 0x801F
+    addiu   t0, t0, 0xF670
+    beqzl   v0, 0x80110838
+    lbu     t7, 0x3F18 (t0)
+.endarea
+
+;==================================================================================================
 ; Check environment hazard
 ;==================================================================================================
 

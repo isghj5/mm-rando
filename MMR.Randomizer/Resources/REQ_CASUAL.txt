@@ -2134,16 +2134,10 @@
     {
       "Id": "AreaPiratesFortressAccess",
       "RequiredItems": [
-        "AreaWestAccess"
+        "AreaWestAccess",
+        "Underwater Stuff"
       ],
-      "ConditionalItems": [
-        [
-          "MaskZora"
-        ],
-        [
-          "SettingIronGoron"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -3580,6 +3574,9 @@
           "Water for Magic Bean"
         ],
         [
+          "Bean Grotto as Giant"
+        ],
+        [
           "SettingClimbMostSurfaces"
         ]
       ],
@@ -3897,10 +3894,10 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "MaskZora"
+          "Underwater Stuff"
         ],
         [
-          "SettingIronGoron"
+          "Underwater Chest as Giant"
         ]
       ],
       "TimeNeeded": "None",
@@ -4660,11 +4657,10 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "Any Wallet",
-          "Bank Without Wallet Upgrades"
+          "Wallet (500)"
         ],
         [
-          "UpgradeGiantWallet"
+          "Bank #3 Without Wallets"
         ]
       ],
       "TimeNeeded": "None",
@@ -4840,9 +4836,16 @@
     {
       "Id": "HeartPieceGreatBayCapeLikeLike",
       "RequiredItems": [
-        "AreaPiratesFortressAccess"
+        "AreaWestAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Underwater Stuff"
+        ],
+        [
+          "The Giant Dive"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -9129,7 +9132,7 @@
           "Any Wallet"
         ],
         [
-          "Bank Without Wallet Upgrades"
+          "Bank #2 Without Wallets"
         ]
       ],
       "TimeNeeded": "None",
@@ -9460,43 +9463,10 @@
     },
     {
       "Id": "MundaneItemCuriosityShopRedRupee",
-      "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "BottleCatchFish"
-        ],
-        [
-          "BottleCatchBug"
-        ],
-        [
-          "BottleCatchFairy"
-        ],
-        [
-          "BottleCatchSpringWater"
-        ],
-        [
-          "BottleCatchHotSpringWater"
-        ],
-        [
-          "BottleCatchEgg"
-        ],
-        [
-          "Any Red Potion"
-        ],
-        [
-          "Any Milk"
-        ],
-        [
-          "Any Green Potion"
-        ],
-        [
-          "Any Blue Potion"
-        ],
-        [
-          "ShopItemTradingPostFairy",
-          "Any Bottle"
-        ]
+      "RequiredItems": [
+        "Any Bottle"
       ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "Night1, Night2, Night3",
       "TimeSetup": "None",
@@ -19964,7 +19934,7 @@
     {
       "Id": "CollectableIkanaCanyonMainAreaGrass7",
       "RequiredItems": [
-        "AreaIkanaCanyonAccess"
+        "AreaStoneTowerClear"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -23581,37 +23551,51 @@
       ],
       "ConditionalItems": [
         [
-          "ItemBottleAliens"
+          "ItemBottleAliens",
+          "SettingNotSimpleMilk"
         ],
         [
-          "ItemRanchBarnMainCowMilk"
+          "ItemRanchBarnMainCowMilk",
+          "SettingNotSimpleMilk"
         ],
         [
-          "ItemRanchBarnOtherCowMilk1"
+          "ItemRanchBarnOtherCowMilk1",
+          "SettingNotSimpleMilk"
         ],
         [
-          "ItemRanchBarnOtherCowMilk2"
+          "ItemRanchBarnOtherCowMilk2",
+          "SettingNotSimpleMilk"
         ],
         [
-          "ItemWellCowMilk"
+          "ItemWellCowMilk",
+          "SettingNotSimpleMilk"
         ],
         [
-          "ItemTerminaGrottoCowMilk1"
+          "ItemTerminaGrottoCowMilk1",
+          "SettingNotSimpleMilk"
         ],
         [
-          "ItemTerminaGrottoCowMilk2"
+          "ItemTerminaGrottoCowMilk2",
+          "SettingNotSimpleMilk"
         ],
         [
-          "ItemCoastGrottoCowMilk1"
+          "ItemCoastGrottoCowMilk1",
+          "SettingNotSimpleMilk"
         ],
         [
-          "ItemCoastGrottoCowMilk2"
+          "ItemCoastGrottoCowMilk2",
+          "SettingNotSimpleMilk"
         ],
         [
-          "ShopItemMilkBarMilk"
+          "ShopItemMilkBarMilk",
+          "SettingNotSimpleMilk"
         ],
         [
-          "ShopItemGormanBrosMilk"
+          "ShopItemGormanBrosMilk",
+          "SettingNotSimpleMilk"
+        ],
+        [
+          "SettingSimpleMilk"
         ]
       ],
       "TimeNeeded": "None",
@@ -23663,9 +23647,15 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
+          "SettingNotRandomizedBottleCatchSpringWater",
+          "Any Bottle"
+        ],
+        [
+          "SettingIsRandomizedBottleCatchSpringWater",
           "BottleCatchSpringWater"
         ],
         [
+          "SettingIsRandomizedBottleCatchSpringWater",
           "BottleCatchHotSpringWater"
         ],
         [
@@ -23778,38 +23768,109 @@
       "TrickCategory": "Universal"
     },
     {
-      "Id": "Bank Without Wallet Upgrades",
+      "Id": "Skull Kid With Bombs",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Any Bomb Bag"
+        ],
+        [
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Hit the Ocarina out of Skull Kid's hand with a well-timed bomb throw.",
+      "TrickCategory": "Clock Tower Roof"
+    },
+    {
+      "Id": "Straw Roof With Jump Slash",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Deposit a lot of rupees into the bank with only the default wallet.",
-      "TrickCategory": "West Clock Town"
+      "TrickTooltip": "Use a precise jump slash to upwarp on top of the straw roof in South Clock Town for the chest.",
+      "TrickCategory": "South Clock Town"
     },
     {
-      "Id": "Scarecrow's Song",
+      "Id": "Jump Slash Tingle Balloon",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Any Sword"
+        ],
+        [
+          "SettingAllowFierceDeityAnywhere"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Jump from the tree, and jump slash Tingle's balloon with a sword to take him down.",
+      "TrickCategory": "North Clock Town"
+    },
+    {
+      "Id": "Bomber Guard Skip",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Backflip over the Bomber Hideout Guard.",
+      "TrickCategory": "East Clock Town"
+    },
+    {
+      "Id": "Inn Balcony Jump",
       "RequiredItems": [
-        "ItemOcarina",
-        "ItemHookshot"
+        "Tall Character"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
-      "IsTrick": false
+      "IsTrick": true,
+      "TrickTooltip": "Jump to the Inn balcony as Zora or Adult Link.",
+      "TrickCategory": "Stock Pot Inn"
     },
     {
-      "Id": "Exit OSH Without Goron",
+      "Id": "Postman without Bunny Hood",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Backwalk up the slope to exit.",
-      "TrickCategory": "Oceanside Spider House"
+      "TrickTooltip": "Get exactly 10 seconds without using the Bunny Hood.",
+      "TrickCategory": "West Clock Town"
+    },
+    {
+      "Id": "Bio Baba Hive Luck",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Hope the item lands on a lilypad.",
+      "TrickCategory": "Termina Field"
+    },
+    {
+      "Id": "Avoid Swamp Tree Bat",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Kill the other bats, then climb around the final bat with precision.",
+      "TrickCategory": "Road to Southern Swamp"
     },
     {
       "Id": "Run Through Poisoned Water",
@@ -23832,6 +23893,568 @@
       "TrickCategory": "Southern Swamp"
     },
     {
+      "Id": "SSH With Bombchu",
+      "RequiredItems": [
+        "Any Bomb Bag",
+        "Any Bombchu Pack"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Destroy beehives in Swamp Spider House with Bombchu.",
+      "TrickCategory": "Swamp Spider House"
+    },
+    {
+      "Id": "Deku Guard Skip",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Backflip over the deku guards from the fence.",
+      "TrickCategory": "Deku Palace"
+    },
+    {
+      "Id": "Woodfall as FD",
+      "RequiredItems": [
+        "SettingAllowFierceDeityAnywhere"
+      ],
+      "ConditionalItems": [
+        [
+          "Long Jump to Soaring Tablet"
+        ],
+        [
+          "FD Jump to Soaring Tablet",
+          "SettingDamageModeDefault"
+        ],
+        [
+          "FD Jump to Soaring Tablet",
+          "Lilypad Parkour as FD"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Jump from the Song of Soaring tablet to the entrance of Woodfall, and collect all the items in Woodfall with clever platforming as Fierce Deity Link.",
+      "TrickCategory": "Woodfall"
+    },
+    {
+      "Id": "WFT 2nd Floor Skip",
+      "RequiredItems": [
+        "ItemHookshot"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Hookshot to the torch in the main room.",
+      "TrickCategory": "Woodfall Temple"
+    },
+    {
+      "Id": "Lensless Climbing",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Climb the Mountain Village invisible ladder without Lens of Truth.",
+      "TrickCategory": "Mountain Village"
+    },
+    {
+      "Id": "Twin Islands Items in Winter",
+      "RequiredItems": [
+        "MaskZora"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Collect the items in the ice in Twin Islands using highly technical Zora Boomerang tricks.",
+      "TrickCategory": "Twin Islands"
+    },
+    {
+      "Id": "Powder Keg Challenge Access as FD",
+      "RequiredItems": [
+        "SettingAllowFierceDeityAnywhere"
+      ],
+      "ConditionalItems": [
+        [
+          "Hot Spring Water in Mountains",
+          "SettingNotRandomizedBottleCatchHotSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater",
+          "Play Song of Soaring"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Fierce Deity Link is tall enough to thaw the ice in front of Medigoron's cave with hot spring water.",
+      "TrickCategory": "Goron Village"
+    },
+    {
+      "Id": "Path to Snowhead without Magic",
+      "RequiredItems": [
+        "MaskGoron"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Roll along the sides of the gaps.",
+      "TrickCategory": "Path to Snowhead"
+    },
+    {
+      "Id": "SHT Tall Jumps",
+      "RequiredItems": [
+        "Tall Character"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "With Zora Mask, Adult Link, or Fierce Deity, get through the bridge room and the Goron Pound switch room with some platforming.",
+      "TrickCategory": "Snowhead Temple"
+    },
+    {
+      "Id": "Ranch Tingle as FD",
+      "RequiredItems": [
+        "SettingAllowFierceDeityAnywhere"
+      ],
+      "ConditionalItems": [
+        [
+          "Out of Bounds"
+        ],
+        [
+          "Magic Meter",
+          "Any Bomb Bag",
+          "Any Bombchu Pack"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Either jump slash Tingle's balloon after jumping from a nearby \"Out of Bounds\" ledge, or use a Sword Beam angled from targeting a Bombchu to pop his balloon.",
+      "TrickCategory": "Milk Road"
+    },
+    {
+      "Id": "Bowless Aliens",
+      "RequiredItems": [
+        "ItemOcarina",
+        "SettingEnableSunsSong"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Pause and unpause until 5:15. Logic expects Sun's Song.",
+      "TrickCategory": "Romani Ranch"
+    },
+    {
+      "Id": "Coast Ledge Long Jump",
+      "RequiredItems": [
+        "SettingDamageModeDefault"
+      ],
+      "ConditionalItems": [
+        [
+          "Any Bomb Bag"
+        ],
+        [
+          "MaskBlast"
+        ],
+        [
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "Scarecrow's Song"
+        ],
+        [
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "Coast Ledge Zora Jump"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Long Jump from the top of the Hookshot target to the next ledge, then long jump from there to the Piece of Heart on the next ledge.",
+      "TrickCategory": "Great Bay Coast"
+    },
+    {
+      "Id": "Coast Ledge Zora Jump",
+      "RequiredItems": [
+        "Tall Character"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Jump to the Piece of Heart on the ledge from the higher ledge as Zora or Adult Link.",
+      "TrickCategory": "Great Bay Coast"
+    },
+    {
+      "Id": "Coast Ledge as FD",
+      "RequiredItems": [
+        "SettingAllowFierceDeityAnywhere"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Jump to the highest ledge from the Hookshot target as Fierce Deity, then jump to the ledge for the Piece of Heart.",
+      "TrickCategory": "Great Bay Coast"
+    },
+    {
+      "Id": "Coast Ledge as Giant",
+      "RequiredItems": [
+        "SettingGiantMaskAnywhere"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Climb to the Hookshot target as Giant Link, then either Zora/Adult Gainer onto the Hookshot target and Long Jump from there, or do the rest of the platforming as Fierce Deity.",
+      "TrickCategory": "Great Bay Coast"
+    },
+    {
+      "Id": "Exit OSH Without Goron",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Backwalk up the slope to exit.",
+      "TrickCategory": "Oceanside Spider House"
+    },
+    {
+      "Id": "Swim to Zora Hall as Human",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "You can avoid being damaged by the fish by swimming sideways.",
+      "TrickCategory": "Zora Cape"
+    },
+    {
+      "Id": "Zora Cape as Giant",
+      "RequiredItems": [
+        "SettingGiantMaskAnywhere",
+        "Any B Sword"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Climb all the way up to the Waterfall Rapids with tactical jump slashes as Giant Link.",
+      "TrickCategory": "Zora Cape"
+    },
+    {
+      "Id": "Lulu's Ledge as Goron",
+      "RequiredItems": [
+        "MaskGoron"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Goron Pound underneath the ledge with the Heart Piece in Lulu's Room to upwarp on top of it.",
+      "TrickCategory": "Zora Hall"
+    },
+    {
+      "Id": "PF Guard Room Rear Entry",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Jump from the Hookshot room to the back entrance of the Guard room. Or roll over the roof as Goron.",
+      "TrickCategory": "Pirates' Fortress"
+    },
+    {
+      "Id": "Pinnacle Rock without Seahorse",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Learn the path and enter Pinnacle Rock without the Seahorse.",
+      "TrickCategory": "Pinnacle Rock"
+    },
+    {
+      "Id": "GBT Goron Waterwheel",
+      "RequiredItems": [
+        "MaskGoron"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Skip the first yellow turnkey with a precise Goron roll.",
+      "TrickCategory": "Great Bay Temple"
+    },
+    {
+      "Id": "Road to Ikana Fences With Goron Bomb Jumps",
+      "RequiredItems": [
+        "SettingDamageModeDefault",
+        "MaskGoron",
+        "Any Bomb Bag"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Self-explanatory. Drop a bomb, pound as Goron, uncurl midair.",
+      "TrickCategory": "Road to Ikana"
+    },
+    {
+      "Id": "Day 2 Grave Without Lens of Truth",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Pass the false wall into Day 2 Grave, and cross the section with the invisible floor without Lens of Truth.",
+      "TrickCategory": "Ikana Graveyard"
+    },
+    {
+      "Id": "Ikana Canyon Iceless",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Hookshot to the first stump from a precise position.",
+      "TrickCategory": "Ikana Canyon"
+    },
+    {
+      "Id": "Defeat Well Big Poe With Bombs",
+      "RequiredItems": [
+        "Any Bomb Bag"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Kill the Big Poe in the Well by simply throwing bombs at it.",
+      "TrickCategory": "Beneath the Well"
+    },
+    {
+      "Id": "Ikana Castle Invisible Platform Without Lens of Truth",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Navigate the single invisible ice platform in Ikana Castle without Lens of Truth.",
+      "TrickCategory": "Ikana Castle"
+    },
+    {
+      "Id": "Climb Stone Tower with One Transformation",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskGoron"
+        ],
+        [
+          "MaskZora"
+        ],
+        [
+          "SettingGiantMaskAnywhere"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Play Elegy while on a block to ride the block up.",
+      "TrickCategory": "Stone Tower"
+    },
+    {
+      "Id": "STT Elegy Maze With Bombchu",
+      "RequiredItems": [
+        "SettingNotRandomizeEnemies"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Break the cracked wall with a Real Bombchu detonation.",
+      "TrickCategory": "Stone Tower Temple"
+    },
+    {
+      "Id": "Shoot Twinmold",
+      "RequiredItems": [
+        "OtherArrow"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Shoot Twinmold's tail with arrows instead of fighting with Giant's Mask.",
+      "TrickCategory": "Inverted Stone Tower Temple"
+    },
+    {
+      "Id": "Deku Trial as FD",
+      "RequiredItems": [
+        "SettingAllowFierceDeityAnywhere"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Collect the Piece of Heart in Deku Trial without Deku Mask using some fine platforming as Fierce Deity Link. You cannot actually complete the trial in this way.",
+      "TrickCategory": "The Moon"
+    },
+    {
+      "Id": "Deku Trial With Hookshot Most Surfaces",
+      "RequiredItems": [
+        "SettingHookshotAnySurface"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Tooltip missing!",
+      "TrickCategory": "The Moon"
+    },
+    {
+      "Id": "Goron Trial as FD",
+      "RequiredItems": [
+        "SettingAllowFierceDeityAnywhere",
+        "SettingDamageModeDefault"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Get through Goron Trial as Fierce Deity with sideways long jumps across long gaps.",
+      "TrickCategory": "The Moon"
+    },
+    {
+      "Id": "Zora Trial as Human",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Swim through the pipes as human. You need either Song of Time, Goron Mask, or a death warp to escape the Heart Piece spot.",
+      "TrickCategory": "The Moon"
+    },
+    {
+      "Id": "Link Trial With Sticks",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Kill the Dinolfos and defeat the Garo Master on the Moon with Deku Sticks.",
+      "TrickCategory": "The Moon"
+    },
+    {
+      "Id": "Link Trial With Songs",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Play Song of Healing"
+        ],
+        [
+          "Play Song of Storms"
+        ],
+        [
+          "Play Epona's Song"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Skip the challenges to unlock barred doors (and summon a ladder) on the Moon by playing songs at specific Gossip Stones.",
+      "TrickCategory": "The Moon"
+    },
+    {
+      "Id": "Link Trial as FD",
+      "RequiredItems": [
+        "SettingAllowFierceDeityAnywhere"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Climb up past the Iron Knuckle as Fierce Deity Link without spawning the ladder. Either jump from the Iron Knuckle chest, or perform a FD Gainer.",
+      "TrickCategory": "The Moon"
+    },
+    {
+      "Id": "Out of Bounds",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Enable tricks that involve being exposed to the global void plane, specifically in Milk Road and Pirates' Fortress Interior.",
+      "TrickCategory": "Racing Banned Tricks"
+    },
+    {
+      "Id": "Super Bowless Aliens",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Mash pause for ~30 minutes (That's real time, not in-game time!) to complete Aliens Defense without a bow or Sun's Song.",
+      "TrickCategory": "PROCEED WITH CAUTION"
+    },
+    {
+      "Id": "Scarecrow's Song",
+      "RequiredItems": [
+        "ItemOcarina",
+        "ItemHookshot"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
       "Id": "Poisoned Water as Goron",
       "RequiredItems": [
         "MaskGoron",
@@ -23844,17 +24467,6 @@
       "IsTrick": true,
       "TrickTooltip": "Enter poisoned swamp by rolling as Goron. You aren't guaranteed to have enough health to make it.",
       "TrickCategory": "Southern Swamp"
-    },
-    {
-      "Id": "Swim to Zora Hall as Human",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "You can avoid being damaged by the fish by swimming sideways.",
-      "TrickCategory": "Zora Hall"
     },
     {
       "Id": "OSH Brute Force Code",
@@ -23903,73 +24515,6 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false
-    },
-    {
-      "Id": "Climb Stone Tower with One Transformation",
-      "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "MaskGoron"
-        ],
-        [
-          "MaskZora"
-        ],
-        [
-          "SettingGiantMaskAnywhere"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Play Elegy while on a block to ride the block up.",
-      "TrickCategory": "Stone Tower"
-    },
-    {
-      "Id": "Day 2 Grave Without Lens of Truth",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Pass the false wall into Day 2 Grave, and cross the section with the invisible floor without Lens of Truth.",
-      "TrickCategory": "Ikana Graveyard"
-    },
-    {
-      "Id": "Bomber Guard Skip",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Backflip over the Bomber Hideout Guard.",
-      "TrickCategory": "East Clock Town"
-    },
-    {
-      "Id": "Deku Guard Skip",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Backflip over the deku guards from the fence.",
-      "TrickCategory": "Deku Palace"
-    },
-    {
-      "Id": "WFT 2nd Floor Skip",
-      "RequiredItems": [
-        "ItemHookshot"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Hookshot to the torch in the main room.",
-      "TrickCategory": "Woodfall Temple"
     },
     {
       "Id": "Kill Deku Shrine Big Octo",
@@ -24023,17 +24568,6 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false
-    },
-    {
-      "Id": "Ikana Canyon Iceless",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Hookshot to the first stump from a precise position.",
-      "TrickCategory": "Ikana Canyon"
     },
     {
       "Id": "Fight Twinmold",
@@ -24105,30 +24639,6 @@
       "IsTrick": false
     },
     {
-      "Id": "SHT Tall Jumps",
-      "RequiredItems": [
-        "Tall Character"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "With Zora Mask, Adult Link, or Fierce Deity, get through the bridge room and the Goron Pound switch room with some platforming.",
-      "TrickCategory": "Snowhead Temple"
-    },
-    {
-      "Id": "Pinnacle Rock without Seahorse",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Learn the path and enter Pinnacle Rock without the Seahorse.",
-      "TrickCategory": "Pinnacle Rock"
-    },
-    {
       "Id": "Pinnacle Rock Access",
       "RequiredItems": [
         "AreaWestAccess"
@@ -24159,28 +24669,6 @@
       "IsTrick": false
     },
     {
-      "Id": "PF Guard Room Rear Entry",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Jump from the Hookshot room to the back entrance of the Guard room. Or roll over the roof as Goron.",
-      "TrickCategory": "Pirates' Fortress"
-    },
-    {
-      "Id": "Avoid Swamp Tree Bat",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Kill the other bats, then climb around the final bat with precision.",
-      "TrickCategory": "Road to Southern Swamp"
-    },
-    {
       "Id": "Lulu's Ledge as Zora",
       "RequiredItems": [],
       "ConditionalItems": [],
@@ -24190,20 +24678,6 @@
       "IsTrick": true,
       "TrickTooltip": "Climb onto the ledge in Lulu's room by navigating the furniture.",
       "TrickCategory": "Zora Hall"
-    },
-    {
-      "Id": "Bowless Aliens",
-      "RequiredItems": [
-        "ItemOcarina",
-        "SettingEnableSunsSong"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Pause and unpause until 5:15. Logic expects Sun's Song.",
-      "TrickCategory": "Romani Ranch"
     },
     {
       "Id": "SHT Lensless Walls/Ceilings",
@@ -24242,17 +24716,6 @@
       "TrickCategory": "Inverted Stone Tower Temple"
     },
     {
-      "Id": "Postman without Bunny Hood",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Get exactly 10 seconds without using the Bunny Hood.",
-      "TrickCategory": "West Clock Town"
-    },
-    {
       "Id": "Stun Keeta with Bombs",
       "RequiredItems": [
         "Any Bomb Bag"
@@ -24264,32 +24727,6 @@
       "IsTrick": true,
       "TrickTooltip": "Use a bomb to stun Captain Keeta before he moves away.",
       "TrickCategory": "Ikana Graveyard"
-    },
-    {
-      "Id": "Path to Snowhead without Magic",
-      "RequiredItems": [
-        "MaskGoron"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Roll along the sides of the gaps.",
-      "TrickCategory": "Path to Snowhead"
-    },
-    {
-      "Id": "Shoot Twinmold",
-      "RequiredItems": [
-        "OtherArrow"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Shoot Twinmold's tail with arrows instead of fighting with Giant's Mask.",
-      "TrickCategory": "Inverted Stone Tower Temple"
     },
     {
       "Id": "SHT Pillar Skip",
@@ -24312,17 +24749,6 @@
       "IsTrick": true,
       "TrickTooltip": "Drop down from the Dexihand either as Deku or with a sidehop and Jump Slash.",
       "TrickCategory": "Inverted Stone Tower Temple"
-    },
-    {
-      "Id": "Lensless Climbing",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Climb the Mountain Village invisible ladder without Lens of Truth.",
-      "TrickCategory": "Mountain Village"
     },
     {
       "Id": "Guess Bomber Code",
@@ -24415,17 +24841,6 @@
       "TrickCategory": "Romani Ranch"
     },
     {
-      "Id": "Bio Baba Hive Luck",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Hope the item lands on a lilypad.",
-      "TrickCategory": "Termina Field"
-    },
-    {
       "Id": "OSH Fireless",
       "RequiredItems": [],
       "ConditionalItems": [],
@@ -24495,19 +24910,6 @@
       "IsTrick": false
     },
     {
-      "Id": "Inn Balcony Jump",
-      "RequiredItems": [
-        "Tall Character"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Jump to the Inn balcony as Zora or Adult Link.",
-      "TrickCategory": "Stock Pot Inn"
-    },
-    {
       "Id": "Any Shield",
       "RequiredItems": [],
       "ConditionalItems": [
@@ -24545,9 +24947,15 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
+          "SettingSimpleHealingPotion",
+          "Any Bottle"
+        ],
+        [
+          "SettingNotSimpleHealingPotion",
           "Any Red Potion"
         ],
         [
+          "SettingNotSimpleHealingPotion",
           "Any Blue Potion"
         ]
       ],
@@ -25040,6 +25448,9 @@
         [
           "MaskFierceDeity",
           "Magic Meter"
+        ],
+        [
+          "Twinmold Minimalism"
         ]
       ],
       "TimeNeeded": "None",
@@ -25062,19 +25473,6 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false
-    },
-    {
-      "Id": "GBT Goron Waterwheel",
-      "RequiredItems": [
-        "MaskGoron"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Skip the first yellow turnkey with a precise Goron roll.",
-      "TrickCategory": "Great Bay Temple"
     },
     {
       "Id": "Powder Kegs as Explosives",
@@ -25371,9 +25769,7 @@
     {
       "Id": "Defeat WFT Gekko",
       "RequiredItems": [
-        "WFT 2nd Floor Access",
-        "Kill Snapper",
-        "Kill Gekko"
+        "WFT 2nd Floor Access"
       ],
       "ConditionalItems": [
         [
@@ -25381,17 +25777,29 @@
           "OtherArrow"
         ],
         [
+          "Kill Snapper",
+          "Kill Gekko",
           "WFT Elevator Room as FD"
         ],
         [
+          "Kill Snapper",
+          "Kill Gekko",
           "WFT as Giant Link"
         ],
         [
+          "Kill Snapper",
+          "Kill Gekko",
           "SettingClimbMostSurfaces",
           "SettingDamageModeDefault"
         ],
         [
+          "Kill Snapper",
+          "Kill Gekko",
           "SettingHookshotAnySurface"
+        ],
+        [
+          "WFT as Giant Link",
+          "Any Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -25632,17 +26040,6 @@
       "IsTrick": true,
       "TrickTooltip": "Thaw ice with precise arrow shots through torches, and raise the pillar with Flame Storage.",
       "TrickCategory": "Snowhead Temple"
-    },
-    {
-      "Id": "Out of Bounds",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Enable tricks that involve being exposed to the global void plane, specifically in Milk Road and Pirates' Fortress Interior.",
-      "TrickCategory": "Racing Banned Tricks"
     },
     {
       "Id": "Inn Balcony With Cucco",
@@ -26253,6 +26650,9 @@
         [
           "STT Goron Bomb Jumps",
           "Any Bomb Bag"
+        ],
+        [
+          "STT as Giant"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -27543,7 +27943,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Get to the Fairy Fountain in Zora Cape with just Zora Mask and an explosive. Extremely precise and requires a highly specific setup; not for the faint of heart!",
-      "TrickCategory": "Zora Cape"
+      "TrickCategory": "PROCEED WITH CAUTION"
     },
     {
       "Id": "Hot Spring Water in Mountains",
@@ -27770,28 +28170,6 @@
       "IsTrick": false
     },
     {
-      "Id": "Powder Keg Challenge Access as FD",
-      "RequiredItems": [
-        "SettingAllowFierceDeityAnywhere"
-      ],
-      "ConditionalItems": [
-        [
-          "Hot Spring Water in Mountains",
-          "SettingNotRandomizedBottleCatchHotSpringWater"
-        ],
-        [
-          "BottleCatchHotSpringWater",
-          "Play Song of Soaring"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Fierce Deity Link is tall enough to thaw the ice in front of Medigoron's cave with hot spring water.",
-      "TrickCategory": "Goron Village"
-    },
-    {
       "Id": "Powder Keg Challenge Access as Zora/Adult Link",
       "RequiredItems": [],
       "ConditionalItems": [
@@ -27848,31 +28226,6 @@
       "IsTrick": true,
       "TrickTooltip": "Jump from the pound switch to the railing outside Pirates' Fortress Interior.",
       "TrickCategory": "Pirates' Fortress"
-    },
-    {
-      "Id": "Woodfall as FD",
-      "RequiredItems": [
-        "SettingAllowFierceDeityAnywhere"
-      ],
-      "ConditionalItems": [
-        [
-          "Long Jump to Soaring Tablet"
-        ],
-        [
-          "FD Jump to Soaring Tablet",
-          "SettingDamageModeDefault"
-        ],
-        [
-          "FD Jump to Soaring Tablet",
-          "Lilypad Parkour as FD"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Jump from the Song of Soaring tablet to the entrance of Woodfall, and collect all the items in Woodfall with clever platforming as Fierce Deity Link.",
-      "TrickCategory": "Woodfall"
     },
     {
       "Id": "Lilypad Parkour as FD",
@@ -28343,17 +28696,6 @@
       "TrickCategory": "Zora Cape"
     },
     {
-      "Id": "Super Bowless Aliens",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Mash pause for ~30 minutes (That's real time, not in-game time!) to complete Aliens Defense without a bow or Sun's Song.",
-      "TrickCategory": "Romani Ranch"
-    },
-    {
       "Id": "Goron Race Without Magic",
       "RequiredItems": [],
       "ConditionalItems": [],
@@ -28362,7 +28704,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Pray.",
-      "TrickCategory": "Twin Islands"
+      "TrickCategory": "PROCEED WITH CAUTION"
     },
     {
       "Id": "Defeat Dampe Big Poe With Nothing",
@@ -28374,19 +28716,6 @@
       "IsTrick": true,
       "TrickTooltip": "You can lure the Big Poe to the stairs for a clean shot at jump slashing it with your best sword, or Deku Sticks.",
       "TrickCategory": "Ikana Graveyard"
-    },
-    {
-      "Id": "Defeat Well Big Poe With Bombs",
-      "RequiredItems": [
-        "Any Bomb Bag"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Kill the Big Poe in the Well by simply throwing bombs at it.",
-      "TrickCategory": "Beneath the Well"
     },
     {
       "Id": "Pacifist Well Hot Spring Water",
@@ -28475,21 +28804,6 @@
       "TrickCategory": "Termina Field"
     },
     {
-      "Id": "Road to Ikana Fences With Goron Bomb Jumps",
-      "RequiredItems": [
-        "SettingDamageModeDefault",
-        "MaskGoron",
-        "Any Bomb Bag"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Self-explanatory. Drop a bomb, pound as Goron, uncurl midair.",
-      "TrickCategory": "Road to Ikana"
-    },
-    {
       "Id": "Road to Ikana Fences With Goron Bubble Boosts",
       "RequiredItems": [
         "SettingNotRandomizeEnemies",
@@ -28517,7 +28831,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Get over the fences in Road to Ikana with highly precise Zora ground jump, jump slash, damage boosts with bombs.",
-      "TrickCategory": "Road to Ikana"
+      "TrickCategory": "PROCEED WITH CAUTION"
     },
     {
       "Id": "Turtle Jump",
@@ -28610,7 +28924,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Damage boost off a Real Bombchu during the day in Road to Ikana to get on the boulder under the ghost for the trick Ikana Canyon Access as FD.",
-      "TrickCategory": "Road to Ikana"
+      "TrickCategory": "PROCEED WITH CAUTION"
     },
     {
       "Id": "Observatory Goron Bomb Jump",
@@ -28750,17 +29064,6 @@
       "TrickCategory": "Woodfall Temple"
     },
     {
-      "Id": "Straw Roof With Jump Slash",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Use a precise jump slash to upwarp on top of the straw roof in South Clock Town for the chest.",
-      "TrickCategory": "South Clock Town"
-    },
-    {
       "Id": "Doggy Racetrack Chest With Jump Slash",
       "RequiredItems": [],
       "ConditionalItems": [],
@@ -28809,19 +29112,6 @@
       "IsTrick": true,
       "TrickTooltip": "Goron Pound underneath the corner of the straw roof to upwarp on top of it, then jump to the chest as human link.",
       "TrickCategory": "South Clock Town"
-    },
-    {
-      "Id": "Lulu's Ledge as Goron",
-      "RequiredItems": [
-        "MaskGoron"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Goron Pound underneath the ledge with the Heart Piece in Lulu's Room to upwarp on top of it.",
-      "TrickCategory": "Zora Hall"
     },
     {
       "Id": "Tourist Center Roof as Goron",
@@ -29171,102 +29461,6 @@
       "IsTrick": false
     },
     {
-      "Id": "Link Trial With Sticks",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Kill the Dinolfos and defeat the Garo Master on the Moon with Deku Sticks.",
-      "TrickCategory": "The Moon"
-    },
-    {
-      "Id": "Link Trial as FD",
-      "RequiredItems": [
-        "SettingAllowFierceDeityAnywhere"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Climb up past the Iron Knuckle as Fierce Deity Link without spawning the ladder. Either jump from the Iron Knuckle chest, or perform a FD Gainer.",
-      "TrickCategory": "The Moon"
-    },
-    {
-      "Id": "Link Trial With Songs",
-      "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "Play Song of Healing"
-        ],
-        [
-          "Play Song of Storms"
-        ],
-        [
-          "Play Epona's Song"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Skip the challenges to unlock barred doors (and summon a ladder) on the Moon by playing songs at specific Gossip Stones.",
-      "TrickCategory": "The Moon"
-    },
-    {
-      "Id": "Zora Trial as Human",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Swim through the pipes as human. You need either Song of Time, Goron Mask, or a death warp to escape the Heart Piece spot.",
-      "TrickCategory": "The Moon"
-    },
-    {
-      "Id": "Goron Trial as FD",
-      "RequiredItems": [
-        "SettingAllowFierceDeityAnywhere",
-        "SettingDamageModeDefault"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Get through Goron Trial as Fierce Deity with sideways long jumps across long gaps.",
-      "TrickCategory": "The Moon"
-    },
-    {
-      "Id": "Deku Trial as FD",
-      "RequiredItems": [
-        "SettingAllowFierceDeityAnywhere"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Collect the Piece of Heart in Deku Trial without Deku Mask using some fine platforming as Fierce Deity Link. You cannot actually complete the trial in this way.",
-      "TrickCategory": "The Moon"
-    },
-    {
-      "Id": "Deku Trial With Hookshot Most Surfaces",
-      "RequiredItems": [
-        "SettingHookshotAnySurface"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Tooltip missing!",
-      "TrickCategory": "The Moon"
-    },
-    {
       "Id": "Reverse Well With Climbing",
       "RequiredItems": [
         "SettingClimbMostSurfaces",
@@ -29335,25 +29529,6 @@
       "IsTrick": true,
       "TrickTooltip": "Simply wait on the balcony after 8:30 PM to speak to Anju during the Midnight Meeting.",
       "TrickCategory": "Stock Pot Inn"
-    },
-    {
-      "Id": "Skull Kid With Bombs",
-      "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "Any Bomb Bag"
-        ],
-        [
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Hit the Ocarina out of Skull Kid's hand with a well-timed bomb throw.",
-      "TrickCategory": "Clock Tower Roof"
     },
     {
       "Id": "Skull Kid With Blast Mask",
@@ -29539,20 +29714,6 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Jump slash to kill the skull, then jump slash to collect the skull, using two precise anti-gravity jumps from the top of the monument, on the lower side.",
-      "TrickCategory": "Swamp Spider House"
-    },
-    {
-      "Id": "SSH With Bombchu",
-      "RequiredItems": [
-        "Any Bomb Bag",
-        "Any Bombchu Pack"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Destroy beehives in Swamp Spider House with Bombchu.",
       "TrickCategory": "Swamp Spider House"
     },
     {
@@ -29820,19 +29981,6 @@
       "TrickCategory": "Termina Field"
     },
     {
-      "Id": "Twin Islands Items in Winter",
-      "RequiredItems": [
-        "MaskZora"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Collect the items in the ice in Twin Islands using highly technical Zora Boomerang tricks.",
-      "TrickCategory": "Twin Islands"
-    },
-    {
       "Id": "Twin Islands FD Diving",
       "RequiredItems": [
         "SettingAllowFierceDeityAnywhere"
@@ -29933,17 +30081,6 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Goron Bomb Jump over the sun block blocking Ikana Castle.",
-      "TrickCategory": "Ikana Castle"
-    },
-    {
-      "Id": "Ikana Castle Invisible Platform Without Lens of Truth",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Navigate the single invisible ice platform in Ikana Castle without Lens of Truth.",
       "TrickCategory": "Ikana Castle"
     },
     {
@@ -30407,75 +30544,6 @@
       "TrickCategory": "Zora Cape"
     },
     {
-      "Id": "Coast Ledge Long Jump",
-      "RequiredItems": [
-        "SettingDamageModeDefault"
-      ],
-      "ConditionalItems": [
-        [
-          "Any Bomb Bag"
-        ],
-        [
-          "MaskBlast"
-        ],
-        [
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "Scarecrow's Song"
-        ],
-        [
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "Coast Ledge Zora Jump"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Long Jump from the top of the Hookshot target to the next ledge, then long jump from there to the Piece of Heart on the next ledge.",
-      "TrickCategory": "Great Bay Coast"
-    },
-    {
-      "Id": "Coast Ledge Zora Jump",
-      "RequiredItems": [
-        "Tall Character"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Jump to the Piece of Heart on the ledge from the higher ledge as Zora or Adult Link.",
-      "TrickCategory": "Great Bay Coast"
-    },
-    {
-      "Id": "Coast Ledge as FD",
-      "RequiredItems": [
-        "SettingAllowFierceDeityAnywhere"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Jump to the highest ledge from the Hookshot target as Fierce Deity, then jump to the ledge for the Piece of Heart.",
-      "TrickCategory": "Great Bay Coast"
-    },
-    {
-      "Id": "Coast Ledge as Giant",
-      "RequiredItems": [
-        "SettingGiantMaskAnywhere"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Climb to the Hookshot target as Giant Link, then either Zora/Adult Gainer onto the Hookshot target and Long Jump from there, or do the rest of the platforming as Fierce Deity.",
-      "TrickCategory": "Great Bay Coast"
-    },
-    {
       "Id": "Smithy Fairy as FD",
       "RequiredItems": [
         "SettingAllowFierceDeityAnywhere",
@@ -30631,24 +30699,6 @@
       "TrickCategory": "Ikana Canyon"
     },
     {
-      "Id": "Jump Slash Tingle Balloon",
-      "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "Any Sword"
-        ],
-        [
-          "SettingAllowFierceDeityAnywhere"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Jump from the tree, and jump slash Tingle's balloon with a sword to take him down.",
-      "TrickCategory": "North Clock Town"
-    },
-    {
       "Id": "Great Bay Tingle as FD",
       "RequiredItems": [
         "SettingAllowFierceDeityAnywhere",
@@ -30732,42 +30782,6 @@
       "IsTrick": true,
       "TrickTooltip": "Climb up the wall near Tingle with the Climb Most Surfaces gimmick to get in range for a jump slash take down.",
       "TrickCategory": "Road to Southern Swamp"
-    },
-    {
-      "Id": "Ranch Tingle as FD",
-      "RequiredItems": [
-        "SettingAllowFierceDeityAnywhere"
-      ],
-      "ConditionalItems": [
-        [
-          "Out of Bounds"
-        ],
-        [
-          "Magic Meter",
-          "Any Bomb Bag",
-          "Any Bombchu Pack"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Either jump slash Tingle's balloon after jumping from a nearby \"Out of Bounds\" ledge, or use a Sword Beam angled from targeting a Bombchu to pop his balloon.",
-      "TrickCategory": "Milk Road"
-    },
-    {
-      "Id": "Zora Cape as Giant",
-      "RequiredItems": [
-        "SettingGiantMaskAnywhere",
-        "Any B Sword"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Climb all the way up to the Waterfall Rapids with tactical jump slashes as Giant Link.",
-      "TrickCategory": "Zora Cape"
     },
     {
       "Id": "Zora Cape Recoil Flip",
@@ -30903,7 +30917,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Get through the first room in Woodfall Temple with a highly technical sideways recoil flip as Zora or Adult Link; probably one of the most challenging jumps in all of Casual Logic!",
-      "TrickCategory": "Woodfall Temple"
+      "TrickCategory": "PROCEED WITH CAUTION"
     },
     {
       "Id": "WFT Jump Slash to 2nd Floor",
@@ -32396,19 +32410,6 @@
       "IsTrick": true,
       "TrickTooltip": "Damage boost off a nearby Bad Bat as Goron to get on top of the stump.",
       "TrickCategory": "Termina Field"
-    },
-    {
-      "Id": "STT Elegy Maze With Bombchu",
-      "RequiredItems": [
-        "SettingNotRandomizeEnemies"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Break the cracked wall with a Real Bombchu detonation.",
-      "TrickCategory": "Stone Tower Temple"
     },
     {
       "Id": "STT Elegy Maze Climb",
@@ -34101,6 +34102,170 @@
       "TimeSetup": "None",
       "IsTrick": false,
       "SettingExpression": "settings.Character != Character.AdultLink"
+    },
+    {
+      "Id": "Bean Grotto as Giant",
+      "RequiredItems": [
+        "SettingGiantMaskAnywhere"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Put on Giant's Mask underneath the chest on the ledge in Bean Man's grotto to get warped up onto the ledge.",
+      "TrickCategory": "Deku Palace"
+    },
+    {
+      "Id": "Underwater Chest as Giant",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Open the chest as Giant from a precise position.",
+      "TrickCategory": "Termina Field"
+    },
+    {
+      "Id": "SettingNotRandomizedBottleCatchSpringWater",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "!settings.CustomItemList.Contains(Item.BottleCatchSpringWater)"
+    },
+    {
+      "Id": "SettingIsRandomizedBottleCatchSpringWater",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "settings.CustomItemList.Contains(Item.BottleCatchSpringWater)"
+    },
+    {
+      "Id": "SettingSimpleHealingPotion",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "!settings.PriceMode.HasFlag(PriceMode.Purchases) && (!settings.CustomItemList.Contains(Item.ShopItemTradingPostRedPotion) || !settings.CustomItemList.Contains(Item.ShopItemWitchRedPotion))"
+    },
+    {
+      "Id": "SettingNotSimpleHealingPotion",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "(settings.CustomItemList.Contains(Item.ShopItemTradingPostRedPotion) && settings.CustomItemList.Contains(Item.ShopItemWitchRedPotion)) || settings.PriceMode.HasFlag(PriceMode.Purchases)"
+    },
+    {
+      "Id": "Twinmold Minimalism",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Any Sword"
+        ],
+        [
+          "MaskGoron"
+        ],
+        [
+          "MaskFierceDeity"
+        ],
+        [
+          "OtherExplosive"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Kill Twinmold with just about any valid damaging hitbox, including just a Kokiri Sword.",
+      "TrickCategory": "PROCEED WITH CAUTION"
+    },
+    {
+      "Id": "Bank #2 Without Wallets",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Bank Reward #2 will not require Adult Wallet or higher.",
+      "TrickCategory": "West Clock Town"
+    },
+    {
+      "Id": "Bank #3 Without Wallets",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Bank Reward #3 will not require Giant Wallet or higher.",
+      "TrickCategory": "West Clock Town"
+    },
+    {
+      "Id": "SettingSimpleMilk",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "!settings.PriceMode.HasFlag(PriceMode.Purchases) && !settings.CustomItemList.Contains(Item.ShopItemGormanBrosMilk)"
+    },
+    {
+      "Id": "SettingNotSimpleMilk",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "settings.PriceMode.HasFlag(PriceMode.Purchases) || settings.CustomItemList.Contains(Item.ShopItemGormanBrosMilk)"
+    },
+    {
+      "Id": "Like Like With Bombchu",
+      "RequiredItems": [
+        "Any Bomb Bag",
+        "Any Bombchu Pack"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Kill the Like Like under the falls in Zora Cape with Bombchu.",
+      "TrickCategory": "Zora Cape"
+    },
+    {
+      "Id": "The Giant Dive",
+      "RequiredItems": [
+        "SettingGiantMaskAnywhere"
+      ],
+      "ConditionalItems": [
+        [
+          "OtherArrow"
+        ],
+        [
+          "Like Like With Bombchu"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Kill the Like-Like under the falls in Zora Cape from a distance, then dive for the item using Giant's Mask to grab it as if it was Ruto's Letter.",
+      "TrickCategory": "Zora Cape"
     }
   ]
 }

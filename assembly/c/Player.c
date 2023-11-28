@@ -351,22 +351,25 @@ u32 Player_GetCollisionType(ActorPlayer* player, GlobalContext* ctxt, u32 collis
 }
 
 void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actionParam) {
+    if (sInstantTranformTimer) {
+        return;
+    }
+
     if (!MISC_CONFIG.flags.instantTransform
         || actionParam < PLAYER_IA_MASK_FIERCE_DEITY
         || actionParam > PLAYER_IA_MASK_DEKU
         || this->animTimer != 0
+        || this->base.bgcheckFlags & 0x200 // BGCHECKFLAG_PLAYER_WALL_INTERACT
         || (this->talkActor != NULL && this->talkActor->flags & 0x10000)
         || (this->stateFlags.state1 & PLAYER_STATE1_TIME_STOP)
         || (this->stateFlags.state2 & PLAYER_STATE2_DIVING)
         || (this->currentBoots == 4 && this->prevBoots == 5)
-        || ((u16)(u32)this->skelAnime.linkAnimetionSeg) == 0xE260 && this->skelAnime.animPlaybackSpeed != 2.0f/3.0f) {
+        || ((u16)(u32)this->skelAnime.linkAnimetionSeg) == 0xE260
+            && this->skelAnime.animPlaybackSpeed != 2.0f/3.0f
+            && this->skelAnime.animCurrentFrame == 1.5f) {
         // Displaced code:
         this->heldItemActionParam = actionParam;
         this->unkAA5 = 5; // PLAYER_UNKAA5_5
-        return;
-    }
-
-    if (sInstantTranformTimer) {
         return;
     }
 
@@ -405,7 +408,9 @@ bool Player_AfterTransformInit(ActorPlayer* this, GlobalContext* ctxt) {
         this->unkAA5 = 0;
     }
     if (MISC_CONFIG.flags.instantTransform && !(this->stateFlags.state2 & PLAYER_STATE2_CLIMBING)) {
-        if (this->actionFunc == sPlayer_BackwalkBraking || this->actionFunc == sPlayer_Action_96 || this->actionFunc == sPlayer_Idle) {
+        if (this->actionFunc == sPlayer_BackwalkBraking
+            || this->actionFunc == sPlayer_Action_96
+            || (this->actionFunc == sPlayer_Idle && this->frozenTimer != 0)) {
             z2_Player_func_8083692C(this, ctxt);
         }
         this->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
