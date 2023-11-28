@@ -377,13 +377,11 @@ namespace MMR.Randomizer
 
                     if (objList.Contains(obj)) { continue; } // already known
 
-                    //var matchingEnemy = VanillaEnemyList.Find(act => act.ObjectIndex() == obj);
                     Actor matchingEnemy = thisSceneData.Actors.Find(act => act.ObjectId == obj);
                     if (matchingEnemy == null) continue;
 
                     GameObjects.Actor matchingEnum = matchingEnemy.ActorEnum;
                     if (matchingEnum > 0                                                         // exists in the list of enemies we want to change
-                                                                                                 //&& !objList.Contains(matchingEnemy.ObjectIndex())                          // not already extracted from this scene
                        && !matchingEnum.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
 
@@ -404,6 +402,8 @@ namespace MMR.Randomizer
 
         public static void SetSceneEnemyObjects(Scene scene, List<List<int>> newObjectsPerMap)
         {
+            /// tag: write objets, write objects
+
             for (var m = 0; m < scene.Maps.Count; m++)
             {
                 var objectsPerMap = newObjectsPerMap[m];
@@ -2816,6 +2816,12 @@ namespace MMR.Randomizer
 
         #endregion
 
+        private static void HandleUniqueSceneSpecialObjectBehaviors(SceneEnemizerData thisSceneData)
+        {
+            SplitSceneLikeLikesIntoTwoActorObjects(thisSceneData);
+            AddAniObjectIfTerminaFieldTree(thisSceneData);
+        }
+
         private static void SplitSceneLikeLikesIntoTwoActorObjects(SceneEnemizerData thisSceneData)
         {
             /// Special case: likelikes need to be split into two objects because ground and water share one object 
@@ -2839,6 +2845,46 @@ namespace MMR.Randomizer
                 }
             }
         }
+
+        private static void AddAniObjectIfTerminaFieldTree(SceneEnemizerData thisSceneData)
+        {
+            /// because we randomized the tree, and the tree spawns ani, we should be able to add the ani object back into the list of objects
+            /// otherwise we are wasting precious object list space on an object that will never be used
+
+            if (thisSceneData.Scene.SceneEnum != GameObjects.Scene.TerminaField)
+                return;
+
+            if (thisSceneData.Objects.Contains(GameObjects.Actor.Treee.ObjectIndex()))
+            {
+                // if tree is randomized, then ani is dead, the object is re-usable
+                // what we probably should do is re-allocate some actors from leever or something to make a new actor group
+                // but for now, we will randomly change this object ahead of time to something that is likely to get us free actors
+                // TODO I might make this randomly selected objects instead
+
+                var freeObjList = new List<int>
+                {
+                    GameObjects.Actor.ClayPot.ObjectIndex(),
+                    GameObjects.Actor.Postbox.ObjectIndex(),
+                    GameObjects.Actor.BeanSeller.ObjectIndex(),
+                    GameObjects.Actor.IronKnuckle.ObjectIndex(),
+                    GameObjects.Actor.Dodongo.ObjectIndex(),
+                    GameObjects.Actor.Scarecrow.ObjectIndex(),
+                    GameObjects.Actor.FriendlyCucco.ObjectIndex(),
+                    GameObjects.Actor.BombFlower.ObjectIndex(),
+                    GameObjects.Actor.HappyMaskSalesman.ObjectIndex()
+                };
+
+                var newObject = SMALLEST_OBJ;
+                if (thisSceneData.RNG.Next() % 10 > 5) // chance of fixed rare/random actor
+                {
+                    newObject = freeObjList[thisSceneData.RNG.Next() & freeObjList.Count];
+                } 
+
+                // for now we just bypass rando and set it manually
+                thisSceneData.Scene.Maps[0].Objects[6] = newObject;
+            }
+        }
+
 
         [System.Diagnostics.DebuggerDisplay("{Scene.SceneEnum.ToString()}")]
         public class SceneEnemizerData
@@ -2878,6 +2924,10 @@ namespace MMR.Randomizer
             // got tired of function with 10+ parameters, so now this thread has context to store all data in one place
             SceneEnemizerData thisSceneData = new SceneEnemizerData(scene);
 
+            // issue: this function is called in paralel, if the order is different the Random object will be different and not seed-reproducable
+            // instead of passing the Random instance, we pass seed and add it to the unique scene number to get a replicatable, but random, seed
+            thisSceneData.RNG = new Random(seed + scene.File);
+
             #region Log Handling functions
             // spoiler log already written by this point, for now making a brand new one instead of appending
             void WriteOutput(string str, StringBuilder altLog = null)
@@ -2916,7 +2966,7 @@ namespace MMR.Randomizer
             WriteOutput("time to get scene enemies: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
             thisSceneData.Objects = GetSceneEnemyObjects(thisSceneData);
-            var sceneObjectLimit = SceneUtils.GetSceneObjectBankSize(scene.SceneEnum);
+            //var sceneObjectLimit = SceneUtils.GetSceneObjectBankSize(scene.SceneEnum); // er, this isnt used here anymore, why did intelesense not tell me?
             WriteOutput(" time to get scene objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
             WriteOutput("=========================================================================");
@@ -2924,7 +2974,7 @@ namespace MMR.Randomizer
             WriteOutput("=========================================================================");
             // WriteOutput(" time to find scene name: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
-            // if actor does NOT exist, but object does, probably spawned by something else; remove from actors to randomize
+            // if actor does NOT exist, but object does, probably spawned by something else; remove from actors scheduled to randomize
             // TODO check for side objects that no longer need to exist and replace with possible alt objects
             // example: dinofos has a second object: dodongo, just for the fire breath dlist
             foreach (int obj in thisSceneData.Objects.ToList())
@@ -2939,17 +2989,14 @@ namespace MMR.Randomizer
                 }
             }
 
-            SplitSceneLikeLikesIntoTwoActorObjects(thisSceneData);
+            HandleUniqueSceneSpecialObjectBehaviors(thisSceneData);
 
             WriteOutput(" time to finish removing unnecessary objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
-            // some scenes are blocked from having enemies, do this ONCE before GetMatcPool, which would do it per-enemy
+            // some scenes are blocked from having enemy placements, do this ONCE before GetMatchPool, which would do it per-enemy
             thisSceneData.AcceptableCandidates = ReplacementCandidateList.FindAll(act => !act.ActorEnum.BlockedScenes().Contains(scene.SceneEnum))
                                                                          .FindAll(act => !act.NoPlacableVariants());
 
-            // issue: this function is called in paralel, if the order is different the Random object will be different and not seed-reproducable
-            // instead of passing the Random instance, we pass seed and add it to the unique scene number to get a replicatable, but random, seed
-            thisSceneData.RNG = new Random(seed + scene.File);
 
             // we want to check for actor types that contain fairies per-scene for speed
             var fairyDroppingActors = GetSceneFairyDroppingEnemyTypes(thisSceneData);
@@ -2983,7 +3030,7 @@ namespace MMR.Randomizer
                 {
                     if (objectTooLargeCount > 0 )
                     {
-                        // get list of largest object actors
+                        /// if we have run out of object space before, from now limit big object actor changes of getting picked to reduce likehood of next cycle
                         List<Actor> bigObjectActors = thisSceneData.AcceptableCandidates.FindAll(o => o.ObjectSize >= 0x6000); // 0x6000 is roughly the median
                         // remove one randomly
                         if (bigObjectActors.Count > 0)
