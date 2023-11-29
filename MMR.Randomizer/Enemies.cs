@@ -75,10 +75,12 @@ namespace MMR.Randomizer
         private static List<Actor> ReplacementCandidateList { get; set; }
         private static List<Actor> FreeCandidateList { get; set; }
         private static List<Actor> FreeOnlyCandidateList { get; set; } // not worthy by themselves, only if object was already selected
+        private static List<GameObjects.Item> ActorizerKnownJunkItems { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
         private static bool ACTORSENABLED = true;
         private static Random seedrng;
         private static Models.RandomizedResult _randomized;
+
 
         public static void PrepareEnemyLists()
         {
@@ -121,6 +123,69 @@ namespace MMR.Randomizer
 
             // because this list needs to be re-evaluated per scene, start smaller here once
             FreeOnlyCandidateList = freeOnlyCandidates.Select(act => new Actor(act)).ToList();
+        }
+
+        private static void PrepareJunkItems()
+        {
+            /// this prepares a list of known junk items based on item chains for actorizer actor replacement
+
+            ActorizerKnownJunkItems = new List<GameObjects.Item>();
+
+            List<GameObjects.Item> allSpiderTokens = _randomized.ItemList.FindAll(item => item.Item.ItemCategory() == GameObjects.ItemCategory.SkulltulaTokens).Select(u => u.Item).ToList();
+
+            // skulls
+            var swampSkullReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MaskTruth);
+            //var swampSkullReward = _randomized.ItemList[GameObjects.Item.MaskTruth];
+            var swampSkullRewardItem = swampSkullReward.Item;
+            if (ItemUtils.IsJunk(swampSkullRewardItem))
+            {
+                // is there a better way to do this?
+                var swampTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Swamp")).ToList();
+                ActorizerKnownJunkItems.AddRange(swampTokens);
+            }
+
+            var oceanSkullRewardD1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.UpgradeGiantWallet).Item;
+            var oceanSkullRewardD2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MundaneItemOceanSpiderHouseDay2PurpleRupee).Item;
+            var oceanSkullRewardD3 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MundaneItemOceanSpiderHouseDay3RedRupee).Item;
+            if (ItemUtils.IsJunk(oceanSkullRewardD1) && ItemUtils.IsJunk(oceanSkullRewardD2) && ItemUtils.IsJunk(oceanSkullRewardD3))
+            {
+                var oceanTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Ocean")).ToList();
+                ActorizerKnownJunkItems.AddRange(oceanTokens);
+            }
+
+            var allFaries = _randomized.ItemList.FindAll(item => item.Item.ClassicCategory() == GameObjects.ClassicCategory.StrayFairies).Select(u => u.Item).ToList();
+
+            // fairies
+            var woodfallFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairySpinAttack).Item;
+            if (ItemUtils.IsJunk(woodfallFairyReward))
+            {
+                var woodfallFairies = allFaries.FindAll(token => token.Name().Contains("Woodfall")).ToList();
+                ActorizerKnownJunkItems.AddRange(woodfallFairies);
+            }
+
+            var snowheadFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairyDoubleMagic).Item;
+            if (ItemUtils.IsJunk(snowheadFairyReward))
+            {
+                var snowheadFairies = allFaries.FindAll(token => token.Name().Contains("Snowhead")).ToList();
+                ActorizerKnownJunkItems.AddRange(snowheadFairies);
+            }
+
+            var greatbayFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairyDoubleDefense).Item;
+            if (ItemUtils.IsJunk(greatbayFairyReward))
+            {
+                var greatbayFairies = allFaries.FindAll(token => token.Name().Contains("Great Bay")).ToList();
+                ActorizerKnownJunkItems.AddRange(greatbayFairies);
+            }
+
+            var stonetowerFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemFairySword).Item;
+            if (ItemUtils.IsJunk(stonetowerFairyReward))
+            {
+                var stoneTowerFairies = allFaries.FindAll(token => token.Name().Contains("Stone Tower")).ToList();
+                ActorizerKnownJunkItems.AddRange(stoneTowerFairies);
+            }
+
+            // keg?
+            // koume?
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -195,7 +260,20 @@ namespace MMR.Randomizer
             GameObjects.ItemCategory.MagicJars
         };
 
-        //private bool IsJunk
+        private static bool IsActorizerJunk(GameObjects.Item itemInCheck)
+        {
+            /// problem: ItemUtils.IsJunk only cares about never-important items like rups
+            ///  and ItemUtils.IsLogicalJunk cares about logic too strongly and can junk cool things like swords
+            ///  goal: use IsJunk and add extra conditions that cna happen
+
+            // we need to build a list of known junk items and check that list here
+            if (ActorizerKnownJunkItems.Contains(itemInCheck))
+            {
+                return true;
+            }
+
+            return ItemUtils.IsJunk(itemInCheck);
+        }
 
         private static bool ObjectIsCheckBlocked(Scene scene, GameObjects.Actor testActor)
         {
@@ -219,7 +297,8 @@ namespace MMR.Randomizer
                         // TODO: make it random rather than yes/no
                         var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]).Item;
                         //var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory)itemInCheck.ItemCategory()) == false);
-                        var itemIsNotJunk = !ItemUtils.IsJunk(itemInCheck);
+                        //var itemIsNotJunk = !ItemUtils.IsJunk(itemInCheck);
+                        var itemIsNotJunk = ! IsActorizerJunk(itemInCheck);
                         if (itemIsNotJunk)
                         {
                             return true;
@@ -3775,6 +3854,7 @@ namespace MMR.Randomizer
                     };// , GameObjects.Scene.DekuPalace };
 
                 PrepareEnemyLists();
+                PrepareJunkItems();
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetSceneHeaders();
                 SceneUtils.GetMaps();
@@ -3804,6 +3884,7 @@ namespace MMR.Randomizer
 
                 Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
                 //foreach (var scene in newSceneList) // sequential for debugging only
+                // ( debugger is too stupid, if you catch a breakpoint and then tell it to move to a new location, it can catch on a _different_ thread)
                 {
                     SwapSceneEnemies(settings, scene, seed);
                 });
@@ -3823,7 +3904,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 55.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 56.0a\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
