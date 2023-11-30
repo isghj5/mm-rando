@@ -1128,6 +1128,11 @@ namespace MMR.Randomizer
                     }
                 }
             } while (updated);
+
+            foreach (var itemObject in ItemList)
+            {
+                LogicUtils.Simplify(itemObject.Conditionals);
+            }
         }
 
         private void PrepareRulesetItemData()

@@ -133,6 +133,36 @@ namespace MMR.Randomizer.Utils
             public ReadOnlyCollection<Item> ImportantSongLocations { get; set; }
         }
 
+        public static void Simplify<T>(List<T> logicPaths) where T : IEnumerable<Item>
+        {
+            Simplify(logicPaths, (list) => list);
+        }
+
+        public static void Simplify<T, T2>(List<T> logicPaths, Func<T, T2> selector) where T2 : IEnumerable<Item>
+        {
+            if (logicPaths.Count > 1)
+            {
+                for (var i = logicPaths.Count - 1; i >= 0; i--)
+                {
+                    var currentLogicPath = selector(logicPaths[i]);
+                    for (var j = i - 1; j >= 0; j--)
+                    {
+                        var otherLogicPath = selector(logicPaths[j]);
+                        if (!otherLogicPath.Except(currentLogicPath).Any())
+                        {
+                            logicPaths.RemoveAt(i);
+                            break;
+                        }
+                        if (!currentLogicPath.Except(otherLogicPath).Any())
+                        {
+                            logicPaths.RemoveAt(j);
+                            i--;
+                        }
+                    }
+                }
+            }
+        }
+
         public static LogicPaths GetImportantLocations(ItemList itemList, GameplaySettings settings, Item location, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedLocations = null, Dictionary<Item, ItemObject> itemsByLocation = null, CancellationTokenSource cts = null, params Item[] exclude)
         {
             if (settings.LogicMode == LogicMode.NoLogic)
@@ -286,32 +316,7 @@ namespace MMR.Randomizer.Utils
                     return null;
                 }
 
-                // Hopefully this makes item importance a little smarter.
-                if (logicPaths.Count > 1)
-                {
-                    var shouldRemove = new List<int>();
-                    for (var i = 0; i < logicPaths.Count; i++)
-                    {
-                        var currentLogicPath = logicPaths[i];
-                        var currentLogicImportant = currentLogicPath.Important.Except(important).Where(item => !item.IsFake());
-                        for (var j = 0; j < logicPaths.Count; j++)
-                        {
-                            if (i != j && !shouldRemove.Contains(i) && !shouldRemove.Contains(j))
-                            {
-                                var otherLogicPath = logicPaths[j];
-                                var otherLogicImportant = otherLogicPath.Important.Except(important).Where(item => !item.IsFake());
-                                if (!currentLogicImportant.Except(otherLogicImportant).Any() && otherLogicImportant.Except(currentLogicImportant).Any())
-                                {
-                                    shouldRemove.Add(j);
-                                }
-                            }
-                        }
-                    }
-                    foreach (var index in shouldRemove.OrderByDescending(x => x))
-                    {
-                        logicPaths.RemoveAt(index);
-                    }
-                }
+                Simplify(logicPaths, lp => lp.Important.Except(important));
 
                 required.AddRange(logicPaths.Select(lp => lp.Required.AsEnumerable()).Aggregate((a, b) => a.Intersect(b)));
                 important.AddRange(logicPaths.SelectMany(lp => lp.Required.Union(lp.Important)).Distinct());

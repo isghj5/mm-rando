@@ -33,9 +33,10 @@ namespace MMR.Randomizer.Extensions
             return item.GetAttribute<GetBottleItemIndicesAttribute>()?.Indices;
         }
 
+        private static IReadOnlyDictionary<Item, string> _names = Enum.GetValues<Item>().ToDictionary(x => x, x => x.GetAttribute<ItemNameAttribute>()?.Name);
         public static string Name(this Item item)
         {
-            return item.GetAttribute<ItemNameAttribute>()?.Name;
+            return _names.GetValueOrDefault(item);
         }
 
         public static string ProgressiveUpgradeName(this Item item, bool progressiveUpgradesEnabled)
@@ -98,9 +99,10 @@ namespace MMR.Randomizer.Extensions
             return alteredLocation.Location();
         }
 
+        private static IReadOnlyDictionary<Item, RegionAttribute> _regionAttributes = Enum.GetValues<Item>().ToDictionary(x => x, x => x.GetAttribute<RegionAttribute>());
         public static Region? Region(this Item item, ItemList itemList)
         {
-            var regionAttribute = item.GetAttribute<RegionAttribute>();
+            var regionAttribute = _regionAttributes.GetValueOrDefault(item);
             if (regionAttribute == null)
             {
                 return null;
@@ -134,14 +136,16 @@ namespace MMR.Randomizer.Extensions
             return item.GetAttribute<RegionAreaAttribute>()?.RegionArea ?? item.Region(itemList)?.RegionArea();
         }
 
+        private static IReadOnlyDictionary<Item, Item?> _mainLocations = Enum.GetValues<Item>().ToDictionary(x => x, x => x.GetAttribute<MainLocationAttribute>()?.Location);
         public static Item? MainLocation(this Item item)
         {
-            return item.GetAttribute<MainLocationAttribute>()?.Location;
+            return _mainLocations.GetValueOrDefault(item);
         }
 
+        private static IReadOnlyDictionary<Item, string> _entrances = Enum.GetValues<Item>().ToDictionary(x => x, x => x.GetAttribute<EntranceNameAttribute>()?.Name);
         public static string Entrance(this Item item)
         {
-            return item.GetAttribute<EntranceNameAttribute>()?.Name;
+            return _entrances.GetValueOrDefault(item);
         }
 
         public static ShopTextAttribute ShopTexts(this Item item)
