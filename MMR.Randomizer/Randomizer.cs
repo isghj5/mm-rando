@@ -1093,6 +1093,41 @@ namespace MMR.Randomizer
                     completeLinkTrial.Conditionals.ForEach(c => c.Remove(bombchu10.Item));
                 }
             }
+
+            Func<ItemObject, bool> filter = io => !io.ItemOverride.HasValue && !_settings.CustomItemList.Contains(io.Item) && io.DependsOnItems.Count == 0 && io.Conditionals.Count == 0;
+
+            var unrandomizedSphereZeroItems = ItemList
+                .Where(filter)
+                .Select(io => io.Item)
+                .ToList();
+            unrandomizedSphereZeroItems.Remove(Item.OtherInaccessible);
+            bool updated;
+            do
+            {
+                updated = false;
+                foreach (var itemObject in ItemList)
+                {
+                    var location = (Item)itemObject.ID;
+                    if (unrandomizedSphereZeroItems.Contains(location) || location == Item.OtherInaccessible)
+                    {
+                        continue;
+                    }
+
+                    itemObject.DependsOnItems.RemoveAll(unrandomizedSphereZeroItems.Contains);
+                    itemObject.Conditionals.ForEach(c => c.RemoveAll(unrandomizedSphereZeroItems.Contains));
+
+                    if (itemObject.Conditionals.Any(c => !c.Any()))
+                    {
+                        itemObject.Conditionals.Clear();
+                    }
+
+                    if (filter(itemObject))
+                    {
+                        unrandomizedSphereZeroItems.Add(itemObject.Item);
+                        updated = true;
+                    }
+                }
+            } while (updated);
         }
 
         private void PrepareRulesetItemData()

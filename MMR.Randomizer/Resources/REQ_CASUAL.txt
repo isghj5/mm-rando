@@ -23537,25 +23537,82 @@
       "IsTrick": false
     },
     {
-      "Id": "Any Red Potion",
-      "RequiredItems": [
-        "Any Bottle"
-      ],
+      "Id": "Any Healing Potion",
+      "RequiredItems": [],
       "ConditionalItems": [
         [
           "ItemBottleWitch"
         ],
         [
+          "Any Bottle",
           "ShopItemTradingPostRedPotion"
         ],
         [
+          "Any Bottle",
           "ShopItemWitchRedPotion"
         ],
         [
+          "Any Bottle",
           "ShopItemGoronRedPotion"
         ],
         [
+          "Any Bottle",
           "ShopItemZoraRedPotion"
+        ],
+        [
+          "Any Bottle",
+          "ShopItemWitchBluePotion"
+        ],
+        [
+          "Any Bottle",
+          "ShopItemBusinessScrubBluePotion"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Any Red Potion",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "ItemBottleWitch"
+        ],
+        [
+          "Any Bottle",
+          "ShopItemTradingPostRedPotion"
+        ],
+        [
+          "Any Bottle",
+          "ShopItemWitchRedPotion"
+        ],
+        [
+          "Any Bottle",
+          "ShopItemGoronRedPotion"
+        ],
+        [
+          "Any Bottle",
+          "ShopItemZoraRedPotion"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Any Blue Potion",
+      "RequiredItems": [
+        "Any Bottle"
+      ],
+      "ConditionalItems": [
+        [
+          "ShopItemWitchBluePotion"
+        ],
+        [
+          "ShopItemBusinessScrubBluePotion"
         ]
       ],
       "TimeNeeded": "None",
@@ -23570,51 +23627,37 @@
       ],
       "ConditionalItems": [
         [
-          "ItemBottleAliens",
-          "SettingNotSimpleMilk"
+          "ItemBottleAliens"
         ],
         [
-          "ItemRanchBarnMainCowMilk",
-          "SettingNotSimpleMilk"
+          "ItemRanchBarnMainCowMilk"
         ],
         [
-          "ItemRanchBarnOtherCowMilk1",
-          "SettingNotSimpleMilk"
+          "ItemRanchBarnOtherCowMilk1"
         ],
         [
-          "ItemRanchBarnOtherCowMilk2",
-          "SettingNotSimpleMilk"
+          "ItemRanchBarnOtherCowMilk2"
         ],
         [
-          "ItemWellCowMilk",
-          "SettingNotSimpleMilk"
+          "ItemWellCowMilk"
         ],
         [
-          "ItemTerminaGrottoCowMilk1",
-          "SettingNotSimpleMilk"
+          "ItemTerminaGrottoCowMilk1"
         ],
         [
-          "ItemTerminaGrottoCowMilk2",
-          "SettingNotSimpleMilk"
+          "ItemTerminaGrottoCowMilk2"
         ],
         [
-          "ItemCoastGrottoCowMilk1",
-          "SettingNotSimpleMilk"
+          "ItemCoastGrottoCowMilk1"
         ],
         [
-          "ItemCoastGrottoCowMilk2",
-          "SettingNotSimpleMilk"
+          "ItemCoastGrottoCowMilk2"
         ],
         [
-          "ShopItemMilkBarMilk",
-          "SettingNotSimpleMilk"
+          "ShopItemMilkBarMilk"
         ],
         [
-          "ShopItemGormanBrosMilk",
-          "SettingNotSimpleMilk"
-        ],
-        [
-          "SettingSimpleMilk"
+          "ShopItemGormanBrosMilk"
         ]
       ],
       "TimeNeeded": "None",
@@ -23636,24 +23679,6 @@
         ],
         [
           "ShopItemBusinessScrubGreenPotion"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "Any Blue Potion",
-      "RequiredItems": [
-        "Any Bottle"
-      ],
-      "ConditionalItems": [
-        [
-          "ShopItemWitchBluePotion"
-        ],
-        [
-          "ShopItemBusinessScrubBluePotion"
         ]
       ],
       "TimeNeeded": "None",
@@ -24960,28 +24985,6 @@
       "IsTrick": true,
       "TrickTooltip": "In the Ocean Spider House storage room, jump onto the boat and clip through the ceiling.",
       "TrickCategory": "Oceanside Spider House"
-    },
-    {
-      "Id": "Any Healing Potion",
-      "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "SettingSimpleHealingPotion",
-          "Any Bottle"
-        ],
-        [
-          "SettingNotSimpleHealingPotion",
-          "Any Red Potion"
-        ],
-        [
-          "SettingNotSimpleHealingPotion",
-          "Any Blue Potion"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
     },
     {
       "Id": "Use Fire Arrow",
@@ -34177,26 +34180,6 @@
       "SettingExpression": "settings.CustomItemList.Contains(Item.BottleCatchSpringWater)"
     },
     {
-      "Id": "SettingSimpleHealingPotion",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false,
-      "SettingExpression": "!settings.PriceMode.HasFlag(PriceMode.Purchases) && (!settings.CustomItemList.Contains(Item.ShopItemTradingPostRedPotion) || !settings.CustomItemList.Contains(Item.ShopItemWitchRedPotion))"
-    },
-    {
-      "Id": "SettingNotSimpleHealingPotion",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false,
-      "SettingExpression": "(settings.CustomItemList.Contains(Item.ShopItemTradingPostRedPotion) && settings.CustomItemList.Contains(Item.ShopItemWitchRedPotion)) || settings.PriceMode.HasFlag(PriceMode.Purchases)"
-    },
-    {
       "Id": "Twinmold Minimalism",
       "RequiredItems": [],
       "ConditionalItems": [
@@ -34241,26 +34224,6 @@
       "IsTrick": true,
       "TrickTooltip": "Bank Reward #3 will not require Giant Wallet or higher.",
       "TrickCategory": "West Clock Town"
-    },
-    {
-      "Id": "SettingSimpleMilk",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false,
-      "SettingExpression": "!settings.PriceMode.HasFlag(PriceMode.Purchases) && !settings.CustomItemList.Contains(Item.ShopItemGormanBrosMilk)"
-    },
-    {
-      "Id": "SettingNotSimpleMilk",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false,
-      "SettingExpression": "settings.PriceMode.HasFlag(PriceMode.Purchases) || settings.CustomItemList.Contains(Item.ShopItemGormanBrosMilk)"
     },
     {
       "Id": "Like Like With Bombchu",
