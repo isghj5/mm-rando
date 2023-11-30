@@ -244,9 +244,14 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
         Peahat = 0x14, // En_Peehat
 
-        // ignored because we already have these as a different actor, extra seems redundant
+        // this is single butterfly spawned directly only on the moon
+        [ActorizerEnabled]
         [FileID(119)]
         [ObjectListIndex(0x2)]
+        // 1 and 2 are vanilla on the moon, 0 is set in init if -1 is params, types unknown
+        [GroundVariants(0, 1, 2)]
+        [FlyingToGroundHeightAdjustment(100)] // does this even work properly like this? might have to make the separate actor
+        [UnkillableAllVariants]
         Butterfly = 0x15, // En_Butte
 
         [FileID(118)]
@@ -739,10 +744,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(95)]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
         [GroundVariants(0x3323, 0x2324, 0x4324)] // bettles on the floor
-        [FlyingVariants(0x2324, 0x4324)] // butterlies in the air
+        //[FlyingVariants(0x2324, 0x4324)] // butterlies in the air
         [WaterVariants(0x6322)] // fish swimming in the water
         [UnkillableAllVariants]
-        [FlyingToGroundHeightAdjustment(100)]
         [VariantsWithRoomMax(max: 2, 0x3323, 0x2324, 0x4324)]
         BugsFishButterfly = 0x4F, // Obj_Mure // includes bugs and fish and butterflies
 

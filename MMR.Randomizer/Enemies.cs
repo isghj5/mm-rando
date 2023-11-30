@@ -295,7 +295,8 @@ namespace MMR.Randomizer
                         if (_randomized.ItemList == null) return true; // vanilla logic
 
                         // TODO: make it random rather than yes/no
-                        var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]).Item;
+                        var check = _randomized.ItemList.Find(item => item.NewLocation != null && item.NewLocation == restrictedChecks[checkIndex]);
+                        var itemInCheck = check.Item;
                         //var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory)itemInCheck.ItemCategory()) == false);
                         //var itemIsNotJunk = !ItemUtils.IsJunk(itemInCheck);
                         var itemIsNotJunk = ! IsActorizerJunk(itemInCheck);
