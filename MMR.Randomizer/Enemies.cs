@@ -2240,7 +2240,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Torch, GameObjects.Actor.CutsceneZelda)) continue;
+                if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Torch, GameObjects.Actor.AnjuWeddingDress)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.Takkuri)) continue;
@@ -2808,25 +2808,47 @@ namespace MMR.Randomizer
                     // reminder: these are companions that fully mix into the actor list
                     if (targetActors.Count <= 3) continue;
 
+                    // for now, we ignore the second element and focus only on the blocking for all objects
+                    // we would need to change to per-actor candidates list to get around this
                     var objectHasBlockingSensitivity = targetActors.Any(actor => actor.Blockable == false);
 
                     foreach (var companion in companionAttrs)
                     {
+                        // check if companion meets object requirements to exist here
                         var cObj = companion.Companion.ObjectIndex();
-                        if (cObj != 1 && cObj != actor.ObjectId && !thisSceneData.Objects.Contains(cObj))
+                        if (cObj != 1 // gameplay keep is everywhere
+                            && cObj != actor.ObjectId // we share the same object we can assure it exists
+                            && ! thisSceneData.Objects.Contains(cObj)) // the scene's replacement objects will have our required object
                             continue;
 
                         var companionType = companion.Companion;
                         // if its banned on this actor slot, also avoid
                         var blockedReplacementActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(actor.OldActorEnum);
-                        if (blockedReplacementActors.Contains(companionType) // blocked from being used as replacement
-                            || (objectHasBlockingSensitivity && companionType.IsBlockingActor())) // actor is bulky, blocks path
+                        if (blockedReplacementActors.Contains(companionType)) // blocked from being used as replacement
                         {
                             continue; // cannot use
                         }
 
+                        /*if (objectHasBlockingSensitivity && companionType.IsBlockingActor()) // actor is blocking type, physically
+                        {
+                            continue; // cannot use
+                        } // */
+
                         var newCompanion = new Actor(companionType);
                         newCompanion.Variants = companion.Variants;
+                        if (objectHasBlockingSensitivity)
+                        {
+                            var blockingVariants = companionType.GetBlockingVariants();
+                            // probably some c# lamba way to do this in one line
+                            foreach (var variant in blockingVariants)
+                            {
+                                if (newCompanion.Variants.Contains(variant))
+                                    newCompanion.Variants.Remove(variant);
+                            }
+                        }
+
+                        if (newCompanion.Variants.Count == 0) continue;
+                        
                         newCompanion.IsCompanion = true;
                         candidates.Add(newCompanion);
                     }
@@ -3189,7 +3211,8 @@ namespace MMR.Randomizer
                     //   issues: we would need to do a final actor trim pass after
 
                     var temporaryMatchEnemyList = new List<Actor>();
-                    List<Actor> subMatches = thisSceneData.CandidatesPerObject[objectIndex].FindAll(act => act.ObjectId == thisSceneData.ChosenReplacementObjects[objectIndex].ChosenV);
+                    var chosenObject = thisSceneData.ChosenReplacementObjects[objectIndex].ChosenV;
+                    List<Actor> subMatches = thisSceneData.CandidatesPerObject[objectIndex].FindAll(act => act.ObjectId == chosenObject);
 
                     AddCompanionsToCandidates(thisSceneData, objectIndex, subMatches);
                     //WriteOutput($"  companions adding time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);

@@ -107,8 +107,8 @@ namespace MMR.Randomizer.Extensions
         public static List<int> KillableVariants(this Actor actor, List<int> acceptableVariants = null)
         {
             var killableVariants = acceptableVariants != null ? acceptableVariants : AllVariants(actor);
-            var unkillableVariants    = UnkillableVariants(actor);
-            var respawningVariants    = RespawningVariants(actor);
+            var unkillableVariants = UnkillableVariants(actor);
+            var respawningVariants = RespawningVariants(actor);
             if (unkillableVariants != null && unkillableVariants.Count > 0)
             {
                 killableVariants.RemoveAll(u => unkillableVariants.Contains(u));
@@ -125,29 +125,6 @@ namespace MMR.Randomizer.Extensions
             return actor.GetAttribute<EnemizerScenesExcludedAttribute>()?.ScenesExcluded ?? new List<Scene>();
         }
 
-        // depreciated
-        /* public static Models.Rom.Actor ToActorModel(this Actor actor)
-        {
-            // turning static actor enum into enemy instance
-            return new Models.Rom.Actor()
-            {
-                Name = actor.ToString(),
-                ActorID = (int)actor,
-                ActorEnum = actor,
-                ObjectID = actor.ObjectIndex(),
-                ObjectSize = ObjUtils.GetObjSize(actor.ObjectIndex()),
-                Variants = actor.AllVariants(),
-                Rotation = new Models.Vectors.vec16(),
-
-                SceneExclude = actor.ScenesRandomizationExcluded(),
-                BlockedScenes = actor.BlockedScenes(),
-                RespawningVariants = actor.RespawningVariants(),
-                //AllVariants = BuildVariantList(actor),
-
-            };
-        } */
-
-
         public static List<int> GetUnPlacableVariants(this Actor actor)
         {
             // if variants with zero max exist, we cannot use them, look them up and return
@@ -159,7 +136,7 @@ namespace MMR.Randomizer.Extensions
             }
 
             var unplacable = new List<int>();
-            foreach(var combo in limitedVariantsAttrs)
+            foreach (var combo in limitedVariantsAttrs)
             {
                 if (combo.RoomMax == 0)
                 {
@@ -291,7 +268,7 @@ namespace MMR.Randomizer.Extensions
             return new List<Scene>();
         }
 
-        public static int VariantMaxCountPerRoom(this Actor actor, int queryVariant) 
+        public static int VariantMaxCountPerRoom(this Actor actor, int queryVariant)
         {
             if (actor.GetAttribute<OnlyOneActorPerRoom>() != null)
             {
@@ -328,7 +305,8 @@ namespace MMR.Randomizer.Extensions
         public static bool NoPlacableVariants(this Actor actor)
         {
             var allVariantsAttrs = actor.GetAttributes<ActorVariantsAttribute>();
-            if (allVariantsAttrs == null) {
+            if (allVariantsAttrs == null)
+            {
                 return true;
             }
 
@@ -388,24 +366,39 @@ namespace MMR.Randomizer.Extensions
             return true;
         }
 
-        public static bool IsBlockingActor(this Actor actor, int variant = 0)
+        public static bool IsBlockingActor(this Actor actor, int variant = 0xFFFFF)
         {
             if (actor.GetAttribute<BlockingVariantsAll>() != null)
             {
                 return true;
             }
 
-            // TODO implement finer specifics
-            var blockingVariants = actor.GetAttribute<BlockingVariantsAttribute>();
-            if (blockingVariants != null)
+            var blockingVariantsAttr = actor.GetAttribute<BlockingVariantsAttribute>();
+            if (blockingVariantsAttr != null)
             {
-                var allVariants = blockingVariants.Variants;
-                return allVariants.Contains(variant);
+                var blockingVariants = blockingVariantsAttr.Variants;
+                return blockingVariants.Contains(variant);
             }
-
 
             return false;
         }
 
+        public static List<int> GetBlockingVariants(this Actor actor)
+        {
+            if (actor.GetAttribute<BlockingVariantsAll>() != null)
+            {
+                // all variants are blockable, return all
+                return actor.AllVariants();
+            }
+
+            var blockingVariantsAttr = actor.GetAttribute<BlockingVariantsAttribute>();
+            if (blockingVariantsAttr != null)
+            {
+                // only some are blocking, return those
+                return blockingVariantsAttr.Variants;
+            }
+
+            return new List<int> { }; // non are blocking
+        }
     }
 }

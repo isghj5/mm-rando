@@ -1160,7 +1160,6 @@ namespace MMR.Randomizer.GameObjects
         // all restricted because they add colliders which limits our BGcheck options for other things
         [VariantsWithRoomMax(max: 1, variant: 0xFF10, 0xFF20, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         //[VariantsWithRoomMax(max: 1, variant: 0xFFC8, 0xFF96, 0xFF78)]
-        [UnkillableAllVariants] // not enemy actor group
         RegularIceBlock = 0x8E, // Obj_Ice_Poly
 
         [EnemizerEnabled]
