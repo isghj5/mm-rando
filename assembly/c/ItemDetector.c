@@ -211,6 +211,9 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
                 ProcessActorGiIndex(actor, ctxt, 0x8A);
             }
             break;
+        case ACTOR_EN_SSH: // Cursed Swamp Spider House Guy
+            ProcessActorGiIndex(actor, ctxt, 0x8A);
+            break;
         case ACTOR_OBJ_MOON_STONE:
             if (actor->draw) {
                 ProcessActorGiIndex(actor, ctxt, 0x96);

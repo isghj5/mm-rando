@@ -1961,6 +1961,18 @@ namespace MMR.Randomizer
                     {
                         overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
                     }
+                    if (_randomized.Settings.VictoryMode.HasFlag(VictoryMode.Hearts) && (item.Item.ItemCategory() == ItemCategory.PiecesOfHeart || item.Item.ItemCategory() == ItemCategory.HeartContainers))
+                    {
+                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
+                    }
+                    if (_randomized.Settings.VictoryMode.HasFlag(VictoryMode.Fairies) && ItemUtils.DungeonStrayFairies().Contains(item.Item))
+                    {
+                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
+                    }
+                    if (_randomized.Settings.VictoryMode.HasFlag(VictoryMode.SkullTokens) && item.Item.ItemCategory() == ItemCategory.SkulltulaTokens)
+                    {
+                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
+                    }
                     ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType, messageTable, _extendedObjects);
                 }
             }
@@ -3652,6 +3664,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
                 }
@@ -3705,6 +3718,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
                 }
@@ -3757,6 +3771,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
                 }
@@ -3810,6 +3825,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
                 }
@@ -3848,6 +3864,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
 
@@ -3870,6 +3887,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
                 }
@@ -3895,6 +3913,7 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
+                        .ShouldTransfer()
                         .Build()
                     );
 
@@ -6288,6 +6307,9 @@ namespace MMR.Randomizer
 
                 progressReporter.ReportProgress(68, "Writing messages...");
                 WriteGossipQuotes(messageTable);
+
+                var messagesToTransfer = messageTable.RemoveMessagesToTransfer();
+                _extraMessages.AddRange(messagesToTransfer);
 
                 MessageTable.WriteDefault(messageTable, _randomized.Settings.QuickTextEnabled);
 

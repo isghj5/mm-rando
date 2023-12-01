@@ -76,6 +76,16 @@ namespace MMR.Randomizer.Models.Rom
             }
         }
 
+        public List<MessageEntry> RemoveMessagesToTransfer()
+        {
+            var messagesToTransfer = this.Messages.Values.Where(m => m.ShouldTransferToExtendedMessageTable).ToList();
+            foreach (var entry in messagesToTransfer)
+            {
+                this.Messages.Remove(entry.Id);
+            }
+            return messagesToTransfer;
+        }
+
         public void ApplyRandomSoundEffects(Dictionary<SoundEffect, SoundEffect> replacements)
         {
             var regex = new Regex("(?<!(?:\x1B|\x1C|\x1D|\x1E|\x1F).?)\x1E(..)", RegexOptions.Singleline);

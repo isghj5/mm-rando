@@ -14,6 +14,7 @@ namespace MMR.Randomizer.Models.Rom
         private byte[] header = null;
         private string message = "";
         private bool excludeFromQuickText = false;
+        private bool shouldTransfer = false;
 
         public MessageEntryBuilder Id(ushort id)
         {
@@ -43,12 +44,19 @@ namespace MMR.Randomizer.Models.Rom
             return this;
         }
 
+        public MessageEntryBuilder ShouldTransfer()
+        {
+            shouldTransfer = true;
+            return this;
+        }
+
         public MessageEntry Build() => new MessageEntry
         {
             Id = id,
             Header = header,
             Message = message,
-            ExcludeFromQuickText = excludeFromQuickText
+            ExcludeFromQuickText = excludeFromQuickText,
+            ShouldTransferToExtendedMessageTable = shouldTransfer,
         };
 
         public class HeaderBuilder

@@ -281,6 +281,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
     if (GiantMask_IsGiant()) {
         if (player->formProperties->unk_00 < 200.0) {
             GiantMask_FormProperties_Grow(player->formProperties);
+            player->base.flags |= (1 << 17); // ACTOR_FLAG_CAN_PRESS_HEAVY_SWITCH
         }
         if (REG(68) > -200) {
             GiantMask_Reg_Grow();
@@ -288,6 +289,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
     }
     else if (player->formProperties->unk_00 >= 200.0) {
         GiantMask_FormProperties_Shrink(player->formProperties);
+        player->base.flags &= ~(1 << 17); // ~ACTOR_FLAG_CAN_PRESS_HEAVY_SWITCH
     }
 
     if (player->form == PLAYER_FORM_FIERCE_DEITY) {
