@@ -698,6 +698,11 @@ namespace MMR.Randomizer
                 var sutari = curiosityShop.Maps[0].Actors[1];
                 sutari.Position = new vec16(51, 3, -17); // move over to the side of the talking grate
                 sutari.Rotation.y = ActorUtils.MergeRotationAndFlags(90 + 15, sutari.Rotation.y);
+
+                // laundrypool wooden box is facing into the wall
+                var laundrypoolScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.LaundryPool.FileID());
+                var woodenBox = laundrypoolScene.Maps[0].Actors[7];
+                woodenBox.Rotation.y = ActorUtils.MergeRotationAndFlags(180, woodenBox.Rotation.y);
             }
         }
 
@@ -748,11 +753,12 @@ namespace MMR.Randomizer
                 dekuPalaceScene.Maps[2].Actors[26].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalaceScene.Maps[2].Actors[26].Rotation.y);
 
                 // goron underwater mode
-                var playerFile = RomData.MMFileList[GameObjects.Actor.Player.FileListIndex()].Data;
+                // this has been superseeded by Zoeys underwater code instead, which should be better
+                //var playerFile = RomData.MMFileList[GameObjects.Actor.Player.FileListIndex()].Data;
                 // changes made to function func_8083BB4C
-                ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE20C, val: 0x00000000); // 80834140 -> NOP
-                ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE214, val: 0x00000000); // 
-                ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE220, val: 0x00000000); //
+                //ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE20C, val: 0x00000000); // 80834140 -> NOP
+                //ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE214, val: 0x00000000); // 
+                //ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE220, val: 0x00000000); //
 
                 if (seedrng.Next() % 10 >= 5)
                 {
@@ -1367,6 +1373,7 @@ namespace MMR.Randomizer
                 ReadWriteUtils.Arr_WriteU16(ranchRoom0Data, 0x72, SMALLEST_OBJ); // object_ha is the donkey the cart uses
 
             }
+
         }
 
         public static void FixKafeiPlacements()
@@ -2233,7 +2240,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.LinkTheGoro)) continue;
+                if (TestHardSetObject(GameObjects.Scene.LaundryPool, GameObjects.Actor.SmallWoodenBox, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.Takkuri)) continue;
