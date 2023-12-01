@@ -2621,7 +2621,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.LaundryPool, variant: -1, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
         [CheckRestricted(Scene.CuriosityShop, variant: -1, Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter,
             Item.NotebookMeetKafei, Item.NotebookUniteAnjuAndKafei, Item.NotebookPromiseKafei,
-            Item.NotebookMeetCuriosityShopManInLaundryPool, Item.NotebookCuriosityShopManSGift, Item.NotebookPromiseCuriosityShopMan)] // can't meet him without kafei I dont think
+            Item.NotebookMeetCuriosityShopMan, Item.NotebookCuriosityShopManSGift, Item.NotebookPromiseCuriosityShopMan)] // can't meet him without kafei I dont think
         // E2 is hidden in ikana somewhere?? since its path its prob running after final hours or something
         [PathingVariants(0x100, 0x1E2, 0x1E3, 0x1E4, 0x1E0)]
         [PathingTypeVarsPlacement(mask: 0x1F, shift: 0)]
@@ -3429,7 +3429,7 @@ namespace MMR.Randomizer.GameObjects
             Item.MaskKeaton, Item.TradeItemMamaLetter,
             Item.MaskAllNight,
             Item.MundaneItemCuriosityShopBlueRupee, Item.MundaneItemCuriosityShopGoldRupee, Item.MundaneItemCuriosityShopPurpleRupee, Item.MundaneItemCuriosityShopRedRupee,
-            Item.NotebookMeetCuriosityShopMan, Item.NotebookMeetCuriosityShopManInLaundryPool, Item.NotebookCuriosityShopManSGift, Item.NotebookPromiseCuriosityShopMan, Item.NotebookPurchaseCuriosityShopItem)]
+            Item.NotebookMeetCuriosityShopMan, Item.NotebookCuriosityShopManSGift, Item.NotebookPromiseCuriosityShopMan, Item.NotebookPurchaseCuriosityShopItem)]
         [GroundVariants(0x0, // inside of shop
             0x1)] // wedding, and giving two items behind shop
         [OnlyOneActorPerRoom]
@@ -4848,6 +4848,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(569)]
         [ObjectListIndex(0xD)]
+        // TODO split them up into two separate things
         [CheckRestricted(Item.ItemBottleMadameAroma, Item.MaskKafei,
             Item.NotebookMeetMadameAroma, Item.NotebookPromiseMadameAroma, Item.NotebookDeliverLetterToMama)]
         [GroundVariants(0)]

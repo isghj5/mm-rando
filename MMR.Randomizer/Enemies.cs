@@ -2240,7 +2240,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.LaundryPool, GameObjects.Actor.SmallWoodenBox, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Torch, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.Takkuri)) continue;
@@ -2964,7 +2964,7 @@ namespace MMR.Randomizer
                 var newObject = SMALLEST_OBJ;
                 if (thisSceneData.RNG.Next() % 10 > 5) // chance of fixed rare/random actor
                 {
-                    newObject = freeObjList[thisSceneData.RNG.Next() & freeObjList.Count];
+                    newObject = freeObjList[thisSceneData.RNG.Next() & (freeObjList.Count -1)];
                 } 
 
                 // for now we just bypass rando and set it manually
