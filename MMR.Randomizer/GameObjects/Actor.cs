@@ -1214,6 +1214,8 @@ namespace MMR.Randomizer.GameObjects
             check: Item.ChestHotSpringGrottoRedRupee)]
         [CheckRestricted(Scene.SwampSpiderHouse, variant: -1,
             check: Item.CollectibleSwampSpiderToken13, Item.CollectableSwampSpiderHouseSoftSoil2)]
+        [CheckRestricted(Scene.ZoraCape, variant: -1,
+            check: Item.ChestGreatBayCapeGrotto)]
         // 0x0114-8 are the bombable rocks in hotspring water
         // params: 0x100 is the big bombable one only, no goron punch
         // 0x8000 creates a Good Job jingle when you break it
@@ -1229,9 +1231,10 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x7000, 0xC000, 0xE000, 0xF000, 0xD000)] // regular unhidden grottos
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
-        [EnemizerScenesExcluded(Scene.GreatBayCoast, Scene.ZoraCape, Scene.Grottos)]
-        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, // too much dyna (unverified)
-            Scene.Woodfall, Scene.DekuShrine)] // blocking enemies
+        [EnemizerScenesExcluded(Scene.Grottos)] //Scene.ZoraCape, Scene.GreatBayCoast
+        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear // too much dyna (unverified)
+            /* Scene.Woodfall, Scene.DekuShrine */)] // blocking enemies
+        [BlockingVariantsAll] // especially the hotwater rocks
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         Bombiwa = 0x92, // Obj_Bombiwa
 
