@@ -1215,7 +1215,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.SwampSpiderHouse, variant: -1,
             check: Item.CollectibleSwampSpiderToken13, Item.CollectableSwampSpiderHouseSoftSoil2)]
         [CheckRestricted(Scene.ZoraCape, variant: -1,
-            check: Item.ChestGreatBayCapeGrotto)]
+            check: Item.ChestGreatBayCapeGrotto, Item.FairyDoubleDefense)]
         // 0x0114-8 are the bombable rocks in hotspring water
         // params: 0x100 is the big bombable one only, no goron punch
         // 0x8000 creates a Good Job jingle when you break it
@@ -1223,6 +1223,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x807F, 0x8004, 0x8002, // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
            0xE, // swamp spiderhouse
            0x0114, 0x0115, 0x0116, 0x0117, 0x0118,
+           0x101,0x100, // cape covering the fairy hole
            0x8003, 0x807F)]
         [FlyingVariants(0x44, 0x8044)] // does not exist, for fun placement
         [WaterBottomVariants(0x07F, // exists under a sign in the deku palace
