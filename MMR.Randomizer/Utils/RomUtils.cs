@@ -227,7 +227,9 @@ namespace MMR.Randomizer.Utils
 
             var startTime = DateTime.Now;
 
-            // sorting the list with .Where().ToList() => OrderByDescending().ToList only takes (~ 0.400 miliseconds) on Isghj's computer
+            // sorting the list with .Where() => OrderByDescending().ToList only takes (~ 0.400 miliseconds) on Isghj's computer
+            //  but the time required to compress mostly scales with size:
+            //  by sorting biggest files first, we are less likely to be stuck waiting for one big file at the end
             var sortedCompressibleFiles = RomData.MMFileList
                 .Where(file => file.IsCompressed && file.WasEdited)
                 .OrderByDescending(file => file.Data.Length)
@@ -248,6 +250,12 @@ namespace MMR.Randomizer.Utils
             });
             // this thread is borrowed, we don't want it to always be the lowest priority, return to previous state
             Thread.CurrentThread.Priority = previousThreadPriority;
+
+            // uncompressed files need to have their compressed rom end address zero'd, this tells the game its not compressed
+            foreach(var uncompressedFile in RomData.MMFileList.Where(file => !file.IsCompressed))
+            {
+                uncompressedFile.Cmp_End = 0x0;
+            }
 
             Debug.WriteLine($" compress all files time : [{(DateTime.Now).Subtract(startTime).TotalMilliseconds} (ms)]");
         }

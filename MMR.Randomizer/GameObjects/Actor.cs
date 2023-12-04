@@ -1828,8 +1828,10 @@ namespace MMR.Randomizer.GameObjects
 
         EmptyE6 = 0xE6, // EmptyE6
 
+        // in vanilla this was an empty actor with almost no code
+        // going to try to force this into a new actor as a workaround
         [FileID(219)]
-        [ObjectListIndex(0x1)]
+        [ObjectListIndex(0x199)] // modified for twig, OG was empty actor
         Unused_En_Hs2 = 0xE7, // En_Hs2
 
         //[ActorizerEnabled] // probably hard coded by zoey for rupee rando
@@ -3954,12 +3956,14 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.GoronShrine, variant: 0x3FF1, Item.SongLullaby)]
         [CheckRestricted(Scene.GoronRacetrack, variant: 0x3FF1, Item.ItemBottleGoronRace)]
         //[CheckRestricted(Scene.TwinIslandsSpring, variant: 0x3FF1, Item.ItemBottleGoronRace)] // not sure this is required
-        //[GroundVariants(0x1400)] // all other versions are 0x13** or 0x1402
+        // all other versions are 0x13** or 0x1402
+        [GroundVariants(0x1400)] // regular one in the shrine
         // 0x3FF1 does not spawn in winter, even in other scenes
-        [GroundVariants(0x3FF1)]
+        //[GroundVariants(0x3FF1)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        [VariantsWithRoomMax(max: 0, variant: 0x3FF1)] // softlock if you enter the song teach cutscene, which in rando is proximity
+        // in 1.16 this was rescinded
+        //[VariantsWithRoomMax(max: 0, variant: 0x3FF1)] // softlock if you enter the song teach cutscene, which in rando is proximity
         //[EnemizerScenesExcluded(Scene.GoronShrine, Scene.GoronRacetrack, Scene.TwinIslandsSpring)]
         [SwitchFlagsPlacement(mask: 0x3F, shift: 8)]
         GoronKid = 0x201, // En_Gk, baby goron, child goron
