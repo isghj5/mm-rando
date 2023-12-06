@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 
 // dotnet 4.5 req
 using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 // todo rename this actorutils.cs and move to MMR.Randomizer/Utils/
 
@@ -76,7 +77,8 @@ namespace MMR.Randomizer
         private static List<Actor> ReplacementCandidateList { get; set; }
         private static List<Actor> FreeCandidateList { get; set; }
         private static List<Actor> FreeOnlyCandidateList { get; set; } // not worthy by themselves, only if object was already selected
-        private static List<GameObjects.Item> ActorizerKnownJunkItems { get; set; }
+        // outer list is item.category, inner list is items
+        private static List<List<GameObjects.Item>> ActorizerKnownJunkItems { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
         private static bool ACTORSENABLED = true;
         private static Random seedrng;
@@ -126,67 +128,175 @@ namespace MMR.Randomizer
             FreeOnlyCandidateList = freeOnlyCandidates.Select(act => new Actor(act)).ToList();
         }
 
-        private static void PrepareJunkItems()
+        private static void PrepareJunkSpiderTokens(List<GameObjects.Item> addedJunkItems, List<(string, string)> allSphereItems)
         {
-            /// this prepares a list of known junk items based on item chains for actorizer actor replacement
-
-            ActorizerKnownJunkItems = new List<GameObjects.Item>();
-
             List<GameObjects.Item> allSpiderTokens = _randomized.ItemList.FindAll(item => item.Item.ItemCategory() == GameObjects.ItemCategory.SkulltulaTokens).Select(u => u.Item).ToList();
 
-            // skulls
-            var swampSkullReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MaskTruth);
-            //var swampSkullReward = _randomized.ItemList[GameObjects.Item.MaskTruth];
-            var swampSkullRewardItem = swampSkullReward.Item;
-            if (ItemUtils.IsJunk(swampSkullRewardItem))
-            {
-                // is there a better way to do this?
-                var swampTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Swamp")).ToList();
-                ActorizerKnownJunkItems.AddRange(swampTokens);
-            }
+            // check the token reward itself
+            //var swampSkullReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MaskTruth).Item;
+            // check if the important items has a token (which might tell us all tokens are required to 
+            //if (ItemUtils.IsJunk(swampSkullReward) )
+            //{
+                // double check: the finishing condition might be all tokens, in which case any specific token should be important
+                var swampTokenImportantSearch = allSphereItems.Any(u => u.Item1 == "Swamp Skulltula Spirit");
+                if (!swampTokenImportantSearch)
+                {
+                    var swampTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Swamp")).ToList();
+                    addedJunkItems.AddRange(swampTokens);
+                }
+            //}
 
-            var oceanSkullRewardD1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.UpgradeGiantWallet).Item;
-            var oceanSkullRewardD2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MundaneItemOceanSpiderHouseDay2PurpleRupee).Item;
-            var oceanSkullRewardD3 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MundaneItemOceanSpiderHouseDay3RedRupee).Item;
-            if (ItemUtils.IsJunk(oceanSkullRewardD1) && ItemUtils.IsJunk(oceanSkullRewardD2) && ItemUtils.IsJunk(oceanSkullRewardD3))
-            {
-                var oceanTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Ocean")).ToList();
-                ActorizerKnownJunkItems.AddRange(oceanTokens);
-            }
 
+            //var oceanSkullRewardDay1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.UpgradeGiantWallet).Item;
+            //var oceanSkullRewardDay2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MundaneItemOceanSpiderHouseDay2PurpleRupee).Item;
+            //var oceanSkullRewardDay3 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MundaneItemOceanSpiderHouseDay3RedRupee).Item;
+            //if (ItemUtils.IsJunk(oceanSkullRewardDay1) && ItemUtils.IsJunk(oceanSkullRewardDay2) && ItemUtils.IsJunk(oceanSkullRewardDay3))
+            //{
+                // double check: the finishing condition might be all tokens, in which case any specific token should be important
+                var oceanTokenImportantSearch = allSphereItems.Any(u => u.Item1 == "Ocean Skulltula Spirit");
+                if (!oceanTokenImportantSearch)
+                {
+                    var oceanTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Ocean")).ToList();
+                    addedJunkItems.AddRange(oceanTokens);
+                }
+            //}
+        }
+
+        private static void PrepareJunkStrayFairies(List<GameObjects.Item> addedJunkItems, List<(string, string)> allSphereItems)
+        {
             var allFaries = _randomized.ItemList.FindAll(item => item.Item.ClassicCategory() == GameObjects.ClassicCategory.StrayFairies).Select(u => u.Item).ToList();
 
-            // fairies
-            var woodfallFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairySpinAttack).Item;
-            if (ItemUtils.IsJunk(woodfallFairyReward))
+            //var woodfallFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairySpinAttack).Item;
+            //if (ItemUtils.IsJunk(woodfallFairyReward))
+            //{
+                var woodfallStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Woodfall Stray Fairy");
+                if (!woodfallStrayFairyImportantSearch)
+                {
+                    var woodfallFairies = allFaries.FindAll(token => token.Name().Contains("Woodfall")).ToList();
+                    addedJunkItems.AddRange(woodfallFairies);
+                }
+            //}
+
+            //var snowheadFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairyDoubleMagic).Item;
+            //if (ItemUtils.IsJunk(snowheadFairyReward))
+            //{
+                var snowheadStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Snowfall Stray Fairy");
+                if (!snowheadStrayFairyImportantSearch)
+                {
+                    var snowheadFairies = allFaries.FindAll(token => token.Name().Contains("Snowhead")).ToList();
+                    addedJunkItems.AddRange(snowheadFairies);
+                }
+           // }
+
+            //var greatbayFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairyDoubleDefense).Item;
+            //if (ItemUtils.IsJunk(greatbayFairyReward))
+            //{
+                var greatbayStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Great Bay Stray Fairy");
+                if (!greatbayStrayFairyImportantSearch)
+                {
+                    var greatbayFairies = allFaries.FindAll(token => token.Name().Contains("Great Bay")).ToList();
+                    addedJunkItems.AddRange(greatbayFairies);
+                }
+            //}
+
+            //var stonetowerFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemFairySword).Item;
+            //if (ItemUtils.IsJunk(stonetowerFairyReward))
+            //{
+                var stonetowerStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Stone Tower Stray Fairy");
+                if (!stonetowerStrayFairyImportantSearch)
+                {
+                    var stoneTowerFairies = allFaries.FindAll(token => token.Name().Contains("Stone Tower")).ToList();
+                    addedJunkItems.AddRange(stoneTowerFairies);
+                }
+            //}
+        }
+
+        private static void PrepareJunkNotebookEntries(List<GameObjects.Item> addedJunkItems, List<(string, string)> allSphereItems)
+        {
+            /// Notebook entries are junk IF the settings do not specify getting all notebook is required to beat the seed
+
+            var notebookEntryImportantSearch = allSphereItems.Any(u => u.Item1 == "Notebook Entry");
+            if (!notebookEntryImportantSearch)
             {
-                var woodfallFairies = allFaries.FindAll(token => token.Name().Contains("Woodfall")).ToList();
-                ActorizerKnownJunkItems.AddRange(woodfallFairies);
+                var notebookEntries = _randomized.ItemList.FindAll(itemObj => itemObj.Item.ItemCategory() == GameObjects.ItemCategory.NotebookEntries).Select(itemObj => itemObj.Item).ToList();
+                addedJunkItems.AddRange(notebookEntries);
+            }
+        }
+
+        private static void PrepareKegEntry(List<GameObjects.Item> addedJunkItems, List<(string, string)> allSphereItems)
+        {
+            var kegImportantSearch = allSphereItems.Any(u => u.Item1 == "Powder Keg");
+            if (!kegImportantSearch)
+            {
+                //VanillaEnemyList.Add(GameObjects.Actor.)
             }
 
-            var snowheadFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairyDoubleMagic).Item;
-            if (ItemUtils.IsJunk(snowheadFairyReward))
+        }
+
+        private static void PrepareJunkOrganizeLists(List<GameObjects.Item> addedJunkItems)
+        {
+            /// We need to clone JunkItems and remove items we want to keep,
+            /// add our new junk items, and generate list of item list (per-category)
+
+            var listOfItemsPerCategory = new List<List<GameObjects.Item>>();
+
+            // because I don't trust isJunk, I am going to pull a copy, modify it, then add it to my list
+            var curatedIsJunkList = ItemUtils.JunkItems.ToList();
+            curatedIsJunkList.Remove(GameObjects.Item.UpgradeRoyalWallet);
+            curatedIsJunkList.Remove(GameObjects.Item.IkanaScrubGoldRupee);
+            curatedIsJunkList.Remove(GameObjects.Item.MundaneItemCuriosityShopGoldRupee);
+            curatedIsJunkList.Remove(GameObjects.Item.CollectableIkanaGraveyardDay2Bats1); // Crimson
+            foreach (var silver in curatedIsJunkList.FindAll(item => item.ItemCategory() == GameObjects.ItemCategory.SilverRupees))
             {
-                var snowheadFairies = allFaries.FindAll(token => token.Name().Contains("Snowhead")).ToList();
-                ActorizerKnownJunkItems.AddRange(snowheadFairies);
+                curatedIsJunkList.Remove(silver);
             }
 
-            var greatbayFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairyDoubleDefense).Item;
-            if (ItemUtils.IsJunk(greatbayFairyReward))
+            // for speed of lookup later, we are going to split items per category into buckets to reduce search time
+            // first, generate list of list with curated junk
+            foreach (var category in Enum.GetValues(typeof(GameObjects.ItemCategory)).Cast<GameObjects.ItemCategory>())
             {
-                var greatbayFairies = allFaries.FindAll(token => token.Name().Contains("Great Bay")).ToList();
-                ActorizerKnownJunkItems.AddRange(greatbayFairies);
+                var newJunkListByCategory = curatedIsJunkList.FindAll(item => item.ItemCategory() == category);
+                listOfItemsPerCategory.Add(newJunkListByCategory);
             }
 
-            var stonetowerFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemFairySword).Item;
-            if (ItemUtils.IsJunk(stonetowerFairyReward))
+            // second, add our new junk items that we selected
+            foreach (var item in addedJunkItems)
             {
-                var stoneTowerFairies = allFaries.FindAll(token => token.Name().Contains("Stone Tower")).ToList();
-                ActorizerKnownJunkItems.AddRange(stoneTowerFairies);
+                var category = (int)item.ItemCategory();
+
+                listOfItemsPerCategory[category].Add(item);
             }
 
-            // keg?
+            ActorizerKnownJunkItems = listOfItemsPerCategory;
+        }
+
+
+        private static void PrepareJunkItems()
+        {
+            /// Problem: IsJunk and ItemUtils.JunkItems aren't a good fit for actorizer replacing actors
+            ///  solution: add more items that we check ourselves, and remove some junk items we want to allow
+
+            var addedJunkItems = new List<GameObjects.Item>();
+            // hope this condensecs teh spheres into one long list fo rme
+            List<(string item, string location)> allSphereItems = _randomized.Spheres.SelectMany(u => u).ToList();
+
+            if (_randomized.Settings.LogicMode == Models.LogicMode.Casual
+                || _randomized.Settings.LogicMode == Models.LogicMode.Glitched)
+            {
+                // for casual and glitched logic these items can be detect as non-important
+                // user logic might do something crazy, not sure this code works at all in no-logic
+                PrepareJunkSpiderTokens(addedJunkItems, allSphereItems);
+                PrepareJunkStrayFairies(addedJunkItems, allSphereItems);
+                PrepareJunkNotebookEntries(addedJunkItems, allSphereItems);
+                // all heart pieces <- already not considered junk
+                // all transformation and non-transofrmation mask <- already not considered junk
+                // all boss remains <- already not considered junk
+            }
+
+            // keg? not handle-able here
             // koume?
+
+            PrepareJunkOrganizeLists(addedJunkItems);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -268,7 +378,7 @@ namespace MMR.Randomizer
             ///  goal: use IsJunk and add extra conditions that cna happen
 
             // we need to build a list of known junk items and check that list here
-            if (ActorizerKnownJunkItems.Contains(itemInCheck))
+            if (ActorizerKnownJunkItems[(int)itemInCheck.ItemCategory()].Contains(itemInCheck))
             {
                 return true;
             }
