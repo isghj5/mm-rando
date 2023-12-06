@@ -124,7 +124,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(47)]
         [ObjectListIndex(0x1)]
-        PowderKeg = 0x9, // En_Bom
+        BombAndKeg = 0x9, // En_Bom
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1B30)]
@@ -377,9 +377,10 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0xEF, 0x7F, 0x3F, 0x4)]
         //[RespawningVariants(0x4)] // doesn't respawn after death, so dont put where respawning enemies are bad either
         [VariantsWithRoomMax(max: 0, variant: 4)] // just dont use, it might be more broken and a cause of a crash? doubt
+        [FlyingToGroundHeightAdjustment(100)]
         [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // shared object with goldskulltula, cannot change without
-        [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, // in the air, bit weird
-            Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
+        //[EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, // in the air, bit weird
+        //    Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
         [SwitchFlagsPlacement(mask: 0x3F, shift: 0)]
         Skulltula = 0x24, // En_St
 
@@ -3416,6 +3417,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.MundaneItemSeahorse)]
         [GroundVariants(0x001, 0x100, 0x101)]
         // limit variants?
+        [VariantsWithRoomMax(max:0, variant:0x101)] // doesn't spawn correctly
         [UnkillableAllVariants]
         GreatBayFisherman = 0x1C2, // En_Tsn
 
