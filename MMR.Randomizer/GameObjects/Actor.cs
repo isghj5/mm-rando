@@ -373,11 +373,13 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2540)]
         [FileID(67)]
         [ObjectListIndex(0x20)]
+        // 0x3F params is a switch flag, so long as its 3F switch flag is ignored tho so not a huge deal
+        // 0x1C0 & == 1 requires lens (0x7F)
         // 4 is in the astral observatory, and has a spawn kill flag, so don't use
         [FlyingVariants(0xEF, 0x7F, 0x3F, 0x4)]
-        //[RespawningVariants(0x4)] // doesn't respawn after death, so dont put where respawning enemies are bad either
-        [VariantsWithRoomMax(max: 0, variant: 4)] // just dont use, it might be more broken and a cause of a crash? doubt
-        [FlyingToGroundHeightAdjustment(100)]
+        [RespawningVariants(0x4)] // doesn't respawn after death, so dont put where respawning enemies are bad either
+        [VariantsWithRoomMax(max: 0, variant: 4)] // if this actor hides an item, could be annoying going back in time to reset, so do not place
+        [FlyingToGroundHeightAdjustment(200)]
         [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // shared object with goldskulltula, cannot change without
         //[EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, // in the air, bit weird
         //    Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
@@ -392,7 +394,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2540)]
         [FileID(67)] // actual file of skulltula in case it wasnts to know things like how big it is
         [FlyingVariants(0)] // going to mark it flying for now
-        [VariantsWithRoomMax(max: 0, variant: 0)] // don't actually place garbage actor
+        [VariantsWithRoomMax(max: 0, variant: 0)] // don't actually place dummy actor
         SkulltulaDummy = 0x25, // fake
         //Empty25 = 0x25, // originally empty
 
