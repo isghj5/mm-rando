@@ -2072,12 +2072,13 @@ namespace MMR.Randomizer
         {
             /// Each Actor spawn gets one cutscene in the scene/room data
             /// if a dinofos is spawned, and has a cutscene from the room spawn data, it plays the cutscene
-            /// (supposed to be the drop from ceiling cutscene) but it breaks the game
+            ///   (supposed to be the drop from ceiling cutscene) but it breaks the game
             /// so we have to disable it for any new dinofos spawns to avoid
             /// also other trouble actors that can take that cutscene and do things we dont want
             /// tag: fix cutscene actors
 
-            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.ClockTowerInterior) return;
+            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.ClockTowerInterior)
+                return; // I think its funny that the cutscenes can activate HMS song of healing cutscene, so I want to leave this
 
             var listTroubleActorsObj = new List<int> {
                 GameObjects.Actor.Dinofos.ObjectIndex(),
@@ -2090,6 +2091,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.LaundryPoolBell.ObjectIndex(),
                 GameObjects.Actor.AnjusGrandmaCredits.ObjectIndex(),
                 GameObjects.Actor.Japas.ObjectIndex(),
+                GameObjects.Actor.Tingle.ObjectIndex(),
                 GameObjects.Actor.SleepingScrub.ObjectIndex(),
                 GameObjects.Actor.GoronWithGeroMask.ObjectIndex()
             };
@@ -2112,6 +2114,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.LaundryPoolBell,
                 GameObjects.Actor.AnjusGrandmaCredits,
                 GameObjects.Actor.Japas,
+                GameObjects.Actor.Tingle,
                 GameObjects.Actor.SleepingScrub,
                 GameObjects.Actor.GoronWithGeroMask
             };

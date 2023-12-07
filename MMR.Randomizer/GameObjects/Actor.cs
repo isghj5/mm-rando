@@ -4367,9 +4367,10 @@ namespace MMR.Randomizer.GameObjects
         // 0x12 is missing, checks for a flag makes snese
         // 0x13/14/15 is jamming at the jazz session cutscene
         // 0x140A is near the entrance
+        // FC11 failed to spawn, TODO lookup what it is supposed to be doing
         // removed 0xFC07 because I cannot right now stop them being placed and randoed at the same time (creeper)
         [WaterBottomVariants(0xFC00, 0xFC08, 0xFC06, 0xFC13, 0xFC14, 0xFC15)] // no reason we cant talk to them underwater I dont think
-        [GroundVariants(0xFC06, 0xFC08, 0xFC0C, 0xFC0D, 0xFC0E, 0xFC0F, 0xFC10, 0xFC11, 0xFC13, 0xFC14, 0xFC15)]
+        [GroundVariants(0xFC06, 0xFC08, 0xFC0C, 0xFC0D, 0xFC0E, 0xFC0F, 0xFC10, 0xFC13, 0xFC14, 0xFC15)]
         // TODO finish making these both underwater and above water where possible
         [PathingVariants(0x140A, 0xFC05, 0x2, 0x3, 0x4)]
         [VariantsWithRoomMax(max: 1, variant: 0x140A, 0xFC05, 0x2, 0x3, 0x4)]
