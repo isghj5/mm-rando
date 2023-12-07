@@ -651,6 +651,7 @@ namespace MMR.Randomizer
             RandomizePinnacleRockSigns();
             RandomizeDekuPalaceBombiwaSigns();
             ChangeHotwaterGrottoDekuBabaIntoSomethingElse(rng);
+            ModifyFireflyKeeseForPerching();
 
             Shinanigans();
             ObjectIsItemBlocked();
@@ -1454,6 +1455,21 @@ namespace MMR.Randomizer
             // change object in the room to match new fake actors
             grottosScene.Maps[14].Objects[2] = (coinTossResultActor.actor).ObjectIndex();
         }
+
+        public static void ModifyFireflyKeeseForPerching()
+        {
+            /// keese only have two params: type 0x7FFF and the 0x8000 flag which is lens sensitive
+            /// except, I need to be able to tell rando which ones are perching and which are on the "wall"
+            /// so I am changing the params erase code in init to & 0xF from & 0x7FFF for now since we only have 4 types anyway
+
+            var fireflyFid = GameObjects.Actor.Keese.FileListIndex();
+            RomUtils.CheckCompressed(fireflyFid);
+            var fireflyData = RomData.MMFileList[fireflyFid].Data;
+
+            fireflyData[0xC6] = 0x00; // 0x7F -> 00
+            fireflyData[0xC6] = 0x0F; // 0xFF -> 0F
+        }
+
 
         public static void MoveActorsIfRandomized()
         {
@@ -2354,7 +2370,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.En_Owl)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.SpikedMine)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.ZoraRaceRing)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;

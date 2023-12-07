@@ -105,6 +105,7 @@ namespace MMR.Randomizer.Models.Rom
                 injected.flyingVariants,
                 new List<int>(),
                 new List<int>(),
+                new List<int>(),
             };
 
             // wasnt there a list of lists to static list we had?
@@ -131,6 +132,8 @@ namespace MMR.Randomizer.Models.Rom
             var flist = ((fattr == null) ? new List<int>() : fattr.Variants);
             var wlattr = actor.GetAttribute<WallVariantsAttribute>();
             var wllist = ((wlattr == null) ? new List<int>() : wlattr.Variants);
+            var perattr = actor.GetAttribute<PerchingVariantsAttribute>();
+            var perlist = ((perattr == null) ? new List<int>() : perattr.Variants);
             var pattr = actor.GetAttribute<PathingVariantsAttribute>();
             var plist = ((pattr == null) ? new List<int>() : pattr.Variants);
             var newList = new List<List<int>>()
@@ -141,6 +144,7 @@ namespace MMR.Randomizer.Models.Rom
                 glist,
                 flist,
                 wllist,
+                perlist,
                 plist
             };
             return newList;
@@ -338,6 +342,15 @@ namespace MMR.Randomizer.Models.Rom
                     }
                 }
 
+                // we allow flying on perching types because there are so few perching actors and perching locations
+                if (randomVariantType == ActorType.Perching && ourVariantMatches)
+                {
+                    var theirFlyingVariants = otherActor.AllVariants[(int)ActorType.Flying - 1];
+                    if (theirFlyingVariants.Count != 0)
+                    {
+                        theirVariants.AddRange(theirFlyingVariants);
+                    }
+                }
 
                 // if we dont have the required variants still, even with optional substitution above, we skip to next type
                 if (ourVariants.Count == 0 && theirVariants.Count == 0) continue;

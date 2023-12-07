@@ -159,6 +159,7 @@ namespace MMR.Randomizer.GameObjects
         // params type: 0 is fire, 2 is normal, 3 is perched, 4 is ice
         // 0x8000 is invisible
         [FlyingVariants(0x0, 0x2, 0x04, 0x8000, 0x8002, 0x8004)] // which ones are fire and ice?
+        [PerchingVariants(0x8103, 0x103)] // 0x100 is not a valid vanilla value, 0x7FFF is type, but the game uses 0xF range, so I modded
         [WallVariants(0x8003, 0x3)] // will take off and attack within 120 units distance (xz)
         [FlyingToGroundHeightAdjustment(150)]
         Keese = 0xC, // En_Firefly
@@ -1455,7 +1456,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xFD)]
         [CheckRestricted(Scene.GoronVillage, variant: -1, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
         // // never going to put him anywhere I dont think, so just mark his spawn as flying
-        [FlyingVariants(0xF18B, // southern swamp // and clear swamp??? he was there??
+        [PerchingVariants(0xF18B, // southern swamp // and clear swamp??? he was there??
+            0xF000,
             0x2102, 0x1102, 0x0102)] // three different days of goron village
         // variant 0/else
         [GroundVariants(0xF000)] // just sits there and stares at you, neat
@@ -1879,6 +1881,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x142)]
         // 0x0042 is swinging from tree, looks stupid if spawns in the ground,
         // 0x0022 is sitting on the edge of a bookcase, looks weird on the ground
+        [PerchingVariants(0x42, 0x22)]
         [GroundVariants(0x0032)] // 0x32: sitting around the fire
         [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)] // they like fire in this game
         [EnemizerScenesExcluded(Scene.IkanaGraveyard, Scene.OceanSpiderHouse)]
@@ -2657,7 +2660,9 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0xFF34,
             0xFF02, 0xFF03, 0x0102, 0x0103, // graveyard
             0xFF01)]
-        [WallVariants(0xFF9F, 0x019F)] // 19F graveyard, FF9F is perched on tree RTSS
+        // using irrelevant switch flags to distinquish the fake perching types
+        [PerchingVariants(0xFF9F, 0x019F)] // 19F graveyard
+        [WallVariants(0xFF9F, 0x029F)] // FF9F is perched on tree RTSS (okay with that one being a wall or perch actor)
         [VariantsWithRoomMax(max: 1, 0xFF34)] // swarm
         [FlyingToGroundHeightAdjustment(150)]
         //[EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
@@ -2735,16 +2740,21 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1830)]
         [FileID(322)]
         [ObjectListIndex(0x17A)]
+        // params: 0x1 is white vs black
+        // 0x2 and 0x4 are flags, 4 might be respawning
+        // 2 flag unknown? neat
+        // 0xFF00 is something else if 0 or 255, else
         [FlyingVariants(0x9605, 0x3205, 0x6405, 0x8C05, 0xFA01, 0xFA00)]
         // this variety is slow spawn, meaning you have to walk up to it: 0x2800, 0x3200, 0xC200, 0xFA00
         [GroundVariants(0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0xFF01, 0xFF05, 0xC200)]
         // 9605,3205,6405 all respawn in path to mountain village, 8C05 is snowhead, 6404 and 7804 are stone tower
         [RespawningVariants(0x6404, 0x7804, 0x9605, 0x3205, 0x6405, 0x8C05, 0xFF05, // actually respawning
             0x2800, 0x3200, 0xC200, 0xFA00)] // these four dont respawn, but they are invisbile until you are right on top of them, then they materialize, so hidden
+        [PerchingVariants(0x2808, 0x3208, 0xC208, 0xFA08)] // non vanilla using non existent 0x8 flag to hide from vanilla code
         [VariantsWithRoomMax(max: 2, variant: 0x9605, 0x3205, 0x6405, 0x8C05, 0xFA01, 0xFA00)]
         [VariantsWithRoomMax(max: 1, variant: 0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0xFF01, 0xFF05, 0xC200)]
         [CompanionActor(ClayPot, ourVariant: -1, variant: 0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
-        Bo = 0x164, //boe, small ball of snow or soot
+        Bo = 0x164, // En_Mkk, boe, small ball of snow or soot
 
         [FileID(323)]
         [ObjectListIndex(0x1)]
@@ -2813,6 +2823,7 @@ namespace MMR.Randomizer.GameObjects
         // turns out the reason it doesnt agro is that param is agro range, its so short its inside of the actor
         [GroundVariants(0x8C, 0x28, 0x3C, 0x46, 0x32, 0x1, 0x8023, 0x5, 0x14, 0x8028, 0x8014)]
         [WallVariants(0x1)] // peaceful, just wants cheese
+        [PerchingVariants(0x2)]
         [RespawningVariants(0x8014, 0x8028, 0x8023, // tested respawning
             0x0032, 0x0005, 0x0014)] // untesed, assumed respawning because I'm lazy for now
         [VariantsWithRoomMax(max: 5, variant: 0x8C, 0x28, 0x3C, 0x46, 0x32, 0x1, 0x5, 0x14)]
@@ -3005,8 +3016,11 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(351)]
         [ObjectListIndex(0xBB)]
+        // type: 0x3000: 0 is path, 1 air 2 water
         [WaterBottomVariants(0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x200B, 0x200C, 0x200D)]
         //[FlyingVariants(0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // loads more, think there are flags here
+        [PerchingVariants(0x1012)] // non-vanilla link speed 12, attempting to perch
+        [GroundVariants(0x0000)] // pathing type? requires us to introduce paths which might confuse our rando tho
         // if I had a hanging from cieling thing like spiders this would work fine
         //[WallVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
         [UnkillableAllVariants] // actorcat PROP, not detected as enemy
@@ -3575,13 +3589,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1FD0)]
         [FileID(426)]
         [ObjectListIndex(0x1B5)]
-        // dont know what the differences are in the params
+        // looks like two params 0x378 and 0x7F and both are some form of animation speed...??
         [WaterVariants(0x3FA8)] // stt (underwater wall)
         [WallVariants(0x1932, // greatbay
             0x3FFF)] // istt hanging from wall
         [GroundVariants(
             0x191E)] // below well
+        [PerchingVariants(0x2034, 0x3EFE)] // non-vanilla variants so they can show up on perchest
         [VariantsWithRoomMax(max: 8, variant: 0x1932, 0x3FFF)]
+        [VariantsWithRoomMax(max: 0, variant: 0x3FA8)] // do not place water variant because dont hav a water wall type yet, which is what this really is, putting in water floats in the water column
         [EnemizerScenesExcluded(Scene.StoneTowerTemple)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GoronRacetrack)]
         Dexihand = 0x1D1, // En_WdHand : ???'s water logged brother
@@ -5508,6 +5524,7 @@ namespace MMR.Randomizer.GameObjects
         Ground,
         Flying,
         Wall,
+        Perching,       // added in 56
         Pathing,
     }
 }
