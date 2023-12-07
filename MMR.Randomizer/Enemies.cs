@@ -378,7 +378,8 @@ namespace MMR.Randomizer
             ///  goal: use IsJunk and add extra conditions that cna happen
 
             // we need to build a list of known junk items and check that list here
-            if (ActorizerKnownJunkItems[(int)itemInCheck.ItemCategory()].Contains(itemInCheck))
+            var category = (int)itemInCheck.ItemCategory();
+            if (ActorizerKnownJunkItems[category].Contains(itemInCheck))
             {
                 return true;
             }
@@ -892,7 +893,8 @@ namespace MMR.Randomizer
 
 
                 // for now, remove all form restrictions to see what works and what does not work anymore
-                /*
+                //*
+                var codeFile = RomData.MMFileList[31].Data;
                 var startLoc = 0x11C950;
                 var endLoc = 0x11CB8C;
                 var i = startLoc;
@@ -2142,7 +2144,7 @@ namespace MMR.Randomizer
                     }
                 }
             }
-            //thisSceneData.Log.AppendLine(" ---------- ");
+            thisSceneData.Log.AppendLine(" ---------- ");
         }
 
         public static void FixSwitchFlagVars(SceneEnemizerData thisSceneData, StringBuilder log)
@@ -2351,7 +2353,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Skulltula)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.En_Owl)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.ZoraRaceRing)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
