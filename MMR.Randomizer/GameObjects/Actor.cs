@@ -3988,8 +3988,9 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x3FF1)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        // in 1.16 this was rescinded
-        //[VariantsWithRoomMax(max: 0, variant: 0x3FF1)] // softlock if you enter the song teach cutscene, which in rando is proximity
+        // in 1.16 this was rescinded, we can now place it in the world again
+        // holy shit this is annoying nvm
+        [VariantsWithRoomMax(max: 0, variant: 0x3FF1)] // softlock if you enter the song teach cutscene, which in rando is proximity
         //[EnemizerScenesExcluded(Scene.GoronShrine, Scene.GoronRacetrack, Scene.TwinIslandsSpring)]
         [SwitchFlagsPlacement(mask: 0x3F, shift: 8)]
         GoronKid = 0x201, // En_Gk, baby goron, child goron

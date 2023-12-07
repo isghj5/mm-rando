@@ -652,6 +652,7 @@ namespace MMR.Randomizer
             RandomizeDekuPalaceBombiwaSigns();
             ChangeHotwaterGrottoDekuBabaIntoSomethingElse(rng);
             ModifyFireflyKeeseForPerching();
+            SplitPirateSewerMines();
 
             Shinanigans();
             ObjectIsItemBlocked();
@@ -1470,6 +1471,7 @@ namespace MMR.Randomizer
             fireflyData[0xC6] = 0x0F; // 0xFF -> 0F
         }
 
+        
 
         public static void MoveActorsIfRandomized()
         {
@@ -1888,9 +1890,9 @@ namespace MMR.Randomizer
 
         public static void SplitSpiderGrottoSkulltulaObject()
         {
-            // in the spider grotto, we have a skullwalltula on the web and a skulltula hanging from the ceiling
-            // this scene room has 3 objects, one is dekubaba, wasted
-            // in order to split the actor, however, I have to change the actor to something else and give it a different object
+            /// in the spider grotto, we have a skullwalltula on the web and a skulltula hanging from the ceiling
+            /// this scene room has 3 objects, one is dekubaba, wasted
+            /// in order to split the actor, however, I have to change the actor to something else and give it a different object
 
             if (!ReplacementListContains(GameObjects.Actor.Skulltula)) return;
 
@@ -1899,14 +1901,15 @@ namespace MMR.Randomizer
 
             spiderRoom.Objects[2] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
             spiderRoom.Actors[1].ChangeActor(GameObjects.Actor.SkulltulaDummy, vars:0, modifyOld: true);
+            spiderRoom.Actors[1].OldName = spiderRoom.Actors[1].Name = "Skulltula";
             spiderRoom.Actors[1].Position.y = 200; // way too high in the ceiling, bring down a touch
         }
 
         public static void SplitOceanSpiderhouseSpiderObject()
         {
-            // in the ocean spiderhouse there are two gold skulltula and there are skulltula (big spider)
-            // we cannot randomize one without the other because they both use the same object
-            // except... if we change the actor and object out for dummy, we can trick rando to allow us to change them cleverly
+            /// in the ocean spiderhouse there are two actors using the same object: gold skulltula and skulltula (big spider)
+            /// we cannot randomize one without the other because they both use the same object
+            /// except... if we change the actor and object out for dummy, we can trick rando to allow us to change them
 
             if (!ReplacementListContains(GameObjects.Actor.Skulltula)) return;
 
@@ -1916,14 +1919,38 @@ namespace MMR.Randomizer
             // object 6 is Bo, its not the spider object but I think thats is safer to replace in this spot
             spiderChestRoom.Objects[6] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
             spiderChestRoom.Actors[0].ChangeActor(GameObjects.Actor.SkulltulaDummy, vars: 0, modifyOld: true);
+            spiderChestRoom.Actors[0].OldName = spiderChestRoom.Actors[0].Name = "SkullTulla";
 
             var spiderStorageRoom = grottoScene.Maps[5];
 
             // object 9 is Stalchild, its not the spider object but I think thats is safer to replace in this spot
             spiderStorageRoom.Objects[9] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
             spiderStorageRoom.Actors[1].ChangeActor(GameObjects.Actor.SkulltulaDummy, vars: 0, modifyOld: true);
+            spiderStorageRoom.Actors[1].OldName = spiderStorageRoom.Actors[1].Name = "SkullTulla";
         }
 
+        public static void SplitPirateSewerMines()
+        {
+            /// The mines in the pirate fort sewer are dual type, in room 10/11 they are underwater mines,
+            /// in room 9 there are cieling hanging mines
+            /// right now, actorizer cannot handle them properly in this form, and we need to split into two separate actors and two separate objects
+            /// turning the ceiling mines into fake skulltula (flying) and changing the object
+
+            //SkulltulaDummy
+            var sewerScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PiratesFortressRooms.FileID());
+            var actors = sewerScene.Maps[10].Actors;
+
+            foreach (var actor in actors)
+            {
+                if (actor.ActorEnum == GameObjects.Actor.SpikedMine)
+                {
+                    actor.ChangeActor(GameObjects.Actor.SkulltulaDummy, 0, modifyOld: true);
+                    actor.OldName = actor.Name = "HangingMine";
+                }
+            }
+
+            sewerScene.Maps[10].Objects[5] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
+        }
 
         #endregion
 

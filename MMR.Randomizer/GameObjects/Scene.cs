@@ -216,8 +216,13 @@ namespace MMR.Randomizer.GameObjects
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
         MilkRoad = 0x1F,
 
+        // this is both the sewer and all of the smaller rooms up top
         [FileID(1258)]
         [SceneInternalId(0x23)]
+        // room 9/10 is the virtical water column elevator in the sewers
+        // room 10/11 is the side channel hallway with the mine traps (between rooms)
+        // room 11/12 is the timed cage prison room
+        // room 12/13 is the first sewer underwater maze
         [ClearEnemyPuzzleRooms(0, 1, 2)] // three pirate minibosses
         // TODO need to re-test this
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SpikedMine,
