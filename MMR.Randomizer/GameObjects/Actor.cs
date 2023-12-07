@@ -2232,7 +2232,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
             Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
-            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode, Item.NotebookMeetBombersInNCT, Item.NotebookMeetBombersInECT, Item.NotebookLearnBombersCodeInNCT, Item.NotebookLearnBombersCodeInECT
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode
             )] // this is duplicated in multiple places
         [GroundVariants(0x510, 0x10)]
         [VariantsWithRoomMax(max: 0, variant: 0x510, 0x10)] // does not spawn except in cutscenes, dont place it will be empty
@@ -2772,7 +2772,6 @@ namespace MMR.Randomizer.GameObjects
         //  0x3 is the object it uses
         //  one is the regular leaves pkmn, one is the old hint one from OOT reused for yellow flower, one is the tall one
         // 0x6 is big one in nightmare cutscene that link waves to
-
         [GroundVariants(0x2, 0x6)]
         [VariantsWithRoomMax(max: 1, variant: 0x6, 0x2)]
         // crash on transition to witches area in swamp and secretary room in mayor's residence
@@ -5135,7 +5134,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
             Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
-            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode, Item.NotebookMeetBombersInNCT, Item.NotebookMeetBombersInECT, Item.NotebookLearnBombersCodeInNCT, Item.NotebookLearnBombersCodeInECT
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode
             )] // this is duplicated in multiple places
         [GroundVariants(0xFF00)]
         [VariantsWithRoomMax(max:0, variant: 0xFF00)] // assumption: cannot be placed in other places because he looks for the balloon
@@ -5153,7 +5152,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
             Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
-            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode, Item.NotebookMeetBombersInNCT, Item.NotebookMeetBombersInECT, Item.NotebookLearnBombersCodeInNCT, Item.NotebookLearnBombersCodeInECT
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode 
             )] // this is duplicated in multiple places
         [GroundVariants(0x0B11, 0x0B22, 0x50F, 0x0513, 0x0910)]
         [OnlyOneActorPerRoom]
@@ -5173,7 +5172,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
             Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
-            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode, Item.NotebookMeetBombersInNCT, Item.NotebookMeetBombersInECT, Item.NotebookLearnBombersCodeInNCT, Item.NotebookLearnBombersCodeInECT
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode
             )] // this is duplicated in multiple places
 
         [GroundVariants(0x0, 0x01, 0x2, 0x3, 0x4, 0x10, 0x11, 0x12, 0x13, 0x14)]
@@ -5211,7 +5210,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
             Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
-            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode, Item.NotebookMeetBombersInNCT, Item.NotebookMeetBombersInECT, Item.NotebookLearnBombersCodeInNCT, Item.NotebookLearnBombersCodeInECT
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode
             )] // this is duplicated in multiple places
         [FlyingVariants(0)]
         [FlyingToGroundHeightAdjustment(200)]

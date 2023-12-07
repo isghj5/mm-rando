@@ -379,6 +379,7 @@ namespace MMR.Randomizer
 
             // we need to build a list of known junk items and check that list here
             var category = (int)itemInCheck.ItemCategory();
+            if (category == 0xFFFFFFFF) return true; // recovery heart?
             if (ActorizerKnownJunkItems[category].Contains(itemInCheck))
             {
                 return true;
