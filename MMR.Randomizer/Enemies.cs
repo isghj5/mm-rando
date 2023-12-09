@@ -662,11 +662,6 @@ namespace MMR.Randomizer
         {
             /// changes after randomization, actors objects already written, at this point we can detect IF an actor was randomized
 
-            // to avoid randomizing medigoron's object
-            //var goronVillageWinter = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.GoronVillage);
-            //goronVillageWinter.Maps[0].Objects[7] = GameObjects.Actor.GoGoron.ObjectIndex(); // square signpost
-            //goronVillageWinter.Maps[0].Objects[7] = GameObjects.Actor.GoGoron.ObjectIndex(); // square signpost
-
             FixKafeiPlacements();
             MoveActorsIfRandomized();
         }
@@ -818,6 +813,13 @@ namespace MMR.Randomizer
                 var laundrypoolScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.LaundryPool.FileID());
                 var woodenBox = laundrypoolScene.Maps[0].Actors[7];
                 woodenBox.Rotation.y = ActorUtils.MergeRotationAndFlags(180, woodenBox.Rotation.y);
+
+                var mayorsResitenceScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MayorsResidence.FileID());
+                var gormanInResidence = mayorsResitenceScene.Maps[0].Actors[1];
+                gormanInResidence.Position = new vec16(201, 0, 48);
+                gormanInResidence.Rotation.y = ActorUtils.MergeRotationAndFlags(180+45, gormanInResidence.Rotation.y);
+                // does gorman not do pathing? because it seems to be a thing here
+                //gormanInResidence.Path
             }
         }
 
@@ -957,11 +959,45 @@ namespace MMR.Randomizer
             //PrintActorValues();
         }
 
+        public static void MoveActorsIfRandomized()
+        {
+            /// if ossan in trading post was randomized we want to move one of them, as there are two of the, assumed for late night
+            var tradingpostScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TradingPost.FileID());
+            var secondOssan = tradingpostScene.Maps[0].Actors[1];
+            if (secondOssan.ActorEnum != GameObjects.Actor.TradingPostShop)
+            {
+                secondOssan.Position = new vec16(-35, 25, -154);
+            }
+
+            // if we randomize the bombiwa in the swamp spiderhouse, replacements with colliders can block bugs
+            // for now, decided to just un-randomize
+
+            // if we randomize cremia in the branch, the uma cart can crash, we need to change its type from ranch to termina field
+            var romaniRanchScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.RomaniRanch.FileID());
+            var cremia = romaniRanchScene.Maps[0].Actors[2];
+            if (cremia.ActorEnum != GameObjects.Actor.Cremia)
+            {
+                var cariageHorse = romaniRanchScene.Maps[0].Actors[34];
+                //cariageHorse.Variants[0] = 0x0; // same as termina field, which doesnt have cremia on it
+                //cariageHorse.ChangeActor(GameObjects.Actor.Dog, vars: 0x3FF); // this DOES NOTHING its too late the actor has already been written idiot
+                var ranchRoom0Data = RomData.MMFileList[GameObjects.Scene.RomaniRanch.FileID() + 1].Data; // 1327
+                //have to erase this actor directly
+                ranchRoom0Data[0x2A4] = 0xFF; // this works, although would be cool if we could just change type
+                ranchRoom0Data[0x2A5] = 0xFF;
+                //ranchRoom0Data[0x2B2] = 0x0; // attempted change of variant type to zero, this does not work, best to remove the whole actor for now
+                //ranchRoom0Data[0x2B3] = 0x0;
+
+                // now that the cariage is gone we should try to remove the objects to make space for other things in the scene
+                ReadWriteUtils.Arr_WriteU16(ranchRoom0Data, 0x74, SMALLEST_OBJ); // carriage
+                ReadWriteUtils.Arr_WriteU16(ranchRoom0Data, 0x72, SMALLEST_OBJ); // object_ha is the donkey the cart uses
+            }
+        }
+
         public static void DisableAllLocationRestrictions()
         {
             /// because, sometimes, enemies can be placed inside, all rules of society have shattered
 
-            // 19 = top of clock tower: if you can soar out its a problem (shrug)
+            // 19 = top of clock tower: if you can soar out its a "problem" (shrug)
             // 54 = sword school: hookshot can lock the player
             var sceneSkipList = new List<int> { (int)GameObjects.Scene.ClockTowerRoof, (int)GameObjects.Scene.SwordsmansSchool };
 
@@ -1472,42 +1508,6 @@ namespace MMR.Randomizer
         }
 
         
-
-        public static void MoveActorsIfRandomized()
-        {
-            /// if ossan in trading post was randomized we want to move one of them, as there are two of the, assumed for late night
-            var tradingpostScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TradingPost.FileID());
-            var secondOssan = tradingpostScene.Maps[0].Actors[1];
-            if (secondOssan.ActorEnum != GameObjects.Actor.TradingPostShop) {
-                secondOssan.Position = new vec16(-35, 25, -154);
-            }
-
-            // if we randomize the bombiwa in the swamp spiderhouse, replacements with colliders can block bugs
-            // for now, decided to just un-randomize
-
-            // if we randomize cremia in the branch, the uma cart can crash, we need to change its type from ranch to termina field
-            var romaniRanchScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.RomaniRanch.FileID());
-            var cremia = romaniRanchScene.Maps[0].Actors[2];
-            if (cremia.ActorEnum != GameObjects.Actor.Cremia)
-            {
-                var cariageHorse = romaniRanchScene.Maps[0].Actors[34];
-                //cariageHorse.Variants[0] = 0x0; // same as termina field, which doesnt have cremia on it
-                //cariageHorse.ChangeActor(GameObjects.Actor.Dog, vars: 0x3FF); // this DOES NOTHING its too late the actor has already been written idiot
-                var ranchRoom0Data = RomData.MMFileList[GameObjects.Scene.RomaniRanch.FileID() + 1].Data; // 1327
-                //have to erase this actor directly
-                ranchRoom0Data[0x2A4] = 0xFF; // this works, although would be cool if we could just change type
-                ranchRoom0Data[0x2A5] = 0xFF;
-                //ranchRoom0Data[0x2B2] = 0x0; // attempted change of variant type to zero, this does not work, best to remove the whole actor for now
-                //ranchRoom0Data[0x2B3] = 0x0;
-
-                // now that the cariage is gone we should try to remove the objects to make space for other things in the scene
-                ReadWriteUtils.Arr_WriteU16(ranchRoom0Data, 0x74, SMALLEST_OBJ); // carriage
-                ReadWriteUtils.Arr_WriteU16(ranchRoom0Data, 0x72, SMALLEST_OBJ); // object_ha is the donkey the cart uses
-
-            }
-
-        }
-
         public static void FixKafeiPlacements()
         {
             if ( ! VanillaEnemyList.Contains(GameObjects.Actor.Kafei)) return;
@@ -2410,7 +2410,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.BombersYouChase)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.SpikedMine, GameObjects.Actor.Postbox)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.ZoraRaceRing)) continue;
+                if (TestHardSetObject(GameObjects.Scene.MayorsResidence, GameObjects.Actor.Gorman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);

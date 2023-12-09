@@ -3018,12 +3018,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xBB)]
         // type: 0x3000: 0 is path, 1 air 2 water
         [WaterBottomVariants(0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x200B, 0x200C, 0x200D)]
-        //[FlyingVariants(0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // loads more, think there are flags here
+        [FlyingVariants(0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // loads more, think there are flags here
         [PerchingVariants(0x1012)] // non-vanilla link speed 12, attempting to perch
-        [GroundVariants(0x0000)] // pathing type? requires us to introduce paths which might confuse our rando tho
+        [PathingVariants(0x0000)] // pathing type? requires us to introduce paths which might confuse our rando tho
         // if I had a hanging from cieling thing like spiders this would work fine
         //[WallVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
         [UnkillableAllVariants] // actorcat PROP, not detected as enemy
+        [PathingTypeVarsPlacement(mask:0xFF, shift:0)]
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         SpikedMine = 0x185, // Obj_Mine
 
