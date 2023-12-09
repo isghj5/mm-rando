@@ -961,7 +961,97 @@ namespace MMR.Randomizer
             //var kegFile = RomData.MMFileList[GameObjects.Actor.PowderKeg.FileListIndex()].Data;
             //kegFile[0x1FF5] |= 0x02; // add ACTOR_FLAG_20000, makes it heavy 
 
+            LightShinanigans();
+
             //PrintActorValues();
+        }
+
+        public static void LightShinanigans()
+        {
+            // tales of light and fox
+            var scenesAsFiles = new List<Scene>();
+
+            // grab all scenes
+            for (int fileId = 0; fileId < RomData.MMFileList.Count; fileId++)
+            {
+                var search = RomData.SceneList.Find(scene => scene.File == fileId);
+                if (search != null)
+                {
+                    scenesAsFiles.Add(search);
+                }
+            }
+
+            // assumption: this is after enemizer so all scenes are decompressed already
+
+            foreach (var scene in scenesAsFiles)
+            {
+                // for each scene change something 
+                // scenes have LightSettings[] which are type EnvLightSettings[]
+                // 0x0F  u8 fogColor[3];
+                // 0x12 s16 fogNear; // ranges from 0-1000 (0: starts immediately, 1000: no fog), but is clamped to ENV_FOGNEAR_MAX
+                // 0x14 s16 zFar; // Max depth (render distance) of the view as a whole. fogFar will always match zFar
+                // except unless the scene list is a list per-room, which is odd we have room files, this shouldnt explain the dark room
+                var sceneFid = scene.File;
+                var sceneData = RomData.MMFileList[sceneFid].Data;
+                var roomCount = 0;
+                // scan scene header for values
+                for (int i = 0; i < sceneData.Length; i += 0x8)
+                {
+                    // TODO abstract function that scans headers for an offset value as I keep making this shit
+                    if (sceneData[i] == 0x14) break; // end of headers
+
+                    if (sceneData[i] == 0x4) // room data, get room count
+                        roomCount = sceneData[i + 1];
+
+                    if (sceneData[i] == 0xF) // env light settings
+                    {
+                        // 16 each
+                        var envLightCount = sceneData[i + 1];
+                        var envLightCountOffset = ReadWriteUtils.Arr_ReadU32(sceneData, i + 4) & 0x00FFFFFF; // segment offset, dont need the 0x02
+                        for (int light = 0; light < envLightCount; light++)
+                        {
+                            var offset = envLightCountOffset + (light * 0x16);
+                            // start by changing the fog color and intesity make sure this shit is working
+                            sceneData[offset + 0xF + 0] = 0xAA;
+                            sceneData[offset + 0xF + 1] = 0x15;
+                            sceneData[offset + 0xF + 2] = 0x00;
+
+                            sceneData[offset + 0x12] = 0x12; // "fognear"
+                            sceneData[offset + 0x13] = 0x12;
+
+                            sceneData[offset + 0x14] = 0x66; // "zfar"
+                            sceneData[offset + 0x15] = 0x66;
+
+                        }
+                    }
+                }
+
+                // for each room in scene change those too
+                // there arent any in room 09, there is room behavior but not room light
+                // SCENE_CMD_ROOM_BEHAVIOR(curRoomUnk3, curRoomUnk2, curRoomUnk5, msgCtxunk12044, enablePosLights, kankyoContextUnkE2)
+                // SCENE_CMD_ROOM_BEHAVIOR(0x01, 0x00, 0, 0, true, 0), // actually used in room 09
+                for (int roomNum = 0; roomNum < roomCount; roomNum++)
+                {
+                    var roomData = RomData.MMFileList[sceneFid + roomNum].Data;
+                    for (int i = 0; i < roomData.Length; i += 0x8)
+                    {
+                        // TODO abstract function that scans headers for an offset value as I keep making this shit
+                        if (roomData[i] == 0x14) break; // end of headers
+
+                        if (roomData[i] == 0x8)
+                        {
+                            // set point lights for all
+                            roomData[i + 6] |= 0x8;
+
+                            // set room behavior to match the dark room in woodfall
+                            roomData[i + 1] = 0x01; // flag 1
+                            roomData[i + 7] = 0x00; // flag 2 & 0xFF
+                            break;
+                        }
+                    }
+                }
+
+            }
         }
 
         public static void MoveActorsIfRandomized()
