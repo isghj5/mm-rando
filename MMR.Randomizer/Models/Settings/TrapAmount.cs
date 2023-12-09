@@ -1,9 +1,9 @@
 ﻿namespace MMR.Randomizer.Models.Settings
 {
     /// <summary>
-    /// Ice traps amount setting.
+    /// Trap amount setting.
     /// </summary>
-    public enum IceTraps
+    public enum TrapAmount
     {
         None,
         Normal,

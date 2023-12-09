@@ -8,11 +8,11 @@ using System.Text;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Security.Cryptography;
-using Newtonsoft.Json;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Models;
 using MMR.Common.Utils;
 using MMR.Randomizer.Asm;
+using System.Text.RegularExpressions;
 
 namespace MMR.Randomizer.Utils
 {
@@ -21,10 +21,10 @@ namespace MMR.Randomizer.Utils
     /// </summary>
     public class ReplacementSongSlot
     {
-        public string          Name;
-        public string          Notes;
-        public List<int>       SceneFIDToModify;
-        public List<string>    NewSlotCategories; // string because they are base 16 which json cannot handle
+        public string          Name { get; set; }
+        public string          Notes { get; set; }
+        public List<string>    SceneFIDToModify { get; set; } // String because we sometimes need to provide a scene layer offset to find the right header to change
+        public List<string>    NewSongSlotCategories { get; set; } // string because they are base 16 which json cannot handle
     }
 
     public class SequenceUtils
@@ -40,8 +40,8 @@ namespace MMR.Randomizer.Utils
         //                                                           0x72, 0x0E, 0x29, 0x2D,
         //                                                           0x2E, 0x7B, 0x73, 0x70, 0x7D, 0x50 };
 
-        public static int MAX_BGM_BUDGET            = 0x3800; // vanilla: 0x3800
-        public static int MAX_COMBAT_BUDGET         = 0x3800; // unk
+        public static int MAX_BGM_BUDGET            = 0x6000; // vanilla: 0x3800
+        public static int MAX_COMBAT_BUDGET         = 0x6000; // unk
         public static int MAX_TYPE2_MUSIC_BUDGET    = 0x6000; // vanilla: 0x4100
 
         public static int New_AudioBankTable = 0; // for mmfilelist
@@ -51,8 +51,8 @@ namespace MMR.Randomizer.Utils
 
         public static void ResetBudget()
         {
-            MAX_BGM_BUDGET          = 0x3800;
-            MAX_COMBAT_BUDGET       = 0x3800;
+            MAX_BGM_BUDGET          = 0x6000;
+            MAX_COMBAT_BUDGET       = 0x6000;
             MAX_TYPE2_MUSIC_BUDGET  = 0x6000;
         }
 
@@ -424,8 +424,30 @@ namespace MMR.Randomizer.Utils
                                 {
                                     // playState is configured in the file as "play in these states", but in the code it's "mute in these states"
                                     // so we need to reverse it
-                                    var playState = Common.Utils.JsonSerializer.Deserialize<SequencePlayState[]>(formMaskJson);
-                                    zSeq.FormMask = playState.Cast<byte>().ToArray();
+                                    var playState = JsonSerializer.Deserialize<SequencePlayState[]>(formMaskJson);
+
+                                    // ensure backwards compatibility with 1.15 sequences
+                                    if (!playState.Any(s => s.HasFlag(SequencePlayState.FierceDeity) && !s.HasFlag(SequencePlayState.Human)))
+                                    {
+                                        for (var i = 0; i < playState.Length; i++)
+                                        {
+                                            if (playState[i].HasFlag(SequencePlayState.Human))
+                                            {
+                                                playState[i] |= SequencePlayState.FierceDeity;
+                                            }
+                                        }
+                                    }
+
+                                    // ensure unused cumulative states don't cause music to get muted in those states
+                                    foreach (var cumulativeState in Enum.GetValues<SequencePlayState>().Where(s => s > SequencePlayState.All))
+                                    {
+                                        if (!playState.Any(s => s.HasFlag(cumulativeState)))
+                                        {
+                                            playState[0x10] |= cumulativeState;
+                                        }
+                                    }
+                                    
+                                    zSeq.FormMask = ConvertUtils.U16ArrayToBytes(playState.Cast<ushort>().ToArray());
                                 }
                                 catch (Exception e)
                                 {
@@ -557,7 +579,7 @@ namespace MMR.Randomizer.Utils
 
 
         // gets passed RomData.SequenceList in Builder.cs::WriteAudioSeq
-        public static void RebuildAudioSeq(List<SequenceInfo> sequenceList, int? sequenceMaskFileIndex)
+        public static void RebuildAudioSeq(List<SequenceInfo> sequenceList, int? sequenceMaskFileIndex, int? sequenceNamesFileIndex)
         {
             // spoiler log output DEBUG
             StringBuilder log = new StringBuilder();
@@ -748,6 +770,7 @@ namespace MMR.Randomizer.Utils
                 }
 
                 byte[] formMask = null;
+                string name = null;
 
                 if (j != -1)
                 {
@@ -757,18 +780,44 @@ namespace MMR.Randomizer.Utils
                     {
                         formMask = sequenceList[j].SequenceBinaryList?.FirstOrDefault()?.FormMask;
                     }
+
+                    if (sequenceNamesFileIndex.HasValue)
+                    {
+                        name = Path.GetFileNameWithoutExtension(sequenceList[j].Name);
+                        if (Path.GetExtension(sequenceList[j].Name) == ".zseq")
+                        {
+                            name = name.Split('_')[0];
+                        }
+                        if (name.Contains("songforce"))
+                        {
+                            name = Regex.Replace(name, "(\\W|^)songforce\\W", string.Empty);
+                            name = name.Replace("songforce", string.Empty);
+                        }
+                    }
                 }
 
                 if (sequenceMaskFileIndex.HasValue)
                 {
                     if (formMask == null)
                     {
-                        formMask = Enumerable.Repeat<byte>(0xFF, 16).ToArray();
+                        formMask = Enumerable.Repeat<byte>(0xFF, 0x20).ToArray();
                     }
                     Array.Resize(ref formMask, MusicConfig.SEQUENCE_DATA_SIZE);
                     ReadWriteUtils.Arr_Insert(formMask, 0, MusicConfig.SEQUENCE_DATA_SIZE, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * MusicConfig.SEQUENCE_DATA_SIZE);
                 }
 
+                if (sequenceNamesFileIndex.HasValue)
+                {
+                    name ??= "";
+                    if (name.Length > MusicConfig.SEQUENCE_NAME_MAX_SIZE - 1)
+                    {
+                        name = name.Substring(0, MusicConfig.SEQUENCE_NAME_MAX_SIZE - 4) + "...";
+                    }
+                    name += "\0";
+                    var nameBytes = Encoding.ASCII.GetBytes(name);
+                    Array.Resize(ref nameBytes, MusicConfig.SEQUENCE_NAME_MAX_SIZE);
+                    ReadWriteUtils.Arr_Insert(nameBytes, 0, MusicConfig.SEQUENCE_NAME_MAX_SIZE, RomData.MMFileList[sequenceNamesFileIndex.Value].Data, i * MusicConfig.SEQUENCE_NAME_MAX_SIZE);
+                }
             }
 
             //// DEBUG spoiler log output
@@ -1112,10 +1161,10 @@ namespace MMR.Randomizer.Utils
                     // pull a sequence from randomized list
                     var validSequence = replacementSequences[0];
                     // we have a list of slots we pointerize, we're recycling those
-                    var newSlot = RomData.PointerizedSequences[0].PreviousSlot;
+                    var newSongSlot = RomData.PointerizedSequences[0].PreviousSlot;
                     RomData.PointerizedSequences.RemoveAt(0);
                     // update sequence to use the slot
-                    validSequence.Replaces = newSlot;
+                    validSequence.Replaces = newSongSlot;
                     replacementSequences.Remove(validSequence);
                     sequences.Remove(validSequence);
                     log.AppendLine($" -- ^ -- Instrument set number {validSequence.Instrument.ToString("X2")} also used by {validSequence.Name}");
@@ -1123,7 +1172,7 @@ namespace MMR.Randomizer.Utils
                     // set the scene to use this new song slot for background music
                     RomUtils.CheckCompressed(sceneFID);
                     var scene = RomData.MMFileList[sceneFID].Data;
-                    scene[musicOffset] = (byte) newSlot;
+                    scene[musicOffset] = (byte) newSongSlot;
                 }
                 // mute the previous music by killing the sfx actor which plays the filtered shop music
                 RomUtils.CheckCompressed(roomFID);
@@ -1308,25 +1357,50 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static bool SearchAndReplaceSceneBGM(int sceneFID, byte slotReplacement)
+        public static bool SearchAndReplaceSceneBGM(string sceneFIDStr, byte slotReplacement)
         {
             /// scan the files for the header that contains scene music (0x15 first byte)
             // 15xx0000 0000yyzz where zz is the sequence pointer byte
+
+            // however, the header data we want COULD be in a different scene layer and we want to be able to search from the offset into the file
+            int sceneFID = -1;
+            var strSplit = sceneFIDStr.Split(":");
+            if (int.TryParse(strSplit[0], out var sceneIntattempt))
+            {
+                sceneFID = sceneIntattempt;
+            }
+            if (sceneFID == -1) return false;
+
+            // if we are searching to replace a scene layer, we need to know the offset, it wont be at the start of the scene file
+            uint searchOffset = 0;
+            if (strSplit.Length > 1)
+            {
+                searchOffset = Convert.ToUInt32(strSplit[1], 16);
+
+            }
+
             RomUtils.CheckCompressed(sceneFID);
-            for (int b = 0; b < 0x10 * 70; b += 8)
+            for (int b = (int) searchOffset; b < searchOffset + (0x10 * 70); b += 8)
             {
                 if (RomData.MMFileList[sceneFID].Data[b] == 0x15)
                 {
-                    Debug.WriteLine("Replacing previous music index byte: " + RomData.MMFileList[sceneFID].Data[b + 0x7].ToString("X2"));
+                    Debug.WriteLine($"[{sceneFID}]Replacing previous music index byte: " + RomData.MMFileList[sceneFID].Data[b + 0x7].ToString("X2") +" at offset:" +b);
                     RomData.MMFileList[sceneFID].Data[b + 0x7] = slotReplacement;
 
                     return true;
                 }
+                if (RomData.MMFileList[sceneFID].Data[b] == 0x14)
+                    break; // this is the last header command, telling us the header is finished, don't waste time going deeper
             }
+
+            // the scene header might not work for scenes where the room music is room specific like astral observatory or the well
+
             return false;
         }
 
-        public static void ReassignSongSlots()
+
+
+        public static void ReassignSongSlots(StringBuilder log, Random rng)
         {
             // read all assginement slots from json files
             var replacementSongSlots = new List<ReplacementSongSlot>();
@@ -1337,48 +1411,74 @@ namespace MMR.Randomizer.Utils
                 {
                     var filetext = File.ReadAllText(filePath);
                     // the json string enum converter lets us read strings as songnames instead of int(slots) for readability
-                    var buildingList = JsonConvert.DeserializeObject<List<ReplacementSongSlot>>(filetext, new Newtonsoft.Json.Converters.StringEnumConverter());
+                    var buildingList = JsonSerializer.Deserialize<List<ReplacementSongSlot>>(filetext);
+                    //var buildingList = System.Text.Json.JsonSerializer.Deserialize<List<ReplacementSongSlot>>(filetext, JsonSerializer._AdditionalSequenceSerializerOptions);
+
+                    Debug.Assert(buildingList[0].Name != null);
+                    Debug.Assert(buildingList[0].NewSongSlotCategories != null);
                     replacementSongSlots = replacementSongSlots.Concat(buildingList).ToList();
                 }
                 catch (IOException ex)
                 {
                     Debug.WriteLine("Error reading file: " + filePath + ", error: " + ex.ToString());
                 }
+                catch (System.Text.Json.JsonException e)
+                {
+                    Debug.WriteLine("Error reading json: " + filePath + ", error: " + e.ToString());
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error unknown error: " + filePath + ", error: " + e.ToString());
+                }
+
             }
+
+            // randomize the order of the list, in case we run out of slots which ones get used will be random per seed
+            replacementSongSlots = replacementSongSlots.OrderBy(x => rng.Next()).ToList();
+
+            // these are song slots that were previously pointed at a different slot to save space
+            //  song slots that had songs we wanted to add to the pool, but because they are (nearly) unreachable in rando, putting music
+            //  in those slots dooms the music to never be heard in the seed, it was increadibly common for me to want to listen to a song and it gets up here
+            // so they got "pointed" at a different slot, if they were discovered in game because of glitches, they would still play the song they point at
+            var availableSlots = RomData.PointerizedSequences.ToList();
+            // note: there are multiple slots in the game that we cannot hear that are fanfares that could get added to this list if we need more
+            // like the opening cutscene, and there are several pointed slots for clocktown we might be able to add
 
             for (int i = 0; i < replacementSongSlots.Count && RomData.PointerizedSequences.Count > 0; i++)
             {
-                ReplacementSongSlot newslot = replacementSongSlots[i];
-                SequenceInfo availableSlot = RomData.PointerizedSequences.ElementAt(0);
-                Debug.WriteLine("Attempting to add new song slot:" + newslot.Name + " at previously unused location " + availableSlot.PreviousSlot.ToString("X2"));
-                RomData.PointerizedSequences.RemoveAt(0);
-                foreach (int sceneFID in newslot.SceneFIDToModify)
+                ReplacementSongSlot newSongSlot = replacementSongSlots[i];
+                SequenceInfo availableSlot = availableSlots.ElementAt(0);
+                log.AppendLine($"++ Adding a new song slot: [{newSongSlot.Name}] at previously unused slot [{availableSlot.PreviousSlot.ToString("X2")}]");
+                availableSlots.RemoveAt(0);
+
+                foreach (string sceneFID in newSongSlot.SceneFIDToModify)
                 {
                     bool result = SearchAndReplaceSceneBGM(sceneFID, (byte)availableSlot.PreviousSlot);
                     if (!result)
                     {
-                        Debug.WriteLine("Error: could not replace teh bgm byte in scene fid: " + sceneFID);
+                        log.AppendLine("Error: could not replace the bgm byte in scene fid: " + sceneFID);
                     }
                 }
+
                 try
                 {
                     SequenceInfo newMusicSlot = new SequenceInfo
                     {
                         // we add mmr- because if the user adds mm- it will confuse our weak parser later
-                        Name = "mmr-" + newslot.Name,
+                        Name = "mmr-" + newSongSlot.Name,
                         MM_seq = availableSlot.PreviousSlot,
                         Replaces = availableSlot.PreviousSlot,
-                        Type = newslot.NewSlotCategories.Select(int.Parse).ToList(),
+                        Type = newSongSlot.NewSongSlotCategories.Select(int.Parse).ToList(),
                         Instrument = 0
                     };
                     RomData.TargetSequences.Add(newMusicSlot);
                 }
                 catch (Exception)
                 {
-                    Debug.WriteLine("Error while converting an additional song slot to a sequence for music rando, slot: " + newslot.Name);
+                    log.AppendLine("Error while converting an additional song slot to a sequence for music rando, slot: " + newSongSlot.Name);
                 }
             }
-        }
+        } // */
 
         public static void ReadInstrumentSetList()
         {

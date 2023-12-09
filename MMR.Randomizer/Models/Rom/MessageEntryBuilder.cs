@@ -13,6 +13,8 @@ namespace MMR.Randomizer.Models.Rom
         private ushort id;
         private byte[] header = null;
         private string message = "";
+        private bool excludeFromQuickText = false;
+        private bool shouldTransfer = false;
 
         public MessageEntryBuilder Id(ushort id)
         {
@@ -36,11 +38,25 @@ namespace MMR.Randomizer.Models.Rom
             return this;
         }
 
+        public MessageEntryBuilder ExcludeFromQuickText()
+        {
+            excludeFromQuickText = true;
+            return this;
+        }
+
+        public MessageEntryBuilder ShouldTransfer()
+        {
+            shouldTransfer = true;
+            return this;
+        }
+
         public MessageEntry Build() => new MessageEntry
         {
             Id = id,
             Header = header,
-            Message = message
+            Message = message,
+            ExcludeFromQuickText = excludeFromQuickText,
+            ShouldTransferToExtendedMessageTable = shouldTransfer,
         };
 
         public class HeaderBuilder
@@ -165,7 +181,12 @@ namespace MMR.Randomizer.Models.Rom
         public class MessageBuilder
         {
             private string message = "";
-            private Stack<char> colorStack = new Stack<char>();
+            protected Stack<char> colorStack;
+
+            public MessageBuilder(MessageBuilder parent = null)
+            {
+                this.colorStack = parent?.colorStack ?? new Stack<char>();
+            }
 
             /// <summary>
             /// Appends the quick text start control character (0x17) to the message.
@@ -245,6 +266,21 @@ namespace MMR.Randomizer.Models.Rom
                 Append(0x09).Append(0x08).AppendGetItemIndex(location);
 
             /// <summary>
+            /// Appends the stray fairy region control characters (0x09 0x09) to the message.
+            /// </summary>
+            /// <returns></returns>
+            public MessageBuilder RuntimeStrayFairyLocationsStart(params Item[] locations)
+            {
+                Append(0x09).Append(0x09);
+                foreach (var location in locations)
+                {
+                    AppendGetItemIndex(location);
+                }
+                Append(0xFFFF);
+                return this;
+            }
+
+            /// <summary>
             /// Appends the generic runtime stop control characters (0x09 0x02) to the message.
             /// </summary>
             /// <returns></returns>
@@ -274,6 +310,14 @@ namespace MMR.Randomizer.Models.Rom
             /// <returns></returns>
             public MessageBuilder EndTextBox() =>
                 Append(0x10);
+
+
+            /// <summary>
+            /// Appends the reset cursor control character (0x13) to the message.
+            /// </summary>
+            /// <returns></returns>
+            public MessageBuilder ResetCursor() =>
+                Append(0x13);
 
             /// <summary>
             /// Appends the Stray Fairy count control character (0x0C) to the message.
@@ -333,6 +377,12 @@ namespace MMR.Randomizer.Models.Rom
             /// <returns></returns>
             public MessageBuilder EndConversation() =>
                 Append(0xE0);
+
+            /// <summary>
+            /// Appends the disable text skip control character (0x15) to the message.
+            /// </summary>
+            /// <returns></returns>
+            public MessageBuilder DisableTextSkip() => Append(0x15);
 
             /// <summary>
             /// Appends the disable text skip II control character (0x19) to the message.
@@ -498,7 +548,7 @@ namespace MMR.Randomizer.Models.Rom
         /// <returns></returns>
         public static MessageEntryBuilder.MessageBuilder CompileTimeWrap(this MessageEntryBuilder.MessageBuilder @this, Action<MessageEntryBuilder.MessageBuilder> action)
         {
-            var wrappedMessageBuilder = new MessageEntryBuilder.MessageBuilder();
+            var wrappedMessageBuilder = new MessageEntryBuilder.MessageBuilder(@this);
             action(wrappedMessageBuilder);
             var message = wrappedMessageBuilder.Build().Wrap(35, "\u0011", "\u0010");
             return @this.Text(message);
@@ -629,6 +679,28 @@ namespace MMR.Randomizer.Models.Rom
             return @this
                 .RuntimeArticleStart(location)
                 .Text(MessageUtils.GetArticle(item, indefiniteArticle))
+                .RuntimeGenericStop();
+        }
+
+        public static MessageEntryBuilder.MessageBuilder RuntimeStrayFairyLocations(this MessageEntryBuilder.MessageBuilder @this, char color, string message, Region region, params Item[] locations)
+        {
+            var regionPreposition = region.Preposition();
+            var regionName = region.Name();
+            if (!string.IsNullOrWhiteSpace(regionPreposition))
+            {
+                regionPreposition += " ";
+            }
+
+            return @this
+                .RuntimeStrayFairyLocationsStart(locations)
+                .TextColor(color, () =>
+                {
+                    @this.RuntimeWrap(() =>
+                    {
+                        @this.Text($" {message} ").Text(regionPreposition ?? "").Red(regionName).Text(".");
+                    });
+                })
+                .EndTextBox()
                 .RuntimeGenericStop();
         }
 

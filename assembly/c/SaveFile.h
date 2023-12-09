@@ -14,7 +14,24 @@ struct SaveFileConfig {
     /* 0x00 */ u32 magic;
     /* 0x04 */ u32 version;
     /* 0x08 */ struct QuestItemStorage questStorage;
-}; // size = 0x1A
+    /* 0x1A */ struct {
+                    /* 0x1A */ u16 swordKokiri;
+                    /* 0x1C */ u16 swordRazor;
+                    /* 0x1E */ u16 magicSmall;
+                    /* 0x20 */ u16 walletAdult;
+                    /* 0x22 */ u16 walletGiant;
+                    /* 0x24 */ u16 bombBagSmall;
+                    /* 0x26 */ u16 bombBagBig;
+                    /* 0x28 */ u16 quiverSmall;
+                    /* 0x2A */ u16 quiverLarge;
+                    /* 0x2C */ u16 lullabyIntro;
+                } spentUpgrades;
+    /* 0x2E */ struct {
+        u16 creditsSeen         : 1;
+        u16 isGiant             : 1;
+        u16                     : 14;
+    } flags;
+}; // size = 0x30
 
 extern struct SaveFileConfig SAVE_FILE_CONFIG;
 

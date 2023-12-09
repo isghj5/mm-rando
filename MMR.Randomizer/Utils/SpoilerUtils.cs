@@ -16,19 +16,22 @@ namespace MMR.Randomizer.Utils
         public static void CreateSpoilerLog(RandomizedResult randomized, GameplaySettings settings, OutputSettings outputSettings)
         {
             var itemList = randomized.ItemList
-                .Where(io => (io.IsRandomized && io.NewLocation.Value.Region().HasValue) || (io.Item.MainLocation().HasValue && randomized.ItemList[io.Item.MainLocation().Value].IsRandomized))
+                .Where(io => io.Item.Entrance() == null)
+                .Where(io => (io.IsRandomized && io.NewLocation.Value.Region(randomized.ItemList).HasValue) || (io.Item.MainLocation().HasValue && randomized.ItemList[io.Item.MainLocation().Value].IsRandomized))
                 .Select(io => new {
                     ItemObject = io.Item.MainLocation().HasValue ? randomized.ItemList.Find(x => x.NewLocation == io.Item.MainLocation().Value) : io,
                     LocationForImportance = io.NewLocation ?? io.Item,
-                    Region = io.IsRandomized ? io.NewLocation.Value.Region().Value : io.Item.Region().Value,
+                    Region = io.IsRandomized ? io.NewLocation.Value.Region(randomized.ItemList).Value : io.Item.Region(randomized.ItemList).Value,
                 })
                 .Select(u => new SpoilerItem(
                     u.ItemObject,
                     u.Region,
                     ItemUtils.IsRequired(u.ItemObject.Item, u.LocationForImportance, randomized),
                     ItemUtils.IsImportant(u.ItemObject.Item, u.LocationForImportance, randomized),
+                    ItemUtils.IsLocationJunk(u.LocationForImportance, randomized.Settings),
                     randomized.ImportantSongLocations?.Contains(u.LocationForImportance) == true,
-                    settings.ProgressiveUpgrades
+                    settings.ProgressiveUpgrades,
+                    randomized.ItemList
                 ));
 
             randomized.Logic.ForEach((il) =>
@@ -36,26 +39,32 @@ namespace MMR.Randomizer.Utils
                 if (il.ItemId >= 0)
                 {
                     var io = randomized.ItemList[il.ItemId];
-                    il.IsFakeItem = !io.IsRandomized || (io.Item.IsFake() && io.Item.Entrance() == null);
+                    il.ShouldAutoAcquire = !io.IsRandomized || il.IsFakeItem;
                     il.IsItemRemoved = io.ItemOverride.HasValue;
                 }
             });
 
             Dictionary<Item, Item> dungeonEntrances = new Dictionary<Item, Item>();
+            var entrances = new List<Item>();
             if (settings.RandomizeDungeonEntrances)
             {
-                var entrances = new List<Item>
-                {
-                    Item.AreaWoodFallTempleAccess,
-                    Item.AreaSnowheadTempleAccess,
-                    Item.AreaGreatBayTempleAccess,
-                    Item.AreaInvertedStoneTowerTempleAccess,
-                };
-                foreach (var entrance in entrances.OrderBy(e => entrances.IndexOf(randomized.ItemList[e].NewLocation.Value)))
-                {
-                    dungeonEntrances.Add(randomized.ItemList[entrance].NewLocation.Value, entrance);
-                }
+                entrances.Add(Item.AreaWoodFallTempleAccess);
+                entrances.Add(Item.AreaSnowheadTempleAccess);
+                entrances.Add(Item.AreaGreatBayTempleAccess);
+                entrances.Add(Item.AreaInvertedStoneTowerTempleAccess);
             }
+            if (settings.RandomizeBossRooms)
+            {
+                entrances.Add(Item.AreaOdolwasLair);
+                entrances.Add(Item.AreaGohtsLair);
+                entrances.Add(Item.AreaGyorgsLair);
+                entrances.Add(Item.AreaTwinmoldsLair);
+            }
+            foreach (var entrance in entrances.OrderBy(e => entrances.IndexOf(randomized.ItemList[e].NewLocation.Value)))
+            {
+                dungeonEntrances.Add(randomized.ItemList[entrance].NewLocation.Value, entrance);
+            }
+
             var settingsString = settings.ToString();
 
             var directory = Path.GetDirectoryName(outputSettings.OutputROMFilename);
@@ -64,12 +73,14 @@ namespace MMR.Randomizer.Utils
             var plainTextRegex = new Regex("[^a-zA-Z0-9' .\\-]+");
             Spoiler spoiler = new Spoiler()
             {
-                Version = Randomizer.AssemblyVersion + " + Isghj's Enemizer Test 55.1",
+                Version = Randomizer.AssemblyVersion + " + Isghj's Enemizer Test 56.0a",
                 SettingsString = settingsString,
                 Seed = randomized.Seed,
                 DungeonEntrances = dungeonEntrances,
                 ItemList = itemList.ToList(),
                 Logic = randomized.Logic,
+                BlitzExtraItems = randomized.BlitzExtraItems.AsReadOnly(),
+                Spheres = randomized.Spheres,
                 GossipHints = randomized.GossipQuotes?.ToDictionary(me => (GossipQuote) me.Id, (me) =>
                 {
                     var message = me.Message.Substring(1);
@@ -89,7 +100,7 @@ namespace MMR.Randomizer.Utils
                         // junk
                         message = "JUNK - " + message;
                     }
-                    return plainTextRegex.Replace(message.Replace("\x11", " "), "");
+                    return plainTextRegex.Replace(message.Replace("\x11", " ").Replace("\x10", " "), "");
                 }),
                 MessageCosts = randomized.MessageCosts.Select((mc, i) =>
                 {
@@ -147,6 +158,16 @@ namespace MMR.Randomizer.Utils
             log.AppendLine($"{"Seed:",-17} {spoiler.Seed}");
             log.AppendLine();
 
+            if (spoiler.BlitzExtraItems.Any())
+            {
+                log.AppendLine(" Blitz Starting Items");
+                foreach (var remain in spoiler.BlitzExtraItems)
+                {
+                    log.AppendLine(remain.Name());
+                }
+                log.AppendLine("");
+            }
+
             if (spoiler.DungeonEntrances.Any())
             {
                 log.AppendLine($" {"Entrance",-21}    {"Destination"}");
@@ -165,6 +186,10 @@ namespace MMR.Randomizer.Utils
                 log.AppendLine($" {region.Key.Name()}");
                 foreach (var item in region.OrderBy(item => item.NewLocationName))
                 {
+                    if (item.IsLocationJunked)
+                    {
+                        log.Append("- ");
+                    }
                     log.AppendLine($"{item.NewLocationName,-50} -> {item.Name}" + (item.IsImportant ? "*" : "") + (item.IsRequired ? "*" : item.IsImportantSong ? "^" : ""));
                 }
             }
@@ -189,6 +214,26 @@ namespace MMR.Randomizer.Utils
                 foreach (var hint in spoiler.GossipHints.OrderBy(h => h.Key.ToString()))
                 {
                     log.AppendLine($"{hint.Key,-25} -> {hint.Value}");
+                }
+            }
+
+
+            if (spoiler.Spheres != null && spoiler.Spheres.Any())
+            {
+                log.AppendLine();
+                log.AppendLine();
+                log.AppendLine(" Playthrough");
+
+                log.AppendLine($"{"Sphere", -10} {"Location",-50}    {"Item"}");
+                var i = 0;
+                foreach (var sphere in spoiler.Spheres)
+                {
+                    foreach (var (item, location) in sphere)
+                    {
+                        log.AppendLine($"{i,-10} {location,-50} -> {item}");
+                    }
+                    log.AppendLine();
+                    i++;
                 }
             }
 

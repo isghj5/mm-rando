@@ -6,6 +6,8 @@ using MMR.Randomizer.Attributes.Entrance;
 using System.Collections.Generic;
 using System.Linq;
 using MMR.Randomizer.Models.Settings;
+using System;
+using MMR.Randomizer.Models;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -31,9 +33,10 @@ namespace MMR.Randomizer.Extensions
             return item.GetAttribute<GetBottleItemIndicesAttribute>()?.Indices;
         }
 
+        private static IReadOnlyDictionary<Item, string> _names = Enum.GetValues<Item>().ToDictionary(x => x, x => x.GetAttribute<ItemNameAttribute>()?.Name);
         public static string Name(this Item item)
         {
-            return item.GetAttribute<ItemNameAttribute>()?.Name;
+            return _names.GetValueOrDefault(item);
         }
 
         public static string ProgressiveUpgradeName(this Item item, bool progressiveUpgradesEnabled)
@@ -60,28 +63,89 @@ namespace MMR.Randomizer.Extensions
                 {
                     return "Bow Upgrade";
                 }
+                if (item == Item.SongLullaby || item == Item.SongLullabyIntro)
+                {
+                    return "Goron Lullaby Upgrade";
+                }
             }
             return item.Name();
         }
 
-        public static string Location(this Item item)
+        public static string Location(this Item item, ItemList itemList = null)
         {
-            return item.GetAttribute<LocationNameAttribute>()?.Name;
+            var locationAttribute = item.GetAttribute<LocationNameAttribute>();
+            if (locationAttribute == null)
+            {
+                return null;
+            }
+            if (itemList == null)
+            {
+                return locationAttribute.Name;
+            }
+
+            var reference = item.GetAttribute<RegionAttribute>()?.Reference;
+            if (reference == null)
+            {
+                return locationAttribute.Name;
+            }
+
+            var referenceNewLocation = itemList[reference.Value].NewLocation ?? reference.Value;
+            var itemCategory = item.GetAttribute<ItemPoolAttribute>()?.ItemCategory;
+
+            var alteredLocation = Enum.GetValues<Item>()
+                .Where(x => x.GetAttribute<ItemPoolAttribute>()?.ItemCategory == itemCategory)
+                .FirstOrDefault(x => x.GetAttribute<RegionAttribute>().Reference == referenceNewLocation);
+
+            return alteredLocation.Location();
         }
 
-        public static Region? Region(this Item item)
+        private static IReadOnlyDictionary<Item, RegionAttribute> _regionAttributes = Enum.GetValues<Item>().ToDictionary(x => x, x => x.GetAttribute<RegionAttribute>());
+        public static Region? Region(this Item item, ItemList itemList)
         {
-            return item.GetAttribute<RegionAttribute>()?.Region;
+            var regionAttribute = _regionAttributes.GetValueOrDefault(item);
+            if (regionAttribute == null)
+            {
+                return null;
+            }
+            if (regionAttribute.Region != null)
+            {
+                return regionAttribute.Region;
+            }
+            if (regionAttribute.Reference != null)
+            {
+                var reference = regionAttribute.Reference.Value;
+                var newLocation = itemList[reference].NewLocation ?? reference;
+                return newLocation.Region(itemList);
+            }
+            throw new System.Exception($"{nameof(RegionAttribute)} must have either {nameof(RegionAttribute.Region)} or {nameof(RegionAttribute.Reference)}");
         }
 
+        public static Region RegionForDirectHint(this Item location, ItemList itemList)
+        {
+            Item[] multiRegionLocations;
+            if ((multiRegionLocations = location.GetAttribute<MultiLocationAttribute>()?.Locations) != null)
+            {
+                location = multiRegionLocations[0];
+            }
+
+            return location.Region(itemList).Value;
+        }
+
+        public static RegionArea? RegionArea(this Item item, ItemList itemList)
+        {
+            return item.GetAttribute<RegionAreaAttribute>()?.RegionArea ?? item.Region(itemList)?.RegionArea();
+        }
+
+        private static IReadOnlyDictionary<Item, Item?> _mainLocations = Enum.GetValues<Item>().ToDictionary(x => x, x => x.GetAttribute<MainLocationAttribute>()?.Location);
         public static Item? MainLocation(this Item item)
         {
-            return item.GetAttribute<MainLocationAttribute>()?.Location;
+            return _mainLocations.GetValueOrDefault(item);
         }
 
+        private static IReadOnlyDictionary<Item, string> _entrances = Enum.GetValues<Item>().ToDictionary(x => x, x => x.GetAttribute<EntranceNameAttribute>()?.Name);
         public static string Entrance(this Item item)
         {
-            return item.GetAttribute<EntranceNameAttribute>()?.Name;
+            return _entrances.GetValueOrDefault(item);
         }
 
         public static ShopTextAttribute ShopTexts(this Item item)
@@ -145,6 +209,13 @@ namespace MMR.Randomizer.Extensions
             return item.Name() == null;
         }
 
+        public static bool CanBeStartedWith(this Item item)
+        {
+            return item.HasAttribute<StartingTingleMapAttribute>()
+                || item.HasAttribute<StartingItemIdAttribute>()
+                || item.HasAttribute<StartingItemAttribute>();
+        }
+
         public static IList<DungeonEntrance> DungeonEntrances(this Item item)
         {
             if (!item.HasAttribute<DungeonEntranceAttribute>())
@@ -161,14 +232,34 @@ namespace MMR.Randomizer.Extensions
             return result;
         }
 
-        public static bool IsOverwritable(this Item item)
+        public static OverwritableAttribute.ItemSlot OverwriteableSlot(this Item item, GameplaySettings settings)
         {
-            return item.HasAttribute<OverwritableAttribute>();
+            var overwriteableAttribute = item.GetAttribute<OverwritableAttribute>();
+            if (overwriteableAttribute?.Condition(settings) == true)
+            {
+                return overwriteableAttribute.Slot;
+            }
+            return OverwritableAttribute.ItemSlot.None;
         }
 
         public static bool IsSong(this Item item)
         {
-            return (Item.SongTime <= item && item <= Item.SongOath);
+            return (Item.SongTime <= item && item <= Item.SongOath)
+                || item == Item.SongLullabyIntro
+                || (item.MainLocation().HasValue && item.MainLocation().Value.IsSong());
+        }
+
+        public static bool IsPlacementHighlyRestricted(this Item item, GameplaySettings settings)
+        {
+            if (!settings.AddSongs && item.IsSong())
+            {
+                return true;
+            }
+            if (settings.BossRemainsMode.HasFlag(BossRemainsMode.ShuffleOnly) && item.ItemCategory() == GameObjects.ItemCategory.BossRemains)
+            {
+                return true;
+            }
+            return false;
         }
 
         public static ChestTypeAttribute.ChestType ChestType(this Item item)
@@ -199,8 +290,8 @@ namespace MMR.Randomizer.Extensions
                 Flag = item.GetAttribute<ExclusiveItemAttribute>().Flags,
                 Index = item.GetAttribute<ExclusiveItemGraphicAttribute>().Graphic,
                 Type = item.GetAttribute<ExclusiveItemAttribute>().Type,
-                Message = (short)item.GetAttribute<ExclusiveItemMessageAttribute>().Id,
-                Object = (short)item.GetAttribute<ExclusiveItemGraphicAttribute>().Object,
+                Message = item.GetAttribute<ExclusiveItemMessageAttribute>().Id,
+                Object = item.GetAttribute<ExclusiveItemGraphicAttribute>().Object,
             };
         }
 
@@ -218,6 +309,11 @@ namespace MMR.Randomizer.Extensions
         public static bool IsSameType(this Item item, Item other)
         {
             return item.IsBottleCatchContent() == other.IsBottleCatchContent();
+        }
+
+        public static bool IsBlockingBombTrapPlacement(this Item item)
+        {
+            return item.HasAttribute<BlockBombTrapPlacementAttribute>();
         }
     }
 }

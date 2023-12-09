@@ -22,7 +22,7 @@ GetItemEntry* MMR_GetGiEntry(u16 index);
 bool MMR_GetGiFlag(u16 giIndex);
 void MMR_Init(void);
 u16 MMR_GetNewGiIndex(GlobalContext* ctxt, Actor* actor, u16 giIndex, bool grant);
-void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex);
+void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex, bool continueTextbox);
 void MMR_ClearItemQueue();
 void MMR_ProcessItemQueue(GlobalContext* ctxt);
 void MMR_GiveItemToHold(Actor* actor, GlobalContext* ctxt, u16 giIndex);
@@ -65,7 +65,9 @@ typedef struct {
     /* 0x120 */ u16 quiverSmall;
     /* 0x122 */ u16 quiverLarge;
     /* 0x124 */ u16 quiverLargest;
-} MMRLocations; // size = 0x126
+    /* 0x126 */ u16 lullaby;
+    /* 0x128 */ u16 lullabyIntro;
+} MMRLocations; // size = 0x12A
 
 typedef struct {
     /* 0x00 */ u8 ids[0x10]; // Probably don't need much more than this, but can increase later if we need to.
@@ -73,9 +75,9 @@ typedef struct {
 } ExtraStartingItems; // size = 0x12
 
 typedef struct {
-    /* 0x00 */ u16 ids[0x10];
-    /* 0x20 */ u16 length;
-} ItemsToReturn; // size = 0x22
+    /* 0x00 */ u16 ids[0x1F];
+    /* 0x3E */ u16 length;
+} ItemsToReturn; // size = 0x40
 
 typedef union {
     struct {
@@ -95,11 +97,11 @@ struct MMRConfig {
     /* 0x000 */ u32 magic;
     /* 0x004 */ u32 version;
     /* 0x008 */ MMRLocations locations;
-    /* 0x12C */ ExtraStartingMaps extraStartingMaps;
-    /* 0x12D */ u8 unused12D; // Padding.
-    /* 0x12E */ ExtraStartingItems extraStartingItems;
-    /* 0x140 */ ItemsToReturn itemsToReturn;
-}; // size = 0x162
+    /* 0x132 */ ExtraStartingMaps extraStartingMaps;
+    /* 0x133 */ u8 unused12D; // Padding.
+    /* 0x134 */ ExtraStartingItems extraStartingItems;
+    /* 0x146 */ ItemsToReturn itemsToReturn;
+}; // size = 0x168
 
 extern struct MMRConfig MMR_CONFIG;
 

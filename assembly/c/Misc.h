@@ -21,6 +21,13 @@ enum AutoInvertState {
     AUTO_INVERT_ALWAYS,
 };
 
+enum ChestGameMiniMapState {
+    CHESTGAME_MINIMAP_OFF,
+    CHESTGAME_MINIMAP_MINIMAL,
+    CHESTGAME_MINIMAP_CONDITIONAL,
+    CHESTGAME_MINIMAP_SPOILER,
+};
+
 // Magic number for misc_config: "MISC"
 #define MISC_CONFIG_MAGIC 0x4D495343
 
@@ -33,14 +40,12 @@ typedef struct {
     u32 questItemStorage    : 1;
     // Version 1 flags
     u32 closeCows           : 1;
-    u32 freestanding        : 1;
     u32 questConsume        : 2;
     u32 arrowCycle          : 1;
     u32 arrowMagicShow      : 1;
     // Version 2 flags
     u32 elegySpeedup        : 1;
     u32 continuousDekuHop   : 1;
-    u32 shopModels          : 1;
     u32 progressiveUpgrades : 1;
     u32 iceTrapQuirks       : 1;
     u32 mikauEarlyBeach     : 1;
@@ -51,7 +56,17 @@ typedef struct {
     u32 fillWallet          : 1;
     u32 autoInvert          : 2;
     u32 hiddenRupeesSparkle : 1;
-    u32                     : 6;
+    u32 saferGlitches       : 1;
+    u32 bombchuDrops        : 1;
+    u32 instantTransform    : 1;
+    u32 bombArrows          : 1;
+    u32 giantMaskAnywhere   : 1;
+    u32 fewerHealthDrops    : 1;
+    u32 ironGoron           : 1;
+    u32 easyFrameByFrame    : 1;
+    u32 fairyMaskShimmer    : 1;
+    u32 skullTokenSounds    : 1;
+    u32                     : 30;
 } MiscFlags;
 
 typedef union {
@@ -63,20 +78,33 @@ typedef union {
 typedef struct {
     // Version 1 flags
     u32 vanillaLayout             : 1;
-    u32                           : 31;
+    u32 victoryDirectToCredits    : 1;
+    u32 victoryCantFightMajora    : 1;
+    u32 victoryFairies            : 1;
+    u32 victorySkullTokens        : 1;
+    u32 victoryNonTransformMasks  : 1;
+    u32 victoryTransformMasks     : 1;
+    u32 victoryNotebook           : 1;
+    u32 victoryHearts             : 1;
+    u32 victoryBossRemains        : 1;
+    u32                           : 22;
 } MiscInternal;
 
 typedef struct {
     // Version 3 flags
-    u32 soundCheck     : 1;
-    u32 blastMaskThief : 1;
-    u32 fishermanGame  : 1;
-    u32 boatArchery    : 1;
-    u32 donGero        : 1;
-    u32 fastBankRupees : 1;
-    u32 doubleArchery  : 1;
-    u32 multiBank      : 1;
-    u32                : 24;
+    u32 soundCheck          : 1;
+    u32 blastMaskThief      : 1;
+    u32 fishermanGame       : 1;
+    u32 boatArchery         : 1;
+    u32 donGero             : 1;
+    u32 fastBankRupees      : 1;
+    u32 doubleArchery       : 1;
+    u32 multiBank           : 1;
+    u32 shortChestOpening   : 1;
+    u32 chestGameMinimap    : 2;
+    u32 skipGiantsCutscene  : 1;
+    u32 oathHint            : 1;
+    u32                     : 19;
 } MiscSpeedups;
 
 typedef struct {
@@ -84,15 +112,44 @@ typedef struct {
     u16 bankWithdrawFee;
 } MiscShorts;
 
+typedef struct {
+    u8 npcKafeiReplaceMask;
+    u8 requiredBossRemains;
+    u8 pad[2];
+} MiscBytes;
+
+typedef struct {
+    u32 freestanding        : 1;
+    u32 drawDonGeroMask     : 1;
+    u32 drawPostmanHat      : 1;
+    u32 drawMaskOfTruth     : 1;
+    u32 drawGaroMask        : 1;
+    u32 drawPendant         : 1;
+    u32 shopModels          : 1;
+    u32                     : 25;
+} MiscDrawFlags;
+
+typedef struct {
+    /* 0x00 */ u16 oldObjectId;
+    /* 0x02 */ u8 oldGraphicId;
+    /* 0x03 */ u8 padding03;
+    /* 0x04 */ u16 newObjectId;
+    /* 0x06 */ u16 padding06;
+    /* 0x08 */ u32 displayListOffset;
+} MiscSmithyModel; // size = 0xC;
+
 struct MiscConfig {
     /* 0x00 */ u32 magic;
     /* 0x04 */ u32 version;
     /* 0x08 */ MiscHash hash;
     /* 0x18 */ MiscFlags flags;
-    /* 0x1C */ MiscInternal internal;
-    /* 0x20 */ MiscSpeedups speedups;
-    /* 0x24 */ MiscShorts shorts;
-}; // size = 0x28
+    /* 0x20 */ MiscInternal internal;
+    /* 0x24 */ MiscSpeedups speedups;
+    /* 0x28 */ MiscShorts shorts;
+    /* 0x2C */ MiscBytes MMRbytes;
+    /* 0x30 */ MiscDrawFlags drawFlags;
+    /* 0x34 */ MiscSmithyModel smithyModels[10];
+}; // size = 0x34
 
 extern struct MiscConfig MISC_CONFIG;
 

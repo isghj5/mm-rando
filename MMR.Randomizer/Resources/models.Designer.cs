@@ -163,6 +163,96 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] envcolour_adultlink_mod {
+            get {
+                object obj = ResourceManager.GetObject("envcolour_adultlink_mod", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] envcolour_dekulink_mod {
+            get {
+                object obj = ResourceManager.GetObject("envcolour_dekulink_mod", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] envcolour_fdlink_mod {
+            get {
+                object obj = ResourceManager.GetObject("envcolour_fdlink_mod", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] envcolour_goronlink_mod {
+            get {
+                object obj = ResourceManager.GetObject("envcolour_goronlink_mod", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] envcolour_humanlink_mod {
+            get {
+                object obj = ResourceManager.GetObject("envcolour_humanlink_mod", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] envcolour_zoralink_mod {
+            get {
+                object obj = ResourceManager.GetObject("envcolour_zoralink_mod", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] gameplay_keep_swordenvs {
+            get {
+                object obj = ResourceManager.GetObject("gameplay_keep_swordenvs", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] gameplaykeep_fincolors {
+            get {
+                object obj = ResourceManager.GetObject("gameplaykeep_fincolors", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] gi_frog {
+            get {
+                object obj = ResourceManager.GetObject("gi_frog", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] gi_link_mask {
             get {
                 object obj = ResourceManager.GetObject("gi_link_mask", resourceCulture);

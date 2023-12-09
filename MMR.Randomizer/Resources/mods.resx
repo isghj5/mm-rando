@@ -118,8 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="add_bombchu_drops" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\add-bombchu-drops.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="byo_ammo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\byo-ammo;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chestgame_minimap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\chestgame-minimap.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="chest_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\chest-table;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -175,6 +181,9 @@
   <data name="faster_bank_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\faster-bank-text;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="faster_bank_text_restore_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\faster-bank-text-restore-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="fierce_deity_anywhere" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fierce-deity-anywhere;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -192,6 +201,9 @@
   </data>
   <data name="fix_deku_drowning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-deku-drowning;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_deku_playground_softlock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-deku-playground-softlock.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="fix_deku_princess" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-deku-princess;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -232,8 +244,17 @@
   <data name="fix_link_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-link-3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="fix_moon_trial_access" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-moon-trial-access.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="fix_music" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-music;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_notebook_madame_aroma" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-notebook-madame-aroma.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_object_stk2_zbuffer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-object-stk2-zbuffer.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="fix_ocarina_checks" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-ocarina-checks;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -274,6 +295,9 @@
   <data name="fix_sword_song_of_time" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-sword-song-of-time;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="fix_town_fairy_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-town-fairy-text.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="floor_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\floor-1;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -292,8 +316,17 @@
   <data name="garo_hints" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\garo-hints.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="giant_mask_anywhere" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\giant-mask-anywhere.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="gi_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\gi-table;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gossip_hints_free" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\gossip-hints-free.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gossip_hints_tolerant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\gossip-hints-tolerant.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="hookshot_any_surface" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\hookshot-any-surface.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -328,6 +361,9 @@
   <data name="misc_changes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\misc-changes;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="misc_changes_restore_swamp_owl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\misc-changes-restore-swamp-owl.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="moveaudiostatebytes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\moveaudiostatebytes;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -355,6 +391,12 @@
   <data name="reloc_audio" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\reloc-audio;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="remove_fanfares" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\remove-fanfares.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="remove_minor_music" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\remove-minor-music.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="remove_morning_music" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\remove-morning-music;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -363,6 +405,30 @@
   </data>
   <data name="replace_gi_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\replace-gi-table;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="safer_glitches_fierce_deity" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\safer-glitches-fierce-deity.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="safer_glitches_fix_0thday_erase" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\safer-glitches-fix-0thday-erase.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="safer_glitches_fix_4thday_gossip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\safer-glitches-fix-4thday-gossip.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="safer_glitches_fix_4thday_mayor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\safer-glitches-fix-4thday-mayor.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="safer_glitches_fix_goron_bow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\safer-glitches-fix-goron-bow.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="safer_glitches_index_warp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\safer-glitches-index-warp.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="safer_glitches_sodt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\safer-glitches-sodt.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="safer_glitches_tatl_text_zero_fourth_day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\safer-glitches-tatl-text-zero-fourth-day.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="shorten_cutscene_don_gero" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\shorten-cutscene-don-gero.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -379,14 +445,32 @@
   <data name="shorten_cutscene_gyorg_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\shorten-cutscene-gyorg-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="shorten_cutscene_hold_a_auto_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-hold-a-auto-text.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="shorten_cutscene_igos_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\shorten-cutscene-igos-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shorten_cutscene_jim_running" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-jim-running.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shorten_cutscene_kotake" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-kotake.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="shorten_cutscene_majora_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\shorten-cutscene-majora-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="shorten_cutscene_odolwa_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\shorten-cutscene-odolwa-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shorten_cutscene_princess_delivery" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-princess-delivery.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shorten_cutscene_sun_mask" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-sun-mask.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shorten_cutscene_tingle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-tingle.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="shorten_cutscene_twinmold_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\shorten-cutscene-twinmold-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -396,6 +480,12 @@
   </data>
   <data name="short_cutscenes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\short-cutscenes;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="skulltula_token_npc_hint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\skulltula-token-npc-hint.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="speedup_babycucco_minimap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\speedup-babycucco-minimap.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="speedup_bank" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\speedup-bank;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -415,14 +505,23 @@
   <data name="standing_hearts" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\standing-hearts;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="tatl_remains_hint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\tatl-remains-hint.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="title_screen" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\title-screen;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="update_chests" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\update-chests;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="update_chest_cutscene" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\update-chest-cutscene.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="update_kafei_mask_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\update-kafei-mask-icon;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="update_remains_required" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\update-remains-required.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="update_trade_scrubs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\update-trade-scrubs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

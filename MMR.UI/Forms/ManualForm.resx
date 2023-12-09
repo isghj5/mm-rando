@@ -299,7 +299,7 @@ This option will change which dungeon can be found in each of the four areas. It
 Songs will be shuffled with the items, allowing songs to be found in item locations and vice versa.
 
 3. Progressive Upgrades
-When you find a sword, wallet, bomb bag, bow/quiver or magic power that game will give you the next upgrade based on your inventory.
+When you find a sword, wallet, bomb bag, bow/quiver, magic power or the Goron Lullaby the game will give you the next upgrade based on your inventory.
 
 4. Enemies
 Switches out enemies with others of a similar type. Working but not perfect - some scenes are currently excluded due to extra logic needed for proper functionality (Woodfall Temple, Ikana Graveyard, Sakon's Hideout, Inverted Stone Tower Temple).

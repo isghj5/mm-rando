@@ -22,6 +22,7 @@ namespace MMR.DiscordBot.Modules
         public UserSeedRepository UserSeedRepository { get; set; }
         public GuildModRepository GuildModRepository { get; set; }
         public TournamentChannelRepository TournamentChannelRepository { get; set; }
+        public TournamentSeedRepository TournamentSeedRepository { get; set; }
         public LogChannelRepository LogChannelRepository { get; set; }
 
         private readonly MMRBaseService _mmrService;
@@ -30,12 +31,6 @@ namespace MMR.DiscordBot.Modules
         {
             _mmrService = mmrService;
         }
-
-        //private readonly IReadOnlyCollection<ulong> _tournamentChannels = new List<ulong>
-        //{
-        //    709731024375906316, // ZoeyZolotova - tournament-admin
-        //    871199781454757969, // MMR - Season 2 Brackets - #bracket-seeds
-        //}.AsReadOnly();
 
         protected virtual void AddHelp(Dictionary<string, string> commands)
         {
@@ -59,7 +54,7 @@ namespace MMR.DiscordBot.Modules
 
         protected async Task<Discord.Rest.RestUserMessage> ReplySendFileAsync(string filepath)
         {
-            var messageReference = new MessageReference(Context.Message.Id, Context.Channel.Id, Context.Guild.Id);
+            var messageReference = new MessageReference(Context.Message.Id, Context.Channel.Id, Context.Guild?.Id);
             return await Context.Channel.SendFileAsync(filepath, allowedMentions: AllowedMentions.None, messageReference: messageReference);
         }
 
@@ -91,7 +86,9 @@ namespace MMR.DiscordBot.Modules
 
             if (await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
             {
-                commands.Add("seed (<@user>){2,}", "Generate a seed. The patch and hashIcons will be sent in a direct message to the tagged users. The spoiler log will be sent to you.");
+                commands.Add("seed (<settingName>)? (<@user>){2,}", "Generate a seed. Optionally provide a setting name. The patch and hashIcons will be sent in a direct message to the tagged users. The spoiler log will be sent to you.");
+                commands.Add("prepare (<settingName>)?", "Generate a seed. Optionally provide a setting name. The patch, hashIcons and spoiler log will be stored until send by the `send` command.");
+                commands.Add("send (<@user>){2,}", "Send a prepared seed. The patch and hashIcons will be sent in a direct message to the tagged users. The spoiler log will be sent to you.");
             }
             else
             {
@@ -102,7 +99,6 @@ namespace MMR.DiscordBot.Modules
                 else
                 {
                     commands.Add("seed (<settingName>)?", "Generate a seed. Optionally provide a setting name.");
-                    commands.Add("mystery <categoryName>", "Generate a seed using a random setting from the <categoryName> mystery category.");
                 }
                 commands.Add("spoiler", "Retrieve the spoiler log for your last generated seed.");
             }
@@ -133,27 +129,22 @@ namespace MMR.DiscordBot.Modules
             await ReplyNoTagAsync("List of commands: (all commands begin with \"!mmr\")\n" + string.Join('\n', commands.Select(kvp => $"`{kvp.Key}` - {kvp.Value}")));
         }
 
-        private async Task TournamentSeed()
+        private async Task PrepareTournamentSeed(string settingPath)
         {
-            // Tournament seed
-            var mentionedUsers = Context.Message.MentionedUsers.DistinctBy(u => u.Id);
-            if (mentionedUsers.Any(u => u.Id == Context.User.Id))
+            var now = DateTime.UtcNow;
+            var tournamentSeedEntity = new TournamentSeedEntity
             {
-                await ReplyNoTagAsync("Cannot generate a seed for yourself.");
-                return;
-            }
-            if (mentionedUsers.Count() < 2)
-            {
-                await ReplyNoTagAsync("Must mention at least two users.");
-                return;
-            }
+                UserId = Context.User.Id,
+                DateTime = now
+            };
+            await TournamentSeedRepository.Save(tournamentSeedEntity);
             var tournamentSeedReply = await ReplyNoTagAsync("Generating seed...");
-            await LogToDiscord($"User {Context.User.Username} requested a tournament seed.");
+            await LogToDiscord($"User {Context.User.Username} requested to prepare a tournament seed.");
             new Thread(async () =>
             {
                 try
                 {
-                    var (patchPath, hashIconPath, spoilerLogPath, _) = await _mmrService.GenerateSeed(DateTime.UtcNow, null, async (i) =>
+                    var (patchPath, hashIconPath, spoilerLogPath, version) = await _mmrService.GenerateSeed(now, settingPath, async (i) =>
                     {
                         if (i < 0)
                         {
@@ -166,7 +157,106 @@ namespace MMR.DiscordBot.Modules
                     });
                     if (File.Exists(patchPath) && File.Exists(hashIconPath) && File.Exists(spoilerLogPath))
                     {
-                        foreach (var user in mentionedUsers)
+                        tournamentSeedEntity.Version = version;
+                        await TournamentSeedRepository.Save(tournamentSeedEntity);
+                        await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "Success.");
+                        await LogToDiscord($"User {Context.User.Username} tournament seed successfully prepared.");
+                    }
+                    else
+                    {
+                        throw new Exception("MMR.CLI succeeded, but output files not found.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await TournamentSeedRepository.DeleteById(Context.User.Id);
+                    await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "An error occurred.");
+                    await LogToDiscord($"User {Context.User.Username} tournament seed failed to generate. Error: {ex.Message}");
+                }
+            }).Start();
+        }
+
+        private async Task SendPreparedTournamentSeed(DateTime dateTime, string version, IUser[] users)
+        {
+            if (users.Any(u => u.Id == Context.User.Id))
+            {
+                await ReplyNoTagAsync("Cannot send a seed to yourself.");
+                return;
+            }
+            if (users.Count() < 2)
+            {
+                await ReplyNoTagAsync("Must mention at least two users.");
+                return;
+            }
+
+            var tournamentSeedReply = await ReplyNoTagAsync("Sending seed...");
+            await LogToDiscord($"User {Context.User.Username} requested to send a prepared tournament seed.");
+            var (_, patchPath, hashIconPath, spoilerLogPath, _) = _mmrService.GetSeedPaths(dateTime, version);
+            try
+            {
+                if (File.Exists(patchPath) && File.Exists(hashIconPath) && File.Exists(spoilerLogPath))
+                {
+                    foreach (var user in users)
+                    {
+                        await user.SendFileAsync(patchPath, "Here is your tournament match seed! Please be sure your Hash matches and let an organizer know if you have any issues before you begin.");
+                        await user.SendFileAsync(hashIconPath);
+                    }
+                    await Context.User.SendFileAsync(spoilerLogPath);
+                    await Context.User.SendFileAsync(hashIconPath);
+                    await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "Success.");
+                    await LogToDiscord($"User {Context.User.Username} successfully sent a prepared tournament seed.");
+                }
+                else
+                {
+                    throw new Exception("Files not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "An error occurred.");
+                await LogToDiscord($"User {Context.User.Username} failed to send a prepared tournament seed. Error: {ex.Message}");
+            }
+            finally
+            {
+                File.Delete(spoilerLogPath);
+                File.Delete(patchPath);
+                File.Delete(hashIconPath);
+                await TournamentSeedRepository.DeleteById(Context.User.Id);
+            }
+        }
+
+        private async Task TournamentSeed(string settingPath, IUser[] users)
+        {
+            if (users.Any(u => u.Id == Context.User.Id))
+            {
+                await ReplyNoTagAsync("Cannot generate a seed for yourself.");
+                return;
+            }
+            if (users.Count() < 2)
+            {
+                await ReplyNoTagAsync("Must mention at least two users.");
+                return;
+            }
+            var tournamentSeedReply = await ReplyNoTagAsync("Generating seed...");
+            await LogToDiscord($"User {Context.User.Username} requested a tournament seed.");
+            new Thread(async () =>
+            {
+                try
+                {
+                    var (patchPath, hashIconPath, spoilerLogPath, _) = await _mmrService.GenerateSeed(DateTime.UtcNow, settingPath, async (i) =>
+                    {
+                        if (i < 0)
+                        {
+                            await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "Generating seed...");
+                        }
+                        else
+                        {
+                            await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = $"You are number {i + 1} in the queue.");
+                        }
+                    });
+                    if (File.Exists(patchPath) && File.Exists(hashIconPath) && File.Exists(spoilerLogPath))
+                    {
+                        foreach (var user in users)
                         {
                             await user.SendFileAsync(patchPath, "Here is your tournament match seed! Please be sure your Hash matches and let an organizer know if you have any issues before you begin.");
                             await user.SendFileAsync(hashIconPath);
@@ -186,7 +276,7 @@ namespace MMR.DiscordBot.Modules
                 }
                 catch (Exception ex)
                 {
-                    await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "An error occured.");
+                    await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "An error occurred.");
                     await LogToDiscord($"User {Context.User.Username} tournament seed failed to generate. Error: {ex.Message}");
                 }
             }).Start();
@@ -258,28 +348,123 @@ namespace MMR.DiscordBot.Modules
             }).Start();
         }
 
-        [Command("seed")]
-        public async Task Seed([Remainder] string settingName = null)
+        private async Task<(string settingPath, bool success)> GetSettingPath(string settingName)
         {
+            if (string.IsNullOrWhiteSpace(settingName))
+            {
+                return (null, true);
+            }
+
+            if (Context.Guild == null)
+            {
+                await ReplyNoTagAsync("Settings are unavailable in direct messages.");
+                return (null, false);
+            }
+
+            var settingPath = _mmrService.GetSettingsPath(Context.Guild.Id, settingName);
+            if (File.Exists(settingPath))
+            {
+                return (settingPath, true);
+            }
+
+            var mysteryPath = _mmrService.GetMysteryPath(Context.Guild.Id, settingName, false);
+            if (Directory.Exists(mysteryPath))
+            {
+                var settingFiles = Directory.EnumerateFiles(mysteryPath).ToList();
+                settingPath = settingFiles.RandomOrDefault(new Random());
+                if (settingPath != default)
+                {
+                    return (settingPath, true);
+                }
+            }
+
+            await ReplyNoTagAsync("Setting not found.");
+            return (null, false);
+        }
+
+        [Command("prepare")]
+        public async Task PrepareSeed(string settingName = null)
+        {
+            if (!await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
+            {
+                return;
+            }
+
+            var (settingPath, success) = await GetSettingPath(settingName);
+            if (!success)
+            {
+                return;
+            }
+
+            var tournamentSeed = await TournamentSeedRepository.GetById(Context.User.Id);
+            if (tournamentSeed != null)
+            {
+                if (string.IsNullOrWhiteSpace(tournamentSeed.Version))
+                {
+                    await ReplyNoTagAsync("Seed is still generating.");
+                }
+                else
+                {
+                    await ReplyNoTagAsync("You already have a seed prepared.");
+                }
+            }
+            else
+            {
+                await PrepareTournamentSeed(settingPath);
+            }
+        }
+
+        [Command("send")]
+        public async Task SendSeed(params IUser[] users)
+        {
+            if (!await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
+            {
+                return;
+            }
+
+            var tournamentSeed = await TournamentSeedRepository.GetById(Context.User.Id);
+            if (tournamentSeed != null)
+            {
+                if (string.IsNullOrWhiteSpace(tournamentSeed.Version))
+                {
+                    await ReplyNoTagAsync("Seed is still generating.");
+                }
+                else
+                {
+                    await SendPreparedTournamentSeed(tournamentSeed.DateTime, tournamentSeed.Version, users);
+                }
+            }
+            else
+            {
+                await ReplyNoTagAsync("You do not have a seed prepared.");
+            }
+        }
+
+        [Command("seed")]
+        public async Task Seed(params IUser[] users)
+        {
+            await Seed(null, users);
+        }
+
+        [Command("seed")]
+        public async Task Seed(string settingName = null, params IUser[] users)
+        {
+            var (settingPath, success) = await GetSettingPath(settingName);
+            if (!success)
+            {
+                return;
+            }
+
             if (await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
             {
-                await TournamentSeed();
+                await TournamentSeed(settingPath, users);
                 return;
             }
             if (!await VerifySeedFrequency())
             {
                 return;
             }
-            string settingPath = null;
-            if (!string.IsNullOrWhiteSpace(settingName))
-            {
-                settingPath = _mmrService.GetSettingsPath(Context.Guild.Id, settingName);
-                if (!File.Exists(settingPath))
-                {
-                    await ReplyNoTagAsync("Setting not found.");
-                    return;
-                }
-            }
+
             await GenerateSeed(settingPath);
         }
 
@@ -331,7 +516,7 @@ namespace MMR.DiscordBot.Modules
             }
 
             var settingsFile = Context.Message.Attachments.Single();
-            if (settingsFile.Size > 10000) // kinda arbitrary
+            if (settingsFile.Size > 25 * 1024) // kinda arbitrary
             {
                 await ReplyNoTagAsync("File is too large.");
                 return;
@@ -340,6 +525,13 @@ namespace MMR.DiscordBot.Modules
             if (Path.GetExtension(settingsFile.Filename) != ".json")
             {
                 await ReplyNoTagAsync("File must be a json file.");
+                return;
+            }
+
+            var mysteryPath = _mmrService.GetMysteryPath(Context.Guild.Id, settingName, false);
+            if (Directory.Exists(mysteryPath))
+            {
+                await ReplyNoTagAsync("A mystery category with that name already exists.");
                 return;
             }
 
@@ -388,15 +580,29 @@ namespace MMR.DiscordBot.Modules
         [RequireContext(ContextType.Guild)]
         public async Task ListSettings()
         {
-            var settingsPaths = _mmrService.GetSettingsPaths(Context.Guild.Id);
+            var settings = _mmrService.GetSettingsPaths(Context.Guild.Id)
+                .Select(p => Path.GetFileNameWithoutExtension(p))
+                .ToList();
 
-            if (!settingsPaths.Any())
+            var mysteryRoot = _mmrService.GetMysteryRoot(Context.Guild.Id);
+            if (Directory.Exists(mysteryRoot))
+            {
+                var mysteryCategories = Directory.EnumerateDirectories(mysteryRoot);
+
+                settings.AddRange(mysteryCategories.Select(categoryFolder =>
+                {
+                    var fileCount = Directory.EnumerateFiles(categoryFolder).Count();
+                    return $"{Path.GetFileNameWithoutExtension(categoryFolder)} ({fileCount} file{(fileCount != 1 ? "s" : "")})";
+                }));
+            }
+
+            if (!settings.Any())
             {
                 await ReplyNoTagAsync("No settings found.");
                 return;
             }
 
-            await ReplyNoTagAsync("List of settings:\n" + string.Join('\n', settingsPaths.Select(p => Path.GetFileNameWithoutExtension(p))));
+            await ReplyNoTagAsync("List of settings:\n" + string.Join('\n', settings));
         }
 
         [Command("get-settings")]
@@ -443,6 +649,13 @@ namespace MMR.DiscordBot.Modules
             if (Path.GetExtension(settingsFile.Filename) != ".json")
             {
                 await ReplyNoTagAsync("File must be a json file.");
+                return;
+            }
+
+            var settingsPath = _mmrService.GetSettingsPath(Context.Guild.Id, categoryName);
+            if (File.Exists(settingsPath))
+            {
+                await ReplyNoTagAsync("A non-mystery setting with that name already exists.");
                 return;
             }
 
@@ -495,6 +708,11 @@ namespace MMR.DiscordBot.Modules
 
             File.Delete(settingPath);
 
+            if (Directory.EnumerateFiles(mysteryPath).Count() == 0)
+            {
+                Directory.Delete(mysteryPath);
+            }
+
             await ReplyNoTagAsync("Deleted mystery setting.");
         }
 
@@ -546,8 +764,10 @@ namespace MMR.DiscordBot.Modules
         }
 
         [Command("mystery")]
+        [RequireContext(ContextType.Guild)]
         public async Task MysterySeed([Remainder] string categoryName)
         {
+            await ReplyNoTagAsync("Warning - this command is deprecated and will be removed in the future. Use the `seed` command instead.");
             if (!await VerifySeedFrequency())
             {
                 return;

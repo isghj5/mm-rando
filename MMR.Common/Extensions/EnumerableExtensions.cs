@@ -37,6 +37,12 @@ namespace MMR.Common.Extensions
             }
 
             var totalWeight = list.Sum(weight);
+
+            if (totalWeight == 0)
+            {
+                return list[random.Next(list.Count)];
+            }
+
             var selectedWeight = random.NextDouble() * totalWeight;
             double currentWeight = 0;
             
@@ -158,6 +164,51 @@ namespace MMR.Common.Extensions
                     chunkBuilder.Clear();
                 }
             }
+        }
+
+        public static byte[] FindAndReplace(this byte[] src, byte[] find, byte[] replace)
+        {
+            var result = new List<byte>();
+            var matches = FindBytes(src, find);
+            var startIndex = 0;
+            for (var i = 0; i < matches.Count; i++)
+            {
+                var index = matches[i];
+                result.AddRange(src.Skip(startIndex).Take(index - startIndex));
+                result.AddRange(replace);
+                startIndex = index + find.Length;
+            }
+            result.AddRange(src.Skip(startIndex).Take(src.Length - startIndex));
+
+            return result.ToArray();
+        }
+
+        private static List<int> FindBytes(byte[] src, byte[] find)
+        {
+            int matchIndex = 0;
+            var matches = new List<int>();
+            for (int i = 0; i < src.Length; i++)
+            {
+                if (src[i] == find[matchIndex])
+                {
+                    if (matchIndex == (find.Length - 1))
+                    {
+                        matches.Add(i - matchIndex);
+                        matchIndex = 0;
+                    }
+                    matchIndex++;
+                }
+                else if (src[i] == find[0])
+                {
+                    matchIndex = 1;
+                }
+                else
+                {
+                    matchIndex = 0;
+                }
+
+            }
+            return matches;
         }
     }
 }

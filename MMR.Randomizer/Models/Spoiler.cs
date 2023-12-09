@@ -43,6 +43,9 @@ namespace MMR.Randomizer.Models
         }
 
         public List<(string name, ushort cost)> MessageCosts { get; set; }
+
+        public ReadOnlyCollection<Item> BlitzExtraItems { get; set; }
+        public List<List<(string item, string location)>> Spheres { get; set; }
     }
 }
 

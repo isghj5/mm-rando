@@ -1,10 +1,12 @@
-﻿using MMR.Randomizer.Models;
+﻿using MMR.Randomizer.Extensions;
+using MMR.Randomizer.Models;
 using MMR.Randomizer.Utils;
 using MMR.UI.Controls;
 using MMR.UI.Forms.Tooltips;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -44,10 +46,16 @@ namespace MMR.UI.Forms
 
             }
 
+            var searchTerm = txtSearch.Text.ToLower();
+            Func<ItemObject, bool> searchPredicate = (io) => io.Name.ToLower().Contains(searchTerm) || io.TrickTooltip.ToLower().Contains(searchTerm);
+
             string currentCategory = string.Empty;
             foreach (var itemObject in tricks)
             {
-                if (!itemObject.Name.ToLower().Contains(txtSearch.Text.ToLower())) { continue; }
+                if (!searchPredicate(itemObject))
+                {
+                    continue;
+                }
                 if (itemObject.TrickCategory != null && currentCategory != itemObject.TrickCategory)
                 {
                     currentCategory = itemObject.TrickCategory;
@@ -57,7 +65,7 @@ namespace MMR.UI.Forms
                     cCategory.Size = new Size(pTricks.Width - 50, deltaY);
                     cCategory.CheckStateChanged += cTrick_CheckStateChanged;
                     cCategory.Tag = tricks
-                        .Where(io => io.TrickCategory == currentCategory && io.Name.ToLower().Contains(txtSearch.Text.ToLower()))
+                        .Where(io => io.TrickCategory == currentCategory && searchPredicate(io))
                         .Select(io => io.Name)
                         .ToHashSet();
                     pTricks.Controls.Add(cCategory);
@@ -67,11 +75,31 @@ namespace MMR.UI.Forms
                 cTrick.Tag = new HashSet<string> { itemObject.Name };
                 cTrick.Checked = Result.Contains(itemObject.Name);
                 cTrick.Text = itemObject.Name;
+                var size = TextRenderer.MeasureText(itemObject.Name, cTrick.Font);
                 TooltipBuilder.SetTooltip(cTrick, itemObject.TrickTooltip);
                 cTrick.Location = new Point(18, y);
-                cTrick.Size = new Size(pTricks.Width - 50, deltaY);
+                cTrick.Size = new Size(size.Width + 20, deltaY);
                 cTrick.CheckStateChanged += cTrick_CheckStateChanged;
                 pTricks.Controls.Add(cTrick);
+                if (itemObject.TrickUrl.IsValidTrickUrl())
+                {
+                    var link = new Label
+                    {
+                        Text = "Video",
+                        Location = new Point(18 + size.Width + 20, y + 3)
+                    };
+                    link.Font = new Font(link.Font, FontStyle.Underline);
+                    link.ForeColor = Color.Blue;
+                    link.Click += (object sender, EventArgs e) =>
+                    {
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = itemObject.TrickUrl,
+                            UseShellExecute = true,
+                        });
+                    };
+                    pTricks.Controls.Add(link);
+                }
                 y += deltaY;
             }
             CalculateCategoryCheckboxes();

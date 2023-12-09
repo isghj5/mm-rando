@@ -48,6 +48,12 @@ namespace MMR.Randomizer.Asm
         public Color IceArrowEffectPrim { get; set; } = Color.FromArgb(0xAA, 0xFF, 0xFF);
         public Color LightArrowEffectEnv { get; set; } = Color.FromArgb(0xFF, 0xFF, 0x00);
         public Color LightArrowEffectPrim { get; set; } = Color.FromArgb(0xFF, 0xFF, 0xAA);
+        public Color FierceDeityTunic { get; set; } = Color.FromArgb(0xBD, 0xB5, 0xAD);
+        public Color GoronTunic { get; set; } = Color.FromArgb(0x1E, 0x69, 0x1B);
+        public Color ZoraTunic { get; set; } = Color.FromArgb(0x1E, 0x69, 0x1B);
+        public Color DekuTunic { get; set; } = Color.FromArgb(0x1E, 0x69, 0x1B);
+        public Color HumanTunic { get; set; } = Color.FromArgb(0x1E, 0x69, 0x1B);
+
 
         /// <summary>
         /// Instance of <see cref="WorldColors"/> with default values.
@@ -122,6 +128,11 @@ namespace MMR.Randomizer.Asm
             IceArrowEffectPrim,
             LightArrowEffectEnv,
             LightArrowEffectPrim,
+            FierceDeityTunic,
+            GoronTunic,
+            ZoraTunic,
+            DekuTunic,
+            HumanTunic,
         };
     }
 }

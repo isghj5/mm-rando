@@ -1,4 +1,6 @@
-﻿using MMR.Common.Extensions;
+﻿using DynamicExpresso;
+using MMR.Common.Extensions;
+using MMR.Randomizer.Asm;
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
@@ -6,10 +8,12 @@ using MMR.Randomizer.LogicMigrator;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -29,7 +33,7 @@ namespace MMR.Randomizer.Utils
             {
                 return LogicFile.FromJson(Properties.Resources.REQ_GLITCH);
             }
-            else if (mode == LogicMode.UserLogic)
+            else if (mode == LogicMode.UserLogic && File.Exists(userLogicFileName))
             {
                 using (StreamReader Req = new StreamReader(File.OpenRead(userLogicFileName)))
                 {
@@ -75,20 +79,10 @@ namespace MMR.Randomizer.Utils
                     TrickTooltip = logicItem.TrickTooltip,
                     DependsOnItems = logicItem.RequiredItems.Select(item => (Item)logic.FindIndex(li => li.Id == item)).ToList(),
                     Conditionals = logicItem.ConditionalItems.Select(c => c.Select(item => (Item)logic.FindIndex(li => li.Id == item)).ToList()).ToList(),
-                    TrickCategory = logicItem.TrickCategory
+                    TrickCategory = logicItem.TrickCategory,
+                    TrickUrl = logicItem.TrickUrl,
+                    SettingExpression = logicItem.SettingExpression,
                 });
-            }
-
-            foreach (var io in itemList)
-            {
-                if (io.DependsOnItems.Any(item => itemList[item].IsTrick))
-                {
-                    throw new Exception($"Dependencies of {io.Name} are not valid. Cannot have tricks as Dependencies.");
-                }
-                if (io.Conditionals.Any() && io.Conditionals.All(c => c.Any(item => itemList[item].IsTrick)))
-                {
-                    throw new Exception($"Conditionals of {io.Name} are not valid. Must have at least one conditional that isn't a trick.");
-                }
             }
 
             return itemList;
@@ -139,8 +133,42 @@ namespace MMR.Randomizer.Utils
             public ReadOnlyCollection<Item> ImportantSongLocations { get; set; }
         }
 
+        public static void Simplify<T>(List<T> logicPaths) where T : IEnumerable<Item>
+        {
+            Simplify(logicPaths, (list) => list);
+        }
+
+        public static void Simplify<T, T2>(List<T> logicPaths, Func<T, T2> selector) where T2 : IEnumerable<Item>
+        {
+            if (logicPaths.Count > 1)
+            {
+                for (var i = logicPaths.Count - 1; i >= 0; i--)
+                {
+                    var currentLogicPath = selector(logicPaths[i]);
+                    for (var j = i - 1; j >= 0; j--)
+                    {
+                        var otherLogicPath = selector(logicPaths[j]);
+                        if (!otherLogicPath.Except(currentLogicPath).Any())
+                        {
+                            logicPaths.RemoveAt(i);
+                            break;
+                        }
+                        if (!currentLogicPath.Except(otherLogicPath).Any())
+                        {
+                            logicPaths.RemoveAt(j);
+                            i--;
+                        }
+                    }
+                }
+            }
+        }
+
         public static LogicPaths GetImportantLocations(ItemList itemList, GameplaySettings settings, Item location, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedLocations = null, Dictionary<Item, ItemObject> itemsByLocation = null, CancellationTokenSource cts = null, params Item[] exclude)
         {
+            if (settings.LogicMode == LogicMode.NoLogic)
+            {
+                return new LogicPaths();
+            }
             cts?.Token.ThrowIfCancellationRequested();
             if (itemsByLocation == null)
             {
@@ -157,13 +185,13 @@ namespace MMR.Randomizer.Utils
             }
             if (exclude.Contains(location))
             {
-                if (settings.AddSongs || !ItemUtils.IsSong(location) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !ItemUtils.IsSong(i)))
+                if (!location.IsPlacementHighlyRestricted(settings) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !i.IsPlacementHighlyRestricted(settings)))
                 {
                     return null;
                 }
             }
             var importantSongLocations = new List<Item>();
-            if (!settings.AddSongs && ItemUtils.IsSong(location) && logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item)))
+            if (!settings.AddSongs && location.IsSong() && logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item)))
             {
                 importantSongLocations.Add(location);
             }
@@ -185,7 +213,7 @@ namespace MMR.Randomizer.Utils
             var important = new List<Item>();
             if (locationLogic.RequiredItemIds != null && locationLogic.RequiredItemIds.Any())
             {
-                if (locationLogic.RequiredItemIds.Contains((int)Item.AreaMoonAccess))
+                if (locationLogic.RequiredItemIds.Contains((int)Item.OtherCredits))
                 {
                     return null;
                 }
@@ -205,7 +233,7 @@ namespace MMR.Randomizer.Utils
                         return null;
                     }
 
-                    if (logicPath[0] != Item.AreaMoonAccess || settings.AddSongs || !ItemUtils.IsSong(requiredLocation) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !ItemUtils.IsSong(i)))
+                    if (logicPath[0] != Item.OtherCredits || !requiredLocation.IsPlacementHighlyRestricted(settings) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !i.IsPlacementHighlyRestricted(settings)))
                     {
                         required.Add(requiredLocation);
                     }
@@ -229,7 +257,7 @@ namespace MMR.Randomizer.Utils
                 var logicPaths = new List<LogicPaths>();
                 foreach (var conditions in locationLogic.ConditionalItemIds)
                 {
-                    if (conditions.Contains((int)Item.AreaMoonAccess))
+                    if (conditions.Contains((int)Item.OtherCredits))
                     {
                         continue;
                     }
@@ -254,7 +282,7 @@ namespace MMR.Randomizer.Utils
                             break;
                         }
 
-                        if (logicPath[0] != Item.AreaMoonAccess || settings.AddSongs || !ItemUtils.IsSong(conditionalLocation) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !ItemUtils.IsSong(i)))
+                        if (logicPath[0] != Item.OtherCredits || !conditionalLocation.IsPlacementHighlyRestricted(settings) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !i.IsPlacementHighlyRestricted(settings)))
                         {
                             conditionalRequired.Add(conditionalLocation);
                         }
@@ -288,32 +316,7 @@ namespace MMR.Randomizer.Utils
                     return null;
                 }
 
-                // Hopefully this makes item importance a little smarter.
-                if (logicPaths.Count > 1)
-                {
-                    var shouldRemove = new List<int>();
-                    for (var i = 0; i < logicPaths.Count; i++)
-                    {
-                        var currentLogicPath = logicPaths[i];
-                        var currentLogicImportant = currentLogicPath.Important.Except(important).Where(item => !item.IsFake());
-                        for (var j = 0; j < logicPaths.Count; j++)
-                        {
-                            if (i != j && !shouldRemove.Contains(i) && !shouldRemove.Contains(j))
-                            {
-                                var otherLogicPath = logicPaths[j];
-                                var otherLogicImportant = otherLogicPath.Important.Except(important).Where(item => !item.IsFake());
-                                if (!currentLogicImportant.Except(otherLogicImportant).Any() && otherLogicImportant.Except(currentLogicImportant).Any())
-                                {
-                                    shouldRemove.Add(j);
-                                }
-                            }
-                        }
-                    }
-                    foreach (var index in shouldRemove.OrderByDescending(x => x))
-                    {
-                        logicPaths.RemoveAt(index);
-                    }
-                }
+                Simplify(logicPaths, lp => lp.Important.Except(important));
 
                 required.AddRange(logicPaths.Select(lp => lp.Required.AsEnumerable()).Aggregate((a, b) => a.Intersect(b)));
                 important.AddRange(logicPaths.SelectMany(lp => lp.Required.Union(lp.Important)).Distinct());
@@ -325,11 +328,74 @@ namespace MMR.Randomizer.Utils
                 Important = important.Union(required).Distinct().ToList().AsReadOnly(),
                 ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly()
             };
-            if (location.Region().HasValue)
+            if (location.Region(itemList).HasValue && location.Entrance() == null)
             {
                 checkedLocations[location] = result;
             }
             return result;
+        }
+
+        public static Expression<Func<GameplaySettings, bool>> ParseSettingExpression(string expression)
+        {
+            return Interpreter.ParseAsExpression<Func<GameplaySettings, bool>>(expression, "settings");
+        }
+
+        public static bool IsSettingEnabled(GameplaySettings settings, string expression)
+        {
+            if (string.IsNullOrWhiteSpace(expression))
+            {
+                return true;
+            }
+            return ParseSettingExpression(expression).Compile()(settings);
+        }
+
+        private static Interpreter Interpreter;
+
+        static LogicUtils()
+        {
+            Interpreter = new Interpreter()
+                .EnableAssignment(AssignmentOperators.None);
+
+            ReferenceEnums(Interpreter, typeof(GameplaySettings));
+        }
+
+        private static void ReferenceEnums(Interpreter interpreter, Type type)
+        {
+            void ProcessPropertyType(Type propertyType)
+            {
+                if (propertyType == typeof(string) || propertyType == typeof(AsmOptionsGameplay))
+                {
+
+                }
+                else if (propertyType.IsGenericType)
+                {
+                    if (propertyType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                    {
+                        var keyType = propertyType.GetGenericArguments()[0];
+                        var valueType = propertyType.GetGenericArguments()[1];
+                        ProcessPropertyType(keyType);
+                        ProcessPropertyType(valueType);
+                    }
+                    else if (propertyType.IsAssignableTo(typeof(IEnumerable)))
+                    {
+                        var itemType = propertyType.GetGenericArguments()[0];
+                        ProcessPropertyType(itemType);
+                    }
+                }
+                else if (propertyType.IsEnum)
+                {
+                    interpreter.Reference(propertyType);
+                }
+                else if (propertyType.IsClass)
+                {
+                    ReferenceEnums(interpreter, propertyType);
+                }
+            }
+
+            foreach (var property in type.GetProperties())
+            {
+                ProcessPropertyType(property.PropertyType);
+            }
         }
     }
 }

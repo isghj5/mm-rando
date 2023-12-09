@@ -10,6 +10,18 @@ struct SaveFileConfig SAVE_FILE_CONFIG = {
 static void InitStruct(struct SaveFileConfig* config) {
     config->magic = SAVE_FILE_CONFIG_MAGIC;
     config->version = 0;
+    config->spentUpgrades.swordKokiri = 0;
+    config->spentUpgrades.swordRazor = 0;
+    config->spentUpgrades.magicSmall = 0;
+    config->spentUpgrades.walletAdult = 0;
+    config->spentUpgrades.walletGiant = 0;
+    config->spentUpgrades.bombBagSmall = 0;
+    config->spentUpgrades.bombBagBig = 0;
+    config->spentUpgrades.quiverSmall = 0;
+    config->spentUpgrades.quiverLarge = 0;
+    config->spentUpgrades.lullabyIntro = 0;
+    config->flags.creditsSeen = false;
+    config->flags.isGiant = false;
     QuestItemStorage_Clear(&config->questStorage);
 }
 

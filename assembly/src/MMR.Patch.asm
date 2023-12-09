@@ -6,11 +6,32 @@
 .headersize G_CODE_DELTA
 
 ; Replaces (. is \x00):
+
+; Replaces:
+; week_event_reg[7
+; 6]..week_event_r
+; eg[77]..
+.org 0x801DC710
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a0, 0x0018 (sp)
+    or      a0, a1, r0
+    lw      a1, 0x0018 (sp)
+    jal     MMR_ProcessItem
+    or      a2, r0, r0
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
+; Replaces:
 ;   nt_reg[82]..week
 ;   _event_reg[83]..
 ;   week_event_reg[8
 ;   4]..week_event_r
-;   eg[85]..
+;   eg[85]..week_eve
+;   nt_reg[86]..week
+;   _event_reg[87]..
+;   week_event_reg[8
 .org 0x801DC790
     addiu   sp, sp, -0x20
     sw      ra, 0x001C (sp)
@@ -30,16 +51,18 @@
     lw      ra, 0x001C (sp)
     jr      ra
     addiu   sp, sp, 0x20
-
-; Directly after above code
-; Replaces
-; week_eve
-; nt_reg[86]..week
-; _eve
-.org 0x801DC7D8
+; 0x801DC7D8
     addiu   sp, sp, -0x18
     sw      ra, 0x0014 (sp)
     jal     MMR_QueueItem
+    nop
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+; 0x801DC7F4
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    jal     MMR_GetNewGiEntry
     nop
     lw      ra, 0x0014 (sp)
     jr      ra

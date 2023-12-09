@@ -11,6 +11,7 @@
 #include <unk.h>
 
 #include <z64actor.h>
+#include <z64audio.h>
 #include <z64animation.h>
 #include <z64collision_check.h>
 #include <z64cutscene.h>
@@ -19,6 +20,7 @@
 #include <z64math.h>
 #include <z64object.h>
 #include <z64scene.h>
+#include <regs.h>
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
@@ -679,11 +681,15 @@ typedef struct {
     /* 0x09C */ s16 gravity;
     /* 0x09E */ UNK_TYPE1 pad9E[0x72];
     /* 0x110 */ u16 updateRate;
-} StaticContext; // size = 0x112
+    /* 0x112 */ UNK_TYPE1 pad112[0xA40];
+    /* 0xB52 */ u16 minimapToggle;
+} StaticContext; // size = 0xB54
 
 /// =============================================================
 /// Messagebox Context
 /// =============================================================
+
+#define FONT_CHAR_TEX_SIZE ((16 * 16) / 2) // 16x16 I4 texture
 
 // Font textures are loaded into here
 typedef struct {
@@ -745,7 +751,19 @@ typedef struct {
     /* 0x12084 */ void* messageTable;
     /* 0x12088 */ UNK_TYPE1 pad12088[0x8];
     /* 0x12090 */ s16 messageDataFile; // 0 = main file, 1 = credits file.
-    /* 0x12092 */ UNK_TYPE1 pad12092[0x2E];
+    /* 0x12092 */ s16 unk12092;
+    /* 0x12094 */ s8 unk12094;
+    /* 0x12095 */ UNK_TYPE1 unk12095[0x3];
+    /* 0x12098 */ f32 unk12098; // Text_Scale?
+    /* 0x1209C */ s16 unk1209C;
+    /* 0x1209E */ UNK_TYPE1 unk1209E[0x2];
+    /* 0x120A0 */ s32 unk120A0;
+    /* 0x120A4 */ s16 unk120A4[6];
+    /* 0x120B0 */ u8 unk120B0;
+    /* 0x120B1 */ u8 unk120B1;
+    /* 0x120B2 */ u8 unk120B2[0xA];
+    /* 0x120BC */ u16 unk_120BC;
+    /* 0x120BE */ s16 unk120BE;
     /* 0x120C0 */ s16 selectionStartIndex;
     /* 0x120C2 */ s16 selectionIndexOffset;
     /* 0x120C4 */ s32 unk120C4;
@@ -986,6 +1004,12 @@ typedef struct {
     /* 0x10 */ Vec3f unk10;
 } GlobalContext1F78; // size = 0x1C
 
+typedef struct {
+    /* 0x0 */ u8   seqId;
+    /* 0x1 */ u8   ambienceId;
+} SequenceContext2; // size = 0x2
+// TODO rename the other SequenceContext to something more appropriate
+
 struct GlobalContext {
     /* 0x00000 */ GameState state;
     /* 0x000A4 */ s16 sceneNum;
@@ -998,9 +1022,7 @@ struct GlobalContext {
     /* 0x00800 */ Camera* cameraPtrs[4];
     /* 0x00810 */ s16 activeCamera;
     /* 0x00812 */ s16 unk812;
-    /* 0x00814 */ u8 unk814;
-    /* 0x00815 */ u8 unk815;
-    /* 0x00816 */ UNK_TYPE1 pad816[0x2];
+    /* 0x00814 */ SequenceContext2 sequenceCtx;
     /* 0x00818 */ LightingContext lightCtx;
     /* 0x00828 */ u32 unk828;
     /* 0x0082C */ UNK_TYPE1 pad82C[0x4];
@@ -1396,7 +1418,9 @@ typedef struct {
     /* 0x0E80 */ UNK_TYPE1 padE80[0x24];
     /* 0x0EA4 */ u8 minimapBitfield[0x1C]; // Bit per scene indicating whether minimap is enabled.
     /* 0x0EC0 */ u16 skullTokens[2];
-    /* 0x0EC4 */ UNK_TYPE1 padEC4[0x10];
+    /* 0x0EC4 */ u32 unk_EC4; // Gossip stone heart piece flags
+    /* 0x0EC8 */ u32 unk_EC8;
+    /* 0x0ECC */ u32 unk_ECC[2]; // Related to blue warps
     /* 0x0ED4 */ u8 stolenItem; // There's a 4 byte struct here of some kind.
     /* 0x0ED5 */ UNK_TYPE1 padED5[0x7];
     /* 0x0EDC */ u32 bankRupees;
@@ -1457,8 +1481,8 @@ typedef struct {
     /* 0x088 */ UNK_TYPE1 pad88[0xA8];
     /* 0x130 */ u8 timers[0x40];
     /* 0x170 */ UNK_TYPE1 pad170[0x106];
-    /* 0x276 */ u8 unk276;
-    /* 0x277 */ UNK_TYPE1 unk277;
+    /* 0x276 */ u8 seqId;
+    /* 0x277 */ u8 ambienceId;
     /* 0x278 */ u8 buttonsUsable[5];
     /* 0x27D */ UNK_TYPE1 pad27D[0x3];
     /* 0x280 */ ButtonsState buttonsState;
@@ -1470,14 +1494,17 @@ typedef struct {
     /* 0x292 */ s16 magicConsumeCost;
     /* 0x294 */ UNK_TYPE1 pad294[0x6];
     /* 0x29A */ u16 minigameCounter[2];
-    /* 0x29E */ UNK_TYPE1 pad29E[0xE];
+    /* 0x29E */ UNK_TYPE1 pad29E[0xC];
+    /* 0x2AA */ u16 nextCutsceneIndex;                 // "next_daytime"
     /* 0x2AC */ u8 cutsceneTrigger;
     /* 0x2AD */ UNK_TYPE1 pad2AD[0x5];
     /* 0x2B2 */ u16 environmentTime;
     /* 0x2B4 */ UNK_TYPE1 pad2B4[0x4];
     /* 0x2B8 */ s16 unk2b8;
-    /* 0x2BA */ UNK_TYPE1 pad2BA[0xA];
-    /* 0x2C4 */ f32 unk2C4;
+    /* 0x2BA */ s16 healthAccumulator;                 // "life_mode"
+    /* 0x2BC */ s32 unk_3F5C;                          // "bet_rupees"
+    /* 0x2C0 */ u8 screenScaleFlag;                    // "framescale_flag"
+    /* 0x2C4 */ f32 screenScale;                       // "framescale_scale"
     /* 0x2C8 */ CycleSceneFlags cycleSceneFlags[120];
 } SaveContextExtra; // size = 0xC28
 
@@ -1486,11 +1513,25 @@ typedef struct {
     /* 0x100C */ SaveContextOwl owl;
     /* 0x3CA0 */ SaveContextExtra extra;
     // Todo: Move these fields later?
-    /* 0x48C8 */ UNK_TYPE1 pad48C8[0x1010];
+    /* 0x48C8 */ u16 dungeonIndex;                      // "scene_id_mix"
+    /* 0x48CA */ u8 masksGivenOnMoon[27];               // bit-packed, masks given away on the Moon. "mask_mask_bit"
+    /* 0x48E5 */ UNK_TYPE1 pad48E5[0xFF3];
     /* 0x58D8 */ ColorRGB16 heartDdBeatingRgb;
     /* 0x58DE */ UNK_TYPE1 pad58DE[0x12];
     /* 0x58F0 */ ColorRGB16 heartDdRgb;
 } SaveContext; // size = 0x58F6
+
+// Game Info aka. Static Context
+// Data normally accessed through REG macros (see regs.h)
+typedef struct {
+    /* 0x00 */ u8  unk_00; // regPage;?   // 1 is first page
+    /* 0x01 */ u8  unk_01; // regGroup;?  // "register" group (R, RS, RO, RP etc.)
+    /* 0x02 */ u8  unk_02; // regCur;?    // selected register within page
+    /* 0x03 */ u8  unk_03; // dpadLast;?
+    /* 0x04 */ u32 unk_04; // repeat;?
+    /* 0x08 */ UNK_TYPE1 pad_08[0xC];
+    /* 0x14 */ s16 data[REG_GROUPS * REG_PER_GROUP]; // 0xAE0 entries
+} GameInfo; // size = 0x15D4
 
 /// =============================================================
 /// Other Actors
@@ -1499,23 +1540,195 @@ typedef struct {
 // En_Box actor (Treasure Chest).
 typedef struct {
     /* 0x000 */ Actor base;
-    /* 0x144 */ UNK_TYPE1 pad144[0xA8];
+    /* 0x144 */ UNK_TYPE1 pad144[0x18];
+    /* 0x15C */ SkelAnime skelanime;
+    /* 0x1A0 */ UNK_TYPE1 pad1A0[0x4C];
     /* 0x1EC */ s16 animCounter; // Used for fancy light animation?
     /* 0x1EE */ u8 unk1EE;
     /* 0x1EF */ u8 unk1EF;
     /* 0x1F0 */ u8 unk1F0;
     /* 0x1F1 */ u8 chestType;
     /* 0x1F2 */ UNK_TYPE1 pad1F2[0x28];
-    /* 0x21A */ s16 unk21A;
+    /* 0x21A */ s16 cutsceneId;
     /* 0x21C */ u32 giIndex;
     /* 0x220 */ u32 unk220;
 } ActorEnBox; // size = 0x224?
 
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ ColCylinder collider1;
+    /* 0x190 */ ColSphereGroup collider2;
+    /* 0x1B0 */ ColSphereGroupElement collider3;
+    /* 0x1F0 */ s16 timer;
+    /* 0x1F2 */ s16 flashSpeedScale;
+    /* 0x1F4 */ f32 unk_1F4;
+    /* 0x1F8 */ u8 unk_1F8;
+    /* 0x1F9 */ u8 isPowderKeg;
+    /* 0x1FA */ s16 unk_1FA;
+    /* 0x1FC */ u8 unk_1FC;
+    /* 0x200 */ void* actionFunc;
+} ActorEnBom; // size = 0x204
+
+typedef struct {
+    /* 0x00 */ s32 active;
+    /* 0x04 */ Vec3f tip;
+    /* 0x10 */ Vec3f base;
+} WeaponInfo; // size = 0x1C
+
+typedef struct {
+    /* 0x00 */ Vec3f unk_00[2];
+    /* 0x18 */ Vec3f unk_18[2][2];
+    /* 0x48 */ Vec3f unk_48;
+} EnArrowUnkStruct; // size = 0x54
+
+typedef struct {
+    /* 0x144 */ SkelAnime skelAnime;
+    /* 0x188 */ Vec3s jointTable[5];
+} ActorEnArrowArrow; // size = 0x1A8
+
+typedef struct {
+    /* 0x144 */ f32 unk_144;
+    /* 0x148 */ u8 unk_148;
+    /* 0x149 */ s8 unk_149;
+    /* 0x14A */ s16 unk_14A;
+    /* 0x14C */ s16 unk_14C;
+} ActorEnArrowBubble; // size = 0x150
+
+typedef struct ActorEnArrow {
+    /* 0x000 */ Actor base;
+    union {
+        ActorEnArrowArrow arrow;
+        ActorEnArrowBubble bubble;
+    };
+    /* 0x1A8 */ ColQuad collider;
+    /* 0x228 */ Vec3f unk_228;
+    /* 0x234 */ Vec3f unk_234;
+    /* 0x240 */ s32 unk_240;
+    /* 0x244 */ WeaponInfo weaponInfo;
+    /* 0x260 */ u8 despawnTimer; // timer in OoT
+    /* 0x261 */ u8 hitFlags; // hitFlags in OoT
+    /* 0x262 */ u8 unk_262;
+    /* 0x263 */ u8 unk_263;
+    /* 0x264 */ Actor* actorBeingCarried;
+    /* 0x268 */ Vec3f unk_268;
+    /* 0x274 */ void* actionFunc;
+} ActorEnArrow; // size = 0x278
+
+struct ActorEnButte;
+
+typedef void (*ActorEnButteActionFunc)(struct ActorEnButte*, GlobalContext*);
+
+typedef struct ActorEnButte {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ ColSphereGroup collider;
+    /* 0x164 */ ColSphereGroupElement colldierElements[1];
+    /* 0x1A4 */ SkelAnime skelAnime;
+    /* 0x1E8 */ Vec3s jointTable[8];
+    /* 0x218 */ Vec3s morphTable[8];
+    /* 0x248 */ ActorEnButteActionFunc actionFunc;
+    /* 0x24C */ s16 unk_24C;
+    /* 0x24E */ u8 unk_24E;
+    /* 0x24F */ u8 unk_24F;
+    /* 0x250 */ u8 unk_250;
+    /* 0x252 */ s16 unk_252;
+    /* 0x254 */ s16 unk_254;
+    /* 0x256 */ s16 unk_256;
+    /* 0x258 */ s16 unk_258;
+    /* 0x25C */ f32 unk_25C;
+} ActorEnButte; // size = 0x260
+
+struct ActorEnGs;
+
+typedef void (*ActorEnGsActionFunc)(struct ActorEnGs*, GlobalContext*);
+
+typedef struct ActorEnGs {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ ColCylinder collider;
+    /* 0x190 */ ActorEnGsActionFunc actionFunc;
+    /* 0x194 */ s8 unk_194;
+    /* 0x195 */ u8 unk_195;
+    /* 0x196 */ u8 switchFlag;
+    /* 0x197 */ s8 unk_197;
+    /* 0x198 */ s16 unk_198;
+    /* 0x19A */ s16 unk_19A;
+    /* 0x19C */ s8 unk_19C;
+    /* 0x19D */ u8 unk_19D;
+    /* 0x19E */ Vec3s unk_19E[3];
+    /* 0x1B0 */ Vec3f unk_1B0[2];
+    /* 0x1C8 */ UNK_TYPE1 unk1C8[0xC];
+    /* 0x1D4 */ s16 unk_1D4;
+    /* 0x1D6 */ UNK_TYPE1 unk1D6[0x6];
+    /* 0x1DC */ f32 unk_1DC;
+    /* 0x1E0 */ f32 unk_1E0;
+    /* 0x1E4 */ f32 unk_1E4;
+    /* 0x1E8 */ f32 unk_1E8;
+    /* 0x1EC */ f32 unk_1EC;
+    /* 0x1F0 */ f32 unk_1F0;
+    /* 0x1F4 */ ColorRGB8 unk_1F4;
+    /* 0x1F7 */ ColorRGB8 unk_1F7;
+    /* 0x1FA */ ColorRGB8 unk_1FA;
+    /* 0x200 */ f32 unk_200;
+    /* 0x204 */ s32 unk_204;
+    /* 0x208 */ s32 unk_208;
+    /* 0x20C */ s32 unk_20C;
+    /* 0x210 */ u16 unk_210;
+    /* 0x212 */ s16 csIdList[2];
+    /* 0x216 */ s16 unk_216;
+    /* 0x218 */ s16 unk_218;
+    /* 0x21A */ s16 unk_21A;
+    /* 0x21C */ s16 quakeY;
+    /* 0x21E */ s16 quakeDuration;
+} ActorEnGs; // size = 0x220
+
+typedef struct ActorBoss03 {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 unk_144[0x108];
+    /* 0x24C */ s16 workTimer[3]; // GYORG_WORK_TIMER_MAX
+    /* 0x252 */ UNK_TYPE1 unk_252[0x32A];
+} ActorBoss03; // size = 0x57C
+
+struct ActorEnElf;
+
+typedef void (*ActorEnElfActionFunc)(struct ActorEnElf*, GlobalContext*);
+typedef void (*ActorEnElfUnkFunc)(struct ActorEnElf*, GlobalContext*);
+
 // En_Elf actor (Fairy).
 typedef struct {
     /* 0x000 */ Actor base;
-    /* 0x144 */ UNK_TYPE1 pad144[0x116];
-    /* 0x25A */ u16 animTimer; // Counts from 0 to 0x5F as "fairy heal" animation progresses.
+    /* 0x144 */ SkelAnime skelAnime;
+    /* 0x188 */ Vec3s jointTable[7];
+    /* 0x1B2 */ Vec3s morphTable[7];
+    /* 0x1DC */ Color_RGBAf innerColor;
+    /* 0x1EC */ Color_RGBAf outerColor;
+    /* 0x1FC */ LightInfo lightInfoGlow;
+    /* 0x20C */ z_Light* lightNodeGlow;
+    /* 0x210 */ LightInfo lightInfoNoGlow;
+    /* 0x220 */ z_Light* lightNodeNoGlow;
+    /* 0x224 */ Vec3f unk_224;
+    /* 0x230 */ Actor* elfMsg;
+    /* 0x234 */ Actor* unk_234;
+    /* 0x238 */ f32 unk_238;
+    /* 0x23C */ f32 unk_23C;
+    /* 0x240 */ f32 unk_240;
+    /* 0x244 */ s16 unk_244;
+    /* 0x246 */ s16 unk_246;
+    /* 0x248 */ s16 unk_248;
+    /* 0x24A */ s16 unk_24A;
+    /* 0x24C */ s16 unk_24C;
+    /* 0x250 */ f32 unk_250;
+    /* 0x254 */ f32 unk_254;
+    /* 0x258 */ s16 unk_258;
+    /* 0x25A */ u16 timer;
+    /* 0x25C */ s16 unk_25C;
+    /* 0x25E */ s16 disappearTimer;
+    /* 0x260 */ s16 collectableFlag;
+    /* 0x262 */ u16 fairyFlags;
+    /* 0x264 */ u16 unk_264;
+    /* 0x266 */ u16 unk_266;
+    /* 0x268 */ u8 unk_268;
+    /* 0x269 */ u8 unk_269;
+    /* 0x26C */ ActorEnElfUnkFunc unk_26C;
+    /* 0x270 */ ActorEnElfActionFunc actionFunc;
 } ActorEnElf; // size = 0x25C?
 
 // En_Test4 actor.
@@ -1673,13 +1886,60 @@ typedef struct {
     /* 0x16A */ UNK_TYPE1 pad16A[0x26];
 } ActorBgIngate; // size = 0x190
 
+typedef struct ActorDoorSpiral {
+    /* 0x000 */ Actor actor;
+    /* 0x144 */ u8 shouldClimb;
+    /* 0x145 */ UNK_TYPE1 unk_145[0xB];
+} ActorDoorSpiral; // size = 0x150
+
+typedef struct KnobDoorActor {
+    /* 0x000 */ DynaPolyActor dyna;
+    /* 0x15C */ SkelAnime skelAnime;
+    /* 0x1A0 */ u8 animIndex;
+    /* 0x1A1 */ u8 playOpenAnim;
+    /* 0x1A2 */ s8 requiredObjBankIndex;
+    /* 0x1A3 */ s8 dlIndex;
+} KnobDoorActor; // size = 0x1A4
+
+typedef struct SlidingDoorActor {
+    /* 0x000 */ DynaPolyActor dyna;
+    /* 0x15C */ s16 unk_15C;
+    /* 0x15E */ s16 unk_15E;
+} SlidingDoorActor; // size = 0x160
+
 // Door_Warp1 actor.
 typedef struct {
-    /* 0x000 */ Actor base;
-    /* 0x144 */ UNK_TYPE1 pad144[0x8A];
+    /* 0x000 */ DynaPolyActor dyna;
+    /* 0x15C */ SkelAnime skelAnime;
+    /* 0x1A0 */ Actor* unk_1A0; // DmHina
+    /* 0x1A4 */ f32 unk_1A4;
+    /* 0x1A8 */ f32 unk_1A8;
+    /* 0x1AC */ f32 unk_1AC;
+    /* 0x1B0 */ f32 unk_1B0;
+    /* 0x1B4 */ f32 unk_1B4;
+    /* 0x1B8 */ f32 unk_1B8;
+    /* 0x1BC */ f32 unk_1BC;
+    /* 0x1C0 */ f32 unk_1C0;
+    /* 0x1C4 */ s16 unk_1C4;
+    /* 0x1C6 */ s16 unk_1C6;
+    /* 0x1C8 */ s16 unk_1C8;
+    /* 0x1CA */ s16 unk_1CA;
+    /* 0x1CC */ s16 unk_1CC;
     /* 0x1CE */ s16 warpTimer;
-    /* 0x1D0 */ s16 warpTimer2;
-} ActorDoorWarp1;
+    /* 0x1D0 */ u16 warpTimer2;
+    /* 0x1D2 */ s8 unk_1D2;
+    /* 0x1D3 */ u8 unk_1D3;
+    /* 0x1D4 */ u8 unk_1D4;
+    /* 0x1D8 */ void* actionFunc; // DoorWarp1ActionFunc
+    /* 0x1DC */ z_Light* unk_1DC;
+    /* 0x1E0 */ LightInfo unk_1E0;
+    /* 0x1F0 */ z_Light* unk_1F0;
+    /* 0x1F4 */ LightInfo unk_1F4;
+    /* 0x202 */ u8 unk_202;
+    /* 0x203 */ u8 unk_203;
+    /* 0x204 */ f32 unk_204;
+    /* 0x208 */ u8 unk_208;
+} ActorDoorWarp1; // size = 0x20C
 
 // En_Kakasi actor (Scarecrow).
 typedef struct {
@@ -1722,6 +1982,118 @@ typedef struct {
     /* 0x262 */ s16 previousBankValue;
     /* 0x264 */ s16 animTimer;
 } ActorEnGinkoMan; // size = 0x268
+
+
+// En_Jg actor (Goron Elder)
+
+struct ActorEnJg;
+
+typedef void (*EnJgActionFunc)(struct ActorEnJg*, GlobalContext*);
+
+typedef struct ActorEnJg {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ Actor* shrineGoron;
+    /* 0x148 */ Actor* icePoly;
+    /* 0x14C */ ColCylinder collider;
+    /* 0x198 */ SkelAnime skelAnime;
+    /* 0x1DC */ EnJgActionFunc actionFunc;
+    /* 0x1E0 */ void* path; // TODO Path struct
+    /* 0x1E4 */ s32 currentPoint;
+    /* 0x1E8 */ Actor* drum;
+    /* 0x1EC */ Vec3s unusedRotation1; // probably meant to be a head rotation to look at the player
+    /* 0x1F2 */ Vec3s unusedRotation2; // probably meant to be a body rotation to look at the player
+    /* 0x1F8 */ Vec3s jointTable[35];
+    /* 0x2CA */ Vec3s morphTable[35];
+    /* 0x39C */ s16 rootRotationWhenTalking;
+    /* 0x39E */ s16 animIndex;
+    /* 0x3A0 */ s16 action;
+    /* 0x3A2 */ s16 freezeTimer;
+    /* 0x3A4 */ Vec3f breathPos;
+    /* 0x3B0 */ Vec3f breathVelocity;
+    /* 0x3BC */ Vec3f breathAccel;
+    /* 0x3C8 */ s16 cutscene;
+    /* 0x3CA */ u8 cutsceneAnimIndex;
+    /* 0x3CB */ u8 csAction;
+    /* 0x3CC */ u16 flags;
+    /* 0x3CE */ u16 textId;
+    /* 0x3D0 */ u8 focusedShrineGoronParam;
+} ActorEnJg; // size = 0x3D4
+
+// En_Ssh actor (Cursed Swamp Skulltula Guy)
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 pad144[0x404];
+    /* 0x548 */ z_Matrix mtx0; // unknown space, repurposing for a matrix
+} ActorEnSsh; // size = 0x5CC?
+
+// En_Sth actor (Ocean Skulltula House Guy + Healed Swamp Skulltula Guy)
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 pad144[0x158];
+    /* 0x29C */ u16 maskFlag;
+} ActorEnSth; // size = 0x2A4?
+
+// En_In actor (Gorman Brothers)
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 pad144[0x28C];
+    /* 0x3D0 */ z_Matrix mtx0; // unknown space, repurposing for a matrix
+    /* 0x410 */ UNK_TYPE1 pad410[0x9C];
+    /* 0x4AC */ u32 modelFlag;
+} ActorEnIn; // size = 0x4CC
+
+// En_Minifrog (Frog Choir Frogs)
+
+struct ActorEnMinifrog;
+
+typedef void (*EnMinifrogActionFunc)(struct ActorEnMinifrog*, GlobalContext*);
+
+typedef struct ActorEnMinifrog {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ SkelAnime skelAnime;
+    /* 0x188 */ Vec3s jointTable[24];
+    /* 0x218 */ Vec3s morphTable[24];
+    /* 0x2A8 */ EnMinifrogActionFunc actionFunc;
+    /* 0x2AC */ struct ActorEnMinifrog* frog;
+    /* 0x2B0 */ s16 frogIndex;
+    /* 0x2B2 */ s16 jumpState;
+    /* 0x2B4 */ s16 timer;
+    /* 0x2B6 */ u16 flags;
+    /* 0x2B8 */ ColCylinder collider;
+} ActorEnMinifrog; // size = 0x304
+
+struct ActorEnJs;
+
+typedef void (*EnJsActionFunc)(struct ActorEnJs*, GlobalContext*);
+
+typedef struct ActorEnJs {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ SkelAnime skelAnime;
+    /* 0x188 */ ColCylinder collider;
+    /* 0x1D4 */ Vec3s jointTable[18]; // MOONCHILD_LIMB_MAX
+    /* 0x240 */ Vec3s morphTable[18]; // MOONCHILD_LIMB_MAX
+    /* 0x2AC */ void* path; // TODO Path struct
+    /* 0x2B0 */ s32 unk_2B0;
+    /* 0x2B4 */ f32 unk_2B4;
+    /* 0x2B8 */ u16 unk_2B8;
+    /* 0x2BA */ s16 maskType;
+    /* 0x2BC */ s16 unk_2BC;
+    /* 0x2BE */ s16 csIdList[2];
+    /* 0x2C2 */ s16 csIdIndex;
+    /* 0x2C4 */ EnJsActionFunc actionFunc;
+} ActorEnJs; // size = 0x2C8
+
+struct ActorEffStk;
+
+typedef void (*EffStkActionFunc)(struct ActorEffStk*, GlobalContext*);
+
+typedef struct ActorEffStk {
+    /* 0x000 */ Actor actor;
+    /* 0x144 */ s16 unk144;
+    /* 0x146 */ s16 unk146;
+    /* 0x148 */ f32 unk148;
+    /* 0x14C */ EffStkActionFunc actionFunc;
+} ActorEffStk; // size = 0x150
 
 /// =============================================================
 /// Actor Cutscene

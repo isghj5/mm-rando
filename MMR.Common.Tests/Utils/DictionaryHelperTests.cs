@@ -2,7 +2,7 @@ using NUnit.Framework;
 using MMR.Common.Utils;
 using System.Collections.Generic;
 
-namespace MMR.Common.Tests
+namespace MMR.Common.Tests.Utils
 {
     public class DictionaryHelperTests
     {

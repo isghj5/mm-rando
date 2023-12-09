@@ -70,8 +70,8 @@ namespace MMR.Randomizer.Utils
                     Flag = fileData[i + 1],
                     Index = fileData[i + 2],
                     Type = fileData[i + 3],
-                    Message = (short)((fileData[i + 4] << 8) | fileData[i + 5]),
-                    Object = (short)((fileData[i + 6] << 8) | fileData[i + 7])
+                    Message = (ushort)((fileData[i + 4] << 8) | fileData[i + 5]),
+                    Object = (ushort)((fileData[i + 6] << 8) | fileData[i + 7])
                 };
             }
         }
@@ -143,12 +143,23 @@ namespace MMR.Randomizer.Utils
                 newItem = RomData.GetItemList[item.GetItemIndex().Value];
             }
 
+            if (!itemObject.IsRandomized && item.ItemCategory() == ItemCategory.NotebookEntries)
+            {
+                newItem.Message = 0; // specially handled for non-randomized notebook entries
+            }
+
+            // set values for draw flags for some mask checks (and pendant of memories)
+            if (getItemIndex is 0x80 or 0x81 or 0x84 or 0x88 or 0x8A or 0xAB)
+            {
+                MaskConfigUtils.UpdateMaskConfig(itemObject, newItem, item, getItemIndex);
+            }
+
             // Attempt to resolve extended object Id, which should affect "Exclusive Items" as well.
             var graphics = extendedObjects.ResolveGraphics(newItem);
             if (graphics.HasValue)
             {
-                newItem.Object = graphics.Value.objectId;
-                newItem.Index = graphics.Value.graphicId;
+                newItem.Object = graphics.Value.ObjectId;
+                newItem.Index = graphics.Value.GraphicId;
             }
 
             var data = new byte[]
@@ -177,8 +188,8 @@ namespace MMR.Randomizer.Utils
                 var refillGraphics = extendedObjects.ResolveGraphics(refillItem);
                 if (refillGraphics.HasValue)
                 {
-                    refillItem.Object = refillGraphics.Value.objectId;
-                    refillItem.Index = refillGraphics.Value.graphicId;
+                    refillItem.Object = refillGraphics.Value.ObjectId;
+                    refillItem.Index = refillGraphics.Value.GraphicId;
                 }
                 var refillData = new byte[]
                 {
@@ -201,10 +212,6 @@ namespace MMR.Randomizer.Utils
             }
 
             var isRepeatable = item.IsRepeatable(settings) || (!settings.PreventDowngrades && item.IsDowngradable());
-            if (settings.ProgressiveUpgrades && item.HasAttribute<ProgressiveAttribute>())
-            {
-                isRepeatable = false;
-            }
             if (item.IsReturnable(settings))
             {
                 isRepeatable = false;
@@ -253,13 +260,21 @@ namespace MMR.Randomizer.Utils
                 var messageId = ReadWriteUtils.ReadU16(shopInventory.ShopItemAddress + 0x0A);
                 var oldMessage = messageTable.GetMessage((ushort)(messageId + 1));
                 var cost = ReadWriteUtils.Arr_ReadU16(oldMessage.Header, 5);
+                var itemCost = $"{cost} Rupee{(cost != 1 ? "s" : "")}";
+                var maxLineLength = 35;
+                var maxItemNameLength = maxLineLength - $": {itemCost}".Length;
+                var itemName = itemObject.DisplayName();
+                if (itemName.Length > maxItemNameLength)
+                {
+                    itemName = itemName.Substring(0, maxItemNameLength - 3) + "...";
+                }
                 newMessages.Add(new MessageEntryBuilder()
                     .Id(messageId)
                     .Message(it =>
                     {
                         it.Red(() =>
                         {
-                            it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text(cost.ToString()).Text(" Rupees").NewLine();
+                            it.RuntimeItemName(itemName, location).Text(": ").Text(itemCost).NewLine();
                         })
                         .RuntimeWrap(() =>
                         {
@@ -275,7 +290,7 @@ namespace MMR.Randomizer.Utils
                     .Id((ushort)(messageId + 1))
                     .Message(it =>
                     {
-                        it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text(cost.ToString()).Text(" Rupees").NewLine()
+                        it.RuntimeItemName(itemName, location).Text(": ").Text(itemCost).NewLine()
                         .Text(" ").NewLine()
                         .StartGreenText()
                         .TwoChoices()
@@ -323,7 +338,6 @@ namespace MMR.Randomizer.Utils
                 }
             }
         }
-
     }
 
 }

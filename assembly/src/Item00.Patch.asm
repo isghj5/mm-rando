@@ -63,3 +63,24 @@
 .org 0x800A70D8
     jal     Item00_GetDespawnDelayAmount_Hook
     nop
+
+;==================================================================================================
+; Replace Item00_GetAlteredDropId with a custom implementation
+;==================================================================================================
+
+; Replaces:
+;   sw      a0, 0x0000 (sp)
+;   sll     a0, a0, 16
+;   sra     a0, a0, 16
+;   addiu   at, r0, 0x0004
+;   beq     a0, at, 0x800A767C
+;   lui     t6, 0x801C
+;   addiu   at, r0, 0x0019
+.org 0x800A7650
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    jal     Item00_GetAlteredDropId
+    nop
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18

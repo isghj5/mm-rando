@@ -4,6 +4,8 @@
 #include "Util.h"
 #include "enums.h"
 #include "Items.h"
+#include "Music.h"
+#include "SaveFile.h"
 
 struct MMRConfig MMR_CONFIG = {
     .magic = MMR_CONFIG_MAGIC,
@@ -28,6 +30,8 @@ struct MMRConfig MMR_CONFIG = {
         .quiverSmall = 0x22,
         .quiverLarge = 0x23,
         .quiverLargest = 0x24,
+        .lullaby = 0x74,
+        .lullabyIntro = 0x44E,
     },
 };
 
@@ -80,7 +84,13 @@ u8* MMR_GiFlag(u16 giIndex) {
     if (giIndex >= 0x400) { // skip scenes 0xA through 0xD (Magic Hag's Potion Shop, Majora's Lair, Beneath the Graveyard, Curiosity Shop)
         address += 0x50;
     }
-    // if (giIndex >= 0x460) { address += 4; } // next threshold is giIndex 0x460
+    if (giIndex >= 0x460) {
+        address += 4;
+    }
+    if (giIndex >= 0x4E0) {
+        address += 4;
+    }
+    // if (giIndex >= 0x560) { address += 4; } // next threshold is giIndex 0x560
     address += (giIndex >> 3);
     return address;
 }
@@ -113,92 +123,140 @@ bool MMR_CheckBottleAndGetGiFlag(u16 giIndex, u16* newGiIndex) {
     return MMR_GetGiFlag(giIndex);
 }
 
-u16 MMR_CheckProgressiveUpgrades(u16 giIndex) {
+u16 MMR_CheckProgressiveUpgrades(u16 giIndex, bool grant) {
     if (giIndex == MMR_CONFIG.locations.swordKokiri || giIndex == MMR_CONFIG.locations.swordRazor || giIndex == MMR_CONFIG.locations.swordGilded) {
-        if (gSaveContext.perm.unk4C.equipment.sword == 0) {
-            if (gSaveContext.perm.stolenItem == ITEM_GILDED_SWORD || gSaveContext.perm.stolenItem == ITEM_RAZOR_SWORD) {
-                return MMR_CONFIG.locations.swordGilded;
-            } else if (gSaveContext.perm.stolenItem == ITEM_KOKIRI_SWORD) {
-                return MMR_CONFIG.locations.swordRazor;
+        u16 swordLevel = gSaveContext.perm.unk4C.equipment.sword;
+        if (swordLevel == 0) {
+            switch (gSaveContext.perm.stolenItem) {
+                case ITEM_KOKIRI_SWORD:
+                    swordLevel = 1;
+                    break;
+                case ITEM_RAZOR_SWORD:
+                    swordLevel = 2;
+                    break;
+                case ITEM_GILDED_SWORD:
+                    swordLevel = 3;
+                    break;
+            }
+        }
+        if (swordLevel == 0 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.swordKokiri) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.swordKokiri = giIndex;
             }
             return MMR_CONFIG.locations.swordKokiri;
         }
-        if (gSaveContext.perm.unk4C.equipment.sword == 1) {
+        if (swordLevel == 1 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.swordRazor) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.swordRazor = giIndex;
+            }
             return MMR_CONFIG.locations.swordRazor;
         }
         return MMR_CONFIG.locations.swordGilded;
     }
     if (giIndex == MMR_CONFIG.locations.magicSmall || giIndex == MMR_CONFIG.locations.magicLarge) {
-        if (gSaveContext.perm.unk24.hasMagic == 0) {
+        if (gSaveContext.perm.unk24.hasMagic == 0 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.magicSmall) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.magicSmall = giIndex;
+            }
             return MMR_CONFIG.locations.magicSmall;
         }
         return MMR_CONFIG.locations.magicLarge;
     }
     if (giIndex == MMR_CONFIG.locations.walletAdult || giIndex == MMR_CONFIG.locations.walletGiant || giIndex == MMR_CONFIG.locations.walletRoyal) {
-        if (gSaveContext.perm.inv.upgrades.wallet == 0) {
+        if (gSaveContext.perm.inv.upgrades.wallet == 0 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.walletAdult) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.walletAdult = giIndex;
+            }
             return MMR_CONFIG.locations.walletAdult;
-        } else if (gSaveContext.perm.inv.upgrades.wallet == 1) {
+        } else if (gSaveContext.perm.inv.upgrades.wallet == 1 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.walletGiant) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.walletGiant = giIndex;
+            }
             return MMR_CONFIG.locations.walletGiant;
         }
         return MMR_CONFIG.locations.walletRoyal;
     }
     if (giIndex == MMR_CONFIG.locations.bombBagSmall || giIndex == MMR_CONFIG.locations.bombBagBig || giIndex == MMR_CONFIG.locations.bombBagBiggest) {
-        if (gSaveContext.perm.inv.upgrades.bombBag == 0) {
+        if (gSaveContext.perm.inv.upgrades.bombBag == 0 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.bombBagSmall) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.bombBagSmall = giIndex;
+            }
             return MMR_CONFIG.locations.bombBagSmall;
         }
-        if (gSaveContext.perm.inv.upgrades.bombBag == 1) {
+        if (gSaveContext.perm.inv.upgrades.bombBag == 1 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.bombBagBig) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.bombBagBig = giIndex;
+            }
             return MMR_CONFIG.locations.bombBagBig;
         }
         return MMR_CONFIG.locations.bombBagBiggest;
     }
     if (giIndex == MMR_CONFIG.locations.quiverSmall || giIndex == MMR_CONFIG.locations.quiverLarge || giIndex == MMR_CONFIG.locations.quiverLargest) {
-        if (gSaveContext.perm.inv.upgrades.quiver == 0) {
+        if (gSaveContext.perm.inv.upgrades.quiver == 0 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.quiverSmall) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.quiverSmall = giIndex;
+            }
             return MMR_CONFIG.locations.quiverSmall;
         }
-        if (gSaveContext.perm.inv.upgrades.quiver == 1) {
+        if (gSaveContext.perm.inv.upgrades.quiver == 1 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.quiverLarge) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.quiverLarge = giIndex;
+            }
             return MMR_CONFIG.locations.quiverLarge;
         }
         return MMR_CONFIG.locations.quiverLargest;
     }
+    if (giIndex == MMR_CONFIG.locations.lullabyIntro || giIndex == MMR_CONFIG.locations.lullaby) {
+        if (gSaveContext.perm.inv.questStatus.lullabyIntro == 0 || giIndex == SAVE_FILE_CONFIG.spentUpgrades.lullabyIntro) {
+            if (grant) {
+                SAVE_FILE_CONFIG.spentUpgrades.lullabyIntro = giIndex;
+            }
+            return MMR_CONFIG.locations.lullabyIntro;
+        }
+        return MMR_CONFIG.locations.lullaby;
+    }
     return giIndex;
 }
 
-#define cycleRepeatableItemsLength 35
+#define cycleRepeatableItemsLength 38
 static u8 cycleRepeatableItems[cycleRepeatableItemsLength] = {
-    0x06, // 1 Bomb
-    0x07, // 10 Bombchu
-    0x08, // 1 Deku Stick
-    0x09, // 1 Deku Nut
-    0x0A, // 1 Magic Bean
-    0x0C, // Powder Keg
-    0x13, // Red Potion
-    0x14, // Green Potion
-    0x15, // Blue Potion
-    0x16, // Fairy
-    0x51, // Hero's Shield
-    0x79, // Magic Jar
-    0x7A, // Large Magic Jar
-    0x83, // 1 Heart
-    0x8B, // 5 Deku Sticks
-    0x8C, // 10 Deku Sticks
-    0x8D, // 5 Deku Nuts
-    0x8E, // 10 Deku Nuts
-    0x8F, // 5 Bombs
-    0x90, // 10 Bombs
-    0x91, // 20 Bombs
-    0x92, // 30 Bombs
-    0x93, // 10 Arrows
-    0x94, // 30 Arrows
-    0x95, // 40 Arrows
-    0x96, // 50 Arrows
-    0x97, // 20 Bombchu
-    0x98, // 10 Bombchu
-    0x99, // 1 Bombchu
-    0x9A, // 5 Bombchu
-    0x9F, // Chateau Romani
-    0xA0, // Milk
-    0xA1, // Gold Dust
-    0xB0, // Ice Trap
+    ITEM_BOMB,
+    ITEM_BOMBCHU,
+    ITEM_DEKU_STICK,
+    ITEM_DEKU_NUT,
+    ITEM_MAGIC_BEAN,
+    ITEM_POWDER_KEG,
+    ITEM_RED_POTION,
+    ITEM_GREEN_POTION,
+    ITEM_BLUE_POTION,
+    ITEM_FAIRY,
+    ITEM_HERO_SHIELD,
+    ITEM_MAGIC_JAR,
+    ITEM_MAGIC_JAR_LARGE,
+    ITEM_HEART,
+    ITEM_PICKUP_DEKU_STICKS_5,
+    ITEM_PICKUP_DEKU_STICKS_10,
+    ITEM_PICKUP_DEKU_NUTS_5,
+    ITEM_PICKUP_DEKU_NUTS_10,
+    ITEM_PICKUP_BOMBS_5,
+    ITEM_PICKUP_BOMBS_10,
+    ITEM_PICKUP_BOMBS_20,
+    ITEM_PICKUP_BOMBS_30,
+    ITEM_PICKUP_ARROWS_10,
+    ITEM_PICKUP_ARROWS_30,
+    ITEM_PICKUP_ARROWS_40,
+    ITEM_PICKUP_ARROWS_50,
+    ITEM_PICKUP_BOMBCHU_20,
+    ITEM_PICKUP_BOMBCHU_10,
+    ITEM_PICKUP_BOMBCHU_1,
+    ITEM_PICKUP_BOMBCHU_5,
+    ITEM_CHATEAU_ROMANI,
+    ITEM_MILK,
+    ITEM_GOLD_DUST,
+    CUSTOM_ITEM_ICE_TRAP,
+    CUSTOM_ITEM_BOMBTRAP,
+    CUSTOM_ITEM_RUPOOR,
+    CUSTOM_ITEM_NOTHING,
     0xFF, // ? Stray Fairy ?
 };
 bool MMR_IsCycleRepeatable(u16 giIndex) {
@@ -245,12 +303,14 @@ u16 MMR_GetNewGiIndex(GlobalContext* ctxt, Actor* actor, u16 giIndex, bool grant
         }
         newGiIndex = giIndex;
         if (MISC_CONFIG.flags.progressiveUpgrades) {
-            newGiIndex = MMR_CheckProgressiveUpgrades(newGiIndex);
+            newGiIndex = MMR_CheckProgressiveUpgrades(newGiIndex, grant);
         }
     } else {
         bool isCycleRepeatable = MMR_IsCycleRepeatable(newGiIndex);
         if (!isCycleRepeatable) {
-            newGiIndex = 0x0A; // Recovery Heart
+            newGiIndex = MISC_CONFIG.flags.fewerHealthDrops
+                ? 0x01 // Green Rupee
+                : 0x0A; // Recovery Heart
         }
     }
     if (grant) {
@@ -262,23 +322,45 @@ u16 MMR_GetNewGiIndex(GlobalContext* ctxt, Actor* actor, u16 giIndex, bool grant
     return newGiIndex;
 }
 
-static u16 gFanfares[5] = { 0x0922, 0x0924, 0x0037, 0x0039, 0x0052 };
+GetItemEntry* MMR_GetNewGiEntry(u16 giIndex) {
+    u16 newGiIndex = MMR_GetNewGiIndex(NULL, NULL, giIndex, false);
+    return MMR_GetGiEntry(newGiIndex);
+}
+
+static u16 gFanfares[] = { 0x4831, 0x4855, 0x0922, 0x0924, 0x0037, 0x0039, 0x0052 };
 
 #define ITEM_QUEUE_LENGTH 4
 static u16 itemQueue[ITEM_QUEUE_LENGTH] = { 0, 0, 0, 0 };
 static s16 forceProcessIndex = -1;
 static u16 lastProcessedGiIndex = 0;
 
-void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex) {
+void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex, bool continueTextbox) {
+    // TODO ideally instead of forcing MMR_GetNewGiIndex to not set grant to false by temporarily
+    // setting the cutscene to 0, the `grant` parameter should be removed and assumed false in the function,
+    // and the granting functionality should be done here, since this grants the item for real even
+    // if `grant` is reset to false.
+    u32 tempCutscene = gSaveContext.perm.cutscene;
+    gSaveContext.perm.cutscene = 0;
     giIndex = MMR_GetNewGiIndex(ctxt, NULL, giIndex, true);
+    gSaveContext.perm.cutscene = tempCutscene;
+
     GetItemEntry* entry = MMR_GetGiEntry(giIndex);
     *MMR_GetItemEntryContext = *entry;
-    z2_ShowMessage(ctxt, entry->message, 0);
-    u8 soundType = entry->type & 0x0F;
-    if (soundType == 0) {
-        z2_PlaySfx(0x4831);
+    if (continueTextbox) {
+        z2_Message_ContinueTextbox(ctxt, entry->message);
     } else {
-        z2_SetBGM2(gFanfares[soundType-1]);
+        z2_ShowMessage(ctxt, entry->message, NULL);
+    }
+    u8 soundType = entry->type & 0x0F;
+    if (MUSIC_CONFIG.flags.disableFanfares && soundType > 1) {
+        z2_PlaySfx(0x4824); // NA_SE_SY_GET_ITEM
+    } else {
+        u16 fanfare = gFanfares[soundType];
+        if (soundType < 2) {
+            z2_PlaySfx(fanfare);
+        } else {
+            z2_SetBGM2(fanfare);
+        }
     }
     z2_GiveItem(ctxt, entry->item);
 }
@@ -308,7 +390,7 @@ void MMR_ProcessItemQueue(GlobalContext* ctxt) {
     if (giIndex) {
         u8 messageState = z2_GetMessageState(&ctxt->msgCtx);
         if (!messageState) {
-            MMR_ProcessItem(ctxt, giIndex);
+            MMR_ProcessItem(ctxt, giIndex, false);
             lastProcessedGiIndex = giIndex;
         } else if (messageState == 0x02 && giIndex == lastProcessedGiIndex) {
             // Closing
@@ -343,11 +425,14 @@ u32 MMR_GetMinorItemSfxId(u8 item) {
     if (item >= ITEM_PICKUP_BOMBCHU_20 && item <= ITEM_PICKUP_BOMBCHU_5 && z2_IsItemKnown(ITEM_BOMBCHU) != 0xFF) {
         return 0x4824;
     }
-    if (item == ITEM_MAGIC_JAR || item == ITEM_MAGIC_JAR_LARGE || item == CUSTOM_ITEM_CRIMSON_RUPEE) {
+    if (item == ITEM_MAGIC_JAR || item == ITEM_MAGIC_JAR_LARGE || item == CUSTOM_ITEM_CRIMSON_RUPEE || item == CUSTOM_ITEM_RUPOOR) {
         return 0x4824;
     }
     if (item == CUSTOM_ITEM_ICE_TRAP) {
         return 0x31A4;
+    }
+    if (item == CUSTOM_ITEM_BOMBTRAP) {
+        return 0x3A76;
     }
     return 0;
 }
@@ -382,7 +467,17 @@ bool MMR_GiveItemIfMinor(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
             return true;
         }
 
-        if (!isActorFreestanding || MISC_CONFIG.flags.freestanding) {
+        if (minorItemSfxId == 0x3A76) {
+            if (isActorFreestanding) {
+                actor->draw = NULL;
+            }
+            // Have IceTrap_Give handle sfx playback for this
+            //z2_PlaySfx(minorItemSfxId);
+            z2_GiveItem(ctxt, entry->item);
+            return true;
+        }
+
+        if (!isActorFreestanding || MISC_CONFIG.drawFlags.freestanding) {
             z2_PlaySfx(minorItemSfxId);
             z2_GiveItem(ctxt, entry->item);
             return true;

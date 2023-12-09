@@ -26,3 +26,42 @@
     nop
     nop
     nop
+
+;==================================================================================================
+; Get stray fairy color index
+;==================================================================================================
+
+; Replaces:
+;   LUI     A2, 0x801F
+;   ADDIU   A2, A2, 0xF670
+;   ADDIU   A1, R0, 0x0003
+;   OR      A0, V0, R0
+;   SW      T0, 0x0000 (A0)
+;   LHU     T6, 0x48C8 (A2)
+.org 0x8014A2A4
+    or      a0, v0, r0
+    sw      t0, 0x0000 (a0)
+    jal     Message_GetStrayFairyIconColorIndex_Hook
+    nop
+    addiu   a1, r0, 0x0003
+    nop
+
+; Replaces:
+;   SW      T9, 0x0000 (A0)
+;   LHU     T8, 0x48C8 (A2)
+.org 0x8014A318
+    jal     Message_GetStrayFairyIconColorIndex_Hook
+    sw      t9, 0x0000 (a0)
+
+; Replaces:
+;   SW      T6, 0x0000 (V1)
+;   LHU     A0, 0x48C8 (A2)
+;   LUI     T9, 0x801D
+;   LUI     T6, 0x072F
+;   SLL     T7, A0, 2
+.org 0x8014A4B8
+    jal     Message_GetStrayFairyIconColorIndex_Hook
+    sw      t6, 0x0000 (v1)
+    lui     t9, 0x801D
+    lui     t6, 0x072F
+    lui     ra, 0xF200

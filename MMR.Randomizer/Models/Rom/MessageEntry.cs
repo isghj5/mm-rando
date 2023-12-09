@@ -21,6 +21,16 @@ namespace MMR.Randomizer.Models.Rom
         public string Message { get; set; }
 
         /// <summary>
+        /// Exclude this message from quick text alteration.
+        /// </summary>
+        public bool ExcludeFromQuickText { get; set; }
+
+        /// <summary>
+        /// Indicate that this message should be removed from the main message table and transfer it to the extended message table.
+        /// </summary>
+        public bool ShouldTransferToExtendedMessageTable { get; set; }
+
+        /// <summary>
         /// Message header bytes.
         /// </summary>
         public byte[] Header { get; set; }

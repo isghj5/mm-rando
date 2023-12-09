@@ -88,6 +88,9 @@
             this.tTrickDescription = new System.Windows.Forms.TextBox();
             this.bCopy = new System.Windows.Forms.Button();
             this.tTrickCategory = new System.Windows.Forms.TextBox();
+            this.tTrickUrl = new System.Windows.Forms.TextBox();
+            this.tSettingExpression = new System.Windows.Forms.TextBox();
+            this.cSetting = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nItem)).BeginInit();
             this.tMain.SuspendLayout();
             this.tTimes.SuspendLayout();
@@ -871,11 +874,53 @@
             this.tTrickCategory.Enter += new System.EventHandler(this.tCategoryDescription_Enter);
             this.tTrickCategory.Leave += new System.EventHandler(this.tCategoryDescription_Leave);
             // 
+            // tTrickUrl
+            // 
+            this.tTrickUrl.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.tTrickUrl.Location = new System.Drawing.Point(536, 39);
+            this.tTrickUrl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tTrickUrl.Name = "tTrickUrl";
+            this.tTrickUrl.Size = new System.Drawing.Size(274, 23);
+            this.tTrickUrl.TabIndex = 13;
+            this.tTrickUrl.Text = "(optional YouTube link)";
+            this.tTrickUrl.TextChanged += new System.EventHandler(this.tTrickUrl_TextChanged);
+            this.tTrickUrl.Enter += new System.EventHandler(this.tTrickUrl_Enter);
+            this.tTrickUrl.Leave += new System.EventHandler(this.tTrickUrl_Leave);
+            // 
+            // tSettingExpression
+            // 
+            this.tSettingExpression.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.tSettingExpression.Location = new System.Drawing.Point(536, 96);
+            this.tSettingExpression.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tSettingExpression.Name = "tSettingExpression";
+            this.tSettingExpression.Size = new System.Drawing.Size(274, 23);
+            this.tSettingExpression.TabIndex = 14;
+            this.tSettingExpression.Text = "(e.g. settings.RandomizeEnemies == false)";
+            this.tSettingExpression.TextChanged += new System.EventHandler(this.tSettingExpression_TextChanged);
+            this.tSettingExpression.Enter += new System.EventHandler(this.tSettingExpression_Enter);
+            this.tSettingExpression.Leave += new System.EventHandler(this.tSettingExpression_Leave);
+            // 
+            // cSetting
+            // 
+            this.cSetting.AutoSize = true;
+            this.cSetting.Location = new System.Drawing.Point(470, 73);
+            this.cSetting.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSetting.Name = "cSetting";
+            this.cSetting.Size = new System.Drawing.Size(63, 19);
+            this.cSetting.TabIndex = 15;
+            this.cSetting.Text = "Setting";
+            this.cSetting.UseVisualStyleBackColor = true;
+            this.cSetting.Visible = false;
+            this.cSetting.CheckedChanged += new System.EventHandler(this.cSetting_CheckedChanged);
+            // 
             // LogicEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(824, 622);
+            this.Controls.Add(this.cSetting);
+            this.Controls.Add(this.tSettingExpression);
+            this.Controls.Add(this.tTrickUrl);
             this.Controls.Add(this.tTrickCategory);
             this.Controls.Add(this.bCopy);
             this.Controls.Add(this.tTrickDescription);
@@ -971,5 +1016,8 @@
         private System.Windows.Forms.CheckBox cSDay1;
         private System.Windows.Forms.Label lTSetup;
         private System.Windows.Forms.TextBox tTrickCategory;
+        private System.Windows.Forms.TextBox tTrickUrl;
+        private System.Windows.Forms.TextBox tSettingExpression;
+        private System.Windows.Forms.CheckBox cSetting;
     }
 }

@@ -13,6 +13,7 @@ namespace MMR.UI.Forms.Tooltips
             tooltip.ReshowDelay = 500;
             // Force the ToolTip text to be displayed whether or not the form is active.
             tooltip.ShowAlways = true;
+            tooltip.AutoPopDelay = 30000;
 
             tooltip.SetToolTip(control, text);
         }

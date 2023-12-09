@@ -89,7 +89,7 @@ namespace MMR.Randomizer.GameObjects
             0x561E, 0x5C79, 0x5991, 0x5B58, 0x5A1E,
             0x50CA, 0x50A1,
             0x0AFB, 0x099C)] // brown, harder to see in perpheral vision, not invisible
-        [VariantsWithRoomMax(max:0,
+        [VariantsWithRoomMax(max: 0,
             0x5080 // road to ikana
             )]
         //[VariantsWithRoomMax(max: 1, variant: )] // vanilla we do not want to re-place in the world
@@ -105,7 +105,7 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacementZRot]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
         [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
-            Scene.StoneTower)] 
+            Scene.StoneTower)]
         TreasureChest = 0x6, // En_Box
 
         [FileID(45)]
@@ -124,7 +124,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(47)]
         [ObjectListIndex(0x1)]
-        PowderKeg = 0x9, // En_Bom
+        BombAndKeg = 0x9, // En_Bom
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1B30)]
@@ -159,6 +159,7 @@ namespace MMR.Randomizer.GameObjects
         // params type: 0 is fire, 2 is normal, 3 is perched, 4 is ice
         // 0x8000 is invisible
         [FlyingVariants(0x0, 0x2, 0x04, 0x8000, 0x8002, 0x8004)] // which ones are fire and ice?
+        [PerchingVariants(0x8103, 0x103)] // 0x100 is not a valid vanilla value, 0x7FFF is type, but the game uses 0xF range, so I modded
         [WallVariants(0x8003, 0x3)] // will take off and attack within 120 units distance (xz)
         [FlyingToGroundHeightAdjustment(150)]
         Keese = 0xC, // En_Firefly
@@ -225,7 +226,7 @@ namespace MMR.Randomizer.GameObjects
         // FE are road to mountain village type AND greatbay type
         // FD is underground, FE can be both but now, for detection, FD is water only
         // FF does not exist in MM vanilla, red variety
-        [GroundVariants(0xFFFD, 0xFFFF)] 
+        [GroundVariants(0xFFFD, 0xFFFF)]
         [WaterTopVariants(0xFFFE)]
         Tektite = 0x12, // En_Tite
 
@@ -244,9 +245,14 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
         Peahat = 0x14, // En_Peehat
 
-        // ignored because we already have these as a different actor, extra seems redundant
+        // this is single butterfly spawned directly only on the moon
+        [ActorizerEnabled]
         [FileID(119)]
         [ObjectListIndex(0x2)]
+        // 1 and 2 are vanilla on the moon, 0 is set in init if -1 is params, types unknown
+        [GroundVariants(0, 1, 2)]
+        [FlyingToGroundHeightAdjustment(100)] // does this even work properly like this? might have to make the separate actor
+        [UnkillableAllVariants]
         Butterfly = 0x15, // En_Butte
 
         [FileID(118)]
@@ -282,7 +288,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(59)]
         [ObjectListIndex(0x5F)]
         [GroundVariants(0x0)]
-        [VariantsWithRoomMax(max:2, variant:0x0)] // Dyna
+        [VariantsWithRoomMax(max: 2, variant: 0x0)] // Dyna
         [EnemizerScenesExcluded(Scene.Snowhead)]
         [UnkillableAllVariants]
         Flagpole = 0x1A, // En_Hata
@@ -352,9 +358,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(66)]
         [ObjectListIndex(0xBC)]
-        [CheckRestricted(Item.HeartPieceChoir)]
-        [GroundVariants(1, 2, 3, 4)] // 3 is southern swamp, 4 is laundry pool, the versions in teh mountaion have the F flag, think the rest are numbered
-        [VariantsWithRoomMax(max: 1, variant: 1, 2, 3, 4)]
+        [CheckRestricted(Scene.SouthernSwamp, variant: 3, Item.HeartPieceChoir, Item.FrogSwamp)]
+        [CheckRestricted(Scene.SouthernSwampClear, variant: 3, Item.HeartPieceChoir, Item.FrogSwamp)]
+        [CheckRestricted(Scene.LaundryPool, variant: 4, Item.HeartPieceChoir, Item.FrogLaundryPool)]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: 4, Item.HeartPieceChoir)]
+        [GroundVariants(1, 2, 3, 4, 0xF)] // 3 is southern swamp, 4 is laundry pool, the versions in teh mountaion have the F flag, think the rest are numbered
+        [VariantsWithRoomMax(max: 1, variant: 1, 2, 3, 4, 0xF)]
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.LaundryPool)]
         RegularFrogs = 0x22, // En_Minifrog
@@ -365,13 +374,16 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2540)]
         [FileID(67)]
         [ObjectListIndex(0x20)]
+        // 0x3F params is a switch flag, so long as its 3F switch flag is ignored tho so not a huge deal
+        // 0x1C0 & == 1 requires lens (0x7F)
         // 4 is in the astral observatory, and has a spawn kill flag, so don't use
         [FlyingVariants(0xEF, 0x7F, 0x3F, 0x4)]
-        //[RespawningVariants(0x4)] // doesn't respawn after death, so dont put where respawning enemies are bad either
-        [VariantsWithRoomMax(max: 0, variant: 4)] // just dont use, it might be more broken and a cause of a crash? doubt
+        [RespawningVariants(0x4)] // doesn't respawn after death, so dont put where respawning enemies are bad either
+        [VariantsWithRoomMax(max: 0, variant: 4)] // if this actor hides an item, could be annoying going back in time to reset, so do not place
+        [FlyingToGroundHeightAdjustment(5000)]
         [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // shared object with goldskulltula, cannot change without
-        [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, // in the air, bit weird
-            Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
+        //[EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, // in the air, bit weird
+        //    Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
         [SwitchFlagsPlacement(mask: 0x3F, shift: 0)]
         Skulltula = 0x24, // En_St
 
@@ -383,7 +395,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2540)]
         [FileID(67)] // actual file of skulltula in case it wasnts to know things like how big it is
         [FlyingVariants(0)] // going to mark it flying for now
-        [VariantsWithRoomMax(max: 0, variant: 0)] // don't actually place garbage actor
+        [VariantsWithRoomMax(max: 0, variant: 0)] // don't actually place dummy actor
         SkulltulaDummy = 0x25, // fake
         //Empty25 = 0x25, // originally empty
 
@@ -418,7 +430,7 @@ namespace MMR.Randomizer.GameObjects
             Item.ShopItemTradingPostNut10, Item.ShopItemTradingPostRedPotion,
             Item.ShopItemTradingPostShield, Item.ShopItemTradingPostStick)]
         [GroundVariants(0, 1)]
-        [VariantsWithRoomMax(max:0, variant:0, 1)]
+        [VariantsWithRoomMax(max: 0, variant: 0, 1)]
         [UnkillableAllVariants]
         TradingPostShop = 0x2A, // En_Ossan
 
@@ -589,7 +601,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1A0)]
         [FileID(86)]
         [ObjectListIndex(0x61)]
-        [CheckRestricted(Scene.TerminaField, variant:0x01, Item.CollectableTerminaFieldTreeItem1)]
+        [CheckRestricted(Scene.TerminaField, variant: 0x01, Item.CollectableTerminaFieldTreeItem1)]
         // bush: 0xFF0B, small tree: 0xFF02
         // big tree: 0xFF00, big tree with shop man in it: 0x0A1A
         // 17,18 are leaf particles
@@ -736,10 +748,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(95)]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
         [GroundVariants(0x3323, 0x2324, 0x4324)] // bettles on the floor
-        [FlyingVariants(0x2324, 0x4324)] // butterlies in the air
+        //[FlyingVariants(0x2324, 0x4324)] // butterlies in the air
         [WaterVariants(0x6322)] // fish swimming in the water
         [UnkillableAllVariants]
-        [FlyingToGroundHeightAdjustment(100)]
         [VariantsWithRoomMax(max: 2, 0x3323, 0x2324, 0x4324)]
         BugsFishButterfly = 0x4F, // Obj_Mure // includes bugs and fish and butterflies
 
@@ -787,7 +798,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x7D)]
         // issue: the game tries to malloc space for a skin skeleton, the default size is WRONG
         // not sure about the actual size tho, so going with overkill size (I hope)
-        [ActorInstanceSize(0x1500)] 
+        [ActorInstanceSize(0x1500)]
         [GroundVariants(0)] // no vanilla params at all
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
@@ -906,15 +917,17 @@ namespace MMR.Randomizer.GameObjects
         // 0 is weird, unattackable just spins forever
         // 1 is stiff stick, 2 is mini
         [GroundVariants(0, 1, 2)] // both stiff and mini
-        [VariantsWithRoomMax(max:0, variant: 0x0)]
+        [VariantsWithRoomMax(max: 0, variant: 0x0)]
         [RespawningAllVariants] // they grow back, dont count as killable
         DekuBabaWithered = 0x66, // En_Karebaba
 
         // TODO fix so we can spawn them in the world
+        // tag: the brothers
         [ActorizerEnabled]
         [FileID(109)]
         [ObjectListIndex(0x99)]
-        [CheckRestricted(Item.ShopItemGormanBrosMilk, Item.MaskGaro)]
+        [CheckRestricted(Item.ShopItemGormanBrosMilk, Item.MaskGaro,
+            Item.NotebookMeetGormanBrothers, Item.NotebookDefeatGormanBrothers)]
         [GroundVariants(0xFE03, 0xFE04)]
         [VariantsWithRoomMax(max: 0, 0xFE03, 0xFE04)] // inf loop if only one and not two
         //[EnemizerScenesExcluded(Scene.GormanTrack)] // if they are missing it crashes cremia game
@@ -1059,11 +1072,20 @@ namespace MMR.Randomizer.GameObjects
 
         // MULTIPLE OBJECT ACTOR
         [ActorizerEnabled]
+        [FileID(126)]
         // this is marked 2 and not 1 because 0x100 pots dont spawn in dungeons
         //[ObjectListIndex(0x1)] // this is a lie, the pot DETECTS multiple objects but does NOT exist in gameplay keep
         [ObjectListIndex(0xF9)]
+        // TODO randomize some more of these
+        [CheckRestricted(Scene.RoadToIkana, variant: -1, Item.CollectableRoadToIkanaPot1)]
+        [CheckRestricted(Scene.TerminaField, variant: -1, Item.CollectableTerminaFieldPot1)]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
+        [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
+        [CheckRestricted(Scene.StoneTower, variant: -1, Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
+        [CheckRestricted(Scene.InvertedStoneTower, variant: -1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3)]
+        [CheckRestricted(Scene.StoneTowerTemple, variant: -1, Item.CollectableStoneTowerTempleInvertedWizzrobeRoomPot1)]
+        [CheckRestricted(Scene.StoneTowerTemple, variant: -1, Item.CollectableStoneTowerTempleInvertedWizzrobeRoomPot1)]
         // 0xF9 is pot and pot shard
-        [FileID(126)]
         // according to CM, 0x100 is available everywhere as a pot, where 0x3F defines the drop item
         // so 1F is arrows, F is magic, B is three small rups? 7 is huge 200 rup, 17 is empty
         // 0xA is one rup, 1A and 14 are empty 04 is 20 rupes, 
@@ -1142,7 +1164,6 @@ namespace MMR.Randomizer.GameObjects
         // all restricted because they add colliders which limits our BGcheck options for other things
         [VariantsWithRoomMax(max: 1, variant: 0xFF10, 0xFF20, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         //[VariantsWithRoomMax(max: 1, variant: 0xFFC8, 0xFF96, 0xFF78)]
-        [UnkillableAllVariants] // not enemy actor group
         RegularIceBlock = 0x8E, // Obj_Ice_Poly
 
         [EnemizerEnabled]
@@ -1191,30 +1212,34 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(137)]
         [ObjectListIndex(0x12A)]
-        [CheckRestricted(Scene.TerminaField, variant:-1,
+        [CheckRestricted(Scene.TerminaField, variant: -1,
             check: Item.HeartPieceTerminaGossipStones, Item.HeartPieceZoraGrotto, Item.CollectableGrottosOceanHeartPieceGrottoBeehive1)]
         [CheckRestricted(Scene.Grottos, variant: -1,
             check: Item.ChestHotSpringGrottoRedRupee)]
         [CheckRestricted(Scene.SwampSpiderHouse, variant: -1,
             check: Item.CollectibleSwampSpiderToken13, Item.CollectableSwampSpiderHouseSoftSoil2)]
+        [CheckRestricted(Scene.ZoraCape, variant: -1,
+            check: Item.ChestGreatBayCapeGrotto, Item.FairyDoubleDefense)]
         // 0x0114-8 are the bombable rocks in hotspring water
         // params: 0x100 is the big bombable one only, no goron punch
         // 0x8000 creates a Good Job jingle when you break it
         // 0x7F is switch flags
         [GroundVariants(0x807F, 0x8004, 0x8002, // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
            0xE, // swamp spiderhouse
-           0x0114, 0x0115, 0x0116, 0x0117, 0x0118, 
-           0x8003, 0x807F )]
+           0x0114, 0x0115, 0x0116, 0x0117, 0x0118,
+           0x101,0x100, // cape covering the fairy hole
+           0x8003, 0x807F)]
         [FlyingVariants(0x44, 0x8044)] // does not exist, for fun placement
-        [WaterBottomVariants( 0x07F, // exists under a sign in the deku palace
+        [WaterBottomVariants(0x07F, // exists under a sign in the deku palace
             0x8077)] // does not exist, used for the bottom of the ocean signs in pinnacle rock (hack)
         [VariantsWithRoomMax(max: 3, variant: 0x807F, 0x8004)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
         [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x7000, 0xC000, 0xE000, 0xF000, 0xD000)] // regular unhidden grottos
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
-        [EnemizerScenesExcluded(Scene.GreatBayCoast, Scene.ZoraCape, Scene.Grottos)]
-        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, // too much dyna (unverified)
-            Scene.Woodfall, Scene.DekuShrine)] // blocking enemies
+        [EnemizerScenesExcluded(Scene.Grottos)] //Scene.ZoraCape, Scene.GreatBayCoast
+        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear // too much dyna (unverified)
+            /* Scene.Woodfall, Scene.DekuShrine */)] // blocking enemies
+        [BlockingVariantsAll] // especially the hotwater rocks
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         Bombiwa = 0x92, // Obj_Bombiwa
 
@@ -1264,7 +1289,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0xF1)]
         [FileID(143)]
-        [CheckRestricted(Scene.MayorsResidence, variant:0, Item.HeartPieceNotebookMayor)]
+        [CheckRestricted(Scene.MayorsResidence, variant: 0, Item.HeartPieceNotebookMayor, Item.NotebookMeetMayorDotour, Item.NotebookDotoursThanks)]
         // 1 scoffing at poster, 2 is shouting at the sky looker
         // 0x03 is a walking type
         [GroundVariants(1, 2,
@@ -1326,15 +1351,17 @@ namespace MMR.Randomizer.GameObjects
 
         EmptyA3 = 0xA3,
 
+        // TODO why am I not randomizing him in the bar?
         [ActorizerEnabled]
         [FileID(150)]
         [ObjectListIndex(0x248)]
         // FF is milkbar, 00 is walking through the reception area
         // 3 exists in granny's room in the inn, for title sequence.. so you can hear him walking toward the door???
         // 3 is also present in east clock town
+        //[Check restricted NotebookMeetGorman, moving gorman performance]
         [GroundVariants(3, 0xFF, 0)]
         // behavior too complicated, disable placement anywhere
-        [VariantsWithRoomMax(max: 0, variant: 3, 0xFF, 0)]
+        [VariantsWithRoomMax(max: 0, variant: 0, 3, 0xFF)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.MilkBar)]
         Gorman = 0xA4, // En_Gm
@@ -1356,7 +1383,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(152)]
         [ObjectListIndex(0xF5)]
-        [CheckRestricted(Item.MaskBunnyHood)]
+        [CheckRestricted(Item.MaskBunnyHood, Item.NotebookMeetGrog, Item.NotebookGrogsThanks)]
         [GroundVariants(0xFE01)] // vanilla, his actor doesnt use these though, might be garbage or might be used by some other actor
         [VariantsWithRoomMax(max: 1, variant: 0xFE01)]
         [UnkillableAllVariants]
@@ -1366,12 +1393,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(153)]
         [ObjectListIndex(0x17F)]
-        [CheckRestricted(scene:Scene.SouthernSwampClear, variant:-1, Item.HeartPieceBoatArchery)]
+        [CheckRestricted(scene: Scene.SouthernSwampClear, variant: -1, Item.HeartPieceBoatArchery)]
         // problem being we would have to check ALL checks after too many
         //[CheckRestricted(scene: Scene.SouthernSwamp, variant: -1, Item.)]
         //[] path are 0xFF, bleh, paths, hope they dont crash without ANY path
         [WaterTopVariants(0x01)] // only vanilla version
-        [VariantsWithRoomMax(max:0, variant:0x01)] // TODO try making version without paths as mmra
+        [VariantsWithRoomMax(max: 0, variant: 0x01)] // TODO try making version without paths as mmra
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.SouthernSwamp)]
         SwampBoat = 0xA7, // Bg_Ingate
@@ -1427,13 +1454,21 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(157)]
         [ObjectListIndex(0xFD)]
-        [CheckRestricted(Scene.GoronVillage, variant:-1, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
+        [CheckRestricted(Scene.GoronVillage, variant: -1, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
         // // never going to put him anywhere I dont think, so just mark his spawn as flying
-        [FlyingVariants(0xF18B, // southern swamp // and clear swamp??? he was there??
+        [PerchingVariants(0xF18B, // southern swamp // and clear swamp??? he was there??
+            0xF000,
             0x2102, 0x1102, 0x0102)] // three different days of goron village
+        // variant 0/else
+        [GroundVariants(0xF000)] // just sits there and stares at you, neat
+        // variant 1
+        //[GroundVariants(0xF080)] // instant talks to you with monkey dialgoue but talking doesnt end: softlock
+        // there is also a variant 1000 which cannot be accessed with the 0x1F range, will have to mod to get that working
+
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         // pathing I think, but pathing flying types do not currently exist in this rando
-        [VariantsWithRoomMax(max:0, variant: 0xF18B, 0x2102, 0x1102, 0x0102)]
+        [VariantsWithRoomMax(max: 0, variant: 0xF18B, 0x2102, 0x1102, 0x0102)]
+        [VariantsWithRoomMax(max: 10, variant: 0xF000)]
         [UnkillableAllVariants]
         En_Owl = 0xAF, // En_Owl
 
@@ -1609,7 +1644,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.DekuPalace,
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
             Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
-            Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall, 
+            Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
             Scene.StockPotInn, Scene.TradingPost,
             Scene.BeneathTheWell, Scene.IkanaGraveyard, Scene.StoneTower)]
@@ -1623,6 +1658,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(172)]
         [ActorInstanceSize(0x2A0)]
         [ObjectListIndex(0x11D)]
+        [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
+        [CheckRestricted(Scene.RoadToIkana, variant: -1, Item.CollectableRoadToIkanaPot1)]
+        [CheckRestricted(Scene.StoneTower, variant: -1, Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
         [CheckRestricted(Scene.TwinIslandsSpring, variant: -1, Item.ItemBottleGoronRace,
             Item.CollectableGoronRacetrackPot1, Item.CollectableGoronRacetrackPot2, Item.CollectableGoronRacetrackPot3,
             Item.CollectableGoronRacetrackPot4, Item.CollectableGoronRacetrackPot5, Item.CollectableGoronRacetrackPot6,
@@ -1650,7 +1689,7 @@ namespace MMR.Randomizer.GameObjects
         // trading post version is 1
         // wish I could spawn the ones that dance so they are always dancing when the player gets there
         [GroundVariants(1, 0x2800, 0x11D)]
-        [WaterBottomVariants(1,0x2800, 0x11D)]
+        [WaterBottomVariants(1, 0x2800, 0x11D)]
         [VariantsWithRoomMax(max: 1, variant: 1)]
         [VariantsWithRoomMax(max: 0, variant: 0x11D)]
         [VariantsWithRoomMax(max: 0, variant: 0x2800)] // below ground to replace, we want above ground placement only
@@ -1693,7 +1732,7 @@ namespace MMR.Randomizer.GameObjects
         // 40 is sun shot, 41 is storms fairy
         [GroundVariants(0x41)] // companion only
         //[FlyingVariants(0x0)] // "else" variant: gives item
-        [VariantsWithRoomMax(max: 1, variant:0x41, 0x40)]
+        [VariantsWithRoomMax(max: 1, variant: 0x41, 0x40)]
         [UnkillableAllVariants]
         Shot_Sun = 0xD0, // Shot_Sun
 
@@ -1801,8 +1840,10 @@ namespace MMR.Randomizer.GameObjects
 
         EmptyE6 = 0xE6, // EmptyE6
 
+        // in vanilla this was an empty actor with almost no code
+        // going to try to force this into a new actor as a workaround
         [FileID(219)]
-        [ObjectListIndex(0x1)]
+        [ObjectListIndex(0x199)] // modified for twig, OG was empty actor
         Unused_En_Hs2 = 0xE7, // En_Hs2
 
         //[ActorizerEnabled] // probably hard coded by zoey for rupee rando
@@ -1840,6 +1881,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x142)]
         // 0x0042 is swinging from tree, looks stupid if spawns in the ground,
         // 0x0022 is sitting on the edge of a bookcase, looks weird on the ground
+        [PerchingVariants(0x42, 0x22)]
         [GroundVariants(0x0032)] // 0x32: sitting around the fire
         [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)] // they like fire in this game
         [EnemizerScenesExcluded(Scene.IkanaGraveyard, Scene.OceanSpiderHouse)]
@@ -1997,7 +2039,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1CB)] // gameplay_keep obj 1, but I dont want it everywhere, I just want with mailbox
         //[GroundVariants(0)]
         [WaterBottomVariants(0)]
-        [VariantsWithRoomMax(max:5, variant:0)]
+        [VariantsWithRoomMax(max: 5, variant: 0)]
         [UnkillableAllVariants]
         LetterToPostman = 0xFE,
 
@@ -2019,7 +2061,7 @@ namespace MMR.Randomizer.GameObjects
         [WaterBottomVariants(0x000, 0x100, 0x200, 0x300, 0x400, 0x500, 0x600, 0x700)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         //[OnlyOneActorPerRoom]
-        [VariantsWithRoomMax(max:1, variant: 0x000, 0x100, 0x200, 0x300, 0x400, 0x500, 0x600, 0x700)]
+        [VariantsWithRoomMax(max: 1, variant: 0x000, 0x100, 0x200, 0x300, 0x400, 0x500, 0x600, 0x700)]
         [BlockingVariantsAll]
         [UnkillableAllVariants]
         PuzzleBlock = 0x102, // Obj_Pzlblock
@@ -2192,7 +2234,8 @@ namespace MMR.Randomizer.GameObjects
             Item.HeartPieceTerminaBusinessScrub,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
-            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode
             )] // this is duplicated in multiple places
         [GroundVariants(0x510, 0x10)]
         [VariantsWithRoomMax(max: 0, variant: 0x510, 0x10)] // does not spawn except in cutscenes, dont place it will be empty
@@ -2375,7 +2418,7 @@ namespace MMR.Randomizer.GameObjects
             0x7FE2, 0x7F85, 0x7F86, 0x7F87,
             0x7FA1, 0x7FC1, 0x7F81, 0x7FF2, // racetrack
             0x7F82, 0x7F92, // praising darmani in cutscene
-            0x7F84, 0x7F94 )] // outside of darmani's grave
+            0x7F84, 0x7F94)] // outside of darmani's grave
         [VariantsWithRoomMax(max: 1,
             0x7FE2, 0x7F85, 0x7F86, 0x7F87,
             0x7F82, 0x7F92)]
@@ -2524,7 +2567,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [EnemizerScenesPlacementBlock(//Scene.DekuShrine, Scene.Woodfall, Scene.LaundryPool, Scene.PiratesFortress,
-            //Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTower, // big blocking
+                                      //Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTower, // big blocking
             Scene.StoneTower)] // too much dyna, only one is allowed
         StockpotBell = 0x14E, // Obj_Bell
 
@@ -2535,7 +2578,7 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0xFFF0, 0xFFF1, 0xFFF2, 0xFFF3, 0xFFF4, 0xFFF5, 0xFFF6, 0xFFF7, 0xFFF8)]
         [GroundVariants(0xFFF0, 0xFFF1, 0xFFF2, 0xFFF3, 0xFFF4, 0xFFF5, 0xFFF6, 0xFFF7, 0xFFF8)]
         // likely dont work without the shooting man anyway
-        [VariantsWithRoomMax(max: 0, variant:0xFFF0, 0xFFF1, 0xFFF2, 0xFFF3, 0xFFF4, 0xFFF5, 0xFFF6, 0xFFF7, 0xFFF8)]
+        [VariantsWithRoomMax(max: 0, variant: 0xFFF0, 0xFFF1, 0xFFF2, 0xFFF3, 0xFFF4, 0xFFF5, 0xFFF6, 0xFFF7, 0xFFF8)]
         [UnkillableAllVariants]
         ShootingGalleryOctorok = 0x14F, // En_Syateki_Okuta
 
@@ -2590,15 +2633,18 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(311)]
         [ObjectListIndex(0x1C)]
-        [CheckRestricted(Scene.IkanaCanyon, variant: -1, check: Item.MaskCouple)]
+        [CheckRestricted(Scene.IkanaCanyon, variant: -1, check: Item.MaskCouple, Item.NotebookMeetKafei)]
         [CheckRestricted(Scene.EastClockTown, variant: -1, check: Item.MaskCouple)]
         [CheckRestricted(Scene.SouthClockTown, variant: 0x1E3, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
         [CheckRestricted(Scene.LaundryPool, variant: -1, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
+        [CheckRestricted(Scene.CuriosityShop, variant: -1, Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter,
+            Item.NotebookMeetKafei, Item.NotebookUniteAnjuAndKafei, Item.NotebookPromiseKafei,
+            Item.NotebookMeetCuriosityShopMan, Item.NotebookCuriosityShopManSGift, Item.NotebookPromiseCuriosityShopMan)] // can't meet him without kafei I dont think
         // E2 is hidden in ikana somewhere?? since its path its prob running after final hours or something
-        [PathingVariants(0x100, 0x1E2, 0x1E3, 0x1E4)]
-        [PathingTypeVarsPlacement(mask:0x1F, shift:0)]
+        [PathingVariants(0x100, 0x1E2, 0x1E3, 0x1E4, 0x1E0)]
+        [PathingTypeVarsPlacement(mask: 0x1F, shift: 0)]
         // assumed all are hardcoded to hell
-        [VariantsWithRoomMax(max:0, variant: 0x100, 0x1E2, 0x1E3, 0x1E4)]
+        [VariantsWithRoomMax(max: 0, variant: 0x100, 0x1E2, 0x1E3, 0x1E4)]
         [UnkillableAllVariants]
         Kafei = 0x159, // En_Test3
 
@@ -2614,12 +2660,14 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0xFF34,
             0xFF02, 0xFF03, 0x0102, 0x0103, // graveyard
             0xFF01)]
-        [WallVariants(0xFF9F, 0x019F)] // 19F graveyard, FF9F is perched on tree RTSS
+        // using irrelevant switch flags to distinquish the fake perching types
+        [PerchingVariants(0xFF9F, 0x019F)] // 19F graveyard
+        [WallVariants(0xFF9F, 0x029F)] // FF9F is perched on tree RTSS (okay with that one being a wall or perch actor)
         [VariantsWithRoomMax(max: 1, 0xFF34)] // swarm
         [FlyingToGroundHeightAdjustment(150)]
         //[EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
-          // switch flags are only for the graveyard, no other version uses it
-          // hardcoded to use only in that scene too, so canno't use for anything else without modifying
+        // switch flags are only for the graveyard, no other version uses it
+        // hardcoded to use only in that scene too, so canno't use for anything else without modifying
         //[SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         BadBat = 0x15B, // En_Bat
 
@@ -2692,16 +2740,21 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1830)]
         [FileID(322)]
         [ObjectListIndex(0x17A)]
+        // params: 0x1 is white vs black
+        // 0x2 and 0x4 are flags, 4 might be respawning
+        // 2 flag unknown? neat
+        // 0xFF00 is something else if 0 or 255, else
         [FlyingVariants(0x9605, 0x3205, 0x6405, 0x8C05, 0xFA01, 0xFA00)]
         // this variety is slow spawn, meaning you have to walk up to it: 0x2800, 0x3200, 0xC200, 0xFA00
         [GroundVariants(0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0xFF01, 0xFF05, 0xC200)]
         // 9605,3205,6405 all respawn in path to mountain village, 8C05 is snowhead, 6404 and 7804 are stone tower
         [RespawningVariants(0x6404, 0x7804, 0x9605, 0x3205, 0x6405, 0x8C05, 0xFF05, // actually respawning
             0x2800, 0x3200, 0xC200, 0xFA00)] // these four dont respawn, but they are invisbile until you are right on top of them, then they materialize, so hidden
+        [PerchingVariants(0x2808, 0x3208, 0xC208, 0xFA08)] // non vanilla using non existent 0x8 flag to hide from vanilla code
         [VariantsWithRoomMax(max: 2, variant: 0x9605, 0x3205, 0x6405, 0x8C05, 0xFA01, 0xFA00)]
         [VariantsWithRoomMax(max: 1, variant: 0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0xFF01, 0xFF05, 0xC200)]
         [CompanionActor(ClayPot, ourVariant: -1, variant: 0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
-        Bo = 0x164, //boe, small ball of snow or soot
+        Bo = 0x164, // En_Mkk, boe, small ball of snow or soot
 
         [FileID(323)]
         [ObjectListIndex(0x1)]
@@ -2729,7 +2782,6 @@ namespace MMR.Randomizer.GameObjects
         //  0x3 is the object it uses
         //  one is the regular leaves pkmn, one is the old hint one from OOT reused for yellow flower, one is the tall one
         // 0x6 is big one in nightmare cutscene that link waves to
-
         [GroundVariants(0x2, 0x6)]
         [VariantsWithRoomMax(max: 1, variant: 0x6, 0x2)]
         // crash on transition to witches area in swamp and secretary room in mayor's residence
@@ -2771,6 +2823,7 @@ namespace MMR.Randomizer.GameObjects
         // turns out the reason it doesnt agro is that param is agro range, its so short its inside of the actor
         [GroundVariants(0x8C, 0x28, 0x3C, 0x46, 0x32, 0x1, 0x8023, 0x5, 0x14, 0x8028, 0x8014)]
         [WallVariants(0x1)] // peaceful, just wants cheese
+        [PerchingVariants(0x2)]
         [RespawningVariants(0x8014, 0x8028, 0x8023, // tested respawning
             0x0032, 0x0005, 0x0014)] // untesed, assumed respawning because I'm lazy for now
         [VariantsWithRoomMax(max: 5, variant: 0x8C, 0x28, 0x3C, 0x46, 0x32, 0x1, 0x5, 0x14)]
@@ -2884,7 +2937,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(343)]
         [ObjectListIndex(0x107)]
-        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat)]
+        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat,
+            Item.NotebookMeetPostman, Item.NotebookPostmansGame, Item.NotebookPostmansFreedom)]
         [GroundVariants(0)] // no params
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
@@ -2962,11 +3016,15 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(351)]
         [ObjectListIndex(0xBB)]
+        // type: 0x3000: 0 is path, 1 air 2 water
         [WaterBottomVariants(0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x200B, 0x200C, 0x200D)]
-        //[FlyingVariants(0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // loads more, think there are flags here
+        [FlyingVariants(0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // loads more, think there are flags here
+        [PerchingVariants(0x1012)] // non-vanilla link speed 12, attempting to perch
+        [PathingVariants(0x0000)] // pathing type? requires us to introduce paths which might confuse our rando tho
         // if I had a hanging from cieling thing like spiders this would work fine
         //[WallVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
         [UnkillableAllVariants] // actorcat PROP, not detected as enemy
+        [PathingTypeVarsPlacement(mask:0xFF, shift:0)]
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         SpikedMine = 0x185, // Obj_Mine
 
@@ -2980,7 +3038,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.ItemPictobox)]
         [GroundVariants(0xFF)] // path = invalid
         [PathingVariants(0x6, 0x3, 0x2)]
-        [PathingTypeVarsPlacement(mask: 0xFF, shift:0)]
+        [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
         [OnlyOneActorPerRoom]
         //[VariantsWithRoomMax(max:0, variant: 0xFF)]
         [EnemizerScenesExcluded(Scene.WoodsOfMystery)] // for now, until I can detect items required for boat race
@@ -3019,7 +3077,7 @@ namespace MMR.Randomizer.GameObjects
         // assumed pathless are 0xF1FF-0xF5FF
         // params: 0xF00 is type, 0xFF is path
         //[WaterVariants] //woried they are pathing
-        [PathingTypeVarsPlacement(mask:0xFF, shift: 0)]
+        [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
         AngryBeavers = 0x18D, // En_Az
 
         [FileID(358)]
@@ -3150,7 +3208,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(379)]
         [ObjectListIndex(0xB7)] // 100 and FF00
         // cremia shows up if you repel the aliens even if romani is gone
-        [CheckRestricted(Item.SongEpona, Item.ItemBottleAliens)]
+        [CheckRestricted(Item.SongEpona, Item.ItemBottleAliens, Item.NotebookPromiseRomani, Item.NotebookSaveTheCows)]
+        //[CheckRestricted(Scene.RanchBuildings, variant:-1, check: Item.Notebook)]
         [PathingVariants(0xFF00, 0x100)]
         [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)]
         [UnkillableAllVariants]
@@ -3284,7 +3343,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.StoneTower, Scene.DekuPlayground)] // dyna crash possible
         ClocktowerGearsAndOrgan = 0x1B6, // Bg_Ctower_Gear
 
-        [ActorizerEnabled] 
+        [ActorizerEnabled]
         [FileID(403)]
         [ObjectListIndex(0x18F)]
         [CheckRestricted(Item.ItemBottleWitch)]
@@ -3292,7 +3351,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingVariants(0x2400, 0x2000)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         // disabled since talking is softlock, need to figure that out
-        [VariantsWithRoomMax(max:0, variant: 0x2400, 0x2000)]
+        [VariantsWithRoomMax(max: 0, variant: 0x2400, 0x2000)]
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(Scene.WoodsOfMystery, Scene.SouthernSwamp)]
         KotakeOnBroom = 0x1B7, // En_Trt2
@@ -3305,12 +3364,12 @@ namespace MMR.Randomizer.GameObjects
         [FileID(405)]
         [ObjectListIndex(0x1A5)]
         // params is == 0 and else
-        [WaterTopVariants(0,1)]
+        [WaterTopVariants(0, 1)]
         [CheckRestricted(Item.HeartPieceBoatArchery)]
         [UnkillableAllVariants]
         // this could work but is a headache, we need to make sure all checks that are reachable by deku and nut are included...
         //[CheckRestricted(Scene.DekuPalace, -1, Item.MaskScents)]
-        [CheckRestricted(Scene.Woodfall , -1, Item.ChestWoodfallBlueRupee, Item.ChestWoodfallRedRupee,
+        [CheckRestricted(Scene.Woodfall, -1, Item.ChestWoodfallBlueRupee, Item.ChestWoodfallRedRupee,
             Item.CollectableWoodfallItem1, Item.CollectableWoodfallPot1, Item.CollectableWoodfallPot2)]
         [EnemizerScenesExcluded(Scene.SouthernSwamp, // no easy way to identify if we need deku hopping
             Scene.DekuPalace)] // see above
@@ -3355,7 +3414,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.GoronVillage, variant: -1, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
         [CheckRestricted(Scene.PathToSnowhead, variant: -1, Item.HeartPieceToSnowhead)]
         [FlyingVariants(0x0)]
-        [VariantsWithRoomMax(max:0, variant:0x0)] // invisible, not even seen just looks empty, unless I can move actors to sit ontop of them or something
+        [VariantsWithRoomMax(max: 0, variant: 0x0)] // invisible, not even seen just looks empty, unless I can move actors to sit ontop of them or something
         [UnkillableAllVariants]
         FlyingLensCavePlatforms = 0x1C0, // Obj_Visiblock
 
@@ -3381,6 +3440,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.MundaneItemSeahorse)]
         [GroundVariants(0x001, 0x100, 0x101)]
         // limit variants?
+        [VariantsWithRoomMax(max:0, variant:0x101)] // doesn't spawn correctly
         [UnkillableAllVariants]
         GreatBayFisherman = 0x1C2, // En_Tsn
 
@@ -3395,20 +3455,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(415)]
         [ObjectListIndex(0x1AB)]
-        [CheckRestricted(Scene.CuriosityShop, variant: 0x1,
+        [CheckRestricted(Scene.CuriosityShop, variant: -1,
             Item.MaskKeaton, Item.TradeItemMamaLetter,
             Item.MaskAllNight,
-            Item.MundaneItemCuriosityShopBlueRupee, Item.MundaneItemCuriosityShopGoldRupee, Item.MundaneItemCuriosityShopPurpleRupee, Item.MundaneItemCuriosityShopRedRupee)]
-        [CheckRestricted(Scene.CuriosityShop, variant: 0x0,
-            Item.MaskKeaton, Item.TradeItemMamaLetter,
-            Item.MaskAllNight,
-            Item.MundaneItemCuriosityShopBlueRupee, Item.MundaneItemCuriosityShopGoldRupee, Item.MundaneItemCuriosityShopPurpleRupee, Item.MundaneItemCuriosityShopRedRupee)]
-        // zero is selling in the shop, 1 is giving behind the place
-        //[GroundVariants(0x1)] // wedding and standing around indoors
+            Item.MundaneItemCuriosityShopBlueRupee, Item.MundaneItemCuriosityShopGoldRupee, Item.MundaneItemCuriosityShopPurpleRupee, Item.MundaneItemCuriosityShopRedRupee,
+            Item.NotebookMeetCuriosityShopMan, Item.NotebookCuriosityShopManSGift, Item.NotebookPromiseCuriosityShopMan, Item.NotebookPurchaseCuriosityShopItem)]
         [GroundVariants(0x0, // inside of shop
-            0x1)] // wedding
+            0x1)] // wedding, and giving two items behind shop
         [OnlyOneActorPerRoom]
-        [VariantsWithRoomMax(max:0, variant:0x0, 0x1)] // wedding version is the same as day 3, gives too many checks
+        [VariantsWithRoomMax(max: 0, variant: 0x0, 0x1)] // wedding version is the same as day 3, gives too many checks
         [UnkillableAllVariants]
         CuriosityShopMan = 0x1C4, // En_Fsn
 
@@ -3447,7 +3502,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(419)]
         [ObjectListIndex(0x1E5)]
-        [CheckRestricted(Scene.DekuPlayground, variant:-1,
+        [CheckRestricted(Scene.DekuPlayground, variant: -1,
             Item.CollectableDekuPlaygroundItem1, Item.CollectableDekuPlaygroundItem2, Item.CollectableDekuPlaygroundItem3,
             Item.CollectableDekuPlaygroundItem4, Item.CollectableDekuPlaygroundItem5, Item.CollectableDekuPlaygroundItem6,
             Item.CollectableDekuPlaygroundItem7, Item.CollectableDekuPlaygroundItem8, Item.CollectableDekuPlaygroundItem9,
@@ -3456,7 +3511,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableDekuPlaygroundItem16, Item.CollectableDekuPlaygroundItem17, Item.CollectableDekuPlaygroundItem18,
             Item.MundaneItemDekuPlaygroundPurpleRupee, Item.HeartPieceDekuPlayground)]
         [GroundVariants(0x7FF, 0x6FF)]
-        [VariantsWithRoomMax(max:0, variant: 0x7FF, 0x6FF)] // if you actually talk to them, and start the game, they cutscene hardlock
+        [VariantsWithRoomMax(max: 0, variant: 0x7FF, 0x6FF)] // if you actually talk to them, and start the game, they cutscene hardlock
         [UnkillableAllVariants]
         DekuPlaygroundKeepers = 0x1C9, // En_Lift_Nuts
 
@@ -3498,7 +3553,7 @@ namespace MMR.Randomizer.GameObjects
                         0x800E, 0x800F, 0x8010, 0x8011, 0x9012, 0x8013)]
         // we are not putting these in the world, only replacing them
         // why? because they all use paths, but they are flying, this is an annoying double type that we dont account for normally
-        [VariantsWithRoomMax(max: 0, 
+        [VariantsWithRoomMax(max: 0,
             0x8000, 0x8001, 0x8002, 0x8003, 0x8004, 0x9005,
             0x8008, 0x8009, 0x800A, 0x800B, 0x800C, 0x900D,
             0x800E, 0x800F, 0x8010, 0x8011, 0x9012, 0x8013)]
@@ -3535,13 +3590,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1FD0)]
         [FileID(426)]
         [ObjectListIndex(0x1B5)]
-        // dont know what the differences are in the params
+        // looks like two params 0x378 and 0x7F and both are some form of animation speed...??
         [WaterVariants(0x3FA8)] // stt (underwater wall)
         [WallVariants(0x1932, // greatbay
             0x3FFF)] // istt hanging from wall
         [GroundVariants(
             0x191E)] // below well
+        [PerchingVariants(0x2034, 0x3EFE)] // non-vanilla variants so they can show up on perchest
         [VariantsWithRoomMax(max: 8, variant: 0x1932, 0x3FFF)]
+        [VariantsWithRoomMax(max: 0, variant: 0x3FA8)] // do not place water variant because dont hav a water wall type yet, which is what this really is, putting in water floats in the water column
         [EnemizerScenesExcluded(Scene.StoneTowerTemple)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GoronRacetrack)]
         Dexihand = 0x1D1, // En_WdHand : ???'s water logged brother
@@ -3562,10 +3619,12 @@ namespace MMR.Randomizer.GameObjects
         SnowCoveredTrees = 0x1D4, // En_Snowwd
 
         // I suspect since he has so few vars that he will be hard coded, and req decomp to fix
+        // TODO add more options to randomize some but not all of them based on checks
         [ActorizerEnabled]
         [FileID(430)]
         [ObjectListIndex(0x107)]
-        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat)]
+        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat,
+            Item.NotebookMeetPostman, Item.NotebookPostmansFreedom)]
         [GroundVariants(0x0)] // 0: sitting in his room?
         //[VariantsWithRoomMax()]
         [UnkillableAllVariants]
@@ -3638,9 +3697,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(439)]
         [ObjectListIndex(0x144)]
-        [CheckRestricted(Scene.PoeHut, variant: 0x0, Item.HeartPiecePoeHut )]
+        [CheckRestricted(Scene.PoeHut, variant: 0x0, Item.HeartPiecePoeHut)]
         [GroundVariants(0x0)]
-        [VariantsWithRoomMax(max:0, variant:0x0)]
+        [VariantsWithRoomMax(max: 0, variant: 0x0)]
         [SwitchFlagsPlacement(mask: 0xFF, shift: 3)] // 0x7F8
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.SecretShrine)]
@@ -3924,23 +3983,33 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.GoronShrine, variant: 0x3FF1, Item.SongLullaby)]
         [CheckRestricted(Scene.GoronRacetrack, variant: 0x3FF1, Item.ItemBottleGoronRace)]
         //[CheckRestricted(Scene.TwinIslandsSpring, variant: 0x3FF1, Item.ItemBottleGoronRace)] // not sure this is required
-        //[GroundVariants(0x1400)] // all other versions are 0x13** or 0x1402
+        // all other versions are 0x13** or 0x1402
+        [GroundVariants(0x1400)] // regular one in the shrine
         // 0x3FF1 does not spawn in winter, even in other scenes
-        [GroundVariants(0x3FF1)]
+        //[GroundVariants(0x3FF1)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        [VariantsWithRoomMax(max:0, variant: 0x3FF1)] // softlock if you enter the song teach cutscene, which in rando is proximity
-        [EnemizerScenesExcluded(Scene.GoronShrine, Scene.GoronRacetrack, Scene.TwinIslandsSpring)]
+        // in 1.16 this was rescinded, we can now place it in the world again
+        // holy shit this is annoying nvm
+        [VariantsWithRoomMax(max: 0, variant: 0x3FF1)] // softlock if you enter the song teach cutscene, which in rando is proximity
+        //[EnemizerScenesExcluded(Scene.GoronShrine, Scene.GoronRacetrack, Scene.TwinIslandsSpring)]
         [SwitchFlagsPlacement(mask: 0x3F, shift: 8)]
-        GoronKid = 0x201, // En_Gk
+        GoronKid = 0x201, // En_Gk, baby goron, child goron
 
         [ActorizerEnabled]
         [FileID(474)]
         [ActorInstanceSize(0x3C8)]
         [ObjectListIndex(0xE2)]
         // to nuke ONLY in stockpot, hardcoded
-        [CheckRestricted(Scene.StockPotInn, variant: 2, Item.TradeItemRoomKey, Item.TradeItemKafeiLetter, Item.MaskCouple)]
-        // 8001 is pathing to laundrypool
+        [CheckRestricted(Scene.StockPotInn, variant: 2,
+            Item.TradeItemRoomKey, Item.TradeItemKafeiLetter, Item.MaskCouple,
+            Item.NotebookMeetAnju, Item.NotebookInnReservation, Item.NotebookPromiseAnjuDelivery,
+            Item.NotebookPromiseAnjuMeeting, Item.NotebookDeliverPendant, Item.NotebookUniteAnjuAndKafei)]
+        [CheckRestricted(Scene.LaundryPool, variant: 0x8001,
+            Item.NotebookMeetAnju)]
+        [CheckRestricted(Scene.RanchBuildings, variant: 0x8001,
+            Item.NotebookMeetAnju)]
+        // 8001 is pathing to laundrypool, also sitting on bed in ranch day 3
         [GroundVariants(2 // inn
             )]
         [PathingVariants(0x8001)] // really a pathing variant (walking through east/south to go see the laundry pool
@@ -4007,7 +4076,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 2, variant: 0xFF01, 0xFF00)]
         //[UnkillableAllVariants] // only 1, the one with a no-respawn flag, spawns readily, so for now, assume the player kills one and can't kill another
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames for ghast
-        [EnemizerScenesPlacementBlock( Scene.TerminaField, // annoying
+        [EnemizerScenesPlacementBlock(Scene.TerminaField, // annoying
             Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
         [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         BigPoe = 0x208, // En_Bigpo
@@ -4098,17 +4167,18 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(490)]
         [ObjectListIndex(0x1F8)]
+        // his actor isnt here, gets spanwed by snowball, this is just for refernece
+        [CheckRestricted(Scene.TwinIslands, variant:-1, Item.SongLullabyIntro)]
         // 1 is standing in the hall during spring
         [GroundVariants(1)]
         [OnlyOneActorPerRoom]
-        [EnemizerScenesExcluded(Scene.GoronShrine)] // remove and it crashes, dont know why
+        [EnemizerScenesExcluded(Scene.GoronShrine)] // remove and it crashes, dont know why (suspected missing object actor that needs it)
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         GoronElder = 0x213, // En_Jg
-
         
         //[ActorizerEnabled]
         [FileID(491)]
@@ -4207,6 +4277,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // romani talking to cremia and dinner and sleeping in bed
         [FileID(502)]
         [ObjectListIndex(0xB7)]
+        //[CheckRestricted(Scene.RanchBuildings, variant:-1, check: Item.Notebook)]
         // 0xF000 is type, 0x00FF range is ignored by her actual code?
         // 0xF000 is just standing there, wont talk or do anything, it falls under "default"
         // 0x1000 is sitting at a table, we want to replace with the mmra version that comes with a box
@@ -4225,7 +4296,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(503)]
         [ObjectListIndex(0xA7)]
         [CheckRestricted(Scene.TerminaField, variant: 0x40FF, Item.MaskRomani)]
-        [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.MaskRomani)]
+        [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.MaskRomani,
+            Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
         [GroundVariants(0, // standing around day 1 is type 0
             0x40FF, // wedding
             0x30FF, // standing in front of ranch, final night walking?
@@ -4297,9 +4369,10 @@ namespace MMR.Randomizer.GameObjects
         // 0x12 is missing, checks for a flag makes snese
         // 0x13/14/15 is jamming at the jazz session cutscene
         // 0x140A is near the entrance
+        // FC11 failed to spawn, TODO lookup what it is supposed to be doing
         // removed 0xFC07 because I cannot right now stop them being placed and randoed at the same time (creeper)
         [WaterBottomVariants(0xFC00, 0xFC08, 0xFC06, 0xFC13, 0xFC14, 0xFC15)] // no reason we cant talk to them underwater I dont think
-        [GroundVariants(0xFC06, 0xFC08, 0xFC0C, 0xFC0D, 0xFC0E, 0xFC0F, 0xFC10, 0xFC11, 0xFC13, 0xFC14, 0xFC15)]
+        [GroundVariants(0xFC06, 0xFC08, 0xFC0C, 0xFC0D, 0xFC0E, 0xFC0F, 0xFC10, 0xFC13, 0xFC14, 0xFC15)]
         // TODO finish making these both underwater and above water where possible
         [PathingVariants(0x140A, 0xFC05, 0x2, 0x3, 0x4)]
         [VariantsWithRoomMax(max: 1, variant: 0x140A, 0xFC05, 0x2, 0x3, 0x4)]
@@ -4416,7 +4489,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(523)]
         [ObjectListIndex(0x23A)]
-        [CheckRestricted(Scene.MilkBar, variant:0x3FFF, Item.MaskCircusLeader)]
+        [CheckRestricted(Scene.MilkBar, variant:0x3FFF, Item.MaskCircusLeader, Item.NotebookMeetToto)]
+        [CheckRestricted(Scene.MayorsResidence, variant:-1, Item.NotebookMeetToto)]
         [GroundVariants(0x050B, 0x3FFF)] // sitting in mayors office
         [VariantsWithRoomMax(max:0, variant:0x050B, 0x3FFF)] // we dont want a sitting npc to be placed places, just replace, also talking to is softlock, and we cannot modify because rando needs this actor for things
         [UnkillableAllVariants]
@@ -4439,8 +4513,9 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled] // does not spawn outside of ikana
         [FileID(525)]
-        [CheckRestricted(Item.MaskBlast, Item.MaskAllNight)]
+        [CheckRestricted(Item.MaskBlast, Item.MaskAllNight, Item.NotebookMeetOldLady, Item.NotebookSaveOldLady)]
         [ObjectListIndex(0xDF)]
+        // hard coded to stand still in the shop, not a separate parameter
         [PathingVariants(0x2FF)]
         [PathingTypeVarsPlacement(mask: 0x3F00, shift: 8)]
         [VariantsWithRoomMax(max:0, variant: 0x2FF)] // probably time gated to hell
@@ -4577,7 +4652,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] 
         [FileID(538)]
         [ObjectListIndex(0x4)]
-        [CheckRestricted(Item.HeartPieceNotebookGran1, Item.HeartPieceNotebookGran2)]
+        [CheckRestricted(Scene.StockPotInn, variant: 0, Item.HeartPieceNotebookGran1, Item.HeartPieceNotebookGran2,
+            Item.NotebookMeetAnjusGrandmother, Item.NotebookGrandmaLongStory, Item.NotebookGrandmaShortStory)]
+        [CheckRestricted(Scene.RanchBuildings, variant: 0, Item.NotebookMeetAnjusGrandmother)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(max: 0, variant: 0)] // does not spawn, time varibles? second required object?
         [UnkillableAllVariants]
@@ -4619,7 +4696,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(543)]
         [ObjectListIndex(0xFF)]
-        [CheckRestricted(Scene.LaundryPool, variant:0x01, Item.MaskBremen)]
+        [CheckRestricted(Scene.LaundryPool, variant:0x01, Item.MaskBremen,
+            Item.NotebookMeetGuruGuru, Item.NotebookGuruGuru)]
         // 00 is the version from the inn, "dont talk to her shes thinking" meaning the rosa sister
         // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
         // 02 is the music-only one that spawns so you can hear him through the walls of the inn
@@ -4639,6 +4717,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(545)]
         [ObjectListIndex(0x1B6)]
+        // check restricted NotebookMeetShiro, NotebookSaveInvisibleSoldier
         [GroundVariants(0)] //unk
         [VariantsWithRoomMax(max: 1, variant:0)]
         [UnkillableAllVariants]
@@ -4805,7 +4884,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(569)]
         [ObjectListIndex(0xD)]
-        [CheckRestricted(Item.ItemBottleMadameAroma, Item.MaskKafei)]
+        // TODO split them up into two separate things
+        [CheckRestricted(Item.ItemBottleMadameAroma, Item.MaskKafei,
+            Item.NotebookMeetMadameAroma, Item.NotebookPromiseMadameAroma, Item.NotebookDeliverLetterToMama)]
         [GroundVariants(0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
@@ -4891,7 +4972,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(578)]
         [ObjectListIndex(0xF0)]
-        [CheckRestricted(Item.HeartPieceNotebookMayor)]
+        [CheckRestricted(Item.HeartPieceNotebookMayor, Item.NotebookMeetMayorDotour, Item.NotebookDotoursThanks)]
         [GroundVariants(0,
             1)] // mayor version
         [UnkillableAllVariants]
@@ -4903,7 +4984,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(579)]
         [ObjectListIndex(0x247)]
-        [CheckRestricted(Item.HeartPieceNotebookMayor)]
+        [CheckRestricted(Item.HeartPieceNotebookMayor, Item.NotebookMeetMayorDotour, Item.NotebookDotoursThanks)]
         [GroundVariants(0, 0x1)] // mayors office
         [VariantsWithRoomMax(max:0, variant: 0, 0x1)]
         [UnkillableAllVariants]
@@ -4913,7 +4994,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(580)]
         [ObjectListIndex(0x1B6)]
-        [CheckRestricted(Item.HeartPieceNotebookMayor)]
+        [CheckRestricted(Item.HeartPieceNotebookMayor, Item.NotebookMeetMayorDotour, Item.NotebookDotoursThanks)]
         [GroundVariants(0, 0x1)]
         [VariantsWithRoomMax(max:0, variant:0, 0x1)]
         [UnkillableAllVariants]
@@ -4932,7 +5013,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(582)]
         [ObjectListIndex(0x241)]
-        [CheckRestricted(Item.HeartPieceNotebookMayor)]
+        [CheckRestricted(Item.HeartPieceNotebookMayor, Item.NotebookMeetMayorDotour, Item.NotebookDotoursThanks)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(0,0)] // talking to him without the rest of his group is crash
         [OnlyOneActorPerRoom]
@@ -4992,6 +5073,7 @@ namespace MMR.Randomizer.GameObjects
         //[ObjectListIndex(0x1E5)] // where did this come from?
         [ObjectListIndex(0x1D5)] // OBJECT_DAI same object as big goron
         [GroundVariants(0x4)] // all vanilla are 0x4, even though the actor checks 0xFF range
+        [VariantsWithRoomMax(max:0, variant:0x4)] // schedule locked, wont spawn in weird locations
         [UnkillableAllVariants]
         // do we need to stop him being randomized?
         LinkTheGoro = 0x276, // En_Ig
@@ -5021,7 +5103,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(593)]
         [ObjectListIndex(0x24A)]
-        [CheckRestricted(Item.MaskKamaro)]
+        [CheckRestricted(Item.MaskKamaro, Item.NotebookMeetKamaro, Item.NotebookPromiseKamaro)]
         [GroundVariants(0xF)]
         [VariantsWithRoomMax(max:0, variant:0xF)] // night only actor, placing just means an empty placement
         //[OnlyOneActorPerRoom] // for now, limit to one instead of limit to none for the rare chance of finding themsomehwere
@@ -5031,7 +5113,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x24B)]
         [FileID(594)]
-        [CheckRestricted(Scene.WestClockTown, variant:0x7E02, Item.HeartPieceNotebookRosa)]
+        [CheckRestricted(Scene.WestClockTown, variant:0x7E02, Item.HeartPieceNotebookRosa, Item.NotebookMeetRosaSisters, Item.NotebookRosaSistersThanks)]
+        [CheckRestricted(Scene.StockPotInn, variant:-1, Item.NotebookMeetRosaSisters)]
         // 0xA00 is lobby pacing
         // params: 8000 is a talking flag, 0x7E00 >> 9 is pathing, 0x7E00 is non-pathing though, the one value
         [GroundVariants(0x7E01, 0xFE00, 0xFE01,
@@ -5051,9 +5134,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(596)]
         [ObjectListIndex(0x24F)]
-        [CheckRestricted(Item.HeartPieceNotebookHand)]
-        [GroundVariants(0)]
-        [WaterBottomVariants(0)]
+        [CheckRestricted(Item.HeartPieceNotebookHand, Item.NotebookMeetToiletHand, Item.NotebookToiletHandSThanks)]
+        [GroundVariants(0x0)]
+        [WaterBottomVariants(0x0)]
+        [VariantsWithRoomMax(max:0, variant:0x0)] // time gated is kind lame bruh
         [UnkillableAllVariants]
         MysteryHand = 0x27D, // En_Bjt
 
@@ -5068,7 +5152,8 @@ namespace MMR.Randomizer.GameObjects
             Item.HeartPieceTerminaBusinessScrub,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
-            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode
             )] // this is duplicated in multiple places
         [GroundVariants(0xFF00)]
         [VariantsWithRoomMax(max:0, variant: 0xFF00)] // assumption: cannot be placed in other places because he looks for the balloon
@@ -5085,7 +5170,8 @@ namespace MMR.Randomizer.GameObjects
             Item.HeartPieceTerminaBusinessScrub,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
-            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode 
             )] // this is duplicated in multiple places
         [GroundVariants(0x0B11, 0x0B22, 0x50F, 0x0513, 0x0910)]
         [OnlyOneActorPerRoom]
@@ -5104,7 +5190,8 @@ namespace MMR.Randomizer.GameObjects
             Item.HeartPieceTerminaBusinessScrub,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
-            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode
             )] // this is duplicated in multiple places
 
         [GroundVariants(0x0, 0x01, 0x2, 0x3, 0x4, 0x10, 0x11, 0x12, 0x13, 0x14)]
@@ -5141,7 +5228,8 @@ namespace MMR.Randomizer.GameObjects
             Item.HeartPieceTerminaBusinessScrub,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
-            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode
             )] // this is duplicated in multiple places
         [FlyingVariants(0)]
         [FlyingToGroundHeightAdjustment(200)]
@@ -5439,6 +5527,7 @@ namespace MMR.Randomizer.GameObjects
         Ground,
         Flying,
         Wall,
+        Perching,       // added in 56
         Pathing,
     }
 }

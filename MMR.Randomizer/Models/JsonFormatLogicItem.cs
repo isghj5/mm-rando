@@ -12,9 +12,11 @@ namespace MMR.Randomizer.Models
         public TimeOfDay TimeAvailable { get; set; }
         public TimeOfDay TimeSetup { get; set; }
         public bool IsTrick { get; set; }
+        public string SettingExpression { get; set; }
 
         private string _trickTooltip;
         private string _trickCategory;
+        private string _trickUrl;
 
         public string TrickTooltip
         {
@@ -37,6 +39,18 @@ namespace MMR.Randomizer.Models
             set
             {
                 _trickCategory = value;
+            }
+        }
+
+        public string TrickUrl
+        {
+            get
+            {
+                return IsTrick ? _trickUrl : null;
+            }
+            set
+            {
+                _trickUrl = value;
             }
         }
 

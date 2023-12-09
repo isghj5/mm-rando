@@ -84,6 +84,12 @@ namespace MMR.Randomizer.Attributes.Actor
         public WallVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
     }
 
+    public class PerchingVariantsAttribute : ActorVariantsAttribute
+    {
+        public PerchingVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
+    }
+
+
     public class PathingVariantsAttribute : ActorVariantsAttribute
     {
         public PathingVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
