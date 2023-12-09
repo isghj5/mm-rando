@@ -277,7 +277,10 @@ namespace MMR.Randomizer
             ///  solution: add more items that we check ourselves, and remove some junk items we want to allow
 
             var addedJunkItems = new List<GameObjects.Item>();
-            // hope this condensecs teh spheres into one long list fo rme
+            ActorizerKnownJunkItems = new List<List<GameObjects.Item>>(); // blank in case of no logic
+
+            if (_randomized.Spheres == null) return; // this is no logic and we can't know anything
+
             List<(string item, string location)> allSphereItems = _randomized.Spheres.SelectMany(u => u).ToList();
 
             if (_randomized.Settings.LogicMode == Models.LogicMode.Casual
@@ -377,9 +380,11 @@ namespace MMR.Randomizer
             ///  and ItemUtils.IsLogicalJunk cares about logic too strongly and can junk cool things like swords
             ///  goal: use IsJunk and add extra conditions that cna happen
 
+            if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic) return ItemUtils.IsJunk(itemInCheck);
+
             // we need to build a list of known junk items and check that list here
             var category = (int)itemInCheck.ItemCategory();
-            if (category == 0xFFFFFFFF) return true; // recovery heart?
+            if (category < 0) return true; // recovery heart?
             if (ActorizerKnownJunkItems[category].Contains(itemInCheck))
             {
                 return true;
