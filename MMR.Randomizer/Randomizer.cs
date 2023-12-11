@@ -28,7 +28,7 @@ namespace MMR.Randomizer
 
         private Random Random { get; set; }
 
-        public ItemList ItemList { get; set; }
+        private ItemList ItemList { get; set; }
 
         #region Dependence and Conditions
         List<Item> ConditionsChecked { get; set; }
@@ -1897,29 +1897,69 @@ namespace MMR.Randomizer
 
         private void RandomizePrices()
         {
-            Func<ushort> RandomPrice = _settings.PriceMode.HasFlag(PriceMode.AccountForRoyalWallet) && _settings.CustomItemList.Contains(Item.UpgradeRoyalWallet)
-                ? () => (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 8.5) * 999, 1, 999)
-                : () => (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 4.0) * 500, 1, 500);
+            var royalWalletEnabled = _settings.PriceMode.HasFlag(PriceMode.AccountForRoyalWallet) && _settings.CustomItemList.Contains(Item.UpgradeRoyalWallet);
+            var priceShouldMultiply = royalWalletEnabled && (_settings.PriceMode.HasFlag(PriceMode.ShuffleOnly) || _settings.PriceMode == PriceMode.AccountForRoyalWallet);
+
+            var costPool = MessageCost.MessageCosts
+                .Where(mc => _settings.PriceMode.HasFlag(mc.Category))
+                .Select(mc => mc.Cost)
+                .ToList();
+
+            ushort randomPrice()
+            {
+                if (_settings.PriceMode.HasFlag(PriceMode.ShuffleOnly))
+                {
+                    return costPool.Random(Random);
+                }
+
+                if (royalWalletEnabled)
+                {
+                    return (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 8.5) * 999, 1, 999);
+                }
+
+                return (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 4.0) * 500, 1, 500);
+            }
 
             _randomized.MessageCosts = new List<ushort?>();
-            // TODO if costs randomized
+            
             for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
             {
                 var messageCost = MessageCost.MessageCosts[i];
-                if (!_settings.PriceMode.HasFlag(messageCost.Category))
+                if (!_settings.PriceMode.HasFlag(messageCost.Category) && !royalWalletEnabled)
                 {
                     _randomized.MessageCosts.Add(null);
                     continue;
                 }
-                var cost = RandomPrice();
 
-                // this relies on puchase 2 appearing in the list directly after purchase 1
-                if (messageCost.Name == "Business Scrub Purchase 2")
+                ushort cost;
+
+                if (_settings.PriceMode.HasFlag(messageCost.Category))
                 {
-                    var purchase1Cost = _randomized.MessageCosts[i - 1] ?? 150;
-                    while (cost == purchase1Cost)
+                    cost = randomPrice();
+
+                    // this relies on puchase 2 appearing in the list directly after purchase 1
+                    if (messageCost.Name == "Business Scrub Purchase 2")
                     {
-                        cost = RandomPrice();
+                        var purchase1Cost = _randomized.MessageCosts[i - 1] ?? 150;
+                        while (cost == purchase1Cost)
+                        {
+                            cost = randomPrice();
+                        }
+                    }
+
+                    costPool.Remove(cost);
+                }
+                else
+                {
+                    cost = messageCost.Cost;
+                }
+
+                if (priceShouldMultiply)
+                {
+                    cost <<= 1;
+                    if (cost > 999)
+                    {
+                        cost = 999;
                     }
                 }
 
@@ -3086,7 +3126,7 @@ namespace MMR.Randomizer
         /// </summary>
         /// <param name="trapAmount">Traps amount setting</param>
         /// <param name="appearance">Traps appearance setting</param>
-        public void AddTraps(TrapAmount trapAmount, Dictionary<TrapType, int> trapWeights, TrapAppearance appearance)
+        private void AddTraps(TrapAmount trapAmount, Dictionary<TrapType, int> trapWeights, TrapAppearance appearance)
         {
             var random = this.Random;
 
