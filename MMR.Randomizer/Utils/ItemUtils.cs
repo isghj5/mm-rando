@@ -321,6 +321,7 @@ namespace MMR.Randomizer.Utils
                     if (cap > 0)
                     {
                         var groupedLocations = tier
+                            .Where(location => !IsLocationJunk(location, settings))
                             .GroupBy(location => ItemCombinableHints.GetValueOrDefault(location).name ?? location.ToString())
                             .ToList();
                         var numberOfLocationsToJunk = groupedLocations.Count - cap;
