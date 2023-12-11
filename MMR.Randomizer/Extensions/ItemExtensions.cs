@@ -267,14 +267,19 @@ namespace MMR.Randomizer.Extensions
             return item.GetAttribute<ChestTypeAttribute>().Type;
         }
 
-        public static bool IsPurchaseable(this Item item)
+        public static bool IsTextVisible(this Item item, GameplaySettings settings)
         {
-            return item.HasAttribute<PurchaseableAttribute>();
+            return item.GetAttributes<TextVisibleAttribute>().Any(a => a.Condition(settings));
         }
 
-        public static bool IsVisible(this Item item)
+        public static bool IsModelVisible(this Item item, GameplaySettings settings)
         {
-            return item.HasAttribute<VisibleAttribute>();
+            return item.GetAttribute<ModelVisibleAttribute>()?.Condition(settings) == true;
+        }
+
+        public static bool IsShopModelVisible(this Item item)
+        {
+            return item.HasAttribute<ShopModelVisibleAttribute>();
         }
 
         public static bool IsExclusiveItem(this Item item)

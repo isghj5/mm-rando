@@ -3180,16 +3180,16 @@ namespace MMR.Randomizer
                 item.ItemOverride = trapItem;
                 item.Mimic = mimic;
 
-                if (trapItem != Item.Nothing && (newLocation.IsVisible() || newLocation.IsPurchaseable()))
+                if (trapItem != Item.Nothing && (newLocation.IsModelVisible(_settings) || newLocation.IsTextVisible(_settings)))
                 {
                     // Store name override for logging in HTML tracker.
-                    if (trapItem != Item.Rupoor || newLocation.IsPurchaseable())
+                    if (trapItem != Item.Rupoor || newLocation.IsShopModelVisible())
                     {
                         item.NameOverride = $"{trapItem.Name()} ({mimic.Item.Name()})";
                     }
 
                     // If trap quirks enabled and placed as a shop item, use a fake shop item name.
-                    if (_settings.TrapQuirks && newLocation.IsPurchaseable())
+                    if (_settings.TrapQuirks && newLocation.IsTextVisible(_settings))
                     {
                         item.Mimic.FakeName = FakeNameUtils.CreateFakeName(item.Mimic.Item.Name(), random);
                     }

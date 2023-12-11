@@ -2770,27 +2770,6 @@ namespace MMR.Randomizer
                         })
                         .Build()
                     );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0xDEE)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("There's a Goron in this village who sells ")
-                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
-                                })
-                                .Text(".")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
                 }
 
                 var bigBombBagItem = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeBigBombBag);
@@ -5596,6 +5575,32 @@ namespace MMR.Randomizer
                         .Build()
                     );
                 }
+
+                // Update Keg Challenge
+                var kegChallengeItem = _randomized.ItemList.First(io => io.NewLocation == Item.ItemPowderKeg);
+                if (kegChallengeItem.Item != Item.ItemPowderKeg)
+                {
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xDEE)
+                        .Message(it =>
+                        {
+                            it.RuntimeWrap(() =>
+                            {
+                                it.Text("There's a Goron in this village who sells ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text(".")
+                                ;
+                            })
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                }
             }
 
             var dungeonItemMessageIds = new byte[] {
@@ -6121,7 +6126,7 @@ namespace MMR.Randomizer
             foreach (var item in _randomized.Traps)
             {
                 var newLocation = item.NewLocation.Value;
-                if (newLocation.IsVisible() && (item.Item != Item.Rupoor || newLocation.IsPurchaseable()) && (item.Item != Item.Nothing))
+                if (newLocation.IsModelVisible(_randomized.Settings) && (item.Item != Item.Rupoor || newLocation.IsShopModelVisible()) && (item.Item != Item.Nothing))
                 {
                     var giIndex = item.NewLocation.Value.GetItemIndex().Value;
                     var graphic = item.Mimic.ResolveGraphic();
