@@ -4941,7 +4941,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(7, 5)]
         [WaterTopVariants(4,6)] // non-vanilla
         [UnkillableAllVariants]
-        [FlyingToGroundHeightAdjustment(200)]
+        [FlyingToGroundHeightAdjustment(500)]
         [VariantsWithRoomMax(max: 2, variant: 7, 5)] // > severe lag over 10
         //[EnemizerScenesExcluded(Scene.GreatBayCoast, Scene.ZoraCape)]
         Seagulls = 0x267, // En_Tanron4
