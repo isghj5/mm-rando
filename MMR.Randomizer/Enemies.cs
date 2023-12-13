@@ -961,7 +961,7 @@ namespace MMR.Randomizer
             //var kegFile = RomData.MMFileList[GameObjects.Actor.PowderKeg.FileListIndex()].Data;
             //kegFile[0x1FF5] |= 0x02; // add ACTOR_FLAG_20000, makes it heavy 
 
-            LightShinanigans();
+            //LightShinanigans();
 
             //PrintActorValues();
         }
@@ -991,6 +991,14 @@ namespace MMR.Randomizer
                 // 0x12 s16 fogNear; // ranges from 0-1000 (0: starts immediately, 1000: no fog), but is clamped to ENV_FOGNEAR_MAX
                 // 0x14 s16 zFar; // Max depth (render distance) of the view as a whole. fogFar will always match zFar
                 // except unless the scene list is a list per-room, which is odd we have room files, this shouldnt explain the dark room
+                // there are two lights in the env light list that have a fog color of zero
+                // 1 {  0x00, 0x00, 0x00, 0x45, 0x45, 0x45, 0x00, 0x00, 0x00, 0xBB, 0xBB, 0xBB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                    // 0x07E6, 0x1A90 },
+
+                // 2 {0x00, 0x00, 0x00, 0x45, 0x45, 0x45, 0x00, 0x00, 0x00, 0xBB, 0xBB, 0xBB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+                    //0x0FE6, 0x1A90 },
+
+
                 var sceneFid = scene.File;
                 var sceneData = RomData.MMFileList[sceneFid].Data;
                 var roomCount = 0;
@@ -1012,15 +1020,33 @@ namespace MMR.Randomizer
                         {
                             var offset = envLightCountOffset + (light * 0x16);
                             // start by changing the fog color and intesity make sure this shit is working
-                            sceneData[offset + 0xF + 0] = 0xAA;
-                            sceneData[offset + 0xF + 1] = 0x15;
-                            sceneData[offset + 0xF + 2] = 0x00;
+                            // AA 15 00 // and orange redish color that seems like glover
+                            // 1 {  0x00, 0x00, 0x00, 0x45,
+                            // 0x45, 0x45, 0x00, 0x00,
+                            // 0x00, 0xBB, 0xBB, 0xBB,
+                            // 0x00, 0x00, 0x00, 0x00,
+                            // 0x00, 0x00,
+                            // 0x07E6, 0x1A90 },
+
+                            // write the exact same light as darkroom
+                            // its dark but tatl alone is not enough to brighten it up, and the far fog is waaaay too low
+                            // also need to fix the skybox during day, maybe fix tatl so she stays out near your head
+                            ReadWriteUtils.Arr_WriteU32(sceneData, (int)offset,        0x00000045);
+                            ReadWriteUtils.Arr_WriteU32(sceneData, (int)offset +    4, 0x45454500);
+                            ReadWriteUtils.Arr_WriteU32(sceneData, (int)offset +    8, 0x00BBBBBB);
+                            ReadWriteUtils.Arr_WriteU32(sceneData, (int)offset +  0xC, 0x00000000);
+                            ReadWriteUtils.Arr_WriteU32(sceneData, (int)offset + 0x10, 0x000007E6);
+                            ReadWriteUtils.Arr_WriteU16(sceneData, (int)offset + 0x14, 0x1A90);
+
+                            /*sceneData[offset + 0xF + 0] = 0; 
+                            sceneData[offset + 0xF + 1] = 0;
+                            sceneData[offset + 0xF + 2] = 0;
 
                             sceneData[offset + 0x12] = 0x12; // "fognear"
                             sceneData[offset + 0x13] = 0x12;
 
                             sceneData[offset + 0x14] = 0x66; // "zfar"
-                            sceneData[offset + 0x15] = 0x66;
+                            sceneData[offset + 0x15] = 0x66; */
 
                         }
                     }
@@ -2495,7 +2521,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.SpikedMine)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.SpikedMine)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.ZoraRaceRing)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
@@ -2505,7 +2531,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.BombersYouChase)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.SpikedMine, GameObjects.Actor.Postbox)) continue;
-                if (TestHardSetObject(GameObjects.Scene.MayorsResidence, GameObjects.Actor.Gorman, GameObjects.Actor.BeanSeller)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.MayorsResidence, GameObjects.Actor.Gorman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);

@@ -3024,6 +3024,7 @@ namespace MMR.Randomizer.GameObjects
         // if I had a hanging from cieling thing like spiders this would work fine
         //[WallVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
         [UnkillableAllVariants] // actorcat PROP, not detected as enemy
+        [FlyingToGroundHeightAdjustment(2000)]
         [PathingTypeVarsPlacement(mask:0xFF, shift:0)]
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         SpikedMine = 0x185, // Obj_Mine
@@ -4076,7 +4077,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 2, variant: 0xFF01, 0xFF00)]
         //[UnkillableAllVariants] // only 1, the one with a no-respawn flag, spawns readily, so for now, assume the player kills one and can't kill another
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames for ghast
-        [EnemizerScenesPlacementBlock(Scene.TerminaField, // annoying
+        [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, // annoying
             Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
         [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         BigPoe = 0x208, // En_Bigpo
