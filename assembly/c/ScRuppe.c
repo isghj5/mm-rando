@@ -16,8 +16,11 @@ bool ScRuppe_GiveItem(ActorEnScRuppe* actor, GlobalContext* ctxt) {
     if (giIndex == 0) {
         return false;
     }
-    if (MMR_GiveItem(ctxt, &actor->base, giIndex)) {
-        Rupee_SetGiIndex(&actor->base, 0);
+    Rupee_SetGiIndex(&actor->base, 0);
+    if (!MMR_GiveItem(ctxt, &actor->base, giIndex)) {
+        actor->base.currPosRot.pos = GET_PLAYER(ctxt)->base.currPosRot.pos;
+        actor->base.currPosRot.pos.y += 40.0f;
+        Player_Pause(ctxt);
     }
     return true;
 }
