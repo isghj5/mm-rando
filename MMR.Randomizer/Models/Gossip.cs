@@ -67,6 +67,7 @@ namespace MMR.Randomizer.Models
             Region.WestClockTown,
             Region.LaundryPool,
             Region.StockPotInn,
+            Region.ClockTowerRoof,
         });
     }
 }
