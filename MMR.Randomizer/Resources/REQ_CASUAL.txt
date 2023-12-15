@@ -17027,6 +17027,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17046,6 +17049,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17065,6 +17071,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17084,6 +17093,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17103,6 +17115,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17122,6 +17137,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17137,7 +17155,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground as Goron"
+          "Deku Playground with Goron Spikes"
         ]
       ],
       "TimeNeeded": "None",
@@ -17153,7 +17171,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground as Goron"
+          "Deku Playground with Goron Spikes"
         ]
       ],
       "TimeNeeded": "None",
@@ -17169,7 +17187,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground as Goron"
+          "Deku Playground with Goron Spikes"
         ]
       ],
       "TimeNeeded": "None",
@@ -17185,7 +17203,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground as Goron"
+          "Deku Playground with Goron Spikes"
         ]
       ],
       "TimeNeeded": "None",
@@ -17201,12 +17219,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground as Goron",
-          "MaskDeku"
-        ],
-        [
-          "Deku Playground as Goron",
-          "Deku Playground as FD"
+          "Deku Playground with Goron Spikes"
         ]
       ],
       "TimeNeeded": "None",
@@ -17222,12 +17235,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground as Goron",
-          "MaskDeku"
-        ],
-        [
-          "Deku Playground as Goron",
-          "Deku Playground as FD"
+          "Deku Playground with Goron Spikes"
         ]
       ],
       "TimeNeeded": "None",
@@ -17247,6 +17255,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17266,6 +17277,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17282,6 +17296,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17298,6 +17315,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17317,6 +17337,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17336,6 +17359,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -30433,11 +30459,24 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Jump to the items as Fierce Deity.",
+      "TrickTooltip": "Get on top of the platforms in the Deku Playground during Day 2 or 3 with a well timed jump as Fierce Deity.",
       "TrickCategory": "North Clock Town"
     },
     {
       "Id": "Deku Playground as Goron",
+      "RequiredItems": [
+        "MaskGoron"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Get on top of the platforms in the Deku Playground during Day 2 or 3 with a well timed roll as Goron.",
+      "TrickCategory": "North Clock Town"
+    },
+    {
+      "Id": "Deku Playground with Goron Spikes",
       "RequiredItems": [
         "Goron Spikes"
       ],
