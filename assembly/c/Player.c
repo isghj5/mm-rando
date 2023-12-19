@@ -760,6 +760,10 @@ void Player_AfterUpdateCollisionCylinder(ActorPlayer* player) {
 
 u8 Player_GetMaskOnLoad(ActorPlayer* player, GlobalContext* ctxt) {
     u8 result = gSaveContext.perm.mask;
+    if (player->form != PLAYER_FORM_HUMAN) {
+        result = player->form + 0x15; // PLAYER_MASK_FIERCE_DEITY
+        gSaveContext.perm.mask = 0; // PLAYER_MASK_NONE
+    }
     s32 voidFlag = gSaveContext.extra.voidFlag;
     bool shouldResetGiantSize = ctxt->sceneNum == SCENE_INISIE_BS || voidFlag == -5 || voidFlag == 1 || voidFlag == -7;
     if (result == 0x14) {
