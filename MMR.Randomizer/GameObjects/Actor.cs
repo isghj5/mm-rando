@@ -4527,7 +4527,7 @@ namespace MMR.Randomizer.GameObjects
         // both of his vars are paths, sooo I'm guessing his behavior is hard coded
         [ObjectListIndex(0xE3)]
         [FileID(526)]
-        [CheckRestricted(Scene.NorthClockTown, variant: 0x83FF, Item.MaskBlast, Item.MaskAllNight)]
+        [CheckRestricted(Scene.NorthClockTown, variant: 0x83FF, Item.MaskBlast, Item.MaskAllNight, Item.NotebookMeetOldLady, Item.NotebookSaveOldLady)]
         [CheckRestricted(Scene.IkanaCanyon, variant: 0x85FF, Item.MaskCouple)]
         // cannot remove because he shares objects with the bank
         //[CheckRestricted(Scene.WestClockTown, variant: 0x83FF, Item.MaskBlast, Item.MaskAllNight)]
