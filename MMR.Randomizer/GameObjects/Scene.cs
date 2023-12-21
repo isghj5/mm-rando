@@ -676,6 +676,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
             Actor.LikeLike)] // If you start with one heart this can be a softlock
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Sakon,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can hide the grass weirdly
         NorthClockTown = 0x6B,
 
         [FileID(1516)]
@@ -695,6 +697,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1518)]
         [SceneInternalId(0x70)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SmallWoodenBox,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block guruguru and maybe more
         LaundryPool = 0x6D,
     }
 
