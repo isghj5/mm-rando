@@ -905,11 +905,12 @@ namespace MMR.Randomizer
                 // for now, remove all form restrictions to see what works and what does not work anymore
                 //*
                 var codeFile = RomData.MMFileList[31].Data;
-                var startLoc = 0x11C950;
+                var startLoc = 0x11C950; 
                 var endLoc = 0x11CB8C;
                 var i = startLoc;
                 while (i < endLoc)
                 {
+                    // gPlayerFormItemRestrictions[GET_PLAYER_FORM][GET_CUR_FORM_BTN_ITEM(i)]
                     codeFile[i] = 0xFF;
                     i++;
                 }
@@ -946,6 +947,7 @@ namespace MMR.Randomizer
 
             // can we remove an object from ikana to increase object budget to have more stuff?
             var ikanaScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaCanyon.FileID());
+            // nobody follows kafei its fine to remove his object from the main room
             ikanaScene.Maps[0].Objects[10] = SMALLEST_OBJ; // kafei
             ikanaScene.Maps[0].Objects[13] = SMALLEST_OBJ; // piece of heart, used in the east side but not here, we dont need here
             ikanaScene.Maps[0].Objects[18] = SMALLEST_OBJ; // flying scrub ( dont think it matters remove it from this area for most people)
