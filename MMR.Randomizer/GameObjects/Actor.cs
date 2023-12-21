@@ -4663,11 +4663,17 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(Scene.StockPotInn)]
         AnjusGrandma = 0x243, // En_Nb
 
+        // issue: they dont spawn without at least a pair, this can lead to areas where you get no spawns at all
         [ActorizerEnabled]
         [FileID(539)]
         [ObjectListIndex(0xE3)]
         [GroundVariants(1,0)]
         [UnkillableAllVariants]
+        [EnemizerScenesPlacementBlock(Scene.RanchBuildings, Scene.ClockTowerInterior,
+            Scene.HoneyDarling, Scene.PostOffice, Scene.MayorsResidence, Scene.TreasureChestShop,
+            Scene.MarineLab, Scene.AstralObservatory,
+            Scene.TownShootingGallery, Scene.SwampShootingGallery, Scene.PotionShop, Scene.GoronShop, Scene.ZoraHallRooms, 
+            Scene.PoeHut, Scene.MusicBoxHouse, Scene.BeneathGraveyard)]
         Jugglers = 0x244, // En_Ja
 
         /// ?? TODO
