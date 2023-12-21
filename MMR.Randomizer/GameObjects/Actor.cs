@@ -1310,7 +1310,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(144)]
         [ObjectListIndex(0xF2)]
-        [CheckRestricted(Item.MaskBunnyHood)]
+        [CheckRestricted(Item.MaskBunnyHood, Item.NotebookMeetGrog, Item.NotebookGrogsThanks)]
         [GroundVariants(0x0FFF)]
         [VariantsWithRoomMax(max: 9, variant: 0x0FFF)] // 10 without grog is probably broken
         [UnkillableAllVariants]
