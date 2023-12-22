@@ -754,6 +754,17 @@ namespace MMR.Randomizer
                 var spiderTorch2 = swampSpiderHouseScene.Maps[3].Actors[2];
                 spiderTorch2.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 135, flags: spiderTorch2.Rotation.y);
 
+                // actually most of them do
+                var spidertorch3 = swampSpiderHouseScene.Maps[5].Actors[1];
+                spidertorch3.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180 - 45, flags: spidertorch3.Rotation.y);
+                var spidertorch4 = swampSpiderHouseScene.Maps[5].Actors[4];
+                spidertorch4.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180 + 45, flags: spidertorch4.Rotation.y);
+                var spidertorch5 = swampSpiderHouseScene.Maps[5].Actors[2];
+                spidertorch5.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 45, flags: spidertorch5.Rotation.y);
+                var spidertorch6 = swampSpiderHouseScene.Maps[5].Actors[3];
+                spidertorch6.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180+90+45, flags: spidertorch6.Rotation.y);
+
+
                 var dekuPalace = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuPalace.FileID());
                 // the torches are really close to the hole, we can spread them wider a bit
                 dekuPalace.Maps[1].Actors[26].Position.z -= 10; // left
@@ -825,6 +836,11 @@ namespace MMR.Randomizer
                 gormanInResidence.Rotation.y = ActorUtils.MergeRotationAndFlags(180+45, gormanInResidence.Rotation.y);
                 // does gorman not do pathing? because it seems to be a thing here
                 //gormanInResidence.Path
+
+                ///zzz
+
+
+
             }
         }
 
@@ -2537,7 +2553,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.Takkuri)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.RomaniYts)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.TownShootingGallery, GameObjects.Actor.Clock, GameObjects.Actor.Keese)) continue;
+                if (TestHardSetObject(GameObjects.Scene.SwampSpiderHouse, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.BombersYouChase)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.SpikedMine, GameObjects.Actor.Postbox)) continue;
