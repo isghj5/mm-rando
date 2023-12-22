@@ -13,6 +13,7 @@ using MMR.Randomizer.Models;
 using MMR.Common.Utils;
 using MMR.Randomizer.Asm;
 using System.Text.RegularExpressions;
+using MMR.Randomizer.Extensions;
 
 namespace MMR.Randomizer.Utils
 {
@@ -1476,6 +1477,16 @@ namespace MMR.Randomizer.Utils
                 catch (Exception)
                 {
                     log.AppendLine("Error while converting an additional song slot to a sequence for music rando, slot: " + newSongSlot.Name);
+                }
+
+                // astral observatory is a special case where going backwards, from observatory into the sewer is hard coded, we have to update that
+                if (newSongSlot.SceneFIDToModify.Contains(GameObjects.Scene.AstralObservatory.FileID().ToString()))
+                {
+                    // in Audio_PlayObjSoundBgm it checks if you are going from astral observatory and back, and sets that ID in hardcode instead
+                    var codeFile = RomData.MMFileList[31].Data;
+                    // 0FBD04 801A17C4 0C06A26A */  jal  AudioSeq_QueueSeqCmd
+                    // 0FBD08 801A17C8 3484003B */  ori   $a0, $a0, 003B <- replace 3B with our byte
+                    codeFile[0xFBD08 + 3] = (byte) availableSlot.PreviousSlot;
                 }
             }
         } // */
