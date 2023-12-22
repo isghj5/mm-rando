@@ -483,10 +483,13 @@ namespace MMR.Randomizer.Asm
         {
             var result = new byte[MiscSmithyModel.Size * 10];
 
-            for (var i = 0; i < Models.Count; i++)
+            if (Models != null)
             {
-                var model = Models[i];
-                ReadWriteUtils.Arr_Insert(model.ToByteArray(), 0, MiscSmithyModel.Size, result, i * MiscSmithyModel.Size);
+                for (var i = 0; i < Models.Count; i++)
+                {
+                    var model = Models[i];
+                    ReadWriteUtils.Arr_Insert(model.ToByteArray(), 0, MiscSmithyModel.Size, result, i * MiscSmithyModel.Size);
+                }
             }
 
             return result;
