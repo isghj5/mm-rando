@@ -963,6 +963,12 @@ namespace MMR.Randomizer
             //var kegFile = RomData.MMFileList[GameObjects.Actor.PowderKeg.FileListIndex()].Data;
             //kegFile[0x1FF5] |= 0x02; // add ACTOR_FLAG_20000, makes it heavy 
 
+            // regular po cannot be hit by zora lightning, but can take arrow damage? this feelslike an oversight
+            RomUtils.CheckCompressed(GameObjects.Actor.Poe.FileListIndex());
+            var pohData = RomData.MMFileList[GameObjects.Actor.Poe.FileListIndex()].Data;
+            pohData[0x3003] = 0x2;
+
+
             //LightShinanigans();
 
             //PrintActorValues();
@@ -2525,7 +2531,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BigPoe)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BigPoe)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.ZoraRaceRing)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
