@@ -4076,12 +4076,13 @@ namespace MMR.Randomizer.GameObjects
                         0x1301)] // not vanilla, maybe we can actually place killable variants?
         //[EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.DampesHouse)] // well and dampe house must be vanilla for scoopsanity
         //[OnlyOneActorPerRoom]
-        [VariantsWithRoomMax(max: 0, variant: 0xFF01, 0xFF00)]
-        [VariantsWithRoomMax(max: 1, variant: 0x1301)] // non-vanilla
-        [RespawningVariants(0x1301)] // this version never respawns, we mark it respawning so that it wont be put into kill-enemy rooms and possibly lock the player
+        [VariantsWithRoomMax(max: 0, variant: 0xFF00)]
+        [VariantsWithRoomMax(max: 1, variant: 0xFF01,
+            0x1301)] // non-vanilla
+        //[RespawningVariants(0x1301)] // if we got killable versions working, this would go back on
         //[UnkillableAllVariants] // only 1, the one with a no-respawn flag, spawns readily, so for now, assume the player kills one and can't kill another
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames for ghast
-        [EnemizerScenesPlacementBlock(/*Scene.TerminaField,*/ Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, // annoying
+        [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, // annoying
             Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
         [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         BigPoe = 0x208, // En_Bigpo

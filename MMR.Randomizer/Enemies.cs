@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Security.Cryptography;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,7 +18,6 @@ using System.Threading.Tasks;
 
 // dotnet 4.5 req
 using System.Runtime.CompilerServices;
-using System.Collections.ObjectModel;
 
 // todo rename this actorutils.cs and move to MMR.Randomizer/Utils/
 
