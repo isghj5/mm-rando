@@ -2525,7 +2525,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.SpikedMine)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BigPoe)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.ZoraRaceRing)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
