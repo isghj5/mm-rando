@@ -948,6 +948,10 @@ namespace MMR.Randomizer
                     Debug.WriteLine($"Actor {a.Name} has object size: {a.ObjectSize.ToString("X6")}");
                 }
                 int i = 4; */
+
+
+
+
             }
           
 
@@ -958,6 +962,21 @@ namespace MMR.Randomizer
             var playerCodeFile = RomData.MMFileList[38].Data;
             // 0x40000000, 
             ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x030B10, val: 0x3FF33333); // change to 1.9, almost double running speed
+
+            // what if all minor hats were as fast as bunny?
+            // except without adding code we can only modify one line of code
+            //  if (this->currentMask == PLAYER_MASK_BUNNY) {speedTarget *= 1.5f;
+            // the closest I can think of is & 0xF which gets most but not all of them, which does shuffle some code around tho
+            // 0x1D59C ofset == 0xCC5490 hard romaddr
+            ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x1D59C, val: 0xC7A4002C);
+            ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x1D5A0, val: 0x3C013FC0);
+            ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x1D5A4, val: 0x3319000F);
+            ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x1D5A8, val: 0x13200005);
+            ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x1D5AC, val: 0x3C08801F);
+
+            ReadWriteUtils.Arr_WriteU16(playerCodeFile, Dest: 0x1D5C0, val: 0x8D08);
+            ReadWriteUtils.Arr_WriteU16(playerCodeFile, Dest: 0x1D5CC, val: 0x8509);
+            ReadWriteUtils.Arr_WriteU16(playerCodeFile, Dest: 0x1D5D8, val: 0x4489);
 
             // can we remove an object from ikana to increase object budget to have more stuff?
             var ikanaScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaCanyon.FileID());
