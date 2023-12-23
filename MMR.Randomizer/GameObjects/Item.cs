@@ -10563,7 +10563,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ItemName("Notebook: Kamaro's Mask"), LocationName("Kamaro"), Region(Region.TerminaField)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Bombers.", isDefinite: true)]
+        [ShopText("The Bombers' Notebook entry for healing Kamaro.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x483), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPromiseKamaro,
@@ -10571,7 +10571,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ItemName("Notebook: Stone Mask"), LocationName("Invisible Soldier"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Bombers.", isDefinite: true)]
+        [ShopText("The Bombers' Notebook entry for the invisible soldier.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x484), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookSaveInvisibleSoldier,
@@ -10579,7 +10579,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ItemName("Notebook: Bremen Mask"), LocationName("Guru-Guru"), Region(Region.LaundryPool)]
         [GossipLocationHint("a musician", "an entertainer"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Bombers.", isDefinite: true)]
+        [ShopText("The Bombers' Notebook entry for listening to Guru-Guru.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x485), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookGuruGuru,
