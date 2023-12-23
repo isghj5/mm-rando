@@ -254,54 +254,6 @@ namespace MMR.Randomizer
             }
         }
 
-        private void WriteTunicColor()
-        {
-            if (_cosmeticSettings.UseTunicColors[TransformationForm.Human])
-            {
-                Color t = _cosmeticSettings.TunicColors[TransformationForm.Human];
-                byte[] color = { t.R, t.G, t.B };
-
-                var playerModel = DeterminePlayerModel();
-                var characterIndex = (int)playerModel;
-                if (playerModel == Character.Kafei)
-                {
-                    var objectData = ObjUtils.GetObjectData(0x11);
-                    TunicUtils.UpdateKafeiTunic(ref objectData, t);
-                    ObjUtils.InsertObj(objectData, 0x11);
-                }
-                else
-                {
-                    var locations = ResourceUtils.GetIndexedAddresses(characterIndex, Resources.addresses.tunic_0, Resources.addresses.tunic_1, Resources.addresses.tunic_2, Resources.addresses.tunic_3);
-                    var objectData = ObjUtils.GetObjectData(0x11);
-                    for (int j = 0; j < locations.Count; j++)
-                    {
-                        ReadWriteUtils.WriteFileAddr(locations[j], color, objectData);
-                    }
-                    ObjUtils.InsertObj(objectData, 0x11);
-                };
-            }
-
-            var tunicForms = new List<TransformationForm>
-            {
-                TransformationForm.Deku,
-                TransformationForm.Goron,
-                TransformationForm.Zora,
-                TransformationForm.Zora,
-                TransformationForm.FierceDeity,
-            };
-
-            var otherTunics = ResourceUtils.GetAddresses(Resources.addresses.tunic_forms);
-
-            for (var i = 0; i < tunicForms.Count; i++)
-            {
-                if (_cosmeticSettings.UseTunicColors[tunicForms[i]])
-                {
-                    var t = _cosmeticSettings.TunicColors[tunicForms[i]];
-                    TunicUtils.UpdateFormTunics(i, otherTunics, t);
-                }
-            }
-        }
-
         private void WriteInstruments(Random random)
         {
             var codeFileAddress = 0xB3C000;
