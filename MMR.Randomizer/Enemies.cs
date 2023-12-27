@@ -381,9 +381,10 @@ namespace MMR.Randomizer
             if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic) return ItemUtils.IsJunk(itemInCheck);
 
             // we need to build a list of known junk items and check that list here
-            var category = (int)itemInCheck.ItemCategory();
-            if (category < 0) return true; // recovery heart?
-            if (ActorizerKnownJunkItems[category].Contains(itemInCheck))
+            var category = itemInCheck.ItemCategory() ?? GameObjects.ItemCategory.None;
+            var intCategory = (int)category;
+            if (intCategory <= 0) return true; // zero is None, recovery heart is something below zero
+            if (ActorizerKnownJunkItems[intCategory].Contains(itemInCheck))
             {
                 return true;
             }
