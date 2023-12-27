@@ -82,6 +82,19 @@ static void Savedata_ResetStartingItems(GlobalContext* ctxt) {
 
 void Savedata_AfterFileInit(GlobalContext* ctxt) {
     Savedata_SetStartingItems(ctxt);
+
+    // wip
+    // we want to give the player nut and stick on c buttons in the save to start the game
+    // c buttons are a 4x4 grid of [form][button] ? what?
+    // button one is the b button, leave that one for now?
+    for (int i = 1; i < 4; i++){
+	    for (int ii = 0; i < 4; i++){
+        //gSaveContext.perm.saveInfo.equips.cButtonSlots[i][ii] = 0x09;
+        gSaveContext.perm.unk4C.formButtonItems[i].buttons[ii] = 0x08;
+        gSaveContext.perm.unk4C.formButtonSlots[i].buttons[ii] = 0x09;
+      }
+    }
+
 }
 
 static inline s32 GetInvertedClockSpeed(void) {

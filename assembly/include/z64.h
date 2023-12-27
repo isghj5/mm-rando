@@ -1390,7 +1390,7 @@ typedef union {
     u8 bytes[0x64];
 } WeekEventReg; // size = 0x64
 
-typedef struct {
+typedef struct { // SaveContextPerm
     /* 0x0000 */ SaveContextEntrance entrance;
     /* 0x0004 */ u8 mask;
     /* 0x0005 */ u8 introFlag;
@@ -1407,8 +1407,9 @@ typedef struct {
     /* 0x0021 */ UNK_TYPE1 pad21;
     /* 0x0022 */ u8 tatlFlag;
     /* 0x0023 */ u8 owlSave;
-    /* 0x0024 */ SaveContext_struct1 unk24;
-    /* 0x004C */ SaveContext_struct2 unk4C;
+    // mm-decomp thinks the rest of this is a different struct "SaveInfo"
+    /* 0x0024 */ SaveContext_struct1 unk24; // SavePlayerData
+    /* 0x004C */ SaveContext_struct2 unk4C; // ItemEquips
     /* 0x006E */ UNK_TYPE1 pad6E[0x2];
     /* 0x0070 */ SaveContextInventory inv;
     /* 0x00F8 */ PermanentSceneFlags sceneFlags[120];
@@ -1442,6 +1443,7 @@ typedef struct {
     /* 0x1000 */ UNK_TYPE1 pad1000[0xA];
     /* 0x100A */ u16 checksum;
 } SaveContextPerm; // size = 0x100C
+// in decomp this was renamed to "Save"
 
 // Save Context that is only stored in an owl save
 typedef struct {

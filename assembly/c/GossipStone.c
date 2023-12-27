@@ -70,7 +70,11 @@ u16 GossipStone_GetGiIndex(ActorEnGs* actor, GlobalContext* ctxt) {
 
 ActorEnElf* GossipStone_FairySpawn(ActorEnGs* actor, GlobalContext* ctxt, s16 actorId, f32 posX, f32 posY, f32 posZ, s16 rotX,
                    s16 rotY, s16 rotZ, s32 params) {
-    ActorEnElf* fairy = (ActorEnElf*)z2_SpawnActor(&ctxt->actorCtx, ctxt, actorId, posX, posY, posZ, rotX, rotY, rotZ, params);
+    f32 newX = (z2_Math_CosS(rotY) * 100) + posX;
+    f32 newZ = (z2_Math_SinS(rotY) * 100) + posZ;
+
+    //ActorEnElf* fairy = (ActorEnElf*)z2_SpawnActor(&ctxt->actorCtx, ctxt, actorId, posX, posY, posZ, rotX, rotY, rotZ, params);
+    ActorEnElf* fairy = (ActorEnElf*)z2_SpawnActor(&ctxt->actorCtx, ctxt, actorId, newX, posY, newZ, rotX, rotY, rotZ, params);
     u16 giIndex = GossipStone_GetGiIndex(actor, ctxt);
     if (giIndex > 0) {
         Rupee_CheckAndSetGiIndex(&fairy->base, ctxt, giIndex);
