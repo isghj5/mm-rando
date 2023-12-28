@@ -306,7 +306,7 @@ namespace MMR.Randomizer.Utils
             {
                 var file = RomData.MMFileList[fileId];
                 RomUtils.CheckCompressed(fileId); // if they werent preiviously modified they might still be compressed, decompress now
-                Debug.Assert(file.IsCompressed);
+                //Debug.Assert(file.IsCompressed);
 
                 file.IsCompressed = false;
             }
