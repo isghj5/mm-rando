@@ -6007,7 +6007,7 @@ namespace MMR.Randomizer
             // change the table labels so "Name", the unused field of filenames, is removed and tiny "cn" is replaced with Num
             // also "No." changed to A.ID, as "No." could be confused for count, but its actorId
             byte[] newTableLabelString = Encoding.ASCII.GetBytes("A.Id RAMStart -   RAMEnd Num."); // replaces "No. RamStart- RamEnd cn  Name\n"
-            var newTableSubString = Encoding.ASCII.GetBytes("%4d %08X - %08X %4d "); // replaces "%3d %08x-%08x %3d %s\n"
+            var newTableSubString = Encoding.ASCII.GetBytes("%4X %08X - %08X %4d "); // replaces "%3d %08x-%08x %3d %s\n"
             ReadWriteUtils.Arr_Insert(newTableLabelString, 0, newTableLabelString.Length, codeFileData, 0x137104);
             ReadWriteUtils.Arr_Insert(newTableSubString,   0, newTableSubString.Length,   codeFileData, 0x137124);
 

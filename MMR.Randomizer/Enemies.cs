@@ -4274,7 +4274,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 56.0a\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 56.0b\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
