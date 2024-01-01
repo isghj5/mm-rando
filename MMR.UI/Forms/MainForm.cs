@@ -126,7 +126,7 @@ namespace MMR.UI.Forms
             // Comforts/cosmetics
             TooltipBuilder.SetTooltip(cQText, "Enable quick text. Dialogs are fast-forwarded to choices/end of dialog.");
             TooltipBuilder.SetTooltip(cSFX, "Randomize sound effects that are played throughout the game.");
-            TooltipBuilder.SetTooltip(cMusic, "Select a music option\n\n - Default: Vanilla background music.\n - Random: Randomized background music.\n - None: No background music. Causes softlock on Frog Choir HP.");
+            TooltipBuilder.SetTooltip(cMusic, "Select a music option\n\n - Default: Vanilla background music.\n - Random: Randomized background music.\n - None: No background music.");
             TooltipBuilder.SetTooltip(lLuckRoll, "Music Rando comes with a chance to accept a song from outside of its categories.\n - This controls the percentage chance of a Luck Roll allowing out-of-category music placement\n - This is per specific slot+song check\n - Only songs with their first category being a general category (0-16) are Luck Rollable.");
             TooltipBuilder.SetTooltip(tLuckRollPercentage, "Music Rando comes with a chance to accept a song from outside of its categories.\n - This controls the percentage chance of a Luck Roll allowing out-of-category music placement\n - This is per specific slot+song check\n - Only songs with their first category being a general category (0-16) are Luck Rollable.");
             TooltipBuilder.SetTooltip(cFreeHints, "Enable reading gossip stone hints without requiring the Mask of Truth.");
