@@ -3347,7 +3347,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(403)]
         [ObjectListIndex(0x18F)]
-        [CheckRestricted(Item.ItemBottleWitch)]
+        [CheckRestricted(Item.ItemBottleWitch,
+            Item.MundaneItemKotakeMushroomSaleRedRupee,
+            Item.ShopItemWitchBluePotion, Item.ShopItemWitchGreenPotion, Item.ShopItemWitchRedPotion)] // because people can play without SOT, she can become unavailable in shop
         // nothing in the other params other than path, the starting animation and stuff are all hardcoded to entrance
         [PathingVariants(0x2400, 0x2000)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
