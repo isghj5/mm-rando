@@ -371,7 +371,7 @@ namespace MMR.Randomizer
             WriteCrashDebuggerShow();
 
             // Dolphin/WiiVC audiothread shutdown workaround
-            ReadWriteUtils.WriteU16ToROM(0xB3C000 + 0x0CD320, 0x1000);
+            ReadWriteUtils.WriteU32ToROM(0xB3C000 + 0x0CD384, 0x00000000);
 
         }
 
