@@ -15,7 +15,7 @@ using MMR.Common.Extensions;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Attributes;
 using System.Numerics;
-
+using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.Utils
 {
@@ -260,9 +260,15 @@ namespace MMR.Randomizer.Utils
             Debug.WriteLine($" compress all files time : [{(DateTime.Now).Subtract(startTime).TotalMilliseconds} (ms)]");
         }
 
-        private static void SetFilesToRemainDecompressed()
+        private static void SetFilesToRemainDecompressed(OutputSettings settings)
         {
             /// Now that files can remain uncompressed and be expected to work, lets leave some commonly accessed files de-compressed so they don't cost as much to load
+
+            if (settings.OutputVC)
+            {
+                return; // this does not work with wiivc right now
+            }
+
 
             var listOfFiles = new List<int>()
             {
@@ -312,7 +318,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static byte[] BuildROM()
+        public static byte[] BuildROM(OutputSettings settings)
         {
             // if injecting new actors, we need to update the actor overlay table overlayEntry
             //if (Settings.RandomizeEnemies) // right... settings files are always local for some reason..
@@ -320,7 +326,7 @@ namespace MMR.Randomizer.Utils
                 Enemies.UpdateActorOverlayTable();
             }
 
-            SetFilesToRemainDecompressed();
+            SetFilesToRemainDecompressed(settings);
 
             CompressMMFiles();
 
