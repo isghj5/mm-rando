@@ -29,6 +29,7 @@ namespace MMR.Randomizer.Models.Rom
         public int OldObjectId; // in-game object list index
         public int ActorIdFlags; // we just want to keep them when re-writing, but I'm not sure they even matter
         public List<int> Variants = new List<int> { 0 };
+        //public int VariantBeforeFlagsAdjustment; // after flags are adjusted variants change, looking up types can be broken
         public List<List<int>> AllVariants = null;
         public int OldVariant;
         public bool MustNotRespawn = false;

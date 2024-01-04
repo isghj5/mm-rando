@@ -380,7 +380,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0xEF, 0x7F, 0x3F, 0x4)]
         [RespawningVariants(0x4)] // doesn't respawn after death, so dont put where respawning enemies are bad either
         [VariantsWithRoomMax(max: 0, variant: 4)] // if this actor hides an item, could be annoying going back in time to reset, so do not place
-        [FlyingToGroundHeightAdjustment(5000)]
+        [FlyingToGroundHeightAdjustment(100)]
         [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // shared object with goldskulltula, cannot change without
         //[EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, // in the air, bit weird
         //    Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
@@ -1648,7 +1648,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
             Scene.StockPotInn, Scene.TradingPost,
             Scene.BeneathTheWell, Scene.IkanaGraveyard, Scene.StoneTower)]
-        [SwitchFlagsPlacement(mask: 0xFF, shift: 0)]
+        //[SwitchFlagsPlacement(mask: 0xFF, shift: 0)]
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
         EmptyC8 = 0xC8,
@@ -2613,7 +2613,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(307)]
         [ObjectListIndex(0x171)]
         [GroundVariants(0)]
-        [VariantsWithRoomMax(max: 3, variant: 0)]
+        [VariantsWithRoomMax(max: 10, variant: 0)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slowing enemies
         Nejiron = 0x155, // Rolling exploding rock in Ikana
 

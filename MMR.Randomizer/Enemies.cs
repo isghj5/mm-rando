@@ -2565,7 +2565,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BigPoe)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Skulltula)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.ZoraRaceRing)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
@@ -2660,7 +2660,8 @@ namespace MMR.Randomizer
                     break;
                 }
 
-                oldActor.ChangeActor(testActor, vars: testActor.Variants[thisSceneData.RNG.Next(testActor.Variants.Count)]);
+                var newVariant = testActor.Variants[thisSceneData.RNG.Next(testActor.Variants.Count)]; // readability
+                oldActor.ChangeActor(testActor, vars: newVariant);
 
                 temporaryMatchEnemyList.Add(oldActor);
                 var testSearch = previouslyAssignedCandidates.Find(act => act.ActorId == oldActor.ActorId);
@@ -3340,7 +3341,7 @@ namespace MMR.Randomizer
             // outer layer is per object
             public List<List<Actor>> ActorsPerObject     = new List<List<Actor>>();   
             public List<List<Actor>> CandidatesPerObject = new List<List<Actor>>();
-            public ActorsCollection ActorCollection = null;
+            public ActorsCollection ActorCollection = null; // used for ram space statistics
             public int FreeActorRate = 75; // percentage chance of getting a free actor instead of an empty actor during trim
 
             public SceneEnemizerData(Scene scene)
@@ -3600,24 +3601,17 @@ namespace MMR.Randomizer
             /////////////////////////////
             #endregion
 
-            // tired of this, wont reproduce at all
-            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.RoadToSouthernSwamp)
-            {
-                var skullwallaSearch = thisSceneData.Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.GoldSkulltula);
-                if (skullwallaSearch.Count > 0 && skullwallaSearch[0].Variants[0] < 0xFF00)// && skullwallaSearch.Find( u => u.Variants[0]))
-                    throw new Exception("Spiders in the swamp again, try another");
-            }
-
             var flagLog = new StringBuilder();
 
+            FixGroundToFlyingActorHeights(thisSceneData, flagLog); // putting flying actors on ground spawns can be weird
+            FixRedeadSpawnScew(thisSceneData); // redeads don't like x/z rotation
+            FixBrokenActorSpawnCutscenes(thisSceneData); // some actors dont like having bad cutscenes
+            FixWaterPostboxes(thisSceneData);
+            // the following modify Variant which can confuse typing system
             FixPathingVars(thisSceneData); // any patrolling types need their vars fixed
             FixKickoutEnemyVars(thisSceneData); // and same with the two actors that have kickout addresses
             FixSwitchFlagVars(thisSceneData, flagLog);
             FixTreasureFlagVars(thisSceneData, flagLog);
-            FixRedeadSpawnScew(thisSceneData); // redeads don't like x/z rotation
-            FixBrokenActorSpawnCutscenes(thisSceneData); // some actors dont like having bad cutscenes
-            FixGroundToFlyingActorHeights(thisSceneData, flagLog); // putting flying actors on ground spawns can be weird
-            FixWaterPostboxes(thisSceneData);
 
             // print debug actor locations
             WriteOutput("####################################################### ");
