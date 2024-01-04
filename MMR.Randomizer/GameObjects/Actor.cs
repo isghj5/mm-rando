@@ -731,7 +731,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.DekuShrine, Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.GoronRacetrack,
             Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard, Scene.DampesHouse,
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse,
-            Scene.StockPotInn, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall, Scene.TradingPost,
+            Scene.StockPotInn, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall, Scene.TradingPost, Scene.MayorsResidence,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
             Scene.SouthernSwamp, // dyna crash, remove if we get dyna overload detection working
             Scene.BeneathTheWell, Scene.IkanaGraveyard, Scene.StoneTower)]
@@ -1646,7 +1646,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
-            Scene.StockPotInn, Scene.TradingPost,
+            Scene.StockPotInn, Scene.TradingPost, Scene.MayorsResidence,
             Scene.BeneathTheWell, Scene.IkanaGraveyard, Scene.StoneTower)]
         //[SwitchFlagsPlacement(mask: 0xFF, shift: 0)]
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
