@@ -3375,7 +3375,7 @@ namespace MMR.Randomizer
                     var checkedLocations = new Dictionary<Item, LogicUtils.LogicPaths>();
                     var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.OtherCredits, logicForImportance, checkedLocations: checkedLocations);
                     var importantLocations = logicPaths?.Important.Where(item => item.Region(ItemList).HasValue && item.Entrance() == null).Distinct().ToHashSet();
-                    var importantSongLocations = logicPaths?.ImportantSongLocations.ToList();
+                    var requiredSongLocations = logicPaths?.RequiredSongLocations.ToList();
                     if (importantLocations == null)
                     {
                         throw new RandomizationException("Moon Access is unobtainable.");
@@ -3408,7 +3408,7 @@ namespace MMR.Randomizer
                                 importantLocationsMutex.ReleaseMutex();
 
                                 importantSongLocationsMutex.WaitOne();
-                                importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
+                                requiredSongLocations.AddRange(checkPaths.RequiredSongLocations);
                                 importantSongLocationsMutex.ReleaseMutex();
                             }
                         }
@@ -3437,7 +3437,7 @@ namespace MMR.Randomizer
                     }
 
                     _randomized.ImportantLocations = importantLocations.Union(songOfTimeImportantItems).Distinct().ToList().AsReadOnly();
-                    _randomized.ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly();
+                    _randomized.RequiredSongLocations = requiredSongLocations.Distinct().ToList().AsReadOnly();
                     _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.Keys.ToList().AsReadOnly();
 
                     var spheres = new List<List<(string item, string location)>>();

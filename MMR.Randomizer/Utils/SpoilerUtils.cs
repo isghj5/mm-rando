@@ -29,7 +29,7 @@ namespace MMR.Randomizer.Utils
                     ItemUtils.IsRequired(u.ItemObject.Item, u.LocationForImportance, randomized),
                     ItemUtils.IsImportant(u.ItemObject.Item, u.LocationForImportance, randomized),
                     ItemUtils.IsLocationJunk(u.LocationForImportance, randomized.Settings),
-                    randomized.ImportantSongLocations?.Contains(u.LocationForImportance) == true,
+                    randomized.RequiredSongLocations?.Contains(u.LocationForImportance) == true,
                     settings.ProgressiveUpgrades,
                     randomized.ItemList
                 ));

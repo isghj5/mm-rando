@@ -16,7 +16,7 @@ namespace MMR.Randomizer.Models
         public List<MessageEntry> GossipQuotes { get; set; }
         public List<ItemLogic> Logic { get; set; }
         public ReadOnlyCollection<Item> ImportantLocations { get; set; }
-        public ReadOnlyCollection<Item> ImportantSongLocations { get; set; }
+        public ReadOnlyCollection<Item> RequiredSongLocations { get; set; }
         public ReadOnlyCollection<Item> LocationsRequiredForMoonAccess { get; set; }
         public Dictionary<Item, LogicUtils.LogicPaths> CheckedImportanceLocations { get; set; }
         public ReadOnlyCollection<ItemObject> Traps { get; set; }

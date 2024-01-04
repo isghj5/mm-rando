@@ -506,6 +506,10 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult, bool anythingCanBeRequired = false)
         {
+            if (anythingCanBeRequired && randomizedResult.RequiredSongLocations?.Contains(locationForImportance) == true)
+            {
+                return true;
+            }
             return (anythingCanBeRequired || (CanBeRequired(item) && !IsItemHinted(item, randomizedResult.Settings))) && randomizedResult.LocationsRequiredForMoonAccess?.Contains(locationForImportance) == true;
         }
 
