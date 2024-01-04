@@ -111,7 +111,7 @@ bool Player_HasCustomVictoryCondition() {
         || MISC_CONFIG.internal.victoryTransformMasks
         || MISC_CONFIG.internal.victoryNotebook
         || MISC_CONFIG.internal.victoryHearts
-        || MISC_CONFIG.internal.victoryBossRemains;
+        || MISC_CONFIG.internal.victoryBossRemainsCount;
 }
 
 bool Player_CheckVictory() {
@@ -167,11 +167,21 @@ bool Player_CheckVictory() {
             return false;
         }
     }
-    if (MISC_CONFIG.internal.victoryBossRemains) {
-        if (!(gSaveContext.perm.inv.questStatus.odolwasRemains
-            && gSaveContext.perm.inv.questStatus.gohtsRemains
-            && gSaveContext.perm.inv.questStatus.gyorgsRemains
-            && gSaveContext.perm.inv.questStatus.twinmoldsRemains)) {
+    if (MISC_CONFIG.internal.victoryBossRemainsCount) {
+        u8 count = 0;
+        if (gSaveContext.perm.inv.questStatus.odolwasRemains) {
+            count++;
+        }
+        if (gSaveContext.perm.inv.questStatus.gohtsRemains) {
+            count++;
+        }
+        if (gSaveContext.perm.inv.questStatus.gyorgsRemains) {
+            count++;
+        }
+        if (gSaveContext.perm.inv.questStatus.twinmoldsRemains) {
+            count++;
+        }
+        if (count < MISC_CONFIG.internal.victoryBossRemainsCount) {
             return false;
         }
     }

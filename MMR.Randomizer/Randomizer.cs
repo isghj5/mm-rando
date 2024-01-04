@@ -571,14 +571,38 @@ namespace MMR.Randomizer
                     ItemList[Item.OtherCredits].DependsOnItems.Add(requiredHearts.Item);
                 }
 
-                if (_settings.VictoryMode.HasFlag(VictoryMode.BossRemains))
+                var bossRemainsAmount = 0;
+                if (_settings.VictoryMode.HasFlag(VictoryMode.FourBossRemains))
+                {
+                    bossRemainsAmount = 4;
+                }
+                else if (_settings.VictoryMode.HasFlag(VictoryMode.ThreeBossRemains))
+                {
+                    bossRemainsAmount = 3;
+                }
+                else if (_settings.VictoryMode.HasFlag(VictoryMode.TwoBossRemains))
+                {
+                    bossRemainsAmount = 2;
+                }
+                else if (_settings.VictoryMode.HasFlag(VictoryMode.OneBossRemains))
+                {
+                    bossRemainsAmount = 1;
+                }
+                if (bossRemainsAmount > 0)
                 {
                     var requiredBossRemains = new ItemObject
                     {
                         ID = ItemList.Count,
                         TimeAvailable = 63,
-                        DependsOnItems = ItemUtils.BossRemains().ToList(),
                     };
+                    if (bossRemainsAmount == 4)
+                    {
+                        requiredBossRemains.DependsOnItems = ItemUtils.BossRemains().ToList();
+                    }
+                    else
+                    {
+                        requiredBossRemains.Conditionals = ItemUtils.BossRemains().Combinations(bossRemainsAmount).Select(c => c.ToList()).ToList();
+                    }
                     ItemList.Add(requiredBossRemains);
                     ItemList[Item.OtherCredits].DependsOnItems.Add(requiredBossRemains.Item);
                 }
