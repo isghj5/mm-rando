@@ -10731,7 +10731,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x494), ItemPool(ItemCategory.Fairy, LocationCategory.SmallSnowballs, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2E22)]
+        [GetItemIndex(0x494), ItemPool(ItemCategory.Fairy, LocationCategory.SmallSnowballs, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2E22), CollectableIndex(0x3921)]
         CollectableSnowheadSmallSnowball10,
 
 
