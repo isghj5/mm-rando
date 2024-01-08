@@ -590,15 +590,15 @@ namespace MMR.Randomizer.Utils
             {
                 "Deku Playground", new List<Item>
                 {
-                    Item.HeartPieceDekuPlayground,
                     Item.MundaneItemDekuPlaygroundPurpleRupee,
+                    Item.HeartPieceDekuPlayground,
                 }.AsReadOnly()
             },
             {
                 "Honey and Darling", new List<Item>
                 {
-                    Item.HeartPieceHoneyAndDarling,
                     Item.MundaneItemHoneyAndDarlingPurpleRupee,
+                    Item.HeartPieceHoneyAndDarling,
                 }.AsReadOnly()
             },
             {
