@@ -32,6 +32,7 @@ static PlayerActionFunc sPlayer_Action_60 = NULL;
 static PlayerActionFunc sPlayer_Action_62 = NULL;
 static PlayerActionFunc sPlayer_Action_61 = NULL;
 static PlayerActionFunc sPlayer_Action_82 = NULL;
+static PlayerActionFunc sPlayer_Action_93 = NULL;
 static PlayerActionFunc sPlayer_Action_96 = NULL;
 static PlayerUpperActionFunc sPlayer_UpperAction_CarryAboveHead = NULL;
 
@@ -53,6 +54,7 @@ void Player_InitFuncPointers() {
     sPlayer_Action_62 = z2_Player_Action_62;
     sPlayer_Action_61 = z2_Player_Action_61;
     sPlayer_Action_82 = z2_Player_Action_82;
+    sPlayer_Action_93 = z2_Player_Action_93;
     sPlayer_Action_96 = z2_Player_Action_96;
     sPlayer_UpperAction_CarryAboveHead = z2_Player_UpperAction_CarryAboveHead;
     sFuncPointersInitialized = true;
@@ -378,6 +380,7 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
         || (this->stateFlags.state1 & PLAYER_STATE1_TIME_STOP)
         || (this->stateFlags.state2 & PLAYER_STATE2_DIVING)
         || (this->currentBoots == 4 && this->prevBoots == 5)
+        || (this->actionFunc == sPlayer_Action_93)
         || ((u16)(u32)this->skelAnime.linkAnimetionSeg) == 0xE260
             && this->skelAnime.animPlaybackSpeed != 2.0f/3.0f
             && this->skelAnime.animCurrentFrame == 1.5f) {
