@@ -406,6 +406,7 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
     // really hacky, but necessary to prevent certain softlocks. unkAA5 gets reset back to 0 after transformation.
     this->heldItemActionParam = 0;
     this->unkAA5 = 5;
+    this->base.shape.rot.x = 0;
 
     if (this->stateFlags.state2 & PLAYER_STATE2_DIVING_2) {
         sSwimmingTransformation = true;
