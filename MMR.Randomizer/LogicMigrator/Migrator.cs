@@ -4182,6 +4182,14 @@ namespace MMR.Randomizer.LogicMigrator
                 return false;
             }
 
+            void addConditionalOrTodo(JsonFormatLogicItem item, params string[] conditionals)
+            {
+                if (!addConditionalIfExists(item, conditionals))
+                {
+                    addTodo(item);
+                }
+            }
+
             bool removeConditional(JsonFormatLogicItem item, params string[] values)
             {
                 return item.ConditionalItems.RemoveAll(c => c.SequenceEqual(values)) > 0;
@@ -4217,8 +4225,8 @@ namespace MMR.Randomizer.LogicMigrator
                 ("CollectableMountainVillageSpringSmallSnowball4", 482, null),
                 ("CollectableMountainVillageWinterPot1", 483, (item) =>
                 {
-                    addConditional(item, "Short Ranged Weapon");
-                    addConditional(item, "Any Bomb Bag");
+                    addConditionalIfExists(item, "Short Ranged Weapon");
+                    addConditionalIfExists(item, "Any Bomb Bag");
                     addConditionalIfExists(item, "Powder Kegs as Explosives", "ItemPowderKeg");
                     addConditionalIfExists(item, "Long Stick");
                 }),
@@ -4263,8 +4271,8 @@ namespace MMR.Randomizer.LogicMigrator
                 }),
                 ("CollectableTerminaFieldPot1", 0, (item) =>
                 {
-                    addConditional(item, "OtherMagicBean", "Water for Magic Bean");
-                    addConditional(item, "Short Ranged Weapon");
+                    addConditionalOrTodo(item, "OtherMagicBean", "Water for Magic Bean");
+                    addConditionalOrTodo(item, "Short Ranged Weapon");
                     addConditionalIfExists(item, "Clever Bombchu Usage");
                     addConditionalIfExists(item, "Bomb Hovering");
                     addConditionalIfExists(item, "Powder Kegs as Explosives", "ItemPowderKeg", "Fewer Item Requirements");
@@ -4357,22 +4365,24 @@ namespace MMR.Randomizer.LogicMigrator
                 return logicItem;
             }).ToList());
 
-            logicObject.Logic.Add(new JsonFormatLogicItem
+            var summonFairy = new JsonFormatLogicItem
             {
                 Id = "Summon Fairy",
                 RequiredItems = new List<string>(),
-                ConditionalItems = new List<List<string>>
-                {
-                    new List<string>
-                    {
-                        "Play Epona's Song"
-                    },
-                    new List<string>
-                    {
-                        "Play Song of Healing"
-                    },
-                },
-            });
+                ConditionalItems = new List<List<string>>(),
+            };
+
+            if (!addConditionalIfExists(summonFairy, "Play Epona's Song"))
+            {
+                addConditional(summonFairy, "ItemOcarina", "SongEpona");
+            }
+
+            if (!addConditionalIfExists(summonFairy, "Play Song of Healing"))
+            {
+                addConditional(summonFairy, "ItemOcarina", "SongHealing");
+            }
+
+            logicObject.Logic.Add(summonFairy);
 
             logicObject.Version = 16;
         }

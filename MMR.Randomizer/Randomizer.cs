@@ -28,7 +28,7 @@ namespace MMR.Randomizer
 
         private Random Random { get; set; }
 
-        public ItemList ItemList { get; set; }
+        private ItemList ItemList { get; set; }
 
         #region Dependence and Conditions
         List<Item> ConditionsChecked { get; set; }
@@ -571,14 +571,38 @@ namespace MMR.Randomizer
                     ItemList[Item.OtherCredits].DependsOnItems.Add(requiredHearts.Item);
                 }
 
-                if (_settings.VictoryMode.HasFlag(VictoryMode.BossRemains))
+                var bossRemainsAmount = 0;
+                if (_settings.VictoryMode.HasFlag(VictoryMode.FourBossRemains))
+                {
+                    bossRemainsAmount = 4;
+                }
+                else if (_settings.VictoryMode.HasFlag(VictoryMode.ThreeBossRemains))
+                {
+                    bossRemainsAmount = 3;
+                }
+                else if (_settings.VictoryMode.HasFlag(VictoryMode.TwoBossRemains))
+                {
+                    bossRemainsAmount = 2;
+                }
+                else if (_settings.VictoryMode.HasFlag(VictoryMode.OneBossRemains))
+                {
+                    bossRemainsAmount = 1;
+                }
+                if (bossRemainsAmount > 0)
                 {
                     var requiredBossRemains = new ItemObject
                     {
                         ID = ItemList.Count,
                         TimeAvailable = 63,
-                        DependsOnItems = ItemUtils.BossRemains().ToList(),
                     };
+                    if (bossRemainsAmount == 4)
+                    {
+                        requiredBossRemains.DependsOnItems = ItemUtils.BossRemains().ToList();
+                    }
+                    else
+                    {
+                        requiredBossRemains.Conditionals = ItemUtils.BossRemains().Combinations(bossRemainsAmount).Select(c => c.ToList()).ToList();
+                    }
                     ItemList.Add(requiredBossRemains);
                     ItemList[Item.OtherCredits].DependsOnItems.Add(requiredBossRemains.Item);
                 }
@@ -1160,7 +1184,6 @@ namespace MMR.Randomizer
 
             UpdateLogicForSettings();
 
-            ItemUtils.PrepareHintedJunkLocations(_settings, Random);
             ItemUtils.PrepareJunkItems(_settings, ItemList);
             _randomized.BlitzExtraItems = new List<Item>();
             if (_settings.CustomJunkLocations.Count > ItemUtils.JunkItems.Count) // TODO also account for HintedJunkLocations and BlitzJunkLocations
@@ -1897,29 +1920,69 @@ namespace MMR.Randomizer
 
         private void RandomizePrices()
         {
-            Func<ushort> RandomPrice = _settings.PriceMode.HasFlag(PriceMode.AccountForRoyalWallet) && _settings.CustomItemList.Contains(Item.UpgradeRoyalWallet)
-                ? () => (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 8.5) * 999, 1, 999)
-                : () => (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 4.0) * 500, 1, 500);
+            var royalWalletEnabled = _settings.PriceMode.HasFlag(PriceMode.AccountForRoyalWallet) && _settings.CustomItemList.Contains(Item.UpgradeRoyalWallet);
+            var priceShouldMultiply = royalWalletEnabled && (_settings.PriceMode.HasFlag(PriceMode.ShuffleOnly) || _settings.PriceMode == PriceMode.AccountForRoyalWallet);
+
+            var costPool = MessageCost.MessageCosts
+                .Where(mc => _settings.PriceMode.HasFlag(mc.Category))
+                .Select(mc => mc.Cost)
+                .ToList();
+
+            ushort randomPrice()
+            {
+                if (_settings.PriceMode.HasFlag(PriceMode.ShuffleOnly))
+                {
+                    return costPool.Random(Random);
+                }
+
+                if (royalWalletEnabled)
+                {
+                    return (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 8.5) * 999, 1, 999);
+                }
+
+                return (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 4.0) * 500, 1, 500);
+            }
 
             _randomized.MessageCosts = new List<ushort?>();
-            // TODO if costs randomized
+            
             for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
             {
                 var messageCost = MessageCost.MessageCosts[i];
-                if (!_settings.PriceMode.HasFlag(messageCost.Category))
+                if (!_settings.PriceMode.HasFlag(messageCost.Category) && !royalWalletEnabled)
                 {
                     _randomized.MessageCosts.Add(null);
                     continue;
                 }
-                var cost = RandomPrice();
 
-                // this relies on puchase 2 appearing in the list directly after purchase 1
-                if (messageCost.Name == "Business Scrub Purchase 2")
+                ushort cost;
+
+                if (_settings.PriceMode.HasFlag(messageCost.Category))
                 {
-                    var purchase1Cost = _randomized.MessageCosts[i - 1] ?? 150;
-                    while (cost == purchase1Cost)
+                    cost = randomPrice();
+
+                    // this relies on puchase 2 appearing in the list directly after purchase 1
+                    if (messageCost.Name == "Business Scrub Purchase 2")
                     {
-                        cost = RandomPrice();
+                        var purchase1Cost = _randomized.MessageCosts[i - 1] ?? 150;
+                        while (cost == purchase1Cost)
+                        {
+                            cost = randomPrice();
+                        }
+                    }
+
+                    costPool.Remove(cost);
+                }
+                else
+                {
+                    cost = messageCost.Cost;
+                }
+
+                if (priceShouldMultiply)
+                {
+                    cost <<= 1;
+                    if (cost > 999)
+                    {
+                        cost = 999;
                     }
                 }
 
@@ -3120,7 +3183,7 @@ namespace MMR.Randomizer
         /// </summary>
         /// <param name="trapAmount">Traps amount setting</param>
         /// <param name="appearance">Traps appearance setting</param>
-        public void AddTraps(TrapAmount trapAmount, Dictionary<TrapType, int> trapWeights, TrapAppearance appearance)
+        private void AddTraps(TrapAmount trapAmount, Dictionary<TrapType, int> trapWeights, TrapAppearance appearance)
         {
             var random = this.Random;
 
@@ -3174,16 +3237,16 @@ namespace MMR.Randomizer
                 item.ItemOverride = trapItem;
                 item.Mimic = mimic;
 
-                if (trapItem != Item.Nothing && (newLocation.IsVisible() || newLocation.IsPurchaseable()))
+                if (trapItem != Item.Nothing && (newLocation.IsModelVisible(_settings) || newLocation.IsTextVisible(_settings)))
                 {
                     // Store name override for logging in HTML tracker.
-                    if (trapItem != Item.Rupoor || newLocation.IsPurchaseable())
+                    if (trapItem != Item.Rupoor || newLocation.IsShopModelVisible())
                     {
                         item.NameOverride = $"{trapItem.Name()} ({mimic.Item.Name()})";
                     }
 
                     // If trap quirks enabled and placed as a shop item, use a fake shop item name.
-                    if (_settings.TrapQuirks && newLocation.IsPurchaseable())
+                    if (_settings.TrapQuirks && newLocation.IsTextVisible(_settings))
                     {
                         item.Mimic.FakeName = FakeNameUtils.CreateFakeName(item.Mimic.Item.Name(), random);
                     }
@@ -3240,6 +3303,8 @@ namespace MMR.Randomizer
                 {
                     ItemList[item].ItemOverride = Item.RecoveryHeart;
                 }
+
+                ItemUtils.PrepareHintedJunkLocations(_settings, Random);
 
                 // TODO check junk location count against junk item count
 
@@ -3368,7 +3433,7 @@ namespace MMR.Randomizer
                     var checkedLocations = new Dictionary<Item, LogicUtils.LogicPaths>();
                     var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.OtherCredits, logicForImportance, checkedLocations: checkedLocations);
                     var importantLocations = logicPaths?.Important.Where(item => item.Region(ItemList).HasValue && item.Entrance() == null).Distinct().ToHashSet();
-                    var importantSongLocations = logicPaths?.ImportantSongLocations.ToList();
+                    var requiredSongLocations = logicPaths?.RequiredSongLocations.ToList();
                     if (importantLocations == null)
                     {
                         throw new RandomizationException("Moon Access is unobtainable.");
@@ -3401,7 +3466,7 @@ namespace MMR.Randomizer
                                 importantLocationsMutex.ReleaseMutex();
 
                                 importantSongLocationsMutex.WaitOne();
-                                importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
+                                requiredSongLocations.AddRange(checkPaths.RequiredSongLocations);
                                 importantSongLocationsMutex.ReleaseMutex();
                             }
                         }
@@ -3430,7 +3495,7 @@ namespace MMR.Randomizer
                     }
 
                     _randomized.ImportantLocations = importantLocations.Union(songOfTimeImportantItems).Distinct().ToList().AsReadOnly();
-                    _randomized.ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly();
+                    _randomized.RequiredSongLocations = requiredSongLocations.Distinct().ToList().AsReadOnly();
                     _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.Keys.ToList().AsReadOnly();
 
                     var spheres = new List<List<(string item, string location)>>();

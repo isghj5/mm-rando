@@ -73,11 +73,13 @@ namespace MMR.Randomizer.Asm
 
         void SetWorldColorTunics(CosmeticSettings settings)
         {
-            Colors.HumanTunic = settings.TunicColors[GameObjects.TransformationForm.Human];
-            Colors.FierceDeityTunic = settings.TunicColors[GameObjects.TransformationForm.FierceDeity];
-            Colors.GoronTunic = settings.TunicColors[GameObjects.TransformationForm.Goron];
-            Colors.ZoraTunic = settings.TunicColors[GameObjects.TransformationForm.Zora];
-            Colors.DekuTunic = settings.TunicColors[GameObjects.TransformationForm.Deku];
+            var defaultColor = Color.FromArgb(0x1E, 0x69, 0x1B);
+            var defaultFDColor = Color.FromArgb(0xBD, 0xB5, 0xAD);
+            Colors.HumanTunic = settings.UseTunicColors[GameObjects.TransformationForm.Human] ? settings.TunicColors[GameObjects.TransformationForm.Human] : defaultColor;
+            Colors.FierceDeityTunic = settings.UseTunicColors[GameObjects.TransformationForm.FierceDeity] ? settings.TunicColors[GameObjects.TransformationForm.FierceDeity] : defaultFDColor;
+            Colors.GoronTunic = settings.UseTunicColors[GameObjects.TransformationForm.Goron] ? settings.TunicColors[GameObjects.TransformationForm.Goron] : defaultColor;
+            Colors.ZoraTunic = settings.UseTunicColors[GameObjects.TransformationForm.Zora] ? settings.TunicColors[GameObjects.TransformationForm.Zora] : defaultColor;
+            Colors.DekuTunic = settings.UseTunicColors[GameObjects.TransformationForm.Deku] ? settings.TunicColors[GameObjects.TransformationForm.Deku] : defaultColor;
         }
     }
 }

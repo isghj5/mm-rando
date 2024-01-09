@@ -86,8 +86,8 @@ typedef struct {
     u32 victoryTransformMasks     : 1;
     u32 victoryNotebook           : 1;
     u32 victoryHearts             : 1;
-    u32 victoryBossRemains        : 1;
-    u32                           : 22;
+    u32 victoryBossRemainsCount   : 3;
+    u32                           : 20;
 } MiscInternal;
 
 typedef struct {

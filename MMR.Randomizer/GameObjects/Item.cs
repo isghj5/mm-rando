@@ -59,7 +59,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Repeatable]
         [Progressive]
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [StartingItem(0xC5CE2A, 0x06)]
         [StartingItem(0xC5CE6F, 0x08)]
         [Overwritable(OverwritableAttribute.ItemSlot.BombBag, nameof(GameplaySettings.PreventDowngrades), false)]
@@ -80,7 +80,9 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x11E), ItemPool(ItemCategory.MainInventory, LocationCategory.Purchases, ClassicCategory.BaseItemPool)]
         ItemMagicBean,
 
-        [Repeatable, Purchaseable]
+        [Repeatable]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [StartingItemId(0x0C)]
         [ItemName("Powder Keg"), LocationName("Powder Keg Challenge"), Region(Region.GoronVillage)]
         [GossipLocationHint("a large goron"), GossipItemHint("gunpowder", "a dangerous item", "an explosive barrel")]
@@ -197,6 +199,7 @@ namespace MMR.Randomizer.GameObjects
         ItemBottleGoronRace,
 
         [StartingItemId(0x12)]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [ItemName("Empty Bottle"), LocationName("Beaver Race #1"), Region(Region.ZoraCape)]
         [GossipLocationHint("a river dweller"), GossipItemHint("an empty vessel", "a glass container"), GossipCompetitiveHint(-2, nameof(GameplaySettings.UpdateNPCText), false)]
         [ShopText("Carry various items in this.")]
@@ -205,6 +208,7 @@ namespace MMR.Randomizer.GameObjects
         ItemBottleBeavers,
 
         [StartingItemId(0x12)]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [ItemName("Empty Bottle"), LocationName("Dampe Digging"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a fearful basement"), GossipItemHint("an empty vessel", "a glass container"), GossipCompetitiveHint(0, nameof(GameplaySettings.UpdateNPCText), false)]
         [ShopText("Carry various items in this.")]
@@ -234,7 +238,7 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable]
         [Progressive]
         [Downgradable]
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true), ShopModelVisible]
         [StartingItem(0xC5CE21, 0x02)]
         [StartingItem(0xC5CE00, 0x4E)]
         [Overwritable(OverwritableAttribute.ItemSlot.Sword, nameof(GameplaySettings.PreventDowngrades), false)]
@@ -248,7 +252,7 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable]
         [Progressive]
         [Downgradable]
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true), ShopModelVisible]
         [StartingItem(0xC5CE21, 0x03)]
         [StartingItem(0xC5CE00, 0x4F)]
         [Overwritable(OverwritableAttribute.ItemSlot.Sword, nameof(GameplaySettings.PreventDowngrades), false)]
@@ -301,7 +305,8 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable]
         [Progressive]
         [Downgradable]
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [StartingItem(0xC5CE2A, 0x06)]
         [StartingItem(0xC5CE6F, 0x10)]
         [Overwritable(OverwritableAttribute.ItemSlot.BombBag, nameof(GameplaySettings.PreventDowngrades), false)]
@@ -316,7 +321,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Repeatable]
         [Progressive]
-        [Downgradable, Purchaseable]
+        [Downgradable, TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [StartingItem(0xC5CE2A, 0x06)]
         [StartingItem(0xC5CE6F, 0x18)]
         [Overwritable(OverwritableAttribute.ItemSlot.BombBag, nameof(GameplaySettings.PreventDowngrades), false)]
@@ -329,6 +334,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Repeatable]
         [Progressive]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [StartingItem(0xC5CE6E, 0x10)]
         [Overwritable(OverwritableAttribute.ItemSlot.Wallet, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Adult Wallet"), LocationName("Bank Reward #1"), Region(Region.WestClockTown)]
@@ -341,6 +347,7 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable]
         [Progressive]
         [Downgradable]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [StartingItem(0xC5CE6E, 0x20)]
         [Overwritable(OverwritableAttribute.ItemSlot.Wallet, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Giant Wallet"), LocationName("Ocean Spider House Day 1 Reward"), Region(Region.GreatBayCoast)]
@@ -363,7 +370,7 @@ namespace MMR.Randomizer.GameObjects
         UpgradeRoyalWallet,
 
         //trades
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true), TextVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.Trade, nameof(GameplaySettings.QuestItemStorage), false)]
         [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Moon's Tear"), LocationName("Astronomy Telescope"), Region(Region.TerminaField)]
@@ -427,7 +434,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xAA), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemKafeiLetter,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable, Overwritable(OverwritableAttribute.ItemSlot.PendantKafei, nameof(GameplaySettings.QuestItemStorage), false)]
         [Temporary(nameof(GameplaySettings.KeepQuestTradeThroughTime), false), Returnable(nameof(GameplaySettings.KeepQuestTradeThroughTime), true)]
         [ItemName("Pendant of Memories"), LocationName("Kafei"), Region(Region.LaundryPool)]
@@ -556,7 +563,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xA3), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         HeartPieceTerminaGossipStones,
 
-        [Purchaseable]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Business Scrub Purchase"), Region(Region.TerminaField)]
         [GossipLocationHint("a hidden merchant"), GossipItemHint("a segment of health")]
@@ -600,6 +607,7 @@ namespace MMR.Randomizer.GameObjects
         HeartPieceChoir,
 
         [RupeeRepeatable]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Beaver Race #2"), Region(Region.ZoraCape)]
         [GossipLocationHint("a river dweller", "a race in the water"), GossipItemHint("a segment of health"), GossipCompetitiveHint(1)]
@@ -701,6 +709,7 @@ namespace MMR.Randomizer.GameObjects
         HeartPieceOceanSpiderHouse,
 
         [StartingItem(0xC5CE70, 0x10, true)]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [ItemName("Piece of Heart"), LocationName("Iron Knuckle Chest"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a hollow ground"), GossipItemHint("a segment of health")]
         [ShopText("Collect four to assemble a new Heart Container.")]
@@ -710,7 +719,7 @@ namespace MMR.Randomizer.GameObjects
 
         //mask
         [Repeatable]
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE3C, 0x3E)]
         [ItemName("Postman's Hat"), LocationName("Postman's Freedom Reward"), Region(Region.EastClockTown)]
         [GossipLocationHint("a special delivery", "one last job"), GossipItemHint("a hard worker's hat")]
@@ -720,7 +729,7 @@ namespace MMR.Randomizer.GameObjects
         MaskPostmanHat,
 
         [Repeatable]
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [StartingItem(0xC5CE3D, 0x38)]
         [ItemName("All-Night Mask"), LocationName("All-Night Mask Purchase"), Region(Region.WestClockTown)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("insomnia"), GossipCompetitiveHint(0, nameof(GameplaySettings.UpdateShopAppearance), false)]
@@ -731,6 +740,7 @@ namespace MMR.Randomizer.GameObjects
         MaskAllNight,
 
         [Repeatable]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [StartingItem(0xC5CE3E, 0x47)]
         [ItemName("Blast Mask"), LocationName("Old Lady"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a good deed", "an old lady's struggle"), GossipItemHint("a dangerous mask")]
@@ -758,7 +768,8 @@ namespace MMR.Randomizer.GameObjects
         MaskGreatFairy,
 
         [Repeatable]
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [StartingItem(0xC5CE42, 0x3A)]
         [ItemName("Keaton Mask"), LocationName("Curiosity Shop Man #1"), Region(Region.LaundryPool)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a popular mask", "a fox's mask")]
@@ -786,7 +797,7 @@ namespace MMR.Randomizer.GameObjects
         MaskBunnyHood,
 
         [Repeatable]
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE45, 0x42)]
         [ItemName("Don Gero's Mask"), LocationName("Hungry Goron"), Region(Region.MountainVillage)]
         [GossipLocationHint("a hungry goron", "a person in need"), GossipItemHint("a conductor's mask", "an amphibious mask")]
@@ -842,7 +853,7 @@ namespace MMR.Randomizer.GameObjects
         MaskCouple,
 
         [Repeatable]
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE4C, 0x36)]
         [ItemName("Mask of Truth"), LocationName("Swamp Spider House Reward"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a gold spider"), GossipItemHint("a piercing gaze"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false, nameof(GameplaySettings.UpdateWorldModels), false)]
@@ -861,7 +872,7 @@ namespace MMR.Randomizer.GameObjects
         MaskKamaro,
 
         [Repeatable]
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE4F, 0x41)]
         [ItemName("Gibdo Mask"), LocationName("Pamela's Father"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a healed spirit", "a lost father"), GossipItemHint("a mask of monsters")]
@@ -871,7 +882,7 @@ namespace MMR.Randomizer.GameObjects
         MaskGibdo,
 
         [Repeatable]
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [RupeeRepeatable]
         [StartingItem(0xC5CE50, 0x3B)]
         [ItemName("Garo's Mask"), LocationName("Gorman Bros Race"), Region(Region.MilkRoad)]
@@ -900,7 +911,7 @@ namespace MMR.Randomizer.GameObjects
         MaskGiant,
 
         [Repeatable]
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE47, 0x33)]
         [ItemName("Goron Mask"), LocationName("Darmani"), Region(Region.MountainVillage)]
         [GossipLocationHint("a healed spirit", "the lost champion"), GossipItemHint("a mountain spirit")]
@@ -910,7 +921,7 @@ namespace MMR.Randomizer.GameObjects
         MaskGoron,
 
         [Repeatable]
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE4D, 0x34)]
         [ItemName("Zora Mask"), LocationName("Mikau"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a healed spirit", "a fallen guitarist"), GossipItemHint("an ocean spirit")]
@@ -921,7 +932,7 @@ namespace MMR.Randomizer.GameObjects
 
         //song
         [Repeatable]
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE24, 0x00)]
         [ItemName("Ocarina of Time"), LocationName("Skull Kid"), Region(Region.ClockTowerRoof)]
         [GossipLocationHint("a stolen possession"), GossipItemHint("a musical instrument")]
@@ -959,6 +970,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Repeatable]
         [RupeeRepeatable]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [StartingItem(0xC5CE72, 0x40)]
         [ItemName("Epona's Song"), LocationName("Romani's Game"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a reunion"), GossipItemHint("a horse's song", "a song of the field")]
@@ -968,6 +980,7 @@ namespace MMR.Randomizer.GameObjects
         SongEpona,
 
         [Repeatable]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [StartingItem(0xC5CE71, 0x01)]
         [ItemName("Song of Storms"), LocationName("Day 1 Grave Tablet"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a hollow ground", "a stone tablet"), GossipItemHint("rain and thunder", "stormy weather")]
@@ -1014,7 +1027,6 @@ namespace MMR.Randomizer.GameObjects
         SongElegy,
 
         [Repeatable]
-        [Visible]
         [StartingItem(0xC5CE72, 0x04)]
         [ItemName("Oath to Order"), LocationName("Boss Blue Warp"), MultiLocation(SongOathInWFT, SongOathInSHT, SongOathInGBT, SongOathInISTT)]
         [GossipLocationHint("cleansed evil", "a fallen evil"), GossipItemHint("a song of summoning", "a song of giants")]
@@ -1267,7 +1279,7 @@ namespace MMR.Randomizer.GameObjects
         ItemStoneTowerKey4,
 
         //shop items
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Red Potion"), LocationName("Trading Post Red Potion"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
@@ -1278,7 +1290,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xCD), ItemPool(ItemCategory.RedPotions, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemTradingPostRedPotion,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Green Potion"), LocationName("Trading Post Green Potion"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a magic potion", "a green drink")]
@@ -1289,7 +1301,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xBB), ItemPool(ItemCategory.GreenPotions, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemTradingPostGreenPotion,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable]
         [Overwritable(OverwritableAttribute.ItemSlot.Shield, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Hero's Shield"), LocationName("Trading Post Hero's Shield"), Region(Region.WestClockTown)]
@@ -1301,7 +1313,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xBC), ItemPool(ItemCategory.Shields, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemTradingPostShield,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Fairy"), LocationName("Trading Post Fairy"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a winged friend", "a healer")]
@@ -1312,7 +1324,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xBD), ItemPool(ItemCategory.Fairy, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemTradingPostFairy,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary]
         [ItemName("Deku Stick"), LocationName("Trading Post Deku Stick"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a flammable weapon", "a flimsy weapon")]
@@ -1323,7 +1335,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xBE), ItemPool(ItemCategory.DekuSticks, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemTradingPostStick,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary]
         [ItemName("30 Arrows"), LocationName("Trading Post 30 Arrows"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -1334,7 +1346,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xBF), ItemPool(ItemCategory.Arrows, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemTradingPostArrow30,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary]
         [ItemName("10 Deku Nuts"), LocationName("Trading Post 10 Deku Nuts"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a flashing impact")]
@@ -1345,7 +1357,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC0), ItemPool(ItemCategory.DekuNuts, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemTradingPostNut10,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary]
         [ItemName("50 Arrows"), LocationName("Trading Post 50 Arrows"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -1356,7 +1368,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC1), ItemPool(ItemCategory.Arrows, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemTradingPostArrow50,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Blue Potion"), LocationName("Witch Shop Blue Potion"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a sleeping witch", "a southern merchant"), GossipItemHint("consumable strength", "a magic potion", "a blue drink")]
@@ -1367,7 +1379,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC2), ItemPool(ItemCategory.BluePotions, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemWitchBluePotion,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Red Potion"), LocationName("Witch Shop Red Potion"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a sleeping witch", "a southern merchant"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
@@ -1377,7 +1389,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC3), ItemPool(ItemCategory.RedPotions, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemWitchRedPotion,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Green Potion"), LocationName("Witch Shop Green Potion"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a sleeping witch", "a southern merchant"), GossipItemHint("a magic potion", "a green drink")]
@@ -1387,7 +1399,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC4), ItemPool(ItemCategory.GreenPotions, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemWitchGreenPotion,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary]
         [ItemName("10 Bombs"), LocationName("Bomb Shop 10 Bombs"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant"), GossipItemHint("explosives")]
@@ -1397,7 +1409,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC5), ItemPool(ItemCategory.Bombs, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemBombsBomb10,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary(nameof(GameplaySettings.BombchuDrops), false)]
         [ItemName("10 Bombchu"), LocationName("Bomb Shop 10 Bombchu"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant"), GossipItemHint("explosives")]
@@ -1407,7 +1419,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC6), ItemPool(ItemCategory.Bombchu, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemBombsBombchu10,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary]
         [ItemName("10 Bombs"), LocationName("Goron Shop 10 Bombs"), MultiLocation(ShopItemGoronBomb10InWinter, ShopItemGoronBomb10InSpring), RegionArea(RegionArea.Mountain)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("explosives")]
@@ -1418,7 +1430,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC7), ItemPool(ItemCategory.Bombs, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemGoronBomb10,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary]
         [ItemName("10 Arrows"), LocationName("Goron Shop 10 Arrows"), MultiLocation(ShopItemGoronArrow10InWinter, ShopItemGoronArrow10InSpring), RegionArea(RegionArea.Mountain)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -1429,7 +1441,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC8), ItemPool(ItemCategory.Arrows, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemGoronArrow10,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Red Potion"), LocationName("Goron Shop Red Potion"), MultiLocation(ShopItemGoronRedPotionInWinter, ShopItemGoronRedPotionInSpring), RegionArea(RegionArea.Mountain)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
@@ -1440,7 +1452,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC9), ItemPool(ItemCategory.RedPotions, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemGoronRedPotion,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable]
         [Overwritable(OverwritableAttribute.ItemSlot.Shield, nameof(GameplaySettings.PreventDowngrades), false)]
         [ItemName("Hero's Shield"), LocationName("Zora Shop Hero's Shield"), Region(Region.ZoraHall)]
@@ -1451,7 +1463,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xCA), ItemPool(ItemCategory.Shields, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemZoraShield,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary]
         [ItemName("10 Arrows"), LocationName("Zora Shop 10 Arrows"), Region(Region.ZoraHall)]
         [GossipLocationHint("a western merchant", "an aquatic shop"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -1461,7 +1473,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xCB), ItemPool(ItemCategory.Arrows, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemZoraArrow10,
 
-        [Purchaseable, Visible]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ModelVisible(nameof(GameplaySettings.UpdateShopAppearance), true), ShopModelVisible]
         [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Red Potion"), LocationName("Zora Shop Red Potion"), Region(Region.ZoraHall)]
         [GossipLocationHint("a western merchant", "an aquatic shop"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
@@ -1990,7 +2002,7 @@ namespace MMR.Randomizer.GameObjects
         HeartPieceBank,
 
         //standing HPs
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Clock Tower Entrance"), Region(Region.SouthClockTown)]
         [GossipLocationHint("the tower doors"), GossipItemHint("a segment of health")]
@@ -1999,7 +2011,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x10B), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Freestanding, ClassicCategory.EverythingElse)]
         HeartPieceSouthClockTown,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("North Clock Town Tree"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a town playground"), GossipItemHint("a segment of health")]
@@ -2008,7 +2020,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x10C), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Freestanding, ClassicCategory.EverythingElse)]
         HeartPieceNorthClockTown,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Path to Swamp Tree"), Region(Region.RoadToSouthernSwamp)]
         [GossipLocationHint("a tree of bats"), GossipItemHint("a segment of health")]
@@ -2017,7 +2029,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x10D), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Freestanding, ClassicCategory.EverythingElse)]
         HeartPieceToSwamp,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Swamp Tourist Center Roof"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a tourist centre"), GossipItemHint("a segment of health")]
@@ -2026,7 +2038,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x10E), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Freestanding, ClassicCategory.EverythingElse)]
         HeartPieceSwampScrub,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Deku Palace West Garden"), Region(Region.DekuPalace)]
         [GossipLocationHint("the home of scrubs"), GossipItemHint("a segment of health")]
@@ -2035,7 +2047,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x10F), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Freestanding, ClassicCategory.EverythingElse)]
         HeartPieceDekuPalace,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Goron Village Ledge"), Region(Region.GoronVillage)]
         [GossipLocationHint("a cold ledge"), GossipItemHint("a segment of health")]
@@ -2044,7 +2056,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x110), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Freestanding, ClassicCategory.EverythingElse)]
         HeartPieceGoronVillageScrub,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Bio Baba Grotto"), Region(Region.TerminaField)]
         [GossipLocationHint("a beehive"), GossipItemHint("a segment of health")]
@@ -2053,7 +2065,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x111), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Beehives, ClassicCategory.EverythingElse)]
         HeartPieceZoraGrotto,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Lab Fish"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("feeding the fish"), GossipItemHint("a segment of health"), GossipCompetitiveHint(0, nameof(GameplaySettings.SpeedupLabFish), false)]
@@ -2062,7 +2074,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x112), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.NpcRewards, ClassicCategory.EverythingElse)]
         HeartPieceLabFish,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Zora Cape Like-Like"), Region(Region.ZoraCape)]
         [GossipLocationHint("a shield eater"), GossipItemHint("a segment of health")]
@@ -2071,7 +2083,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x113), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.EnemySpawn, ClassicCategory.EverythingElse)]
         HeartPieceGreatBayCapeLikeLike,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Pirates' Fortress Cage"), Region(Region.PiratesFortressSewer)]
         [GossipLocationHint("a timed door"), GossipItemHint("a segment of health")]
@@ -2080,7 +2092,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x114), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Freestanding, ClassicCategory.EverythingElse)]
         HeartPiecePiratesFortress,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Lulu's Room Ledge"), Region(Region.ZoraHall)]
         [GossipLocationHint("the singer's room"), GossipItemHint("a segment of health")]
@@ -2089,7 +2101,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x115), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Freestanding, ClassicCategory.EverythingElse)]
         HeartPieceZoraHallScrub,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Path to Snowhead Pillar"), Region(Region.PathToSnowhead)]
         [GossipLocationHint("a cold platform"), GossipItemHint("a segment of health")]
@@ -2098,7 +2110,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x116), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Freestanding, ClassicCategory.EverythingElse)]
         HeartPieceToSnowhead,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Great Bay Coast Ledge"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a rock face"), GossipItemHint("a segment of health")]
@@ -2107,7 +2119,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x117), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Freestanding, ClassicCategory.EverythingElse)]
         HeartPieceGreatBayCoast,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Ikana Canyon Ledge"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a thief's doorstep"), GossipItemHint("a segment of health")]
@@ -2116,7 +2128,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x118), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Freestanding, ClassicCategory.EverythingElse)]
         HeartPieceIkana,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Ikana Castle Pillar"), Region(Region.IkanaCastle)]
         [GossipLocationHint("a fiery pillar"), GossipItemHint("a segment of health")]
@@ -2125,7 +2137,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x119), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.Freestanding, ClassicCategory.EverythingElse)]
         HeartPieceCastle,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CDE9, 0x10, true)] // add max health
         [StartingItem(0xC5CDEB, 0x10, true)] // add current health
         [StartingItem(0xC40E1B, 0x10, true)] // add respawn health
@@ -2138,7 +2150,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x11A), ItemPool(ItemCategory.HeartContainers, LocationCategory.BossFights, ClassicCategory.EverythingElse)]
         HeartContainerWoodfall,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CDE9, 0x10, true)] // add max health
         [StartingItem(0xC5CDEB, 0x10, true)] // add current health
         [StartingItem(0xC40E1B, 0x10, true)] // add respawn health
@@ -2151,7 +2163,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x11B), ItemPool(ItemCategory.HeartContainers, LocationCategory.BossFights, ClassicCategory.EverythingElse)]
         HeartContainerSnowhead,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CDE9, 0x10, true)] // add max health
         [StartingItem(0xC5CDEB, 0x10, true)] // add current health
         [StartingItem(0xC40E1B, 0x10, true)] // add respawn health
@@ -2164,7 +2176,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x11C), ItemPool(ItemCategory.HeartContainers, LocationCategory.BossFights, ClassicCategory.EverythingElse)]
         HeartContainerGreatBay,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CDE9, 0x10, true)] // add max health
         [StartingItem(0xC5CDEB, 0x10, true)] // add current health
         [StartingItem(0xC40E1B, 0x10, true)] // add respawn health
@@ -2179,7 +2191,7 @@ namespace MMR.Randomizer.GameObjects
 
         //maps
         [Repeatable]
-        [Purchaseable]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [StartingTingleMap(TingleMap.Town)]
         [ItemName("Map of Clock Town"), LocationName("Clock Town Map Purchase"), MultiLocation(ItemTingleMapTownInTown, ItemTingleMapTownInCanyon)]
         [GossipLocationHint("a map maker", "a forest fairy"), GossipItemHint("a world map")]
@@ -2189,7 +2201,7 @@ namespace MMR.Randomizer.GameObjects
         ItemTingleMapTown,
 
         [Repeatable]
-        [Purchaseable]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [StartingTingleMap(TingleMap.Swamp)]
         [ItemName("Map of Woodfall"), LocationName("Woodfall Map Purchase"), MultiLocation(ItemTingleMapWoodfallInSwamp, ItemTingleMapWoodfallInTown)]
         [GossipLocationHint("a map maker", "a forest fairy"), GossipItemHint("a world map")]
@@ -2199,7 +2211,7 @@ namespace MMR.Randomizer.GameObjects
         ItemTingleMapWoodfall,
 
         [Repeatable]
-        [Purchaseable]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [StartingTingleMap(TingleMap.Mountain)]
         [ItemName("Map of Snowhead"), LocationName("Snowhead Map Purchase"), MultiLocation(ItemTingleMapSnowheadInMountain, ItemTingleMapSnowheadInSwamp)]
         [GossipLocationHint("a map maker", "a forest fairy"), GossipItemHint("a world map")]
@@ -2209,7 +2221,7 @@ namespace MMR.Randomizer.GameObjects
         ItemTingleMapSnowhead,
 
         [Repeatable]
-        [Purchaseable]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [StartingTingleMap(TingleMap.Ranch)]
         [ItemName("Map of Romani Ranch"), LocationName("Romani Ranch Map Purchase"), MultiLocation(ItemTingleMapRanchInRanch, ItemTingleMapRanchInMountain)]
         [GossipLocationHint("a map maker", "a forest fairy"), GossipItemHint("a world map")]
@@ -2219,7 +2231,7 @@ namespace MMR.Randomizer.GameObjects
         ItemTingleMapRanch,
 
         [Repeatable]
-        [Purchaseable]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [StartingTingleMap(TingleMap.Ocean)]
         [ItemName("Map of Great Bay"), LocationName("Great Bay Map Purchase"), MultiLocation(ItemTingleMapGreatBayInOcean, ItemTingleMapGreatBayInRanch)]
         [GossipLocationHint("a map maker", "a forest fairy"), GossipItemHint("a world map")]
@@ -2229,7 +2241,7 @@ namespace MMR.Randomizer.GameObjects
         ItemTingleMapGreatBay,
 
         [Repeatable]
-        [Purchaseable]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [StartingTingleMap(TingleMap.Canyon)]
         [ItemName("Map of Stone Tower"), LocationName("Stone Tower Map Purchase"), MultiLocation(ItemTingleMapStoneTowerInCanyon, ItemTingleMapStoneTowerInOcean)]
         [GossipLocationHint("a map maker", "a forest fairy"), GossipItemHint("a world map")]
@@ -2264,7 +2276,7 @@ namespace MMR.Randomizer.GameObjects
         OtherKillMajora,
         OtherCredits,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Deku Trial Bonus"), Region(Region.TheMoon)]
         [GossipLocationHint("a masked child's game"), GossipItemHint("a segment of health")]
@@ -2273,7 +2285,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x11F), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.MoonItems, ClassicCategory.MoonItems)]
         HeartPieceDekuTrial,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Goron Trial Bonus"), Region(Region.TheMoon)]
         [GossipLocationHint("a masked child's game"), GossipItemHint("a segment of health")]
@@ -2282,7 +2294,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x120), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.MoonItems, ClassicCategory.MoonItems)]
         HeartPieceGoronTrial,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Zora Trial Bonus"), Region(Region.TheMoon)]
         [GossipLocationHint("a masked child's game"), GossipItemHint("a segment of health")]
@@ -2291,7 +2303,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x121), ItemPool(ItemCategory.PiecesOfHeart, LocationCategory.MoonItems, ClassicCategory.MoonItems)]
         HeartPieceZoraTrial,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Link Trial Bonus"), Region(Region.TheMoon)]
         [GossipLocationHint("a masked child's game"), GossipItemHint("a segment of health")]
@@ -2445,7 +2457,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x139), ItemPool(ItemCategory.Milk, LocationCategory.NpcRewards, ClassicCategory.CowMilk)]
         ItemCoastGrottoCowMilk2,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Near Ceiling"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2453,7 +2465,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x13A), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken1,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Gold Room Near Ceiling"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2461,7 +2473,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x13B), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken2,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room Torch"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2469,7 +2481,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x13C), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken3,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Gold Room Pillar"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2477,7 +2489,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x13E), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken4,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Jar"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2485,7 +2497,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x13F), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.Jars, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken5,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Grass 1"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2493,7 +2505,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x140), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken6,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Grass 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2501,7 +2513,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x141), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken7,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Water"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2509,7 +2521,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x142), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken8,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Lower Left Soft Soil"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2517,7 +2529,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x143), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.SoftSoil, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken9,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room Crate 1"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2525,7 +2537,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x144), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.Crates, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken10,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Upper Soft Soil"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2533,7 +2545,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x145), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.SoftSoil, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken11,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Lower Right Soft Soil"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2541,7 +2553,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x146), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.SoftSoil, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken12,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room Lower Wall"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2549,7 +2561,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x147), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken13,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room On Monument"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2557,7 +2569,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x148), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken14,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Pillar"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2565,7 +2577,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x149), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken15,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Pot 1"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2573,7 +2585,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x14A), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken16,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Pot 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2581,7 +2593,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x14B), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken17,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Gold Room Hive"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2589,7 +2601,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x14C), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.Beehives, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken18,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Upper Pillar"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2597,7 +2609,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x14D), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken19,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Behind Vines"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2605,7 +2617,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x14E), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken20,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Tree 1"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2613,7 +2625,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x14F), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken21,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Wall"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2621,7 +2633,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x150), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken22,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Hive 1"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2629,7 +2641,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x151), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.Beehives, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken23,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Tree 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2637,7 +2649,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x152), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken24,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Gold Room Wall"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2645,7 +2657,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x153), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken25,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Hive"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2653,7 +2665,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x154), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.Beehives, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken26,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room Crate 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2661,7 +2673,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x155), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.Crates, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken27,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Hive 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2669,7 +2681,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x156), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.Beehives, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken28,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Tree 3"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2677,7 +2689,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x157), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken29,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Jar"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
@@ -2685,7 +2697,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x158), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.Jars, ClassicCategory.SkulltulaTokens)]
         CollectibleSwampSpiderToken30,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Behind Boat"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2693,7 +2705,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x159), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken1,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Hole Behind Picture"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2701,7 +2713,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x15A), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken2,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Hole Behind Cabinet"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2709,7 +2721,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x15B), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken3,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library On Corner Bookshelf"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2717,7 +2729,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x15C), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken4,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Ceiling Edge"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2725,7 +2737,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x15D), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken5,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Ceiling Plank"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2733,7 +2745,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x15E), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken6,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Ceiling Edge"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2741,7 +2753,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x15F), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken7,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Ceiling Edge"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2749,7 +2761,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x160), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken8,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Ceiling Web"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2757,7 +2769,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x161), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken9,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Behind Crate"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2765,7 +2777,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x162), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken10,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Jar"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2773,7 +2785,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x163), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.Jars, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken11,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Entrance Right Wall"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2781,7 +2793,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x164), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken12,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Entrance Left Wall"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2789,7 +2801,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x165), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken13,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Webbed Hole"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2797,7 +2809,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x166), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken14,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Entrance Web"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2805,7 +2817,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x167), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken15,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Chandelier 1"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2813,7 +2825,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x168), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken16,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Chandelier 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2821,7 +2833,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x169), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken17,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Chandelier 3"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2829,7 +2841,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x16A), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken18,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Behind Picture"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2837,7 +2849,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x16B), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken19,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Behind Picture"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2845,7 +2857,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x16C), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken20,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Behind Bookcase 1"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2853,7 +2865,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x16D), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken21,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Crate"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2861,7 +2873,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x16E), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.Crates, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken22,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Webbed Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2869,7 +2881,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x16F), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken23,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Upper Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2877,7 +2889,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x170), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken24,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2885,7 +2897,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x171), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken25,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Jar"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2893,7 +2905,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x172), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.Jars, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken26,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Lower Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2901,7 +2913,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x173), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken27,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Behind Bookcase 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2909,7 +2921,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x174), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken28,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Behind Skull 1"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2917,7 +2929,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x175), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken29,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Behind Skull 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
@@ -2925,7 +2937,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x176), ItemPool(ItemCategory.SkulltulaTokens, LocationCategory.EnemySpawn, ClassicCategory.SkulltulaTokens)]
         CollectibleOceanSpiderToken30,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [ItemName("Clock Town Stray Fairy"), LocationName("Clock Town Stray Fairy"), MultiLocation(CollectibleStrayFairyClockTownInLaundryPool, CollectibleStrayFairyClockTownInECT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Return it to the Fairy Fountain in North Clock Town.")]
@@ -2935,7 +2947,7 @@ namespace MMR.Randomizer.GameObjects
         //[GetItemIndex(0x1A1)] // used as a flag to track if the actual fairy has been collected.
         CollectibleStrayFairyClockTown,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Lower Right Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -2944,7 +2956,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x177), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall1,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Entrance Fairy"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -2953,7 +2965,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x178), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall2,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Upper Left Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -2962,7 +2974,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x179), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall3,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Pillar Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -2971,7 +2983,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x17A), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall4,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Deku Baba"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -2980,7 +2992,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x17B), ItemPool(ItemCategory.StrayFairies, LocationCategory.EnemySpawn, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall5,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Poison Water Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -2989,7 +3001,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x17C), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall6,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Main Room Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -2998,7 +3010,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x17D), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall7,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Skulltula"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3007,7 +3019,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x17E), ItemPool(ItemCategory.StrayFairies, LocationCategory.EnemySpawn, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall8,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Upper Right Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3016,7 +3028,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x17F), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall9,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Main Room Switch"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3025,7 +3037,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x184), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall10,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Entrance Platform"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3034,7 +3046,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x185), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall11,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Dark Room"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3043,7 +3055,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x186), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall12,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Jar Fairy"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3052,7 +3064,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x189), ItemPool(ItemCategory.StrayFairies, LocationCategory.Jars, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall13,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Bridge Room Hive"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3061,7 +3073,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x18A), ItemPool(ItemCategory.StrayFairies, LocationCategory.Beehives, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall14,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Platform Room Hive"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3070,7 +3082,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x18B), ItemPool(ItemCategory.StrayFairies, LocationCategory.Beehives, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyWoodfall15,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Snow Room Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3079,7 +3091,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x18C), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead1,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Ceiling Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3088,7 +3100,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x18D), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead2,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Dinolfos 1"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3097,7 +3109,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x18E), ItemPool(ItemCategory.StrayFairies, LocationCategory.EnemySpawn, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead3,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Bridge Room Ledge Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3106,7 +3118,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x190), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead4,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Bridge Room Pillar Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3115,7 +3127,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x191), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead5,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Dinolfos 2"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3124,7 +3136,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x192), ItemPool(ItemCategory.StrayFairies, LocationCategory.EnemySpawn, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead6,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Map Room Fairy"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3133,7 +3145,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x193), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead7,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Map Room Ledge"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3142,7 +3154,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x194), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead8,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Basement"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3151,7 +3163,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x195), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead9,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Twin Block"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3160,7 +3172,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x196), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead10,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Icicle Room Wall"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3169,7 +3181,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x197), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead11,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Main Room Wall"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3178,7 +3190,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x198), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead12,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Pillar Freezards"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3187,7 +3199,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x199), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead13,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Ice Puzzle"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3196,7 +3208,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x19A), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead14,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Crate"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3205,7 +3217,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x19F), ItemPool(ItemCategory.StrayFairies, LocationCategory.Crates, ClassicCategory.StrayFairies)]
         CollectibleStrayFairySnowhead15,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Skulltula"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3214,7 +3226,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1A7), ItemPool(ItemCategory.StrayFairies, LocationCategory.EnemySpawn, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay1,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Pre-Boss Room Underwater Bubble"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3223,7 +3235,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1A4), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay2,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Water Control Room Underwater Bubble"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3232,7 +3244,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1A5), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay3,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Pre-Boss Room Bubble"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3243,7 +3255,7 @@ namespace MMR.Randomizer.GameObjects
 
         // A8 empty
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Waterwheel Room Upper"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3252,7 +3264,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1A9), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay5,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Green Valve"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3261,7 +3273,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1AA), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay6,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Seesaw Room"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3270,7 +3282,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1AB), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay7,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Waterwheel Room Lower"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3279,7 +3291,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1AC), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay8,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Entrance Torches"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3288,7 +3300,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1AD), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay9,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Bio Babas"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3297,7 +3309,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1AE), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay10,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Underwater Barrel"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3306,7 +3318,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1AF), ItemPool(ItemCategory.StrayFairies, LocationCategory.Barrels, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay11,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Whirlpool Jar"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3315,7 +3327,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1B0), ItemPool(ItemCategory.StrayFairies, LocationCategory.Jars, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay12,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Whirlpool Barrel"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3324,7 +3336,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1B1), ItemPool(ItemCategory.StrayFairies, LocationCategory.Barrels, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay13,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Dexihands Jar"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3333,7 +3345,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1B2), ItemPool(ItemCategory.StrayFairies, LocationCategory.Jars, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay14,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Ledge Jar"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3342,7 +3354,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1B3), ItemPool(ItemCategory.StrayFairies, LocationCategory.Jars, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyGreatBay15,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Mirror Sun Block"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3351,7 +3363,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1B4), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower1,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Eyegore"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3360,7 +3372,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1B5), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower2,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Lava Room Fire Ring"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3369,7 +3381,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1B6), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower3,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Updraft Fire Ring"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3378,7 +3390,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1B7), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower4,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Mirror Sun Switch"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3387,7 +3399,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1B8), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower5,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Entrance Sun Switch"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3396,7 +3408,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1B9), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower6,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Wizzrobe"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3405,7 +3417,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1BA), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower7,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Death Armos"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3414,7 +3426,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1BB), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower8,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Updraft Frozen Eye"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3423,7 +3435,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1BC), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower9,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Thin Bridge"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3432,7 +3444,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1BD), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower10,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Basement Ledge"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3441,7 +3453,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1BE), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower11,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Statue Eye"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3450,7 +3462,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1BF), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower12,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Underwater"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3459,7 +3471,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1C0), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower13,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Bridge Crystal"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3468,7 +3480,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1C1), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower14,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
         [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Lava Room Ledge"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3477,7 +3489,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1C2), ItemPool(ItemCategory.StrayFairies, LocationCategory.Chests, ClassicCategory.StrayFairies)]
         CollectibleStrayFairyStoneTower15,
 
-        [Purchaseable]
+        [TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [RupeeRepeatable]
         [Repeatable]
         [ItemName("Purple Rupee"), LocationName("Lottery"), Region(Region.WestClockTown)]
@@ -3495,7 +3507,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x13D), ItemPool(ItemCategory.BlueRupees, LocationCategory.NpcRewards, ClassicCategory.MundaneRewards)]
         MundaneItemBankBlueRupee,
 
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [ItemName("Chateau Romani"), LocationName("Milk Bar Chateau"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town shop"), GossipItemHint("a dairy product", "an adult beverage")]
         [ShopText("Drink it to get lasting stamina for your magic power.", isMultiple: true)]
@@ -3504,7 +3516,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x180), ItemPool(ItemCategory.Chateau, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemMilkBarChateau,
 
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [ItemName("Milk"), LocationName("Milk Bar Milk"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town shop"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -3542,6 +3554,7 @@ namespace MMR.Randomizer.GameObjects
 
         [RupeeRepeatable]
         [Repeatable]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [ItemName("Blue Rupee"), LocationName("Pictograph Contest Standard Photo"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a swamp game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
@@ -3551,6 +3564,7 @@ namespace MMR.Randomizer.GameObjects
 
         [RupeeRepeatable]
         [Repeatable]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [ItemName("Red Rupee"), LocationName("Pictograph Contest Good Photo"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a swamp game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 20 rupees.")]
@@ -3558,7 +3572,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x18F), ItemPool(ItemCategory.RedRupees, LocationCategory.NpcRewards, ClassicCategory.MundaneRewards)]
         MundaneItemPictographContestRedRupee,
 
-        [Repeatable, Temporary, Purchaseable]
+        [Repeatable, Temporary, TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [StartingItemId(0x0A)]
         [ItemName("Magic Bean"), LocationName("Swamp Scrub Purchase"), MultiLocation(ShopItemBusinessScrubMagicBeanInSwamp, ShopItemBusinessScrubMagicBeanInTown)]
         [GossipLocationHint("a southern merchant"), GossipItemHint("a plant seed")]
@@ -3568,7 +3582,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x19B), ItemPool(ItemCategory.MainInventory, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemBusinessScrubMagicBean,
 
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [ItemName("Green Potion"), LocationName("Ocean Scrub Purchase"), MultiLocation(ShopItemBusinessScrubGreenPotionInOcean, ShopItemBusinessScrubGreenPotionInMountain)]
         [GossipLocationHint("a western merchant"), GossipItemHint("a magic potion", "a green drink")]
         [ShopText("Replenishes your magic power.")]
@@ -3577,7 +3591,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x19C), ItemPool(ItemCategory.GreenPotions, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemBusinessScrubGreenPotion,
 
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [ItemName("Blue Potion"), LocationName("Canyon Scrub Purchase"), MultiLocation(ShopItemBusinessScrubBluePotionInCanyon, ShopItemBusinessScrubBluePotionInOcean)]
         [GossipLocationHint("an eastern merchant"), GossipItemHint("consumable strength", "a magic potion", "a blue drink")]
         [ShopText("Replenishes both life energy and magic power.")]
@@ -3594,7 +3608,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x19E), ItemPool(ItemCategory.BlueRupees, LocationCategory.NpcRewards, ClassicCategory.MundaneRewards)]
         MundaneItemZoraStageLightsBlueRupee,
 
-        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), Purchaseable]
+        [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle), TextVisible(nameof(GameplaySettings.UpdateShopAppearance), true)]
         [ItemName("Milk"), LocationName("Gorman Bros Milk Purchase"), Region(Region.MilkRoad)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
@@ -3604,6 +3618,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemGormanBrosMilk,
 
         [Repeatable]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [ItemName("Purple Rupee"), LocationName("Ocean Spider House Day 2 Reward"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a gold spider"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false, nameof(GameplaySettings.UpdateNPCText), false)]
         [ShopText("This is worth 50 rupees.")]
@@ -3612,6 +3627,7 @@ namespace MMR.Randomizer.GameObjects
         MundaneItemOceanSpiderHouseDay2PurpleRupee,
 
         [Repeatable]
+        [TextVisible(nameof(GameplaySettings.UpdateNPCText), true)]
         [ItemName("Red Rupee"), LocationName("Ocean Spider House Day 3 Reward"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a gold spider"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false, nameof(GameplaySettings.UpdateNPCText), false)]
         [ShopText("This is worth 20 rupees.")]
@@ -3700,7 +3716,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x1CA), ItemPool(ItemCategory.GoldRupees, LocationCategory.NpcRewards, ClassicCategory.MundaneRewards)]
         MundaneItemCuriosityShopGoldRupee,
 
-        [Visible, Purchaseable]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true), TextVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable, Temporary, Overwritable(OverwritableAttribute.ItemSlot.Bottle)]
         [ItemName("Seahorse"), LocationName("Fisherman Pictograph"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a fisherman"), GossipItemHint("a sea creature")]
@@ -3712,7 +3728,7 @@ namespace MMR.Randomizer.GameObjects
 
         //[GetItemIndex(0x1A1)]
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Ikana Castle Courtyard Grass"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient plant"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3722,7 +3738,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAncientCastleOfIkanaCastleExteriorGrass1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Ikana Castle Courtyard Grass 2"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient plant"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3732,7 +3748,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAncientCastleOfIkanaCastleExteriorGrass2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Night 1 Grave Pot"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3742,7 +3758,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheGraveyardMainAreaPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Night 2 Grave Pot"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3752,7 +3768,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheGraveyardInvisibleRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Night 1 Grave Pot 2"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3762,7 +3778,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheGraveyardBadBatRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Cucco Shack Crate"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a chicken crate"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3772,7 +3788,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableCuccoShackWoodenCrateLarge1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Dampe's Basement Pot"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3782,7 +3798,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDampesHouseBasementPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Dampe's Basement Pot 2"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3792,7 +3808,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDampesHouseBasementPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Dampe's Basement Pot 3"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3802,7 +3818,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDampesHouseBasementPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Dampe's Basement Pot 4"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3812,7 +3828,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDampesHouseBasementPot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Goron Village Small Snowball"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3822,7 +3838,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterSmallSnowball1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Goron Village Small Snowball 2"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3832,7 +3848,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterSmallSnowball2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Great Bay Coast Pot"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("an ocean jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3842,7 +3858,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Great Bay Coast Pot 2"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("an ocean jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3852,7 +3868,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Great Bay Coast Pot 3"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("an ocean jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3862,7 +3878,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Great Bay Coast Pot 4"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("an ocean jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3872,7 +3888,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastPot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Great Bay Temple Red Valve Barrel"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3882,7 +3898,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleBlueChuchuValveRoomBarrel1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Ikana King Pot"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3892,7 +3908,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Ikana King Pot 2"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3902,7 +3918,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Ikana King Entry Pot"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3912,7 +3928,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIgosDuIkanaSLairPreBossRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Ikana King Entry Pot 2"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3922,7 +3938,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIgosDuIkanaSLairPreBossRoomPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Ikana Graveyard Grass"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("unholy grass"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3932,7 +3948,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardIkanaGraveyardLowerGrass1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Oceanside Spider House Entrance Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3942,7 +3958,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseEntrancePot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Oceanside Spider House Entrance Pot 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3952,7 +3968,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseEntrancePot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Pirates' Fortress Sewer Gate Pot"), Region(Region.PiratesFortressSewer)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3962,7 +3978,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorWaterCurrentRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Pirates' Fortress Guarded Egg Pot"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3972,7 +3988,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInterior100RupeeEggRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Pirates' Fortress Barrel Maze Egg Pot"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3982,7 +3998,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorBarrelRoomEggPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Pirates' Fortress Sewer Exit Pot"), Region(Region.PiratesFortressSewer)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -3992,7 +4008,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorTelescopeRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Secret Shrine Underwater Pot"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4002,7 +4018,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineMainRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Secret Shrine Underwater Pot 2"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4012,7 +4028,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineMainRoomPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Snowhead Temple Icicle Room Snowball"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4022,7 +4038,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleIceBlockRoomSmallSnowball1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Snowhead Temple Icicle Room Snowball 2"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4032,7 +4048,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleIceBlockRoomSmallSnowball2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Stone Tower Upper Scarecrow Pot"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4042,7 +4058,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Stone Tower Upper Scarecrow Pot 2"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4052,7 +4068,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Great Bay Coast Pot 5"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("an ocean jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4062,7 +4078,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastPot5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Great Bay Temple Seesaw Room Pot"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4072,7 +4088,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleSeesawRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Great Bay Temple Green Pump Barrel"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4082,7 +4098,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Ikana Canyon Grass"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("cursed grass"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4092,7 +4108,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaCanyonMainAreaGrass1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Milk Road Grass"), Region(Region.MilkRoad)]
         [GossipLocationHint("a roadside plant"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4102,7 +4118,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMilkRoadGrass1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Mountain Village Spring Snowball"), Region(Region.MountainVillage)]
         [GossipLocationHint("a spring snowball"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4112,7 +4128,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringSmallSnowball1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Mountain Village Winter Small Snowball"), Region(Region.MountainVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4122,7 +4138,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterSmallSnowball1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Pirates' Fortress Lone Guard Egg Pot"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4132,7 +4148,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorTwinBarrelEggRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Pirates' Fortress Cage Pot"), Region(Region.PiratesFortressSewer)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4142,7 +4158,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Ranch Crate"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a ranch container"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4152,7 +4168,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRomaniRanchWoodenCrateLarge1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Snowhead Small Snowball"), Region(Region.Snowhead)]
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4162,7 +4178,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadSmallSnowball1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Stone Tower Owl Pot"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4172,7 +4188,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Zora Cape Owl Pot"), Region(Region.ZoraCape)]
         [GossipLocationHint("a cape jar"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -4182,7 +4198,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableZoraCapePot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Observatory Scarecrow Pot"), Region(Region.EastClockTown)]
         [GossipLocationHint("an underground jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4192,7 +4208,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAstralObservatoryObservatoryBombersHideoutPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Observatory Scarecrow Pot 2"), Region(Region.EastClockTown)]
         [GossipLocationHint("an underground jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4202,7 +4218,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAstralObservatoryObservatoryBombersHideoutPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Deku Palace Item"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4212,7 +4228,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceWestInnerGardenItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Deku Palace Item 2"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4222,7 +4238,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceEastInnerGardenItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Deku Palace Item 3"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4232,7 +4248,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceEastInnerGardenItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Deku Palace Item 4"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4242,7 +4258,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceWestInnerGardenItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Deku Palace Item 5"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4252,7 +4268,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceWestInnerGardenItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Doggy Racetrack Pot"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a sporting arena"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4262,7 +4278,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDoggyRacetrackPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Doggy Racetrack Pot 2"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a sporting arena"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4272,7 +4288,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDoggyRacetrackPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Doggy Racetrack Pot 3"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a sporting arena"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4282,7 +4298,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDoggyRacetrackPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Doggy Racetrack Pot 4"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a sporting arena"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4292,7 +4308,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDoggyRacetrackPot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Goron Village Large Snowball"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4302,7 +4318,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterLargeSnowball1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Goron Village Large Snowball 2"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4312,7 +4328,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterLargeSnowball2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Goron Village Large Snowball 3"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4322,7 +4338,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterLargeSnowball3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Great Bay Coast Ledge Pot"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a high ocean jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4332,7 +4348,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastPot6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Great Bay Coast Ledge Pot 2"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a high ocean jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4342,7 +4358,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastPot7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Great Bay Coast Ledge Pot 3"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a high ocean jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4352,7 +4368,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastPot8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Great Bay Temple Water Control Room Item"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4362,7 +4378,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleWaterControlRoomItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Great Bay Temple Water Control Room Item 2"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4372,7 +4388,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleWaterControlRoomItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Bio Baba Grotto Hive"), Region(Region.TerminaField)]
         [GossipLocationHint("an underground hive"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4382,7 +4398,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGrottosOceanHeartPieceGrottoBeehive1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Laundry Pool Crate"), Region(Region.LaundryPool)]
         [GossipLocationHint("a town crate"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4392,7 +4408,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableLaundryPoolWoodenCrateSmall1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Mountain Village Day 3 Snowball"), Region(Region.MountainVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4402,7 +4418,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterLargeSnowball1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Mountain Village Day 2 Snowball"), Region(Region.MountainVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4412,7 +4428,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterLargeSnowball2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Twin Islands Item"), Region(Region.TwinIslands)]
         [GossipLocationHint("a frozen lake"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4422,7 +4438,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Twin Islands Item 2"), Region(Region.TwinIslands)]
         [GossipLocationHint("a frozen lake"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4432,7 +4448,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Twin Islands Item 3"), Region(Region.TwinIslands)]
         [GossipLocationHint("a frozen lake"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4442,7 +4458,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Twin Islands Item 4"), Region(Region.TwinIslands)]
         [GossipLocationHint("a frozen lake"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4452,7 +4468,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Pirates' Fortress Barrel Maze Egg Pot 2"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4462,7 +4478,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorBarrelRoomEggPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Pirates' Fortress Sewer Exit Barrel"), Region(Region.PiratesFortressSewer)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4472,7 +4488,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorTelescopeRoomItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Pirates' Fortress Sewer Exit Barrel 2"), Region(Region.PiratesFortressSewer)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4482,7 +4498,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorTelescopeRoomItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Pirates' Fortress Sewer Exit Barrel 3"), Region(Region.PiratesFortressSewer)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4492,7 +4508,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorTelescopeRoomItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Pirates' Fortress Cage Room Barrel"), Region(Region.PiratesFortressSewer)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4502,7 +4518,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Ranch Barn Hay Item"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a bale of hay"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4512,7 +4528,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRanchHouseBarnBarnItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Ranch Barn Hay Item 2"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a bale of hay"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4522,7 +4538,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRanchHouseBarnBarnItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Snowhead Temple Icicle Room Snowball 3"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4532,7 +4548,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleIceBlockRoomSmallSnowball3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Snowhead Temple Icicle Room Snowball 4"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4542,7 +4558,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleIceBlockRoomSmallSnowball4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Snowhead Temple Icicle Room Snowball 5"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4552,7 +4568,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleIceBlockRoomSmallSnowball5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Snowhead Temple Elevator Room Crate"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4562,7 +4578,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleMapRoomWoodenCrateLarge1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Snowhead Temple Elevator Room Crate 2"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4572,7 +4588,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleMapRoomWoodenCrateLarge2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Snowhead Temple Elevator Room Crate 3"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4582,7 +4598,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleMapRoomWoodenCrateLarge3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Snowhead Temple Elevator Room Crate 4"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4592,7 +4608,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleMapRoomWoodenCrateLarge4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Snowhead Temple Elevator Room Crate 5"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4602,7 +4618,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleMapRoomWoodenCrateLarge5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Snowhead Temple Safety Bridge Pot"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4612,7 +4628,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleMainRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Snowhead Temple Safety Bridge Pot 2"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4622,7 +4638,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleMainRoomPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Cleared Swamp Potion Shop Pot"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a swamp jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4632,7 +4648,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Swamp Near Frog Item"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a swamp flower"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4642,7 +4658,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthernSwampPoisonedCentralSwampItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Swamp Near Frog Item 2"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a swamp flower"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4652,7 +4668,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthernSwampPoisonedCentralSwampItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Potion Shop Pot"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a swamp jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4662,7 +4678,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Stone Tower Temple Lava Room Item"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4672,7 +4688,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleLavaRoomItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Stone Tower Temple Lava Room Item 2"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4682,7 +4698,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleLavaRoomItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Stone Tower Temple Thin Bridge Item"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4692,7 +4708,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleRoomAfterLightArrowsItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Stone Tower Temple Thin Bridge Item 2"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4702,7 +4718,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleRoomAfterLightArrowsItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Stone Tower Temple Thin Bridge Item 3"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4712,7 +4728,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleRoomAfterLightArrowsItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Stone Tower Temple Thin Bridge Item 4"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4722,7 +4738,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleRoomAfterLightArrowsItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Stone Tower Temple Thin Bridge Item 5"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4732,7 +4748,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleRoomAfterLightArrowsItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Stone Tower Temple Thin Bridge Item 6"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4742,7 +4758,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleRoomAfterLightArrowsItem6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Stone Tower Temple Thin Bridge Item 7"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4752,7 +4768,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleRoomAfterLightArrowsItem7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Stone Tower Temple Thin Bridge Item 8"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4762,7 +4778,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleRoomAfterLightArrowsItem8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Inverted Stone Tower Temple Dexihand Item"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4772,7 +4788,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedEyegoreRoomItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Inverted Stone Tower Temple Pre-Boss Closest Item"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4782,7 +4798,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedPreBossRoomItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Inverted Stone Tower Temple Pre-Boss 2nd Closest Item"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4792,7 +4808,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedPreBossRoomItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Inverted Stone Tower Temple Pre-Boss Item"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4802,7 +4818,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedPreBossRoomItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Inverted Stone Tower Temple Pre-Boss Item 2"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4812,7 +4828,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedPreBossRoomItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Inverted Stone Tower Temple Pre-Boss Item 3"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4822,7 +4838,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedPreBossRoomItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Inverted Stone Tower Temple Pre-Boss Furthest Item"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4832,7 +4848,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedPreBossRoomItem6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Inverted Stone Tower Temple Pre-Boss Furthest Item 2"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4842,7 +4858,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedPreBossRoomItem7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Inverted Stone Tower Temple Pre-Boss 2nd Furthest Item"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4852,7 +4868,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedPreBossRoomItem8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Inverted Stone Tower Temple Pre-Boss 2nd Furthest Item 2"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4862,7 +4878,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedPreBossRoomItem9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Inverted Stone Tower Temple Pre-Boss Closest Item 2"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4872,7 +4888,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedPreBossRoomItem10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Inverted Stone Tower Temple Pre-Boss 2nd Closest Item 2"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4882,7 +4898,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedPreBossRoomItem11,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Swordsman's School Pot"), Region(Region.WestClockTown)]
         [GossipLocationHint("cowering"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4892,7 +4908,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwordsmanSSchoolPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Swordsman's School Pot 2"), Region(Region.WestClockTown)]
         [GossipLocationHint("cowering"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4902,7 +4918,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwordsmanSSchoolPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Swordsman's School Pot 3"), Region(Region.WestClockTown)]
         [GossipLocationHint("cowering"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4912,7 +4928,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwordsmanSSchoolPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Swordsman's School Pot 4"), Region(Region.WestClockTown)]
         [GossipLocationHint("cowering"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4922,7 +4938,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwordsmanSSchoolPot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Swordsman's School Pot 5"), Region(Region.WestClockTown)]
         [GossipLocationHint("cowering"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4932,7 +4948,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwordsmanSSchoolPot5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Woodfall Item"), Region(Region.Woodfall)]
         [GossipLocationHint("a poisoned stump"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4942,7 +4958,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Woodfall Temple Entrance Hive"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4952,7 +4968,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallTempleEntranceRoomBeehive1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Woodfall Temple Gekko Room Pot"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4962,7 +4978,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallTempleGekkoRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Woodfall Temple Gekko Room Pot 2"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4972,7 +4988,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallTempleGekkoRoomPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Woodfall Temple Gekko Room Pot 3"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4982,7 +4998,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallTempleGekkoRoomPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Woodfall Temple Gekko Room Pot 4"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -4992,7 +5008,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallTempleGekkoRoomPot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Woodfall Temple Pre-Boss Platform Item"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5002,7 +5018,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallTemplePreBossRoomItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Woodfall Temple Pre-Boss Platform Item 2"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5012,7 +5028,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallTemplePreBossRoomItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Woodfall Temple Pre-Boss Platform Item 3"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5022,7 +5038,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallTemplePreBossRoomItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Woodfall Temple Pre-Boss Platform Item 4"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5032,7 +5048,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallTemplePreBossRoomItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Well Left Path Pot"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a cursed pot"), GossipItemHint("explosives")]
@@ -5042,7 +5058,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheWellBugAndBombRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Well Left Path Pot 2"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a cursed pot"), GossipItemHint("explosives")]
@@ -5052,7 +5068,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheWellBugAndBombRoomPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Well Left Path Pot 3"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a cursed pot"), GossipItemHint("explosives")]
@@ -5062,7 +5078,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheWellBugAndBombRoomPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Well Left Path Pot 4"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a cursed pot"), GossipItemHint("explosives")]
@@ -5072,7 +5088,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheWellBugAndBombRoomPot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Well Left Path Pot 5"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a cursed pot"), GossipItemHint("explosives")]
@@ -5082,7 +5098,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheWellBugAndBombRoomPot5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Goron Village Small Snowball 3"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("explosives")]
@@ -5092,7 +5108,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterSmallSnowball3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Goron Village Small Snowball 4"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("explosives")]
@@ -5102,7 +5118,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterSmallSnowball4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Great Bay Coast Pot 6"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("an ocean jar"), GossipItemHint("explosives")]
@@ -5112,7 +5128,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastPot9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Great Bay Temple Red Valve Barrel 2"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("explosives")]
@@ -5122,7 +5138,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleBlueChuchuValveRoomBarrel2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Great Bay Temple Green Pump Barrel 2"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("explosives")]
@@ -5132,7 +5148,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Ikana Canyon Grass 2"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("cursed grass"), GossipItemHint("explosives")]
@@ -5142,7 +5158,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaCanyonMainAreaGrass2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Mountain Village Spring Snowball 2"), Region(Region.MountainVillage)]
         [GossipLocationHint("a spring snowball"), GossipItemHint("explosives")]
@@ -5152,7 +5168,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringSmallSnowball2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Mountain Village Winter Small Snowball 2"), Region(Region.MountainVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("explosives")]
@@ -5162,7 +5178,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterSmallSnowball2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Snowhead Small Snowball 2"), Region(Region.Snowhead)]
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("explosives")]
@@ -5172,7 +5188,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadSmallSnowball2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Stone Tower Owl Pot 2"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("explosives")]
@@ -5182,7 +5198,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Inverted Stone Tower Pot"), Region(Region.StoneTower)]
         [GossipLocationHint("a sky below"), GossipItemHint("explosives")]
@@ -5192,7 +5208,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerInvertedStoneTowerFlippedPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Zora Cape Owl Pot 2"), Region(Region.ZoraCape)]
         [GossipLocationHint("a cape jar"), GossipItemHint("explosives")]
@@ -5202,7 +5218,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableZoraCapePot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Deku Nuts"), LocationName("Ikana Castle Left Staircase Pot"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a flashing impact")]
@@ -5212,7 +5228,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAncientCastleOfIkana1FWestStaircasePot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Deku Nuts"), LocationName("Goron Village Small Snowball 5"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a flashing impact")]
@@ -5222,7 +5238,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterSmallSnowball5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Deku Nuts"), LocationName("Goron Village Small Snowball 6"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a flashing impact")]
@@ -5232,7 +5248,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterSmallSnowball6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Deku Nuts"), LocationName("Pirates' Fortress Sewer Exit Pot 2"), Region(Region.PiratesFortressSewer)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("a flashing impact")]
@@ -5242,7 +5258,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorTelescopeRoomPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Deku Nuts"), LocationName("Woodfall Pot"), Region(Region.Woodfall)]
         [GossipLocationHint("a poisoned platform"), GossipItemHint("a flashing impact")]
@@ -5252,7 +5268,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Deku Stick"), LocationName("Goron Shrine Pot"), Region(Region.GoronVillage)]
         [GossipLocationHint("a crying child's jar"), GossipItemHint("a flammable weapon", "a flimsy weapon")]
@@ -5262,7 +5278,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronShrineGoronKidSRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Deku Stick"), LocationName("Goron Shrine Pot 2"), Region(Region.GoronVillage)]
         [GossipLocationHint("a crying child's jar"), GossipItemHint("a flammable weapon", "a flimsy weapon")]
@@ -5272,7 +5288,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronShrineGoronKidSRoomPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Deku Stick"), LocationName("Goron Shrine Pot 3"), Region(Region.GoronVillage)]
         [GossipLocationHint("a crying child's jar"), GossipItemHint("a flammable weapon", "a flimsy weapon")]
@@ -5282,7 +5298,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronShrineMainRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Deku Stick"), LocationName("Goron Shrine Pot 4"), Region(Region.GoronVillage)]
         [GossipLocationHint("a crying child's jar"), GossipItemHint("a flammable weapon", "a flimsy weapon")]
@@ -5292,7 +5308,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronShrineMainRoomPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Deku Stick"), LocationName("Goron Shrine Pot 5"), Region(Region.GoronVillage)]
         [GossipLocationHint("a crying child's jar"), GossipItemHint("a flammable weapon", "a flimsy weapon")]
@@ -5302,7 +5318,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronShrineMainRoomPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Deku Stick"), LocationName("Goron Village Small Snowball 7"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a flammable weapon", "a flimsy weapon")]
@@ -5312,7 +5328,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterSmallSnowball7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Deku Stick"), LocationName("Goron Village Small Snowball 8"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a flammable weapon", "a flimsy weapon")]
@@ -5322,7 +5338,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterSmallSnowball8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Deku Stick"), LocationName("Cleared Swamp Owl Grass"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("swamp grass"), GossipItemHint("a flammable weapon", "a flimsy weapon")]
@@ -5332,7 +5348,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthernSwampClearCentralSwampGrass1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Deku Stick"), LocationName("Southern Swamp Owl Grass"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("swamp grass"), GossipItemHint("a flammable weapon", "a flimsy weapon")]
@@ -5342,7 +5358,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthernSwampPoisonedCentralSwampGrass1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Deku Stick"), LocationName("Woodfall Pot 2"), Region(Region.Woodfall)]
         [GossipLocationHint("a poisoned platform"), GossipItemHint("a flammable weapon", "a flimsy weapon")]
@@ -5352,7 +5368,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Dampe's Basement Pot 5"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5362,7 +5378,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDampesHouseBasementPot5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Dampe's Basement Pot 6"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5372,7 +5388,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDampesHouseBasementPot6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Dampe's Basement Pot 7"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5382,7 +5398,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDampesHouseBasementPot7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Item 6"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5392,7 +5408,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceEastInnerGardenItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Item 7"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5402,7 +5418,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceEastInnerGardenItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Item 8"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5412,7 +5428,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceEastInnerGardenItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Item 9"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5422,7 +5438,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceEastInnerGardenItem6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Item 10"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5432,7 +5448,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceEastInnerGardenItem7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Item 11"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5442,7 +5458,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceEastInnerGardenItem8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Item 12"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5452,7 +5468,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceWestInnerGardenItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Item 13"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5462,7 +5478,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceWestInnerGardenItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Item 14"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5472,7 +5488,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceWestInnerGardenItem6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Out of Bounds Item"), Region(Region.DekuPalace)]
         [GossipLocationHint("a hidden royal treasure"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5482,7 +5498,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceWestInnerGardenItem7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Item 15"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5492,7 +5508,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceWestInnerGardenItem8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Item 16"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5502,7 +5518,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceWestInnerGardenItem9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Item 17"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5512,7 +5528,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceWestInnerGardenItem10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5522,7 +5538,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineGiantRoomFloor1Item1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 2"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5532,7 +5548,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineGiantRoomFloor1Item2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 3"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5542,7 +5558,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineGiantRoomFloor1Item3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 4"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5552,7 +5568,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineGiantRoomFloor1Item4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 5"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5562,7 +5578,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineGiantRoomFloor1Item5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 6"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5572,7 +5588,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineGiantRoomFloor1Item6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race River Item"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5582,7 +5598,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineWaterRoomWithPlatformsItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race River Item 2"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5592,7 +5608,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineWaterRoomWithPlatformsItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race River Item 3"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5602,7 +5618,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineWaterRoomWithPlatformsItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race River Item 4"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5612,7 +5628,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineWaterRoomWithPlatformsItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race River Item 5"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5622,7 +5638,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineWaterRoomWithPlatformsItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race River Item 6"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5632,7 +5648,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineWaterRoomWithPlatformsItem6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5642,7 +5658,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineRoomBeforeFlameWallsItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 2"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5652,7 +5668,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineRoomBeforeFlameWallsItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 3"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5662,7 +5678,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineRoomBeforeFlameWallsItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 4"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5672,7 +5688,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineRoomBeforeFlameWallsItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 5"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5682,7 +5698,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineRoomBeforeFlameWallsItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 6"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5692,7 +5708,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineRoomBeforeFlameWallsItem6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5702,7 +5718,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineDekuButlerSRoomItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 2"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5712,7 +5728,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineDekuButlerSRoomItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 3"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5722,7 +5738,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineDekuButlerSRoomItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 4"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5732,7 +5748,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineDekuButlerSRoomItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 5"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5742,7 +5758,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineDekuButlerSRoomItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 6"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5752,7 +5768,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineDekuButlerSRoomItem6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 7"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5762,7 +5778,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineDekuButlerSRoomItem7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 8"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5772,7 +5788,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineDekuButlerSRoomItem8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 9"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5782,7 +5798,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineDekuButlerSRoomItem9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 10"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5792,7 +5808,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineDekuButlerSRoomItem10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Butler Race Dual Pot"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5802,7 +5818,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineGreyBoulderRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("East Clock Town Crate"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town crate"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5812,7 +5828,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableEastClockTownWoodenCrateSmall1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Great Bay Temple Water Control Room Item 3"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5822,7 +5838,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleWaterControlRoomItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Great Bay Temple Water Control Room Item 4"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5832,7 +5848,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleWaterControlRoomItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Grass 2"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("unholy grass"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5842,7 +5858,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardIkanaGraveyardLowerGrass2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Potion Shop Item"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a shop corner"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5852,7 +5868,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMagicHagsPotionShopItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Pirates' Fortress Cage Room Barrel 2"), Region(Region.PiratesFortressSewer)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5862,7 +5878,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Pirates' Fortress Cage Room Barrel 3"), Region(Region.PiratesFortressSewer)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5872,7 +5888,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Pirates' Fortress Cage Room Barrel 4"), Region(Region.PiratesFortressSewer)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5882,7 +5898,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Pirates' Fortress Cage Room Barrel 5"), Region(Region.PiratesFortressSewer)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5892,7 +5908,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5902,7 +5918,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 2"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5912,7 +5928,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 3"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5922,7 +5938,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 4"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5932,7 +5948,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 5"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5942,7 +5958,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 6"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5952,7 +5968,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 7"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5962,7 +5978,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 8"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5972,7 +5988,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 9"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5982,7 +5998,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 10"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -5992,7 +6008,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 11"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6002,7 +6018,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem11,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 12"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6012,7 +6028,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem12,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 13"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6022,7 +6038,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem13,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 14"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6032,7 +6048,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem14,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 15"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6042,7 +6058,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem15,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 16"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6052,7 +6068,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem16,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Secret Shrine Floating Item 17"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6062,7 +6078,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineEntranceRoomItem17,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Cleared Swamp Potion Shop Pot 2"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a swamp jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6072,7 +6088,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Potion Shop Pot 2"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a swamp jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6082,7 +6098,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Stone Tower Temple Lava Room Item 3"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6092,7 +6108,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleLavaRoomItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Stone Tower Temple Lava Room Item 4"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6102,7 +6118,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleLavaRoomItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Stone Tower Temple Lava Room Item 5"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6112,7 +6128,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleLavaRoomItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Inverted Stone Tower Temple Dexihand Item 2"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6122,7 +6138,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedEyegoreRoomItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Clock Tower Rooftop Pot"), Region(Region.ClockTowerRoof)]
         [GossipLocationHint("a rooftop pot"), GossipItemHint("a magic refill")]
@@ -6132,7 +6148,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableClockTowerRooftopPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Clock Tower Rooftop Pot 2"), Region(Region.ClockTowerRoof)]
         [GossipLocationHint("a rooftop pot"), GossipItemHint("a magic refill")]
@@ -6142,7 +6158,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableClockTowerRooftopPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Clock Tower Rooftop Pot 3"), Region(Region.ClockTowerRoof)]
         [GossipLocationHint("a rooftop pot"), GossipItemHint("a magic refill")]
@@ -6152,7 +6168,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableClockTowerRooftopPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Clock Tower Rooftop Pot 4"), Region(Region.ClockTowerRoof)]
         [GossipLocationHint("a rooftop pot"), GossipItemHint("a magic refill")]
@@ -6162,7 +6178,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableClockTowerRooftopPot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6172,7 +6188,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 2"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6182,7 +6198,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 3"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6192,7 +6208,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 4"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6202,7 +6218,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 5"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6212,7 +6228,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 6"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6222,7 +6238,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 7"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6232,7 +6248,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 8"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6242,7 +6258,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 9"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6252,7 +6268,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 10"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6262,7 +6278,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 11"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6272,7 +6288,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot11,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 12"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6282,7 +6298,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot12,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 13"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6292,7 +6308,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot13,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 14"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6302,7 +6318,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot14,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 15"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6312,7 +6328,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot15,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 16"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6322,7 +6338,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot16,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 17"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6332,7 +6348,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot17,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 18"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6342,7 +6358,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot18,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 19"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6352,7 +6368,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot19,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 20"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6362,7 +6378,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot20,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 21"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6372,7 +6388,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot21,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 22"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6382,7 +6398,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot22,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 23"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6392,7 +6408,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot23,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 24"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6402,7 +6418,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot24,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 25"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6412,7 +6428,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot25,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 26"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6422,7 +6438,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot26,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 27"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -6432,7 +6448,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot27,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Shrine Pot 6"), Region(Region.GoronVillage)]
         [GossipLocationHint("a crying child's jar"), GossipItemHint("a magic refill")]
@@ -6442,7 +6458,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronShrineGoronKidSRoomPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Shrine Pot 7"), Region(Region.GoronVillage)]
         [GossipLocationHint("a crying child's jar"), GossipItemHint("a magic refill")]
@@ -6452,7 +6468,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronShrineMainRoomPot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Shrine Pot 8"), Region(Region.GoronVillage)]
         [GossipLocationHint("a crying child's jar"), GossipItemHint("a magic refill")]
@@ -6462,7 +6478,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronShrineMainRoomPot5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Shrine Pot 9"), Region(Region.GoronVillage)]
         [GossipLocationHint("a crying child's jar"), GossipItemHint("a magic refill")]
@@ -6472,7 +6488,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronShrineMainRoomPot6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Great Bay Coast Pot 7"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("an ocean jar"), GossipItemHint("a magic refill")]
@@ -6482,7 +6498,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastPot10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Great Bay Temple Red Valve Crate"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("a magic refill")]
@@ -6492,7 +6508,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleBlueChuchuValveRoomWoodenCrateLarge1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Ikana King Pot 3"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a magic refill")]
@@ -6502,7 +6518,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Ikana Canyon Grass 3"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("cursed grass"), GossipItemHint("a magic refill")]
@@ -6512,7 +6528,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaCanyonMainAreaGrass3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Milk Road Grass 2"), Region(Region.MilkRoad)]
         [GossipLocationHint("a roadside plant"), GossipItemHint("a magic refill")]
@@ -6522,7 +6538,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMilkRoadGrass2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Mountain Village Spring Snowball 3"), Region(Region.MountainVillage)]
         [GossipLocationHint("a spring snowball"), GossipItemHint("a magic refill")]
@@ -6532,7 +6548,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringSmallSnowball3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Graveyard Snowball"), Region(Region.MountainVillage)]
         [GossipLocationHint("a high snowball"), GossipItemHint("a magic refill")]
@@ -6542,7 +6558,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterSmallSnowball3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Goron Graveyard Snowball 2"), Region(Region.MountainVillage)]
         [GossipLocationHint("a high snowball"), GossipItemHint("a magic refill")]
@@ -6552,7 +6568,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterSmallSnowball4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Mountain Village Winter Small Snowball 3"), Region(Region.MountainVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a magic refill")]
@@ -6562,7 +6578,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterSmallSnowball5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Snowhead Small Snowball 3"), Region(Region.Snowhead)]
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a magic refill")]
@@ -6572,7 +6588,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadSmallSnowball3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Stone Tower Owl Pot 3"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a magic refill")]
@@ -6582,7 +6598,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Inverted Stone Tower Pot 2"), Region(Region.StoneTower)]
         [GossipLocationHint("a sky below"), GossipItemHint("a magic refill")]
@@ -6592,7 +6608,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerInvertedStoneTowerFlippedPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Link Trial Pot"), Region(Region.TheMoon)]
         [GossipLocationHint("a trial jar"), GossipItemHint("a magic refill")]
@@ -6602,7 +6618,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonLinkTrialEntrancePot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Link Trial Pot 2"), Region(Region.TheMoon)]
         [GossipLocationHint("a trial jar"), GossipItemHint("a magic refill")]
@@ -6612,7 +6628,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonLinkTrialEntrancePot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Link Trial Pot 3"), Region(Region.TheMoon)]
         [GossipLocationHint("a trial jar"), GossipItemHint("a magic refill")]
@@ -6622,7 +6638,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonLinkTrialEntrancePot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Link Trial Pot 4"), Region(Region.TheMoon)]
         [GossipLocationHint("a trial jar"), GossipItemHint("a magic refill")]
@@ -6632,7 +6648,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonLinkTrialEntrancePot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Zora Cape Owl Pot 3"), Region(Region.ZoraCape)]
         [GossipLocationHint("a cape jar"), GossipItemHint("a magic refill")]
@@ -6642,7 +6658,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableZoraCapePot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Purple Rupee"), LocationName("Dampe's Basement Pot 8"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6652,7 +6668,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDampesHouseBasementPot8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Recovery Heart"), LocationName("Pirates' Fortress Item"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("health")]
@@ -6662,7 +6678,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Recovery Heart"), LocationName("Pirates' Fortress Item 2"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("health")]
@@ -6672,7 +6688,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Recovery Heart"), LocationName("Pirates' Fortress Item 3"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("health")]
@@ -6682,7 +6698,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Butler Race Pillar Item 7"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6692,7 +6708,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineGiantRoomFloor1Item7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Butler Race Pillar Item 8"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6702,7 +6718,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuShrineGiantRoomFloor1Item8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Great Bay Temple Water Control Room Item 5"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6712,7 +6728,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleWaterControlRoomItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Great Bay Temple Dexihand Item"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6722,7 +6738,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleCompassBossKeyRoomItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Great Bay Temple Dexihand Item 2"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6732,7 +6748,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleCompassBossKeyRoomItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Great Bay Temple Green Pump Item"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6742,7 +6758,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleTopmostRoomWithGreenValveItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Great Bay Temple Green Pump Item 2"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6752,7 +6768,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleTopmostRoomWithGreenValveItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Laundry Pool Item"), Region(Region.LaundryPool)]
         [GossipLocationHint("a floating item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6762,7 +6778,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableLaundryPoolItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Laundry Pool Item 2"), Region(Region.LaundryPool)]
         [GossipLocationHint("a floating item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6772,7 +6788,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableLaundryPoolItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Laundry Pool Item 3"), Region(Region.LaundryPool)]
         [GossipLocationHint("a floating item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6782,7 +6798,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableLaundryPoolItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Mountain Village Spring Stair Item"), Region(Region.MountainVillage)]
         [GossipLocationHint("an item under the stairs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6792,7 +6808,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterMountainVillageSpringItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Snowhead Temple Icicle Room Frozen Item"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6802,7 +6818,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleIceBlockRoomItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Snowhead Temple Icicle Room Frozen Item 2"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6812,7 +6828,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleIceBlockRoomItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Snowhead Temple Icicle Room Frozen Item 3"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6822,7 +6838,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleIceBlockRoomItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Swamp Near Frog Hive"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a swamp hive"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6832,7 +6848,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthernSwampPoisonedCentralSwampBeehive1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Stone Tower Temple Lava Room Item 6"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6842,7 +6858,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleLavaRoomItem6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Stone Tower Temple Eyegore Room Item"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6852,7 +6868,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleEyegoreRoomItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Stone Tower Temple Mirror Room Crate"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6862,7 +6878,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleMirrorRoomWoodenCrateLarge1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Stone Tower Temple Mirror Room Crate 2"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6872,7 +6888,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleMirrorRoomWoodenCrateLarge2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Stone Tower Temple Eyegore Room Item 2"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6882,7 +6898,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleEyegoreRoomItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Inverted Stone Tower Temple Dexihand Item 3"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6892,7 +6908,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedEyegoreRoomItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Inverted Stone Tower Temple Updraft Room Item"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6902,7 +6918,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedAirRoomItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Inverted Stone Tower Temple Updraft Room Item 2"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6912,7 +6928,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedAirRoomItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Termina Field Pillar Item"), Region(Region.TerminaField)]
         [GossipLocationHint("a pillar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6922,7 +6938,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Woodfall Temple Pre-Boss Left Pillar Item"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6932,7 +6948,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallTemplePreBossRoomItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Woodfall Temple Pre-Boss Right Pillar Item"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -6942,7 +6958,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallTemplePreBossRoomItem6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Ikana Castle Courtyard Grass 3"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient plant"), GossipItemHint("a magic refill")]
@@ -6952,7 +6968,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAncientCastleOfIkanaCastleExteriorGrass3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Ikana Castle Courtyard Grass 4"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient plant"), GossipItemHint("a magic refill")]
@@ -6962,7 +6978,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAncientCastleOfIkanaCastleExteriorGrass4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Ikana Castle Fire Ceiling Room Pot"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a magic refill")]
@@ -6972,7 +6988,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAncientCastleOfIkanaFireCeilingRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Ikana Castle Hole Room Pot"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a magic refill")]
@@ -6982,7 +6998,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAncientCastleOfIkanaHoleRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Ikana Castle Hole Room Pot 2"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a magic refill")]
@@ -6992,7 +7008,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAncientCastleOfIkanaHoleRoomPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Observatory Balloon Pot"), Region(Region.EastClockTown)]
         [GossipLocationHint("an underground jar"), GossipItemHint("a magic refill")]
@@ -7002,7 +7018,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAstralObservatorySewerPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Observatory Balloon Pot 2"), Region(Region.EastClockTown)]
         [GossipLocationHint("an underground jar"), GossipItemHint("a magic refill")]
@@ -7012,7 +7028,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAstralObservatorySewerPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Observatory Scarecrow Pot 3"), Region(Region.EastClockTown)]
         [GossipLocationHint("an underground jar"), GossipItemHint("a magic refill")]
@@ -7022,7 +7038,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAstralObservatoryObservatoryBombersHideoutPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Night 2 Grave Pot 2"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy jar"), GossipItemHint("a magic refill")]
@@ -7032,7 +7048,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheGraveyardMainAreaPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Deku Palace Pot"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal pathway", "the home of scrubs"), GossipItemHint("a magic refill")]
@@ -7042,7 +7058,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceEastInnerGardenPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Deku Palace Pot 2"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal pathway", "the home of scrubs"), GossipItemHint("a magic refill")]
@@ -7052,7 +7068,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceEastInnerGardenPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Goron Racetrack Pot 28"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -7062,7 +7078,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot28,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Goron Racetrack Pot 29"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -7072,7 +7088,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot29,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Goron Racetrack Pot 30"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
@@ -7082,7 +7098,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronRacetrackPot30,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Goron Shrine Pot 10"), Region(Region.GoronVillage)]
         [GossipLocationHint("a crying child's jar"), GossipItemHint("a magic refill")]
@@ -7092,7 +7108,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronShrineMainRoomPot7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Goron Shrine Pot 11"), Region(Region.GoronVillage)]
         [GossipLocationHint("a crying child's jar"), GossipItemHint("a magic refill")]
@@ -7102,7 +7118,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronShrineMainRoomPot8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Goron Village Large Snowball 4"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a magic refill")]
@@ -7112,7 +7128,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterLargeSnowball4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Goron Village Large Snowball 5"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a magic refill")]
@@ -7122,7 +7138,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterLargeSnowball5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Goron Village Large Snowball 6"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a magic refill")]
@@ -7132,7 +7148,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterLargeSnowball6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Goron Village Small Snowball 9"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a magic refill")]
@@ -7142,7 +7158,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterSmallSnowball9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Goron Village Small Snowball 10"), Region(Region.GoronVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a magic refill")]
@@ -7152,7 +7168,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGoronVillageWinterSmallSnowball10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Ikana King Entry Pot 3"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a magic refill")]
@@ -7162,7 +7178,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIgosDuIkanaSLairPreBossRoomPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Ikana Graveyard Grass 3"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("unholy grass"), GossipItemHint("a magic refill")]
@@ -7172,7 +7188,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardIkanaGraveyardLowerGrass3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Mountain Village Winter Small Snowball 4"), Region(Region.MountainVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a magic refill")]
@@ -7182,7 +7198,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterSmallSnowball6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Mountain Village Winter Small Snowball 5"), Region(Region.MountainVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a magic refill")]
@@ -7192,7 +7208,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterSmallSnowball7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Mountain Village Day 1 Snowball"), Region(Region.MountainVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a magic refill")]
@@ -7202,7 +7218,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterLargeSnowball3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Mountain Village Day 2 Snowball 2"), Region(Region.MountainVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a magic refill")]
@@ -7212,7 +7228,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterLargeSnowball4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Oceanside Spider House Main Room Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a magic refill")]
@@ -7222,7 +7238,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseMainRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Oceanside Spider House Entrance Pot 3"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a magic refill")]
@@ -7232,7 +7248,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseEntrancePot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Oceanside Spider House Main Room Pot 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a magic refill")]
@@ -7242,7 +7258,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseMainRoomPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Oceanside Spider House Storage Room Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a magic refill")]
@@ -7252,7 +7268,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseStorageRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 3 Snowball"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7262,7 +7278,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 3 Snowball 2"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7272,7 +7288,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 3 Snowball 3"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7282,7 +7298,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 3 Snowball 4"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7292,7 +7308,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 3 Snowball 5"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7302,7 +7318,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 2 Snowball"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7312,7 +7328,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 2 Snowball 2"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7322,7 +7338,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 2 Snowball 3"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7332,7 +7348,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 2 Snowball 4"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7342,7 +7358,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 1 Snowball"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7352,7 +7368,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 1 Snowball 2"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7362,7 +7378,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball11,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 1 Snowball 3"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7372,7 +7388,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball12,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 1 Snowball 4"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7382,7 +7398,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball13,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Day 1 Snowball 5"), Region(Region.TwinIslands)]
         [GossipLocationHint("a travelling snowball"), GossipItemHint("a magic refill")]
@@ -7392,7 +7408,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterLargeSnowball14,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Small Snowball"), Region(Region.TwinIslands)]
         [GossipLocationHint("a lake snowball"), GossipItemHint("a magic refill")]
@@ -7402,7 +7418,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterSmallSnowball1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Small Snowball 2"), Region(Region.TwinIslands)]
         [GossipLocationHint("a lake snowball"), GossipItemHint("a magic refill")]
@@ -7412,7 +7428,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterSmallSnowball2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Twin Islands Ramp Snowball"), Region(Region.TwinIslands)]
         [GossipLocationHint("a lake snowball"), GossipItemHint("a magic refill")]
@@ -7422,7 +7438,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToGoronVillageWinterSmallSnowball3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Small Snowball"), Region(Region.PathToMountainVillage)]
         [GossipLocationHint("a foothill snowball"), GossipItemHint("a magic refill")]
@@ -7432,7 +7448,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToMountainVillageSmallSnowball1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Path to Snowhead Large Snowball"), Region(Region.PathToSnowhead)]
         [GossipLocationHint("a treacherous snowball"), GossipItemHint("a magic refill")]
@@ -7442,7 +7458,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToSnowheadLargeSnowball1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Path to Snowhead Large Snowball 2"), Region(Region.PathToSnowhead)]
         [GossipLocationHint("a treacherous snowball"), GossipItemHint("a magic refill")]
@@ -7452,7 +7468,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToSnowheadLargeSnowball2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Path to Snowhead Large Snowball 3"), Region(Region.PathToSnowhead)]
         [GossipLocationHint("a treacherous snowball"), GossipItemHint("a magic refill")]
@@ -7462,7 +7478,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToSnowheadLargeSnowball3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Path to Snowhead Large Snowball 4"), Region(Region.PathToSnowhead)]
         [GossipLocationHint("a treacherous snowball"), GossipItemHint("a magic refill")]
@@ -7472,7 +7488,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToSnowheadLargeSnowball4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Pinnacle Rock Pot"), Region(Region.PinnacleRock)]
         [GossipLocationHint("a deep jar"), GossipItemHint("a magic refill")]
@@ -7482,7 +7498,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePinnacleRockPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Pinnacle Rock Pot 2"), Region(Region.PinnacleRock)]
         [GossipLocationHint("a deep jar"), GossipItemHint("a magic refill")]
@@ -7492,7 +7508,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePinnacleRockPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Pinnacle Rock Pot 3"), Region(Region.PinnacleRock)]
         [GossipLocationHint("a deep jar"), GossipItemHint("a magic refill")]
@@ -7502,7 +7518,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePinnacleRockPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Pinnacle Rock Pot 4"), Region(Region.PinnacleRock)]
         [GossipLocationHint("a deep jar"), GossipItemHint("a magic refill")]
@@ -7512,7 +7528,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePinnacleRockPot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Secret Shrine Underwater Pot 3"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("a magic refill")]
@@ -7522,7 +7538,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineMainRoomPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Secret Shrine Underwater Pot 4"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("a magic refill")]
@@ -7532,7 +7548,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineMainRoomPot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Snowhead Large Snowball"), Region(Region.Snowhead)]
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a magic refill")]
@@ -7542,7 +7558,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadLargeSnowball1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Snowhead Large Snowball 2"), Region(Region.Snowhead)]
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a magic refill")]
@@ -7552,7 +7568,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadLargeSnowball2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Snowhead Large Snowball 3"), Region(Region.Snowhead)]
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a magic refill")]
@@ -7562,7 +7578,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadLargeSnowball3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Snowhead Large Snowball 4"), Region(Region.Snowhead)]
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a magic refill")]
@@ -7572,7 +7588,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadLargeSnowball4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Snowhead Large Snowball 5"), Region(Region.Snowhead)]
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a magic refill")]
@@ -7582,7 +7598,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadLargeSnowball5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Snowhead Large Snowball 6"), Region(Region.Snowhead)]
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a magic refill")]
@@ -7592,7 +7608,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadLargeSnowball6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Stone Tower Lower Scarecrow Pot"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a magic refill")]
@@ -7602,7 +7618,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Stone Tower Lower Scarecrow Pot 2"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a magic refill")]
@@ -7612,7 +7628,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Stone Tower Upper Scarecrow Pot 3"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a magic refill")]
@@ -7622,7 +7638,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Stone Tower Upper Scarecrow Pot 4"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a magic refill")]
@@ -7632,7 +7648,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Stone Tower Lower Scarecrow Pot 3"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a magic refill")]
@@ -7642,7 +7658,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Zora Cape Waterfall Pot"), Region(Region.ZoraCape)]
         [GossipLocationHint("a cape jar"), GossipItemHint("a magic refill")]
@@ -7652,7 +7668,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableZoraCapePot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Ranch Fence Item"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a fence"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7662,7 +7678,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRomaniRanchInvisibleItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Ranch Fence Item 2"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a fence"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7672,7 +7688,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRomaniRanchInvisibleItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ranch Fence Item 3"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a fence"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7682,7 +7698,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRomaniRanchInvisibleItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ranch Fence Item 4"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a fence"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7692,7 +7708,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRomaniRanchInvisibleItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ranch Fence Item 5"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a fence"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7702,7 +7718,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRomaniRanchInvisibleItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ranch Fence Item 6"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a fence"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7712,7 +7728,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRomaniRanchInvisibleItem6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Above Cow Grotto Invisible Item"), Region(Region.TerminaField)]
         [GossipLocationHint("a hidden item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7722,7 +7738,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldInvisibleItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Invisible Item 2"), Region(Region.TerminaField)]
         [GossipLocationHint("a hidden item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7732,7 +7748,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldInvisibleItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Invisible Item 3"), Region(Region.TerminaField)]
         [GossipLocationHint("a hidden item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7742,7 +7758,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldInvisibleItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Invisible Item 4"), Region(Region.TerminaField)]
         [GossipLocationHint("a hidden item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7752,7 +7768,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldInvisibleItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Invisible Item 5"), Region(Region.TerminaField)]
         [GossipLocationHint("a hidden item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7762,7 +7778,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldInvisibleItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Invisible Item 6"), Region(Region.TerminaField)]
         [GossipLocationHint("a hidden item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7772,7 +7788,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldInvisibleItem6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Invisible Item 7"), Region(Region.TerminaField)]
         [GossipLocationHint("a hidden item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7782,7 +7798,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldInvisibleItem7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Invisible Item 8"), Region(Region.TerminaField)]
         [GossipLocationHint("a hidden item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7792,7 +7808,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldInvisibleItem8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Northern Ramp Invisible Item"), Region(Region.TerminaField)]
         [GossipLocationHint("a hidden item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7802,7 +7818,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldInvisibleItem9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Invisible Item 10"), Region(Region.TerminaField)]
         [GossipLocationHint("a hidden item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7812,7 +7828,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldInvisibleItem10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Invisible Item 11"), Region(Region.TerminaField)]
         [GossipLocationHint("a hidden item"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7822,7 +7838,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldInvisibleItem11,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Invisible Item"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a large jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7832,7 +7848,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseInvisibleItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Invisible Item 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a large jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7842,7 +7858,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseInvisibleItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Invisible Item 3"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a large jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7852,7 +7868,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseInvisibleItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Swamp Spider House Invisible Item 4"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a large jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7862,7 +7878,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseInvisibleItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Swamp Spider House Invisible Item 5"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a large jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7872,7 +7888,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseInvisibleItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Termina Field Tree Item"), Region(Region.TerminaField)]
         [GossipLocationHint("a tree"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7882,7 +7898,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldTreeItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Termina Field Pillar Spawned Item"), Region(Region.TerminaField)]
         [GossipLocationHint("a pillar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7892,7 +7908,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldPillarItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Termina Field Telescope Guay"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7902,7 +7918,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldTelescopeGuay1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Swordsman School Gong"), Region(Region.WestClockTown)]
         [GossipLocationHint("timekeeping"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7912,7 +7928,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwordsmanSchoolGong1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Bean Grotto Soft Soil"), Region(Region.DekuPalace)]
         [GossipLocationHint("underground soil"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7922,7 +7938,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeanGrottoSoftSoil1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Deku Palace Soft Soil"), Region(Region.DekuPalace)]
         [GossipLocationHint("royal soil", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7932,7 +7948,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceSoftSoil1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Doggy Racetrack Soft Soil"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a sporting arena"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7942,7 +7958,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDoggyRacetrackSoftSoil1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Great Bay Coast Soft Soil"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("ocean soil"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7952,7 +7968,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastSoftSoil1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Ranch Day 1 Soil"), Region(Region.RomaniRanch)]
         [GossipLocationHint("early soil"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -7962,7 +7978,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRomaniRanchSoftSoil1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Ranch Day 2 or 3 Soil"), Region(Region.RomaniRanch)]
         [GossipLocationHint("late soil"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7972,7 +7988,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRomaniRanchSoftSoil2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Secret Shrine Soft Soil"), Region(Region.SecretShrine)]
         [GossipLocationHint("secret soil"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -7982,7 +7998,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSecretShrineSoftSoil1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Stone Tower Soft Soil Lower"), Region(Region.StoneTower)]
         [GossipLocationHint("high soil"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -7992,7 +8008,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerSoftSoil1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Stone Tower Soft Soil Upper"), Region(Region.StoneTower)]
         [GossipLocationHint("high soil"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -8002,7 +8018,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerSoftSoil2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Swamp Spider House Rock Soft Soil"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("rock soil"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8012,7 +8028,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseSoftSoil1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Swamp Spider House Gold Room Soft Soil"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("gold soil"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -8022,7 +8038,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseSoftSoil2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Termina Field Stump Soft Soil"), Region(Region.TerminaField)]
         [GossipLocationHint("field soil"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8032,7 +8048,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSoftSoil1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Observatory Soft Soil"), Region(Region.TerminaField)]
         [GossipLocationHint("field soil"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8042,7 +8058,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSoftSoil2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field South Wall Soft Soil"), Region(Region.TerminaField)]
         [GossipLocationHint("wall soil"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8052,7 +8068,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSoftSoil3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Termina Field Pillar Soft Soil"), Region(Region.TerminaField)]
         [GossipLocationHint("field soil"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -8062,7 +8078,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSoftSoil4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #1"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8072,7 +8088,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #2"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8082,7 +8098,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #3"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8092,7 +8108,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #4"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8102,7 +8118,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #5"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8112,7 +8128,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #6"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8122,7 +8138,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #7"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8132,7 +8148,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #8"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8142,7 +8158,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #9"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8152,7 +8168,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #10"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8162,7 +8178,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #11"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8172,7 +8188,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay11,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #12"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8182,7 +8198,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay12,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #13"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8192,7 +8208,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay13,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #14"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8202,7 +8218,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay14,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #15"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8212,7 +8228,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay15,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #16"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8222,7 +8238,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay16,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #17"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8232,7 +8248,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay17,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #18"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8242,7 +8258,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay18,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Guay #19"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8252,7 +8268,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay19,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Termina Field Guay #20"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8262,7 +8278,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay20,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Guay #5a"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8272,7 +8288,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay21,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Guay #10a"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8282,7 +8298,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay22,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Guay #15a"), Region(Region.TerminaField)]
         [GossipLocationHint("bird droppings"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8292,7 +8308,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGuay23,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Rupee Cluster"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal circle", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8302,7 +8318,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceRupeeCluster1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Rupee Cluster 2"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal circle", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8312,7 +8328,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceRupeeCluster2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Rupee Cluster 3"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal circle", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8322,7 +8338,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceRupeeCluster3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Rupee Cluster 4"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal circle", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8332,7 +8348,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceRupeeCluster4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Rupee Cluster 5"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal circle", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8342,7 +8358,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceRupeeCluster5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Palace Rupee Cluster 6"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal circle", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8352,7 +8368,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceRupeeCluster6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Deku Palace Rupee Cluster 7"), Region(Region.DekuPalace)]
         [GossipLocationHint("a royal circle", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8362,7 +8378,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPalaceRupeeCluster7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Rupee Cluster"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy circle"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8372,7 +8388,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheGraveyardRupeeCluster1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Rupee Cluster 2"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy circle"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8382,7 +8398,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheGraveyardRupeeCluster2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Rupee Cluster 3"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy circle"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8392,7 +8408,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheGraveyardRupeeCluster3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Rupee Cluster 4"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy circle"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8402,7 +8418,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheGraveyardRupeeCluster4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Rupee Cluster 5"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy circle"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8412,7 +8428,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheGraveyardRupeeCluster5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Rupee Cluster 6"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy circle"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8422,7 +8438,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheGraveyardRupeeCluster6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Ikana Graveyard Rupee Cluster 7"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("an unholy circle"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8432,7 +8448,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableBeneathTheGraveyardRupeeCluster7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Termina Field Song Wall Dawn"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8442,7 +8458,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Termina Field Song Wall Dawn 2"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8452,7 +8468,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Termina Field Song Wall Dawn 3"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8462,7 +8478,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Termina Field Song Wall 0 / 8 / 12 / 16"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8472,7 +8488,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Song Wall 0 / 8 / 12 / 16 2"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8482,7 +8498,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Song Wall 0 / 8 / 12 / 16 3"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8492,7 +8508,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Song Wall 2 / 10 / 14 / 18 / 22"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8502,7 +8518,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Song Wall 2 / 10 / 14 / 18 / 22 2"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8512,7 +8528,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Song Wall 2 / 10 / 14 / 18 / 22 3"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8522,7 +8538,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Termina Field Song Wall 4 / 20"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8532,7 +8548,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Song Wall 4 / 20 2"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8542,7 +8558,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall11,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Song Wall 4 / 20 3"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8552,7 +8568,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall12,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Song Wall Odd Hours"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8562,7 +8578,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall13,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Song Wall Odd Hours 2"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8572,7 +8588,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall14,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Song Wall Odd Hours 3"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8582,7 +8598,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldSongWall15,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8592,7 +8608,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item 2"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8602,7 +8618,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item 3"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8612,7 +8628,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item 4"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8622,7 +8638,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item 5"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8632,7 +8648,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Deku Playground Day 2 Item 6"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8642,7 +8658,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8652,7 +8668,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item 2"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8662,7 +8678,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item 3"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8672,7 +8688,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item 4"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8682,7 +8698,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item 5"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8692,7 +8708,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem11,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Deku Playground Day 1 Item 6"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8702,7 +8718,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem12,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8712,7 +8728,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem13,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item 2"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8722,7 +8738,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem14,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item 3"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8732,7 +8748,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem15,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item 4"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8742,7 +8758,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem16,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Deku Playground Day 3 Item 5"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8752,7 +8768,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem17,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item 6"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8762,7 +8778,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDekuPlaygroundItem18,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Pirates' Fortress Skull Flag Left Eye"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("a pirate flag"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8772,7 +8788,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressHitTag1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Pirates' Fortress Skull Flag Left Eye 2"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("a pirate flag"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8782,7 +8798,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressHitTag2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Pirates' Fortress Skull Flag Left Eye 3"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("a pirate flag"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8792,7 +8808,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressHitTag3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Pirates' Fortress Skull Flag Right Eye"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("a pirate flag"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8802,7 +8818,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressHitTag4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Pirates' Fortress Skull Flag Right Eye 2"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("a pirate flag"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8812,7 +8828,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressHitTag5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Pirates' Fortress Skull Flag Right Eye 3"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("a pirate flag"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8822,7 +8838,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressHitTag6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Hookshot Room Skull Flag Forehead"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("a pirate flag"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8832,7 +8848,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorHookshotRoomHitTag1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Hookshot Room Skull Flag Forehead 2"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("a pirate flag"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8842,7 +8858,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorHookshotRoomHitTag2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Hookshot Room Skull Flag Forehead 3"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("a pirate flag"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8852,7 +8868,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorHookshotRoomHitTag3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8862,7 +8878,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseHitTag1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8872,7 +8888,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseHitTag2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 3"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8882,7 +8898,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseHitTag3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 4"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8892,7 +8908,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseHitTag4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 5"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8902,7 +8918,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseHitTag5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 6"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8912,7 +8928,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseHitTag6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 7"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8922,7 +8938,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseHitTag7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 8"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8932,7 +8948,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseHitTag8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 9"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8942,7 +8958,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseHitTag9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 10"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8952,7 +8968,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseHitTag10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 11"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8962,7 +8978,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseHitTag11,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 12"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8972,7 +8988,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseHitTag12,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8982,7 +8998,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseHitTag1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -8992,7 +9008,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseHitTag2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 3"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9002,7 +9018,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseHitTag3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 4"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9012,7 +9028,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseHitTag4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 5"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9022,7 +9038,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseHitTag5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 6"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9032,7 +9048,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseHitTag6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 7"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9042,7 +9058,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseHitTag7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 8"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9052,7 +9068,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseHitTag8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 9"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9062,7 +9078,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseHitTag9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Clam"), Region(Region.TerminaField)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9072,7 +9088,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldHitTag1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Clam 2"), Region(Region.TerminaField)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9082,7 +9098,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldHitTag2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Clam 3"), Region(Region.TerminaField)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9092,7 +9108,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldHitTag3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Wall"), Region(Region.TerminaField)]
         [GossipLocationHint("a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9102,7 +9118,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldHitTag4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Wall 2"), Region(Region.TerminaField)]
         [GossipLocationHint("a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9112,7 +9128,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldHitTag5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Wall 3"), Region(Region.TerminaField)]
         [GossipLocationHint("a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9122,7 +9138,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldHitTag6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Skull Kid Drawing"), Region(Region.TerminaField)]
         [GossipLocationHint("a drawing"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9132,7 +9148,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldHitTag7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Skull Kid Drawing 2"), Region(Region.TerminaField)]
         [GossipLocationHint("a drawing"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9142,7 +9158,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldHitTag8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Termina Field Skull Kid Drawing 3"), Region(Region.TerminaField)]
         [GossipLocationHint("a drawing"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9152,7 +9168,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldHitTag9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Cucco Shack Diamond Hole"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a diamond gap"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9162,7 +9178,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableCuccoShackHitTag1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Cucco Shack Diamond Hole 2"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a diamond gap"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9172,7 +9188,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableCuccoShackHitTag2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Cucco Shack Diamond Hole 3"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a diamond gap"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9182,7 +9198,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableCuccoShackHitTag3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Cucco Shack Diamond Hole 4"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a diamond gap"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9192,7 +9208,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableCuccoShackHitTag4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Cucco Shack Diamond Hole 5"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a diamond gap"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9202,7 +9218,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableCuccoShackHitTag5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Cucco Shack Diamond Hole 6"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a diamond gap"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9212,7 +9228,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableCuccoShackHitTag6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Lantern"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a lantern"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9222,7 +9238,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardHitTag1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Lantern 2"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a lantern"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9232,7 +9248,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardHitTag2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Lantern 3"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a lantern"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9242,7 +9258,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardHitTag3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Lantern 4"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a lantern"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9252,7 +9268,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardHitTag4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Lantern 5"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a lantern"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9262,7 +9278,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardHitTag5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Lantern 6"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a lantern"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9272,7 +9288,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardHitTag6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Lantern 7"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a lantern"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9282,7 +9298,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardHitTag7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Lantern 8"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a lantern"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9292,7 +9308,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardHitTag8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Lantern 9"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a lantern"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9302,7 +9318,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardHitTag9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Lantern 10"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a lantern"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9312,7 +9328,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardHitTag10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Lantern 11"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a lantern"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9322,7 +9338,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardHitTag11,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Ikana Graveyard Lantern 12"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a lantern"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9332,7 +9348,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardHitTag12,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Stock Pot Inn Mask"), Region(Region.StockPotInn)]
         [GossipLocationHint("a town mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9342,7 +9358,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStockPotInnHitTag1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Stock Pot Inn Mask 2"), Region(Region.StockPotInn)]
         [GossipLocationHint("a town mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9352,7 +9368,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStockPotInnHitTag2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Stock Pot Inn Mask 3"), Region(Region.StockPotInn)]
         [GossipLocationHint("a town mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9362,7 +9378,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStockPotInnHitTag3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("East Clock Town Target"), Region(Region.EastClockTown)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9372,7 +9388,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableEastClockTownHitTag1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("East Clock Town Target 2"), Region(Region.EastClockTown)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9382,7 +9398,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableEastClockTownHitTag2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("East Clock Town Target 3"), Region(Region.EastClockTown)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9392,7 +9408,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableEastClockTownHitTag3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("East Clock Town Target 4"), Region(Region.EastClockTown)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9402,7 +9418,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableEastClockTownHitTag4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("East Clock Town Target 5"), Region(Region.EastClockTown)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9412,7 +9428,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableEastClockTownHitTag5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("East Clock Town Target 6"), Region(Region.EastClockTown)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9422,7 +9438,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableEastClockTownHitTag6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("East Clock Town Basket"), Region(Region.EastClockTown)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9432,7 +9448,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableEastClockTownHitTag7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("East Clock Town Basket 2"), Region(Region.EastClockTown)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9442,7 +9458,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableEastClockTownHitTag8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("East Clock Town Basket 3"), Region(Region.EastClockTown)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9452,7 +9468,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableEastClockTownHitTag9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Clock Tower Clock"), Region(Region.SouthClockTown)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9462,7 +9478,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthClockTownHitTag1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Clock Tower Clock 2"), Region(Region.SouthClockTown)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9472,7 +9488,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthClockTownHitTag2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Clock Tower Clock 3"), Region(Region.SouthClockTown)]
         [GossipLocationHint("an accurate shot"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9482,7 +9498,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthClockTownHitTag3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Gold Rupee"), LocationName("Takkuri"), Region(Region.TerminaField)]
         [GossipLocationHint("a thief"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9493,7 +9509,7 @@ namespace MMR.Randomizer.GameObjects
 
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Hookshot Room Pot"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -9503,7 +9519,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorHookshotRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Hookshot Room Pot 2"), Region(Region.PiratesFortressInterior)]
         [GossipLocationHint("the home of pirates"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -9513,7 +9529,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePiratesFortressInteriorHookshotRoomPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Termina Field Rock"), Region(Region.TerminaField)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -9523,7 +9539,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldRock1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Termina Field Rock 2"), Region(Region.TerminaField)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -9533,7 +9549,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldRock2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Ikana Graveyard Highest Rock"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9543,7 +9559,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardIkanaGraveyardUpperRock1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Ikana Graveyard Lowest Rock"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9553,7 +9569,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardIkanaGraveyardUpperRock2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Ikana Graveyard 2nd Lowest Rock"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9563,7 +9579,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardIkanaGraveyardUpperRock3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Rock 3"), Region(Region.TerminaField)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9573,7 +9589,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldRock3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Rock 4"), Region(Region.TerminaField)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9583,7 +9599,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldRock4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Rock 5"), Region(Region.TerminaField)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9593,7 +9609,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldRock5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Rock 6"), Region(Region.TerminaField)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9603,7 +9619,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldRock6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Termina Field Rock 7"), Region(Region.TerminaField)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9613,7 +9629,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldRock7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Ikana Graveyard 2nd Highest Rock"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9623,7 +9639,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardIkanaGraveyardUpperRock4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Ikana Graveyard Middle Rock"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9633,7 +9649,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardIkanaGraveyardUpperRock5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Termina Field Rock 8"), Region(Region.TerminaField)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9643,7 +9659,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldRock8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Termina Field Rock 9"), Region(Region.TerminaField)]
         [GossipLocationHint("a rock on a wall"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9653,7 +9669,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldRock9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass"), Region(Region.MilkRoad)]
@@ -9664,7 +9680,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMilkRoadKeatonGrass1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass 2"), Region(Region.MilkRoad)]
@@ -9675,7 +9691,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMilkRoadKeatonGrass2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass 3"), Region(Region.MilkRoad)]
@@ -9686,7 +9702,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMilkRoadKeatonGrass3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass 4"), Region(Region.MilkRoad)]
@@ -9697,7 +9713,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMilkRoadKeatonGrass4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass 5"), Region(Region.MilkRoad)]
@@ -9708,7 +9724,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMilkRoadKeatonGrass5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass 6"), Region(Region.MilkRoad)]
@@ -9719,7 +9735,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMilkRoadKeatonGrass6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass 7"), Region(Region.MilkRoad)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9729,7 +9745,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMilkRoadKeatonGrass7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass 8"), Region(Region.MilkRoad)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9739,7 +9755,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMilkRoadKeatonGrass8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Milk Road Keaton Grass 9"), Region(Region.MilkRoad)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9749,7 +9765,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMilkRoadKeatonGrass9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass"), Region(Region.NorthClockTown)]
@@ -9760,7 +9776,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableNorthClockTownKeatonGrass1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass 2"), Region(Region.NorthClockTown)]
@@ -9771,7 +9787,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableNorthClockTownKeatonGrass2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass 3"), Region(Region.NorthClockTown)]
@@ -9782,7 +9798,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableNorthClockTownKeatonGrass3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass 4"), Region(Region.NorthClockTown)]
@@ -9793,7 +9809,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableNorthClockTownKeatonGrass4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass 5"), Region(Region.NorthClockTown)]
@@ -9804,7 +9820,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableNorthClockTownKeatonGrass5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass 6"), Region(Region.NorthClockTown)]
@@ -9815,7 +9831,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableNorthClockTownKeatonGrass6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass 7"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9825,7 +9841,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableNorthClockTownKeatonGrass7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass 8"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9835,7 +9851,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableNorthClockTownKeatonGrass8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("North Clock Town Keaton Grass 9"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9845,7 +9861,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableNorthClockTownKeatonGrass9,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass"), Region(Region.MountainVillage)]
@@ -9856,7 +9872,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringKeatonGrass1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass 2"), Region(Region.MountainVillage)]
@@ -9867,7 +9883,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringKeatonGrass2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass 3"), Region(Region.MountainVillage)]
@@ -9878,7 +9894,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringKeatonGrass3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass 4"), Region(Region.MountainVillage)]
@@ -9889,7 +9905,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringKeatonGrass4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass 5"), Region(Region.MountainVillage)]
@@ -9900,7 +9916,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringKeatonGrass5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass 6"), Region(Region.MountainVillage)]
@@ -9911,7 +9927,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringKeatonGrass6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass 7"), Region(Region.MountainVillage)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9921,7 +9937,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringKeatonGrass7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass 8"), Region(Region.MountainVillage)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9931,7 +9947,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringKeatonGrass8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Mountain Village Spring Keaton Grass 9"), Region(Region.MountainVillage)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -9942,7 +9958,7 @@ namespace MMR.Randomizer.GameObjects
 
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Oceanside Spider House Mask Room Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -9952,7 +9968,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseMaskRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("10 Arrows"), LocationName("Oceanside Spider House Mask Room Pot 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -9962,7 +9978,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableOceansideSpiderHouseMaskRoomPot2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("30 Arrows"), LocationName("Ikana Canyon Cleared Grass"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("uncursed grass"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
@@ -9973,7 +9989,7 @@ namespace MMR.Randomizer.GameObjects
 
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("5 Bombs"), LocationName("Ikana Canyon Cleared Grass 2"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("uncursed grass"), GossipItemHint("explosives")]
@@ -9984,7 +10000,7 @@ namespace MMR.Randomizer.GameObjects
 
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Ikana Canyon Cleared Grass 3"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("uncursed grass"), GossipItemHint("a magic refill")]
@@ -9994,7 +10010,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaCanyonMainAreaGrass6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Path to Snowhead Spring Snowball"), Region(Region.PathToSnowhead)]
         [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
@@ -10004,7 +10020,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToSnowheadSmallSnowball1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Path to Snowhead Spring Snowball 2"), Region(Region.PathToSnowhead)]
         [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
@@ -10014,7 +10030,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToSnowheadSmallSnowball2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Path to Snowhead Spring Snowball 3"), Region(Region.PathToSnowhead)]
         [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
@@ -10024,7 +10040,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToSnowheadSmallSnowball3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Large Magic Jar"), LocationName("Path to Snowhead Spring Snowball 4"), Region(Region.PathToSnowhead)]
         [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
@@ -10035,7 +10051,7 @@ namespace MMR.Randomizer.GameObjects
 
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Spring Snowball"), Region(Region.PathToMountainVillage)]
         [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
@@ -10045,7 +10061,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToMountainVillageSmallSnowball2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Spring Snowball 2"), Region(Region.PathToMountainVillage)]
         [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
@@ -10055,7 +10071,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToMountainVillageSmallSnowball3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Spring Snowball 3"), Region(Region.PathToMountainVillage)]
         [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
@@ -10065,7 +10081,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToMountainVillageSmallSnowball4,
 
 
-        [Purchaseable]
+        [TextVisible]
         [Repeatable]
         [ItemName("Silver Rupee"), LocationName("Zora Cape Jar Game"), Region(Region.ZoraCape)]
         [GossipLocationHint("an ocean game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -10075,7 +10091,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableZoraCapeJarGame1,
 
 
-        [Visible]
+        [TextVisible]
         [Repeatable]
         [ItemName("Crimson Rupee"), LocationName("Ikana Graveyard Day 2 Bats"), Region(Region.IkanaGraveyard)]
         [GossipLocationHint("a swarm of bats"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -10086,7 +10102,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaGraveyardDay2Bats1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Cucco Shack Potted Plant"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a potted plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
@@ -10096,7 +10112,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableCuccoShackPottedPlant1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE73, 0x01)]
         [ItemName("Odolwa's Remains"), LocationName("Woodfall Boss Warp"), Region(AreaOdolwasLair)]
         [GossipLocationHint("a masked evil"), GossipItemHint("an evil mask")]
@@ -10106,7 +10122,7 @@ namespace MMR.Randomizer.GameObjects
         RemainsOdolwa,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE73, 0x02)]
         [ItemName("Goht's Remains"), LocationName("Snowhead Boss Warp"), Region(AreaGohtsLair)]
         [GossipLocationHint("a masked evil"), GossipItemHint("an evil mask")]
@@ -10116,7 +10132,7 @@ namespace MMR.Randomizer.GameObjects
         RemainsGoht,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE73, 0x04)]
         [ItemName("Gyorg's Remains"), LocationName("Great Bay Boss Warp"), Region(AreaGyorgsLair)]
         [GossipLocationHint("a masked evil"), GossipItemHint("an evil mask")]
@@ -10126,7 +10142,7 @@ namespace MMR.Randomizer.GameObjects
         RemainsGyorg,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE73, 0x08)]
         [ItemName("Twinmold's Remains"), LocationName("Stone Tower Boss Warp"), Region(AreaTwinmoldsLair)]
         [GossipLocationHint("a masked evil"), GossipItemHint("an evil mask")]
@@ -10547,7 +10563,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ItemName("Notebook: Kamaro's Mask"), LocationName("Kamaro"), Region(Region.TerminaField)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Bombers.", isDefinite: true)]
+        [ShopText("The Bombers' Notebook entry for healing Kamaro.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x483), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPromiseKamaro,
@@ -10555,7 +10571,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ItemName("Notebook: Stone Mask"), LocationName("Invisible Soldier"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Bombers.", isDefinite: true)]
+        [ShopText("The Bombers' Notebook entry for the invisible soldier.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x484), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookSaveInvisibleSoldier,
@@ -10563,12 +10579,12 @@ namespace MMR.Randomizer.GameObjects
 
         [ItemName("Notebook: Bremen Mask"), LocationName("Guru-Guru"), Region(Region.LaundryPool)]
         [GossipLocationHint("a musician", "an entertainer"), GossipItemHint("a diary entry")]
-        [ShopText("The Bombers' Notebook entry for meeting the Bombers.", isDefinite: true)]
+        [ShopText("The Bombers' Notebook entry for listening to Guru-Guru.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x485), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookGuruGuru,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Ikana Castle Courtyard Pot"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a winged friend", "a healer")]
@@ -10578,7 +10594,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAncientCastleOfIkanaCastleExteriorPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Ikana Castle Hole Room Pot 3"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a winged friend", "a healer")]
@@ -10588,7 +10604,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAncientCastleOfIkanaHoleRoomPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Ikana Castle Hole Room Pot 4"), Region(Region.IkanaCastle)]
         [GossipLocationHint("an ancient jar"), GossipItemHint("a winged friend", "a healer")]
@@ -10598,7 +10614,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableAncientCastleOfIkanaHoleRoomPot4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Great Bay Coast Pot 8"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("an ocean jar"), GossipItemHint("a winged friend", "a healer")]
@@ -10608,7 +10624,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastPot11,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Great Bay Temple Entrance Room Barrel"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("a winged friend", "a healer")]
@@ -10618,7 +10634,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayTempleEntranceRoomBarrel1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Ikana Canyon Cleared Grass 4"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("an ancient plant"), GossipItemHint("a winged friend", "a healer")]
@@ -10628,7 +10644,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaCanyonMainAreaGrass7,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Ikana Canyon Grass 4"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("an ancient plant"), GossipItemHint("a winged friend", "a healer")]
@@ -10638,7 +10654,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaCanyonMainAreaGrass8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Milk Road Grass 3"), Region(Region.MilkRoad)]
         [GossipLocationHint("a roadside plant"), GossipItemHint("a winged friend", "a healer")]
@@ -10648,7 +10664,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMilkRoadGrass3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Mountain Village Spring Pot"), Region(Region.MountainVillage)]
         [GossipLocationHint("a spring jar"), GossipItemHint("a winged friend", "a healer")]
@@ -10658,7 +10674,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Mountain Village Spring Snowball 4"), Region(Region.MountainVillage)]
         [GossipLocationHint("a spring snowball"), GossipItemHint("a winged friend", "a healer")]
@@ -10668,7 +10684,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringSmallSnowball4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Mountain Village Winter Pot"), Region(Region.MountainVillage)]
         [GossipLocationHint("a village jar"), GossipItemHint("a winged friend", "a healer")]
@@ -10678,7 +10694,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Mountain Village Winter Small Snowball 6"), Region(Region.MountainVillage)]
         [GossipLocationHint("a village snowball"), GossipItemHint("a winged friend", "a healer")]
@@ -10688,7 +10704,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterSmallSnowball8,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Road to Ikana Pot"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a jar on a rock"), GossipItemHint("a winged friend", "a healer")]
@@ -10698,7 +10714,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRoadToIkanaPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Secret Shrine Underwater Pot 5"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("a winged friend", "a healer")]
@@ -10709,17 +10725,17 @@ namespace MMR.Randomizer.GameObjects
 
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Snowhead Small Snowball 4"), Region(Region.Snowhead)]
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a winged friend", "a healer")]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x494), ItemPool(ItemCategory.Fairy, LocationCategory.SmallSnowballs, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2E22)]
+        [GetItemIndex(0x494), ItemPool(ItemCategory.Fairy, LocationCategory.SmallSnowballs, ClassicCategory.FixedMinorItemDrops), CollectableIndex(0x2E22), CollectableIndex(0x3921)]
         CollectableSnowheadSmallSnowball10,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Snowhead Main Room Pot"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("a winged friend", "a healer")]
@@ -10729,7 +10745,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSnowheadTempleMainRoomPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Cleared Swamp Owl Grass 2"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("swamp grass"), GossipItemHint("a winged friend", "a healer")]
@@ -10739,7 +10755,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthernSwampClearCentralSwampGrass2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Southern Swamp Owl Grass 2"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("swamp grass"), GossipItemHint("a winged friend", "a healer")]
@@ -10749,7 +10765,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthernSwampPoisonedCentralSwampGrass2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Stone Tower Lower Scarecrow Pot 4"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a winged friend", "a healer")]
@@ -10759,7 +10775,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot11,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Stone Tower Lower Scarecrow Pot 5"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a winged friend", "a healer")]
@@ -10769,7 +10785,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot12,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Stone Tower Upper Scarecrow Pot 5"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a winged friend", "a healer")]
@@ -10779,7 +10795,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot13,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Stone Tower Owl Pot 4"), Region(Region.StoneTower)]
         [GossipLocationHint("a high tower"), GossipItemHint("a winged friend", "a healer")]
@@ -10789,7 +10805,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerPot14,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Inverted Stone Tower Pot 3"), Region(Region.StoneTower)]
         [GossipLocationHint("a sky below"), GossipItemHint("a winged friend", "a healer")]
@@ -10804,7 +10820,7 @@ namespace MMR.Randomizer.GameObjects
         // [GetItemIndex(0x49E)] // Removed
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Stone Tower Temple Wizzrobe Pot"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a winged friend", "a healer")]
@@ -10814,7 +10830,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableStoneTowerTempleInvertedWizzrobeRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Termina Field Pillar Pot"), Region(Region.TerminaField)]
         [GossipLocationHint("a jar on a pillar"), GossipItemHint("a winged friend", "a healer")]
@@ -10824,7 +10840,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Woodfall Pot 3"), Region(Region.Woodfall)]
         [GossipLocationHint("a poisoned platform"), GossipItemHint("a winged friend", "a healer")]
@@ -10834,7 +10850,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallPot3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Woodfall Temple Entrance Pot"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("a winged friend", "a healer")]
@@ -10844,7 +10860,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableWoodfallTempleEntranceRoomPot1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Zora Cape Owl Pot 4"), Region(Region.ZoraCape)]
         [GossipLocationHint("a cape jar"), GossipItemHint("a winged friend", "a healer")]
@@ -10855,7 +10871,7 @@ namespace MMR.Randomizer.GameObjects
 
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Cucco Shack Gossip Fairy"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10865,7 +10881,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableCuccoShackGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Doggy Racetrack Gossip Fairy"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10875,7 +10891,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableDoggyRacetrackGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Great Bay Coast Gossip Fairy"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10885,7 +10901,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Gossip Grotto Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10895,7 +10911,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGrottosOceanGossipStonesGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Ikana Canyon Dock Gossip Fairy"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10905,7 +10921,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaCanyonMainAreaGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Ikana Canyon Spirit House Gossip Fairy"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10915,7 +10931,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaCanyonMainAreaGossipFairy2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Ikana Canyon Ravine Gossip Fairy"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10925,7 +10941,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableIkanaCanyonSakonSHideoutAreaGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Milk Road Gossip Fairy"), Region(Region.MilkRoad)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10935,7 +10951,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMilkRoadGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Mountain Village Spring Path Gossip Fairy"), Region(Region.MountainVillage)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10945,7 +10961,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringPathToGoronGraveyardGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Mountain Village Spring Frog Gossip Fairy"), Region(Region.MountainVillage)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10955,7 +10971,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageSpringGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Path to Mountain Village Gossip Fairy"), Region(Region.PathToMountainVillage)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10965,7 +10981,7 @@ namespace MMR.Randomizer.GameObjects
         CollectablePathToMountainVillageGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Road to Ikana Gossip Fairy"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10975,7 +10991,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRoadToIkanaGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Road to Southern Swamp Gossip Fairy"), Region(Region.RoadToSouthernSwamp)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10985,7 +11001,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRoadToSouthernSwampGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Ranch Entrance Gossip Fairy"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -10995,7 +11011,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRomaniRanchGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Ranch Tree Gossip Fairy"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11005,7 +11021,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRomaniRanchGossipFairy2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Ranch Barn Gossip Fairy"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11015,7 +11031,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableRomaniRanchGossipFairy3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Southern Swamp Gossip Fairy"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11025,7 +11041,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Swamp Spider House Gossip Fairy"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11035,7 +11051,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableSwampSpiderHouseTreeRoomGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Termina Field Observatory Gossip Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11045,7 +11061,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Termina Field East Gossip Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11055,7 +11071,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGossipFairy2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Termina Field South Gossip Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11065,7 +11081,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGossipFairy3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Termina Field North Gossip Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11075,7 +11091,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGossipFairy4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Termina Field West Gossip Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11085,7 +11101,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGossipFairy5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Termina Field Milk Gossip Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11095,7 +11111,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTerminaFieldGossipFairy6,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Deku Trial Left Closer Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11105,7 +11121,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonDekuTrialDekuTrialGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Deku Trial Right Closer Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11115,7 +11131,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonDekuTrialDekuTrialGossipFairy2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Deku Trial Left Middle Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11125,7 +11141,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonDekuTrialDekuTrialGossipFairy3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Deku Trial Right Middle Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11135,7 +11151,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonDekuTrialDekuTrialGossipFairy4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Deku Trial Right Further Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11145,7 +11161,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonDekuTrialDekuTrialGossipFairy5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Goron Trial End Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11155,7 +11171,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonGoronTrialGoronTrialGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Goron Trial Second Set Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11165,7 +11181,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonGoronTrialGoronTrialGossipFairy2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Goron Trial Second Set Gossip Fairy 2"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11175,7 +11191,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonGoronTrialGoronTrialGossipFairy3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Goron Trial First Set Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11185,7 +11201,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonGoronTrialGoronTrialGossipFairy4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Goron Trial First Set Gossip Fairy 2"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11195,7 +11211,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonGoronTrialGoronTrialGossipFairy5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Link Trial First Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11205,7 +11221,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonLinkTrialGossipStoneRoom1GossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Link Trial Second Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11215,7 +11231,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonLinkTrialGossipStoneRoom2GossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Link Trial Iron Knuckle Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11225,7 +11241,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonLinkTrialIronKnuckleBattleGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Link Trial Iron Knuckle Fairy 2"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11235,7 +11251,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonLinkTrialIronKnuckleBattleGossipFairy2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Link Trial Last Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11245,7 +11261,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonLinkTrialPieceOfHeartRoomGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11255,7 +11271,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonZoraTrialZoraTrialGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy 2"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11265,7 +11281,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonZoraTrialZoraTrialGossipFairy2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy 3"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11275,7 +11291,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonZoraTrialZoraTrialGossipFairy3,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy 4"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11285,7 +11301,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonZoraTrialZoraTrialGossipFairy4,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Zora Trial Gossip Fairy 5"), Region(Region.TheMoon)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11295,7 +11311,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableTheMoonZoraTrialZoraTrialGossipFairy5,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Zora Cape Gossip Fairy"), Region(Region.ZoraCape)]
         [GossipLocationHint("a summoning"), GossipItemHint("a winged friend", "a healer")]
@@ -11305,7 +11321,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableZoraCapeGossipFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Great Bay Coast Butterfly Fairy"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
@@ -11315,7 +11331,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGreatBayCoastButterflyFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Termina Field West Gossip Grotto Butterfly Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
@@ -11325,7 +11341,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGrottosOceanGossipStonesButterflyFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Bean Man Butterfly Fairy"), Region(Region.DekuPalace)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
@@ -11335,7 +11351,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Termina Field Cow Grotto Butterfly Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
@@ -11345,7 +11361,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGrottosCowGrottoButterflyFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Great Bay Coast Cow Grotto Butterfly Fairy"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
@@ -11355,7 +11371,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableGrottosCowGrottoButterflyFairy2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Mountain Village Spring Butterfly Fairy"), Region(Region.MountainVillage)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
@@ -11365,7 +11381,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Mountain Village Spring Butterfly Fairy 2"), Region(Region.MountainVillage)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
@@ -11375,7 +11391,7 @@ namespace MMR.Randomizer.GameObjects
         CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Near Peahat Grotto Butterfly Fairy"), Region(Region.TerminaField)]
         [GossipLocationHint("a transformation"), GossipItemHint("a winged friend", "a healer")]
@@ -11421,7 +11437,7 @@ namespace MMR.Randomizer.GameObjects
         FrogLaundryPool,
 
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 1"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
@@ -11430,7 +11446,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x4D9), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy1,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 2"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
@@ -11439,7 +11455,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x4DA), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy2,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 3"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
@@ -11448,7 +11464,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x4DB), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy3,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 4"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
@@ -11457,7 +11473,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x4DC), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy4,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 5"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
@@ -11466,7 +11482,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x4DD), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy5,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 6"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
@@ -11475,7 +11491,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x4DE), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy6,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 7"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]
@@ -11484,7 +11500,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x4DF), ItemPool(ItemCategory.Fairy, LocationCategory.Fairies, ClassicCategory.Fairies), NullableItem]
         CollectableWellFountainFairy7,
 
-        [Visible]
+        [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [Repeatable]
         [ItemName("Fairy"), LocationName("Well Fountain Fairy 8"), Region(Region.BeneathTheWell)]
         [GossipLocationHint("a fountain"), GossipItemHint("a winged friend", "a healer")]

@@ -2,7 +2,8 @@
 
 namespace MMR.Randomizer.Attributes
 {
-    public class VisibleAttribute : Attribute
+    public class ShopModelVisibleAttribute : Attribute
     {
+
     }
 }

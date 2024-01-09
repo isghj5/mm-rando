@@ -661,27 +661,21 @@ void Models_RotateScopecoin(Actor* actor, GlobalContext* ctxt) {
 }
 
 bool Models_DrawScRuppe(ActorEnScRuppe* actor, GlobalContext* ctxt) {
-    // if receiving item
-    if (actor->disappearCountdown == 1 && Rupee_GetGiIndex(&actor->base) > 0) {
-        Player_Pause(ctxt);
-    }
-
     if (MISC_CONFIG.drawFlags.freestanding) {
         u16 giIndex = Rupee_GetGiIndex(&actor->base);
-        u16 giIndexToDraw = Rupee_GetDrawGiIndex(&actor->base);
-        if (giIndex > 0 || giIndexToDraw > 0) {
-            // if not receiving item
-            if (actor->base.gravity != 0) {
-                giIndexToDraw = MMR_GetNewGiIndex(ctxt, 0, giIndex, false);
-                Rupee_SetDrawGiIndex(&actor->base, giIndexToDraw);
-            }
+        if (giIndex > 0) {
+            u16 drawGiIndex = MMR_GetNewGiIndex(ctxt, 0, giIndex, false);
+            Rupee_SetDrawGiIndex(&actor->base, drawGiIndex);
+        }
 
-            // TODO render rupees as rupees?
+        u16 giIndexToDraw = Rupee_GetDrawGiIndex(&actor->base);
+        if (giIndexToDraw > 0) {
             struct Model model;
             GetItemEntry* entry = PrepareGiEntry(&model, ctxt, giIndexToDraw, false);
 
             z2_CallSetupDList(ctxt->state.gfxCtx);
             DrawModel(model, &actor->base, ctxt, 25.0);
+
             return true;
         }
     }
@@ -702,27 +696,21 @@ void Models_RotateScRuppe(Actor* actor, GlobalContext* ctxt) {
 }
 
 bool Models_DrawDekuScrubPlaygroundRupee(ActorEnGamelupy* actor, GlobalContext* ctxt) {
-    // if receiving item
-    if (actor->disappearCountdown == 1 && Rupee_GetGiIndex(&actor->base) > 0) {
-        Player_Pause(ctxt);
-    }
-
     if (MISC_CONFIG.drawFlags.freestanding) {
         u16 giIndex = Rupee_GetGiIndex(&actor->base);
-        u16 giIndexToDraw = Rupee_GetDrawGiIndex(&actor->base);
-        if (giIndex > 0 || giIndexToDraw > 0) {
-            // if not receiving item
-            if (actor->base.gravity != 0) {
-                giIndexToDraw = MMR_GetNewGiIndex(ctxt, 0, giIndex, false);
-                Rupee_SetDrawGiIndex(&actor->base, giIndexToDraw);
-            }
+        if (giIndex > 0) {
+            u16 drawGiIndex = MMR_GetNewGiIndex(ctxt, 0, giIndex, false);
+            Rupee_SetDrawGiIndex(&actor->base, drawGiIndex);
+        }
 
-            // TODO render rupees as rupees?
+        u16 giIndexToDraw = Rupee_GetDrawGiIndex(&actor->base);
+        if (giIndexToDraw > 0) {
             struct Model model;
             GetItemEntry* entry = PrepareGiEntry(&model, ctxt, giIndexToDraw, false);
 
             z2_CallSetupDList(ctxt->state.gfxCtx);
             DrawModel(model, &actor->base, ctxt, 25.0);
+
             return true;
         }
     }

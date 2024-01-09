@@ -321,6 +321,7 @@ namespace MMR.Randomizer.Utils
                     if (cap > 0)
                     {
                         var groupedLocations = tier
+                            .Where(location => !IsLocationJunk(location, settings))
                             .GroupBy(location => ItemCombinableHints.GetValueOrDefault(location).name ?? location.ToString())
                             .ToList();
                         var numberOfLocationsToJunk = groupedLocations.Count - cap;
@@ -505,6 +506,10 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult, bool anythingCanBeRequired = false)
         {
+            if (anythingCanBeRequired && randomizedResult.RequiredSongLocations?.Contains(locationForImportance) == true)
+            {
+                return true;
+            }
             return (anythingCanBeRequired || (CanBeRequired(item) && !IsItemHinted(item, randomizedResult.Settings))) && randomizedResult.LocationsRequiredForMoonAccess?.Contains(locationForImportance) == true;
         }
 
@@ -585,15 +590,15 @@ namespace MMR.Randomizer.Utils
             {
                 "Deku Playground", new List<Item>
                 {
-                    Item.HeartPieceDekuPlayground,
                     Item.MundaneItemDekuPlaygroundPurpleRupee,
+                    Item.HeartPieceDekuPlayground,
                 }.AsReadOnly()
             },
             {
                 "Honey and Darling", new List<Item>
                 {
-                    Item.HeartPieceHoneyAndDarling,
                     Item.MundaneItemHoneyAndDarlingPurpleRupee,
+                    Item.HeartPieceHoneyAndDarling,
                 }.AsReadOnly()
             },
             {

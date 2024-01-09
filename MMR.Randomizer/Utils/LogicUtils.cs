@@ -130,7 +130,7 @@ namespace MMR.Randomizer.Utils
         {
             public ReadOnlyCollection<Item> Required { get; set; }
             public ReadOnlyCollection<Item> Important { get; set; }
-            public ReadOnlyCollection<Item> ImportantSongLocations { get; set; }
+            public ReadOnlyCollection<Item> RequiredSongLocations { get; set; }
         }
 
         public static void Simplify<T>(List<T> logicPaths) where T : IEnumerable<Item>
@@ -183,17 +183,18 @@ namespace MMR.Randomizer.Utils
             {
                 return null;
             }
+            var requiredSongLocations = new List<Item>();
             if (exclude.Contains(location))
             {
-                if (!location.IsPlacementHighlyRestricted(settings) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !i.IsPlacementHighlyRestricted(settings)))
+                if (!location.IsPlacementHighlyRestricted(settings))
                 {
                     return null;
                 }
-            }
-            var importantSongLocations = new List<Item>();
-            if (!settings.AddSongs && location.IsSong() && logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item)))
-            {
-                importantSongLocations.Add(location);
+                requiredSongLocations.Add(location);
+                if (logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !i.IsPlacementHighlyRestricted(settings)))
+                {
+                    return null;
+                }
             }
             logicPath.Add(location);
             if (checkedLocations == null)
@@ -246,9 +247,9 @@ namespace MMR.Randomizer.Utils
                     {
                         important.AddRange(childPaths.Important);
                     }
-                    if (childPaths.ImportantSongLocations != null)
+                    if (childPaths.RequiredSongLocations != null)
                     {
-                        importantSongLocations.AddRange(childPaths.ImportantSongLocations);
+                        requiredSongLocations.AddRange(childPaths.RequiredSongLocations);
                     }
                 }
             }
@@ -264,7 +265,7 @@ namespace MMR.Randomizer.Utils
 
                     var conditionalRequired = new List<Item>();
                     var conditionalImportant = new List<Item>();
-                    var conditionalImportantSongLocations = new List<Item>();
+                    var conditionalRequiredSongLocations = new List<Item>();
                     foreach (var conditionalItemId in conditions.Cast<Item>())
                     {
                         if (itemList[conditionalItemId].Item != conditionalItemId)
@@ -295,9 +296,9 @@ namespace MMR.Randomizer.Utils
                         {
                             conditionalImportant.AddRange(childPaths.Important);
                         }
-                        if (childPaths.ImportantSongLocations != null)
+                        if (childPaths.RequiredSongLocations != null)
                         {
-                            conditionalImportantSongLocations.AddRange(childPaths.ImportantSongLocations);
+                            conditionalRequiredSongLocations.AddRange(childPaths.RequiredSongLocations);
                         }
                     }
 
@@ -307,7 +308,7 @@ namespace MMR.Randomizer.Utils
                         {
                             Required = conditionalRequired.AsReadOnly(),
                             Important = conditionalImportant.AsReadOnly(),
-                            ImportantSongLocations = conditionalImportantSongLocations.AsReadOnly()
+                            RequiredSongLocations = conditionalRequiredSongLocations.AsReadOnly()
                         });
                     }
                 }
@@ -320,13 +321,13 @@ namespace MMR.Randomizer.Utils
 
                 required.AddRange(logicPaths.Select(lp => lp.Required.AsEnumerable()).Aggregate((a, b) => a.Intersect(b)));
                 important.AddRange(logicPaths.SelectMany(lp => lp.Required.Union(lp.Important)).Distinct());
-                importantSongLocations.AddRange(logicPaths.SelectMany(lp => lp.ImportantSongLocations).Distinct());
+                requiredSongLocations.AddRange(logicPaths.SelectMany(lp => lp.RequiredSongLocations).Distinct());
             }
             var result = new LogicPaths
             {
                 Required = required.Distinct().ToList().AsReadOnly(),
                 Important = important.Union(required).Distinct().ToList().AsReadOnly(),
-                ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly()
+                RequiredSongLocations = requiredSongLocations.Distinct().ToList().AsReadOnly()
             };
             if (location.Region(itemList).HasValue && location.Entrance() == null)
             {

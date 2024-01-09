@@ -596,17 +596,13 @@
           "Use Light Arrow"
         ],
         [
-          "MaskGibdo",
-          "BottleCatchBigPoe",
-          "Any Milk",
-          "SettingClimbMostSurfaces",
-          "Out of Bounds",
-          "MaskDeku"
-        ],
-        [
-          "Out of Bounds",
           "Reverse Well With Climbing",
           "Use Fire Arrow"
+        ],
+        [
+          "Reverse Well With Climbing",
+          "BottleCatchBigPoe",
+          "Any Milk"
         ]
       ],
       "TimeNeeded": "None",
@@ -2083,15 +2079,12 @@
           "Any B Sword"
         ],
         [
-          "Out of Bounds",
           "FD Jump into Ranch"
         ],
         [
-          "Out of Bounds",
           "Climb Into Romani Ranch"
         ],
         [
-          "Out of Bounds",
           "Hookshot into Ranch"
         ]
       ],
@@ -2211,8 +2204,7 @@
           "Ikana Canyon Access as FD"
         ],
         [
-          "Garo Mask Skip",
-          "Out of Bounds"
+          "Garo Mask Skip"
         ]
       ],
       "TimeNeeded": "None",
@@ -3705,12 +3697,10 @@
           "ItemHookshot"
         ],
         [
-          "Pirates' Fortress Upper Chest as Goron",
-          "Out of Bounds"
+          "Pirates' Fortress Upper Chest as Goron"
         ],
         [
-          "Pirates' Fortress Upper Chest as FD",
-          "Out of Bounds"
+          "Pirates' Fortress Upper Chest as FD"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -4100,6 +4090,9 @@
         ],
         [
           "Doggy Racetrack Chest With Jump Slash"
+        ],
+        [
+          "Doggy Racetrack Chest With Nothing"
         ]
       ],
       "TimeNeeded": "None",
@@ -10415,7 +10408,8 @@
           "SettingClimbMostSurfaces"
         ],
         [
-          "SettingGiantMaskAnywhere"
+          "SettingGiantMaskAnywhere",
+          "SettingNotCharacterAdultLink"
         ]
       ],
       "TimeNeeded": "None",
@@ -17033,6 +17027,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17052,6 +17049,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17071,6 +17071,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17090,6 +17093,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17109,6 +17115,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17128,6 +17137,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17143,7 +17155,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground as Goron"
+          "Deku Playground with Goron Spikes"
         ]
       ],
       "TimeNeeded": "None",
@@ -17159,7 +17171,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground as Goron"
+          "Deku Playground with Goron Spikes"
         ]
       ],
       "TimeNeeded": "None",
@@ -17175,7 +17187,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground as Goron"
+          "Deku Playground with Goron Spikes"
         ]
       ],
       "TimeNeeded": "None",
@@ -17191,7 +17203,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground as Goron"
+          "Deku Playground with Goron Spikes"
         ]
       ],
       "TimeNeeded": "None",
@@ -17207,12 +17219,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground as Goron",
-          "MaskDeku"
-        ],
-        [
-          "Deku Playground as Goron",
-          "Deku Playground as FD"
+          "Deku Playground with Goron Spikes"
         ]
       ],
       "TimeNeeded": "None",
@@ -17228,12 +17235,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground as Goron",
-          "MaskDeku"
-        ],
-        [
-          "Deku Playground as Goron",
-          "Deku Playground as FD"
+          "Deku Playground with Goron Spikes"
         ]
       ],
       "TimeNeeded": "None",
@@ -17253,6 +17255,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17272,6 +17277,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17288,6 +17296,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17304,6 +17315,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17323,6 +17337,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -17342,6 +17359,9 @@
         ],
         [
           "Deku Playground as FD"
+        ],
+        [
+          "Deku Playground as Goron"
         ]
       ],
       "TimeNeeded": "None",
@@ -21855,8 +21875,7 @@
           "Swamp Tingle as FD"
         ],
         [
-          "Swamp Tingle With Climbing",
-          "Out of Bounds"
+          "Swamp Tingle With Climbing"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -21877,6 +21896,9 @@
         ],
         [
           "Ranch Tingle as FD"
+        ],
+        [
+          "Ranch Tingle With Sword Beams"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -21941,6 +21963,9 @@
         ],
         [
           "Ranch Tingle as FD"
+        ],
+        [
+          "Ranch Tingle With Sword Beams"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -23987,16 +24012,17 @@
       "TrickCategory": "Woodfall"
     },
     {
-      "Id": "WFT 2nd Floor Skip",
+      "Id": "WFT 2nd Floor With Hookshot",
       "RequiredItems": [
-        "ItemHookshot"
+        "ItemHookshot",
+        "SettingDamageModeDefault"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Hookshot to the torch in the main room.",
+      "TrickTooltip": "Hookshot the torch on the right side of the main room, and jump up.",
       "TrickCategory": "Woodfall Temple"
     },
     {
@@ -24070,28 +24096,6 @@
       "IsTrick": true,
       "TrickTooltip": "With Zora Mask, Adult Link, or Fierce Deity, get through the bridge room and the Goron Pound switch room with some platforming.",
       "TrickCategory": "Snowhead Temple"
-    },
-    {
-      "Id": "Ranch Tingle as FD",
-      "RequiredItems": [
-        "SettingAllowFierceDeityAnywhere"
-      ],
-      "ConditionalItems": [
-        [
-          "Out of Bounds"
-        ],
-        [
-          "Magic Meter",
-          "Any Bomb Bag",
-          "Any Bombchu Pack"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Either jump slash Tingle's balloon after jumping from a nearby \"Out of Bounds\" ledge, or use a Sword Beam angled from targeting a Bombchu to pop his balloon.",
-      "TrickCategory": "Milk Road"
     },
     {
       "Id": "Bowless Aliens",
@@ -24391,7 +24395,7 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Tooltip missing!",
+      "TrickTooltip": "Hookshot your way across the trial. To get to the door, hookshot from the moving platform.",
       "TrickCategory": "The Moon"
     },
     {
@@ -24465,14 +24469,14 @@
       "TrickCategory": "The Moon"
     },
     {
-      "Id": "Out of Bounds",
+      "Id": "Termina Stump with No Items",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Enable tricks that involve being exposed to the global void plane, specifically in Milk Road and Pirates' Fortress Interior.",
+      "TrickTooltip": "Slowly walk up the seam of the stump.",
       "TrickCategory": "Racing Banned Tricks"
     },
     {
@@ -24735,14 +24739,16 @@
       "TrickCategory": "Snowhead Temple"
     },
     {
-      "Id": "Termina Stump with No Items",
-      "RequiredItems": [],
+      "Id": "Ranch Tingle as FD",
+      "RequiredItems": [
+        "SettingAllowFierceDeityAnywhere"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Slowly walk up the seam of the stump.",
+      "TrickTooltip": "Climb the \"Out of Bounds\" ledge near the sign to Romani Ranch, and take Tingle down with a jump and a Jump Slash.",
       "TrickCategory": "Racing Banned Tricks"
     },
     {
@@ -25391,7 +25397,6 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "OtherArrow",
           "Any Sword"
         ],
         [
@@ -25450,6 +25455,11 @@
         ],
         [
           "GBT Gyorg as Goron"
+        ],
+        [
+          "SettingCharacterAdultLink",
+          "SettingGiantMaskAnywhere",
+          "Any B Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -28140,12 +28150,10 @@
           "Goron Racetrack Access as Giant"
         ],
         [
-          "Goron Racetrack Access as FD",
-          "Out of Bounds"
+          "Goron Racetrack Access as FD"
         ],
         [
-          "Goron Racetrack Access With Hookshot/Climb Anywhere",
-          "Out of Bounds"
+          "Goron Racetrack Access With Hookshot/Climb Anywhere"
         ],
         [
           "SettingGiantMaskAnywhere",
@@ -28889,7 +28897,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Climb through the boulder in Milk Road with the Climb Most Surfaces gimmick.",
-      "TrickCategory": "Milk Road"
+      "TrickCategory": "Racing Banned Tricks"
     },
     {
       "Id": "FD Jump into Ranch",
@@ -28903,7 +28911,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Jump over the boulder in Milk Road as Fierce Deity. You can climb on some of the terrain near Tingle.",
-      "TrickCategory": "Milk Road"
+      "TrickCategory": "Racing Banned Tricks"
     },
     {
       "Id": "Hookshot into Ranch",
@@ -28916,7 +28924,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Hookshot into Ranch with the gimmick Hookshot Any Surface.",
-      "TrickCategory": "Milk Road"
+      "TrickCategory": "Racing Banned Tricks"
     },
     {
       "Id": "Ikana Canyon Access as FD",
@@ -29504,7 +29512,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Enter the Well from Ikana Castle with Deku Mask and the Climb Most Surfaces gimmick.",
-      "TrickCategory": "Beneath the Well"
+      "TrickCategory": "Racing Banned Tricks"
     },
     {
       "Id": "Inn Balcony With Bombs",
@@ -29632,7 +29640,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Bug limit Ikana access with a Goron damage boost, a lot of slope climbing, and a recoil flip.",
-      "TrickCategory": "Road to Ikana"
+      "TrickCategory": "Racing Banned Tricks"
     },
     {
       "Id": "Climb Stone Tower as FD",
@@ -29941,7 +29949,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Roll along the slope on the side as Goron to get to the upper chest in Pirates' Fortress Interior.",
-      "TrickCategory": "Pirates' Fortress"
+      "TrickCategory": "Racing Banned Tricks"
     },
     {
       "Id": "Pirates' Fortress Upper Chest as FD",
@@ -29954,7 +29962,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Jump along the slope to the side as Fierce Deity to get to the upper chest in Pirates' Fortress Interior.",
-      "TrickCategory": "Pirates' Fortress"
+      "TrickCategory": "Racing Banned Tricks"
     },
     {
       "Id": "Hookshot Room Skull Flag Rupees With Zora Boomerangs",
@@ -30064,6 +30072,7 @@
       "Id": "Stone Tower Bean Chests as Giant",
       "RequiredItems": [
         "SettingGiantMaskAnywhere",
+        "SettingNotCharacterAdultLink",
         "Any B Sword"
       ],
       "ConditionalItems": [],
@@ -30071,7 +30080,7 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Jump slash to the bean chests as Giant Link, then quickly take the Giant's Mask off",
+      "TrickTooltip": "Jump slash to the bean chests as Giant Link.",
       "TrickCategory": "Stone Tower"
     },
     {
@@ -30333,7 +30342,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Long jump onto some grabbable terrain as Fierce Deity, then navigate the terrain to sidehop into the racetrack loading zone from above.",
-      "TrickCategory": "Twin Islands"
+      "TrickCategory": "Racing Banned Tricks"
     },
     {
       "Id": "Goron Racetrack Access With Hookshot/Climb Anywhere",
@@ -30351,7 +30360,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Get above the giant boulder in front of the Goron Racetrack, and sidehop into the loading zone.",
-      "TrickCategory": "Twin Islands"
+      "TrickCategory": "Racing Banned Tricks"
     },
     {
       "Id": "Near Frog Hive Flower as Human",
@@ -30450,11 +30459,24 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Jump to the items as Fierce Deity.",
+      "TrickTooltip": "Get on top of the platforms in the Deku Playground during Day 2 or 3 with a well timed jump as Fierce Deity.",
       "TrickCategory": "North Clock Town"
     },
     {
       "Id": "Deku Playground as Goron",
+      "RequiredItems": [
+        "MaskGoron"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Get on top of the platforms in the Deku Playground during Day 2 or 3 with a well timed roll as Goron.",
+      "TrickCategory": "North Clock Town"
+    },
+    {
+      "Id": "Deku Playground with Goron Spikes",
       "RequiredItems": [
         "Goron Spikes"
       ],
@@ -30813,7 +30835,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Climb up the wall near Tingle with the Climb Most Surfaces gimmick to get in range for a jump slash take down.",
-      "TrickCategory": "Road to Southern Swamp"
+      "TrickCategory": "Racing Banned Tricks"
     },
     {
       "Id": "Zora Cape Recoil Flip",
@@ -30960,20 +30982,6 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Above the main room, perform a jump slash recoil through one of the holes to obtain access to the main room's 2nd floor.",
-      "TrickCategory": "Woodfall Temple"
-    },
-    {
-      "Id": "WFT 2nd Floor With Hookshot",
-      "RequiredItems": [
-        "ItemHookshot",
-        "SettingDamageModeDefault"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Hookshot the torch on the right side of the main room, and jump up.",
       "TrickCategory": "Woodfall Temple"
     },
     {
@@ -32441,7 +32449,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Damage boost off a nearby Bad Bat as Goron to get on top of the stump.",
-      "TrickCategory": "Termina Field"
+      "TrickCategory": "PROCEED WITH CAUTION"
     },
     {
       "Id": "STT Elegy Maze Climb",
@@ -34150,7 +34158,9 @@
     },
     {
       "Id": "Underwater Chest as Giant",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "SettingGiantMaskAnywhere"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -34311,6 +34321,31 @@
       "IsTrick": true,
       "TrickTooltip": "Long Jump to the first crystal switch to raise the metal gate. With Blast Mask, you can also hit the second crystal switch to activate the water elevator while simultaneously performing a Long Jump/Recoil Flip to get to the water elevator in time.",
       "TrickCategory": "Pirates' Fortress"
+    },
+    {
+      "Id": "Ranch Tingle With Sword Beams",
+      "RequiredItems": [
+        "SettingAllowFierceDeityAnywhere",
+        "Magic Meter"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Shoot a Sword Beam at Tingle's balloon as Fierce Deity Link. You can get the right angle by targeting the pickaxe guy between him and the rock, on all 3 days.",
+      "TrickCategory": "Romani Ranch"
+    },
+    {
+      "Id": "Doggy Racetrack Chest With Nothing",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Climb onto the awning with a precise jump without using a sword to Jump Slash through it.",
+      "TrickCategory": "Romani Ranch"
     }
   ]
 }

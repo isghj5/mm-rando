@@ -720,6 +720,7 @@ namespace MMR.Randomizer.Asm
         {
             { 10, new int[] { 2 } }, // ignore compass glass
             { 66, new int[] { 3, 4 } }, // ignore gold rupee glow
+            { 78, new int[] { 3 } }, // ignore stray fairy model's sprite
             { 79, new int[] { 3, 4 } }, // ignore green rupee glow
             { 80, new int[] { 3, 4 } }, // ignore blue rupee glow
             { 81, new int[] { 3, 4 } }, // ignore red rupee glow

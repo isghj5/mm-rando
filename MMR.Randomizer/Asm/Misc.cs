@@ -401,7 +401,7 @@ namespace MMR.Randomizer.Asm
         public bool VictoryTransformationMasks { get; set; }
         public bool VictoryNotebook { get;  set; }
         public bool VictoryHearts { get;  set; }
-        public bool VictoryBossRemains { get;  set; }
+        public byte VictoryBossRemainsCount { get; set; }
 
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
@@ -419,7 +419,7 @@ namespace MMR.Randomizer.Asm
             bitPacker.Write(VictoryTransformationMasks);
             bitPacker.Write(VictoryNotebook);
             bitPacker.Write(VictoryHearts);
-            bitPacker.Write(VictoryBossRemains);
+            bitPacker.Write(VictoryBossRemainsCount, 3);
             return bitPacker.ToByteArray(4);
         }
     }
@@ -483,10 +483,13 @@ namespace MMR.Randomizer.Asm
         {
             var result = new byte[MiscSmithyModel.Size * 10];
 
-            for (var i = 0; i < Models.Count; i++)
+            if (Models != null)
             {
-                var model = Models[i];
-                ReadWriteUtils.Arr_Insert(model.ToByteArray(), 0, MiscSmithyModel.Size, result, i * MiscSmithyModel.Size);
+                for (var i = 0; i < Models.Count; i++)
+                {
+                    var model = Models[i];
+                    ReadWriteUtils.Arr_Insert(model.ToByteArray(), 0, MiscSmithyModel.Size, result, i * MiscSmithyModel.Size);
+                }
             }
 
             return result;
@@ -715,7 +718,24 @@ namespace MMR.Randomizer.Asm
             this.InternalFlags.VictoryTransformationMasks = settings.VictoryMode.HasFlag(VictoryMode.TransformationMasks);
             this.InternalFlags.VictoryNotebook = settings.VictoryMode.HasFlag(VictoryMode.Notebook);
             this.InternalFlags.VictoryHearts = settings.VictoryMode.HasFlag(VictoryMode.Hearts);
-            this.InternalFlags.VictoryBossRemains = settings.VictoryMode.HasFlag(VictoryMode.BossRemains);
+            byte bossRemainsAmount = 0;
+            if (settings.VictoryMode.HasFlag(VictoryMode.FourBossRemains))
+            {
+                bossRemainsAmount = 4;
+            }
+            else if (settings.VictoryMode.HasFlag(VictoryMode.ThreeBossRemains))
+            {
+                bossRemainsAmount = 3;
+            }
+            else if (settings.VictoryMode.HasFlag(VictoryMode.TwoBossRemains))
+            {
+                bossRemainsAmount = 2;
+            }
+            else if (settings.VictoryMode.HasFlag(VictoryMode.OneBossRemains))
+            {
+                bossRemainsAmount = 1;
+            }
+            this.InternalFlags.VictoryBossRemainsCount = bossRemainsAmount;
             this.Shorts.CollectableTableFileIndex = ItemSwapUtils.COLLECTABLE_TABLE_FILE_INDEX;
             this.MMRBytes.NpcKafeiReplaceMask = MaskConfigUtils.NpcKafeiDrawMask;
         }

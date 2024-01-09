@@ -33,8 +33,17 @@ namespace MMR.Randomizer.Models
         [Description("Have all 20 hearts.")]
         Hearts = 1 << 7,
 
-        [Description("Have all the boss remain.")]
-        BossRemains = 1 << 8,
+        [Description("Have one of the boss remains. Only the highest boss remain victory condition enabled will be used.")]
+        OneBossRemains = 1 << 8,
+
+        [Description("Have two of the boss remains. Only the highest boss remain victory condition enabled will be used.")]
+        TwoBossRemains = 1 << 9,
+
+        [Description("Have three of the boss remains. Only the highest boss remain victory condition enabled will be used.")]
+        ThreeBossRemains = 1 << 10,
+
+        [Description("Have all the boss remains. Only the highest boss remain victory condition enabled will be used.")]
+        FourBossRemains = 1 << 11,
 
         // TODO MoonTrials
     }
