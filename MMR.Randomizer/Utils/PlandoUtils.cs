@@ -19,11 +19,15 @@ namespace MMR.Randomizer.Utils
         public bool SkipIfError { get; set; } = false;
     }
 
+    [System.Diagnostics.DebuggerDisplay("[{Name}]")]
     public class PlandoItemCombo : PlandoCombo
     {
         public List<Item> ItemList { get; set; }
         public List<Item> CheckList { get; set; }
+        public List<Item> CheckListInverted { get; set; }
+
         public bool SkipLogic { get; set; } = false;
+
 
         public static PlandoItemCombo Copy(PlandoItemCombo pic)
         {
@@ -32,6 +36,7 @@ namespace MMR.Randomizer.Utils
                 // to list makes a copy
                 ItemList = pic.ItemList.ToList(),
                 CheckList = pic.CheckList.ToList(),
+                CheckListInverted = (pic.CheckListInverted == null) ? null : pic.CheckListInverted.ToList(),
                 SkipLogic = pic.SkipLogic,
                 ItemDrawCount = pic.ItemDrawCount,
                 Name = pic.Name,
@@ -40,6 +45,7 @@ namespace MMR.Randomizer.Utils
         }
     }
 
+    [System.Diagnostics.DebuggerDisplay("[{Name}]")]
     public class PlandoMusicCombo : PlandoCombo
     {
         public List<string> SongsList { get; set; }
@@ -57,10 +63,10 @@ namespace MMR.Randomizer.Utils
 
     class PlandoUtils
     {
-        // read plando list(s) from file
+        /// read plando list(s) from file
         public static List<PlandoItemCombo> ReadAllItemPlandoFiles(List<Item> randomizerItemList)
         {
-            // any file with FILEName_Plando.json in the base directory is a plando file
+            // any file with FILEName_ItemPlando.json in the base directory is a plando file
             // resource folders getting nuked, cannot use, just assume base directory is best places for now
             var itemPlandoList = new List<PlandoItemCombo>();
             foreach (var filePath in Directory.GetFiles(Values.MainDirectory, "*ItemPlando.json"))
@@ -75,18 +81,37 @@ namespace MMR.Randomizer.Utils
                     // for item in workingList, get object reference from ItemList, beacuse we need to modify these later
                     foreach (PlandoItemCombo pic in workingList)
                     {
+                        
                         for (int i = 0; i < pic.ItemList.Count; i++)
                         {
-                            if (randomizerItemList.Contains(pic.ItemList[i]))
+                            Item? itemSearch = randomizerItemList.Find(u => u == pic.ItemList[i]);
+                            if (itemSearch != null)
                             {
-                                pic.ItemList[i] = randomizerItemList.Find(u => u == pic.ItemList[i]);
+                                pic.ItemList[i] = (Item) itemSearch;
                             }
                         }
-                        for (int i = 0; i < pic.CheckList.Count; i++)
+                        if (pic.CheckListInverted?.Count > 0) // inverted list
                         {
-                            if (randomizerItemList.Contains(pic.CheckList[i]))
+                            var invertedList = randomizerItemList.ToList();
+                            for (int i = 0; i < pic.CheckListInverted.Count; i++)
                             {
-                                pic.CheckList[i] = randomizerItemList.Find(u => u == pic.CheckList[i]);
+                                Item? checkSearch = randomizerItemList.Find(u => u == pic.CheckListInverted[i]);
+                                if (checkSearch != null)
+                                {
+                                    invertedList.Remove((Item) checkSearch);
+                                }
+                            }
+                            pic.CheckList = invertedList;
+                        }
+                        else // regular check list
+                        { 
+                            for (int i = 0; i < pic.CheckList.Count; i++)
+                            {
+                                Item? checkSearch = randomizerItemList.Find(u => u == pic.CheckList[i]);
+                                if (checkSearch != null)
+                                {
+                                    pic.CheckList[i] = (Item) checkSearch;
+                                }
                             }
                         }
                     }
