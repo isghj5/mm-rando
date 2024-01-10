@@ -2651,7 +2651,7 @@ namespace MMR.Randomizer
                 var itemCombo = PlandoUtils.CleanItemCombo(pic, Random, itemPool, ItemList);
                 if (itemCombo == null) // not possible to fullfill
                 {
-                    if (pic.SkipIfError) continue;
+                    if (pic.SkipIfError) continue; // TODO why is this here? shouldnt the skip be in the error handling?
 
                     // let's backtrack and find the items that are already assigned
                     //   and the checks that are already taken and print them
