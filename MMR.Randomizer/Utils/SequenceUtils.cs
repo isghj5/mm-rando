@@ -20,6 +20,7 @@ namespace MMR.Randomizer.Utils
     /// <summary>
     /// Used for reading from JSON file
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("[{Name}]")]
     public class ReplacementSongSlot
     {
         public string          Name { get; set; }
@@ -1445,7 +1446,7 @@ namespace MMR.Randomizer.Utils
             // note: there are multiple slots in the game that we cannot hear that are fanfares that could get added to this list if we need more
             // like the opening cutscene, and there are several pointed slots for clocktown we might be able to add
 
-            for (int i = 0; i < availableSlots.Count && i < replacementSongSlots.Count && RomData.PointerizedSequences.Count > 0; i++)
+            for (int i = 0; availableSlots.Count > 0 && i < replacementSongSlots.Count && RomData.PointerizedSequences.Count > 0; i++)
             {
                 ReplacementSongSlot newSongSlot = replacementSongSlots[i];
                 SequenceInfo availableSlot = availableSlots.ElementAt(0);

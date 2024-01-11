@@ -2657,7 +2657,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(313)]
         [ObjectListIndex(0x172)]
         [CheckRestricted(Scene.IkanaGraveyard, variant: ActorConst.ANY_VARIANT, Item.CollectableIkanaGraveyardDay2Bats1)]
-        [FlyingVariants(0xFF34,
+        [FlyingVariants(0xFF34, // big cluster
             0xFF02, 0xFF03, 0x0102, 0x0103, // graveyard
             0xFF01)]
         // using irrelevant switch flags to distinquish the fake perching types
