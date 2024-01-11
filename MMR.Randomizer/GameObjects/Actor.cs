@@ -4627,6 +4627,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard)]
+        [VariantsWithRoomMax(max:0, variant:0)] // silly
         GoronShrineChandelier = 0x240, // Obj_Chan
 
         [ActorizerEnabled]
