@@ -78,9 +78,11 @@ namespace MMR.Randomizer
         // outer list is item.category, inner list is items
         private static List<List<GameObjects.Item>> ActorizerKnownJunkItems { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = true;
+        private static bool ACTORSENABLED = false;
         private static Random seedrng;
         private static Models.RandomizedResult _randomized;
+        private static OutputSettings _outputSettings;
+        private static CosmeticSettings _cosmeticSettings;
 
 
         public static void PrepareEnemyLists()
@@ -657,6 +659,7 @@ namespace MMR.Randomizer
             ChangeHotwaterGrottoDekuBabaIntoSomethingElse(rng);
             ModifyFireflyKeeseForPerching();
             SplitPirateSewerMines();
+            BlockBabyGoronIfNoSFXRando();
 
             Shinanigans();
             ObjectIsItemBlocked();
@@ -2115,6 +2118,18 @@ namespace MMR.Randomizer
             sewerScene.Maps[10].Objects[5] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
         }
 
+        public static void BlockBabyGoronIfNoSFXRando()
+        {
+            /// the baby crying is very annoying and loud, do not allow
+            
+            if ( ! _cosmeticSettings.RandomizeSounds) // if not sfx rando
+            {
+                var bab = ReplacementCandidateList.Find(act => act.ActorEnum == GameObjects.Actor.GoronKid);
+                ReplacementCandidateList.Remove(bab);
+            }
+        }
+
+
         #endregion
 
         public static List<GameObjects.Actor> GetSceneFairyDroppingEnemyTypes(SceneEnemizerData thisSceneData)
@@ -3352,7 +3367,7 @@ namespace MMR.Randomizer
             }
         }
 
-        public static void SwapSceneEnemies(OutputSettings settings, Scene scene, int seed)
+        public static void SwapSceneEnemies(Scene scene, int seed)
         {
             /// randomize all enemies/actors in a single scene
 
@@ -3375,7 +3390,7 @@ namespace MMR.Randomizer
             void FlushLog()
             {
                 EnemizerLogMutex.WaitOne(); // with paralel, thread safety
-                using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename + "_EnemizerLog.txt", append: true))
+                using (StreamWriter sw = new StreamWriter(_outputSettings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write(thisSceneData.Log);
@@ -4203,12 +4218,14 @@ namespace MMR.Randomizer
 
         #endregion
 
-        public static void ShuffleEnemies(OutputSettings settings, Models.RandomizedResult randomized, int randomizedSeed)
+        public static void ShuffleEnemies(OutputSettings outputSettings, CosmeticSettings cosmeticSettings, Models.RandomizedResult randomized, int randomizedSeed)
         {
             try
             {
                 seedrng = new Random(randomizedSeed);
                 _randomized = randomized;
+                _outputSettings = outputSettings;
+                _cosmeticSettings = cosmeticSettings;
                 DateTime enemizerStartTime = DateTime.Now;
 
                 // for dingus that want moonwarp, re-enable dekupalace
@@ -4250,7 +4267,7 @@ namespace MMR.Randomizer
                 //foreach (var scene in newSceneList) // sequential for debugging only
                 // ( debugger is too stupid, if you catch a breakpoint and then tell it to move to a new location, it can catch on a _different_ thread)
                 {
-                    SwapSceneEnemies(settings, scene, seed);
+                    SwapSceneEnemies(scene, seed);
                 });
                 //}
 
@@ -4264,11 +4281,11 @@ namespace MMR.Randomizer
                 }
 
                 // write the final time and version last
-                using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename + "_EnemizerLog.txt", append: true))
+                using (StreamWriter sw = new StreamWriter(_outputSettings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 56.0b\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 56.0c\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
