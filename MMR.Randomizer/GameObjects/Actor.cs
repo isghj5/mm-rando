@@ -3983,7 +3983,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(473)]
         [ObjectListIndex(0x1DF)]
-        [CheckRestricted(Scene.GoronShrine, variant: 0x3FF1, Item.SongLullaby)]
+        [CheckRestricted(Scene.GoronShrine, variant: 0x3FF1, Item.SongLullaby, Item.MaskDonGero)]
         [CheckRestricted(Scene.GoronRacetrack, variant: 0x3FF1, Item.ItemBottleGoronRace)]
         //[CheckRestricted(Scene.TwinIslandsSpring, variant: 0x3FF1, Item.ItemBottleGoronRace)] // not sure this is required
         // all other versions are 0x13** or 0x1402
