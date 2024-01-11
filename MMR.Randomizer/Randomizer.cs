@@ -2642,7 +2642,7 @@ namespace MMR.Randomizer
                 AddAllItems(itemPool);
             }
 
-            List<PlandoItemCombo> plandoItemCombos = PlandoUtils.ReadAllItemPlandoFiles(itemPool);
+            List<PlandoItemCombo> plandoItemCombos = PlandoUtils.ReadAllItemPlandoFiles(itemPool, ItemList);
             if (plandoItemCombos == null) return; // no plandos found
 
             foreach (PlandoItemCombo pic in plandoItemCombos)
@@ -2655,7 +2655,7 @@ namespace MMR.Randomizer
 
                     // let's backtrack and find the items that are already assigned
                     //   and the checks that are already taken and print them
-                    var allItems = ItemList.FindAll(u => pic.ItemList.Contains(u.Item));
+                    var allItems = ItemList.FindAll(u => pic.ItemListConverted.Contains(u.Item));
                     var previouslyPlacedItems = allItems.FindAll(u => u.IsRandomized);
                     string picDebug = "Items that were already assigned:\n";
                     foreach (var item in previouslyPlacedItems)
@@ -2663,14 +2663,14 @@ namespace MMR.Randomizer
                         picDebug += "- [" + item.Item.Name() + "] was placed in check: [" + item.NewLocation.Value.Location() + "]\n";
                     }
 
-                    var previouslyPlacedChecks = ItemList.FindAll(u => u.IsRandomized && pic.CheckList.Contains(u.NewLocation.Value));
+                    var previouslyPlacedChecks = ItemList.FindAll(u => u.IsRandomized && pic.CheckListConverted.Contains(u.NewLocation.Value));
                     picDebug += "\nChecks that were already assigned:\n";
                     foreach (var item in previouslyPlacedChecks)
                     {
                         picDebug += "- [" + item.NewLocation.Value.Location() + "] was filled with item: [" + item.Item.Name() + "]\n";
                     }
 
-                    var originalChecks = oldPic.CheckList;
+                    var originalChecks = oldPic.CheckListConverted;
                     picDebug += "\nChecks this ItemCombo was supposed to use:\n";
                     foreach (var item in originalChecks)
                     {
@@ -2679,13 +2679,13 @@ namespace MMR.Randomizer
 
                     itemPool = new List<Item>();
                     AddAllItems(itemPool);
-                    var notRandomized = oldPic.ItemList.Except(itemPool);
+                    var notRandomized = oldPic.ItemListConverted.Except(itemPool);
                     if (notRandomized.Count() > 0)
                     {
                         picDebug += "\nthis PIC has items that were NOT RANDOMIZED\n";
                     }
 
-                    notRandomized = oldPic.CheckList.Except(itemPool);
+                    notRandomized = oldPic.CheckListConverted.Except(itemPool);
                     if (notRandomized.Count() > 0)
                     {
                         picDebug += "\nthis PIC has checks that were NOT RANDOMIZED\n";
@@ -2695,11 +2695,11 @@ namespace MMR.Randomizer
                 }
 
                 int drawCount = 0;
-                for (int itemCount = 0; drawCount < itemCombo.ItemDrawCount && itemCount < itemCombo.ItemList.Count; itemCount++)
+                for (int itemCount = 0; drawCount < itemCombo.ItemDrawCount && itemCount < itemCombo.ItemListConverted.Count; itemCount++)
                 {
                     /// for all items, attempt to add; count successes
-                    Item item = itemCombo.ItemList[itemCount];
-                    foreach (Item check in itemCombo.CheckList)
+                    Item item = itemCombo.ItemListConverted[itemCount];
+                    foreach (Item check in itemCombo.CheckListConverted)
                     {
                         if (itemCombo.SkipLogic == false && ItemUtils.IsStartingLocation(check) && ForbiddenStartingItems.Contains(item))
                         {
@@ -2715,7 +2715,7 @@ namespace MMR.Randomizer
                             Debug.WriteLine($"----Plando Placed {item.Name()} at {check.Location()}----");
 
                             itemPool.Remove(check);
-                            itemCombo.CheckList.Remove(check);
+                            itemCombo.CheckListConverted.Remove(check);
                             drawCount++;
                             break;
                         }
@@ -2724,12 +2724,12 @@ namespace MMR.Randomizer
 
                 if (drawCount < itemCombo.ItemDrawCount)
                 {
-                    var junkChecks = string.Join(", ", itemCombo.CheckList.Where(u => _settings.CustomJunkLocations.Contains(u)));
-                    var remainingItems = string.Join(", ", itemCombo.ItemList.Where(u => ItemList[u].IsRandomized == false));
+                    var junkChecks = string.Join(", ", itemCombo.CheckListConverted.Where(u => _settings.CustomJunkLocations.Contains(u)));
+                    var remainingItems = string.Join(", ", itemCombo.ItemListConverted.Where(u => ItemList[u].IsRandomized == false));
 
                     throw new Exception($"Error: Plando could not find enough checks to match this plandos items with this seed:\n [{itemCombo.Name}]\n"
                         + $"Remaining Unplaced Items:\n [{remainingItems}]\n"
-                        + $"Remaining Unfullfilled Checks:\n [{string.Join(", ", itemCombo.CheckList)}]\n"
+                        + $"Remaining Unfullfilled Checks:\n [{string.Join(", ", itemCombo.CheckListConverted)}]\n"
                         + $"Checks in this plando item combo marked as junk:\n [{junkChecks}]");
                 }
             }
