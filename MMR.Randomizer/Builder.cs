@@ -117,6 +117,9 @@ namespace MMR.Randomizer
             ReadWriteUtils.WriteCodeUInt32(0x801DB9B4, 0x6000);
             ReadWriteUtils.WriteCodeUInt32(0x801DB9B8, 0x6000);
 
+            // write bigger music buffer for SEQ_PLAYER_BGM_SUB
+            ReadWriteUtils.WriteCodeUInt32(0x801DB9A8, 0x2800);
+
             RemoveFanfaresFromShootingGaleryActors();
         }
 
