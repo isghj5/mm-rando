@@ -286,9 +286,11 @@ namespace MMR.Randomizer.Utils
                 GameObjects.Scene.Grottos.FileID(),
                 GameObjects.Scene.Grottos.FileID() + 4, // room 4 : regular chest grotto
 
-                // actor overlays
+                // THESE TWO are the highest priority, huge imporovement 
                 38, // player overlay
                 37, // pause menu
+
+                // actor overlays
                 GameObjects.Actor.Fairy.FileListIndex(),
                 GameObjects.Actor.Arrow.FileListIndex(),
                 GameObjects.Actor.BombAndKeg.FileListIndex(),

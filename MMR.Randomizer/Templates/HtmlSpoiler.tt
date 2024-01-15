@@ -90,7 +90,7 @@
 
 </style>
 </head>
-<body class="light-mode">
+<body class="dark-mode">
 <label><b>Version: </b></label><span><#= spoiler.Version #></span><br/>
 <label><b>Settings: </b></label><code style="word-break: break-all;" class="invisible" id="settingsCode"><#= spoiler.SettingsString #></code>
 <button type="button" onclick="showHideSettings()">Toggle Setting Display</button><br/><br/>
