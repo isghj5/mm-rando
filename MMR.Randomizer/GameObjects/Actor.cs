@@ -3171,8 +3171,16 @@ namespace MMR.Randomizer.GameObjects
 
         Empty19D = 0x19D,
 
+
+        // the only one we can put down is the credits version that basically tposes, make this a modified actor instead
+        //[ActorizerEnabled]
         [FileID(373)]
         [ObjectListIndex(0x195)]
+        // params
+        // type (0x780) >> 7 // holy shit why
+        [GroundVariants(0xFD7F//, // credits monk
+            )]
+        [UnkillableAllVariants]
         // missing switch flags
         Monkey = 0x19E, // En_Mnk
 
@@ -4162,8 +4170,14 @@ namespace MMR.Randomizer.GameObjects
         [TreasureFlagsPlacement(mask: 0x7F, shift: 2)]
         SkullKidPainting = 0x210, // Bg_Kin2_Picture
 
+        [ActorizerEnabledFreeOnly] // big object, boring actor
         [FileID(488)]
         [ObjectListIndex(0x1F5)]
+        [GroundVariants(0x1, // big shelf
+            0x0)] // little shelf
+        [VariantsWithRoomMax(max:2, variant: 0, 1)] // dyna I think, have to limit for now
+        [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // object is shared with multiple actors in this scene, breaks whole area to remove
+        [UnkillableAllVariants]
         OceanSpiderhouseMovableShelf = 0x211, // Bg_Kin2_Shelf
 
         // kinda want to try randomizing, but I need to check against ALL checks in the graveyard, kinda hard to do
