@@ -2,6 +2,7 @@ version: '3'
 services:
   mmr:
     build: .
+    image: catclaws/mmr-assembly
     volumes:
       - ../:/docker
     working_dir: /docker/assembly
