@@ -73,7 +73,10 @@ static void CheckRespawn(GlobalContext* ctxt) {
  * Hook function called after game processes next frame.
  **/
 void Game_AfterUpdate(GlobalContext* ctxt) {
-    OverlayMenu_Draw(ctxt);
+    OverlayMenu_Draw(ctxt); // TODO move this to a hook called from the start menu
+
+    SaveMenu_ListenForMenuSwapButton(ctxt);
+
     Music_Update(ctxt);
     if (Game_IsPlayerActor()) {
         MMR_ProcessItemQueue(ctxt);
