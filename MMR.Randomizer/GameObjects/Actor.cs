@@ -2151,7 +2151,8 @@ namespace MMR.Randomizer.GameObjects
 
         // unused actor, now used by a new injected actor
         [FileID(246)]
-        [EnemizerScenesPlacementBlock(Scene.StoneTower, Scene.SouthernSwamp, Scene.SouthernSwampClear)] // dyna crash possible
+        [EnemizerScenesPlacementBlock(Scene.PinnacleRock, // super annoying warping the player all the way back
+            Scene.StoneTower, Scene.SouthernSwamp, Scene.SouthernSwampClear)] // dyna crash possible
         Mimi = 0x111, // En_Bu
 
         //[EnemizerEnabled] //crash
