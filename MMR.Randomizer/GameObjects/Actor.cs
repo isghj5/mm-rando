@@ -842,6 +842,8 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)] // FIRE AND DARKNESS
         [AlignedCompanionActor(Obj_Dowsing, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x110)] // rumble
+        [AlignedCompanionActor(Butterfly, CompanionAlignment.Above, ourVariant: -1,
+            variant: 0, 1, 2)]
         [BlockingVariantsAll] // might turn this off again, but at can cause issues, esp in deku palace and races
         [EnemizerScenesExcluded(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead)]
         GrottoHole = 0x55, // Door_Ana
@@ -3341,6 +3343,13 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0x2)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
+        // todo add fairies and butterflies and bees
+        [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
+            variant: 2, 9)]
+        [AlignedCompanionActor(Butterfly, CompanionAlignment.Above, ourVariant: -1,
+            variant: 0, 1, 2)]
+        [AlignedCompanionActor(GiantBeee, CompanionAlignment.Above, ourVariant: 0x2,
+            variant: 0, 1, 2, 3, 4, 5)]
         [EnemizerScenesPlacementBlock(Scene.TerminaField)] // TF has object size issues, this is the largest object, this is here just to speed up
         HappyMaskSalesman = 0x1B5, // En_Osn
 
@@ -5499,11 +5508,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         SoliderMoonLeaveCutscene = 0x2AA, // En_Ending_Hero4
 
-        //[ActorizerEnabled]
+        [ActorizerEnabled]
         [FileID(642)]
         [ObjectListIndex(0xF1)]
-        //[GroundVariants()]
+        [GroundVariants(0x0, 0x1, 0x2, 0x3, 0x4)]
         [UnkillableAllVariants]
+        // placable?
         CarpentersMoonLeaveCutscene = 0x2AB, // En_Ending_Hero5
 
         // ???
