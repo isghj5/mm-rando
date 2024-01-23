@@ -216,8 +216,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1256)]
         [SceneInternalId(0x22)]
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Carpenter,
-            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
+        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Carpenter,
+            //Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
         MilkRoad = 0x1F,
 
         // this is both the sewer and all of the smaller rooms up top
@@ -274,10 +274,10 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1298)]
         [SceneInternalId(0x29)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.Scarecrow, // can block the stairs
-            Actor.ClocktowerGearsAndOrgan)]
-        //[EnemizerSceneEnemyReplacementBlock(Actor.Torch, // can block the stairs
-        //    Actor.ClocktowerGearsAndOrgan)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Scarecrow,
+            Actor.ClocktowerGearsAndOrgan)] // can block the stairs
+        [EnemizerSceneEnemyReplacementBlock(Actor.Torch,
+            Actor.DeathArmos)] // might be too much
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
         AstralObservatory = 0x26, // and sewer leading to it
 
@@ -307,7 +307,6 @@ namespace MMR.Randomizer.GameObjects
         // these actors are only seen in the credits, we should block all large object actors from these spots to save generation time
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ViscenMoonLeaveCutscene,
             Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
-        ///*
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.MutoMoonLeaveCutscene,
                         Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.AnjusGrandmaCredits,
@@ -315,6 +314,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.AnjuMotherWedding,
                         Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CuriosityShopMan,
+                        Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CarpentersFromCutscene,
                         Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
         //*/
         TerminaField = 0x2A,
@@ -561,7 +562,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1453)]
         [SceneInternalId(0x5D)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wolfos,
-            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can be so wide they block the hot spring grotto
+            /* Actor.UnusedStoneTowerPlatform,*/ Actor.UnusedStoneTowerStoneElevator)] // can be so wide they block the hot spring grotto
         TwinIslands = 0x5A,
 
         [FileID(1455)]
@@ -666,7 +667,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
             Actor.LikeLike)] // If you start with one heart this can be a softlock
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BombersYouChase,
-            Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform)]
+            Actor.UnusedStoneTowerStoneElevator)]//, Actor.UnusedStoneTowerPlatform)]
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
         WestClockTown = 0x6A,
 
@@ -678,7 +679,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
             Actor.LikeLike)] // If you start with one heart this can be a softlock
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Sakon,
-            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can hide the grass weirdly
+            /*Actor.UnusedStoneTowerPlatform,*/ Actor.UnusedStoneTowerStoneElevator)] // can hide the grass weirdly
         NorthClockTown = 0x6B,
 
         [FileID(1516)]
@@ -699,7 +700,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1518)]
         [SceneInternalId(0x70)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SmallWoodenBox,
-            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block guruguru and maybe more
+            /*Actor.UnusedStoneTowerPlatform,*/ Actor.UnusedStoneTowerStoneElevator)] // can block guruguru and maybe more
         LaundryPool = 0x6D,
     }
 

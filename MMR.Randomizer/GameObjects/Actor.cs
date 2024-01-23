@@ -1643,7 +1643,8 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [FlyingToGroundHeightAdjustment(200)]
-        [EnemizerScenesPlacementBlock(Scene.DekuPalace,
+        // TODO go through all of these and recheck now that we can modify the height correctly
+        [EnemizerScenesPlacementBlock(//Scene.DekuPalace,
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
             Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
@@ -3130,10 +3131,9 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1BE)]
         SkullKidsOcarina = 0x194, // Dm_Char02
 
-        // ??
         [FileID(365)]
         [ObjectListIndex(0x1A3)]
-        Dm_Char03 = 0x195, // Dm_Char03
+        DekuMaskCutsceneFalling = 0x195, // Dm_Char03
 
         //[ActorizerEnabled]
         [FileID(366)]
@@ -3145,19 +3145,28 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         Dm_Char04 = 0x196, // Dm_Char04
 
-        // these should all be cutscene actors, but which one we do not know
         [FileID(367)]
         [ObjectListIndex(0x213)]
-        Dm_Char05 = 0x197, // Dm_Char05
+        CreditsMaskObjects = 0x197, // Dm_Char05
+
         [FileID(368)]
         [ObjectListIndex(0x1E6)]
-        Dm_Char06 = 0x198, // Dm_Char06
+        SnowheadMountainsSpringTransitionEffects = 0x198, // Dm_Char06
+
+
         [FileID(369)]
         [ObjectListIndex(0x212)]
-        Dm_Char07 = 0x199, // Dm_Char07
+        MilkBarCutsceneObjects  = 0x199, // Dm_Char07
+
+        // cannot put places without modification because he actionFunc=null crashes, hardcoded to the two scenes
+        //[ActorizerEnabled]
         [FileID(370)]
         [ObjectListIndex(0x229)]
-        Dm_Char08 = 0x19A, // Dm_Char08
+        [GroundVariants(0)]
+        [WaterBottomVariants(0)]
+        [VariantsWithRoomMax(max:1, variant:0)]
+        [UnkillableAllVariants]
+        LargeGreatBayTurtle = 0x19A, // Dm_Char08
 
         // todo reattempt: could not spawn
         [FileID(371)]
@@ -3606,7 +3615,6 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x1)]
         Mir_Ray2 = 0x1D0, // Mir_Ray2
 
-        // TODO lookup parametsr
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1FD0)]
         [FileID(426)]
@@ -5514,7 +5522,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0, 0x1, 0x2, 0x3, 0x4)]
         [UnkillableAllVariants]
         // placable?
-        CarpentersMoonLeaveCutscene = 0x2AB, // En_Ending_Hero5
+        CarpentersFromCutscene = 0x2AB, // En_Ending_Hero5
 
         // ???
         [FileID(643)]
