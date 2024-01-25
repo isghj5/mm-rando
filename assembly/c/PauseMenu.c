@@ -7,7 +7,6 @@
 #include "SaveFile.h"
 #include "macro.h"
 #include "controller.h"
-#include "Sprite.h"
 
 // Vertex buffers.
 static Vtx gVertexBufs[(4 * 3) * 2];
@@ -183,65 +182,12 @@ bool PauseMenu_SelectItemShowAButtonEnabled(GlobalContext* ctxt) {
     }
 }
 
-
-bool SaveMenu_ShouldDraw(GlobalContext* ctxt) {
-    return (ctxt->pauseCtx.state == 6 && // nominal state, pause menu ready for player input
-        
-        ctxt->pauseCtx.switchingScreen == 0 &&
-        // cats code was checking screen 0 and 3 which was mask and item screen, so the other two are..
-        //(ctxt->pauseCtx.screenIndex == 1 || ctxt->pauseCtx.screenIndex == 2) &&
-        // dd (dpad down) wasnt working
-        ctxt->state.input[0].current.buttons.du) /* || ctxt->state.input[0].current.buttons.du */
-        || ctxt->pauseCtx.state == 7;
-        
-}
-
-void SaveMenu_ListenForMenuSwapButton(GlobalContext* ctxt){
-  // we want to switch to the invisible save menu, which is still functional just doesnt have a draw function
-
-  if ( ! SaveMenu_ShouldDraw(ctxt)) {
-    return;
-  }
-
-  ctxt->pauseCtx.state = 7;
-  
-  // TODO can we draw something? to help remind players what is happening?
-
-  // draw code being stolen from OverlayMenu_Draw
-
-  DispBuf* db = &ctxt->state.gfxCtx->overlay;
-  db->p = db->buf;
-
-  // Call setup display list.
-  gSPDisplayList(db->p++, &gSetupDb);
-
-  // General variables.
-  int iconSize = 16;
-  int padding = 1;
-  int rows = 10;
-
-  // Background rectangle.
-  int bgWidth =
-      (7 * iconSize) + 4 +
-      (9 * gSpriteFont.tileW) +
-      (9 * padding);
-  int bgHeight = (rows * iconSize) + ((rows + 1) * padding);
-  int bgLeft = (SCREEN_WIDTH - bgWidth) / 2;
-  int bgTop = (SCREEN_HEIGHT - bgHeight) / 2;
-
-}
-
-
-
 /**
  * Hook function called while on pause menu before processing each frame.
  **/
 void PauseMenu_BeforeUpdate(GlobalContext* ctxt) {
     // Update pause menu colors.
     HudColors_UpdatePauseMenuColors(ctxt);
-
-    // listen for the prompt to open the save menu
-    //SaveMenu_ListenForMenuSwapButton(ctxt);
 }
 
 static bool sHoldingStart = false;
