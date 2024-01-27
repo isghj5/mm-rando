@@ -79,9 +79,7 @@ void Player_PreventDangerousStates(ActorPlayer* player) {
     // parent can be hookshot or epona
     // "&& player->base.parent->id == ACTOR_ARMS_HOOK" doesn't work because parent might be stale reference
     if (player->base.parent) {
-        if ((player->stateFlags.state3 & PLAYER_STATE3_JUMP_ATTACK)
-            || (player->actionFunc == sPlayer_Falling
-                && !(player->stateFlags.state3 & PLAYER_STATE3_HOOK_ARRIVE_2))) {
+        if (player->stateFlags.state3 & PLAYER_STATE3_JUMP_ATTACK) {
             player->base.parent = NULL;
         }
         Actor* door = player->doorActor;
