@@ -15,7 +15,7 @@ namespace MMR.Common.Extensions
                 return null;
             }
             return type.GetField(name)
-                .GetCustomAttributes(false)
+                .GetCustomAttributes(typeof(TAttribute), false)
                 .OfType<TAttribute>()
                 .SingleOrDefault();
         }

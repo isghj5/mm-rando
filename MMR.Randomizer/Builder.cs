@@ -1844,7 +1844,7 @@ namespace MMR.Randomizer
                     }
                     if ((item.Item.Name().Contains("Bombchu") || item.Item.Name().Contains("Shield")) && itemIsUsed((int)item.Item, new Stack<int>()))
                     {
-                        overrideChestType = item.Item.IsTemporary(_randomized.Settings) ? ChestTypeAttribute.ChestType.SmallGold : ChestTypeAttribute.ChestType.LargeGold;
+                        overrideChestType = item.Item.IsTemporary() ? ChestTypeAttribute.ChestType.SmallGold : ChestTypeAttribute.ChestType.LargeGold;
                     }
                     if (item.Item.Name().Contains("Compass") && _randomized.Settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.CompassRevealsBoss))
                     {
