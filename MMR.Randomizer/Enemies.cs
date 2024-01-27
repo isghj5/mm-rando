@@ -1008,6 +1008,7 @@ namespace MMR.Randomizer
             //  if (this->currentMask == PLAYER_MASK_BUNNY) {speedTarget *= 1.5f;
             // the closest I can think of is & 0xF which gets most but not all of them, which does shuffle some code around tho
             // 0x1D59C ofset == 0xCC5490 hard romaddr
+            /*
             ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x1D59C, val: 0xC7A4002C);
             ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x1D5A0, val: 0x3C013FC0);
             ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x1D5A4, val: 0x3319000F);
@@ -1017,6 +1018,7 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_WriteU16(playerCodeFile, Dest: 0x1D5C0, val: 0x8D08);
             ReadWriteUtils.Arr_WriteU16(playerCodeFile, Dest: 0x1D5CC, val: 0x8509);
             ReadWriteUtils.Arr_WriteU16(playerCodeFile, Dest: 0x1D5D8, val: 0x4489);
+            */
 
             // can we remove an object from ikana to increase object budget to have more stuff?
             var ikanaScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaCanyon.FileID());
