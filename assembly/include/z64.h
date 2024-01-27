@@ -572,13 +572,14 @@ typedef struct {
 
 typedef union {
     struct {
-        /* 0x0 */ u16 item;
-        /* 0x2 */ u16 map;
-        /* 0x4 */ u16 quest;
-        /* 0x6 */ u16 mask;
+        /* 0x0 */ s16 item;
+        /* 0x2 */ s16 map;
+        /* 0x4 */ s16 quest;
+        /* 0x6 */ s16 mask;
+        /* 0x8 */ s16 worldmap;
     };
-    u16 values[0x4];
-} PauseCells; // size = 0x8
+    s16 values[0x5];
+} PauseCells; // size = 0xA
 
 typedef struct {
     /* 0x000 */ View view;
@@ -610,7 +611,6 @@ typedef struct {
     /* 0x224 */ u16 itemAlpha;
     /* 0x226 */ UNK_TYPE1 pad226[0x12];
     /* 0x238 */ PauseCells cells1;
-    /* 0x240 */ UNK_TYPE1 pad240[0x2];
     /* 0x242 */ u16 itemX;
     /* 0x244 */ UNK_TYPE1 pad244[0x4];
     /* 0x248 */ u16 maskX;
@@ -628,7 +628,7 @@ typedef struct {
     /* 0x264 */ u16 maskItem;
     /* 0x266 */ u16 unk266;
     /* 0x268 */ PauseCells cells2;
-    /* 0x270 */ UNK_TYPE1 pad270[0x60];
+    /* 0x272 */ UNK_TYPE1 pad272[0x5E];
 } PauseContext; // size = 0x2D0
 
 /// =============================================================
