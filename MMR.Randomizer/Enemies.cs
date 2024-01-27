@@ -846,6 +846,53 @@ namespace MMR.Randomizer
             }
         }
 
+
+        private static void EnableAllFormItems()
+        {
+            /// let deku nut
+
+            const int FORM_FD    = 0; // let me use enum as int without a cast and I'll use it
+            const int FORM_GORON = 1;
+            const int FORM_ZORA  = 2;
+            const int FORM_DEKU  = 3;
+            const int FORM_CHILD = 4;
+
+
+            var codeFile = RomData.MMFileList[31].Data;
+            var startLoc = 0x11C950; // offset to gPlayerFormItemRestrictions
+            var endLoc = 0x11CB90; // this is wrong, includes some padding
+            var formDataWidth = 0x72; // item bytes per form (yes each restriction is a byte not a bit, what a waste...)
+
+            // start by enable everything
+            var i = startLoc;
+            while (i < endLoc)
+            {
+                // gPlayerFormItemRestrictions[GET_PLAYER_FORM][GET_CUR_FORM_BTN_ITEM(i)] // /* 11C950 801C2410 */
+                // item enum: ItemId
+                codeFile[i] = 0xFF; // this is overkill, it can be any value over 1, but this helps with visiblity
+                i++;
+            }
+
+            // however there are some that are broken/bugged and should never be used
+            // hookshot should not be allowed in any forms
+            for (int form = 0; form < 4; form++) // dont overwrite regular link which is form 5
+            {
+                // hookshot item is 0xF ( _can_ crash, cause unknown)
+                codeFile[startLoc + (form * formDataWidth) + 0xF] &= 0x00;
+                // bow item is 0x0 (buggy behavior that isn't useful)
+                codeFile[startLoc + (form * formDataWidth) + 0x1] &= 0x00;
+            }
+
+            // disable goron stick (he just punches which is counter int)
+            codeFile[startLoc + (FORM_GORON * formDataWidth) + 0x8] &= 0x00;
+
+            // FD cannot use bow or stick
+            codeFile[startLoc + (FORM_FD * formDataWidth) + 0x1] &= 0x00;
+            codeFile[startLoc + (FORM_FD * formDataWidth) + 0x8] &= 0x00;
+
+        }
+
+
         private static void Shinanigans()
         {
             // the peahat grass drops NOTHING, this has bothered me for ages, here I change it
@@ -919,19 +966,8 @@ namespace MMR.Randomizer
                     twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall 
                 }
 
+                EnableAllFormItems();
 
-                // for now, remove all form restrictions to see what works and what does not work anymore
-                //*
-                var codeFile = RomData.MMFileList[31].Data;
-                var startLoc = 0x11C950; 
-                var endLoc = 0x11CB8C;
-                var i = startLoc;
-                while (i < endLoc)
-                {
-                    // gPlayerFormItemRestrictions[GET_PLAYER_FORM][GET_CUR_FORM_BTN_ITEM(i)]
-                    codeFile[i] = 0xFF;
-                    i++;
-                }
                 // */
                 // RecreateFishing();
 
