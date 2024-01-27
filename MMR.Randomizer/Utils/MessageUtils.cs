@@ -27,6 +27,30 @@ namespace MMR.Randomizer.Utils
             if (hintStyle == GossipHintStyle.Default)
                 return new List<MessageEntry>();
 
+            var preventRegions = new List<Region> { Region.BottleCatch, Region.Misc };
+            byte bossRemainsAmount = 0;
+            if (randomizedResult.Settings.VictoryMode.HasFlag(VictoryMode.FourBossRemains))
+            {
+                bossRemainsAmount = 4;
+            }
+            else if (randomizedResult.Settings.VictoryMode.HasFlag(VictoryMode.ThreeBossRemains))
+            {
+                bossRemainsAmount = 3;
+            }
+            else if (randomizedResult.Settings.VictoryMode.HasFlag(VictoryMode.TwoBossRemains))
+            {
+                bossRemainsAmount = 2;
+            }
+            else if (randomizedResult.Settings.VictoryMode.HasFlag(VictoryMode.OneBossRemains))
+            {
+                bossRemainsAmount = 1;
+            }
+            if ((randomizedResult.Settings.VictoryMode & ~(VictoryMode.FourBossRemains | VictoryMode.ThreeBossRemains | VictoryMode.TwoBossRemains | VictoryMode.OneBossRemains | VictoryMode.DirectToCredits | VictoryMode.CantFightMajora)) == 0
+                && randomizedResult.Settings.RequiredBossRemains >= bossRemainsAmount)
+            {
+                preventRegions.Add(Region.TheMoon);
+            }
+
             var random = new Random(randomizedResult.Seed);
 
             var hintableItems = new List<ItemObject>();
@@ -67,7 +91,6 @@ namespace MMR.Randomizer.Utils
 
                 if (hintStyle == GossipHintStyle.Competitive)
                 {
-                    var preventRegions = new List<Region> { Region.TheMoon, Region.BottleCatch, Region.Misc };
                     var locationForImportance = io.Item.MainLocation().HasValue ? io.Item : io.NewLocation.Value;
                     var itemRegion = locationForImportance.Region(randomizedResult.ItemList);
                     if (itemRegion.HasValue
