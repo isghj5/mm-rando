@@ -3487,6 +3487,11 @@ namespace MMR.Randomizer
                         .ToDictionary(g2 => g2.Key, g2 => g2.Select(x => x.Location).ToArray())
                     );
 
+                if (strayFairyRegionLocations.Any())
+                {
+                    ResourceUtils.ApplyHack(Resources.mods.dungeon_fairy_npc_hint);
+                }
+
                 if (strayFairyRegionLocations.ContainsKey(Region.WoodfallTemple))
                 {
                     newMessages.Add(new MessageEntryBuilder()
