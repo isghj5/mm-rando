@@ -191,3 +191,9 @@ void Misc_Init(void) {
         MISC_CONFIG.drawFlags.shopModels = 0;
     }
 }
+
+bool Misc_ShouldStopDrownTimer(s16 envHazard) {
+    return envHazard == PLAYER_ENV_HAZARD_NONE
+        || envHazard == PLAYER_ENV_HAZARD_SWIMMING
+        || (MISC_CONFIG.flags.ironGoron && envHazard == PLAYER_ENV_HAZARD_UNDERWATER_FLOOR);
+}
