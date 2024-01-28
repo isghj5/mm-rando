@@ -3443,19 +3443,19 @@ namespace MMR.Randomizer
 
             if (scene.SceneEnum == GameObjects.Scene.TerminaField || scene.SceneEnum == GameObjects.Scene.IkanaCanyon)
                 Thread.CurrentThread.Priority = ThreadPriority.AboveNormal; // more time than the other small scenes
+            WriteOutput($" starting timestamp : [{DateTime.Now.ToString("hh:mm:ss.fff tt")}]");
             #endregion
 
-            WriteOutput($" starting timestamp : [{DateTime.Now.ToString("hh:mm:ss.fff tt")}]");
             thisSceneData.Actors = GetSceneEnemyActors(scene);
             if (thisSceneData.Actors.Count == 0)
             {
                 return; // if no enemies, no point in continuing
             }
-            WriteOutput("time to get scene enemies: " + GET_TIME(thisSceneData.StartTime) + "ms");
+            WriteOutput("time to read scene enemies: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
             thisSceneData.Objects = GetSceneEnemyObjects(thisSceneData);
             //var sceneObjectLimit = SceneUtils.GetSceneObjectBankSize(scene.SceneEnum); // er, this isnt used here anymore, why did intelesense not tell me?
-            WriteOutput(" time to get scene objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
+            WriteOutput(" time to read scene objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
             WriteOutput("=========================================================================");
             WriteOutput("For Scene: [" + scene.ToString() + "] with fid: " + scene.File + ", with sid: 0x" + scene.Number.ToString("X2"));
@@ -3574,6 +3574,8 @@ namespace MMR.Randomizer
 
                 // check if objects fits now, because the rest can take awhile and at least for termina field we can check this waaaaay earlier
                 thisSceneData.ActorCollection.SetNewActors(scene, thisSceneData.ChosenReplacementObjects);
+                WriteOutput($" set new actors: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
+
                 var objectOverflowCheck = thisSceneData.ActorCollection.isObjectSizeAcceptable();
                 if (objectOverflowCheck > 0){
                     WriteOutput($"---- bogo REJECTED: obj pre-check failed (size:{objectOverflowCheck}): [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
@@ -3621,7 +3623,7 @@ namespace MMR.Randomizer
                 //}
 
                 // set objects and actors for isSizeAcceptable to use, and our debugging output
-                thisSceneData.ActorCollection.SetNewActors(scene, thisSceneData.ChosenReplacementObjects);
+                thisSceneData.ActorCollection.SetNewActors(scene, thisSceneData.ChosenReplacementObjects); // 30~70ms for this? hmm
 
                 WriteOutput($" set for size check: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
@@ -3671,8 +3673,7 @@ namespace MMR.Randomizer
             for (int a = 0; a < thisSceneData.Actors.Count; a++)
             {
                 var actor = thisSceneData.Actors[a];
-                WriteOutput($"  Old Enemy actor:[{actor.OldName}] " +
-                    $"map [{actor.Room.ToString("D2")}] " +
+                WriteOutput($"  Old Enemy actor:[{actor.Room.ToString("D2")}] [{actor.OldName}] " +
                     $"was replaced by new enemy: [{actor.Variants[0].ToString("X4")}]" +
                     $"[{actor.Name}]");
             }
@@ -4349,7 +4350,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 57.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 57.1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

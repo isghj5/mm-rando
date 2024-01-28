@@ -69,13 +69,13 @@ namespace MMR.Randomizer
             RomData.TargetSequences = RomData.TargetSequences.OrderBy(x => random.Next()).ToList(); // random ordered slots
 
             // if we have lots of music, let's randomize skulltula house and ikana well to have something unique that isn't cave music
-            if (RomData.SequenceList.Count > 80 &&RomData.SequenceList.FindAll(u => u.Type.Contains(2)).Count >= 8 + 2){ // tested by asking for all targetseq that have a category of 2, counted (8)
+            if (RomData.SequenceList.Count > 80 && RomData.SequenceList.FindAll(u => u.Type.Contains(2)).Count >= 8 + 2){ // tested by asking for all targetseq that have a category of 2, counted (8)
                 // this is currently broken, does not read the json correctly
                 SequenceUtils.ReassignSongSlots(log, random);
             }
             SequenceUtils.ResetBudget();
             WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + unassigned.Count + " available songs:");
-
+            WriteOutput("=====================================================");
 
             // songtest filename token allows music makers and users to force a song into a MMR seed for recording/testing
             SequenceUtils.CheckSongTest(unassigned, log);
@@ -141,7 +141,7 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_WriteU32(dekuNutsData, 0xC18, 0x24044807); // load 0x4807 into a0, the same sfx used in the rest of the game
         }
 
-        private void WriteAudioSeq(Random random, OutputSettings _settings)
+        private void WriteAudioSeq(Random random, OutputSettings settings)
         {
             if (_cosmeticSettings.Music == Music.None)
             {
@@ -155,7 +155,7 @@ namespace MMR.Randomizer
             if (_cosmeticSettings.Music == Music.Random)
             {
                 SequenceUtils.PointerizeSequenceSlots();
-                BGMShuffle(random, _settings);
+                BGMShuffle(random, settings);
                 ResourceUtils.ApplyHack(Resources.mods.remove_morning_music);
             }
 
@@ -163,7 +163,7 @@ namespace MMR.Randomizer
             SequenceUtils.RebuildAudioSeq(RomData.SequenceList,
                 _cosmeticSettings.AsmOptions.MusicConfig.SequenceMaskFileIndex,
                 _cosmeticSettings.AsmOptions.MusicConfig.SequenceNamesFileIndex);
-            SequenceUtils.WriteNewSoundSamples(RomData.InstrumentSetList);
+            SequenceUtils.WriteNewSoundSamples(RomData.InstrumentSetList, settings);
             SequenceUtils.RebuildAudioBank(RomData.InstrumentSetList);
         }
 

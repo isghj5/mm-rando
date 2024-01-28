@@ -1576,19 +1576,31 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-
-        public static void WriteNewSoundSamples(List<InstrumentSetInfo> InstrumentSetList)
+        public static void WriteNewSoundSamples(List<InstrumentSetInfo> InstrumentSetList, OutputSettings settings)
         {
             /// Writing all of our new samples in a single file at the end
             //  in the event we run out of MMFile DMA indexes: These files dont need to be a hard file in the filesystem
             //  they can be placed anywhere after the soundbank starting address on rom, instrument sample lookup doesnt use file system
             //  adding to the file system is just useful for shifting in BuildROM()
 
+            StringBuilder log = new StringBuilder();
+            void WriteOutput(string str)
+            {
+                Debug.WriteLine(str);
+                log.AppendLine(str);
+            }
+            string Hex(int input)
+            {
+                return "0x" + input.ToString("X");
+            }
+
             // issue: we don't know right now where the samples will be written to, because BuildRom will shift the files
             //  for now we write samples, after audiobank/soundbank/samples are written, we'll update audiobank pointers
             // save extra soundsamples fid, and the samples with their data, for later (UpdateBankInstrumentPointers())
             int fid = RomData.SamplesFileID = RomUtils.AppendFile(new byte[0x0]);
             RomData.ListOfSamples = new List<SequenceSoundSampleBinaryData>();
+
+            WriteOutput($" Sample Injections:\n===================");
 
             // for each custom instrument set that needs a custom sample
             foreach (InstrumentSetInfo instrumentSet in InstrumentSetList)
@@ -1611,16 +1623,20 @@ namespace MMR.Randomizer.Utils
                             {
                                 RomData.MMFileList[fid].Data = RomData.MMFileList[fid].Data.Concat(new byte[paddingRemainder]).ToArray();
                             }
+                            
+                            WriteOutput($"New sample added for bank [{Hex(instrumentSet.BankSlot)}]\n - sample location: [{Hex((int)sample.Addr)}] size: [{Hex(sample.BinaryData.Length)}]");
                             RomData.ListOfSamples.Add(sample);
                         }
                         else // get address of previously used sample
                         {
+                            WriteOutput($" ♻ Bank [{Hex(instrumentSet.BankSlot)}] is reusing existing sample: offset: [{Hex((int)previouslyWrittenSample.Addr)}]");
                             sample.Addr = previouslyWrittenSample.Addr;
                         }
                     }
                 }
             }
 
+            WriteSongLog(log, settings);
         }
 
         public static void RebuildAudioBank(List<InstrumentSetInfo> InstrumentSetList)
