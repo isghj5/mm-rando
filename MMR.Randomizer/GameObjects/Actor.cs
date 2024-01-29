@@ -4924,7 +4924,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(567)]
         [ObjectListIndex(0xD0)]
-        [WaterTopVariants(0,1)]
+        //[WaterTopVariants(0,1)] // these are not actually at the water surface, but 10ft below
+        [WaterVariants(0,1)]
         [UnkillableAllVariants]
         SwimmingZora = 0x260, // En_Zow
 
