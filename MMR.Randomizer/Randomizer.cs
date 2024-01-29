@@ -1906,6 +1906,21 @@ namespace MMR.Randomizer
                 return (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 4.0) * 500, 1, 500);
             }
 
+            (ushort, ushort) randomPriceWithComparablePrice()
+            {
+                var cost = randomPrice();
+                var comparableCost = cost;
+                if (priceShouldMultiply)
+                {
+                    comparableCost <<= 1;
+                    if (comparableCost > 999)
+                    {
+                        comparableCost = 999;
+                    }
+                }
+                return (cost, comparableCost);
+            }
+
             _randomized.MessageCosts = new List<ushort?>();
             
             for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
@@ -1918,18 +1933,20 @@ namespace MMR.Randomizer
                 }
 
                 ushort cost;
+                ushort comparableCost;
 
                 if (_settings.PriceMode.HasFlag(messageCost.Category))
                 {
-                    cost = randomPrice();
+                    (cost, comparableCost) = randomPriceWithComparablePrice();
 
                     // this relies on puchase 2 appearing in the list directly after purchase 1
                     if (messageCost.Name == "Business Scrub Purchase 2")
                     {
                         var purchase1Cost = _randomized.MessageCosts[i - 1] ?? 150;
-                        while (cost == purchase1Cost)
+
+                        while (comparableCost == purchase1Cost)
                         {
-                            cost = randomPrice();
+                            (cost, comparableCost) = randomPriceWithComparablePrice();
                         }
                     }
 
