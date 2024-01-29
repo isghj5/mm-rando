@@ -728,7 +728,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [BlockingVariantsAll]
-        [FlyingToGroundHeightAdjustment(200)]
+        [FlyingToGroundHeightAdjustment(250)]
         [EnemizerScenesPlacementBlock(
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.PiratesFortressRooms, Scene.DekuPalace,
             Scene.DekuShrine, Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.GoronRacetrack,
@@ -1645,7 +1645,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [BlockingVariantsAll]
-        [FlyingToGroundHeightAdjustment(200)]
+        [FlyingToGroundHeightAdjustment(250)]
         // TODO go through all of these and recheck now that we can modify the height correctly
         [EnemizerScenesPlacementBlock(//Scene.DekuPalace,
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
