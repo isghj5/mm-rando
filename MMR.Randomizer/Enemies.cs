@@ -874,13 +874,16 @@ namespace MMR.Randomizer
             }
 
             // however there are some that are broken/bugged and should never be used
-            // hookshot should not be allowed in any forms
             for (int form = 0; form < 4; form++) // dont overwrite regular link which is form 5
             {
-                // hookshot item is 0xF ( _can_ crash, cause unknown)
+                // hookshot item is 0xF ( _can_ crash, cause unknown, pj64 doesnt crash so I cant even debug it)
                 codeFile[startLoc + (form * formDataWidth) + 0xF] &= 0x00;
                 // bow item is 0x0 (buggy behavior that isn't useful)
                 codeFile[startLoc + (form * formDataWidth) + 0x1] &= 0x00;
+                // elemental arrows are different items
+                codeFile[startLoc + (form * formDataWidth) + 0x2] &= 0x00;
+                codeFile[startLoc + (form * formDataWidth) + 0x3] &= 0x00;
+                codeFile[startLoc + (form * formDataWidth) + 0x4] &= 0x00;
             }
 
             // disable goron stick (he just punches which is counter int)
