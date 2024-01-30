@@ -2618,7 +2618,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.DekuBaba, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.En_Horse_Link_Child)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Snowhead, GameObjects.Actor.Bo, GameObjects.Actor.BadBat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
@@ -2790,6 +2790,7 @@ namespace MMR.Randomizer
                 MustBeKillable = true; // we dont want respawning or unkillable enemies here
                 /// special case: armos does not drop stray fairies, and I dont know why. TODO attempt to fix instead of this code
                 ReplacementListRemove(reducedCandidateList, GameObjects.Actor.Armos);
+                ReplacementListRemove(reducedCandidateList, GameObjects.Actor.DragonFly);
             }
 
             // this could be per-enemy, but right now its only used where enemies and objects match,
