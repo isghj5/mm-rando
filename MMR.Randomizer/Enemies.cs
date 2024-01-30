@@ -660,6 +660,7 @@ namespace MMR.Randomizer
             ModifyFireflyKeeseForPerching();
             SplitPirateSewerMines();
             BlockBabyGoronIfNoSFXRando();
+            FixArmosSpawnPos();
 
             Shinanigans();
             ObjectIsItemBlocked();
@@ -2170,6 +2171,38 @@ namespace MMR.Randomizer
             }
         }
 
+        public static void FixArmosSpawnPos()
+        {
+            /// for some reason armos changes its home and world position based on y rotation in init
+            //
+            // this->actor.home.pos.x -= 9.0f * Math_SinS(this->actor.shape.rot.y);
+            // this->actor.home.pos.z -= 9.0f * Math_CosS(this->actor.shape.rot.y);
+            // this->actor.world.pos.x = this->actor.home.pos.x;
+            // this->actor.world.pos.z = this->actor.home.pos.z;
+            // and it makes no sense, removing
+
+            var armosData = RomData.MMFileList[GameObjects.Actor.Armos.FileListIndex()].Data;
+
+            // the four writes (home.x home.z world.x, world.z)
+            ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x0E0, val: 0x0000000); // reminder: all zero instruction is NOP
+            ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x104, val: 0x0000000);
+            ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x0FC, val: 0x0000000);
+            ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x110, val: 0x0000000);
+
+            // for good measure, lets nop some of these expensive floating instructions leading to the save too
+            ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x0D4, val: 0x0000000); // mul.s
+            ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x0D8, val: 0x0000000); // sub.s
+            ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x0F4, val: 0x0000000); // mul.s
+            ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x100, val: 0x0000000); // sub.s
+
+            // god this compiler sucks, it LOADS the value it just stored to re-save it to a new location,
+            // instead of reusing the already populated register
+            ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x0CC, val: 0x0000000); // lwc
+            ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x0EC, val: 0x0000000); // lwc
+            ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x0F0, val: 0x0000000); // lwc
+            ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x108, val: 0x0000000); // lwc
+        }
+
 
         #endregion
 
@@ -2621,12 +2654,12 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.En_Horse_Link_Child)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Armos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Snowhead, GameObjects.Actor.Bo, GameObjects.Actor.BadBat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 if (TestHardSetObject(GameObjects.Scene.MilkRoad, GameObjects.Actor.Carpenter, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.RomaniYts)) continue;
+                if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.DekuBaba, GameObjects.Actor.Armos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SwampSpiderHouse, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.BeanSeller)) continue;
@@ -2792,7 +2825,7 @@ namespace MMR.Randomizer
             {
                 MustBeKillable = true; // we dont want respawning or unkillable enemies here
                 /// special case: armos does not drop stray fairies, and I dont know why. TODO attempt to fix instead of this code
-                ReplacementListRemove(reducedCandidateList, GameObjects.Actor.Armos);
+                //ReplacementListRemove(reducedCandidateList, GameObjects.Actor.Armos);
                 ReplacementListRemove(reducedCandidateList, GameObjects.Actor.DragonFly);
             }
 
