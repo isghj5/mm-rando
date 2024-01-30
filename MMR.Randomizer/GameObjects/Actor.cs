@@ -4226,6 +4226,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled]
         [FileID(491)]
         [ObjectListIndex(0x18E)]
+        [CheckRestricted(scene: Scene.SouthernSwampClear, variant: -1, Item.HeartPieceBoatArchery)]
         [UnkillableAllVariants]
         BoatArcheryKoume = 0x214, // En_Tru_Mt
 

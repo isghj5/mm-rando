@@ -2409,6 +2409,26 @@ namespace MMR.Randomizer
             }
         }
 
+
+        public static Actor FindStrayFairy(SceneEnemizerData thisSceneData, int x, int z)
+        {
+            var scene = thisSceneData.Scene;
+            for (int m = 0; m < scene.Maps.Count; m++)
+            {
+                var actors = scene.Maps[m].Actors;
+                for (int a = 0; a < actors.Count; a++)
+                {
+                    var actor = actors[a];
+                    if (actor.ActorEnum == GameObjects.Actor.StrayFairy && actor.Position.x == x && actor.Position.z == z)
+                    {
+                        return actor;
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public static void FixGroundToFlyingActorHeights(SceneEnemizerData thisSceneData, StringBuilder log)
         {
             /// For variety, I wanted to be able to put flying enemies where ground enemies used to be.
@@ -2443,6 +2463,17 @@ namespace MMR.Randomizer
 
                         log.AppendLine($" + adjusted height of actor [{testActor.Name}] by [{attr.Height}]");
                     }
+
+                    // if this actor was on top of a fairy, the fairy has to match the same height or it wont spawn after the enemy death
+                    if (thisSceneData.Scene.SceneEnum.IsFairyDroppingEnemy(roomNum: testActor.Room, actorNum: testActor.RoomActorIndex))
+                    {
+                        var testStrayFairy = FindStrayFairy(thisSceneData, testActor.Position.x, testActor.Position.z);
+                        if (testStrayFairy != null)
+                        {
+                            testStrayFairy.Position.y = testActor.Position.y;
+                        }
+                    }
+
                 }
             }
             thisSceneData.Log.AppendLine(" ---------- ");
@@ -2654,12 +2685,12 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Armos)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Armos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Snowhead, GameObjects.Actor.Bo, GameObjects.Actor.BadBat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
-                if (TestHardSetObject(GameObjects.Scene.MilkRoad, GameObjects.Actor.Carpenter, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
-                if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.DekuBaba, GameObjects.Actor.Armos)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.MilkRoad, GameObjects.Actor.Carpenter, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
+                if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.DekuBaba, GameObjects.Actor.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SwampSpiderHouse, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.BeanSeller)) continue;
@@ -2826,7 +2857,7 @@ namespace MMR.Randomizer
                 MustBeKillable = true; // we dont want respawning or unkillable enemies here
                 /// special case: armos does not drop stray fairies, and I dont know why. TODO attempt to fix instead of this code
                 //ReplacementListRemove(reducedCandidateList, GameObjects.Actor.Armos);
-                ReplacementListRemove(reducedCandidateList, GameObjects.Actor.DragonFly);
+                //ReplacementListRemove(reducedCandidateList, GameObjects.Actor.DragonFly);
             }
 
             // this could be per-enemy, but right now its only used where enemies and objects match,
@@ -4387,7 +4418,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 57.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 57.2\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

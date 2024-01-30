@@ -30,16 +30,16 @@ namespace MMR.Randomizer.Extensions
             return attr == null ? false : attr.PuzzleRooms.Contains(room);
         }
 
-        public static bool IsFairyDroppingEnemy(this Scene scene, int roomNumber, int actorNumber)
+        public static bool IsFairyDroppingEnemy(this Scene scene, int roomNum, int actorNum)
         {
             var FairyDroppingEnemiesAttr = scene.GetAttributes<FairyDroppingEnemiesAttribute>();
             if (FairyDroppingEnemiesAttr != null)
             {
                 foreach(var roomWithFairyEnemies in FairyDroppingEnemiesAttr)
                 {
-                    if (roomWithFairyEnemies.RoomNumber == roomNumber)
+                    if (roomWithFairyEnemies.RoomNumber == roomNum)
                     {
-                        return roomWithFairyEnemies.ActorNumbers.Contains(actorNumber);
+                        return roomWithFairyEnemies.ActorNumbers.Contains(actorNum);
                     }
                 }
             }
