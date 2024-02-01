@@ -180,7 +180,7 @@ namespace MMR.Randomizer
             //var snowheadFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairyDoubleMagic).Item;
             //if (ItemUtils.IsJunk(snowheadFairyReward))
             //{
-                var snowheadStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Snowfall Stray Fairy");
+                var snowheadStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Snowhead Stray Fairy");
                 if (!snowheadStrayFairyImportantSearch)
                 {
                     var snowheadFairies = allFaries.FindAll(token => token.Name().Contains("Snowhead")).ToList();
