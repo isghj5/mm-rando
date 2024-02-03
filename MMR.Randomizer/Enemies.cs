@@ -215,7 +215,7 @@ namespace MMR.Randomizer
         {
             /// Notebook entries are junk IF the settings do not specify getting all notebook is required to beat the seed
 
-            var notebookEntryImportantSearch = allSphereItems.Any(u => u.Item1 == "Notebook Entry");
+            var notebookEntryImportantSearch = allSphereItems.Any(u => u.Item1 == "Notebook:");
             if (!notebookEntryImportantSearch)
             {
                 var notebookEntries = _randomized.ItemList.FindAll(itemObj => itemObj.Item.ItemCategory() == GameObjects.ItemCategory.NotebookEntries).Select(itemObj => itemObj.Item).ToList();
@@ -4418,7 +4418,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 57.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 57.3\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
