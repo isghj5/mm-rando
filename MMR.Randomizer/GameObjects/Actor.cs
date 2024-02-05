@@ -3661,6 +3661,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0)] // 0: sitting in his room?
         //[VariantsWithRoomMax()]
         [UnkillableAllVariants]
+        [VariantsWithRoomMax(max:0, variant:0)] // do not place: hardcoded up the wazzo
         [EnemizerScenesExcluded(Scene.WestClockTown, Scene.EastClockTown, Scene.NorthClockTown, Scene.SouthClockTown)]
         PostMan = 0x1D5, // En_Pm
 
