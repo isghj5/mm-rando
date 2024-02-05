@@ -663,7 +663,7 @@ namespace MMR.Randomizer.GameObjects
         Demo_Effect = 0x48, // Demo_Effect
 
         // MULTIPLE OBJECT ACTOR
-        [ActorizerEnabled]
+        //[ActorizerEnabled]
         [FileID(91)]
         [ActorInstanceSize(0x1650)]
         [ActorInitVarOffset(0x1F78)]
