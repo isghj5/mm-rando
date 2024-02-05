@@ -49,6 +49,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.Octarok,
             Actor.Wolfos, // can attack you off the boat
             Actor.LikeLike)] // can grab you on the boat ride
+        [EnemizerSceneEnemyReplacementBlock(Actor.Lilypad,
+            Actor.Desbreko)] // heavy lag
         SouthernSwampClear = 0x06,
 
         [FileID(1151)]
