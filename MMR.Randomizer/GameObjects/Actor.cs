@@ -2903,7 +2903,7 @@ namespace MMR.Randomizer.GameObjects
         // flying ice platforms leading to lens cave
         [FileID(339)]
         [ObjectListIndex(0x187)]
-        [CheckRestricted(Item.MaskGoron,
+        [CheckRestricted( scene:Scene.MountainVillage, variant:-1, check: Item.MaskGoron,
             Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
             Item.ChestHotSpringGrottoRedRupee,
             Item.UpgradeRazorSword, Item.UpgradeRazorSword)]
@@ -2911,7 +2911,7 @@ namespace MMR.Randomizer.GameObjects
         [WaterTopVariants(0x1FFE, 0x1FFD, 0x1000, 0x1004)]
         // TODO should we consider putting them on water top?
         // don't put too many in the world might run into BG issues
-        [VariantsWithRoomMax(max: 2, variant: 0x1FFE, 0x1FFD, 0x1000, 0x1004)]
+        [VariantsWithRoomMax(max: 1, variant: 0x1FFE, 0x1FFD, 0x1000, 0x1004)]
         [UnkillableAllVariants]
         IceWaterPlatforms = 0x179, // Obj_Driftice
 
@@ -3446,10 +3446,11 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1A8)]
         [CheckRestricted(Scene.GoronVillage, variant: -1, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
         [CheckRestricted(Scene.PathToSnowhead, variant: -1, Item.HeartPieceToSnowhead)]
+        [CheckRestricted(Scene.IkanaCastle, variant: -1, Item.SongElegy)]
         [FlyingVariants(0x0)]
         [VariantsWithRoomMax(max: 0, variant: 0x0)] // invisible, not even seen just looks empty, unless I can move actors to sit ontop of them or something
         [UnkillableAllVariants]
-        FlyingLensCavePlatforms = 0x1C0, // Obj_Visiblock
+        FlyingLensCaveIcePlatforms = 0x1C0, // Obj_Visiblock
 
         [ActorizerEnabled]
         [FileID(412)]
