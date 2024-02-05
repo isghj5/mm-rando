@@ -6305,9 +6305,9 @@ namespace MMR.Randomizer
                     }
 
                     byte[] ROM = RomUtils.BuildROM();
-                    if (ROM.Length > 0x2600000) // over 39MB (owl is not a cat says this is closer to the limit, actual hard limit unknown)
+                    if (ROM.Length > 0x2800000) // Over 40MB. The upper limit is likely 48MB, but let's stick with 40 for now.
                     {
-                        throw new ROMOverflowException("39 MB", "WiiVC");
+                        throw new ROMOverflowException("40 MB", "WiiVC");
                     }
                     progressReporter.ReportProgress(90, "Writing VC...");
                     var fileName = Path.ChangeExtension(outputSettings.OutputROMFilename, "wad");
