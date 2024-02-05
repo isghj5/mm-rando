@@ -53,6 +53,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1151)]
         [SceneInternalId(0x0D)]
+        //[EnemizerSceneEnemyReplacementBlock(originalEnemy:Actor.Sakon,
+        //    Actor.SleepingScrub, // Can block the text interaction
+        //    Actor.En_Ani)]
         CuriosityShop = 0x07,
 
         //[FileID(1520)]

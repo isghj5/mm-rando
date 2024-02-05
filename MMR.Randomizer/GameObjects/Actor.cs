@@ -4574,6 +4574,8 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.NorthClockTown, variant: 0x83FF, Item.MaskBlast, Item.MaskAllNight, Item.NotebookMeetOldLady, Item.NotebookSaveOldLady,
             Item.MaskCouple, Item.NotebookEscapeFromSakonSHideout)]
         [CheckRestricted(Scene.IkanaCanyon, variant: 0x85FF, Item.MaskCouple, Item.NotebookEscapeFromSakonSHideout)]
+        [CheckRestricted(Scene.CuriosityShop, variant: 0x83FF, Item.MaskBlast, Item.UpgradeBigBombBag,
+            Item.MundaneItemCuriosityShopBlueRupee, Item.MundaneItemCuriosityShopRedRupee, Item.MundaneItemCuriosityShopPurpleRupee, Item.MundaneItemCuriosityShopGoldRupee)]
         // cannot remove because he shares objects with the bank
         //[CheckRestricted(Scene.WestClockTown, variant: 0x83FF, Item.MaskBlast, Item.MaskAllNight)]
         // can't replace the one in west clocktown without killing bank
