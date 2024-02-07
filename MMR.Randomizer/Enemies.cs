@@ -835,14 +835,12 @@ namespace MMR.Randomizer
 
                 var mayorsResitenceScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MayorsResidence.FileID());
                 var gormanInResidence = mayorsResitenceScene.Maps[0].Actors[1];
-                gormanInResidence.Position = new vec16(201, 0, 48);
-                gormanInResidence.Rotation.y = ActorUtils.MergeRotationAndFlags(180+45, gormanInResidence.Rotation.y);
-                // does gorman not do pathing? because it seems to be a thing here
-                //gormanInResidence.Path
+                gormanInResidence.Position = new vec16(77, 15, 148);
+                gormanInResidence.Rotation.y = ActorUtils.MergeRotationAndFlags(180+90, gormanInResidence.Rotation.y);
 
-                ///zzz
-
-
+                // this one is facing the door which is odd, turn to face madam
+                gormanInResidence = mayorsResitenceScene.Maps[2].Actors[1];
+                gormanInResidence.Rotation.y = ActorUtils.MergeRotationAndFlags(180 + 45, gormanInResidence.Rotation.y);
 
             }
         }
@@ -2695,7 +2693,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.SpikedMine, GameObjects.Actor.Postbox)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.MayorsResidence, GameObjects.Actor.Gorman, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.MayorsResidence, GameObjects.Actor.Gorman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Monkey)) continue;
@@ -4419,7 +4417,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 57.3\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 57.4\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

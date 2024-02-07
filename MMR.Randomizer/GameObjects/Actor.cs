@@ -2196,7 +2196,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // assumption: need mirror shield
         SkeleKnight = 0x115, // En_Knight
 
-        [ActorizerEnabled]
+        [ActorizerEnabled] // used in the moon
         [FileID(251)]
         [ObjectListIndex(3)] // 3 if you want the visible one, from Goron Trial
         // params: 0x8000 is invisbile (deku playground exit)
@@ -2205,6 +2205,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x3C0)] // zero index, always safe
         [WaterBottomVariants(0x3C0)]
         [EnemizerScenesExcluded(Scene.GoronTrial)]
+        [EnemizerScenesPlacementBlock(Scene.IkanaCastle)] // wrongly warps you to the boss room but its not loaded
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         WarpToTrialEntrance = 0x116, // En_Warp_tag
