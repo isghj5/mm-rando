@@ -215,7 +215,7 @@ namespace MMR.Randomizer
         {
             /// Notebook entries are junk IF the settings do not specify getting all notebook is required to beat the seed
 
-            var notebookEntryImportantSearch = allSphereItems.Any(u => u.Item1 == "Notebook:");
+            var notebookEntryImportantSearch = allSphereItems.Any(u => u.Item1.Contains("Notebook:"));
             if (!notebookEntryImportantSearch)
             {
                 var notebookEntries = _randomized.ItemList.FindAll(itemObj => itemObj.Item.ItemCategory() == GameObjects.ItemCategory.NotebookEntries).Select(itemObj => itemObj.Item).ToList();
@@ -2683,7 +2683,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.FriendlyCucco)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Snowhead, GameObjects.Actor.Bo, GameObjects.Actor.BadBat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
