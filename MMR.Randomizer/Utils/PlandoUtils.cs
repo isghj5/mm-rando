@@ -79,9 +79,9 @@ namespace MMR.Randomizer.Utils
             foreach (var filePath in Directory.GetFiles(Values.MainDirectory, "*ItemPlando.json"))
             {
                 var fileName = Path.GetFileName(filePath);
+                string filetext = File.ReadAllText(fileName);
                 try
                 {
-                    string filetext = File.ReadAllText(fileName);
                     // the string enum converter reads the item enumerators as strings rather than their int values, so we can read item/checks by enum
                     // eg, the json can have ItemList: ["MaskBunnyHood"] instead of ItemList: [ 22 ]
                     var workingList = JsonSerializer.Deserialize<List<PlandoItemCombo>>(filetext);
@@ -134,17 +134,33 @@ namespace MMR.Randomizer.Utils
                 }
                 catch (System.Text.Json.JsonException e)
                 {
-                    Debug.Print("Error: exception occurred reading plando file: " + e.ToString());
-                    throw new Exception("The following plando file failed to parse:\n"
+                    if (filetext[0] != '[')
+                    {
+                        throw new Exception("The following plando file failed to parse:\n"
                                       + Path.GetFileName(filePath) + "\n\n"
-                                      + "That means it was not in acceptable json format.\n"
-                                      + "Common reasons are missing punctuation or characters,\n"
-                                      + "   like a missing comma separating items in a list\n"
-                                      + "   or a missing comma separating parts of a single combo\n"
-                                      + "   or a missing \" character at the start/end of an item\n"
-                                      + "Sometimes the line number of the error is below the actual issue\n\n"
-                                      + "The location of the parse error was reported at\n"
-                                      + "line number: " + e.LineNumber + ", " + e.BytePositionInLine + " characters deep.");
+                                      + "There is no starting square bracket \"[\" to mark this file a list of events.\n"
+                                      + "Even if there is only one event the file needs to have a list to parse. Example:\n"
+                                      + "[\n"
+                                      + "  {\n"
+                                      + "    // your event data goes here \n"
+                                      + "  },\n"
+                                      + "]\n" );
+                    }
+                    else
+                    {
+                        Debug.Print("Error: exception occurred reading plando file: " + e.ToString());
+                        throw new Exception("The following plando file failed to parse:\n"
+                                          + Path.GetFileName(filePath) + "\n\n"
+                                          + "That means it was not in acceptable json format.\n"
+                                          + "Common reasons are missing punctuation or characters,\n"
+                                          + "   like a missing comma separating items in a list\n"
+                                          + "   or a missing comma separating parts of a single combo\n"
+                                          + "   or a missing \" character at the start/end of an item\n"
+                                          + "Sometimes the line number of the error is below the actual issue\n\n"
+                                          + "The location of the parse error was reported at\n"
+                                          + "line number: " + e.LineNumber + ", " + e.BytePositionInLine + " characters deep.");
+                    }
+
                 }
                 catch (Exception e)
                 {
