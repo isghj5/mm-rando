@@ -77,7 +77,8 @@ namespace MMR.Randomizer.GameObjects
             //Actor.Nejiron, Actor.RedBubble, 
             Actor.RegularIceBlock)] // blocking actors
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DekuBabaWithered, // grottos are common, this can get silly
-            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard//, Actor.BomberHideoutGuard // annoying
+            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, //, Actor.BomberHideoutGuard // annoying
+            Actor.Hiploop// water causes instant death
             //Actor.Bumper, Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, Actor.RegularIceBlock,
             /*Actor.ClocktowerGearsAndOrgan /*, Actor.PatrollingPirate */ )]
         [EnemizerSceneBlockSensitive(Actor.DekuBabaWithered, -1)]
