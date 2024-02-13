@@ -2909,10 +2909,13 @@ namespace MMR.Randomizer.GameObjects
             Item.ChestHotSpringGrottoRedRupee,
             Item.UpgradeRazorSword, Item.UpgradeRazorSword)]
         // parameters unknown, they are not even and not time (time of spawn is a different parameter)
-        [WaterTopVariants(0x1FFE, 0x1FFD, 0x1000, 0x1004)]
+        [WaterTopVariants(0x1FFE, 0x1FFD, 0x1000, 0x1004)] // for replacement
+        //[PathingVariants(0x1FFD, 0x1FFE)] // 0x7F >> 2, 0x1FC
+        //[PathingTypeVarsPlacement(mask:0x7F, shift:2)]
         // TODO should we consider putting them on water top?
         // don't put too many in the world might run into BG issues
-        [VariantsWithRoomMax(max: 1, variant: 0x1FFE, 0x1FFD, 0x1000, 0x1004)]
+        [VariantsWithRoomMax(max: 2, variant: 0x1000, 0x1004)]
+        [VariantsWithRoomMax(max: 0, variant: 0x1FFE, 0x1FFD)] // pathing type, and we dont want them to path
         [UnkillableAllVariants]
         IceWaterPlatforms = 0x179, // Obj_Driftice
 
