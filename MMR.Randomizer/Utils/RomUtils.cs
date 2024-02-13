@@ -35,7 +35,7 @@ namespace MMR.Randomizer.Utils
             #if DEBUG
             string settingstring = $"{setting} + DEBUG BUILD\x00";
             #else
-            string settingstring = $"{setting} + Isghj's Enemizer Test 58.1\x00";
+            string settingstring = $"{setting} + Isghj's Enemizer Test 58.2\x00";
             #endif
             int f = GetFileIndexForWriting(veraddr);
             var file = RomData.MMFileList[f];
@@ -322,17 +322,9 @@ namespace MMR.Randomizer.Utils
 
         public static byte[] BuildROM(OutputSettings settings)
         {
-            // if injecting new actors, we need to update the actor overlay table overlayEntry
-            //if (Settings.RandomizeEnemies) // right... settings files are always local for some reason..
-            {
-                Enemies.UpdateActorOverlayTable();
-            }
-
             SetFilesToRemainDecompressed(settings);
 
             CompressMMFiles();
-
-            //UpdateCompressedDMAAddresses(); // wait we dont need to separate anymore
 
             byte[] ROM = new byte[0x2000000];
 
