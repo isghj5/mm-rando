@@ -4711,7 +4711,7 @@ namespace MMR.Randomizer
                         {
                             it.PlaySoundEffect(0x291A)
                             .Text("Koo, koo, koo.").NewLine()
-                            .Text("OK, I'll give you ")
+                            .Text("OK, I'll give you")
                             .RuntimePronounOrAmount(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
                             .Text(".")
                             .EndTextBox()
@@ -4818,7 +4818,7 @@ namespace MMR.Randomizer
                                 ;
                             })
                             .EndTextBox()
-                            .Text("I can't give you ")
+                            .Text("I can't give you")
                             .RuntimePronounOrAmount(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
                             .Text(" just because").NewLine()
                             .Text("you beat my little brother.")
@@ -4833,7 +4833,7 @@ namespace MMR.Randomizer
                         .Message(it =>
                         {
                             it.PlaySoundEffect(0x291A)
-                            .Text("We can't just give you ")
+                            .Text("We can't just give you")
                             .RuntimePronounOrAmount(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
                             .Text(".")
                             .DisableTextSkip()
@@ -4847,7 +4847,7 @@ namespace MMR.Randomizer
                         .Message(it =>
                         {
                             it.PlaySoundEffect(0x2919)
-                            .Text("I'll give you ")
+                            .Text("I'll give you")
                             .RuntimePronounOrAmount(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
                             .Text(" after you race").NewLine()
                             .Text("once more against me.")
