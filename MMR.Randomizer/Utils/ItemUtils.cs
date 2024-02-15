@@ -515,8 +515,7 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsImportant(Item item, Item locationForImportance, RandomizedResult randomizedResult)
         {
-            return !item.Name().Contains("Heart")
-                && item >= 0
+            return item >= 0
                 && randomizedResult.ImportantLocations?.Contains(locationForImportance) == true;
         }
 
