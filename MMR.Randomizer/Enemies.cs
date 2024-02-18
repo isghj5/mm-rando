@@ -3931,7 +3931,7 @@ namespace MMR.Randomizer
             foreach (string filePath in GenerateMMRAFileList(directory))
             {
                 if (filePath.Contains("SafeBoat.mmra") ||
-                    filePath.Contains("FollowingDinofos.mmra"))
+                    filePath.Contains("Dinofos"))
                     //throw new Exception("SafeBoat.mmra no longer works in actorizer 1.16, \n remove the file from MMR/actors and start a new seed.");
                     continue;
 
