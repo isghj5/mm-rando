@@ -118,6 +118,10 @@ namespace MMR.Randomizer.Models.Rom
         /// <returns>Byte array.</returns>
         public byte[] ToBytes()
         {
+            if (this.Size > 0x500)
+            {
+                throw new Exception($"Message {this.Id} is too large.");
+            }
             var header = this.GetHeaderBytes();
             var message = Array.ConvertAll(this.Message.ToCharArray(), x => (byte)x);
             // var size = (header.Length + message.Length + 3) & -4;

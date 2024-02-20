@@ -3533,7 +3533,7 @@ namespace MMR.Randomizer
 
                             foreach (var kvp in strayFairyRegionLocations[Region.WoodfallTemple])
                             {
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
                             }
 
                             it.Text("Please save the fairies so I can").NewLine()
@@ -3586,7 +3586,7 @@ namespace MMR.Randomizer
 
                             foreach (var kvp in strayFairyRegionLocations[Region.SnowheadTemple])
                             {
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
                             }
 
                             it.Text("Please bring them back here so").NewLine()
@@ -3640,7 +3640,7 @@ namespace MMR.Randomizer
 
                             foreach (var kvp in strayFairyRegionLocations[Region.GreatBayTemple])
                             {
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
                             }
 
                             it.Text("Please save them and bring them").NewLine()
@@ -3693,7 +3693,7 @@ namespace MMR.Randomizer
 
                             foreach (var kvp in strayFairyRegionLocations[Region.StoneTowerTemple])
                             {
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
                             }
 
                             it.Text("Please save them and bring them").NewLine()
@@ -3723,16 +3723,44 @@ namespace MMR.Randomizer
                         .Build()
                     );
 
+                    var dict = strayFairyRegionLocations[Region.SwampSpiderHouseItems];
+
                     newMessages.Add(new MessageEntryBuilder()
                         .Id(0x912)
+                        .Header(h => h.Y(0).Icon(0x52).NextMessage(0x9912))
                         .Message(it =>
                         {
                             it.Text("There should still be...")
                             .EndTextBox();
 
-                            foreach (var kvp in strayFairyRegionLocations[Region.SwampSpiderHouseItems])
+                            var firstHalf = dict.Take(dict.Count / 2).ToList();
+
+                            for (var i = 0; i < firstHalf.Count; i++)
                             {
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                                var kvp = firstHalf[i];
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", i == firstHalf.Count - 1, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                            it
+                            .DisableTextSkip()
+                            .EndFinalTextBox();
+                        })
+                        .ExcludeFromQuickText()
+                        .ShouldTransfer()
+                        .Build()
+                    );
+
+                    _extraMessages.Add(new MessageEntryBuilder()
+                        .Id(0x9912)
+                        .Header(h => h.Y(0).Icon(0x52))
+                        .Message(it =>
+                        {
+                            var lastHalf = dict.Skip(dict.Count / 2).ToList();
+
+                            for (var i = 0; i < lastHalf.Count; i++)
+                            {
+                                var kvp = lastHalf[i];
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
                             }
 
                             it
@@ -3741,26 +3769,27 @@ namespace MMR.Randomizer
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
-                        .ShouldTransfer()
                         .Build()
                     );
 
                     newMessages.Add(new MessageEntryBuilder()
                         .Id(0x914)
-                        .Header(h => h.Y(0).Icon(0x52))
+                        .Header(h => h.Y(0).Icon(0x52).NextMessage(0x9912))
                         .Message(it =>
                         {
-                            it.Text("Please...There should still be...")
+                            it.Text("Please... There should still be...")
                             .EndTextBox();
 
-                            foreach (var kvp in strayFairyRegionLocations[Region.SwampSpiderHouseItems])
+                            var firstHalf = dict.Take(dict.Count / 2).ToList();
+
+                            for (var i = 0; i < firstHalf.Count; i++)
                             {
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                                var kvp = firstHalf[i];
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", i == firstHalf.Count - 1, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
                             }
 
                             it
-                            .Text("Please hurry...")
-                            .DisableTextSkip2()
+                            .DisableTextSkip()
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
@@ -3771,22 +3800,50 @@ namespace MMR.Randomizer
 
                 if (strayFairyRegionLocations.ContainsKey(Region.OceanSpiderHouseItems) && ItemUtils.OceanSkulltulaTokens().Any(token => _randomized.ItemList[token].IsRandomized))
                 {
+                    var dict = strayFairyRegionLocations[Region.OceanSpiderHouseItems];
+
                     newMessages.Add(new MessageEntryBuilder()
                         .Id(0x1135)
-                        .Header(h => h.Y(0).Icon(0x52))
+                        .Header(h => h.Y(0).Icon(0x52).NextMessage(0xA135))
                         .Message(it =>
                         {
                             it.Text("I beg you! Lift the curse on this").NewLine()
                             .Text("place! There should still be...")
                             .EndTextBox();
 
-                            foreach (var kvp in strayFairyRegionLocations[Region.OceanSpiderHouseItems])
+                            var firstHalf = dict.Take(dict.Count / 2).ToList();
+
+                            for (var i = 0; i < firstHalf.Count; i++)
                             {
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                                var kvp = firstHalf[i];
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", i == firstHalf.Count - 1, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                            it
+                            .DisableTextSkip()
+                            .EndFinalTextBox();
+                        })
+                        .ExcludeFromQuickText()
+                        .ShouldTransfer()
+                        .Build()
+                    );
+
+                    _extraMessages.Add(new MessageEntryBuilder()
+                        .Id(0xA135)
+                        .Header(h => h.Y(0).Icon(0x52))
+                        .Message(it =>
+                        {
+                            var lastHalf = dict.Skip(dict.Count / 2).ToList();
+
+                            for (var i = 0; i < lastHalf.Count; i++)
+                            {
+                                var kvp = lastHalf[i];
+                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
                             }
 
                             it.Text("If you lift the curse, I'll buy").NewLine()
                             .Text("this place off you! Please hurry...")
+                            .DisableTextSkip2()
                             .EndFinalTextBox();
                         })
                         .ExcludeFromQuickText()
