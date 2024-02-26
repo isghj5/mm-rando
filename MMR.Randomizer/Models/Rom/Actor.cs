@@ -95,6 +95,7 @@ namespace MMR.Randomizer.Models.Rom
 
             // this might break things, but required for actor placement blocking
             this.ActorEnum = this.OldActorEnum = (GameObjects.Actor) injected.ActorId;
+            this.BlockedScenes = this.ActorEnum.BlockedScenes();
 
             // for now injected actors can only be of type ground
             this.AllVariants = new List<List<int>>()
