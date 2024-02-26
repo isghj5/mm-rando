@@ -4583,7 +4583,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(526)]
         [CheckRestricted(Scene.NorthClockTown, variant: 0x83FF, Item.MaskBlast, Item.MaskAllNight, Item.NotebookMeetOldLady, Item.NotebookSaveOldLady,
             Item.MaskCouple, Item.NotebookEscapeFromSakonSHideout)]
-        [CheckRestricted(Scene.IkanaCanyon, variant: 0x85FF, Item.MaskCouple, Item.NotebookEscapeFromSakonSHideout)]
+        [CheckRestricted(Scene.IkanaCanyon, variant: 0x85FF, Item.MaskCouple, Item.NotebookEscapeFromSakonSHideout, Item.NotebookUniteAnjuAndKafei)]
         [CheckRestricted(Scene.CuriosityShop, variant: 0x83FF, Item.MaskBlast, Item.UpgradeBigBombBag,
             Item.MundaneItemCuriosityShopBlueRupee, Item.MundaneItemCuriosityShopRedRupee, Item.MundaneItemCuriosityShopPurpleRupee, Item.MundaneItemCuriosityShopGoldRupee)]
         // cannot remove because he shares objects with the bank
