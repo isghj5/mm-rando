@@ -2707,6 +2707,11 @@ namespace MMR.Randomizer
                             continue;
                         }
 
+                        if (itemCombo.SkipLogic == false && _settings.CustomStartingItemList.Contains(item))
+                        {
+                            throw new Exception($"The following item:\n [{item}]\n Is scheduled to be given to the player as starting item and cannot be placed with plando.");
+                        }
+
                         if (itemCombo.SkipLogic || CheckMatch(item, check))
                         {
                             ItemList[item].NewLocation = check;

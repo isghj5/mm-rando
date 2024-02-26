@@ -3915,7 +3915,8 @@ namespace MMR.Randomizer.GameObjects
         [WaterBottomVariants(0x00FF)]
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         // uhhh what else
-        //[CheckRestricted(Scene.InvertedStoneTowerTemple, variant:-1,  Item.MundaneItemCuriosityShopBlueRupee)]
+        //[CheckRestricted(Scene.InvertedStoneTowerTemple, variant:-1,
+        //    Item.MundaneItemCuriosityShopBlueRupee, Item.)] // this is not easy to check if the poe scoop, could be princess leads to butler race
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple)]
         Poe = 0x1F3, // En_Poh
 
