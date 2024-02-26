@@ -253,7 +253,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1276)]
         [SceneInternalId(0x25)]
-        [EnemizerSceneBlockSensitive(Actor.PointedSign, -1)]
+        // to randomize the signs, I added another object and changed the signs to bombiwa, the code expects bombiwa
+        [EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)]
         PinnacleRock = 0x22,
 
         [FileID(1278)]
