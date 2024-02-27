@@ -521,10 +521,10 @@ namespace MMR.Randomizer.Utils
             {
                 // these cutscene songs are never heard if shorten cutscenes is enabled, just pointerize it
                 ConvertSequenceSlotToPointer(0x72, 0x45); // point wagonride at kaeopora 
-                ConvertSequenceSlotToPointer(0x2D, 0x3A); // point giants world (oath get cutscene) at observatory
+                //ConvertSequenceSlotToPointer(0x2D, 0x3A); // point giants world (oath get cutscene) at observatory
                 ConvertSequenceSlotToPointer(0x70, 0x0B); // point call the giants( cutscene confronting skullkid) at healed
                 ConvertSequenceSlotToPointer(0x7B, 0x0D); // point maskreveal, the song that plays when the mask shows its alive during moon cutscene, at aliens
-                ConvertSequenceSlotToPointer(0x7D, 0x05); // point reunion at clocktower
+                //ConvertSequenceSlotToPointer(0x7D, 0x05); // point reunion at clocktower
             }
 
             // if ocarina is NOT randomized, pointerize skullkid's seq since it gets used nowhere
@@ -551,6 +551,13 @@ namespace MMR.Randomizer.Utils
                 ConvertSequenceSlotToPointer(0x08, 0x09); // point chasefail(skullkid chase) at fail
                 ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
             }
+
+            // adding some more never-heard-in-rando for extra song slots feature
+            ConvertSequenceSlotToPointer(0x58, 0x0B); // point mikau story song at healed theme
+            // think this one breaks healing goron child
+            //ConvertSequenceSlotToPointer(0x61, 0x0B); // point "pointer to luliby intro" song at healed theme
+            ConvertSequenceSlotToPointer(0x60, 0x0B); // point "pointer to final hours" song at healed theme
+
 
             // create some pointerized slots that are otherwise ignored, beacuse this pool gets re-used later for new song slots
             RomData.PointerizedSequences.Add(new SequenceInfo() { Name = "mm-introcutscene1", MM_seq = 0x1E, PreviousSlot = 0x1E, Replaces = 0x76 });
