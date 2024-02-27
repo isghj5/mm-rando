@@ -728,7 +728,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [BlockingVariantsAll]
-        [FlyingToGroundHeightAdjustment(250)]
+        [FlyingToGroundHeightAdjustment(275)]
         [EnemizerScenesPlacementBlock(
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.PiratesFortressRooms, Scene.DekuPalace,
             Scene.DekuShrine, Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.GoronRacetrack,
@@ -737,7 +737,8 @@ namespace MMR.Randomizer.GameObjects
             Scene.StockPotInn, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall, Scene.TradingPost, Scene.MayorsResidence,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
             Scene.SouthernSwamp, // dyna crash, remove if we get dyna overload detection working
-            Scene.BeneathTheWell, Scene.IkanaGraveyard, Scene.StoneTower)]
+            Scene.BeneathTheWell,
+            Scene.IkanaGraveyard, Scene.StoneTower)] // dyna crash
         //*/
         //[EnemizerScenesPlacementBlock(Scene.DekuPalace, Scene.BeneathTheWell, Scene.BeneathGraveyard, Scene.RoadToIkana, Scene.StoneTower)]
         UnusedStoneTowerStoneElevator = 0x4D, // Bg_F40_Flift
@@ -1645,7 +1646,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [BlockingVariantsAll]
-        [FlyingToGroundHeightAdjustment(250)]
+        [FlyingToGroundHeightAdjustment(275)]
         // TODO go through all of these and recheck now that we can modify the height correctly
         [EnemizerScenesPlacementBlock(//Scene.DekuPalace,
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
@@ -1653,7 +1654,8 @@ namespace MMR.Randomizer.GameObjects
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
             Scene.StockPotInn, Scene.TradingPost, Scene.MayorsResidence,
-            Scene.BeneathTheWell, Scene.IkanaGraveyard, Scene.StoneTower)]
+            Scene.BeneathTheWell,
+            Scene.IkanaGraveyard, Scene.StoneTower)] // dyna crash
         //[SwitchFlagsPlacement(mask: 0xFF, shift: 0)]
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
