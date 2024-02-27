@@ -193,10 +193,10 @@ namespace MMR.Randomizer.Utils
         }
 
         // todo cache
-        public static Dictionary<OverwritableAttribute.ItemSlot, ReadOnlyCollection<Item>> OverwriteableSlotItems(GameplaySettings settings)
+        public static Dictionary<OverwritableAttribute.ItemSlot, ReadOnlyCollection<Item>> OverwriteableSlotItems()
         {
             return Enum.GetValues<Item>()
-                .GroupBy(item => item.OverwriteableSlot(settings))
+                .GroupBy(item => item.OverwriteableSlot())
                 .Where(g => g.Key != OverwritableAttribute.ItemSlot.None)
                 .ToDictionary(g => g.Key, g => g.ToList().AsReadOnly());
         }
@@ -515,8 +515,7 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsImportant(Item item, Item locationForImportance, RandomizedResult randomizedResult)
         {
-            return !item.Name().Contains("Heart")
-                && item >= 0
+            return item >= 0
                 && randomizedResult.ImportantLocations?.Contains(locationForImportance) == true;
         }
 

@@ -33,7 +33,6 @@ namespace MMR.Randomizer
         #region Dependence and Conditions
         List<Item> ConditionsChecked { get; set; }
         Dictionary<Item, Dependence> DependenceChecked { get; set; }
-        List<int[]> ConditionRemoves { get; set; }
 
         private class Dependence
         {
@@ -229,6 +228,8 @@ namespace MMR.Randomizer
             {
                 ForbiddenStartingItems.AddRange(ItemUtils.DowngradableItems());
             }
+
+            ItemExtensions.PrepareSettings(settings);
         }
 
         //rando functions
@@ -1210,7 +1211,7 @@ namespace MMR.Randomizer
             }
 
             //check timing
-            if (currentItemObject.TimeNeeded != 0 && (!_timeTravelPlaced || (currentItem.IsTemporary(_settings) && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary(_settings)))))
+            if (currentItemObject.TimeNeeded != 0 && (!_timeTravelPlaced || (currentItem.IsTemporary() && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary()))))
             {
                 if ((currentItemObject.TimeNeeded & currentTargetObject.TimeAvailable) == 0)
                 {
@@ -1238,7 +1239,6 @@ namespace MMR.Randomizer
 
                 int k = 0;
                 var circularDependencies = new List<Item>();
-                var conditionRemoves = new List<int[]>();
                 for (int i = 0; i < currentTargetObject.Conditionals.Count; i++)
                 {
                     bool match = false;
@@ -1283,16 +1283,7 @@ namespace MMR.Randomizer
                             {
                                 DependenceChecked[d] = Dependence.Dependent;
                             }
-                            if (DependenceChecked[d].Type == DependenceType.Dependent)
-                            {
-                                int[] check = new int[] { (int)target, i, j };
-
-                                if (!conditionRemoves.Any(c => c.SequenceEqual(check)))
-                                {
-                                    conditionRemoves.Add(check);
-                                }
-                            }
-                            else
+                            if (DependenceChecked[d].Type != DependenceType.Dependent)
                             {
                                 circularDependencies = circularDependencies.Union(DependenceChecked[d].Items).ToList();
                             }
@@ -1314,16 +1305,6 @@ namespace MMR.Randomizer
                     Debug.WriteLine($"All conditionals of {targetName} failed dependency check for {currentItem}.");
                     return Dependence.Dependent;
                 }
-                else
-                {
-                    foreach (var cr in conditionRemoves)
-                    {
-                        if (!ConditionRemoves.Any(c => c.SequenceEqual(cr)))
-                        {
-                            ConditionRemoves.Add(cr);
-                        }
-                    }
-                }
             }
 
             if (currentTargetObject.DependsOnItems == null)
@@ -1340,7 +1321,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            var currentItemIsTemporary = !_timeTravelPlaced || currentItem.IsTemporary(_settings);
+            var currentItemIsTemporary = !_timeTravelPlaced || currentItem.IsTemporary();
 
             //cycle through all things
             foreach (var dependency in currentTargetObject.DependsOnItems)
@@ -1399,22 +1380,6 @@ namespace MMR.Randomizer
             }
 
             return Dependence.NotDependent;
-        }
-
-        private void RemoveConditionals(Item currentItem)
-        {
-            foreach (var conditionRemove in ConditionRemoves)
-            {
-                int x = conditionRemove[0];
-                int y = conditionRemove[1];
-                int z = conditionRemove[2];
-                ItemList[x].Conditionals[y] = null;
-            }
-
-            foreach (var itemObject in ItemList)
-            {
-                itemObject.Conditionals.RemoveAll(u => u == null);
-            }
         }
 
         private void UpdateConditionals(Item currentItem, Item target)
@@ -1501,7 +1466,7 @@ namespace MMR.Randomizer
             var targetItemObject = ItemList[target];
             if (target == Item.MaskBlast || target == Item.NotebookSaveOldLady || target == Item.UpgradeBigBombBag)
             {
-                if (_timeTravelPlaced && !currentItem.IsTemporary(_settings))
+                if (_timeTravelPlaced && !currentItem.IsTemporary())
                 {
                     targetItemObject.DependsOnItems?.Remove(Item.TradeItemKafeiLetter);
                     targetItemObject.DependsOnItems?.Remove(Item.TradeItemPendant);
@@ -1530,7 +1495,7 @@ namespace MMR.Randomizer
                         CheckConditionals(currentItem, location, childPath);
                     }
                 }
-                else if (ItemList[currentItem].TimeNeeded != 0 && dependency.IsTemporary(_settings) && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary(_settings)))
+                else if (ItemList[currentItem].TimeNeeded != 0 && dependency.IsTemporary() && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary()))
                 {
                     if (dependencyObject.TimeNeeded == 0)
                     {
@@ -1587,14 +1552,14 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            var overwritableSlot = currentItem.OverwriteableSlot(_settings);
+            var overwritableSlot = currentItem.OverwriteableSlot();
 
             if (overwritableSlot != OverwritableAttribute.ItemSlot.None)
             {
                 var forcedCheckGroup = ForcedCheckGroups.FirstOrDefault(locations => locations.Contains(target));
                 if (forcedCheckGroup != default)
                 {
-                    var slotItems = ItemUtils.OverwriteableSlotItems(_settings)[overwritableSlot];
+                    var slotItems = ItemUtils.OverwriteableSlotItems()[overwritableSlot];
 
                     foreach (var slotItem in slotItems)
                     {
@@ -1606,7 +1571,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (!_timeTravelPlaced || currentItem.IsTemporary(_settings))
+            if (!_timeTravelPlaced || currentItem.IsTemporary())
             {
                 if ((target.Region(ItemList) == Region.TheMoon || target.Region(ItemList) == Region.ClockTowerRoof) && currentItem.ItemCategory() != ItemCategory.TimeTravel)
                 {
@@ -1624,7 +1589,6 @@ namespace MMR.Randomizer
             }
 
             //check direct dependence
-            ConditionRemoves = new List<int[]>();
             DependenceChecked = new Dictionary<Item, Dependence> { { target, new Dependence { Type = DependenceType.Dependent } } };
             var dependencyPath = new List<Item> { target };
 
@@ -1634,7 +1598,6 @@ namespace MMR.Randomizer
             }
 
             //check conditional dependence
-            RemoveConditionals(currentItem);
             ConditionsChecked = new List<Item>();
             CheckConditionals(currentItem, target, dependencyPath);
 
@@ -1943,6 +1906,21 @@ namespace MMR.Randomizer
                 return (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 4.0) * 500, 1, 500);
             }
 
+            (ushort, ushort) randomPriceWithComparablePrice()
+            {
+                var cost = randomPrice();
+                var comparableCost = cost;
+                if (priceShouldMultiply)
+                {
+                    comparableCost <<= 1;
+                    if (comparableCost > 999)
+                    {
+                        comparableCost = 999;
+                    }
+                }
+                return (cost, comparableCost);
+            }
+
             _randomized.MessageCosts = new List<ushort?>();
             
             for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
@@ -1955,18 +1933,20 @@ namespace MMR.Randomizer
                 }
 
                 ushort cost;
+                ushort comparableCost;
 
                 if (_settings.PriceMode.HasFlag(messageCost.Category))
                 {
-                    cost = randomPrice();
+                    (cost, comparableCost) = randomPriceWithComparablePrice();
 
                     // this relies on puchase 2 appearing in the list directly after purchase 1
                     if (messageCost.Name == "Business Scrub Purchase 2")
                     {
                         var purchase1Cost = _randomized.MessageCosts[i - 1] ?? 150;
-                        while (cost == purchase1Cost)
+
+                        while (comparableCost == purchase1Cost)
                         {
-                            cost = randomPrice();
+                            (cost, comparableCost) = randomPriceWithComparablePrice();
                         }
                     }
 
@@ -2745,7 +2725,7 @@ namespace MMR.Randomizer
         /// </summary>
         private void PlaceRemainingItems(List<Item> itemPool)
         {
-            foreach (var item in ItemUtils.AllLocations().OrderByDescending(item => !ItemUtils.IsJunk(ItemList[item].Item)).ThenByDescending(item => item.IsTemporary(_settings)))
+            foreach (var item in ItemUtils.AllLocations().OrderByDescending(item => !ItemUtils.IsJunk(ItemList[item].Item)).ThenByDescending(item => item.IsTemporary()))
             {
                 if (ItemList[item].NewLocation == null)
                 {
@@ -2955,7 +2935,7 @@ namespace MMR.Randomizer
                 freeItemLocations.Remove(Item.SongHealing);
             }
             var availableStartingItems = (_settings.StartingItemMode switch {
-                    StartingItemMode.Random => ItemUtils.StartingItems().Where(item => !item.IsTemporary(_settings) && item != Item.ItemPowderKeg),
+                    StartingItemMode.Random => ItemUtils.StartingItems().Where(item => !item.IsTemporary() && item != Item.ItemPowderKeg),
                     StartingItemMode.AllowTemporaryItems => ItemUtils.StartingItems(),
                     _ => Enumerable.Empty<Item>(),
                 })

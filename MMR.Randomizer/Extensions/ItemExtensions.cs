@@ -71,22 +71,23 @@ namespace MMR.Randomizer.Extensions
             return item.Name();
         }
 
+        private static IReadOnlyDictionary<Item, string> _locations = Enum.GetValues<Item>().ToDictionary(x => x, x => x.GetAttribute<LocationNameAttribute>()?.Name);
         public static string Location(this Item item, ItemList itemList = null)
         {
-            var locationAttribute = item.GetAttribute<LocationNameAttribute>();
-            if (locationAttribute == null)
+            var location = _locations.GetValueOrDefault(item);
+            if (location == null)
             {
                 return null;
             }
             if (itemList == null)
             {
-                return locationAttribute.Name;
+                return location;
             }
 
             var reference = item.GetAttribute<RegionAttribute>()?.Reference;
             if (reference == null)
             {
-                return locationAttribute.Name;
+                return location;
             }
 
             var referenceNewLocation = itemList[reference.Value].NewLocation ?? reference.Value;
@@ -184,9 +185,24 @@ namespace MMR.Randomizer.Extensions
             return item.HasAttribute<DowngradableAttribute>();
         }
 
-        public static bool IsTemporary(this Item item, GameplaySettings settings)
+        public static void PrepareSettings(GameplaySettings settings)
         {
-            return item.GetAttribute<TemporaryAttribute>()?.Condition(settings) ?? false;
+            _isTemporary = Enum.GetValues<Item>().ToDictionary(x => x, x => x.GetAttribute<TemporaryAttribute>()?.Condition(settings) ?? false);
+            _overwriteableSlots = Enum.GetValues<Item>().ToDictionary(x => x, x =>
+            {
+                var overwriteableAttribute = x.GetAttribute<OverwritableAttribute>();
+                if (overwriteableAttribute?.Condition(settings) == true)
+                {
+                    return overwriteableAttribute.Slot;
+                }
+                return OverwritableAttribute.ItemSlot.None;
+            });
+        }
+
+        private static IReadOnlyDictionary<Item, bool> _isTemporary;
+        public static bool IsTemporary(this Item item)
+        {
+            return _isTemporary.GetValueOrDefault(item);
         }
 
         public static ClassicCategory? ClassicCategory(this Item item)
@@ -232,14 +248,10 @@ namespace MMR.Randomizer.Extensions
             return result;
         }
 
-        public static OverwritableAttribute.ItemSlot OverwriteableSlot(this Item item, GameplaySettings settings)
+        private static IReadOnlyDictionary<Item, OverwritableAttribute.ItemSlot> _overwriteableSlots;
+        public static OverwritableAttribute.ItemSlot OverwriteableSlot(this Item item)
         {
-            var overwriteableAttribute = item.GetAttribute<OverwritableAttribute>();
-            if (overwriteableAttribute?.Condition(settings) == true)
-            {
-                return overwriteableAttribute.Slot;
-            }
-            return OverwritableAttribute.ItemSlot.None;
+            return _overwriteableSlots.GetValueOrDefault(item);
         }
 
         public static bool IsSong(this Item item)

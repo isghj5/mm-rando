@@ -70,3 +70,19 @@ Misc_AfterDeath_Hook:
     lw      ra, 0x0014 (sp)
     jr      ra
     addiu   sp, sp, 0x18
+
+Misc_ShouldStopDrownTimer_Hook:
+    addiu   sp, sp, -0x20
+    sw      ra, 0x0014 (sp)
+    sw      t0, 0x0018 (sp)
+    sw      v1, 0x001C (sp)
+
+    jal     Misc_ShouldStopDrownTimer
+    sw      a1, 0x0024 (sp)
+
+    lw      a1, 0x0024 (sp)
+    lw      v1, 0x001C (sp)
+    lw      t0, 0x0018 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x20

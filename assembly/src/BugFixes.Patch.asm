@@ -63,3 +63,22 @@
 .org 0x80848DBC
     jal     BugFixes_PlayEmptyWeaponSound
     addiu   a1, a1, 0xD5FA
+
+;==================================================================================================
+; Fix Index Warp from Z button
+;==================================================================================================
+
+.headersize G_CODE_DELTA
+
+; Replaces:
+;   SRA     T8, A0, 4
+;   ANDI    T9, T8, 0x0001
+;   BEQZ    T9, .+0xC
+;   ADDIU   T0, R0, 0x0004
+;   SH      T0, 0x0240 (V1)
+.org 0x800F4B38
+    jal     BugFixes_SoaringCursorPoint
+    or      a0, v1, r0
+    nop
+    nop
+    nop

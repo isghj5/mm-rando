@@ -52,3 +52,15 @@ void BugFixes_PlayEmptyWeaponSound(ActorPlayer* player, s16* soundEffects) {
     }
     z2_PlayPlayerSfx(player, soundEffects[sfxIndex]);
 }
+
+void BugFixes_SoaringCursorPoint(PauseContext* pauseCtx) {
+    // Displaced code:
+    if (gSaveContext.perm.unk24.owlsHit.clockTown) {
+        pauseCtx->cells1.worldmap = 4;
+    }
+    // End displaced code
+
+    if (MISC_CONFIG.flags.saferGlitches && pauseCtx->cells1.worldmap == -1) {
+        pauseCtx->cells1.worldmap = 0;
+    }
+}

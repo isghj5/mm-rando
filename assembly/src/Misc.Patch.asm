@@ -66,3 +66,22 @@
 .org 0x801AA930
     jal     Misc_AfterDeath_Hook
     lw      a0, 0x0018 (sp)
+
+;==================================================================================================
+; Stop drown timer
+;==================================================================================================
+
+.headersize G_CODE_DELTA
+
+; Replaces:
+;   LH      V0, 0xF8DC (V0)
+;   ADDIU   AT, R0, 0x0003
+;   BEQZL   V0, .+0x10
+;   SLTI    AT, V1, 0x0005
+;   BNE     V0, AT, .+0x14
+.org 0x80121BDC
+    jal     Misc_ShouldStopDrownTimer_Hook
+    lh      a0, 0xF8DC (v0)
+    beqz    v0, 0x80121C00
+    lw      a3, 0x0020 (sp)
+    nop

@@ -682,7 +682,7 @@ namespace MMR.Randomizer.Models.Rom
                 .RuntimeGenericStop();
         }
 
-        public static MessageEntryBuilder.MessageBuilder RuntimeStrayFairyLocations(this MessageEntryBuilder.MessageBuilder @this, char color, string message, Region region, params Item[] locations)
+        public static MessageEntryBuilder.MessageBuilder RuntimeStrayFairyLocations(this MessageEntryBuilder.MessageBuilder @this, char color, string message, bool isLast, Region region, params Item[] locations)
         {
             var regionPreposition = region.Preposition();
             var regionName = region.Name();
@@ -691,17 +691,20 @@ namespace MMR.Randomizer.Models.Rom
                 regionPreposition += " ";
             }
 
-            return @this
-                .RuntimeStrayFairyLocationsStart(locations)
+            @this.RuntimeStrayFairyLocationsStart(locations)
                 .TextColor(color, () =>
                 {
                     @this.RuntimeWrap(() =>
                     {
                         @this.Text($" {message} ").Text(regionPreposition ?? "").Red(regionName).Text(".");
                     });
-                })
-                .EndTextBox()
-                .RuntimeGenericStop();
+                });
+            if (!isLast)
+            {
+                @this.EndTextBox();
+            }
+            @this.RuntimeGenericStop();
+            return @this;
         }
 
         #region Color Extensions
