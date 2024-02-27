@@ -1362,7 +1362,6 @@ namespace MMR.Randomizer.Utils
         public static bool SearchAndReplaceSceneBGM(string sceneFIDStr, byte slotReplacement)
         {
             /// scan the files for the header that contains scene music (0x15 first byte)
-            // 15xx0000 0000yyzz where zz is the sequence pointer byte
 
             // however, the header data we want COULD be in a different scene layer and we want to be able to search from the offset into the file
             int sceneFID = -1;
@@ -1382,20 +1381,23 @@ namespace MMR.Randomizer.Utils
             }
 
             RomUtils.CheckCompressed(sceneFID);
-            for (int b = (int) searchOffset; b < searchOffset + (0x10 * 70); b += 8)
+            var sceneData = RomData.MMFileList[sceneFID].Data;
+            for (int b = (int)searchOffset; b < searchOffset + (0x10 * 70); b += 8)
             {
-                if (RomData.MMFileList[sceneFID].Data[b] == 0x15)
+                // sound settings header command: 15xx0000 0000yyzz where zz is the sequence pointer byte
+                if (sceneData[b] == 0x15) 
                 {
-                    Debug.WriteLine($"[{sceneFID}]Replacing previous music index byte: " + RomData.MMFileList[sceneFID].Data[b + 0x7].ToString("X2") +" at offset:" +b);
-                    RomData.MMFileList[sceneFID].Data[b + 0x7] = slotReplacement;
+                    Debug.WriteLine($"[{sceneFID}]Replacing previous music index byte: " + sceneData[b + 0x7].ToString("X2") + " at offset:" + b);
+                    sceneData[b + 0x7] = slotReplacement;
 
                     return true;
                 }
-                if (RomData.MMFileList[sceneFID].Data[b] == 0x14)
+                if (sceneData[b] == 0x14)
+                {
+                    throw new Exception("Error: adding new song slots ran out of space and coult not modify anything");
                     break; // this is the last header command, telling us the header is finished, don't waste time going deeper
+                }
             }
-
-            // the scene header might not work for scenes where the room music is room specific like astral observatory or the well
 
             return false;
         }
@@ -1404,6 +1406,7 @@ namespace MMR.Randomizer.Utils
 
         public static void ReassignSongSlots(StringBuilder log, Random rng)
         {
+            /// new extra song slots
             // read all assginement slots from json files
             var replacementSongSlots = new List<ReplacementSongSlot>();
             // resources folder got nuked, for now lets assume this will be in the main folder
@@ -1453,6 +1456,7 @@ namespace MMR.Randomizer.Utils
                 log.AppendLine($"++ Adding a new song slot: [{newSongSlot.Name}] at previously unused slot [{availableSlot.PreviousSlot.ToString("X2")}]");
                 availableSlots.RemoveAt(0);
 
+                // replace the song byte for every scene in this replacement event
                 foreach (string sceneFID in newSongSlot.SceneFIDToModify)
                 {
                     bool result = SearchAndReplaceSceneBGM(sceneFID, (byte)availableSlot.PreviousSlot);
@@ -1468,7 +1472,7 @@ namespace MMR.Randomizer.Utils
                     {
                         // we add mmr- because if the user adds mm- it will confuse our weak parser later
                         Name = "mmr-" + newSongSlot.Name,
-                        MM_seq = availableSlot.PreviousSlot,
+                        MM_seq = availableSlot.MM_seq, // previoyusly PreviousSlot
                         Replaces = availableSlot.PreviousSlot,
                         Type = newSongSlot.NewSongSlotCategories.Select(int.Parse).ToList(),
                         Instrument = 0
@@ -1489,6 +1493,8 @@ namespace MMR.Randomizer.Utils
                     // 0FBD08 801A17C8 3484003B */  ori   $a0, $a0, 003B <- replace 3B with our byte
                     codeFile[0xFBD08 + 3] = (byte) availableSlot.PreviousSlot;
                 }
+
+                RomData.PointerizedSequences.Remove(availableSlot);
             }
         } // */
 
