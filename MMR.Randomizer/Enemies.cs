@@ -78,7 +78,7 @@ namespace MMR.Randomizer
         // outer list is item.category, inner list is items
         private static List<List<GameObjects.Item>> ActorizerKnownJunkItems { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = true;
+        private static bool ACTORSENABLED = false;
         private static Random seedrng;
         private static Models.RandomizedResult _randomized;
         private static OutputSettings _outputSettings;
@@ -852,9 +852,9 @@ namespace MMR.Randomizer
 
             const int FORM_FD    = 0; // let me use enum as int without a cast and I'll use it
             const int FORM_GORON = 1;
-            const int FORM_ZORA  = 2;
-            const int FORM_DEKU  = 3;
-            const int FORM_CHILD = 4;
+            //const int FORM_ZORA  = 2;
+            //const int FORM_DEKU  = 3;
+            //const int FORM_CHILD = 4;
 
 
             var codeFile = RomData.MMFileList[31].Data;
@@ -1045,6 +1045,10 @@ namespace MMR.Randomizer
             var pohData = RomData.MMFileList[GameObjects.Actor.Poe.FileListIndex()].Data;
             pohData[0x3003] = 0x2;
 
+            // to pointerize milk bar we have to change the obj_sound actor in themilkbar
+            //SequenceUtils.ConvertSequenceSlotToPointer(seqSlotIndex: 0x56, substituteSlotIndex:0x1F, "mm-milk-bar-pointer"); // house
+            var milkbarScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MilkBar.FileID());
+            milkbarScene.Maps[0].Actors[17].Variants[0] = 0x13C; // from 0x156, the pointer, to 3C the actual milkbar song
 
             //LightShinanigans();
 
@@ -2689,11 +2693,11 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.MilkRoad, GameObjects.Actor.Carpenter, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.DekuBaba, GameObjects.Actor.DragonFly)) continue;
-                if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.SpikedMine, GameObjects.Actor.Postbox)) continue;
-                if (TestHardSetObject(GameObjects.Scene.MayorsResidence, GameObjects.Actor.Gorman, GameObjects.Actor.BeanSeller)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.MayorsResidence, GameObjects.Actor.Gorman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Monkey)) continue;

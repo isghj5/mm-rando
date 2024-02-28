@@ -552,18 +552,18 @@ namespace MMR.Randomizer.Utils
                 ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
             }
 
-            // adding some more never-heard-in-rando for extra song slots feature
-            ConvertSequenceSlotToPointer(0x58, 0x0B); // point mikau story song at healed theme
-            // think this one breaks healing goron child
             //ConvertSequenceSlotToPointer(0x61, 0x0B); // point "pointer to luliby intro" song at healed theme
-            ConvertSequenceSlotToPointer(0x60, 0x0B); // point "pointer to final hours" song at healed theme
-
 
             // create some pointerized slots that are otherwise ignored, beacuse this pool gets re-used later for new song slots
-            RomData.PointerizedSequences.Add(new SequenceInfo() { Name = "mm-introcutscene1", MM_seq = 0x1E, PreviousSlot = 0x1E, Replaces = 0x76 });
+            ConvertSequenceSlotToPointer( 0x1E, 0x76, "mm-introcutscene1");
+            ConvertSequenceSlotToPointer(0x58, 0xB, "mm-mikaustory1"); // healed
+            ConvertSequenceSlotToPointer(0x60, 0xB, "mm-old-final-hours-pointer");
+
+            // think this one breaks healing goron child, as this pointer is used for post-playing fanfares I think
+            //ConvertSequenceSlotToPointer("mm-goron-lulliby-intro-pointer", 0x61, 0xB);
         }
 
-        public static void ConvertSequenceSlotToPointer(int seqSlotIndex, int substituteSlotIndex)
+        public static void ConvertSequenceSlotToPointer(int seqSlotIndex, int substituteSlotIndex, string name = "")
         {
             // turns the sequence slot into a pointer, which points at another song, at SubstituteSlotIndex
             // the slot at SeqSlotIndex is marked such that, instead of a new sequence being put there
@@ -582,7 +582,8 @@ namespace MMR.Randomizer.Utils
             else
             {
                 //throw new IndexOutOfRangeException("Could not convert slot to pointer:" + SeqSlotIndex.ToString("X2"));
-                Debug.WriteLine("Cannot pointerize a songslot that does not exist: " + seqSlotIndex.ToString("X") + " and " + substituteSlotIndex.ToString("X"));
+                Debug.WriteLine("Adding new pointer slot for un-shuffled music: " + seqSlotIndex.ToString("X") + " and " + substituteSlotIndex.ToString("X"));
+                RomData.PointerizedSequences.Add(new SequenceInfo() { Name = name, MM_seq = seqSlotIndex, PreviousSlot = seqSlotIndex, Replaces = substituteSlotIndex });
             }
         }
 
@@ -1460,7 +1461,7 @@ namespace MMR.Randomizer.Utils
             {
                 ReplacementSongSlot newSongSlot = replacementSongSlots[i];
                 SequenceInfo availableSlot = availableSlots.ElementAt(0);
-                log.AppendLine($"++ Adding a new song slot: [{newSongSlot.Name}] at previously unused slot [{availableSlot.PreviousSlot.ToString("X2")}]");
+                log.AppendLine($"++ Adding a new song slot: [{newSongSlot.Name}] at previously unused slot [{availableSlot.PreviousSlot.ToString("X2")}][{availableSlot.Name}]");
                 availableSlots.RemoveAt(0);
 
                 // replace the song byte for every scene in this replacement event
