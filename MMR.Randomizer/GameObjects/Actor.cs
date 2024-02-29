@@ -1687,7 +1687,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableGoronRacetrackPot24, Item.CollectableGoronRacetrackPot25, Item.CollectableGoronRacetrackPot26,
             Item.CollectableGoronRacetrackPot27, Item.CollectableGoronRacetrackPot28, Item.CollectableGoronRacetrackPot29, Item.CollectableGoronRacetrackPot30
             )]
-        [CheckRestricted(Scene.TwinIslands, variant: -1, Item.ItemBottleGoronRace,
+        [CheckRestricted(Scene.TwinIslands, variant: -1, Item.ItemBottleGoronRace, Item.ChestToGoronRaceGrotto,
             Item.CollectableGoronRacetrackPot1, Item.CollectableGoronRacetrackPot2, Item.CollectableGoronRacetrackPot3,
             Item.CollectableGoronRacetrackPot4, Item.CollectableGoronRacetrackPot5, Item.CollectableGoronRacetrackPot6,
             Item.CollectableGoronRacetrackPot7, Item.CollectableGoronRacetrackPot8, Item.CollectableGoronRacetrackPot9, Item.CollectableGoronRacetrackPot10,
