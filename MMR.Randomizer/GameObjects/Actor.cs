@@ -2915,7 +2915,8 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted( scene:Scene.MountainVillage, variant:-1, check: Item.MaskGoron,
             Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
             Item.ChestHotSpringGrottoRedRupee,
-            Item.UpgradeRazorSword, Item.UpgradeRazorSword)]
+            Item.UpgradeRazorSword, Item.UpgradeRazorSword,
+            Item.ItemWellCowMilk)]
         // parameters unknown, they are not even and not time (time of spawn is a different parameter)
         [WaterTopVariants(0x1FFE, 0x1FFD, 0x1000, 0x1004)] // for replacement
         //[PathingVariants(0x1FFD, 0x1FFE)] // 0x7F >> 2, 0x1FC
