@@ -477,6 +477,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.BigPoe)] // for some reason big poe in the first room can cause camera to lock, unknown reason
         [EnemizerSceneEnemyReplacementBlock(Actor.Dexihand,
             Actor.Bumper)] // can block the water channel
+        [EnemizerSceneEnemyReplacementBlock(Actor.SkullFish,
+            Actor.Desbreko)] // lag
         [FairyDroppingEnemies(roomNumber: 8, actorNumber: 7)] // skulltula in first room
         [EnemizerSceneBlockSensitive(Actor.Dexihand, -1)]
         GreatBayTemple = 0x46,
