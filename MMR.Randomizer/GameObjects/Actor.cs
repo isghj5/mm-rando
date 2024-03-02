@@ -4360,7 +4360,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(503)]
         [ObjectListIndex(0xA7)]
-        [CheckRestricted(Scene.TerminaField, variant: 0x40FF, Item.MaskRomani)]
+        [CheckRestricted(Scene.TerminaField, variant: 0x40FF, Item.MaskRomani,
+            Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
         [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.MaskRomani,
             Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
         [GroundVariants(0, // standing around day 1 is type 0

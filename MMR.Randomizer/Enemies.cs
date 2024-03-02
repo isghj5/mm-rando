@@ -1739,7 +1739,7 @@ namespace MMR.Randomizer
             {
                 // sitting just outside of town door, move inwards a bit
                 ectKafei.Position = new vec16(1475, 60, -747);
-                sctKafei.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: sctKafei.Rotation.y);
+                ectKafei.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: sctKafei.Rotation.y);
                 SceneUtils.UpdateScene(eastClockTown);
             }
 
