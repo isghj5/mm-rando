@@ -490,7 +490,7 @@ namespace MMR.Randomizer.Utils
             } // for each mmrs end
         }
 
-        public static void PointerizeSequenceSlots()
+        public static void PointerizeSequenceSlots(OutputSettings _settings, bool randomizedEnemies)
         {
             // if music availablilty is low, pointerize some slots
             // why? because in Z64 fairy fountain and fileselect are the same song,
@@ -552,15 +552,30 @@ namespace MMR.Randomizer.Utils
                 ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
             }
 
-            //ConvertSequenceSlotToPointer(0x61, 0x0B); // point "pointer to luliby intro" song at healed theme
-
             // create some pointerized slots that are otherwise ignored, beacuse this pool gets re-used later for new song slots
             ConvertSequenceSlotToPointer( 0x1E, 0x76, "mm-introcutscene1");
             ConvertSequenceSlotToPointer(0x58, 0xB, "mm-mikaustory1"); // healed
-            ConvertSequenceSlotToPointer(0x60, 0xB, "mm-old-final-hours-pointer");
+
+            // got a report this isn't working, although I tested it myself, what is happening...
+            //ConvertSequenceSlotToPointer(0x60, 0xB, "mm-old-final-hours-pointer");
 
             // think this one breaks healing goron child, as this pointer is used for post-playing fanfares I think
             //ConvertSequenceSlotToPointer("mm-goron-lulliby-intro-pointer", 0x61, 0xB);
+
+            // to pointerize milk bar we have to change the obj_sound actor in themilkbar
+            ConvertSequenceSlotToPointer(seqSlotIndex: 0x56, substituteSlotIndex:0x1F, "mm-milk-bar-pointer"); // house
+            if (randomizedEnemies)
+            {
+                var milkbarScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MilkBar.FileID());
+                milkbarScene.Maps[0].Actors[17].Variants[0] = 0x13C; // from 0x156, the pointer, to 3C the actual milkbar song
+            }
+            else
+            {
+                // except we can't do this in enemizer we can't know for certain anyone is playing with both
+                RomUtils.CheckCompressed(GameObjects.Scene.MilkBar.FileID() + 1);
+                var milkbarData = RomData.MMFileList[GameObjects.Scene.MilkBar.FileID() + 1].Data;
+                milkbarData[0x193] = 0x3C; // obj_sound (actor 17) parameter from 0x156 to 0x13C (where 56 is milkbar ptr, 3C is actual milkbar slot)
+            }
         }
 
         public static void ConvertSequenceSlotToPointer(int seqSlotIndex, int substituteSlotIndex, string name = "")

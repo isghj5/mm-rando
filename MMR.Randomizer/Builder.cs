@@ -153,7 +153,7 @@ namespace MMR.Randomizer
             SequenceUtils.ResetFreeBankIndex();
             if (_cosmeticSettings.Music == Music.Random)
             {
-                SequenceUtils.PointerizeSequenceSlots();
+                SequenceUtils.PointerizeSequenceSlots(settings, _randomized.Settings.RandomizeEnemies);
                 BGMShuffle(random, settings);
                 ResourceUtils.ApplyHack(Resources.mods.remove_morning_music);
             }
