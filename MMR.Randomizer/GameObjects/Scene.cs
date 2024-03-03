@@ -415,6 +415,7 @@ namespace MMR.Randomizer.GameObjects
         // mirror blocks climbing
         [EnemizerSceneEnemyReplacementBlock(Actor.BadBat,
             Actor.Bo, Actor.StoneTowerMirror,
+            Actor.MothSwarm, // can block
             Actor.SpiderWeb)] // TODO would be cool if we could allow this if the item was junk, or logic require fire arrows
         [EnemizerSceneBlockSensitive(Actor.BadBat, -1)] // giant ice block, unused stone stuff at least
         RoadToSouthernSwamp = 0x3D,
