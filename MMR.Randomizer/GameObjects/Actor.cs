@@ -2912,11 +2912,13 @@ namespace MMR.Randomizer.GameObjects
         // flying ice platforms leading to lens cave
         [FileID(339)]
         [ObjectListIndex(0x187)]
-        [CheckRestricted( scene:Scene.MountainVillage, variant:-1, check: Item.MaskGoron,
+        // this is not enough: this does NOT take into account scoop sanity
+        /*[CheckRestricted( scene:Scene.MountainVillage, variant:-1, check: Item.MaskGoron,
             Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
             Item.ChestHotSpringGrottoRedRupee,
             Item.UpgradeRazorSword, Item.UpgradeRazorSword,
             Item.ItemWellCowMilk)]
+        // */
         // parameters unknown, they are not even and not time (time of spawn is a different parameter)
         [WaterTopVariants(0x1FFE, 0x1FFD, 0x1000, 0x1004)] // for replacement
         //[PathingVariants(0x1FFD, 0x1FFE)] // 0x7F >> 2, 0x1FC
@@ -2926,6 +2928,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 2, variant: 0x1000, 0x1004)]
         [VariantsWithRoomMax(max: 0, variant: 0x1FFE, 0x1FFD)] // pathing type, and we dont want them to path
         [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.MountainVillage)]
         IceWaterPlatforms = 0x179, // Obj_Driftice
 
         [EnemizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
