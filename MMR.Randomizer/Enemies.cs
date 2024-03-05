@@ -853,7 +853,7 @@ namespace MMR.Randomizer
             const int FORM_FD    = 0; // let me use enum as int without a cast and I'll use it
             const int FORM_GORON = 1;
             //const int FORM_ZORA  = 2;
-            //const int FORM_DEKU  = 3;
+            const int FORM_DEKU  = 3;
             //const int FORM_CHILD = 4;
 
 
@@ -892,6 +892,9 @@ namespace MMR.Randomizer
             codeFile[startLoc + (FORM_FD * formDataWidth) + 0x1] = 0x00;
             codeFile[startLoc + (FORM_FD * formDataWidth) + 0x8] = 0x00;
 
+            // Dekulink can lock up if he gets a recoil while using sword/stick
+            codeFile[startLoc + (FORM_DEKU * formDataWidth) + 0x8] = 0x00;
+            codeFile[startLoc + (FORM_DEKU * formDataWidth) + 0x10] = 0x00;
         }
 
 
