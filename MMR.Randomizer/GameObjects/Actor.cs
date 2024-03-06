@@ -136,6 +136,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x81)]
         [BlockingVariants(0x81)]
         [VariantsWithRoomMax(max: 1, variant: 0x81)] // have to limit because it can block and I don't have variant blocking
+        [DifficultAllVariants]
         [RespawningVariants(variant: 0x81)] // if they fly away after melt they might not come down (bug), so not killable
         [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         //[EnemizerScenesPlacementBlock(Scene.TerminaField)] // temporary, melting them can unmelt the north ice block, but why
@@ -145,9 +146,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2A40)]
         [FileID(49)]
         [ObjectListIndex(0xA)]
-        [GroundVariants(1, 0)]
-        [VariantsWithRoomMax(max: 1, variant: 1)]
-        [VariantsWithRoomMax(max: 2, variant: 0)] // 3 is enough, it can lag rooms as is
+        [GroundVariants(0x0, 0x1)]
+        [DifficultVariants(0x1)]
+        [VariantsWithRoomMax(max: 1, variant: 0x1)]
+        [VariantsWithRoomMax(max: 2, variant: 0x0)] // 3 is enough, it can lag rooms as is
         [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)] // they're teething
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
         Dodongo = 0xB, // En_Dodongo
@@ -161,6 +163,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x0, 0x2, 0x04, 0x8000, 0x8002, 0x8004)] // which ones are fire and ice?
         [PerchingVariants(0x8103, 0x103)] // 0x100 is not a valid vanilla value, 0x7FFF is type, but the game uses 0xF range, so I modded
         [WallVariants(0x8003, 0x3)] // will take off and attack within 120 units distance (xz)
+        [DifficultVariants(0x8000, 0x4, 0x8004, 0x8002)]
         [FlyingToGroundHeightAdjustment(150)]
         Keese = 0xC, // En_Firefly
 
@@ -239,6 +242,7 @@ namespace MMR.Randomizer.GameObjects
         // 0 is the big one in peahat grotto, 1 is the little ones normally only spawned by the big one if you hit them at night
         [GroundVariants(0)]
         [FlyingVariants(1)]
+        [DifficultVariants(0)]
         [VariantsWithRoomMax(max: 3, variant: 0)]
         [VariantsWithRoomMax(max: 7, variant: 1)] // lag, not difficulty
         //[EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall)] // too big, can block the butler race
@@ -278,6 +282,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(58)]
         [ObjectListIndex(0x17)]
         [GroundVariants(0)]
+        [DifficultAllVariants]
         [VariantsWithRoomMax(max: 2, variant: 0)]
         // crashes if placed on an actor that has cutscene data, because it tries to use that cutscene data as its intro cutscen
         [EnemizerScenesExcluded(Scene.SecretShrine)] // issue: spawn is too high, needs to be lowered
@@ -312,6 +317,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0xFFFF)] // 0 works, but OOT used FFFF
         [GroundVariants(0xFFFF)] // 0 works, but OOT used FFFF
         [WaterTopVariants(0xFFFF)]  // 0 works, but OOT used FFFF
+        [DifficultVariants(0x2)]
         Shabom = 0x1D, // En_Bubble, the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
         [FileID(63)]
@@ -449,10 +455,11 @@ namespace MMR.Randomizer.GameObjects
         //[FlyingVariants(0xFF)]
         //[GroundVariants(0xFF)]
         [PathingVariants(1, 2, 3, 4, 7)]
+        [RespawningAllVariants] // they do NOT respawn, this is temporary: light arrow req makes them difficult to kill early in the game
         [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
+        [DifficultAllVariants]
         [VariantsWithRoomMax(max: 10, variant: 0xFF)]
         [FlyingToGroundHeightAdjustment(100)]
-        [RespawningAllVariants] // they do NOT respawn, this is temporary: light arrow req makes them difficult to kill early in the game
         [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)] // unknown crash reason
         DeathArmos = 0x2D, // En_Famos
 
@@ -487,6 +494,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(74)]
         [ObjectListIndex(0x31)]
         [GroundVariants(1, 0)] // 0 regular, 1 is big one from OOT forest temple
+        [DifficultVariants(1)]
         [VariantsWithRoomMax(max: 1, variant: 1)]
         [VariantsWithRoomMax(max: 8, variant: 0)]
         DekuBaba = 0x33, // En_Dekubaba
@@ -701,6 +709,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0, 0x8000)]
         //[VariantsWithRoomMax(max:1, variant:0x8000)]
         [VariantsWithRoomMax(max: 3, variant: 0)]
+        [DifficultAllVariants]
         FloorMaster = 0x4A, // En_Floormas
 
         Empty4B = 0x4B,
@@ -716,7 +725,8 @@ namespace MMR.Randomizer.GameObjects
         // 0xFFFE is -2 = gibdo, does not stun
         // 0xFFFE is -3 = gibdo that rises out of the coffin, from OOT, does not stun and looks weird so we wont use until I find a way to combine with a fake chest
         [GroundVariants(0x7F07, 0x7F05, 0x7F06, 0x7F03, 0x7F04, 0x8005, 0x8006, 0x8007, 0x8003, 0xFFFE)]
-        [WaterBottomVariants(0x7F07, 0x7F05, 0x7F06, 0x7F03, 0x7F04, 0x8005, 0x8006, 0x8007, 0x8003, 0xFFFE)]
+        //[WaterBottomVariants(0x7F07, 0x7F05, 0x7F06, 0x7F03, 0x7F04, 0x8005, 0x8006, 0x8007, 0x8003, 0xFFFE)] // you idiot this means you can put water enemies there
+        [DifficultAllVariants]
         [VariantsWithRoomMax(max: 3, variant: 0x7F07, 0x7F05, 0x7F06, 0x7F02, 0x8005, 0x8006, 0x8007, 0x7F04)]
         [VariantsWithRoomMax(max: 1, variant: 0x7F03, 0x8003, 0xFFFE)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)] // 0xFF00 is read, but only 0x7F of that gets set on death, never checked
@@ -978,6 +988,7 @@ namespace MMR.Randomizer.GameObjects
         // 2 is ocean bottom, 0 is one in shallow shore water, 3 is land and one in shallow water
         [WaterBottomVariants(0, 2)]
         [GroundVariants(3)]
+        [DifficultAllVariants]
         [VariantsWithRoomMax(max: 3, variant: 0, 2)]
         [VariantsWithRoomMax(max: 6, variant: 3)]
         //[GroundVariants(3)]
@@ -1121,8 +1132,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xD8)]
         // 0xFF(decrement) is armor type, the upper byte is completely unused and is even cleared
         [GroundVariants(0xFF03, 0xFF02, 0xFF01)]
-        [WaterBottomVariants(0x7703, 0x7702, 0x7701)] // non vanilla
-        [VariantsWithRoomMax(max: 2, 0xFF03, 0xFF02, 0xFF01, 0x7703, 0x7702, 0x7701)]
+        [WaterBottomVariants(0x0103, 0x0102, 0x0101)] // non vanilla
+        [DifficultAllVariants]
+        [VariantsWithRoomMax(max: 2, 0xFF03, 0xFF02, 0xFF01)]
+        [VariantsWithRoomMax(max: 1, 0x0103, 0x0102, 0x0101)]
         IronKnuckle = 0x84, // En_Ik
 
         Empty85 = 0x85,
@@ -2124,7 +2137,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(241)]
         [ObjectListIndex(0x14E)]
         [FlyingVariants(0, 2, 3)]
-        //[GroundVariants(1)] // works not sure what it does
+        [DifficultAllVariants]
         [VariantsWithRoomMax(max: 2, 0, 2, 3)]
         [FlyingToGroundHeightAdjustment(150)]
         DragonFly = 0x109, // En_Grasshopper
@@ -2679,6 +2692,7 @@ namespace MMR.Randomizer.GameObjects
         // using irrelevant switch flags to distinquish the fake perching types
         [PerchingVariants(0xFF9F, 0x019F)] // 19F graveyard
         [WallVariants(0xFF9F, 0x029F)] // FF9F is perched on tree RTSS (okay with that one being a wall or perch actor)
+        [DifficultVariants(0xFF34)]
         [VariantsWithRoomMax(max: 1, 0xFF34)] // swarm
         [FlyingToGroundHeightAdjustment(150)]
         //[EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
@@ -3028,6 +3042,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x18D)]
         // params: 7x >> 6 is switch, 0x3F is unk
         [PathingVariants(0x700, 0x940)]
+        [DifficultAllVariants]
         [PathingTypeVarsPlacement(mask: 0x3F, shift: 0)]
         [OnlyOneActorPerRoom]
         [BlockingVariantsAll] // until we can fix his pathing, he will just sit there as a statue most of the time
@@ -3172,7 +3187,6 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1E6)]
         SnowheadMountainsSpringTransitionEffects = 0x198, // Dm_Char06
 
-
         [FileID(369)]
         [ObjectListIndex(0x212)]
         MilkBarCutsceneObjects  = 0x199, // Dm_Char07
@@ -3201,7 +3215,6 @@ namespace MMR.Randomizer.GameObjects
         Clock = 0x19C, // Obj_Tokeidai
 
         Empty19D = 0x19D,
-
 
         // the only one we can put down is the credits version that basically tposes, make this a modified actor instead
         //[ActorizerEnabled]
@@ -3429,6 +3442,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(406)]
         [ObjectListIndex(0x1A6)]
         [GroundVariants(0x0)]
+        [DifficultVariants(0)]
         [CompanionActor(DekuFlower, ourVariant: -1, variant: 0x7F)]
         //[EnemizerScenesExcluded(Scene.WoodfallTemple)] // req for gekko miniboss, do not touch until fix
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
@@ -3811,6 +3825,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(446)]
         [ObjectListIndex(0x1C4)]
         [GroundVariants(0xFF00, 0xFF01, 0, 1)]
+        [DifficultVariants(1,0xF001)]
         [VariantsWithRoomMax(max: 1, variant: 1, 0xF001)] // limit the bigger one
         Eeno = 0x1E6, // En_Snowman
 
@@ -3827,6 +3842,7 @@ namespace MMR.Randomizer.GameObjects
         //[FlyingVariants(0x300, 0x200, 0x100)] // not meg because I think she shows up too frequently
         [GroundVariants(0x300, 0x200, 0x100, 0x000)]
         [RespawningVariants(0x0)] // meg does NOT respawn but her death doesnt always trigger kills rooms, not sure why
+        [DifficultAllVariants]
         [VariantsWithRoomMax(max: 1, variant: 0x000, 0x100, 0x200, 0x300)] // only one per
         [CompanionActor(Flame, ourVariant: 0x000, variant: 0xD)]      // meg gets purple flames // NOT DONE
         [CompanionActor(Flame, ourVariant: 0x100, variant: 0x4, 0x5)] // jo gets red flames
@@ -3840,9 +3856,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x3794)]
         [FileID(449)]
         [ObjectListIndex(0x1C6)]
-        [GroundVariants(0, 0x0101)]
+        [GroundVariants(0, 0x0101)] // 101 is non-armored version
+        [DifficultVariants(0)]
         [EnemizerScenesPlacementBlock(Scene.TownShootingGallery)]
-        Hiploop = 0x1E9, // Charging beetle in Woodfall
+        Hiploop = 0x1E9, // En_Pp  // Charging beetle in Woodfall
 
         [FileID(450)]
         [ObjectListIndex(0x1BB)]
@@ -3925,6 +3942,7 @@ namespace MMR.Randomizer.GameObjects
         // FF is in the game, in OOT 02 was a composer brother, but in MM 0-6 are the same as FF
         [GroundVariants(0x00FF)]
         [WaterBottomVariants(0x00FF)]
+        [DifficultAllVariants]
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         // uhhh what else
         //[CheckRestricted(Scene.InvertedStoneTowerTemple, variant:-1,
@@ -4131,6 +4149,7 @@ namespace MMR.Randomizer.GameObjects
                         0x1301)] // not vanilla, maybe we can actually place killable variants?
         //[EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.DampesHouse)] // well and dampe house must be vanilla for scoopsanity
         //[OnlyOneActorPerRoom]
+        [DifficultAllVariants]
         [VariantsWithRoomMax(max: 0, variant: 0xFF00)]
         [VariantsWithRoomMax(max: 1, variant: 0xFF01,
             0x1301)] // non-vanilla
@@ -5401,6 +5420,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.CollectableTerminaFieldEnemy1)]
         //[FlyingVariants(0, 1)] // two? one that steals and one that doesn't?
         [FlyingVariants(0)] // zero seems safe, does not steal sword or anything, 1 does not spawn
+        [DifficultAllVariants]
         [OnlyOneActorPerRoom]
         [FlyingToGroundHeightAdjustment(100)]
         //[EnemizerScenesExcluded(Scene.TerminaField)] // do not remove original, esp with rupeeland coming soon

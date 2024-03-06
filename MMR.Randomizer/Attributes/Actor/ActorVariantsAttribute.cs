@@ -50,6 +50,19 @@ namespace MMR.Randomizer.Attributes.Actor
     public class RespawningAllVariantsAttribute : Attribute { }
 
     /// <summary>
+    /// Some enemies, when put into old mini-boss areas are so easy to fight the fight is a joke
+    ///   this will hopefully combat this a bit by restricting how many easy enemies can be put places
+    /// </summary>
+
+    public class DifficultVariantsAttribute : ActorVariantsAttribute
+    {
+        public DifficultVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
+    }
+
+    public class DifficultAllVariantsAttribute : Attribute { }
+
+
+    /// <summary>
     /// some enemies can spawn in multiple situations, likelike can spawn on the beach or ocean bottom, so two types
     /// I don't really want to add one of these times the different types, even though we need them, so inheritance
     /// </summary>

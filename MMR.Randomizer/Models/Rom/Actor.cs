@@ -551,6 +551,21 @@ namespace MMR.Randomizer.Models.Rom
             return this.Variants;
         }
 
+        public List<int> RemoveBoringEnemies()
+        {
+            var allDifficult = this.ActorEnum.GetAttribute<DifficultAllVariantsAttribute>();
+            if (allDifficult != null) return this.Variants;
+
+            var difficultTypeVariants = this.ActorEnum.GetAttribute<DifficultVariantsAttribute>();
+            if (difficultTypeVariants != null)
+            {
+                this.Variants = this.Variants.Where(var => !difficultTypeVariants.Variants.Contains(var)).ToList();
+            }
+
+            return this.Variants;
+        }
+
+
         public List<int>FilterBlockingTypes(List<int> PreviousCandidateVariants)
         {
             var blockingTypeVariants = this.ActorEnum.GetAttribute<BlockingVariantsAttribute>();

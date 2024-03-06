@@ -2814,15 +2814,6 @@ namespace MMR.Randomizer
                 var objectHasBlockingSensitivity = currentTargetActors.Any(actor => actor.Blockable == false);
                 // get a list of matching actors that can fit in the place of the previous actor
                 var newCandiateList = GetMatchPool(thisSceneData, thisSceneData.ActorsPerObject[objectIndex], objectHasFairyDroppingEnemy, objectHasBlockingSensitivity);
-                var sanityCheck = newCandiateList.Find(act => act.Variants.Count == 0);
-                if ( sanityCheck != null) // haven't gotten this error in awhile, but leaving here in case I break something
-                {
-                    throw new Exception("GenActorCandidatees: zero variants detected");
-                }
-                if (newCandiateList == null || newCandiateList.Count == 0)
-                {
-                    throw new Exception("GenActorCandidatees: no candidates detected");
-                }
 
                 // HOTFIX: TODO replace with something proper later
                 // this is currently the only instance of ground+pathing getting replacement by only pathing, so handle it unique case
@@ -2860,16 +2851,13 @@ namespace MMR.Randomizer
             if (containsFairyDroppingEnemy)
             {
                 MustBeKillable = true; // we dont want respawning or unkillable enemies here
-                /// special case: armos does not drop stray fairies, and I dont know why. TODO attempt to fix instead of this code
-                //ReplacementListRemove(reducedCandidateList, GameObjects.Actor.Armos);
-                //ReplacementListRemove(reducedCandidateList, GameObjects.Actor.DragonFly);
             }
 
             // this could be per-enemy, but right now its only used where enemies and objects match,
             // so to save cpu cycles do it once per object not per enemy
             // TODO: this only removes one actor, if one object can have multiple actors we should check all ofthem
-            var oldactor = oldActors[0].OldActorEnum;
-            var blockedReplacementActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(oldactor);
+            var oldActorEnum = oldActors[0].OldActorEnum;
+            var blockedReplacementActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(oldActorEnum);
             for (var e = 0; e < blockedReplacementActors.Count; e++)
             {
                 var blockedActor = blockedReplacementActors[e];
@@ -2902,6 +2890,17 @@ namespace MMR.Randomizer
                         {
                             continue; // can't put this enemy here: it has no non-respawning variants
                         }
+
+                        // if the actor is in a kill all enemy room, reduce the chances of boring enemies from showing up here
+                        if ((oldActor.MustNotRespawn && !containsFairyDroppingEnemy) && seedrng.Next(100) < 25)
+                        {
+                            newEnemy.RemoveBoringEnemies();
+                            if (newEnemy.Variants.Count == 0) // TODO refactor this into the overall flow
+                            {
+                                continue;
+                            }
+                        }
+
                     }
                     else if (oldActor.Blockable == false)
                     {
@@ -4424,7 +4423,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 59.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 60.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
