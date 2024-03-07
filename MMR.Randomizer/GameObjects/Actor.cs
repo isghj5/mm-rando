@@ -209,7 +209,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.BeneathTheWell)] // dont remove from well
         Fairy = 0x10, // En_Elf
 
-        [EnemizerEnabled] // now that they are testy, lets count them as enemies
+        [ActorizerEnabled] // now that they are testy, lets count them as enemies
         [FileID(54)]
         [ObjectListIndex(0xF)]
         // all variants less than zero get turned into zero, so we can add ones 
@@ -2945,7 +2945,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.MountainVillage)]
         IceWaterPlatforms = 0x179, // Obj_Driftice
 
-        [EnemizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
+        [ActorizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
         [FileID(340)]
         [ObjectListIndex(0x135)]
         // variants 0x7F is the switch range (unused) where 7F tells the actor to ignore switches
