@@ -254,7 +254,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1276)]
         [SceneInternalId(0x25)]
         // to randomize the signs, I added another object and changed the signs to bombiwa, the code expects bombiwa
-        [EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)]
+        //[EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa, // blocking a few skulltulla
+            Actor.Obj_Iceblock, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator,
+            Actor.Bumper, Actor.ClocktowerGearsAndOrgan)]
         PinnacleRock = 0x22,
 
         [FileID(1278)]
@@ -299,6 +302,7 @@ namespace MMR.Randomizer.GameObjects
             //Actor.RegularIceBlock,  // the big one can be too big
             Actor.Dexihand)] // if it grabs you as you fall into a grotto hole it can hardlock
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
+        [EnemizerSceneBlockSensitive(Actor.Monkey, -1)] // giant ice block, unused stone stuff at least
         DekuPalace = 0x28,
 
         [FileID(1308)]
@@ -554,6 +558,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1444)]
         [SceneInternalId(0x59)]
         [EnemizerSceneBlockSensitive(Actor.BlueBubble, -1)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Poe,
+            Actor.Bo)] // can block the whole assension
+
         InvertedStoneTower = 0x56,
 
         [FileID(1446)]

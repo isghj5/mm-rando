@@ -3060,9 +3060,9 @@ namespace MMR.Randomizer.GameObjects
         // if I had a hanging from cieling thing like spiders this would work fine
         //[WallVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
         [UnkillableAllVariants] // actorcat PROP, not detected as enemy
-        [FlyingToGroundHeightAdjustment(2000)]
+        [FlyingToGroundHeightAdjustment(300)]
         [PathingTypeVarsPlacement(mask:0xFF, shift:0)]
-        [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
+        //[EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         SpikedMine = 0x185, // Obj_Mine
 
         [FileID(352)]
@@ -3215,14 +3215,24 @@ namespace MMR.Randomizer.GameObjects
         Empty19D = 0x19D,
 
         // the only one we can put down is the credits version that basically tposes, make this a modified actor instead
-        //[ActorizerEnabled]
+        // but we want to remove the other one for peaking possibly, for now we can do both even if the later is boring
+        [ActorizerEnabled]
         [FileID(373)]
         [ObjectListIndex(0x195)]
+        [CheckRestricted(scene:Scene.DekuKingChamber, variant:0x2FF, Item.SongSonata)]
         // params
         // type (0x780) >> 7 // holy shit why
-        [GroundVariants(0xFD7F//, // credits monk
+        [GroundVariants(0xFD7F, // credits monk
+                        0x0082, // near entrance/exit of woods of mystery
+                        0x1882, // near entrance/exit of swamp
+                        0x2210, // near entrance to deku palace
+                        0x6181 // near deku king
+                      /*0x7B7F*/ )] // roast
+        [WallVariants(0x02FF//, // tied to a pole
             )]
         [UnkillableAllVariants]
+        [VariantsWithRoomMax(max: 0, 0x02FF)]
+        [VariantsWithRoomMax(max: 0, 0x82, 0x1882, 0x2210, 0x6182)] // situationally appear, otherwise invisible, also assume path
         // missing switch flags
         Monkey = 0x19E, // En_Mnk
 
@@ -3939,8 +3949,8 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.BottleCatchPoe)]
         [FlyingVariants(0x00FF)]
         // FF is in the game, in OOT 02 was a composer brother, but in MM 0-6 are the same as FF
-        [GroundVariants(0x00FF)]
-        [WaterBottomVariants(0x00FF)]
+        [GroundVariants(0x01FF)] // non-vanilla, params doesnt seem to matter for this actor
+        [WaterBottomVariants(0x01FF)]
         [DifficultAllVariants]
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         //[EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple)] // only if the scoop check isnt working

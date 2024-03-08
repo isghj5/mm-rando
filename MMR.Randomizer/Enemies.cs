@@ -682,6 +682,7 @@ namespace MMR.Randomizer
             SplitPirateSewerMines();
             BlockBabyGoronIfNoSFXRando();
             FixArmosSpawnPos();
+            RandomizeTheSongMonkey();
 
             Shinanigans();
             //ObjectIsItemBlocked();
@@ -2229,6 +2230,60 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x108, val: 0x0000000); // lwc
         }
 
+        private static void RandomizeTheSongMonkey()
+        {
+            /// we normally cannot randomize just the song monkey in the deku king chamber scene
+            /// because the object is needed for multiple monkeys
+            /// but the scene uses 5 objects, and since they come in pairs that means there is a free space we can add another object, adding the monkey back in
+
+            if (!ReplacementListContains(GameObjects.Actor.Monkey)) return;
+
+            var dekuKingScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuKingChamber.FileID());
+            dekuKingScene.Maps[0].Objects = new List<int> {
+                dekuKingScene.Maps[0].Objects[0],
+                dekuKingScene.Maps[0].Objects[1],
+                dekuKingScene.Maps[0].Objects[2],
+                dekuKingScene.Maps[0].Objects[3],
+                dekuKingScene.Maps[0].Objects[4],
+                GameObjects.Actor.Monkey.ObjectIndex(),
+            };
+            // we have to tell the room to load the extra object though
+            var dekuKingSceneMap0FileData = RomData.MMFileList[GameObjects.Scene.DekuKingChamber.FileID() + 1].Data;
+            dekuKingSceneMap0FileData[0x31] = 0x6; // setting object header object count from 5 to 6
+
+            // swampo monkey are annoying, we want to move them so they dont block things
+            var southernSwampScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthernSwamp.FileID());
+            southernSwampScene.Maps[2].Actors[10].Position = new vec16(3826, 15, -1320); // those near witch
+            southernSwampScene.Maps[2].Actors[11].Position = new vec16(3729, 15, -1358); 
+            southernSwampScene.Maps[2].Actors[12].Position = new vec16(3619, 15, -1367);
+
+            southernSwampScene.Maps[0].Actors[35].Position = new vec16(380, 64, -950); // near entrance
+            southernSwampScene.Maps[0].Actors[35].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 0+30, flags: southernSwampScene.Maps[0].Actors[35].Rotation.y);
+            southernSwampScene.Maps[0].Actors[35].ChangeActor(GameObjects.Actor.Bombiwa, vars: 0xE, modifyOld: true);
+            southernSwampScene.Maps[0].Actors[35].OldName = "Monkey1";
+
+            southernSwampScene.Maps[0].Actors[36].Position = new vec16(499, 58, -890); // do we rotate too?
+            southernSwampScene.Maps[0].Actors[36].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270-30, flags: southernSwampScene.Maps[0].Actors[36].Rotation.y);
+            southernSwampScene.Maps[0].Actors[36].ChangeActor(GameObjects.Actor.Bombiwa, vars: 0xE, modifyOld: true);
+            southernSwampScene.Maps[0].Actors[36].OldName = "Monkey2";
+
+            southernSwampScene.Maps[0].Actors[37].Position = new vec16(399, 46, -828); // this one is weirdly alright as is
+            southernSwampScene.Maps[0].Actors[37].ChangeActor(GameObjects.Actor.Bombiwa, vars: 0xE, modifyOld: true);
+            southernSwampScene.Maps[0].Actors[37].OldName = "Monkey3";
+
+            // because we changed the monkey to bombiwa actor, we need to change the object to so that they will respond correctly
+            southernSwampScene.Maps[0].Objects[2] = GameObjects.Actor.Bombiwa.ObjectIndex();
+
+            southernSwampScene.Maps[1].Actors[34].Position = new vec16(-681, 32, 4142); // near deku palace entrance
+            southernSwampScene.Maps[1].Actors[34].ChangeActor(GameObjects.Actor.Snapper, vars: 0x0, modifyOld: true);
+            southernSwampScene.Maps[1].Actors[34].OldName = "Monkey(Palace Entrance)";
+            southernSwampScene.Maps[1].Objects[2] = GameObjects.Actor.Bombiwa.ObjectIndex();
+
+            var dekuPalaceScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuPalace.FileID());
+            dekuPalaceScene.Maps[0].Actors[11].Position = new vec16(-74, 0, 1466);
+            dekuPalaceScene.Maps[0].Actors[11].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180-40, flags: dekuPalaceScene.Maps[0].Actors[11].Rotation.y);
+        }
+
 
         #endregion
 
@@ -2719,7 +2774,8 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.DekuBaba, GameObjects.Actor.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.Monkey, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Monkey, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.SpikedMine, GameObjects.Actor.Postbox)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.MayorsResidence, GameObjects.Actor.Gorman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
