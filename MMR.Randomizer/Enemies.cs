@@ -78,7 +78,7 @@ namespace MMR.Randomizer
         // outer list is item.category, inner list is items
         private static List<List<GameObjects.Item>> ActorizerKnownJunkItems { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = false;
+        private static bool ACTORSENABLED = true;
         private static Random seedrng;
         private static Models.RandomizedResult _randomized;
         private static OutputSettings _outputSettings;
@@ -233,6 +233,25 @@ namespace MMR.Randomizer
 
         }
 
+        private static void PrepareJunkScoopList(List<GameObjects.Item> addedJunkItems, List<(string, string)> allSphereItems)
+        {
+            var importantBottleItems = allSphereItems.FindAll(item => item.Item1.Contains("Bottle:"));
+
+            // scoops are a special case, they dont count as junk items above since they are all in one category handle separatly
+            // for all items in list of items that are scoop types
+            // check if each and every one is an important item?
+            var scoopItems = _randomized.ItemList.FindAll(item => item.Item.ItemCategory() == GameObjects.ItemCategory.ScoopedItems);
+            //var unImportantScoops = scoopItems.FindAll(scoop => allSphereItems.Count(important => important.Item1 == scoop.Name) == 0);
+            //var unImportantScoops = scoopItems.FindAll(scoop => allSphereItems.Count(important => important.Item1 == scoop.Item.Name()) == 0);
+            //var unImportantScoops = scoopItems.FindAll(scoop => importantBottleItems.Count(important => important.Item1 == scoop.NewLocation.ToString()) == 0);
+            var unImportantScoops = scoopItems.FindAll(scoop => importantBottleItems.Count(important => important.Item2 == scoop.Item.Name()) == 0);
+
+            //scoopItems.RemoveAll(importantScoops);
+            List<GameObjects.Item> itemList = unImportantScoops.Select(itemObj => itemObj.Item).ToList();
+            addedJunkItems.AddRange(itemList);
+        }
+
+
         private static void PrepareJunkOrganizeLists(List<GameObjects.Item> addedJunkItems)
         {
             /// We need to clone JunkItems and remove items we want to keep,
@@ -291,6 +310,7 @@ namespace MMR.Randomizer
                 PrepareJunkSpiderTokens(addedJunkItems, allSphereItems);
                 PrepareJunkStrayFairies(addedJunkItems, allSphereItems);
                 PrepareJunkNotebookEntries(addedJunkItems, allSphereItems);
+                PrepareJunkScoopList(addedJunkItems, allSphereItems);
                 // all heart pieces <- already not considered junk
                 // all transformation and non-transofrmation mask <- already not considered junk
                 // all boss remains <- already not considered junk
@@ -299,6 +319,7 @@ namespace MMR.Randomizer
             // keg? not handle-able here
             // koume?
 
+            // todo: why not just add to list by category first instead of scanning
             PrepareJunkOrganizeLists(addedJunkItems);
         }
 
@@ -378,7 +399,7 @@ namespace MMR.Randomizer
         {
             /// problem: ItemUtils.IsJunk only cares about never-important items like rups
             ///  and ItemUtils.IsLogicalJunk cares about logic too strongly and can junk cool things like swords
-            ///  goal: use IsJunk and add extra conditions that cna happen
+            ///  goal: use IsJunk and add extra conditions that can happen
 
             if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic) return ItemUtils.IsJunk(itemInCheck);
 
@@ -663,7 +684,7 @@ namespace MMR.Randomizer
             FixArmosSpawnPos();
 
             Shinanigans();
-            ObjectIsItemBlocked();
+            //ObjectIsItemBlocked();
         }
 
         public static void EnemizerLateFixes()

@@ -2927,11 +2927,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(339)]
         [ObjectListIndex(0x187)]
         // this is not enough: this does NOT take into account scoop sanity
-        /*[CheckRestricted( scene:Scene.MountainVillage, variant:-1, check: Item.MaskGoron,
+        [CheckRestricted( scene:Scene.MountainVillage, variant:-1, check: Item.MaskGoron,
             Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
-            Item.ChestHotSpringGrottoRedRupee,
-            Item.UpgradeRazorSword, Item.UpgradeRazorSword,
-            Item.ItemWellCowMilk)]
+            Item.BottleCatchHotSpringWater)]
         // */
         // parameters unknown, they are not even and not time (time of spawn is a different parameter)
         [WaterTopVariants(0x1FFE, 0x1FFD, 0x1000, 0x1004)] // for replacement
@@ -2942,7 +2940,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 2, variant: 0x1000, 0x1004)]
         [VariantsWithRoomMax(max: 0, variant: 0x1FFE, 0x1FFD)] // pathing type, and we dont want them to path
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.MountainVillage)]
+        //[EnemizerScenesExcluded(Scene.MountainVillage)] // IF I can't detect when the ice is important, enable this
         IceWaterPlatforms = 0x179, // Obj_Driftice
 
         [ActorizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
@@ -3938,16 +3936,14 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2F70)]
         [FileID(459)]
         [ObjectListIndex(0x1C3)]
+        [CheckRestricted(Item.BottleCatchPoe)]
         [FlyingVariants(0x00FF)]
         // FF is in the game, in OOT 02 was a composer brother, but in MM 0-6 are the same as FF
         [GroundVariants(0x00FF)]
         [WaterBottomVariants(0x00FF)]
         [DifficultAllVariants]
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
-        // uhhh what else
-        //[CheckRestricted(Scene.InvertedStoneTowerTemple, variant:-1,
-        //    Item.MundaneItemCuriosityShopBlueRupee, Item.)] // this is not easy to check if the poe scoop, could be princess leads to butler race
-        [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple)]
+        //[EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple)] // only if the scoop check isnt working
         Poe = 0x1F3, // En_Poh
 
         [FileID(460)]
@@ -3958,7 +3954,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(461)]
         [ObjectListIndex(0x1CE)]
-        [CheckRestricted(Item.SongNewWaveBossaNova)]
+        [CheckRestricted(Item.BottleCatchEgg)]
         // 2000 is hookshot room, 1A00 is twin barrel, 0x1E00 is barrel room, 1C00 is last room
         // the three at pinnacle rock are 0x1400, 0x1600, 0x1800
         // 0 loaded fine, what happens if we load smaller values? can we have 3 or more?
@@ -4011,12 +4007,13 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(468)]
         [ObjectListIndex(0x1D4)]
+        [CheckRestricted(Item.BottleCatchPrincess)]
         // 0 is inside of tree
         // 2 is post-woodfall sitting in royal chamber, does not spawn until after a flag is set
         [GroundVariants(0x0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.DekuKingChamber)] // if her object is not in the king chamber no cutscene after bottle delivery
+        [EnemizerScenesExcluded(/*Scene.WoodfallTemple,*/ Scene.DekuKingChamber)] // if her object is not in the king chamber no cutscene after bottle delivery
         DekuPrincess = 0x1FC, // En_Dnp
 
         [ActorizerEnabled]
