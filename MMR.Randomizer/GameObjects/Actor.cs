@@ -480,8 +480,9 @@ namespace MMR.Randomizer.GameObjects
         Empty31 = 0x31,
 
         [EnemizerEnabled]
-        [ActorInitVarOffset(0x1380)]
-        [FileID(73)]
+        [ActorInitVarOffset(0x1380)] // is this wrong? I see < 1100 for size
+        [ActorInstanceSize(0x380)]
+        [FileID(73)] // 0x49
         [ObjectListIndex(0x30)]
         // armos has no params, dont know why these are vanilla
         [GroundVariants(0xFFFF, 0x7F)]
