@@ -2173,7 +2173,7 @@ namespace MMR.Randomizer
 
             //SkulltulaDummy
             var sewerScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PiratesFortressRooms.FileID());
-            var actors = sewerScene.Maps[10].Actors;
+            var actors = sewerScene.Maps[9].Actors;
 
             foreach (var actor in actors)
             {
@@ -2181,10 +2181,11 @@ namespace MMR.Randomizer
                 {
                     actor.ChangeActor(GameObjects.Actor.SkulltulaDummy, 0, modifyOld: true);
                     actor.OldName = actor.Name = "HangingMine";
+                    actor.Position.y -= 30; // touching the cieling, lets drop a bit
                 }
             }
 
-            sewerScene.Maps[10].Objects[5] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
+            sewerScene.Maps[9].Objects[5] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
         }
 
         public static void BlockBabyGoronIfNoSFXRando()
