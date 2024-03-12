@@ -2464,10 +2464,13 @@ namespace MMR.Randomizer.GameObjects
 
         Empty139 = 0x139,
 
-        //[EnemizerEnabled] // todo: try randomizing
+        [EnemizerEnabled]
         [FileID(278)]
         [ObjectListIndex(0x161)]
+        [WaterTopVariants(0xF81, 0xF82, 0xF83, 0xF84, 0xF85, 0xF86, 0xF87)]
+        [VariantsWithRoomMax(max:1, variant: 0xF81, 0xF82, 0xF83, 0xF84, 0xF85, 0xF86, 0xF87)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        [EnemizerScenesExcluded(Scene.WoodfallTemple)]
         Raft = 0x13A, // En_Raf carniverous raft, woodfall temple
 
         [FileID(279)]
