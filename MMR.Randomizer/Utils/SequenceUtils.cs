@@ -315,7 +315,7 @@ namespace MMR.Randomizer.Utils
                             {
                                 delimitingChar = '-';
                             }
-                            else if (categoryData.Contains("\n"))
+                            else if (categoryData.Contains("\n") && ! categoryData.Contains(","))
                             {
                                 delimitingChar = '\n';
                             }
