@@ -2767,7 +2767,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.DekuBaba, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.DekuBaba, GameObjects.Actor.Armos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Snowhead, GameObjects.Actor.Bo, GameObjects.Actor.BadBat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
@@ -2775,8 +2775,8 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.DekuBaba, GameObjects.Actor.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.Monkey, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Monkey, GameObjects.Actor.BeanSeller)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.Monkey, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.LikeLike, GameObjects.Actor.IronKnuckle)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.SpikedMine, GameObjects.Actor.Postbox)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.MayorsResidence, GameObjects.Actor.Gorman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
@@ -4501,7 +4501,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 60.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 60.2\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

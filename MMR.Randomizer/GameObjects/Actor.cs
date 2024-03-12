@@ -487,7 +487,8 @@ namespace MMR.Randomizer.GameObjects
         // armos has no params, dont know why these are vanilla
         [GroundVariants(0xFFFF, 0x7F)]
         [WaterBottomVariants(0x777)]
-        [VariantsWithRoomMax(max: 7, variant: 0xFFFF, 0x7F)] // weirdly high cpu usage, not a low as other still enemies
+        //[VariantsWithRoomMax(max: 7, variant: 0xFFFF, 0x7F)] // weirdly high cpu usage, not a low as other still enemies
+        [VariantsWithRoomMax(max: 0, variant: 0xFFFF, 0x7F, 0x777)] // disabled until I can figure out what caused the corruption
         Armos = 0x32, // En_Am
 
         [EnemizerEnabled]
@@ -2944,7 +2945,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(Scene.MountainVillage)] // IF I can't detect when the ice is important, enable this
         IceWaterPlatforms = 0x179, // Obj_Driftice
 
-        [ActorizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
+        [EnemizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
         [FileID(340)]
         [ObjectListIndex(0x135)]
         // variants 0x7F is the switch range (unused) where 7F tells the actor to ignore switches
