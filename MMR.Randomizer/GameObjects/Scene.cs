@@ -109,7 +109,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x14)]
         // TODO come up with a way to make sure that one spot isn't blocking without hardcoding
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PatrollingPirate,
-            Actor.Obj_Iceblock,// can block the stairs
+            Actor.RegularIceBlock,// can block the stairs
             Actor.Torch, Actor.LargeCrate, Actor.SmallWoodenBox, Actor.Bombiwa, Actor.ClocktowerGearsAndOrgan, // boring
             Actor.CuccoChick, Actor.En_Ani, Actor.CutsceneZelda, Actor.OOTPotionShopMan, Actor.WoodenBarrel, Actor.IkanaGravestone // boring
             )] 
@@ -256,7 +256,7 @@ namespace MMR.Randomizer.GameObjects
         // to randomize the signs, I added another object and changed the signs to bombiwa, the code expects bombiwa
         //[EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa, // blocking a few skulltulla
-            Actor.Obj_Iceblock, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator,
+            Actor.RegularIceBlock, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator,
             Actor.Bumper, Actor.ClocktowerGearsAndOrgan)]
         PinnacleRock = 0x22,
 
