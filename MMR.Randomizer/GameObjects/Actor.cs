@@ -3067,6 +3067,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // actorcat PROP, not detected as enemy
         [FlyingToGroundHeightAdjustment(300)]
         [PathingTypeVarsPlacement(mask:0xFF, shift:0)]
+        [VariantsWithRoomMax(max:0, 0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // until I can get cieling detection modification, this is weird
         //[EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         SpikedMine = 0x185, // Obj_Mine
 
