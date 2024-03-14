@@ -1079,6 +1079,15 @@ namespace MMR.Randomizer
             var milkbarScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MilkBar.FileID());
             milkbarScene.Maps[0].Actors[17].Variants[0] = 0x13C; // from 0x156, the pointer, to 3C the actual milkbar song
 
+            // what if each grotto was randomized
+            // currently, let's change just one
+            grottosScene.Maps[4].Actors[4].ChangeActor(GameObjects.Actor.GAP, 0x1, modifyOld: true);
+            grottosScene.Maps[4].Actors[4].OldName = "RegularGrotto1";
+            grottosScene.Maps[4].Actors[8].ChangeActor(GameObjects.Actor.GAP, 0x1, modifyOld: true);
+            grottosScene.Maps[4].Actors[8].OldName = "RegularGrotto2";
+            grottosScene.Maps[4].Actors[13].ChangeActor(GameObjects.Actor.GAP, 0x1, modifyOld: true);
+            grottosScene.Maps[4].Actors[13].OldName = "RegularGrotto3";
+
             //LightShinanigans();
 
             //PrintActorValues();
@@ -4374,11 +4383,11 @@ namespace MMR.Randomizer
                 // unused actors or objects:
                 GameObjects.Actor.UnusedClockTowerSpotlight.FileListIndex(),
                 GameObjects.Actor.Obj_Ocarinalift.FileListIndex(),
-                GameObjects.Actor.UnusedStoneTowerPlatform.FileListIndex(),
+                //GameObjects.Actor.UnusedStoneTowerPlatform.FileListIndex(),
                 GameObjects.Actor.Unused_En_Boj_01.FileListIndex(),  // empty actors with nothing in them
                 GameObjects.Actor.Unused_En_Boj_02.FileListIndex(),
                 GameObjects.Actor.Unused_En_Boj_03.FileListIndex(),
-                GameObjects.Actor.En_Boj_04.FileListIndex(),
+                //GameObjects.Actor.En_Boj_04.FileListIndex(), // reserved now by GAP
                 GameObjects.Actor.En_Boj_05.FileListIndex(),
                 //GameObjects.Actor.En_Stream.FileListIndex(), // is this really unused? we now use it in actorizer
                 GameObjects.Actor.SariaSongOcarinaEffects.FileListIndex(), // should be lower down as we might need to use it later

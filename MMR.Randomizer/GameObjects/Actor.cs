@@ -2294,10 +2294,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x6)]
         En_Syateki_Crow = 0x120, // En_Syateki_Crow
 
-        // empty
+        // empty in vanilla, going to reuse for grotto actor placer
         [FileID(261)]
         [ObjectListIndex(0x1)]
-        En_Boj_04 = 0x121, // En_Boj_04
+        GAP = 0x121, // En_Boj_04
 
         // broken actor, needs two objects (animation is in another object) such a pain
         // we have replaced this actor with an injected replacement that doesnt require EnHy
