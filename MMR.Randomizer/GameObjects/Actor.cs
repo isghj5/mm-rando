@@ -488,7 +488,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFFFF, 0x7F)]
         [WaterBottomVariants(0x777)]
         //[VariantsWithRoomMax(max: 7, variant: 0xFFFF, 0x7F)] // weirdly high cpu usage, not a low as other still enemies
-        [VariantsWithRoomMax(max: 0, variant: 0xFFFF, 0x7F, 0x777)] // disabled until I can figure out what caused the corruption
+        //[VariantsWithRoomMax(max: 0, variant: 0xFFFF, 0x7F, 0x777)] // disabled until I can figure out what caused the corruption
         Armos = 0x32, // En_Am
 
         [EnemizerEnabled]

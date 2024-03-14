@@ -1020,12 +1020,8 @@ namespace MMR.Randomizer
                 }
                 int i = 4; */
 
-
-
-
             }
           
-
             // attempt faster breman march, testing
             //glabel D_8085E5A0
             // 030B10 8085E5A0 3ECCCCCD  .float 0.4
@@ -2213,6 +2209,7 @@ namespace MMR.Randomizer
             // this->actor.world.pos.z = this->actor.home.pos.z;
             // and it makes no sense, removing
 
+            RomUtils.CheckCompressed(GameObjects.Actor.Armos.FileListIndex());
             var armosData = RomData.MMFileList[GameObjects.Actor.Armos.FileListIndex()].Data;
 
             // the four writes (home.x home.z world.x, world.z)
@@ -2771,7 +2768,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Shabom)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Armos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Snowhead, GameObjects.Actor.Bo, GameObjects.Actor.BadBat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
