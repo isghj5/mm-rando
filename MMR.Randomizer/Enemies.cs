@@ -270,6 +270,9 @@ namespace MMR.Randomizer
                 curatedIsJunkList.Remove(silver);
             }
 
+            curatedIsJunkList.Remove(GameObjects.Item.IceTrap); // Requested because the actor being removed can give away traps for now
+            curatedIsJunkList.Remove(GameObjects.Item.BombTrap); // Requested because the actor being removed can give away traps for now
+
             // for speed of lookup later, we are going to split items per category into buckets to reduce search time
             // first, generate list of list with curated junk
             foreach (var category in Enum.GetValues(typeof(GameObjects.ItemCategory)).Cast<GameObjects.ItemCategory>())
@@ -4504,7 +4507,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 60.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 60.3\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
