@@ -301,6 +301,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // can block the stairs
             //Actor.RegularIceBlock,  // the big one can be too big
             Actor.Dexihand)] // if it grabs you as you fall into a grotto hole it can hardlock
+        [EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa, Actor.ClocktowerGearsAndOrgan)] // likely dynacrash if other actors have them too
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
         [EnemizerSceneBlockSensitive(Actor.Monkey, -1)] // giant ice block, unused stone stuff at least
         DekuPalace = 0x28,
