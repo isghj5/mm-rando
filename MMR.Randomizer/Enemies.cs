@@ -2455,6 +2455,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Japas.ObjectIndex(),
                 GameObjects.Actor.Tingle.ObjectIndex(),
                 GameObjects.Actor.SleepingScrub.ObjectIndex(),
+                GameObjects.Actor.ElegyStatueSwitch.ObjectIndex(),
                 GameObjects.Actor.GoronWithGeroMask.ObjectIndex()
             };
 
@@ -2478,6 +2479,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Japas,
                 GameObjects.Actor.Tingle,
                 GameObjects.Actor.SleepingScrub,
+                GameObjects.Actor.ElegyStatueSwitch,
                 GameObjects.Actor.GoronWithGeroMask
             };
 
