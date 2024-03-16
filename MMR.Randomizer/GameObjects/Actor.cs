@@ -2691,12 +2691,15 @@ namespace MMR.Randomizer.GameObjects
         [FileID(313)]
         [ObjectListIndex(0x172)]
         [CheckRestricted(Scene.IkanaGraveyard, variant: ActorConst.ANY_VARIANT, Item.CollectableIkanaGraveyardDay2Bats1)]
+        // what is the variant?
         [FlyingVariants(0xFF34, // big cluster
             0xFF02, 0xFF03, 0x0102, 0x0103, // graveyard
             0xFF01)]
         // using irrelevant switch flags to distinquish the fake perching types
-        [PerchingVariants(0xFF9F, 0x019F)] // 19F graveyard
-        [WallVariants(0xFF9F, 0x029F)] // FF9F is perched on tree RTSS (okay with that one being a wall or perch actor)
+        [PerchingVariants(0xFF9F, // bat tree
+            0x019F)] // 19F graveyard
+        [WallVariants(0xFF9F, // bat tree
+            0x029F)] // 
         [DifficultVariants(0xFF34)]
         [VariantsWithRoomMax(max: 1, 0xFF34)] // swarm
         [FlyingToGroundHeightAdjustment(150)]
@@ -4023,7 +4026,22 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(468)]
         [ObjectListIndex(0x1D4)]
-        [CheckRestricted(Item.BottleCatchPrincess)]
+        [CheckRestricted(Item.BottleCatchPrincess, Item.MaskScents,
+            Item.CollectableDekuShrineDekuButlerSRoomItem1, Item.CollectableDekuShrineDekuButlerSRoomItem2, Item.CollectableDekuShrineDekuButlerSRoomItem3,
+            Item.CollectableDekuShrineDekuButlerSRoomItem4, Item.CollectableDekuShrineDekuButlerSRoomItem5, Item.CollectableDekuShrineDekuButlerSRoomItem6,
+            Item.CollectableDekuShrineDekuButlerSRoomItem7, Item.CollectableDekuShrineDekuButlerSRoomItem8, Item.CollectableDekuShrineDekuButlerSRoomItem9,
+            Item.CollectableDekuShrineDekuButlerSRoomItem10,
+            Item.CollectableDekuShrineGreyBoulderRoomPot1,
+            Item.CollectableDekuShrineGiantRoomFloor1Item1, Item.CollectableDekuShrineGiantRoomFloor1Item2,
+            Item.CollectableDekuShrineGiantRoomFloor1Item3, Item.CollectableDekuShrineGiantRoomFloor1Item4,
+            Item.CollectableDekuShrineGiantRoomFloor1Item5, Item.CollectableDekuShrineGiantRoomFloor1Item6,
+            Item.CollectableDekuShrineGiantRoomFloor1Item7, Item.CollectableDekuShrineGiantRoomFloor1Item8,
+            Item.CollectableDekuShrineRoomBeforeFlameWallsItem1, Item.CollectableDekuShrineRoomBeforeFlameWallsItem2,
+            Item.CollectableDekuShrineRoomBeforeFlameWallsItem3, Item.CollectableDekuShrineRoomBeforeFlameWallsItem4,
+            Item.CollectableDekuShrineRoomBeforeFlameWallsItem5, Item.CollectableDekuShrineRoomBeforeFlameWallsItem6,
+            Item.CollectableDekuShrineWaterRoomWithPlatformsItem1, Item.CollectableDekuShrineWaterRoomWithPlatformsItem2,
+            Item.CollectableDekuShrineWaterRoomWithPlatformsItem3, Item.CollectableDekuShrineWaterRoomWithPlatformsItem4,
+            Item.CollectableDekuShrineWaterRoomWithPlatformsItem5, Item.CollectableDekuShrineWaterRoomWithPlatformsItem6)]
         // 0 is inside of tree
         // 2 is post-woodfall sitting in royal chamber, does not spawn until after a flag is set
         [GroundVariants(0x0)]
