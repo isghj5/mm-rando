@@ -206,8 +206,9 @@ namespace MMR.Randomizer.GameObjects
         //    Actor.WarpDoor, Actor.WarpToTrialEntrance, Actor.ClocktowerGearsAndOrgan, Actor.Bumper, Actor.IkanaGravestone, Actor.Tijo)]
         [EnemizerSceneBlockSensitive(Actor.Wolfos, -1)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RedBubble, // spawns in hot lava, keep wood enemies out
-            Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos, Actor.Dinofos, Actor.Snapper)]
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo, // spawns in hot lava, keep wood enemies out
+            Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered,
+            Actor.Freezard, Actor.RegularIceBlock, Actor.Eeno, Actor.Wolfos, Actor.Dinofos, Actor.Snapper)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo,
             Actor.Bombiwa /* Actor.RegularIceBlock, Actor.IkanaCanyonHookshotStump, */ )] // could block the fairy bubble
         [EnemizerSceneBlockSensitive(Actor.Bo, -1)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Freezard,

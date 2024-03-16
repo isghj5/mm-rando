@@ -108,6 +108,7 @@ namespace MMR.Randomizer.Models.Rom
                 new List<int>(),
                 new List<int>(),
                 new List<int>(),
+                new List<int>(),
             };
 
             // wasnt there a list of lists to static list we had?
@@ -136,6 +137,8 @@ namespace MMR.Randomizer.Models.Rom
             var wllist = ((wlattr == null) ? new List<int>() : wlattr.Variants);
             var perattr = actor.GetAttribute<PerchingVariantsAttribute>();
             var perlist = ((perattr == null) ? new List<int>() : perattr.Variants);
+            var celattr = actor.GetAttribute<CeilingVariantsAttribute>();
+            var cellist = ((celattr == null) ? new List<int>() : celattr.Variants);
             var pattr = actor.GetAttribute<PathingVariantsAttribute>();
             var plist = ((pattr == null) ? new List<int>() : pattr.Variants);
             var newList = new List<List<int>>()
@@ -147,6 +150,7 @@ namespace MMR.Randomizer.Models.Rom
                 flist,
                 wllist,
                 perlist,
+                cellist,
                 plist
             };
             return newList;
@@ -344,8 +348,8 @@ namespace MMR.Randomizer.Models.Rom
                     }
                 }
 
-                // we allow flying on perching types because there are so few perching actors and perching locations
-                if (randomVariantType == ActorType.Perching && ourVariantMatches)
+                // we allow flying on perching and cieling types because there are so few perching/ceiling actors and perching locations
+                if ((randomVariantType == ActorType.Perching || randomVariantType == ActorType.Ceiling) && ourVariantMatches)
                 {
                     var theirFlyingVariants = otherActor.AllVariants[(int)ActorType.Flying - 1];
                     if (theirFlyingVariants.Count != 0)

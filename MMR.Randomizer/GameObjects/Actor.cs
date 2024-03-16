@@ -385,12 +385,14 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x20)]
         // 0x3F params is a switch flag, so long as its 3F switch flag is ignored tho so not a huge deal
         // 0x1C0 & == 1 requires lens (0x7F)
-        // 4 is in the astral observatory, and has a spawn kill flag, so don't use
-        [FlyingVariants(0xEF, 0x7F, 0x3F, 0x4)]
+        [CeilingVariants(0xEF, // not vanilla? where did I get this? what is 1C = 3 even do?
+            0x7F, // invisible grave2
+            0x3F, // spider gossip grotto, woodfall, greatbaytemple, all over the place
+            0x4)] // 4 is in the astral observatory, and has a spawn kill flag, so don't use
         [RespawningVariants(0x4)] // doesn't respawn after death, so dont put where respawning enemies are bad either
         [VariantsWithRoomMax(max: 0, variant: 4)] // if this actor hides an item, could be annoying going back in time to reset, so do not place
-        [FlyingToGroundHeightAdjustment(100)]
-        [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // shared object with goldskulltula, cannot change without
+        //[FlyingToGroundHeightAdjustment(100)] // no longer flying type, that was weird
+        [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // shared object with goldskulltula, cannot change without modification
         //[EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, // in the air, bit weird
         //    Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
         [SwitchFlagsPlacement(mask: 0x3F, shift: 0)]
@@ -403,8 +405,9 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x22D)] // empty object
         [ActorInitVarOffset(0x2540)]
         [FileID(67)] // actual file of skulltula in case it wasnts to know things like how big it is
-        [FlyingVariants(0)] // going to mark it flying for now
-        [VariantsWithRoomMax(max: 0, variant: 0)] // don't actually place dummy actor
+        [FlyingVariants(1)] // going to mark it flying for now
+        [CeilingVariants(0)]
+        [VariantsWithRoomMax(max: 0, variant: 0, 1)] // don't actually place dummy actor
         SkulltulaDummy = 0x25, // fake
         //Empty25 = 0x25, // originally empty
 
@@ -2782,13 +2785,20 @@ namespace MMR.Randomizer.GameObjects
         // 0x2 and 0x4 are flags, 4 might be respawning
         // 2 flag unknown? neat
         // 0xFF00 is something else if 0 or 255, else
-        [FlyingVariants(0x9605, 0x3205, 0x6405, 0x8C05, 0xFA01, 0xFA00)]
+        [CeilingVariants(0xFF05, // sht goron button puzzle lens cieling bubble
+            0xFA01, 0xFA00)] // spring tunnel to darmani grave
+        [PerchingVariants(0x9605, 0x6405, 0x3205)] // snow falling from tree in pathtomountain
+        [FlyingVariants( 0x8C05//, // falling as snow onto the ramp in snowhead
+            )]
         // this variety is slow spawn, meaning you have to walk up to it: 0x2800, 0x3200, 0xC200, 0xFA00
-        [GroundVariants(0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0xFF01, 0xFF05, 0xC200)]
+        [GroundVariants(0xFF00, 0x6404, 0x7804, // stt (ff00 is also in secret grotto)
+            0x7800, 0x2800, 0x3200, // wft
+            0xFF01, // sht
+            0xC200)] // ocean spiderhouse
         // 9605,3205,6405 all respawn in path to mountain village, 8C05 is snowhead, 6404 and 7804 are stone tower
-        [RespawningVariants(0x6404, 0x7804, 0x9605, 0x3205, 0x6405, 0x8C05, 0xFF05, // actually respawning
-            0x2800, 0x3200, 0xC200, 0xFA00)] // these four dont respawn, but they are invisbile until you are right on top of them, then they materialize, so hidden
-        [PerchingVariants(0x2808, 0x3208, 0xC208, 0xFA08)] // non vanilla using non existent 0x8 flag to hide from vanilla code
+        [RespawningVariants(0x6404, 0x7804, 0x9605, 0x3205, 0x6405, 0x8C05, 0xFF05//, // actually respawning
+            /* 0x2800, 0x3200, 0xC200, 0xFA00 */)] // these four dont respawn, but they are invisbile until you are right on top of them, then they materialize, so hidden
+        //[PerchingVariants(0x2808, 0x3208, 0xC208, 0xFA08)] // non vanilla using non existent 0x8 flag to hide from vanilla code
         [VariantsWithRoomMax(max: 2, variant: 0x9605, 0x3205, 0x6405, 0x8C05, 0xFA01, 0xFA00)]
         [VariantsWithRoomMax(max: 1, variant: 0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0xFF01, 0xFF05, 0xC200)]
         [CompanionActor(ClayPot, ourVariant: -1, variant: 0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
@@ -2869,9 +2879,15 @@ namespace MMR.Randomizer.GameObjects
         [CompanionActor(ClayPot, ourVariant: -1, variant: 0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
         RealBombchu = 0x16F, // En_Rat
 
+        // both the dripping water from the roof of caves, but also falling flame rocks from ISTT lava
+        //[ActorizerEnabled]
         [FileID(332)]
         [ObjectListIndex(0x182)]
-        En_Water_Effect = 0x170, // En_Water_Effect
+        // this actor is also effects, mostly used in gyorg fight
+        [CeilingVariants(0x00FF, // water drip spawner
+            0x0001)] // fire rock spawner
+        [UnkillableAllVariants]
+        CeilingSpawner = 0x170, // En_Water_Effect
 
         [ActorizerEnabled]
         [FileID(333)]
@@ -3062,7 +3078,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xBB)]
         // type: 0x3000: 0 is path, 1 air 2 water
         [WaterBottomVariants(0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x200B, 0x200C, 0x200D)]
-        [FlyingVariants(0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // loads more, think there are flags here
+        //[FlyingVariants(0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // loads more, think there are flags here
+        [CeilingVariants(0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // loads more, think there are flags here
         [PerchingVariants(0x1012)] // non-vanilla link speed 12, attempting to perch
         [PathingVariants(0x0000)] // pathing type? requires us to introduce paths which might confuse our rando tho
         // if I had a hanging from cieling thing like spiders this would work fine
@@ -3575,6 +3592,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         GateSoldier = 0x1C7,
 
+        // this might also be the hanging iceicle in snowheadtemple
         [ObjectListIndex(0x1AD)]
         [FileID(418)]
         // FF01 is the ice blocking the path north
@@ -5041,6 +5059,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(572)]
         [ObjectListIndex(0x1)]
         [WallVariants(0xFE00)]
+        [CeilingVariants(0xFC00)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         [OnlyOneActorPerRoom]
         HitSpot = 0x265, // En_Hit_Tag
@@ -5660,6 +5679,7 @@ namespace MMR.Randomizer.GameObjects
         Flying,
         Wall,
         Perching,       // added in 56
+        Ceiling,        // added in 61
         Pathing,
     }
 }

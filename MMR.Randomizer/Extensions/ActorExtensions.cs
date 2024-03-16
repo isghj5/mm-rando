@@ -95,6 +95,11 @@ namespace MMR.Randomizer.Extensions
             {
                 variants.AddRange(attrWall.Variants);
             }
+            var attrCeil = actor.GetAttribute<CeilingVariantsAttribute>();
+            if (attrCeil != null)
+            {
+                variants.AddRange(attrCeil.Variants);
+            }
             var attrPatrol = actor.GetAttribute<PathingVariantsAttribute>();
             if (attrPatrol != null)
             {

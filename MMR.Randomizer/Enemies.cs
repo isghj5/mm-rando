@@ -683,6 +683,7 @@ namespace MMR.Randomizer
             ChangeHotwaterGrottoDekuBabaIntoSomethingElse(rng);
             ModifyFireflyKeeseForPerching();
             SplitPirateSewerMines();
+            SplitSnowheadTempleBo();
             BlockBabyGoronIfNoSFXRando();
             FixArmosSpawnPos();
             RandomizeTheSongMonkey();
@@ -2191,6 +2192,28 @@ namespace MMR.Randomizer
             sewerScene.Maps[9].Objects[5] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
         }
 
+        private static void SplitSnowheadTempleBo()
+        {
+            /// the bo are both in the entrance and hanging from the ceiling,
+            /// this is an issue because there are almost none that are dual type
+
+            var shtScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SnowheadTemple.FileID());
+            var boActors = shtScene.Maps[8].Actors;
+
+            foreach (var actor in boActors)
+            {
+                if (actor.ActorEnum == GameObjects.Actor.Bo)
+                {
+                    actor.ChangeActor(GameObjects.Actor.SkulltulaDummy, 0, modifyOld: true);
+                    actor.OldName = actor.Name = "CeilingBo";
+                }
+            }
+
+            // we need to change the object to match skulltula in our code so rando knows to change the object
+            shtScene.Maps[8].Objects[15] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
+
+        }
+
         public static void BlockBabyGoronIfNoSFXRando()
         {
             /// the baby crying is very annoying and loud, do not allow
@@ -2540,6 +2563,7 @@ namespace MMR.Randomizer
                     ((oldGroundVariants != null && oldGroundVariants.Variants.Contains(testActor.OldVariant)) // previous ground
                      || (oldPathVariants != null && oldPathVariants.Variants.Contains(testActor.OldVariant)) // previous pathing(ground)
                      || (oldWaterSurfaceVariants != null && oldWaterSurfaceVariants.Variants.Contains(testActor.OldVariant)) // water surface too
+                     || (oldWaterSurfaceVariants != null && oldWaterSurfaceVariants.Variants.Contains(testActor.OldVariant)) // water surface too
                       || testActor.OldActorEnum == GameObjects.Actor.BlueBubble) ) // our new actor can fly
                 {
                     // if attribute exists, we need to adjust
@@ -2563,6 +2587,14 @@ namespace MMR.Randomizer
                     }
 
                 }
+
+                var oldCeilingVariants = testActor.OldActorEnum.GetAttribute<CeilingVariantsAttribute>();
+                if ((flyingVariants != null && flyingVariants.Variants.Contains(testActor.Variants[0])) && // chosen variant is flying
+                    (oldCeilingVariants != null && oldCeilingVariants.Variants.Contains(testActor.OldVariant))) // previous ceiling 
+                {
+                    testActor.Position.y -= (short) 100; // always lower flying enemies on ceiling placement, its usually way too high
+                }
+
             }
             thisSceneData.Log.AppendLine(" ---------- ");
         }
