@@ -4,10 +4,10 @@ using System;
 namespace MMR.Randomizer.Attributes.Enemy
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
-    public class SceneExcludeAttribute : Attribute
+    public class ForbidToSceneAttribute : Attribute
     {
         public Scene Scene { get; }
-        public SceneExcludeAttribute(Scene scene)
+        public ForbidToSceneAttribute(Scene scene)
         {
             Scene = scene;
         }

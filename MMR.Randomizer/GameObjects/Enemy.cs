@@ -8,8 +8,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectId(0x0005)]
         [Variable(0xff00)]
         [ActorType(ActorTypeAttribute.ActorType.Water)]
-        [SceneExclude(Scene.IkanaCanyon)]
-        [SceneExclude(Scene.GreatBayTemple)]
+        [ForbidFromScene(Scene.IkanaCanyon)] // needed to freeze
+        [ForbidFromScene(Scene.GreatBayTemple)] // needed to freeze
         Octorok,
 
         [ActorId(0x000a)]
@@ -45,7 +45,7 @@ namespace MMR.Randomizer.GameObjects
         [Variable(0x0000)]
         [ActorType(ActorTypeAttribute.ActorType.Ground)]
         [IsMoving]
-        [SceneExclude(Scene.Grottos)]
+        [ForbidFromScene(Scene.Grottos)] // ?
         Peahat,
 
         [ActorId(0x0019)]
@@ -53,10 +53,11 @@ namespace MMR.Randomizer.GameObjects
         [Variable(0x0000)]
         [ActorType(ActorTypeAttribute.ActorType.Ground)]
         [IsMoving]
-        [SceneExclude(Scene.WoodfallTemple)]
-        [SceneExclude(Scene.SnowheadTemple)]
-        [SceneExclude(Scene.SecretShrine)]
-        [SceneExclude(Scene.LinkTrial)]
+        [ForbidFromScene(Scene.WoodfallTemple)] // spawns too high
+        [ForbidFromScene(Scene.SnowheadTemple)] // ?
+        [ForbidFromScene(Scene.SecretShrine)] // spawns too high
+        [ForbidFromScene(Scene.LinkTrial)] // spawns too high
+        [ForbidToScene(Scene.BeneathGraveyard)] // Dinolfos can crash in graveyard
         Dinolfos,
 
         [ActorId(0x001d)]
@@ -64,17 +65,17 @@ namespace MMR.Randomizer.GameObjects
         [Variable(0x0000)]
         [ActorType(ActorTypeAttribute.ActorType.Air)]
         [IsMoving]
-        [SceneExclude(Scene.GiantsChamber)]
+        [ForbidFromScene(Scene.GiantsChamber)] // scene effect
         Shabom,
 
         [ActorId(0x0024)]
         [ObjectId(0x0020)]
         [Variable(0x003f), Variable(0x007f)]
         [ActorType(ActorTypeAttribute.ActorType.Other)]
-        [SceneExclude(Scene.WoodfallTemple)]
-        [SceneExclude(Scene.SwampSpiderHouse)]
-        [SceneExclude(Scene.OceanSpiderHouse)]
-        [SceneExclude(Scene.GreatBayTemple)]
+        [ForbidFromScene(Scene.WoodfallTemple)] // ? because of the stray fairy?
+        [ForbidFromScene(Scene.SwampSpiderHouse)] // Golden Skulltulas use the same object
+        [ForbidFromScene(Scene.OceanSpiderHouse)] // Golden Skulltulas use the same object
+        [ForbidFromScene(Scene.GreatBayTemple)] // ? because of the stray fairy?
         Skulltula,
 
         //[ActorId(0x002d)]
@@ -93,14 +94,14 @@ namespace MMR.Randomizer.GameObjects
         [ObjectId(0x0031)]
         [Variable(0x0000)]
         [ActorType(ActorTypeAttribute.ActorType.Ground)]
-        [SceneExclude(Scene.WoodfallTemple)]
+        [ForbidFromScene(Scene.WoodfallTemple)] // ? because of the stray fairy?
         DekuBaba,
 
         [ActorId(0x003b)]
         [ObjectId(0x0040)]
         [Variable(0xff02), Variable(0xff00)]
         [ActorType(ActorTypeAttribute.ActorType.Ground)]
-        [SceneExclude(Scene.Woodfall)]
+        [ForbidFromScene(Scene.Woodfall)] // needed to spawn deku flowers to cross the area
         MadScrub,
 
         [ActorId(0x003c)]
@@ -134,8 +135,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectId(0x0075)]
         [Variable(0x7f07), Variable(0x7f05), Variable(0x7f06)]
         [ActorType(ActorTypeAttribute.ActorType.Ground)]
-        [SceneExclude(Scene.BeneathTheWell)]
-        [SceneExclude(Scene.IkanaCanyon)]
+        [ForbidFromScene(Scene.BeneathTheWell)] // Gibdos use the same object
+        [ForbidFromScene(Scene.IkanaCanyon)] // Gibdos use the same object
         Redead,
 
         //[ActorId(0x0050)]
@@ -187,8 +188,8 @@ namespace MMR.Randomizer.GameObjects
         [Variable(0x0042), Variable(0x0022), Variable(0x0032)]
         [ActorType(ActorTypeAttribute.ActorType.Ground)]
         [IsMoving]
-        [SceneExclude(Scene.IkanaGraveyard)]
-        [SceneExclude(Scene.OceanSpiderHouse)]
+        [ForbidFromScene(Scene.IkanaGraveyard)] // needed to open graves
+        [ForbidFromScene(Scene.OceanSpiderHouse)] // needed to get the mask code
         Stalchild,
 
         [ActorId(0x00f1)]
@@ -209,7 +210,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectId(0x015e)]
         [Variable(0x0002), Variable(0x0000), Variable(0x0004), Variable(0x0001)]
         [ActorType(ActorTypeAttribute.ActorType.Water)]
-        [SceneExclude(Scene.GreatBayTemple)]
+        [ForbidFromScene(Scene.GreatBayTemple)] // needed to get to the compass chest?
         BioBaba,
 
         [ActorId(0x014a)]
@@ -217,7 +218,7 @@ namespace MMR.Randomizer.GameObjects
         [Variable(0x0c01), Variable(0x1402), Variable(0xff03), Variable(0xff01), Variable(0xff00), Variable(0x0a01), Variable(0x0202), Variable(0x0801), Variable(0xff02)]
         [ActorType(ActorTypeAttribute.ActorType.Respawn)]
         [IsMoving]
-        [SceneExclude(Scene.GreatBayTemple)]
+        [ForbidFromScene(Scene.GreatBayTemple)] // needed to freeze
         Chuchu,
 
         [ActorId(0x014b)]
@@ -246,7 +247,7 @@ namespace MMR.Randomizer.GameObjects
         [Variable(0xff00), Variable( 0x6404), Variable( 0x7804), Variable( 0x7800), Variable( 0x2800), Variable( 0x3200), Variable( 0x9605), Variable( 0x3205), Variable( 0x6405), Variable( 0xff01), Variable( 0xff05), Variable( 0xc200), Variable( 0xfa00), Variable( 0xfa01), Variable( 0x8c05)]
         [ActorType(ActorTypeAttribute.ActorType.Respawn)]
         [IsMoving]
-        [SceneExclude(Scene.WoodfallTemple)]
+        [ForbidFromScene(Scene.WoodfallTemple)] // Boes in woodfall temple shouldn't respawn because of the dark room fairy
         Boe,
 
         [ActorId(0x016f)]
@@ -268,7 +269,7 @@ namespace MMR.Randomizer.GameObjects
         [Variable(0x0000)]
         [ActorType(ActorTypeAttribute.ActorType.Ground)]
         [IsMoving]
-        [SceneExclude(Scene.WoodfallTemple)]
+        [ForbidFromScene(Scene.WoodfallTemple)] // miniboss uses the same object?
         Snapper,
 
         [ActorId(0x01e6)]
@@ -290,8 +291,8 @@ namespace MMR.Randomizer.GameObjects
         [Variable(0x00ff)]
         [ActorType(ActorTypeAttribute.ActorType.Air)]
         [IsMoving]
-        [SceneExclude(Scene.StoneTowerTemple)]
-        [SceneExclude(Scene.InvertedStoneTowerTemple)]
+        [ForbidFromScene(Scene.StoneTowerTemple)] // ?
+        [ForbidFromScene(Scene.InvertedStoneTowerTemple)] // Only place to get a poe
         Poe,
 
         [ActorId(0x0204)]
@@ -299,7 +300,7 @@ namespace MMR.Randomizer.GameObjects
         [Variable(0x0000)]
         [ActorType(ActorTypeAttribute.ActorType.Air)]
         [IsMoving]
-        [SceneExclude(Scene.PiratesFortressRooms)]
+        [ForbidFromScene(Scene.PiratesFortressRooms)] // Needed to chase pirates away?
         Hornet,
     }
 }

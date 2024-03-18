@@ -32,7 +32,8 @@ namespace MMR.Randomizer
                     Stationary = !e.HasAttribute<IsMovingAttribute>(),
                     Type = (int)e.GetAttribute<ActorTypeAttribute>().Type,
                     Variables = e.GetAttributes<VariableAttribute>().Select(va => va.Variable).ToList(),
-                    SceneExclude = e.GetAttributes<SceneExcludeAttribute>().Select(sea => sea.Scene.Id()).ToList(),
+                    ForbidFromScene = e.GetAttributes<ForbidFromSceneAttribute>().Select(sea => sea.Scene.Id()).ToList(),
+                    ForbidToScene = e.GetAttributes<ForbidToSceneAttribute>().Select(sea => sea.Scene.Id()).ToList(),
                 };
                 enemy.ObjectSize = ObjUtils.GetObjSize(enemy.Object);
                 return enemy;
@@ -49,7 +50,7 @@ namespace MMR.Randomizer
                     var enemy = EnemyList.FirstOrDefault(u => u.Actor == actor.n);
                     if (enemy != null)
                     {
-                        if (!enemy.SceneExclude.Contains(scene.Number))
+                        if (!enemy.ForbidFromScene.Contains(scene.Number))
                         {
                             actorList.Add(enemy.Actor);
                         }
@@ -71,7 +72,7 @@ namespace MMR.Randomizer
                     {
                         if (!objList.Contains(enemy.Object))
                         {
-                            if (!enemy.SceneExclude.Contains(scene.Number))
+                            if (!enemy.ForbidFromScene.Contains(scene.Number))
                             {
                                 objList.Add(enemy.Object);
                             }
@@ -114,12 +115,12 @@ namespace MMR.Randomizer
             }
         }
 
-        public static List<Enemy> GetMatchPool(List<Enemy> sceneObjectEnemies, Random R)
+        public static List<Enemy> GetMatchPool(List<Enemy> sceneObjectEnemies, List<Enemy> allowedEnemies, Random R)
         {
             var pool = new List<Enemy>();
             foreach (var sceneObjectEnemy in sceneObjectEnemies)
             {
-                foreach (var enemy in EnemyList)
+                foreach (var enemy in allowedEnemies)
                 {
                     if ((enemy.Type == sceneObjectEnemy.Type) && (enemy.Stationary == sceneObjectEnemy.Stationary))
                     {
@@ -180,7 +181,8 @@ namespace MMR.Randomizer
                 foreach (var sceneObject in sceneObjects)
                 {
                     var sceneObjectEnemies = EnemyList.FindAll(u => u.Object == sceneObject && sceneActors.Contains(u.Actor));
-                    var matchPool = GetMatchPool(sceneObjectEnemies, rng);
+                    var allowedEnemies = EnemyList.FindAll(u => !u.ForbidToScene.Contains(scene.Number));
+                    var matchPool = GetMatchPool(sceneObjectEnemies, allowedEnemies, rng);
                     var randomMatch = matchPool.Random(rng);
                     var newobj = randomMatch.Object;
                     newsize += randomMatch.ObjectSize;

@@ -13,6 +13,7 @@ namespace MMR.Randomizer.Models.Rom
         public List<ushort> Variables = new List<ushort>();
         public int Type;
         public bool Stationary;
-        public List<byte> SceneExclude = new List<byte>();
+        public List<byte> ForbidFromScene = new List<byte>();
+        public List<byte> ForbidToScene = new List<byte>();
     }
 }
