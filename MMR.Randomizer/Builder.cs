@@ -93,7 +93,7 @@ namespace MMR.Randomizer
 
                 if (foundValidReplacement == false) // no available songs fit in this slot category
                 {
-                    WriteOutput($"No song fits in [{targetSlot.Name}] slot, with categories: " + String.Join(", ", targetSlot.Type.Select(x => "0x" + x.ToString("X2"))));
+                    WriteOutput($"No song fits in [{targetSlot.Name}] slot, with categories: " + String.Join(", ", targetSlot.Categories.Select(x => "0x" + x.ToString("X2"))));
                     // loosen song restrictions and re-attempt
                     SequenceUtils.TryBackupSongPlacement(targetSlot, log, unassigned, settings);
                 }
