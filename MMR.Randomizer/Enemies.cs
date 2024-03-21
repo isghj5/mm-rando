@@ -1707,7 +1707,7 @@ namespace MMR.Randomizer
                 (GameObjects.Actor.LikeLike, 0x2), // water bottom type
                 (GameObjects.Actor.GoGoron, 0x7FC1) // ground type (race track goron, stretching)
             };
-            int coinFlip = rng.Next(1);
+            int coinFlip = rng.Next(2);
             var coinTossResultActor = randomActorCandidates[coinFlip];
 
             var grottosScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Grottos.FileID());
@@ -1718,15 +1718,22 @@ namespace MMR.Randomizer
                 baba.OldName = "HotSpringBaba";
             }
 
-            // move them into water
-            hotspringDekuBaba[0].Position = new vec16(6936, -22, 824);  
-            hotspringDekuBaba[1].Position = new vec16(6935, -24, 1072 );
-            hotspringDekuBaba[2].Position = new vec16(7160, -24, 916);
+            // from the perspective of the door
+            var farEntry   = hotspringDekuBaba[0];
+            var leftEntry  = hotspringDekuBaba[1];
+            var rightEntry = hotspringDekuBaba[2];
 
-            // baba have no face, so they don't get a rotation normally, they would all face the same direction
-            hotspringDekuBaba[0].Rotation.y = ActorUtils.MergeRotationAndFlags(210, flags: hotspringDekuBaba[0].Rotation.y);
-            hotspringDekuBaba[1].Rotation.y = ActorUtils.MergeRotationAndFlags(135, flags: hotspringDekuBaba[1].Rotation.y);
-            hotspringDekuBaba[2].Rotation.y = ActorUtils.MergeRotationAndFlags(105, flags: hotspringDekuBaba[2].Rotation.y);
+            // move them into water
+            farEntry.Position   = new vec16(6936, -22, 824);
+            leftEntry.Position  = new vec16(6935, -24, 1072);
+            rightEntry.Position = new vec16(7160, -24, 916);
+
+            // baba have no face, so they don't get a rotation normally, they would all face the same direction,
+            // turn them to face the center of the pool and each other
+            // zero y rotation is facing the door
+            farEntry.Rotation.y   = ActorUtils.MergeRotationAndFlags(30, flags: farEntry.Rotation.y);
+            leftEntry.Rotation.y  = ActorUtils.MergeRotationAndFlags(90 + 60, flags: leftEntry.Rotation.y);
+            rightEntry.Rotation.y = ActorUtils.MergeRotationAndFlags(360 - 45 - 30, flags: rightEntry.Rotation.y);
 
             // change object in the room to match new fake actors
             grottosScene.Maps[14].Objects[2] = (coinTossResultActor.actor).ObjectIndex();
@@ -2814,7 +2821,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.Monkey, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.LikeLike, GameObjects.Actor.IronKnuckle)) continue;
+                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.SpikedMine, GameObjects.Actor.Postbox)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.MayorsResidence, GameObjects.Actor.Gorman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
