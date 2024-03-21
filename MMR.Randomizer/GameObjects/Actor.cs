@@ -2387,11 +2387,13 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x3760)]
         [FileID(271)]
         [ObjectListIndex(0x15E)]
+        [CheckRestricted(Scene.GreatBayTemple, variant:-1,
+            Item.CollectibleStrayFairyGreatBay10)] // biobaba room
         // 0x1 is the one that hangs from the ceiling in GBT
         // TODO if I get wall sideways working with dexihand, do it for baba too
         [WaterTopVariants(04, 02, 0)]
-        [EnemizerScenesExcluded(Scene.GreatBayTemple)] // need their lilipads to reach compass chest and fairy chest
-        BioDekuBaba = 0x12D, // Boss_05
+        //[EnemizerScenesExcluded(Scene.GreatBayTemple)] // need their lilipads to reach compass chest and fairy chest
+        BioDekuBaba = 0x12D, // Boss_05 // biobaba
 
         //[EnemizerEnabled]
         [FileID(272)]
