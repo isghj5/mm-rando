@@ -361,6 +361,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1324)]
         [SceneInternalId(0x34)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee,
+                        Actor.Hiploop)] // water explosion
         TradingPost = 0x31,
 
         [FileID(1326)]

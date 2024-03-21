@@ -160,6 +160,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xB)]
         // params type: 0 is fire, 2 is normal, 3 is perched, 4 is ice
         // 0x8000 is invisible
+        // type 2 can be perching? I saw 2 and 8002 in a grotto sittin in the air
         [FlyingVariants(0x0, 0x2, 0x04, 0x8000, 0x8002, 0x8004)] // which ones are fire and ice?
         [PerchingVariants(0x8103, 0x103)] // 0x100 is not a valid vanilla value, 0x7FFF is type, but the game uses 0xF range, so I modded
         [WallVariants(0x8003, 0x3)] // will take off and attack within 120 units distance (xz)
@@ -772,7 +773,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(95)]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
-        [GroundVariants(0x3323, 0x2324, 0x4324)] // bettles on the floor
+        [GroundVariants(0x3323, 0x2324, 0x4324)] // beatles on the floor
         //[FlyingVariants(0x2324, 0x4324)] // butterlies in the air
         [WaterVariants(0x6322)] // fish swimming in the water
         [UnkillableAllVariants]
