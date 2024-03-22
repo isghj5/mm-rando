@@ -2357,6 +2357,7 @@ namespace MMR.Randomizer.GameObjects
         // 0xFF == 0 or 1 is different case
         // 0x7F00 >> 8 is flags
         [WallVariants(0x7E01, 0x7D01, 0x7C01)]
+        [CeilingVariants(0x7E01, 0x7D01, 0x7C01)]
         //[GroundVariants(0x7E00, 0x7D00, 0x7C00)] // work but too low mostly hidden by ground
         [VariantsWithRoomMax(max: 1, 0x7E01, 0x7D01, 0x7C01)]
         [UnkillableAllVariants]
