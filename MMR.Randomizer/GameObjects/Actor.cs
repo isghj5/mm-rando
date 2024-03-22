@@ -3393,13 +3393,14 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         StrayFairy = 0x1B0, // En_Elforg
 
-        //[ActorizerEnabled] // don't give actual items, sadly, just jape you into thinking they are items
+        [ActorizerEnabled] // don't give actual items, sadly, just jape you into thinking they are items
         [FileID(398)]
         [ObjectListIndex(0xE)]
         // snowhead : 0x5E00,0x6000, 0x5800,0x5600, GreatBay: 0x6000
         // huh? these repeat per dungeon? 
-        [FlyingVariants(0x5E00, 0x6000, 0x5800, 0x5600)]
-        [GroundVariants(0x5E00, 0x6000, 0x5800, 0x5600)]
+        //[FlyingVariants(0x5E00, 0x6000, 0x5800, 0x5600)]
+        //[GroundVariants(0x5E00, 0x6000, 0x5800, 0x5600)]
+        [CeilingVariants(0x5E00, 0x6000, 0x5800, 0x5600)] // not really a thing, but lets see if we can't do this as a joke
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)] // 0xFE00
@@ -4417,7 +4418,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         // if kickout is 1F it does nothing? interesting
         [PathingKickoutAddrVarsPlacement(mask: 0x1F, shift: 0x0)]
-        [RespawningAllVariants] // think they count as enemy, so can't put places
+        [RespawningAllVariants] // think they count as enemy, but they dont die they get back up, so can't put places
         //[EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // because the ones in the hookshot room need to stay around
         [EnemizerScenesPlacementBlock(Scene.SouthClockTown, Scene.SwampSpiderHouse, Scene.MayorsResidence, Scene.RanchBuildings,
             Scene.DekuPlayground, Scene.DekuShrine, Scene.TradingPost)]
@@ -4748,6 +4749,7 @@ namespace MMR.Randomizer.GameObjects
         //[AlignedCompanionActor(Torch, CompanionAlignment.Above,
         //    variant: )] // 
         [OnlyOneActorPerRoom]
+        [FlyingToGroundHeightAdjustment(50)]
         [RespawningAllVariants] // they do NOT respawn, but they do block clear all rooms
         [UnkillableAllVariants]
         [EnemizerScenesPlacementBlock(Scene.Snowhead)]

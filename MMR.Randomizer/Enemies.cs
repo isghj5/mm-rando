@@ -761,7 +761,8 @@ namespace MMR.Randomizer
 
             var piratesFortressCourtyardScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PiratesFortress.FileID());
             piratesFortressCourtyardScene.Maps[0].Actors[17].Position.x = 1267;
-            piratesFortressCourtyardScene.Maps[0].Actors[17].Position.y = 323;
+            piratesFortressCourtyardScene.Maps[0].Actors[17].Position.y = 319;
+            piratesFortressCourtyardScene.Maps[0].Actors[20].Position.y = -200; // too high, can cause bombchu to explode
 
             if (ACTORSENABLED)
             {
