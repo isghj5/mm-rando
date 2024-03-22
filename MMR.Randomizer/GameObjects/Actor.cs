@@ -3606,14 +3606,21 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         GateSoldier = 0x1C7,
 
-        // this might also be the hanging iceicle in snowheadtemple
+        // this is both the hanging iceccyle in termina field and the ones in the temple 
+        [ActorizerEnabled]
         [ObjectListIndex(0x1AD)]
         [FileID(418)]
+        [CheckRestricted(Item.CollectableSnowheadTempleIceBlockRoomItem1,
+                         Item.CollectableSnowheadTempleIceBlockRoomItem2,
+                         Item.CollectableSnowheadTempleIceBlockRoomItem3)] // should be just for the sht scene but thats the only place it shows up
         // FF01 is the ice blocking the path north
         // 0x5AXX seems to be the blocking path ice walls from snowhead temple
-        //[GroundVariants(0x5A00)] 
+        [GroundVariants(0x5A00)]
+        [CeilingVariants(0x5A08, 0x5A0A, 0x5A0C, 0x5A0D, 0x5A0E // snowhead
+            )]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
+        [EnemizerScenesExcluded(Scene.TerminaField)]
         NorthTFIceBlock = 0x1C8, // Obj_BigIcicle
 
         [ActorizerEnabled]
@@ -4379,9 +4386,14 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         GBTSeaSaw = 0x21B, // Bg_Dblue_Balance
 
+        // lol
+        [ActorizerEnabled]
         [FileID(499)]
         [ObjectListIndex(0x184)]
-        GBTFreezableGuyser = 0x21C, // Bg_Dblue_Waterfall
+        [CeilingVariants(0x3)] // the one in greatbay temple above the door, just going to use one
+        [SwitchFlagsPlacement(mask:0x7F, shift:0)]
+        [UnkillableAllVariants]
+        GBTFreezableWaterfall = 0x21C, // Bg_Dblue_Waterfall
 
         //[EnemizerEnabled] // cutscene is broken without camera placement, player stuck in place
         [FileID(500)]
