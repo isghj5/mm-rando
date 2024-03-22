@@ -1495,7 +1495,6 @@ namespace MMR.Randomizer.GameObjects
         // variant 1
         //[GroundVariants(0xF080)] // instant talks to you with monkey dialgoue but talking doesnt end: softlock
         // there is also a variant 1000 which cannot be accessed with the 0x1F range, will have to mod to get that working
-
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         // pathing I think, but pathing flying types do not currently exist in this rando
         [VariantsWithRoomMax(max: 0, variant: 0xF18B, 0x2102, 0x1102, 0x0102)]
@@ -2290,9 +2289,15 @@ namespace MMR.Randomizer.GameObjects
 
         Empty11E = 0x11E,
 
+        [ActorizerEnabled]
         [FileID(259)]
         [ObjectListIndex(0x157)]
-        IceCavernStelagtite = 0x11F, // Bg_Icicle
+        [GroundVariants(0x700, 0xD00, 0xA00, // greatbaytemple
+                        0x003F, // goron trial
+                        0x1000, 0x0B00, 0x0C00, 0x600, 0x002B)] // snowheattemple
+        [CeilingVariants(0xFF01, 0xFF00, 0xFF02 )]
+        [UnkillableAllVariants]
+        IceCavernStelagtite = 0x11F, // Bg_Icicle // also stalagmite
 
         [FileID(260)]
         [ObjectListIndex(0x6)]
@@ -2888,9 +2893,9 @@ namespace MMR.Randomizer.GameObjects
         RealBombchu = 0x16F, // En_Rat
 
         // both the dripping water from the roof of caves, but also falling flame rocks from ISTT lava
-        //[ActorizerEnabled]
+        [ActorizerEnabled]
         [FileID(332)]
-        [ObjectListIndex(0x182)]
+        [ObjectListIndex(0x182)] // this is its own special object? weird
         // this actor is also effects, mostly used in gyorg fight
         [CeilingVariants(0x00FF, // water drip spawner
             0x0001)] // fire rock spawner
@@ -4940,7 +4945,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(Scene.ZoraCape)]
         Lulu = 0x252, // Ee_Zov
 
-        // probably boring actor with timed flags nonsense
+        // placable but does nothing and is waaaay too common
         [ActorizerEnabled]
         [FileID(554)]
         [ObjectListIndex(0x7)]
@@ -5553,6 +5558,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x7)]
         [GroundVariants(0x0)]
         [UnkillableAllVariants]
+        [VariantsWithRoomMax(max:0, variant:0x0)] // super common and boring: does nothing until I can fix
         [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)] // red flames
         AnjuMotherWedding = 0x29F, // Dm_Ah
 
