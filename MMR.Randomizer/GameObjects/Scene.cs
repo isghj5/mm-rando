@@ -160,7 +160,8 @@ namespace MMR.Randomizer.GameObjects
         [FairyDroppingEnemies(roomNumber: 3, actorNumber: 3)] // west wing, skulltula:3
         [FairyDroppingEnemies(roomNumber: 5, actorNumber: 22)] // east wing, beehive:22
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Dinofos, // weak enemies are kinda lame here
-            Actor.Leever, Actor.ChuChu, Actor.DekuBabaWithered)]
+            Actor.Leever, Actor.ChuChu, Actor.DekuBabaWithered,
+            Actor.Hiploop)] // dies instantly in the water
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula, 
             Actor.BigPoe)] // I think this was an issue? other than being annoying I mean
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo,
