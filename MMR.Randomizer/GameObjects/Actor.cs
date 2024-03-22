@@ -3617,11 +3617,12 @@ namespace MMR.Randomizer.GameObjects
                          Item.CollectableSnowheadTempleIceBlockRoomItem3)] // should be just for the sht scene but thats the only place it shows up
         // FF01 is the ice blocking the path north
         // 0x5AXX seems to be the blocking path ice walls from snowhead temple
-        [GroundVariants(0x5A00)]
+        //[CeilingVariants(0x5A00)] // we dont want t remove, and placing them on the floor 
         [CeilingVariants(0x5A08, 0x5A0A, 0x5A0C, 0x5A0D, 0x5A0E // snowhead
             )]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
+        [VariantsWithRoomMax(max:0, variant:0x5A00)]
         [EnemizerScenesExcluded(Scene.TerminaField)]
         NorthTFIceBlock = 0x1C8, // Obj_BigIcicle
 
