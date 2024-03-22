@@ -2391,8 +2391,13 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectibleStrayFairyGreatBay10)] // biobaba room
         // 0x1 is the one that hangs from the ceiling in GBT
         // TODO if I get wall sideways working with dexihand, do it for baba too
-        [WaterTopVariants(04, 02, 0)]
+        [WaterTopVariants( 0x0002, // without a head to bite you
+            0x0000)] // regular
+        // is there a watter bottom version by default?
+        [WaterBottomVariants(4)]
+        [CeilingVariants(0x0001)] // their in the ceiling now
         //[EnemizerScenesExcluded(Scene.GreatBayTemple)] // need their lilipads to reach compass chest and fairy chest
+        [UnkillableVariants(0)]
         BioDekuBaba = 0x12D, // Boss_05 // biobaba
 
         //[EnemizerEnabled]
@@ -4378,12 +4383,13 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x24B)] // 3 different versions
         [GroundVariants(0x24B)]
         //[EnemizerScenesExcluded(0x23)] // do not remove original, for now
-        PirateColonel = 0x21D,
+        PirateColonel = 0x21D, // En_Kaizoku
 
         // TODO make the one that just looks at you a non-enemy type in the replacement
         [EnemizerEnabled]
         [FileID(501)]
         [ObjectListIndex(0x12E)]
+        [CheckRestricted(Scene.PiratesFortressRooms, variant:-1, Item.HeartPiecePiratesFortress)]
         // vanilla variants:
         // Aviels room: 0xCB1
         // path == 0x3F ignores path, just stands in one spot
@@ -4407,8 +4413,7 @@ namespace MMR.Randomizer.GameObjects
         // if kickout is 1F it does nothing? interesting
         [PathingKickoutAddrVarsPlacement(mask: 0x1F, shift: 0x0)]
         [RespawningAllVariants] // think they count as enemy, so can't put places
-        [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // because the ones in the hookshot room need to stay around
-        // this actor is blocked from grotto deku baba because the kickout is crash, not sure why yet its a scene_table thing
+        //[EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // because the ones in the hookshot room need to stay around
         [EnemizerScenesPlacementBlock(Scene.SouthClockTown, Scene.SwampSpiderHouse, Scene.MayorsResidence, Scene.RanchBuildings,
             Scene.DekuPlayground, Scene.DekuShrine, Scene.TradingPost)]
         PatrollingPirate = 0x21E, // En_Ge2
