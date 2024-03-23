@@ -219,6 +219,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorType(ActorTypeAttribute.ActorType.Respawn)]
         [IsMoving]
         [ForbidFromScene(Scene.GreatBayTemple)] // needed to freeze
+        [ForbidToScene(Scene.SouthernSwampClear)]
         Chuchu,
 
         [ActorId(0x014b)]
