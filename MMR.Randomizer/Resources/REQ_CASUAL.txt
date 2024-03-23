@@ -24961,7 +24961,9 @@
     },
     {
       "Id": "Any Shield",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "Setting Can Shield"
+      ],
       "ConditionalItems": [
         [
           "UpgradeMirrorShield"
@@ -34346,6 +34348,16 @@
       "IsTrick": true,
       "TrickTooltip": "Climb onto the awning with a precise jump without using a sword to Jump Slash through it.",
       "TrickCategory": "Romani Ranch"
+    },
+    {
+      "Id": "Setting Can Shield",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false,
+      "SettingExpression": "!settings.TakeDamageWhileShielding"
     }
   ]
 }
