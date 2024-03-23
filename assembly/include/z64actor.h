@@ -391,7 +391,8 @@ typedef struct ActorPlayer {
     /* 0x384 */ u16 getItem;
     /* 0x386 */ u16 unk386; // Some kind of rotation?
     /* 0x388 */ Actor* givingActor;
-    /* 0x38C */ UNK_TYPE1 pad38C[0x8];
+    /* 0x38C */ s8 mountSide;
+    /* 0x390 */ Actor* rideActor;
     /* 0x394 */ u8 unk394;
     /* 0x395 */ UNK_TYPE1 pad395[0x37];
     /* 0x3CC */ s16 unk3CC;
@@ -402,7 +403,9 @@ typedef struct ActorPlayer {
     /* 0x504 */ z_Light* lightNode;
     /* 0x508 */ LightInfo lightInfo;
     /* 0x518 */ ColCylinder collisionCylinder;
-    /* 0x564 */ UNK_TYPE1 pad564[0x1CC];
+    /* 0x564 */ ColQuad meleeWeaponQuads[2];
+    /* 0x664 */ ColQuad shieldQuad;
+    /* 0x6E4 */ ColCylinder shieldCylinder;
     /* 0x730 */ Actor* target;
     /* 0x734 */ char unk_734[4];
     /* 0x738 */ s32 unk_738;

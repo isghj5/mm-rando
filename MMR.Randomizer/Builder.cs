@@ -1720,6 +1720,36 @@ namespace MMR.Randomizer
                 ReadWriteUtils.WriteCodeNOP(0x800DF450);
             }
 
+            if (_randomized.Settings.TakeDamageWhileShielding)
+            {
+                hacks.Add(Resources.mods.take_damage_while_shielding);
+            }
+
+            if (_randomized.Settings.TakeDamageFromVoid)
+            {
+                hacks.Add(Resources.mods.take_damage_from_void);
+            }
+
+            if (_randomized.Settings.TakeDamageFromDog)
+            {
+                hacks.Add(Resources.mods.take_damage_from_dog);
+            }
+
+            if (_randomized.Settings.TakeDamageFromGorons)
+            {
+                hacks.Add(Resources.mods.take_damage_from_goron);
+            }
+
+            if (_randomized.Settings.TakeDamageGettingCaught)
+            {
+                hacks.Add(Resources.mods.take_damage_from_caught);
+            }
+
+            if (_randomized.Settings.TakeDamageFromGibdosFaster)
+            {
+                hacks.Add(Resources.mods.take_damage_from_gibdo_immediately);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);

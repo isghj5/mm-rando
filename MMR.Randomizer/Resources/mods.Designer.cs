@@ -1373,6 +1373,66 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] take_damage_from_caught {
+            get {
+                object obj = ResourceManager.GetObject("take_damage_from_caught", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] take_damage_from_dog {
+            get {
+                object obj = ResourceManager.GetObject("take_damage_from_dog", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] take_damage_from_gibdo_immediately {
+            get {
+                object obj = ResourceManager.GetObject("take_damage_from_gibdo_immediately", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] take_damage_from_goron {
+            get {
+                object obj = ResourceManager.GetObject("take_damage_from_goron", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] take_damage_from_void {
+            get {
+                object obj = ResourceManager.GetObject("take_damage_from_void", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] take_damage_while_shielding {
+            get {
+                object obj = ResourceManager.GetObject("take_damage_while_shielding", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] tatl_remains_hint {
             get {
                 object obj = ResourceManager.GetObject("tatl_remains_hint", resourceCulture);

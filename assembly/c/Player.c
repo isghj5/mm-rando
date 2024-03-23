@@ -935,11 +935,30 @@ bool Player_ShouldBeKnockedOver(GlobalContext* ctxt, ActorPlayer* player, s32 da
         return false;
     }
 
+    if (MISC_CONFIG.flags.takeDamageOnEpona && (player->stateFlags.state1 & PLAYER_STATE1_EPONA)) {
+        bool* gHorseIsMounted = (bool*)0x801BDA9C;
+        z2_Camera_ChangeSetting(z2_Play_GetCamera(ctxt, 0), 1); // CAM_ID_MAIN, CAM_SET_NORMAL0
+        player->stateFlags.state1 &= ~PLAYER_STATE1_EPONA;
+        player->rideActor->child = NULL;
+        player->base.parent = NULL;
+        *gHorseIsMounted = false;
+        gSaveContext.perm.horseData.sceneId = ctxt->sceneNum;
+        gSaveContext.perm.horseData.pos.x = player->rideActor->currPosRot.pos.x;
+        gSaveContext.perm.horseData.pos.y = player->rideActor->currPosRot.pos.y;
+        gSaveContext.perm.horseData.pos.z = player->rideActor->currPosRot.pos.z;
+        gSaveContext.perm.horseData.yaw = player->rideActor->shape.rot.y;
+        return true;
+    }
+
     // Displaced code:
     return damageType == 1
         || damageType == 2
         || !(player->base.bgcheckFlags & 1) // BGCHECKFLAG_GROUND
         || (player->stateFlags.state1 & (PLAYER_STATE1_LEDGE_CLIMB | PLAYER_STATE1_LEDGE_HANG | PLAYER_STATE1_CLIMB_UP | PLAYER_STATE1_LADDER));
+}
+
+bool Player_ShouldSkipParentDamageCheck(ActorPlayer* player) {
+    return MISC_CONFIG.flags.takeDamageOnEpona && (player->stateFlags.state1 & PLAYER_STATE1_EPONA);
 }
 
 bool Player_CantBeGrabbed(GlobalContext* ctxt, ActorPlayer* player) {
@@ -1024,4 +1043,19 @@ Actor* Player_GetGoronPunchCollisionActor(CollisionContext* colCtx, s32 bgId) {
 
 bool Player_ShouldNotSetGlobalVoidFlag(CollisionContext* colCtx, BgPolygon* poly, s32 bgId) {
     return gSaveContext.extra.voidFlag == -7 || z2_SurfaceType_IsWallDamage(colCtx, poly, bgId);
+}
+
+Actor* Player_GetHittingActor(ActorPlayer* player) {
+    if (player->collisionCylinder.base.flagsAC & AC_HIT) {
+        return player->collisionCylinder.base.collisionAC;
+    }
+    if (MISC_CONFIG.flags.takeDamageOnShield) {
+        if (player->shieldQuad.base.flagsAC & AC_HIT) {
+            return player->shieldQuad.base.collisionAC;
+        }
+        if (player->shieldCylinder.base.flagsAC & AC_HIT) {
+            return player->shieldCylinder.base.collisionAC;
+        }
+    }
+    return NULL;
 }

@@ -64,6 +64,7 @@
 0x800C99D4,z2_GetFloorPhysicsType
 0x800C9E88,z2_SurfaceType_IsWallDamage
 0x800CB7CC,z2_Camera_IsHookArrival
+0x800DFAC8,z2_Camera_ChangeSetting
 0x800E0410,z2_CollisionCheck_GetDamageAndEffectOnBumper
 0x800E04EC,z2_CollisionCheck_GetToucherDamage
 0x800E7DF8,z2_Collider_UpdateCylinder
@@ -170,6 +171,7 @@
 0x801694DC,z2_Play_CreateSubCamera
 0x80169590,z2_Play_CameraChangeStatus
 0x80169600,z2_Play_ClearCamera
+0x801696D4,z2_Play_GetCamera
 0x8016981C,z2_Play_CameraSetAtEyeUp
 0x80169AFC,z2_80169AFC
 0x80169CBC,z2_check_scene_pairs

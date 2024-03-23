@@ -1296,6 +1296,12 @@ typedef union {
     u8 bytes[0x1C];
 } PermanentSceneFlags; // size = 0x1C
 
+typedef struct HorseData {
+    /* 0x0 */ s16 sceneId;                             // "spot_no"
+    /* 0x2 */ Vec3s pos;                               // "horse_x", "horse_y" and "horse_z"
+    /* 0x8 */ s16 yaw;                                 // "horse_a"
+} HorseData; // size = 0xA
+
 typedef struct {
     /* 0x00 */ u8 zelda[6]; // Will always be "ZELDA3" for a valid save
     /* 0x06 */ u16 songOfTimeCount;
@@ -1439,7 +1445,7 @@ typedef struct {
     /* 0x0FEC */ u8 lotteryCodes[9];
     /* 0x0FF5 */ u8 spiderHouseMaskOrder[6];
     /* 0x0FFB */ u8 bomberCode[5];
-    /* 0x1000 */ UNK_TYPE1 pad1000[0xA];
+    /* 0x1000 */ HorseData horseData;
     /* 0x100A */ u16 checksum;
 } SaveContextPerm; // size = 0x100C
 

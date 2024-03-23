@@ -615,3 +615,15 @@ Player_Lib_IsBootDataSwimming_Hook:
     jr      ra
     or      t5, t5, t4
 
+Player_GetHittingActor_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a0, 0x0010 (sp)
+
+    jal     Player_GetHittingActor
+    or      a0, s0, r0
+
+    lw      a0, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18

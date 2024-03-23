@@ -293,6 +293,10 @@ namespace MMR.Randomizer.Asm
 
         public bool SkulltulaTokenSounds { get; set; }
 
+        public bool TakeDamageOnEpona { get; set; }
+
+        public bool TakeDamageWhileShielding { get; set; }
+
         public MiscFlags()
         {
         }
@@ -340,6 +344,8 @@ namespace MMR.Randomizer.Asm
             EasyFrameByFrame = bitUnpacker.ReadBool();
             FairyMaskShimmer = bitUnpacker.ReadBool();
             SkulltulaTokenSounds = bitUnpacker.ReadBool();
+            TakeDamageOnEpona = bitUnpacker.ReadBool();
+            TakeDamageWhileShielding = bitUnpacker.ReadBool();
         }
 
         /// <summary>
@@ -380,6 +386,8 @@ namespace MMR.Randomizer.Asm
             bitPacker.Write(EasyFrameByFrame);
             bitPacker.Write(FairyMaskShimmer);
             bitPacker.Write(SkulltulaTokenSounds);
+            bitPacker.Write(TakeDamageOnEpona);
+            bitPacker.Write(TakeDamageWhileShielding);
             return bitPacker.ToByteArray(4);
         }
     }

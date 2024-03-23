@@ -63,6 +63,7 @@ extern Actor* z2_DynaPoly_GetActor(CollisionContext* colCtx, s32 bgId);
 extern u32 z2_GetFloorPhysicsType(void* arg0, void* arg1, u8 arg2);
 extern bool z2_SurfaceType_IsWallDamage(CollisionContext* colCtx, BgPolygon* poly, s32 bgId);
 extern bool z2_Camera_IsHookArrival(Camera* camera);
+extern bool z2_Camera_ChangeSetting(Camera* camera, s16 setting);
 extern void z2_PushMatrixStackCopy();
 extern void z2_PopMatrixStack();
 extern f32* z2_GetMatrixStackTop();
@@ -306,6 +307,7 @@ extern void ShrinkWindow_SetLetterboxTarget(s16 unkA0);
 extern s16 z2_Play_CreateSubCamera(GlobalContext* ctxt);
 extern void z2_Play_CameraChangeStatus(GlobalContext* ctxt, s16 camId, s16 status);
 extern void z2_Play_ClearCamera(GlobalContext* ctxt, s16 camId);
+extern Camera* z2_Play_GetCamera(GlobalContext* ctxt, s16 camId);
 extern void z2_Play_CameraSetAtEyeUp(GlobalContext* ctxt, s16 camId, Vec3f* at, Vec3f* eye, Vec3f* up);
 extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 
