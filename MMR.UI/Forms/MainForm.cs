@@ -118,8 +118,8 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cTakeDamageFromVoid, "Link will take damage when falling into most voids. Voids that have a specific destination will not deal damage.");
             TooltipBuilder.SetTooltip(cTakeDamageFromGorons, "Link will take damage when being hit by Gorons during the Goron Race.");
             TooltipBuilder.SetTooltip(cTakeDamageFromGibdosFaster, "Gibdos will deal damage immediately after grabbing Link.");
-            TooltipBuilder.SetTooltip(cTakeDamageGettingCaught, "Getting thrown out after being caught by guards will deal damage.");
-            TooltipBuilder.SetTooltip(cTakeDamageFromDog, "The dog in Clock Town will damage Deku Link.");
+            TooltipBuilder.SetTooltip(cTakeDamageGettingCaught, "Getting thrown out after being caught by guards will deal damage. Being thrown out after getting the reward from the Imprisoned Monkey will not deal damage.");
+            TooltipBuilder.SetTooltip(cTakeDamageFromDog, "Dogs will damage Deku Link.");
             TooltipBuilder.SetTooltip(cTakeDamageFromDexihands, "Link will take damage from Dexihands.");
             TooltipBuilder.SetTooltip(cContinuousDekuHopping, "Press A while hopping across water to keep hopping.");
             TooltipBuilder.SetTooltip(cIronGoron, "Goron Link will sink in water instead of drowning.");
