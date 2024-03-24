@@ -1023,7 +1023,7 @@ namespace MMR.Randomizer.Utils
                     return false;
                 }
 
-                if (targetSlot.Type[0] < 8) // to reduce spam, limit logging this only to the regular categories
+                if (targetSlot.Categories[0] < 8) // to reduce spam, limit logging this only to the regular categories
                 {
                     log.AppendLine($"{testSeq.Name,-50}  skipped for slot {targetSlot.Replaces.ToString("X2")} because it's a low use slot and requires a custom bank");
                 }
@@ -1443,108 +1443,13 @@ namespace MMR.Randomizer.Utils
                 Name = "mm-spiderhouse-replacement",
                 MM_seq = replacement_slot,
                 Replaces = replacement_slot,
-                Type = new List<int> { 2 },
+                Categories = new List<int> { 2 },
                 Instrument = 3
             };
 
             RomData.TargetSequences.Add(new_music_slot);
 
         }
-
-
-        public static void ReassignSongSlots(StringBuilder log, Random rng)
-        {
-            /// new extra song slots
-            // read all assginement slots from json files
-            var replacementSongSlots = new List<ReplacementSongSlot>();
-            // resources folder got nuked, for now lets assume this will be in the main folder
-            foreach (var filePath in Directory.GetFiles(".", "*AdditionalSongSlots.json"))
-            {
-                try
-                {
-                    var filetext = File.ReadAllText(filePath);
-                    // the json string enum converter lets us read strings as songnames instead of int(slots) for readability
-                    var buildingList = JsonSerializer.Deserialize<List<ReplacementSongSlot>>(filetext);
-                    //var buildingList = System.Text.Json.JsonSerializer.Deserialize<List<ReplacementSongSlot>>(filetext, JsonSerializer._AdditionalSequenceSerializerOptions);
-
-                    Debug.Assert(buildingList[0].Name != null);
-                    Debug.Assert(buildingList[0].NewSongSlotCategories != null);
-                    replacementSongSlots = replacementSongSlots.Concat(buildingList).ToList();
-                }
-                catch (IOException ex)
-                {
-                    Debug.WriteLine("Error reading file: " + filePath + ", error: " + ex.ToString());
-                }
-                catch (System.Text.Json.JsonException e)
-                {
-                    Debug.WriteLine("Error reading json: " + filePath + ", error: " + e.ToString());
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine("Error unknown error: " + filePath + ", error: " + e.ToString());
-                }
-
-            }
-
-            // randomize the order of the list, in case we run out of slots which ones get used will be random per seed
-            replacementSongSlots = replacementSongSlots.OrderBy(x => rng.Next()).ToList();
-
-            // these are song slots that were previously pointed at a different slot to save space
-            //  song slots that had songs we wanted to add to the pool, but because they are (nearly) unreachable in rando, putting music
-            //  in those slots dooms the music to never be heard in the seed, it was increadibly common for me to want to listen to a song and it gets up here
-            // so they got "pointed" at a different slot, if they were discovered in game because of glitches, they would still play the song they point at
-            var availableSlots = RomData.PointerizedSequences.ToList();
-            // note: there are multiple slots in the game that we cannot hear that are fanfares that could get added to this list if we need more
-            // like the opening cutscene, and there are several pointed slots for clocktown we might be able to add
-
-            for (int i = 0; availableSlots.Count > 0 && i < replacementSongSlots.Count && RomData.PointerizedSequences.Count > 0; i++)
-            {
-                ReplacementSongSlot newSongSlot = replacementSongSlots[i];
-                SequenceInfo availableSlot = availableSlots.ElementAt(0);
-                log.AppendLine($"++ Adding a new song slot: [{newSongSlot.Name}] at previously unused slot [{availableSlot.PreviousSlot.ToString("X2")}][{availableSlot.Name}]");
-                availableSlots.RemoveAt(0);
-
-                // replace the song byte for every scene in this replacement event
-                foreach (string sceneFID in newSongSlot.SceneFIDToModify)
-                {
-                    bool result = SearchAndReplaceSceneBGM(sceneFID, (byte)availableSlot.PreviousSlot);
-                    if (!result)
-                    {
-                        log.AppendLine("Error: could not replace the bgm byte in scene fid: " + sceneFID);
-                    }
-                }
-
-                try
-                {
-                    SequenceInfo newMusicSlot = new SequenceInfo
-                    {
-                        // we add mmr- because if the user adds mm- it will confuse our weak parser later
-                        Name = "mmr-" + newSongSlot.Name,
-                        MM_seq = availableSlot.MM_seq, // previoyusly PreviousSlot
-                        Replaces = availableSlot.PreviousSlot,
-                        Categories = newSongSlot.NewSongSlotCategories.Select(int.Parse).ToList(),
-                        Instrument = 0
-                    };
-                    RomData.TargetSequences.Add(newMusicSlot);
-                }
-                catch (Exception)
-                {
-                    log.AppendLine("Error while converting an additional song slot to a sequence for music rando, slot: " + newSongSlot.Name);
-                }
-
-                // astral observatory is a special case where going backwards, from observatory into the sewer is hard coded, we have to update that
-                if (newSongSlot.SceneFIDToModify.Contains(GameObjects.Scene.AstralObservatory.FileID().ToString()))
-                {
-                    // in Audio_PlayObjSoundBgm it checks if you are going from astral observatory and back, and sets that ID in hardcode instead
-                    var codeFile = RomData.MMFileList[31].Data;
-                    // 0FBD04 801A17C4 0C06A26A */  jal  AudioSeq_QueueSeqCmd
-                    // 0FBD08 801A17C8 3484003B */  ori   $a0, $a0, 003B <- replace 3B with our byte
-                    codeFile[0xFBD08 + 3] = (byte) availableSlot.PreviousSlot;
-                }
-
-                RomData.PointerizedSequences.Remove(availableSlot);
-            }
-        } // */
 
         public static void ReadInstrumentSetList()
         {
