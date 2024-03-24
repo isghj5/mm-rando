@@ -1400,57 +1400,6 @@ namespace MMR.Randomizer.Utils
         }
 
 
-
-        public static void ReassignSkulltulaHousesMusic(byte replacement_slot = 0x75)
-        {
-            // changes the skulltulla house BGM to a separate slot so it plays a new music that isn't generic cave music (overused)
-            // the BGM for a scene is specified by a single byte in the scene headers
-
-            // to modify the scene header, which is in the scene, we need the scene as a file
-            //  we can get this from the Romdata.SceneList but this only gets populated on enemizer
-            //  and we don't NEED to populate it since vanilla scenes are static, we can just hard code it here
-            //  at re-encode, we'll have fewer decoded files to re-encode too
-            int swamp_spider_house_fid = 1284; // taken from ultimate MM spreadsheet (US File list -> A column)
-
-            // scan the files for the header that contains scene music (0x15 first byte)
-            // 15xx0000 0000yyzz where zz is the sequence pointer byte
-            RomUtils.CheckCompressed(swamp_spider_house_fid);
-            for (int b = 0; b < 0x10 * 70; b += 8)
-            {
-                if (RomData.MMFileList[swamp_spider_house_fid].Data[b] == 0x15
-                    && RomData.MMFileList[swamp_spider_house_fid].Data[b + 0x7] == 0x3B)
-                {
-                    RomData.MMFileList[swamp_spider_house_fid].Data[b + 0x7] = replacement_slot;
-                    break;
-                }
-            }
-
-            int ocean_spider_house_fid = 1291; // taken from ultimate MM spreadsheet
-            RomUtils.CheckCompressed(ocean_spider_house_fid);
-            for (int b = 0; b < 0x10 * 70; b += 8)
-            {
-                if (RomData.MMFileList[ocean_spider_house_fid].Data[b] == 0x15
-                    && RomData.MMFileList[ocean_spider_house_fid].Data[b + 0x7] == 0x3B)
-                {
-                    RomData.MMFileList[ocean_spider_house_fid].Data[b + 0x7] = replacement_slot;
-                    break;
-                }
-            }
-
-
-            SequenceInfo new_music_slot = new SequenceInfo
-            {
-                Name = "mm-spiderhouse-replacement",
-                MM_seq = replacement_slot,
-                Replaces = replacement_slot,
-                Categories = new List<int> { 2 },
-                Instrument = 3
-            };
-
-            RomData.TargetSequences.Add(new_music_slot);
-
-        }
-
         public static void ReadInstrumentSetList()
         {
             /// traverse the whole audiobank index and grab details about every bank
