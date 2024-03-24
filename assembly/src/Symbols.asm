@@ -134,6 +134,7 @@
 .definelabel z2_Player_InBlockingCsMode, 0x80123358
 .definelabel z2_CanInteract, 0x801233E4
 .definelabel z2_Inventory_GetBtnItem, 0x8012364C
+.definelabel z2_Player_SetEquipmentData, 0x80123C90
 .definelabel z2_801242DC, 0x801242DC
 .definelabel z2_Player_DrawGetItem, 0x8012697C
 .definelabel z2_PlayerGormanTears, 0x80127594

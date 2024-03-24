@@ -1303,6 +1303,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] sonata_check_gentle_throw {
+            get {
+                object obj = ResourceManager.GetObject("sonata_check_gentle_throw", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] speedup_babycucco_minimap {
             get {
                 object obj = ResourceManager.GetObject("speedup_babycucco_minimap", resourceCulture);

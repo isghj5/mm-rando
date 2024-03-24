@@ -1439,6 +1439,32 @@
     beqz    v0, 0x80834B24
     or      t5, v0, r0
 
+.org 0x808349EC
+    jal     Player_GetHittingActor_Hook
+    nop
+    beqz    v0, 0x80834B24
+    or      t5, v0, r0
+
+;==================================================================================================
+; Take Damage after minor void
+;==================================================================================================
+
+; Replaces:
+;   JAL     Player_SetEquipmentData
+.org 0x808498B8
+    jal     Player_OnMinorVoid
+
+; Replaces:
+;   JAL     z2_PerformEnterWaterEffects
+.org 0x8083BDF8
+    jal     Player_OnDekuWaterVoid
+
+; Fix relocations.
+; Replaces:
+;   .dw 0x4400E368
+.org 0x8085FA04
+    .dw 0x00000000
+
 ;==================================================================================================
 ; Player Lib
 ;==================================================================================================

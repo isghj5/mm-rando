@@ -1743,6 +1743,11 @@ namespace MMR.Randomizer
             if (_randomized.Settings.TakeDamageGettingCaught)
             {
                 hacks.Add(Resources.mods.take_damage_from_caught);
+
+                if (_randomized.Settings.LogicMode != LogicMode.Vanilla)
+                {
+                    hacks.Add(Resources.mods.sonata_check_gentle_throw);
+                }
             }
 
             if (_randomized.Settings.TakeDamageFromGibdosFaster)

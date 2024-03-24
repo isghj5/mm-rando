@@ -80,6 +80,14 @@ namespace MMR.UI.Forms
             this.pLocationCategories = new System.Windows.Forms.Panel();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.gGimmicksChallenges = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cTakeDamageFromGibdosFaster = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageGettingCaught = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageFromGorons = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageFromDog = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageFromVoid = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageWhileShielding = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageOnEpona = new System.Windows.Forms.CheckBox();
             this.cFewerHealthDrops = new System.Windows.Forms.CheckBox();
             this.cDType = new System.Windows.Forms.ComboBox();
             this.lDType = new System.Windows.Forms.Label();
@@ -265,14 +273,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cTakeDamageOnEpona = new System.Windows.Forms.CheckBox();
-            this.cTakeDamageWhileShielding = new System.Windows.Forms.CheckBox();
-            this.cTakeDamageFromVoid = new System.Windows.Forms.CheckBox();
-            this.cTakeDamageFromDog = new System.Windows.Forms.CheckBox();
-            this.cTakeDamageFromGorons = new System.Windows.Forms.CheckBox();
-            this.cTakeDamageGettingCaught = new System.Windows.Forms.CheckBox();
-            this.cTakeDamageFromGibdosFaster = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.cTakeDamageFromDexihands = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -834,6 +835,7 @@ namespace MMR.UI.Forms
             // 
             // gGimmicksChallenges
             // 
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromDexihands);
             this.gGimmicksChallenges.Controls.Add(this.label2);
             this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromGibdosFaster);
             this.gGimmicksChallenges.Controls.Add(this.cTakeDamageGettingCaught);
@@ -857,6 +859,114 @@ namespace MMR.UI.Forms
             this.gGimmicksChallenges.TabIndex = 33;
             this.gGimmicksChallenges.TabStop = false;
             this.gGimmicksChallenges.Text = "Challenges";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 120);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(126, 15);
+            this.label2.TabIndex = 34;
+            this.label2.Text = "More Damage Sources";
+            // 
+            // cTakeDamageFromGibdosFaster
+            // 
+            this.cTakeDamageFromGibdosFaster.AutoSize = true;
+            this.cTakeDamageFromGibdosFaster.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromGibdosFaster.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromGibdosFaster.Location = new System.Drawing.Point(154, 138);
+            this.cTakeDamageFromGibdosFaster.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromGibdosFaster.Name = "cTakeDamageFromGibdosFaster";
+            this.cTakeDamageFromGibdosFaster.Size = new System.Drawing.Size(128, 19);
+            this.cTakeDamageFromGibdosFaster.TabIndex = 33;
+            this.cTakeDamageFromGibdosFaster.Text = "From Gibdos Faster";
+            this.cTakeDamageFromGibdosFaster.UseVisualStyleBackColor = false;
+            this.cTakeDamageFromGibdosFaster.CheckedChanged += new System.EventHandler(this.cTakeDamageFromGibdosFaster_CheckedChanged);
+            // 
+            // cTakeDamageGettingCaught
+            // 
+            this.cTakeDamageGettingCaught.AutoSize = true;
+            this.cTakeDamageGettingCaught.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageGettingCaught.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageGettingCaught.Location = new System.Drawing.Point(153, 163);
+            this.cTakeDamageGettingCaught.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageGettingCaught.Name = "cTakeDamageGettingCaught";
+            this.cTakeDamageGettingCaught.Size = new System.Drawing.Size(107, 19);
+            this.cTakeDamageGettingCaught.TabIndex = 32;
+            this.cTakeDamageGettingCaught.Text = "Getting Caught";
+            this.cTakeDamageGettingCaught.UseVisualStyleBackColor = false;
+            this.cTakeDamageGettingCaught.CheckedChanged += new System.EventHandler(this.cTakeDamageGettingCaught_CheckedChanged);
+            // 
+            // cTakeDamageFromGorons
+            // 
+            this.cTakeDamageFromGorons.AutoSize = true;
+            this.cTakeDamageFromGorons.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromGorons.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromGorons.Location = new System.Drawing.Point(7, 213);
+            this.cTakeDamageFromGorons.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromGorons.Name = "cTakeDamageFromGorons";
+            this.cTakeDamageFromGorons.Size = new System.Drawing.Size(95, 19);
+            this.cTakeDamageFromGorons.TabIndex = 31;
+            this.cTakeDamageFromGorons.Text = "From Gorons";
+            this.cTakeDamageFromGorons.UseVisualStyleBackColor = false;
+            this.cTakeDamageFromGorons.CheckedChanged += new System.EventHandler(this.cTakeDamageFromGorons_CheckedChanged);
+            // 
+            // cTakeDamageFromDog
+            // 
+            this.cTakeDamageFromDog.AutoSize = true;
+            this.cTakeDamageFromDog.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromDog.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromDog.Location = new System.Drawing.Point(153, 188);
+            this.cTakeDamageFromDog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromDog.Name = "cTakeDamageFromDog";
+            this.cTakeDamageFromDog.Size = new System.Drawing.Size(79, 19);
+            this.cTakeDamageFromDog.TabIndex = 30;
+            this.cTakeDamageFromDog.Text = "From Dog";
+            this.cTakeDamageFromDog.UseVisualStyleBackColor = false;
+            this.cTakeDamageFromDog.CheckedChanged += new System.EventHandler(this.cTakeDamageFromDog_CheckedChanged);
+            // 
+            // cTakeDamageFromVoid
+            // 
+            this.cTakeDamageFromVoid.AutoSize = true;
+            this.cTakeDamageFromVoid.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromVoid.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromVoid.Location = new System.Drawing.Point(8, 188);
+            this.cTakeDamageFromVoid.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromVoid.Name = "cTakeDamageFromVoid";
+            this.cTakeDamageFromVoid.Size = new System.Drawing.Size(80, 19);
+            this.cTakeDamageFromVoid.TabIndex = 29;
+            this.cTakeDamageFromVoid.Text = "From Void";
+            this.cTakeDamageFromVoid.UseVisualStyleBackColor = false;
+            this.cTakeDamageFromVoid.CheckedChanged += new System.EventHandler(this.cTakeDamageFromVoid_CheckedChanged);
+            // 
+            // cTakeDamageWhileShielding
+            // 
+            this.cTakeDamageWhileShielding.AutoSize = true;
+            this.cTakeDamageWhileShielding.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageWhileShielding.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageWhileShielding.Location = new System.Drawing.Point(8, 163);
+            this.cTakeDamageWhileShielding.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageWhileShielding.Name = "cTakeDamageWhileShielding";
+            this.cTakeDamageWhileShielding.Size = new System.Drawing.Size(108, 19);
+            this.cTakeDamageWhileShielding.TabIndex = 28;
+            this.cTakeDamageWhileShielding.Text = "While Shielding";
+            this.cTakeDamageWhileShielding.UseVisualStyleBackColor = false;
+            this.cTakeDamageWhileShielding.CheckedChanged += new System.EventHandler(this.cTakeDamageWhileShielding_CheckedChanged);
+            // 
+            // cTakeDamageOnEpona
+            // 
+            this.cTakeDamageOnEpona.AutoSize = true;
+            this.cTakeDamageOnEpona.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageOnEpona.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageOnEpona.Location = new System.Drawing.Point(8, 138);
+            this.cTakeDamageOnEpona.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageOnEpona.Name = "cTakeDamageOnEpona";
+            this.cTakeDamageOnEpona.Size = new System.Drawing.Size(78, 19);
+            this.cTakeDamageOnEpona.TabIndex = 27;
+            this.cTakeDamageOnEpona.Text = "On Epona";
+            this.cTakeDamageOnEpona.UseVisualStyleBackColor = false;
+            this.cTakeDamageOnEpona.CheckedChanged += new System.EventHandler(this.cTakeDamageOnEpona_CheckedChanged);
             // 
             // cFewerHealthDrops
             // 
@@ -3226,113 +3336,19 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // cTakeDamageOnEpona
+            // cTakeDamageFromDexihands
             // 
-            this.cTakeDamageOnEpona.AutoSize = true;
-            this.cTakeDamageOnEpona.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageOnEpona.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageOnEpona.Location = new System.Drawing.Point(8, 138);
-            this.cTakeDamageOnEpona.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageOnEpona.Name = "cTakeDamageOnEpona";
-            this.cTakeDamageOnEpona.Size = new System.Drawing.Size(78, 19);
-            this.cTakeDamageOnEpona.TabIndex = 27;
-            this.cTakeDamageOnEpona.Text = "On Epona";
-            this.cTakeDamageOnEpona.UseVisualStyleBackColor = false;
-            this.cTakeDamageOnEpona.CheckedChanged += new System.EventHandler(this.cTakeDamageOnEpona_CheckedChanged);
-            // 
-            // cTakeDamageWhileShielding
-            // 
-            this.cTakeDamageWhileShielding.AutoSize = true;
-            this.cTakeDamageWhileShielding.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageWhileShielding.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageWhileShielding.Location = new System.Drawing.Point(8, 163);
-            this.cTakeDamageWhileShielding.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageWhileShielding.Name = "cTakeDamageWhileShielding";
-            this.cTakeDamageWhileShielding.Size = new System.Drawing.Size(108, 19);
-            this.cTakeDamageWhileShielding.TabIndex = 28;
-            this.cTakeDamageWhileShielding.Text = "While Shielding";
-            this.cTakeDamageWhileShielding.UseVisualStyleBackColor = false;
-            this.cTakeDamageWhileShielding.CheckedChanged += new System.EventHandler(this.cTakeDamageWhileShielding_CheckedChanged);
-            // 
-            // cTakeDamageFromVoid
-            // 
-            this.cTakeDamageFromVoid.AutoSize = true;
-            this.cTakeDamageFromVoid.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageFromVoid.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromVoid.Location = new System.Drawing.Point(8, 188);
-            this.cTakeDamageFromVoid.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageFromVoid.Name = "cTakeDamageFromVoid";
-            this.cTakeDamageFromVoid.Size = new System.Drawing.Size(80, 19);
-            this.cTakeDamageFromVoid.TabIndex = 29;
-            this.cTakeDamageFromVoid.Text = "From Void";
-            this.cTakeDamageFromVoid.UseVisualStyleBackColor = false;
-            this.cTakeDamageFromVoid.CheckedChanged += new System.EventHandler(this.cTakeDamageFromVoid_CheckedChanged);
-            // 
-            // cTakeDamageFromDog
-            // 
-            this.cTakeDamageFromDog.AutoSize = true;
-            this.cTakeDamageFromDog.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageFromDog.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromDog.Location = new System.Drawing.Point(153, 188);
-            this.cTakeDamageFromDog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageFromDog.Name = "cTakeDamageFromDog";
-            this.cTakeDamageFromDog.Size = new System.Drawing.Size(79, 19);
-            this.cTakeDamageFromDog.TabIndex = 30;
-            this.cTakeDamageFromDog.Text = "From Dog";
-            this.cTakeDamageFromDog.UseVisualStyleBackColor = false;
-            this.cTakeDamageFromDog.CheckedChanged += new System.EventHandler(this.cTakeDamageFromDog_CheckedChanged);
-            // 
-            // cTakeDamageFromGorons
-            // 
-            this.cTakeDamageFromGorons.AutoSize = true;
-            this.cTakeDamageFromGorons.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageFromGorons.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromGorons.Location = new System.Drawing.Point(7, 213);
-            this.cTakeDamageFromGorons.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageFromGorons.Name = "cTakeDamageFromGorons";
-            this.cTakeDamageFromGorons.Size = new System.Drawing.Size(95, 19);
-            this.cTakeDamageFromGorons.TabIndex = 31;
-            this.cTakeDamageFromGorons.Text = "From Gorons";
-            this.cTakeDamageFromGorons.UseVisualStyleBackColor = false;
-            this.cTakeDamageFromGorons.CheckedChanged += new System.EventHandler(this.cTakeDamageFromGorons_CheckedChanged);
-            // 
-            // cTakeDamageGettingCaught
-            // 
-            this.cTakeDamageGettingCaught.AutoSize = true;
-            this.cTakeDamageGettingCaught.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageGettingCaught.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageGettingCaught.Location = new System.Drawing.Point(153, 163);
-            this.cTakeDamageGettingCaught.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageGettingCaught.Name = "cTakeDamageGettingCaught";
-            this.cTakeDamageGettingCaught.Size = new System.Drawing.Size(107, 19);
-            this.cTakeDamageGettingCaught.TabIndex = 32;
-            this.cTakeDamageGettingCaught.Text = "Getting Caught";
-            this.cTakeDamageGettingCaught.UseVisualStyleBackColor = false;
-            this.cTakeDamageGettingCaught.CheckedChanged += new System.EventHandler(this.cTakeDamageGettingCaught_CheckedChanged);
-            // 
-            // cTakeDamageFromGibdosFaster
-            // 
-            this.cTakeDamageFromGibdosFaster.AutoSize = true;
-            this.cTakeDamageFromGibdosFaster.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageFromGibdosFaster.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromGibdosFaster.Location = new System.Drawing.Point(154, 138);
-            this.cTakeDamageFromGibdosFaster.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageFromGibdosFaster.Name = "cTakeDamageFromGibdosFaster";
-            this.cTakeDamageFromGibdosFaster.Size = new System.Drawing.Size(128, 19);
-            this.cTakeDamageFromGibdosFaster.TabIndex = 33;
-            this.cTakeDamageFromGibdosFaster.Text = "From Gibdos Faster";
-            this.cTakeDamageFromGibdosFaster.UseVisualStyleBackColor = false;
-            this.cTakeDamageFromGibdosFaster.CheckedChanged += new System.EventHandler(this.cTakeDamageFromGibdosFaster_CheckedChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 120);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(126, 15);
-            this.label2.TabIndex = 34;
-            this.label2.Text = "More Damage Sources";
+            this.cTakeDamageFromDexihands.AutoSize = true;
+            this.cTakeDamageFromDexihands.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromDexihands.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromDexihands.Location = new System.Drawing.Point(153, 213);
+            this.cTakeDamageFromDexihands.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromDexihands.Name = "cTakeDamageFromDexihands";
+            this.cTakeDamageFromDexihands.Size = new System.Drawing.Size(112, 19);
+            this.cTakeDamageFromDexihands.TabIndex = 35;
+            this.cTakeDamageFromDexihands.Text = "From Dexihands";
+            this.cTakeDamageFromDexihands.UseVisualStyleBackColor = false;
+            this.cTakeDamageFromDexihands.CheckedChanged += new System.EventHandler(this.cTakeDamageFromDexihands_CheckedChanged);
             // 
             // MainForm
             // 
@@ -3669,6 +3685,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cTakeDamageFromDog;
         private System.Windows.Forms.CheckBox cTakeDamageFromVoid;
         private System.Windows.Forms.CheckBox cTakeDamageWhileShielding;
+        private System.Windows.Forms.CheckBox cTakeDamageFromDexihands;
     }
 }
 

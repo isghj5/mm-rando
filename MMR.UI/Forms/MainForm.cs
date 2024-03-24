@@ -120,6 +120,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cTakeDamageFromGibdosFaster, "Gibdos will deal damage immediately after grabbing Link.");
             TooltipBuilder.SetTooltip(cTakeDamageGettingCaught, "Getting thrown out after being caught by guards will deal damage.");
             TooltipBuilder.SetTooltip(cTakeDamageFromDog, "The dog in Clock Town will damage Deku Link.");
+            TooltipBuilder.SetTooltip(cTakeDamageFromDexihands, "Link will take damage from Dexihands.");
             TooltipBuilder.SetTooltip(cContinuousDekuHopping, "Press A while hopping across water to keep hopping.");
             TooltipBuilder.SetTooltip(cIronGoron, "Goron Link will sink in water instead of drowning.");
             TooltipBuilder.SetTooltip(cHookshotAnySurface, "Hookshot can hook to any surface.");
@@ -254,6 +255,7 @@ namespace MMR.UI.Forms
                 { cTakeDamageFromGibdosFaster, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromGibdosFaster))},
                 { cTakeDamageGettingCaught, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageGettingCaught))},
                 { cTakeDamageFromDog, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromDog))},
+                { cTakeDamageFromDexihands, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromDexihands))},
 
             };
 
@@ -1289,6 +1291,7 @@ namespace MMR.UI.Forms
             cTakeDamageFromGibdosFaster.Checked = _configuration.GameplaySettings.TakeDamageFromGibdosFaster;
             cTakeDamageGettingCaught.Checked = _configuration.GameplaySettings.TakeDamageGettingCaught;
             cTakeDamageFromDog.Checked = _configuration.GameplaySettings.TakeDamageFromDog;
+            cTakeDamageFromDexihands.Checked = _configuration.GameplaySettings.TakeDamageFromDexihands;
             cIceTrapQuirks.Checked = _configuration.GameplaySettings.TrapQuirks;
             cClockSpeed.SelectedIndex = (int)_configuration.GameplaySettings.ClockSpeed;
             cAutoInvert.SelectedIndex = (int)_configuration.GameplaySettings.AutoInvert;
@@ -1699,6 +1702,11 @@ namespace MMR.UI.Forms
         private void cTakeDamageFromDog_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.TakeDamageFromDog = cTakeDamageFromDog.Checked);
+        }
+
+        private void cTakeDamageFromDexihands_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TakeDamageFromDexihands = cTakeDamageFromDexihands.Checked);
         }
 
         private void cIceTrapQuirks_CheckedChanged(object sender, EventArgs e)
@@ -2319,6 +2327,7 @@ namespace MMR.UI.Forms
             cTakeDamageFromGibdosFaster.Enabled = v;
             cTakeDamageGettingCaught.Enabled = v;
             cTakeDamageFromDog.Enabled = v;
+            cTakeDamageFromDexihands.Enabled = v;
             cIceTrapQuirks.Enabled = v;
             cHookshotAnySurface.Enabled = v;
             cClimbMostSurfaces.Enabled = v;

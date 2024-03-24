@@ -473,7 +473,16 @@ typedef struct ActorPlayer {
     /* 0xD04 */ z_Matrix attachmentMtx1; //used by mirror shield lightray actor
     /* 0xD44 */ UNK_TYPE1 padD44[0x18];
     /* 0xD5C */ s8 invincibilityFrames;
-    /* 0xD5D */ UNK_TYPE1 padD5D[0x1B];
+    /* 0xD5D */ u8 floorTypeTimer; // Unused remnant of OoT
+    /* 0xD5E */ u8 floorProperty; // FloorProperty enum
+    /* 0xD5F */ u8 prevFloorType; // Unused remnant of OoT
+    /* 0xD60 */ f32 prevControlStickMagnitude;
+    /* 0xD64 */ s16 prevControlStickAngle;
+    /* 0xD66 */ u16 prevFloorSfxOffset;
+    /* 0xD68 */ s16 unk_D68;
+    /* 0xD6A */ s8 unk_D6A;
+    /* 0xD6B */ u8 unk_D6B;
+    /* 0xD6C */ Vec3f unk_D6C; // previous body part 0 position
 } ActorPlayer; // size = 0xD78
 
 typedef enum {

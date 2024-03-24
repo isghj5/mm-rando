@@ -68,7 +68,8 @@ typedef struct {
     u32 skullTokenSounds    : 1;
     u32 takeDamageOnEpona   : 1;
     u32 takeDamageOnShield  : 1;
-    u32                     : 28;
+    u32 takeDamageFromVoid  : 1;
+    u32                     : 27;
 } MiscFlags;
 
 typedef union {

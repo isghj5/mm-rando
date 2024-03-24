@@ -1059,3 +1059,24 @@ Actor* Player_GetHittingActor(ActorPlayer* player) {
     }
     return NULL;
 }
+
+void Player_OnMinorVoid(GlobalContext* ctxt, ActorPlayer* player) {
+    // Displaced code:
+    z2_Player_SetEquipmentData(ctxt, player);
+    // End displaced code
+
+    if (MISC_CONFIG.flags.takeDamageFromVoid) {
+        z2_Player_InflictDamage(ctxt, -16);
+        player->unk_D6A = -2;
+    }
+}
+
+void Player_OnDekuWaterVoid(GlobalContext* ctxt, ActorPlayer* player) {
+    // Displaced code:
+    z2_PerformEnterWaterEffects(ctxt, player);
+    // End displaced code
+
+    if (ctxt->warpType) {
+        z2_Player_InflictDamage(ctxt, -16);
+    }
+}

@@ -52,6 +52,7 @@
 extern int z2_CanInteract(GlobalContext* ctxt);
 extern u8 z2_Player_MaskIdToItemId(s32 maskIdMinusOne);
 extern void z2_Player_SetBootData(GlobalContext* ctxt, ActorPlayer* player);
+extern void z2_Player_SetEquipmentData(GlobalContext* ctxt, ActorPlayer* player);
 extern int z2_Player_InBlockingCsMode(GlobalContext* ctxt, ActorPlayer* player);
 extern int z2_Inventory_GetBtnItem(GlobalContext* ctxt, ActorPlayer* player, s32 buttonIndex);
 extern void z2_DrawButtonAmounts(GlobalContext* ctxt, u32 arg1, u16 alpha);
@@ -325,6 +326,7 @@ extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 #define z2_Player_func_8083692C_VRAM     0x8083692C
 #define z2_Player_func_80838A90_VRAM     0x80838A90
 #define z2_Player_func_8083B930_VRAM     0x8083B930
+#define z2_Player_InflictDamage_VRAM     0x8085B3E0
 
 #define z2_Player_Action_0_VRAM          0x808496AC
 #define z2_Player_Action_1_VRAM          0x808497A0
@@ -452,5 +454,6 @@ typedef bool (*z2_Player_func_80838A90_Func)(ActorPlayer* player, GlobalContext*
 typedef bool (*z2_Player_func_8083B930_Func)(GlobalContext* ctxt, ActorPlayer* player);
 typedef void (*z2_Player_PlayAnimationOnce_Func)(GlobalContext* ctxt, ActorPlayer* player, void* anim);
 typedef void (*z2_Player_PlayAnimationLoop_Func)(GlobalContext* ctxt, ActorPlayer* player, void* anim);
+typedef void (*z2_Player_InflictDamage_Func)(GlobalContext* ctxt, s32 damage);
 
 #endif

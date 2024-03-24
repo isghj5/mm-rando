@@ -261,7 +261,11 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.TakeDamageWhileShielding = value; }
         }
 
-        public bool TakeDamageFromVoid { get; set; }
+        public bool TakeDamageFromVoid
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.TakeDamageFromVoid; }
+            set { this.AsmOptions.MiscConfig.Flags.TakeDamageFromVoid = value; }
+        }
 
         public bool TakeDamageFromDog { get; set; }
 
@@ -270,6 +274,8 @@ namespace MMR.Randomizer.Models.Settings
         public bool TakeDamageGettingCaught { get; set; }
 
         public bool TakeDamageFromGibdosFaster { get; set; }
+
+        public bool TakeDamageFromDexihands { get; set; }
 
         /// <summary>
         /// How many boss remains are required to proceed through the final Giants cutscene.
