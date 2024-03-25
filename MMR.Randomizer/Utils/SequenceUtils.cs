@@ -238,7 +238,7 @@ namespace MMR.Randomizer.Utils
                 }
             }
 
-            throw new Exception("GetSequenceSize: Sequence File is missing");
+            throw new Exception($"GetSequenceSize: Sequence File is missing: [{seq.Filename}]");
         }
 
         public static void ScanZSEQUENCE(string directory)
