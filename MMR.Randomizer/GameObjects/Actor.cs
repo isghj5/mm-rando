@@ -4396,6 +4396,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x184)]
         [CeilingVariants(0x3)] // the one in greatbay temple above the door, just going to use one
         [SwitchFlagsPlacement(mask:0x7F, shift:0)]
+        [EnemizerScenesExcluded(Scene.GreatBayTemple)]
         [UnkillableAllVariants]
         GBTFreezableWaterfall = 0x21C, // Bg_Dblue_Waterfall
 
