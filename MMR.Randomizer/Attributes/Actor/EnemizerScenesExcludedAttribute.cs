@@ -8,11 +8,11 @@ namespace MMR.Randomizer.Attributes.Actor
     ///   example: we dont want to randomize the octorocks that are used for freezing with ice arrows in ikana
     /// </summary>
 
-    class EnemizerScenesExcludedAttribute : Attribute
+    class ForbidFromSceneAttribute : Attribute
     {
        public List<GameObjects.Scene> ScenesExcluded { get; private set; }
 
-        public EnemizerScenesExcludedAttribute(GameObjects.Scene scene, params GameObjects.Scene[] additionalScenes)
+        public ForbidFromSceneAttribute(GameObjects.Scene scene, params GameObjects.Scene[] additionalScenes)
         {
             var scenes = new List<GameObjects.Scene> { scene };
             if (additionalScenes.Length > 0)
