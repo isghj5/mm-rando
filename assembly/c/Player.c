@@ -939,14 +939,8 @@ bool Player_ShouldBeKnockedOver(GlobalContext* ctxt, ActorPlayer* player, s32 da
         bool* gHorseIsMounted = (bool*)0x801BDA9C;
         z2_Camera_ChangeSetting(z2_Play_GetCamera(ctxt, 0), 1); // CAM_ID_MAIN, CAM_SET_NORMAL0
         player->stateFlags.state1 &= ~PLAYER_STATE1_EPONA;
-        player->rideActor->child = NULL;
         player->base.parent = NULL;
         *gHorseIsMounted = false;
-        gSaveContext.perm.horseData.sceneId = ctxt->sceneNum;
-        gSaveContext.perm.horseData.pos.x = player->rideActor->currPosRot.pos.x;
-        gSaveContext.perm.horseData.pos.y = player->rideActor->currPosRot.pos.y;
-        gSaveContext.perm.horseData.pos.z = player->rideActor->currPosRot.pos.z;
-        gSaveContext.perm.horseData.yaw = player->rideActor->shape.rot.y;
         return true;
     }
 

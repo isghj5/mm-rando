@@ -26,4 +26,14 @@ Actor* Actor_Spawn(GlobalContext* ctxt, u8 id, Vec3f pos, Vec3s rot, u16 params)
 void Actor_Update(Actor* actor, GlobalContext* ctxt) {
     actor->update(actor, ctxt);
     ItemDetector_AfterActorUpdate(actor, ctxt);
+    if (actor->id == ACTOR_EN_HORSE) {
+        if (actor->child != NULL && actor->child->id == ACTOR_PLAYER && actor->child->parent != actor && (actor->bgcheckFlags & 1) && (actor->child->bgcheckFlags & 1)) { // BGCHECKFLAG_GROUND
+            actor->child = NULL;
+            gSaveContext.perm.horseData.sceneId = ctxt->sceneNum;
+            gSaveContext.perm.horseData.pos.x = actor->currPosRot.pos.x;
+            gSaveContext.perm.horseData.pos.y = actor->currPosRot.pos.y;
+            gSaveContext.perm.horseData.pos.z = actor->currPosRot.pos.z;
+            gSaveContext.perm.horseData.yaw = actor->shape.rot.y;
+        }
+    }
 }
