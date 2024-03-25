@@ -136,6 +136,14 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cByoAmmo, "Arrows, Bombs, and Bombchu will not be provided for minigames. You must bring your own. Logic Modes other than No Logic will account for this.");
             TooltipBuilder.SetTooltip(cDeathMoonCrash, "Dying causes the moon to crash, with all that that implies.");
             TooltipBuilder.SetTooltip(cFewerHealthDrops, "Recovery Hearts will not drop, and re-acquiring random items will turn into Green Rupees instead. Fairies will not heal except on death.");
+            TooltipBuilder.SetTooltip(cTakeDamageOnEpona, "Instead of being immune to damage while riding Epona, Link will take damage and be thrown off.");
+            TooltipBuilder.SetTooltip(cTakeDamageWhileShielding, "Link will take damage when being hit on his shield, and can't recoil off damage to the shield.");
+            TooltipBuilder.SetTooltip(cTakeDamageFromVoid, "Link will take damage when falling into most voids. Voids that have a specific destination will not deal damage.");
+            TooltipBuilder.SetTooltip(cTakeDamageFromGorons, "Link will take damage when being hit by Gorons during the Goron Race.");
+            TooltipBuilder.SetTooltip(cTakeDamageFromGibdosFaster, "Gibdos will deal damage immediately after grabbing Link.");
+            TooltipBuilder.SetTooltip(cTakeDamageGettingCaught, "Getting thrown out after being caught by guards will deal damage. Being thrown out after getting the reward from the Imprisoned Monkey will not deal damage.");
+            TooltipBuilder.SetTooltip(cTakeDamageFromDog, "Dogs will damage Deku Link.");
+            TooltipBuilder.SetTooltip(cTakeDamageFromDexihands, "Link will take damage from Dexihands.");
             TooltipBuilder.SetTooltip(cContinuousDekuHopping, "Press A while hopping across water to keep hopping.");
             TooltipBuilder.SetTooltip(cIronGoron, "Goron Link will sink in water instead of drowning.");
             TooltipBuilder.SetTooltip(cHookshotAnySurface, "Hookshot can hook to any surface.");
@@ -263,6 +271,15 @@ namespace MMR.UI.Forms
                 { cGiantMaskAnywhere, (typeof(GameplaySettings), nameof(GameplaySettings.GiantMaskAnywhere)) },
                 { cInstantTransformations, (typeof(GameplaySettings), nameof(GameplaySettings.InstantTransform)) },
                 { cBombArrows, (typeof(GameplaySettings), nameof(GameplaySettings.BombArrows)) },
+                { cTakeDamageOnEpona, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageOnEpona))},
+                { cTakeDamageWhileShielding, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageWhileShielding))},
+                { cTakeDamageFromVoid, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromVoid))},
+                { cTakeDamageFromGorons, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromGorons))},
+                { cTakeDamageFromGibdosFaster, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromGibdosFaster))},
+                { cTakeDamageGettingCaught, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageGettingCaught))},
+                { cTakeDamageFromDog, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromDog))},
+                { cTakeDamageFromDexihands, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromDexihands))},
+
             };
 
             foreach (var (control, settingInfo) in settingToControlMapping2)
@@ -1363,6 +1380,14 @@ namespace MMR.UI.Forms
             cByoAmmo.Checked = _configuration.GameplaySettings.ByoAmmo;
             cDeathMoonCrash.Checked = _configuration.GameplaySettings.DeathMoonCrash;
             cFewerHealthDrops.Checked = _configuration.GameplaySettings.FewerHealthDrops;
+            cTakeDamageOnEpona.Checked = _configuration.GameplaySettings.TakeDamageOnEpona;
+            cTakeDamageWhileShielding.Checked = _configuration.GameplaySettings.TakeDamageWhileShielding;
+            cTakeDamageFromVoid.Checked = _configuration.GameplaySettings.TakeDamageFromVoid;
+            cTakeDamageFromGorons.Checked = _configuration.GameplaySettings.TakeDamageFromGorons;
+            cTakeDamageFromGibdosFaster.Checked = _configuration.GameplaySettings.TakeDamageFromGibdosFaster;
+            cTakeDamageGettingCaught.Checked = _configuration.GameplaySettings.TakeDamageGettingCaught;
+            cTakeDamageFromDog.Checked = _configuration.GameplaySettings.TakeDamageFromDog;
+            cTakeDamageFromDexihands.Checked = _configuration.GameplaySettings.TakeDamageFromDexihands;
             cIceTrapQuirks.Checked = _configuration.GameplaySettings.TrapQuirks;
             cClockSpeed.SelectedIndex = (int)_configuration.GameplaySettings.ClockSpeed;
             cAutoInvert.SelectedIndex = (int)_configuration.GameplaySettings.AutoInvert;
@@ -1738,6 +1763,46 @@ namespace MMR.UI.Forms
         private void cFewerHealthDrops_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.FewerHealthDrops = cFewerHealthDrops.Checked);
+        }
+
+        private void cTakeDamageOnEpona_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TakeDamageOnEpona = cTakeDamageOnEpona.Checked);
+        }
+
+        private void cTakeDamageWhileShielding_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TakeDamageWhileShielding = cTakeDamageWhileShielding.Checked);
+        }
+
+        private void cTakeDamageFromVoid_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TakeDamageFromVoid = cTakeDamageFromVoid.Checked);
+        }
+
+        private void cTakeDamageFromGorons_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TakeDamageFromGorons = cTakeDamageFromGorons.Checked);
+        }
+
+        private void cTakeDamageFromGibdosFaster_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TakeDamageFromGibdosFaster = cTakeDamageFromGibdosFaster.Checked);
+        }
+
+        private void cTakeDamageGettingCaught_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TakeDamageGettingCaught = cTakeDamageGettingCaught.Checked);
+        }
+
+        private void cTakeDamageFromDog_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TakeDamageFromDog = cTakeDamageFromDog.Checked);
+        }
+
+        private void cTakeDamageFromDexihands_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TakeDamageFromDexihands = cTakeDamageFromDexihands.Checked);
         }
 
         private void cIceTrapQuirks_CheckedChanged(object sender, EventArgs e)
@@ -2351,6 +2416,14 @@ namespace MMR.UI.Forms
             cByoAmmo.Enabled = v;
             cDeathMoonCrash.Enabled = v;
             cFewerHealthDrops.Enabled = v;
+            cTakeDamageOnEpona.Enabled = v;
+            cTakeDamageWhileShielding.Enabled = v;
+            cTakeDamageFromVoid.Enabled = v;
+            cTakeDamageFromGorons.Enabled = v;
+            cTakeDamageFromGibdosFaster.Enabled = v;
+            cTakeDamageGettingCaught.Enabled = v;
+            cTakeDamageFromDog.Enabled = v;
+            cTakeDamageFromDexihands.Enabled = v;
             cIceTrapQuirks.Enabled = v;
             cHookshotAnySurface.Enabled = v;
             cClimbMostSurfaces.Enabled = v;

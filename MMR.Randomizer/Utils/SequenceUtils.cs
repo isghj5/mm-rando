@@ -1060,7 +1060,7 @@ namespace MMR.Randomizer.Utils
                     return false;
                 }
 
-                if (targetSlot.Type[0] < 8) // to reduce spam, limit logging this only to the regular categories
+                if (targetSlot.Categories[0] < 8) // to reduce spam, limit logging this only to the regular categories
                 {
                     log.AppendLine($"{testSeq.Name,-50}  skipped for slot {targetSlot.Replaces.ToString("X2")} because it's a low use slot and requires a custom bank");
                 }

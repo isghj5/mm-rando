@@ -66,6 +66,7 @@
 .definelabel z2_GetFloorPhysicsType, 0x800C99D4
 .definelabel z2_SurfaceType_IsWallDamage, 0x800C9E88
 .definelabel z2_Camera_IsHookArrival, 0x800CB7CC
+.definelabel z2_Camera_ChangeSetting, 0x800DFAC8
 .definelabel z2_CollisionCheck_GetDamageAndEffectOnBumper, 0x800E0410
 .definelabel z2_CollisionCheck_GetToucherDamage, 0x800E04EC
 .definelabel z2_Collider_UpdateCylinder, 0x800E7DF8
@@ -133,6 +134,7 @@
 .definelabel z2_Player_InBlockingCsMode, 0x80123358
 .definelabel z2_CanInteract, 0x801233E4
 .definelabel z2_Inventory_GetBtnItem, 0x8012364C
+.definelabel z2_Player_SetEquipmentData, 0x80123C90
 .definelabel z2_801242DC, 0x801242DC
 .definelabel z2_Player_DrawGetItem, 0x8012697C
 .definelabel z2_PlayerGormanTears, 0x80127594
@@ -178,6 +180,7 @@
 .definelabel z2_Play_CreateSubCamera, 0x801694DC
 .definelabel z2_Play_CameraChangeStatus, 0x80169590
 .definelabel z2_Play_ClearCamera, 0x80169600
+.definelabel z2_Play_GetCamera, 0x801696D4
 .definelabel z2_Play_CameraSetAtEyeUp, 0x8016981C
 .definelabel z2_80169AFC, 0x80169AFC
 .definelabel z2_check_scene_pairs, 0x80169CBC
