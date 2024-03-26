@@ -1700,6 +1700,7 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.safer_glitches_fix_4thday_mayor);
                 hacks.Add(Resources.mods.safer_glitches_fix_4thday_gossip);
                 hacks.Add(Resources.mods.safer_glitches_fix_4thday_deku_playground);
+                hacks.Add(Resources.mods.safer_glitches_fix_0thday_4thday_town_shooting);
             }
 
             if (_randomized.Settings.BombchuDrops)
