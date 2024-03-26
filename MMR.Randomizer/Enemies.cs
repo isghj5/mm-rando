@@ -1086,6 +1086,11 @@ namespace MMR.Randomizer
             var dinofosData = RomData.MMFileList[GameObjects.Actor.Dinofos.FileListIndex()].Data;
             dinofosData[0x3A74] |= 0x80; // set the 0x80000000 actor flag to enabled red dot on the minimap
 
+            // bigpo deserves a red dot on the minimap
+            RomUtils.CheckCompressed(GameObjects.Actor.BigPoe.FileListIndex());
+            var biopoData = RomData.MMFileList[GameObjects.Actor.BigPoe.FileListIndex()].Data;
+            biopoData[0x3A14] |= 0x80; // set the 0x80000000 actor flag to enabled red dot on the minimap
+
 
             //LightShinanigans();
 
@@ -2818,7 +2823,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Wart)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Dinofos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Snowhead, GameObjects.Actor.Bo, GameObjects.Actor.BadBat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
