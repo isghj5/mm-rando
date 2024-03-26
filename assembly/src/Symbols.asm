@@ -64,6 +64,8 @@
 .definelabel z2_BgCheck_EntityCheckCeiling, 0x800C4F84
 .definelabel z2_DynaPoly_GetActor, 0x800C6248
 .definelabel z2_GetFloorPhysicsType, 0x800C99D4
+.definelabel z2_SurfaceType_GetFloorType, 0x800C99D4
+.definelabel z2_SurfaceType_IsHorseBlocked, 0x800C9B90
 .definelabel z2_SurfaceType_IsWallDamage, 0x800C9E88
 .definelabel z2_Camera_IsHookArrival, 0x800CB7CC
 .definelabel z2_Camera_ChangeSetting, 0x800DFAC8

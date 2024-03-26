@@ -22,6 +22,8 @@ static PlayerActionFunc sPlayer_Idle = NULL;
 static PlayerActionFunc sPlayer_BackwalkBraking = NULL;
 static PlayerActionFunc sPlayer_Falling = NULL;
 static PlayerActionFunc sPlayer_Action_43 = NULL;
+static PlayerActionFunc sPlayer_Action_52 = NULL;
+static PlayerActionFunc sPlayer_Action_53 = NULL;
 static PlayerActionFunc sPlayer_Action_54 = NULL;
 static PlayerActionFunc sPlayer_Action_55 = NULL;
 static PlayerActionFunc sPlayer_Action_56 = NULL;
@@ -44,6 +46,8 @@ void Player_InitFuncPointers() {
     sPlayer_BackwalkBraking = z2_Player_Action_8;
     sPlayer_Falling = z2_Player_Action_25;
     sPlayer_Action_43 = z2_Player_Action_43;
+    sPlayer_Action_52 = z2_Player_Action_52;
+    sPlayer_Action_53 = z2_Player_Action_53;
     sPlayer_Action_54 = z2_Player_Action_54;
     sPlayer_Action_55 = z2_Player_Action_55;
     sPlayer_Action_56 = z2_Player_Action_56;
@@ -952,7 +956,10 @@ bool Player_ShouldBeKnockedOver(GlobalContext* ctxt, ActorPlayer* player, s32 da
 }
 
 bool Player_ShouldSkipParentDamageCheck(ActorPlayer* player) {
-    return MISC_CONFIG.flags.takeDamageOnEpona && (player->stateFlags.state1 & PLAYER_STATE1_EPONA);
+    return MISC_CONFIG.flags.takeDamageOnEpona
+        && (player->stateFlags.state1 & PLAYER_STATE1_EPONA)
+        && (WEEKEVENTREG(92) & 7) == 0 // Not Gorman Race
+        && (player->actionFunc == sPlayer_Action_52 || player->actionFunc == sPlayer_Action_53); // Mounting/Mounted/Dismounting
 }
 
 bool Player_CantBeGrabbed(GlobalContext* ctxt, ActorPlayer* player) {
@@ -1040,6 +1047,12 @@ bool Player_ShouldNotSetGlobalVoidFlag(CollisionContext* colCtx, BgPolygon* poly
 }
 
 Actor* Player_GetHittingActor(ActorPlayer* player) {
+    if (MISC_CONFIG.flags.takeDamageOnEpona && player->base.colChkInfo.acHitEffect == 2 && (player->stateFlags.state1 & PLAYER_STATE1_EPONA)) {
+        player->base.colChkInfo.acHitEffect = 0;
+        if (player->base.colChkInfo.damage == 0) {
+            player->base.colChkInfo.damage = 4;
+        }
+    }
     if (player->collisionCylinder.base.flagsAC & AC_HIT) {
         return player->collisionCylinder.base.collisionAC;
     }
