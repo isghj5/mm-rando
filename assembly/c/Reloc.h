@@ -29,6 +29,7 @@
 #define z2_Player_func_8083B930     Reloc_ResolvePlayerActorFunc(z2_Player_func_8083B930)
 #define z2_Player_PlayAnimationOnce Reloc_ResolvePlayerActorFunc(z2_Player_PlayAnimationOnce)
 #define z2_Player_PlayAnimationLoop Reloc_ResolvePlayerActorFunc(z2_Player_PlayAnimationLoop)
+#define z2_Player_InflictDamage     Reloc_ResolvePlayerActorFunc(z2_Player_InflictDamage)
 
 // Relocatable PlayerActionFunc functions.
 #define z2_Player_Action_0          Reloc_ResolvePlayerActionFunc(z2_Player_Action_0)

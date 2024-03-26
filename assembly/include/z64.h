@@ -1114,23 +1114,79 @@ typedef struct SequenceChannelContext {
     /* 0x84 */ UNK_PTR unk84[0x1B]; // might not all be pointers. some are 0, some are -1.
 } SequenceChannelContext; // size = 0xF0
 
+typedef struct {
+    /* 0x00 */ u8* pc; // program counter
+    /* 0x04 */ u8* stack[4];
+    /* 0x14 */ u8 remLoopIters[4]; // remaining loop iterations
+    /* 0x18 */ u8 depth;
+    /* 0x19 */ s8 value;
+} SeqScriptState; // size = 0x1C
+
+// A node in a circularly linked list. Each node is either a head or an item:
+// - Items can be either detached (prev = NULL), or attached to a list.
+//   'value' points to something of interest.
+// - List heads are always attached; if a list is empty, its head points
+//   to itself. 'count' contains the size of the list.
+// If the list holds notes, 'pool' points back to the pool where it lives.
+// Otherwise, that member is NULL.
+typedef struct AudioListItem {
+    /* 0x00 */ struct AudioListItem* prev;
+    /* 0x04 */ struct AudioListItem* next;
+    union {
+        /* 0x08 */ void* value; // either Note* or SequenceLayer*
+        /* 0x08 */ s32 count;
+               } u;
+    /* 0x0C */ struct NotePool* pool;
+} AudioListItem; // size = 0x10
+
+typedef struct NotePool {
+    /* 0x00 */ AudioListItem disabled;
+    /* 0x10 */ AudioListItem decaying;
+    /* 0x20 */ AudioListItem releasing;
+    /* 0x30 */ AudioListItem active;
+} NotePool; // size = 0x40
+
 typedef struct SequenceContext {
-    /* 0x000 */ UNK_TYPE1 unk0[0x4];
+    /* 0x000 */ u8 enabled : 1;
+    /* 0x000 */ u8 finished : 1;
+    /* 0x000 */ u8 muted : 1;
+    /* 0x000 */ u8 seqDmaInProgress : 1;
+    /* 0x000 */ u8 fontDmaInProgress : 1;
+    /* 0x000 */ u8 recalculateVolume : 1;
+    /* 0x000 */ u8 stopScript : 1;
+    /* 0x000 */ u8 applyBend : 1;
+    /* 0x001 */ u8 state;
+    /* 0x002 */ u8 noteAllocPolicy;
+    /* 0x003 */ u8 muteFlags;
     /* 0x004 */ u8 sequenceId;
-    /* 0x005 */ UNK_TYPE1 unk5[0x3];
-    /* 0x008 */ UNK_TYPE1 unk8[0x10];
-    /* 0x018 */ UNK_PTR unk18;
-    /* 0x01C */ f32 unk1C;
-    /* 0x020 */ UNK_TYPE1 unk20[0x8];
-    /* 0x028 */ f32 unk28;
-    /* 0x02C */ f32 unk2C;
-    /* 0x030 */ f32 unk30;
-    /* 0x034 */ f32 unk34;
+    /* 0x005 */ u8 defaultFont;
+    /* 0x006 */ u8 unk_06[1];
+    /* 0x007 */ s8 playerIndex;
+    /* 0x008 */ u16 tempo; // tatums per minute
+    /* 0x00A */ u16 tempoAcc;
+    /* 0x00C */ s16 tempoChange;
+    /* 0x00E */ s16 transposition;
+    /* 0x010 */ u16 delay;
+    /* 0x012 */ u16 fadeTimer;
+    /* 0x014 */ u16 storedFadeTimer;
+    /* 0x016 */ u16 unk_16;
+    /* 0x018 */ u8* seqData;
+    /* 0x01C */ f32 fadeVolume;
+    /* 0x020 */ f32 fadeVelocity;
+    /* 0x024 */ f32 volume;
+    /* 0x028 */ f32 muteVolumeScale;
+    /* 0x02C */ f32 fadeVolumeScale;
+    /* 0x030 */ f32 appliedFadeVolume;
+    /* 0x034 */ f32 bend;
     /* 0x038 */ SequenceChannelContext* channels[0x10];
-    /* 0x078 */ UNK_PTR unk78; // maybe track pointer
-    /* 0x07C */ UNK_TYPE1 unk7C[0x18];
-    /* 0x094 */ UNK_PTR unk94[0x12];
-    /* 0x0DC */ UNK_TYPE1 unkDC[0x84];
+    /* 0x078 */ SeqScriptState scriptState;
+    /* 0x094 */ u8* shortNoteVelocityTable;
+    /* 0x098 */ u8* shortNoteGateTimeTable;
+    /* 0x09C */ NotePool notePool;
+    /* 0x0DC */ s32 skipTicks;
+    /* 0x0E0 */ u32 scriptCounter;
+    /* 0x0E4 */ UNK_TYPE1 unk_E4[0x74]; // unused struct members for sequence/sound font dma management, according to sm64 decomp
+    /* 0x158 */ s8 seqScriptIO[8];
 } SequenceContext; // size = 0x160
 
 typedef struct ChannelState {
@@ -1296,6 +1352,12 @@ typedef union {
     u8 bytes[0x1C];
 } PermanentSceneFlags; // size = 0x1C
 
+typedef struct HorseData {
+    /* 0x0 */ s16 sceneId;                             // "spot_no"
+    /* 0x2 */ Vec3s pos;                               // "horse_x", "horse_y" and "horse_z"
+    /* 0x8 */ s16 yaw;                                 // "horse_a"
+} HorseData; // size = 0xA
+
 typedef struct {
     /* 0x00 */ u8 zelda[6]; // Will always be "ZELDA3" for a valid save
     /* 0x06 */ u16 songOfTimeCount;
@@ -1439,7 +1501,7 @@ typedef struct {
     /* 0x0FEC */ u8 lotteryCodes[9];
     /* 0x0FF5 */ u8 spiderHouseMaskOrder[6];
     /* 0x0FFB */ u8 bomberCode[5];
-    /* 0x1000 */ UNK_TYPE1 pad1000[0xA];
+    /* 0x1000 */ HorseData horseData;
     /* 0x100A */ u16 checksum;
 } SaveContextPerm; // size = 0x100C
 

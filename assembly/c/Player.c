@@ -925,7 +925,7 @@ void Player_AfterCrushed(void) {
 
 s32 Player_GetWeaponDamageFlags(ActorPlayer* player, s32 dmgFlags) {
     if (GiantMask_IsGiant()) {
-        return 0xC0000108; // DMG_POWDER_KEG | DMG_EXPLOSIVES | DMG_GORON_PUNCH | DMG_UNK_0x1E // DMG_UNK_0x1E is used to trigger different damage calculation algorithm.
+        return DMG_POWDER_KEG | DMG_EXPLOSIVES | DMG_GORON_PUNCH | DMG_UNK_0x1E; // DMG_UNK_0x1E is used to trigger different damage calculation algorithm.
     }
     return dmgFlags;
 }
@@ -935,11 +935,24 @@ bool Player_ShouldBeKnockedOver(GlobalContext* ctxt, ActorPlayer* player, s32 da
         return false;
     }
 
+    if (MISC_CONFIG.flags.takeDamageOnEpona && (player->stateFlags.state1 & PLAYER_STATE1_EPONA)) {
+        bool* gHorseIsMounted = (bool*)0x801BDA9C;
+        z2_Camera_ChangeSetting(z2_Play_GetCamera(ctxt, 0), 1); // CAM_ID_MAIN, CAM_SET_NORMAL0
+        player->stateFlags.state1 &= ~PLAYER_STATE1_EPONA;
+        player->base.parent = NULL;
+        *gHorseIsMounted = false;
+        return true;
+    }
+
     // Displaced code:
     return damageType == 1
         || damageType == 2
         || !(player->base.bgcheckFlags & 1) // BGCHECKFLAG_GROUND
         || (player->stateFlags.state1 & (PLAYER_STATE1_LEDGE_CLIMB | PLAYER_STATE1_LEDGE_HANG | PLAYER_STATE1_CLIMB_UP | PLAYER_STATE1_LADDER));
+}
+
+bool Player_ShouldSkipParentDamageCheck(ActorPlayer* player) {
+    return MISC_CONFIG.flags.takeDamageOnEpona && (player->stateFlags.state1 & PLAYER_STATE1_EPONA);
 }
 
 bool Player_CantBeGrabbed(GlobalContext* ctxt, ActorPlayer* player) {
@@ -1024,4 +1037,40 @@ Actor* Player_GetGoronPunchCollisionActor(CollisionContext* colCtx, s32 bgId) {
 
 bool Player_ShouldNotSetGlobalVoidFlag(CollisionContext* colCtx, BgPolygon* poly, s32 bgId) {
     return gSaveContext.extra.voidFlag == -7 || z2_SurfaceType_IsWallDamage(colCtx, poly, bgId);
+}
+
+Actor* Player_GetHittingActor(ActorPlayer* player) {
+    if (player->collisionCylinder.base.flagsAC & AC_HIT) {
+        return player->collisionCylinder.base.collisionAC;
+    }
+    if (MISC_CONFIG.flags.takeDamageOnShield) {
+        if (player->shieldQuad.base.flagsAC & AC_HIT) {
+            return player->shieldQuad.base.collisionAC;
+        }
+        if (player->shieldCylinder.base.flagsAC & AC_HIT) {
+            return player->shieldCylinder.base.collisionAC;
+        }
+    }
+    return NULL;
+}
+
+void Player_OnMinorVoid(GlobalContext* ctxt, ActorPlayer* player) {
+    // Displaced code:
+    z2_Player_SetEquipmentData(ctxt, player);
+    // End displaced code
+
+    if (MISC_CONFIG.flags.takeDamageFromVoid) {
+        z2_Player_InflictDamage(ctxt, -16);
+        player->unk_D6A = -2;
+    }
+}
+
+void Player_OnDekuWaterVoid(GlobalContext* ctxt, ActorPlayer* player) {
+    // Displaced code:
+    z2_PerformEnterWaterEffects(ctxt, player);
+    // End displaced code
+
+    if (ctxt->warpType) {
+        z2_Player_InflictDamage(ctxt, -16);
+    }
 }

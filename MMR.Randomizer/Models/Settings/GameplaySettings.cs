@@ -249,6 +249,34 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.SkulltulaTokenSounds = value; }
         }
 
+        public bool TakeDamageOnEpona
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.TakeDamageOnEpona; }
+            set { this.AsmOptions.MiscConfig.Flags.TakeDamageOnEpona = value; }
+        }
+
+        public bool TakeDamageWhileShielding
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.TakeDamageWhileShielding; }
+            set { this.AsmOptions.MiscConfig.Flags.TakeDamageWhileShielding = value; }
+        }
+
+        public bool TakeDamageFromVoid
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.TakeDamageFromVoid; }
+            set { this.AsmOptions.MiscConfig.Flags.TakeDamageFromVoid = value; }
+        }
+
+        public bool TakeDamageFromDog { get; set; }
+
+        public bool TakeDamageFromGorons { get; set; }
+
+        public bool TakeDamageGettingCaught { get; set; }
+
+        public bool TakeDamageFromGibdosFaster { get; set; }
+
+        public bool TakeDamageFromDexihands { get; set; }
+
         /// <summary>
         /// How many boss remains are required to proceed through the final Giants cutscene.
         /// </summary>

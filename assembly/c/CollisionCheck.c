@@ -12,7 +12,7 @@ f32 CollisionCheck_GetDamageAndEffectOnBumper(ColCommon* at, ColBodyInfo* atInfo
     dmgFlags = atInfo->toucher.dmgFlags;
     ActorDamageChart* damageTable = ac->actor->colChkInfo.damageTable;
 
-    if (dmgFlags & 0x40000000 && damageTable != NULL) { // DMG_UNK_0x1E
+    if (dmgFlags & DMG_UNK_0x1E && damageTable != NULL) {
         *effect = 0;
         damage = z2_CollisionCheck_GetToucherDamage(at, atInfo, ac, acInfo);
 

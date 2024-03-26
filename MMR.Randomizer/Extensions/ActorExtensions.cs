@@ -127,7 +127,7 @@ namespace MMR.Randomizer.Extensions
 
         public static List<Scene> ScenesRandomizationExcluded(this Actor actor)
         {
-            return actor.GetAttribute<EnemizerScenesExcludedAttribute>()?.ScenesExcluded ?? new List<Scene>();
+            return actor.GetAttribute<ForbidFromSceneAttribute>()?.ScenesExcluded ?? new List<Scene>();
         }
 
         public static List<int> GetUnPlacableVariants(this Actor actor)

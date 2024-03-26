@@ -52,6 +52,7 @@
 extern int z2_CanInteract(GlobalContext* ctxt);
 extern u8 z2_Player_MaskIdToItemId(s32 maskIdMinusOne);
 extern void z2_Player_SetBootData(GlobalContext* ctxt, ActorPlayer* player);
+extern void z2_Player_SetEquipmentData(GlobalContext* ctxt, ActorPlayer* player);
 extern int z2_Player_InBlockingCsMode(GlobalContext* ctxt, ActorPlayer* player);
 extern int z2_Inventory_GetBtnItem(GlobalContext* ctxt, ActorPlayer* player, s32 buttonIndex);
 extern void z2_DrawButtonAmounts(GlobalContext* ctxt, u32 arg1, u16 alpha);
@@ -63,6 +64,7 @@ extern Actor* z2_DynaPoly_GetActor(CollisionContext* colCtx, s32 bgId);
 extern u32 z2_GetFloorPhysicsType(void* arg0, void* arg1, u8 arg2);
 extern bool z2_SurfaceType_IsWallDamage(CollisionContext* colCtx, BgPolygon* poly, s32 bgId);
 extern bool z2_Camera_IsHookArrival(Camera* camera);
+extern bool z2_Camera_ChangeSetting(Camera* camera, s16 setting);
 extern void z2_PushMatrixStackCopy();
 extern void z2_PopMatrixStack();
 extern f32* z2_GetMatrixStackTop();
@@ -306,6 +308,7 @@ extern void ShrinkWindow_SetLetterboxTarget(s16 unkA0);
 extern s16 z2_Play_CreateSubCamera(GlobalContext* ctxt);
 extern void z2_Play_CameraChangeStatus(GlobalContext* ctxt, s16 camId, s16 status);
 extern void z2_Play_ClearCamera(GlobalContext* ctxt, s16 camId);
+extern Camera* z2_Play_GetCamera(GlobalContext* ctxt, s16 camId);
 extern void z2_Play_CameraSetAtEyeUp(GlobalContext* ctxt, s16 camId, Vec3f* at, Vec3f* eye, Vec3f* up);
 extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 
@@ -323,6 +326,7 @@ extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 #define z2_Player_func_8083692C_VRAM     0x8083692C
 #define z2_Player_func_80838A90_VRAM     0x80838A90
 #define z2_Player_func_8083B930_VRAM     0x8083B930
+#define z2_Player_InflictDamage_VRAM     0x8085B3E0
 
 #define z2_Player_Action_0_VRAM          0x808496AC
 #define z2_Player_Action_1_VRAM          0x808497A0
@@ -450,5 +454,6 @@ typedef bool (*z2_Player_func_80838A90_Func)(ActorPlayer* player, GlobalContext*
 typedef bool (*z2_Player_func_8083B930_Func)(GlobalContext* ctxt, ActorPlayer* player);
 typedef void (*z2_Player_PlayAnimationOnce_Func)(GlobalContext* ctxt, ActorPlayer* player, void* anim);
 typedef void (*z2_Player_PlayAnimationLoop_Func)(GlobalContext* ctxt, ActorPlayer* player, void* anim);
+typedef void (*z2_Player_InflictDamage_Func)(GlobalContext* ctxt, s32 damage);
 
 #endif
