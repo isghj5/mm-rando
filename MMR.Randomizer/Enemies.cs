@@ -2041,7 +2041,7 @@ namespace MMR.Randomizer
             var newPeahat = grottosScene.Maps[13].Actors[3];
             newPeahat.ChangeActor(GameObjects.Actor.Peahat, vars: 0, modifyOld: true);
             //newPeahat.Position = new vec16(5010, -20, 600); // move over near peahat one
-            newPeahat.Position = new vec16(5010, -10, 600); // move over near peahat one
+            newPeahat.Position = new vec16(5010, -20, 600); // move over near peahat one
 
             // straight jp grotto has only one object, padding of scene data means there is space for an object right behind it that we can use
             //  we can use the second object to give this area a chest by taking one of the useless mushrooms and changing it
