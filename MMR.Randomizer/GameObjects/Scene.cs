@@ -109,11 +109,16 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x14)]
         // TODO come up with a way to make sure that one spot isn't blocking without hardcoding
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PatrollingPirate,
-            Actor.RegularIceBlock,// can block the stairs
+            //Actor.RegularIceBlock // should be covered by block sensitive now
             // Actor.LargeCrate, .SmalActorlWoodenBox, Actor.WoodenBarrel,  // these should only be free actors lets let them show up again
-            Actor.Bombiwa, Actor.ClocktowerGearsAndOrgan, Actor.Torch,  // boring
+            //Actor.ClocktowerGearsAndOrgan, // blocking
+            Actor.Bombiwa, Actor.Torch,  // boring
             Actor.CuccoChick, Actor.En_Ani, Actor.IkanaGravestone // boring
-            )] 
+            )]
+        [EnemizerSceneBlockSensitive(Actor.PatrollingPirate,
+            0x14EA, // bottom of ladder
+            0x18EA, // bridge to chest room
+            0xEA)] // top of ladder -> bridge
         PiratesFortress = 0x11,
 
         [FileID(1173)]
