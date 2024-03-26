@@ -1025,7 +1025,7 @@ namespace MMR.Randomizer.Utils
                 }
                 else // all custom banks have been claimed
                 {
-                    if (CurrentFreeBank > 0x0080)
+                    if (CurrentFreeBank > 0x0038)
                     {
                         return false; // can't overwrite any more entries
                     }
