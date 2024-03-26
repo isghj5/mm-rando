@@ -4249,8 +4249,9 @@ namespace MMR.Randomizer.GameObjects
         //[RespawningVariants(0x1301)] // if we got killable versions working, this would go back on
         //[UnkillableAllVariants] // only 1, the one with a no-respawn flag, spawns readily, so for now, assume the player kills one and can't kill another
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames for ghast
-        [EnemizerScenesPlacementBlock(//Scene.TerminaField,
+        [EnemizerScenesPlacementBlock(Scene.TerminaField, // very annoying
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, // annoying
+            // TODO how old is this? is this before I knew about the cutscene version?
             Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
         [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         BigPoe = 0x208, // En_Bigpo

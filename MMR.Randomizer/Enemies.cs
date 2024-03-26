@@ -120,9 +120,13 @@ namespace MMR.Randomizer
             // because this list needs to be re-evaluated per scene, start smaller here once
             FreeCandidateList = freeCandidates.Select(act => new Actor(act)).ToList();
 
-            var freeOnlyCandidates = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
-                    .Where(act => ACTORSENABLED && act.IsActorFreeOnly())
-                    .ToList();
+            var freeOnlyCandidates = new List<GameObjects.Actor>();
+            if (ACTORSENABLED)
+            {
+                freeOnlyCandidates = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
+                                            .Where(act => act.IsActorFreeOnly())
+                                            .ToList();
+            }
 
             // because this list needs to be re-evaluated per scene, start smaller here once
             FreeOnlyCandidateList = freeOnlyCandidates.Select(act => new Actor(act)).ToList();
@@ -132,83 +136,61 @@ namespace MMR.Randomizer
         {
             List<GameObjects.Item> allSpiderTokens = _randomized.ItemList.FindAll(item => item.Item.ItemCategory() == GameObjects.ItemCategory.SkulltulaTokens).Select(u => u.Item).ToList();
 
+            // I used to do this but now that we have sphere its faster because the sphere list is smaller datasize
             // check the token reward itself
             //var swampSkullReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MaskTruth).Item;
             // check if the important items has a token (which might tell us all tokens are required to 
             //if (ItemUtils.IsJunk(swampSkullReward) )
-            //{
-                // double check: the finishing condition might be all tokens, in which case any specific token should be important
-                var swampTokenImportantSearch = allSphereItems.Any(u => u.Item1 == "Swamp Skulltula Spirit");
-                if (!swampTokenImportantSearch)
-                {
-                    var swampTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Swamp")).ToList();
-                    addedJunkItems.AddRange(swampTokens);
-                }
-            //}
 
+            var swampTokenImportantSearch = allSphereItems.Any(u => u.Item1 == "Swamp Skulltula Spirit");
+            if (!swampTokenImportantSearch)
+            {
+                var swampTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Swamp")).ToList();
+                addedJunkItems.AddRange(swampTokens);
+            }
 
-            //var oceanSkullRewardDay1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.UpgradeGiantWallet).Item;
-            //var oceanSkullRewardDay2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MundaneItemOceanSpiderHouseDay2PurpleRupee).Item;
-            //var oceanSkullRewardDay3 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MundaneItemOceanSpiderHouseDay3RedRupee).Item;
-            //if (ItemUtils.IsJunk(oceanSkullRewardDay1) && ItemUtils.IsJunk(oceanSkullRewardDay2) && ItemUtils.IsJunk(oceanSkullRewardDay3))
-            //{
-                // double check: the finishing condition might be all tokens, in which case any specific token should be important
-                var oceanTokenImportantSearch = allSphereItems.Any(u => u.Item1 == "Ocean Skulltula Spirit");
-                if (!oceanTokenImportantSearch)
-                {
-                    var oceanTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Ocean")).ToList();
-                    addedJunkItems.AddRange(oceanTokens);
-                }
-            //}
+            var oceanTokenImportantSearch = allSphereItems.Any(u => u.Item1 == "Ocean Skulltula Spirit");
+            if (!oceanTokenImportantSearch)
+            {
+                var oceanTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Ocean")).ToList();
+                addedJunkItems.AddRange(oceanTokens);
+            }
         }
 
         private static void PrepareJunkStrayFairies(List<GameObjects.Item> addedJunkItems, List<(string, string)> allSphereItems)
         {
             var allFaries = _randomized.ItemList.FindAll(item => item.Item.ClassicCategory() == GameObjects.ClassicCategory.StrayFairies).Select(u => u.Item).ToList();
 
+            // I used to do this but now that we have sphere its faster because the sphere list is smaller datasize
             //var woodfallFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairySpinAttack).Item;
             //if (ItemUtils.IsJunk(woodfallFairyReward))
-            //{
-                var woodfallStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Woodfall Stray Fairy");
-                if (!woodfallStrayFairyImportantSearch)
-                {
-                    var woodfallFairies = allFaries.FindAll(token => token.Name().Contains("Woodfall")).ToList();
-                    addedJunkItems.AddRange(woodfallFairies);
-                }
-            //}
+            var woodfallStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Woodfall Stray Fairy");
+            if (!woodfallStrayFairyImportantSearch)
+            {
+                var woodfallFairies = allFaries.FindAll(token => token.Name().Contains("Woodfall")).ToList();
+                addedJunkItems.AddRange(woodfallFairies);
+            }
 
-            //var snowheadFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairyDoubleMagic).Item;
-            //if (ItemUtils.IsJunk(snowheadFairyReward))
-            //{
-                var snowheadStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Snowhead Stray Fairy");
-                if (!snowheadStrayFairyImportantSearch)
-                {
-                    var snowheadFairies = allFaries.FindAll(token => token.Name().Contains("Snowhead")).ToList();
-                    addedJunkItems.AddRange(snowheadFairies);
-                }
-           // }
+            var snowheadStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Snowhead Stray Fairy");
+            if (!snowheadStrayFairyImportantSearch)
+            {
+                var snowheadFairies = allFaries.FindAll(token => token.Name().Contains("Snowhead")).ToList();
+                addedJunkItems.AddRange(snowheadFairies);
+            }
 
-            //var greatbayFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairyDoubleDefense).Item;
-            //if (ItemUtils.IsJunk(greatbayFairyReward))
-            //{
-                var greatbayStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Great Bay Stray Fairy");
-                if (!greatbayStrayFairyImportantSearch)
-                {
-                    var greatbayFairies = allFaries.FindAll(token => token.Name().Contains("Great Bay")).ToList();
-                    addedJunkItems.AddRange(greatbayFairies);
-                }
-            //}
+            var greatbayStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Great Bay Stray Fairy");
+            if (!greatbayStrayFairyImportantSearch)
+            {
+                var greatbayFairies = allFaries.FindAll(token => token.Name().Contains("Great Bay")).ToList();
+                addedJunkItems.AddRange(greatbayFairies);
+            }
 
-            //var stonetowerFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemFairySword).Item;
-            //if (ItemUtils.IsJunk(stonetowerFairyReward))
-            //{
-                var stonetowerStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Stone Tower Stray Fairy");
-                if (!stonetowerStrayFairyImportantSearch)
-                {
-                    var stoneTowerFairies = allFaries.FindAll(token => token.Name().Contains("Stone Tower")).ToList();
-                    addedJunkItems.AddRange(stoneTowerFairies);
-                }
-            //}
+            var stonetowerStrayFairyImportantSearch = allSphereItems.Any(u => u.Item1 == "Stone Tower Stray Fairy");
+            if (!stonetowerStrayFairyImportantSearch)
+            {
+                var stoneTowerFairies = allFaries.FindAll(token => token.Name().Contains("Stone Tower")).ToList();
+                addedJunkItems.AddRange(stoneTowerFairies);
+            }
         }
 
         private static void PrepareJunkNotebookEntries(List<GameObjects.Item> addedJunkItems, List<(string, string)> allSphereItems)
@@ -235,15 +217,23 @@ namespace MMR.Randomizer
 
         private static void PrepareJunkScoopList(List<GameObjects.Item> addedJunkItems, List<(string, string)> allSphereItems)
         {
+            // if the scoops are vanilla they can never be considered junk
+
             var importantBottleItems = allSphereItems.FindAll(item => item.Item1.Contains("Bottle:"));
+
+            // get all bottles as items that are not randomized for now we have to assume they are important
+            var bottleCatches = _randomized.ItemList
+                    .Where(item => item.DisplayName() != null && item.DisplayName().Contains("Bottle:"))
+                    .ToList();
+            var unrandomizedBottles = bottleCatches.Where(item => !item.IsRandomized).ToList();
+            // add that list to importantBottleItems
+            foreach (var itemstring in unrandomizedBottles)
+              importantBottleItems.Add(("", itemstring.DisplayName()));
 
             // scoops are a special case, they dont count as junk items above since they are all in one category handle separatly
             // for all items in list of items that are scoop types
             // check if each and every one is an important item?
             var scoopItems = _randomized.ItemList.FindAll(item => item.Item.ItemCategory() == GameObjects.ItemCategory.ScoopedItems);
-            //var unImportantScoops = scoopItems.FindAll(scoop => allSphereItems.Count(important => important.Item1 == scoop.Name) == 0);
-            //var unImportantScoops = scoopItems.FindAll(scoop => allSphereItems.Count(important => important.Item1 == scoop.Item.Name()) == 0);
-            //var unImportantScoops = scoopItems.FindAll(scoop => importantBottleItems.Count(important => important.Item1 == scoop.NewLocation.ToString()) == 0);
             var unImportantScoops = scoopItems.FindAll(scoop => importantBottleItems.Count(important => important.Item2 == scoop.Item.Name()) == 0);
 
             //scoopItems.RemoveAll(importantScoops);
@@ -2823,7 +2813,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Dinofos)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Dinofos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Snowhead, GameObjects.Actor.Bo, GameObjects.Actor.BadBat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
