@@ -278,6 +278,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         En_Holl = 0x18, // En_Holl
 
+        // warning: can crash if put on an actor that has cutscene data, fixed by removing cutscene data in ::FixBrokenActorSpawnCutscenes
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3A70)]
         [FileID(58)]
@@ -285,7 +286,6 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [DifficultAllVariants]
         [VariantsWithRoomMax(max: 2, variant: 0)]
-        // crashes if placed on an actor that has cutscene data, because it tries to use that cutscene data as its intro cutscen
         [ForbidFromScene(Scene.SecretShrine)] // issue: spawn is too high, needs to be lowered
         Dinofos = 0x19, // En_Dinofos
 
@@ -2395,8 +2395,15 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x15C)]
         Gyorg = 0x12B, // Boss_03
 
+        // can we randomize him?
+        // turns out he spawns on the floor in gbt
+        //[EnemizerEnabled] // spawning behavior is weird and can spawn out of bounds
         [FileID(270)]
         [ObjectListIndex(0x15D)]
+        [GroundVariants(0)] // his placement is on the ground, cutscene?
+        [VariantsWithRoomMax(max:0, variant:0)]
+        [OnlyOneActorPerRoom]
+        [DifficultAllVariants]
         Wart = 0x12C, // Boss_04
 
         [EnemizerEnabled]
