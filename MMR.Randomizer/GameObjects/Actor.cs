@@ -3065,12 +3065,16 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x16B)]
         DefeatedSkullfish = 0x181, // En_Prz
 
-        //[EnemizerEnabled]
+        // turns out his spawn in STT is on the ground, so cutscene actor?
+        [EnemizerEnabled]
         [FileID(348)]
         [ObjectListIndex(0x155)]
-        [GroundVariants(0)]  // does not spawn, but if you approach where he SHOULD BE you lose camera control
+        [GroundVariants(0, // stt light arrow fight
+            1)]  // the other fights
+        [DifficultAllVariants]
         [OnlyOneActorPerRoom]
-        [ForbidFromScene(Scene.StoneTowerTemple)]
+        [VariantsWithRoomMax(max:0, variant:0)] // cutscene variant is hardcoded
+        //[ForbidFromScene(Scene.StoneTowerTemple)]
         GaroMaster = 0x182, // En_Jso2
 
         [EnemizerEnabled] // free enemy, placed in places where enemies are normally
@@ -4795,7 +4799,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(535)]
         [ObjectListIndex(0x21E)]
         [CheckRestricted(Item.MaskDonGero)]
-        [FlyingVariants(0)]
+        [CeilingVariants(0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
