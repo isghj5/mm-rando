@@ -2031,6 +2031,7 @@ namespace MMR.Randomizer
             var grottosScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Grottos.FileID());
 
             // dodongo grotto has a blue icecycle object, switch to BO so we can get bo actors from jp grotto
+            // TODO is this actually getting updated without an actor tho?f
             var dodongoGrottoObjectList = grottosScene.Maps[7].Objects;
             dodongoGrottoObjectList[2] = GameObjects.Actor.Bo.ObjectIndex();
 
@@ -2050,6 +2051,7 @@ namespace MMR.Randomizer
                                                            GameObjects.Actor.TreasureChest.ObjectIndex() };
             // change dekubaba to dodongo so its killable to get the new chest
             grottosScene.Maps[6].Actors[2].ChangeActor(GameObjects.Actor.Peahat, vars: 0, modifyOld: true);
+            grottosScene.Maps[6].Actors[2].OldName = grottosScene.Maps[6].Actors[2].Name = "JpGrottoEnemy";
             // we have to tell the room to load the extra object though
             var straightJPGrottoRoomFile = RomData.MMFileList[GameObjects.Scene.Grottos.FileID() + 7];
             straightJPGrottoRoomFile.Data[0x29] = 0x2; // setting object header object count from 1 to 2
@@ -2073,7 +2075,7 @@ namespace MMR.Randomizer
             /// we cannot randomize any goron in the shrine because they all use the same object
             ///   and for some reason it crashes if there isnt one there at all, unknown reason
             /// except both rooms use the same 5 objects, and object list is padded to word length
-            ///   so there is a space object space in the list we can use
+            ///   so there is a space object space in the list we can use, we can add a second goron object which we leave alone
             if (!ReplacementListContains(GameObjects.Actor.GoronSGoro)) return;
 
             var goronShrine = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GoronShrine.FileID());
@@ -2179,11 +2181,11 @@ namespace MMR.Randomizer
         public static void SplitPirateSewerMines()
         {
             /// The mines in the pirate fort sewer are dual type, in room 10/11 they are underwater mines,
-            /// in room 9 there are cieling hanging mines
-            /// right now, actorizer cannot handle them properly in this form, and we need to split into two separate actors and two separate objects
-            /// turning the ceiling mines into fake skulltula (flying) and changing the object
+            /// in room 9 there are ceiling hanging mines
+            /// right now, actorizer cannot handle them properly in this form (we get water types in the air or air types in the water)
+            /// we need to split into two separate actors and two separate objects
+            /// turning the ceiling mines into fake skulltula (ceiling type) and changing the object in that room to match
 
-            //SkulltulaDummy
             var sewerScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PiratesFortressRooms.FileID());
             var actors = sewerScene.Maps[9].Actors;
 
@@ -2193,7 +2195,8 @@ namespace MMR.Randomizer
                 {
                     actor.ChangeActor(GameObjects.Actor.SkulltulaDummy, 0, modifyOld: true);
                     actor.OldName = actor.Name = "HangingMine";
-                    actor.Position.y -= 30; // touching the cieling, lets drop a bit
+                    // ceiling type should handle this by default now
+                    //actor.Position.y -= 30; // touching the ceiling, lets drop a bit
                 }
             }
 
@@ -2202,8 +2205,9 @@ namespace MMR.Randomizer
 
         private static void SplitSnowheadTempleBo()
         {
-            /// the bo are both in the entrance and hanging from the ceiling,
+            /// the bo in sht are in two locations: floor in the entrance and hanging from the ceiling,
             /// this is an issue because there are almost none that are dual type
+            /// split the two into different enemies for better type control
 
             var shtScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SnowheadTemple.FileID());
             var boActors = shtScene.Maps[8].Actors;
@@ -2275,19 +2279,12 @@ namespace MMR.Randomizer
             if (!ReplacementListContains(GameObjects.Actor.Monkey)) return;
 
             var dekuKingScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuKingChamber.FileID());
-            dekuKingScene.Maps[0].Objects = new List<int> {
-                dekuKingScene.Maps[0].Objects[0],
-                dekuKingScene.Maps[0].Objects[1],
-                dekuKingScene.Maps[0].Objects[2],
-                dekuKingScene.Maps[0].Objects[3],
-                dekuKingScene.Maps[0].Objects[4],
-                GameObjects.Actor.Monkey.ObjectIndex(),
-            };
+            dekuKingScene.Maps[0].Objects.Add(GameObjects.Actor.Monkey.ObjectIndex());
             // we have to tell the room to load the extra object though
             var dekuKingSceneMap0FileData = RomData.MMFileList[GameObjects.Scene.DekuKingChamber.FileID() + 1].Data;
-            dekuKingSceneMap0FileData[0x31] = 0x6; // setting object header object count from 5 to 6
+            dekuKingSceneMap0FileData[0x31] = 0x6; // updating object header object count from 5 to 6
 
-            // swampo monkey are annoying, we want to move them so they dont block things
+            // swamp monkey are annoying, we want to move them so they dont block things
             var southernSwampScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthernSwamp.FileID());
             southernSwampScene.Maps[2].Actors[10].Position = new vec16(3826, 15, -1320); // those near witch
             southernSwampScene.Maps[2].Actors[11].Position = new vec16(3729, 15, -1358); 
@@ -2296,21 +2293,22 @@ namespace MMR.Randomizer
             southernSwampScene.Maps[0].Actors[35].Position = new vec16(380, 64, -950); // near entrance
             southernSwampScene.Maps[0].Actors[35].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 0+30, flags: southernSwampScene.Maps[0].Actors[35].Rotation.y);
             southernSwampScene.Maps[0].Actors[35].ChangeActor(GameObjects.Actor.Bombiwa, vars: 0xE, modifyOld: true);
-            southernSwampScene.Maps[0].Actors[35].OldName = "Monkey1";
+            southernSwampScene.Maps[0].Actors[35].OldName = "Monkey(Near Road)";
 
-            southernSwampScene.Maps[0].Actors[36].Position = new vec16(499, 58, -890); // do we rotate too?
+            southernSwampScene.Maps[0].Actors[36].Position = new vec16(499, 58, -890);
             southernSwampScene.Maps[0].Actors[36].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270-30, flags: southernSwampScene.Maps[0].Actors[36].Rotation.y);
             southernSwampScene.Maps[0].Actors[36].ChangeActor(GameObjects.Actor.Bombiwa, vars: 0xE, modifyOld: true);
-            southernSwampScene.Maps[0].Actors[36].OldName = "Monkey2";
+            southernSwampScene.Maps[0].Actors[36].OldName = "Monkey(Near Road)";
 
-            southernSwampScene.Maps[0].Actors[37].Position = new vec16(399, 46, -828); // this one is weirdly alright as is
+            southernSwampScene.Maps[0].Actors[37].Position = new vec16(399, 46, -828); // this one is weirdly alright as is for rotation
             southernSwampScene.Maps[0].Actors[37].ChangeActor(GameObjects.Actor.Bombiwa, vars: 0xE, modifyOld: true);
-            southernSwampScene.Maps[0].Actors[37].OldName = "Monkey3";
+            southernSwampScene.Maps[0].Actors[37].OldName = "Monkey(Near Road)";
 
             // because we changed the monkey to bombiwa actor, we need to change the object to so that they will respond correctly
             southernSwampScene.Maps[0].Objects[2] = GameObjects.Actor.Bombiwa.ObjectIndex();
 
-            southernSwampScene.Maps[1].Actors[34].Position = new vec16(-681, 32, 4142); // near deku palace entrance
+            // same with monkey near the deky palace entrance
+            southernSwampScene.Maps[1].Actors[34].Position = new vec16(-681, 32, 4142);
             southernSwampScene.Maps[1].Actors[34].ChangeActor(GameObjects.Actor.Snapper, vars: 0x0, modifyOld: true);
             southernSwampScene.Maps[1].Actors[34].OldName = "Monkey(Palace Entrance)";
             southernSwampScene.Maps[1].Objects[2] = GameObjects.Actor.Bombiwa.ObjectIndex();
@@ -3504,6 +3502,7 @@ namespace MMR.Randomizer
         {
             SplitSceneLikeLikesIntoTwoActorObjects(thisSceneData);
             AddAniObjectIfTerminaFieldTree(thisSceneData);
+            AddExtraObjectToPiratesInterior(thisSceneData);
         }
 
         private static void SplitSceneLikeLikesIntoTwoActorObjects(SceneEnemizerData thisSceneData)
@@ -3561,11 +3560,68 @@ namespace MMR.Randomizer
                 var newObject = SMALLEST_OBJ;
                 if (thisSceneData.RNG.Next() % 10 > 5) // chance of fixed rare/random actor
                 {
-                    newObject = freeObjList[thisSceneData.RNG.Next() & (freeObjList.Count -1)];
+                    newObject = freeObjList[thisSceneData.RNG.Next() % (freeObjList.Count -1)];
                 } 
 
                 // for now we just bypass rando and set it manually
                 thisSceneData.Scene.Maps[0].Objects[6] = newObject;
+            }
+        }
+
+        private static void AddExtraObjectToPiratesInterior(SceneEnemizerData thisSceneData)
+        {
+            /// With enemizer/actorizer pirates interior is actually kinda dry and boring
+            /// the scene has 11 objects, we can add another object to the scene to give enemizer some more free-object actors it can place
+            /// also the scene has an unused object (that doesn't get used in enemizer now) we can swap out for something random
+
+            if (thisSceneData.Scene.SceneEnum != GameObjects.Scene.PiratesFortress) return;
+
+            // for now there should only be some chance of this happening in case the object budget is too close to call
+            //if (thisSceneData.RNG.Next() % 10 > 2) // nvm seems fine
+            {
+                List<int> freeObjList = new List<int>
+                {
+                    GameObjects.Actor.ClayPot.ObjectIndex(), // flying clay pot for enemizer, actual clay pots for actorizer
+                    GameObjects.Actor.IronKnuckle.ObjectIndex(),
+                    GameObjects.Actor.LikeLike.ObjectIndex(),
+                    GameObjects.Actor.DeathArmos.ObjectIndex(),
+                    GameObjects.Actor.Guay.ObjectIndex(),
+                    GameObjects.Actor.Nejiron.ObjectIndex(),
+                    GameObjects.Actor.ReDead.ObjectIndex(),
+                    GameObjects.Actor.RedBubble.ObjectIndex(), // both bubble types
+                    GameObjects.Actor.PatrollingPirate.ObjectIndex(), // thats right, have a chance of putting some of them back in
+                    GameObjects.Actor.DekuPatrolGuard.ObjectIndex(),
+                };
+
+                if (ACTORSENABLED)
+                {
+                    freeObjList.AddRange(
+                        new List<int>{
+                            GameObjects.Actor.Postbox.ObjectIndex(),
+                            GameObjects.Actor.BeanSeller.ObjectIndex(),
+                            GameObjects.Actor.Scarecrow.ObjectIndex(),
+                            GameObjects.Actor.FriendlyCucco.ObjectIndex(),
+                            GameObjects.Actor.HappyMaskSalesman.ObjectIndex(),
+                            GameObjects.Actor.ImposterFrog.ObjectIndex(),
+                            GameObjects.Actor.BombFlower.ObjectIndex()
+                        }
+                    ); ; ;
+                }
+
+                var newObject1 = freeObjList[thisSceneData.RNG.Next() % (freeObjList.Count - 1)];
+                freeObjList.Remove(newObject1);
+                var newObject2 = freeObjList[thisSceneData.RNG.Next() % (freeObjList.Count - 1)];
+                Debug.WriteLine($"+ extra object for pirates fortress interior is [0x{newObject1.ToString("X")}]");
+                Debug.WriteLine($"+ kaizoku object replacemnet for pirates fortress interior is [0x{newObject2.ToString("X")}]");
+
+                thisSceneData.Scene.Maps[0].Objects.Add(newObject1);
+
+                // have to update the scene data to load a larger object list in the game
+                var pirateSceneData = RomData.MMFileList[GameObjects.Scene.PiratesFortress.FileID() + 1].Data;
+                pirateSceneData[0x31] = 12;
+
+                // for some dumb reason the kaizoku (pirate leutenant you fight in the inteior) is here too, we can change this to something useful since it never gets used
+                thisSceneData.Scene.Maps[0].Objects[3] = newObject2;
             }
         }
 

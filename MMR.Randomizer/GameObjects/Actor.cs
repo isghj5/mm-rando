@@ -1866,10 +1866,18 @@ namespace MMR.Randomizer.GameObjects
         [TreasureFlagsPlacement(mask: 0xFF, shift: 2)] // 0x3FC
         HoneyComb = 0xE4, // Obj_Comb
 
+        [ActorizerEnabledFreeOnly] // too boring to get as an actor, but we should be able to place new ones if the object is already there somehow
         [FileID(218)]
         [ObjectListIndex(0x133)]
         // not always active, only sometimes:q
         [TreasureFlagsPlacement(mask: 0x1F, shift: 2)]
+        [GroundVariants(0x7F3F, // buisness scrub and pirates fortress
+            //0x1E11, // sht compass room // fairy crate
+            0x000B, // sht bridge room
+            0x000F, // sht goron switch room
+            // there are more TODO add them from spider house and a few other places
+            0x2604)] // stt mirror room
+        [UnkillableAllVariants]
         LargeCrate = 0xE5, // Obj_Kibako2
 
         EmptyE6 = 0xE6, // EmptyE6
@@ -4594,6 +4602,7 @@ namespace MMR.Randomizer.GameObjects
 
         // ignored because of how borring it is, need way to restrict these
         // enabling only for underwater adventure
+        // wish we could add them to overworld without adding them as a sole object...
         [ActorizerEnabled]
         [FileID(516)]
         [ObjectListIndex(0x250)]
@@ -5531,11 +5540,17 @@ namespace MMR.Randomizer.GameObjects
         [FileID(621)]
         [ObjectListIndex(0x270)]
         Demo_Moonend = 0x296, // Demo_Moonend
-        
+
+        // the pillars you hookshot in stonetower and pirates fortress
+        [ActorizerEnabledFreeOnly] // do not remove, we just want to add as variety IF the object is there
         [FileID(622)]
         [ObjectListIndex(0x27F)]
+        [GroundVariants(0x0)] // all the same
+        [ForbidFromScene(Scene.PiratesFortress, Scene.StoneTower)]
+        [UnkillableAllVariants]
         RainbowHookshotPillar = 0x297, // Bg_Lbfshot
-        
+
+        // the bombchu walls you blow up in the link trial
         [FileID(623)]
         [ObjectListIndex(0x234)]
         LinkTrialBombWall = 0x298, // Bg_Last_Bwall

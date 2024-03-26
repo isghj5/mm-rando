@@ -110,8 +110,9 @@ namespace MMR.Randomizer.GameObjects
         // TODO come up with a way to make sure that one spot isn't blocking without hardcoding
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PatrollingPirate,
             Actor.RegularIceBlock,// can block the stairs
-            Actor.Torch, Actor.LargeCrate, Actor.SmallWoodenBox, Actor.Bombiwa, Actor.ClocktowerGearsAndOrgan, // boring
-            Actor.CuccoChick, Actor.En_Ani, Actor.CutsceneZelda, Actor.OOTPotionShopMan, Actor.WoodenBarrel, Actor.IkanaGravestone // boring
+            // Actor.LargeCrate, .SmalActorlWoodenBox, Actor.WoodenBarrel,  // these should only be free actors lets let them show up again
+            Actor.Bombiwa, Actor.ClocktowerGearsAndOrgan, Actor.Torch,  // boring
+            Actor.CuccoChick, Actor.En_Ani, Actor.IkanaGravestone // boring
             )] 
         PiratesFortress = 0x11,
 
