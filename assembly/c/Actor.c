@@ -30,21 +30,24 @@ void Actor_Update(Actor* actor, GlobalContext* ctxt) {
         if (actor->child != NULL && actor->child->id == ACTOR_PLAYER && actor->child->parent != actor && (actor->bgcheckFlags & 1)) { // BGCHECKFLAG_GROUND
             ActorPlayer* player = (ActorPlayer*)actor->child;
             if (!(player->stateFlags.state1 & PLAYER_STATE1_EPONA)) {
-                s32* action = (s32*)(((u8*)actor)+0x144);
-                s32* animIndex = (s32*)(((u8*)actor)+0x20C);
-                s32* playerControlled = (s32*)(((u8*)actor)+0x208);
-                s32* stateFlags = (s32*)(((u8*)actor)+0x1E8);
+                s32 postDrawFunc = *(s32*)(((u8*)actor)+0x240);
+                if (!postDrawFunc) {
+                    s32* action = (s32*)(((u8*)actor)+0x144);
+                    s32* animIndex = (s32*)(((u8*)actor)+0x20C);
+                    s32* playerControlled = (s32*)(((u8*)actor)+0x208);
+                    s32* stateFlags = (s32*)(((u8*)actor)+0x1E8);
 
-                actor->child = NULL;
-                *playerControlled = false;
-                *stateFlags &= ~(1 << 16); // ENHORSE_UNRIDEABLE
-                *action = 2; // ENHORSE_ACTION_IDLE
-                *animIndex = 1; // ENHORSE_ANIM_WHINNY
-                gSaveContext.perm.horseData.sceneId = ctxt->sceneNum;
-                gSaveContext.perm.horseData.pos.x = actor->currPosRot.pos.x;
-                gSaveContext.perm.horseData.pos.y = actor->currPosRot.pos.y;
-                gSaveContext.perm.horseData.pos.z = actor->currPosRot.pos.z;
-                gSaveContext.perm.horseData.yaw = actor->shape.rot.y;
+                    actor->child = NULL;
+                    *playerControlled = false;
+                    *stateFlags &= ~(1 << 16); // ENHORSE_UNRIDEABLE
+                    *action = 2; // ENHORSE_ACTION_IDLE
+                    *animIndex = 1; // ENHORSE_ANIM_WHINNY
+                    gSaveContext.perm.horseData.sceneId = ctxt->sceneNum;
+                    gSaveContext.perm.horseData.pos.x = actor->currPosRot.pos.x;
+                    gSaveContext.perm.horseData.pos.y = actor->currPosRot.pos.y;
+                    gSaveContext.perm.horseData.pos.z = actor->currPosRot.pos.z;
+                    gSaveContext.perm.horseData.yaw = actor->shape.rot.y;
+                }
             }
         }
     }
