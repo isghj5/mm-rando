@@ -940,7 +940,7 @@ bool Player_ShouldBeKnockedOver(GlobalContext* ctxt, ActorPlayer* player, s32 da
     }
 
     if (MISC_CONFIG.flags.takeDamageOnEpona && (player->stateFlags.state1 & PLAYER_STATE1_EPONA)) {
-        bool* gHorseIsMounted = (bool*)0x801BDA9C;
+        s32* gHorseIsMounted = (s32*)0x801BDA9C;
         z2_Camera_ChangeSetting(z2_Play_GetCamera(ctxt, 0), 1); // CAM_ID_MAIN, CAM_SET_NORMAL0
         player->stateFlags.state1 &= ~PLAYER_STATE1_EPONA;
         player->base.parent = NULL;
