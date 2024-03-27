@@ -646,14 +646,13 @@ namespace MMR.Randomizer.GameObjects
 
         Empty42 = 0x42,
 
-        //[EnemizerEnabled] //hardcoded values for his entrance spawn make the camera wonky, and his color darkening is wack
+        //[EnemizerEnabled] //hardcoded values for his entrance spawn make the camera wonky, and his color darkening is wack, also hardware crash
         [FileID(87)]
-        [ActorInstanceSize(0x938 + (0x2a0 * 22))] // 0x938 // oversized because he spawns little bats and can easily overblow ram
-        // WARNING: this size aprox does NOT include the actor overlay size of the bats (En_Minideath)
+        [ActorInstanceSize(0x938 + (0x2A0 * 25))] // 0x938 // oversized because he spawns little bats and can easily overblow ram
         [ObjectListIndex(0x52)]
         [GroundVariants(0)] // can fly, but weirdly is very bad at changing height if you fight in a multi-level area
         [OnlyOneActorPerRoom] // only fight her if you fight only one
-        [UnkillableAllVariants] // is NOT unkillable, but assume never have light arrows until the last second of a run, do not place where can block an item
+        [RespawningAllVariants] // is NOT unkillable, but assume never have light arrows until the last second of a run, do not place where can block an item
         [ForbidFromScene(Scene.InvertedStoneTowerTemple)] // lets not randomize his normal spawn
         // good candidate for night and dungeon spawn only
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.RoadToIkana,

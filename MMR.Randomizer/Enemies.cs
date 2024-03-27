@@ -2817,7 +2817,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Snowhead, GameObjects.Actor.Bo, GameObjects.Actor.BadBat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.MilkRoad, GameObjects.Actor.Carpenter, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
+                if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Wolfos, GameObjects.Actor.Gomess)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.DekuBaba, GameObjects.Actor.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
@@ -4538,11 +4538,11 @@ namespace MMR.Randomizer
 
         #endregion
 
-        public static void ShuffleEnemies(OutputSettings outputSettings, CosmeticSettings cosmeticSettings, Models.RandomizedResult randomized, int randomizedSeed)
+        public static void ShuffleEnemies(OutputSettings outputSettings, CosmeticSettings cosmeticSettings, Models.RandomizedResult randomized)
         {
             try
             {
-                seedrng = new Random(randomizedSeed);
+                seedrng = new Random(randomized.Seed);
                 _randomized = randomized;
                 _outputSettings = outputSettings;
                 _cosmeticSettings = cosmeticSettings;
@@ -4578,7 +4578,7 @@ namespace MMR.Randomizer
                     newSceneList.Insert(0, item);
                 }
                 //int seed = random.Next(); // order is up to the cpu scheduler, to keep these matching the seed, set them all to start at the same value
-                int seed = randomizedSeed;
+                int seed = randomized.Seed;
 
                 var previousThreadPriority = Thread.CurrentThread.Priority;
                 Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
