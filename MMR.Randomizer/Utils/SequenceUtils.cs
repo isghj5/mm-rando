@@ -551,7 +551,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static void PointerizeSequenceSlots(OutputSettings _settings, bool randomizedEnemies)
+        public static void PointerizeSequenceSlots(OutputSettings _settings, RandomizedResult _results, CosmeticSettings cosmeticSettings)
         {
             // if music availablilty is low, pointerize some slots
             // why? because in Z64 fairy fountain and fileselect are the same song,
@@ -625,7 +625,7 @@ namespace MMR.Randomizer.Utils
 
             // to pointerize milk bar we have to change the obj_sound actor in themilkbar
             ConvertSequenceSlotToPointer(seqSlotIndex: 0x56, substituteSlotIndex:0x1F, "mm-milk-bar-pointer"); // house
-            if (randomizedEnemies)
+            if (_results.Settings.RandomizeEnemies)
             {
                 var milkbarScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MilkBar.FileID());
                 milkbarScene.Maps[0].Actors[17].Variants[0] = 0x13C; // from 0x156, the pointer, to 3C the actual milkbar song
@@ -637,6 +637,22 @@ namespace MMR.Randomizer.Utils
                 var milkbarData = RomData.MMFileList[GameObjects.Scene.MilkBar.FileID() + 1].Data;
                 milkbarData[0x193] = 0x3C; // obj_sound (actor 17) parameter from 0x156 to 0x13C (where 56 is milkbar ptr, 3C is actual milkbar slot)
             }
+
+            // if combat music is disabled, that slot should be usable
+            if (cosmeticSettings.DisableCombatMusic == CombatMusic.All) // I think this is what zoey has us using currently??
+            {
+                ConvertSequenceSlotToPointer(0x1A, 0x38); // combat pointed at miniboss, but its going to be replaced more than likely
+            }
+
+            // if fanfares are disabled, can we pointerize some of those slots?
+            if (cosmeticSettings.DisableFanfares == true) // I think this is what zoey has us using currently??
+            {
+                ConvertSequenceSlotToPointer(0x22, 0x08); // get item -> event failure
+                ConvertSequenceSlotToPointer(0x24, 0x08); // get heart container -> event failure
+                ConvertSequenceSlotToPointer(0x37, 0x08); // get mask-> event failure
+                ConvertSequenceSlotToPointer(0x39, 0x08); // get small item  -> event failure
+            }
+
         }
 
         public static void ConvertSequenceSlotToPointer(int seqSlotIndex, int substituteSlotIndex, string name = "")
