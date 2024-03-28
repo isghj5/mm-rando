@@ -62,6 +62,8 @@ namespace MMR.Randomizer.Utils
 
         public static void ReadSequenceInfo()
         {
+            /// Reads the Seqs.txt file for sequence information about the game and user configuration
+
             md5lib = MD5.Create();
 
             RomData.SequenceList = new List<SequenceInfo>();
@@ -137,6 +139,7 @@ namespace MMR.Randomizer.Utils
                             Instrument = targetInstrument
                         };
 
+                        // this is legacy: adding sequences to the seqs.txt file that arent vanilla songs is no longer useful
                         if (sourceSequence.Name.StartsWith("mm-"))
                         {
                             targetSlot.Replaces = Convert.ToInt32(lines[i + 3], 16);
@@ -152,6 +155,8 @@ namespace MMR.Randomizer.Utils
                             {
                                 continue; //old already have it
                             }
+                            sourceSequence.Directory = "";
+
                             RomData.TargetSequences.Add(targetSlot);
                         }
                         else
@@ -192,6 +197,7 @@ namespace MMR.Randomizer.Utils
                 RomData.SequenceList.Add(new SequenceInfo
                 {
                     Name = nameof(Properties.Resources.mmr_f_sot),
+                    Directory = "",
                     Categories = new List<int> { 8 },
                     Instrument = 3,
                     Replaces = 0x75,
@@ -495,6 +501,7 @@ namespace MMR.Randomizer.Utils
                         var currentSong = new SequenceInfo();
                         var splitFilePath = filePath.Split('\\');
                         currentSong.Name = splitFilePath[splitFilePath.Length - 1];
+                        currentSong.Directory = directory;
 
                         // read categories file
                         ZipArchiveEntry categoriesFileEntry = zip.GetEntry("categories.txt");
@@ -1277,7 +1284,10 @@ namespace MMR.Randomizer.Utils
         public static void CheckSongForce(List<SequenceInfo> sequences, StringBuilder log, Random rng)
         {
             /// songs with 'songforce' are higher priorty and get shuffled to the top of the previously randomized list of sequences
-            List<SequenceInfo> forcedSequences = RomData.SequenceList.FindAll(u => u.Name.Contains("songforce") == true).OrderBy(x => rng.Next()).ToList();
+            List<SequenceInfo> forcedSequences = RomData.SequenceList.FindAll(u => u.Name.Contains("songforce")
+                                                                                || u.Directory.Contains("songforce"));
+
+            forcedSequences = forcedSequences.OrderBy(x => rng.Next()).ToList(); // re-randomize order per seed
             if (forcedSequences != null && forcedSequences.Count > 0)
             {
                 foreach (SequenceInfo seq in forcedSequences)
