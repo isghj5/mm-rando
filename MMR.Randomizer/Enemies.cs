@@ -3018,7 +3018,7 @@ namespace MMR.Randomizer
                         // if the actor is in a kill all enemy room, reduce the chances of boring enemies from showing up here
                         if ((oldActor.MustNotRespawn && !containsFairyDroppingEnemy) && seedrng.Next(100) < 25)
                         {
-                            newEnemy.RemoveBoringEnemies();
+                            newEnemy.RemoveEasyEmemies();
                             if (newEnemy.Variants.Count == 0) // TODO refactor this into the overall flow
                             {
                                 continue;

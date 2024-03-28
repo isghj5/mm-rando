@@ -528,6 +528,9 @@ namespace MMR.Randomizer.Models.Rom
             // should we add or replace variants? for now we add
             this.Variants.AddRange(injectedActor.groundVariants);
             this.Variants.AddRange(injectedActor.flyingVariants);
+            this.Variants.AddRange(injectedActor.waterVariants);
+            this.Variants.AddRange(injectedActor.waterBottomVariants);
+            this.Variants.AddRange(injectedActor.waterTopVariants);
             this.Variants = this.Variants.Distinct().ToList(); // if variant copies with limits we can double dip, also bloats loops
 
             if (this.RespawningVariants == null)
@@ -536,11 +539,21 @@ namespace MMR.Randomizer.Models.Rom
             }
             this.RespawningVariants.AddRange(injectedActor.respawningVariants);
 
+            void AddToSpecificSubtype(ActorType type, List<int> newList)
+            {
+                var variantSubList = this.AllVariants[(int)type - 1];
+                variantSubList.AddRange(newList.Except(variantSubList));
+            }
+
             this.VariantsWithRoomMax.AddRange(injectedActor.limitedVariants);
-            var groundVariantEntry = this.AllVariants[(int)ActorType.Ground - 1];
-            groundVariantEntry.AddRange(injectedActor.groundVariants.Except(groundVariantEntry));
-            var flyingVariantEntry = this.AllVariants[(int)ActorType.Ground - 1];
-            flyingVariantEntry.AddRange(injectedActor.flyingVariants.Except(flyingVariantEntry));
+            AddToSpecificSubtype(ActorType.Ground, injectedActor.groundVariants);
+            //var groundVariantEntry = this.AllVariants[(int)ActorType.Ground - 1];
+            //groundVariantEntry.AddRange(injectedActor.groundVariants.Except(groundVariantEntry));
+            AddToSpecificSubtype(ActorType.Flying, injectedActor.flyingVariants);
+            AddToSpecificSubtype(ActorType.Water, injectedActor.waterVariants);
+            AddToSpecificSubtype(ActorType.WaterTop, injectedActor.waterTopVariants);
+            AddToSpecificSubtype(ActorType.WaterBottom, injectedActor.waterBottomVariants);
+
         }
 
         // TODO merge these two, but for right now they are used differently in different places
@@ -555,7 +568,7 @@ namespace MMR.Randomizer.Models.Rom
             return this.Variants;
         }
 
-        public List<int> RemoveBoringEnemies()
+        public List<int> RemoveEasyEmemies()
         {
             var allDifficult = this.ActorEnum.GetAttribute<DifficultAllVariantsAttribute>();
             if (allDifficult != null) return this.Variants;

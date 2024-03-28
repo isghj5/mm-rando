@@ -3628,9 +3628,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x1AD)]
         [FileID(418)]
-        [CheckRestricted(Item.CollectableSnowheadTempleIceBlockRoomItem1,
+        [CheckRestricted(Item.ItemSnowheadKey2,
+                         Item.CollectableSnowheadTempleIceBlockRoomItem1,
                          Item.CollectableSnowheadTempleIceBlockRoomItem2,
-                         Item.CollectableSnowheadTempleIceBlockRoomItem3)] // should be just for the sht scene but thats the only place it shows up
+                         Item.CollectableSnowheadTempleIceBlockRoomItem3 // should be just for the sht scene but thats the only place it shows up
+            )] 
         // FF01 is the ice blocking the path north
         // 0x5AXX seems to be the blocking path ice walls from snowhead temple
         //[CeilingVariants(0x5A00)] // we dont want t remove, and placing them on the floor 
@@ -3640,7 +3642,7 @@ namespace MMR.Randomizer.GameObjects
         [BlockingVariantsAll]
         [VariantsWithRoomMax(max:0, variant:0x5A00)]
         [ForbidFromScene(Scene.TerminaField)]
-        NorthTFIceBlock = 0x1C8, // Obj_BigIcicle
+        LargeBreakableIceDrop = 0x1C8, // Obj_BigIcicle
 
         [ActorizerEnabled]
         [FileID(419)]
