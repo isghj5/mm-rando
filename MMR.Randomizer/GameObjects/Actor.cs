@@ -317,7 +317,6 @@ namespace MMR.Randomizer.GameObjects
         // This actor is modified by custom MMRA, type 0 is now random count, -1 is single
         [FlyingVariants(0xFFFF)] // 0 works, but OOT used FFFF
         [GroundVariants(0xFFFF)] // 0 works, but OOT used FFFF
-        [WaterTopVariants(0xFFFF)]  // 0 works, but OOT used FFFF
         [DifficultVariants(0x2)]
         Shabom = 0x1D, // En_Bubble, the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
@@ -745,7 +744,6 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7E, shift: 9)]
         //[GroundVariants(0)] // params are ignored, uses params as a variable for setting
         [FlyingVariants(0)]
-        [WaterTopVariants(0)]
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [BlockingVariantsAll]
@@ -1667,7 +1665,6 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x5C)]
         //[GroundVariants(0)]
         [FlyingVariants(0)]
-        [WaterTopVariants(0)]
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [BlockingVariantsAll]
@@ -4591,7 +4588,6 @@ namespace MMR.Randomizer.GameObjects
         [FlyingToGroundHeightAdjustment(15)]
         [FlyingVariants(0x0)]
         [GroundVariants(0x0)]
-        [WaterTopVariants(0x0)]
         [VariantsWithRoomMax(variant: 0, max: 1)]
         [EnemizerScenesPlacementBlock(Scene.StoneTower, Scene.IkanaGraveyard, // too much dyna
             Scene.SouthernSwamp, Scene.SouthernSwampClear,
@@ -5140,7 +5136,6 @@ namespace MMR.Randomizer.GameObjects
         // params is number of gulls
         // exception: 0x100 is following player
         [FlyingVariants(7, 5)]
-        [WaterTopVariants(4,6)] // non-vanilla
         [UnkillableAllVariants]
         [FlyingToGroundHeightAdjustment(500)]
         [VariantsWithRoomMax(max: 2, variant: 7, 5)] // > severe lag over 10
