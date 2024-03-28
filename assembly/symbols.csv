@@ -62,6 +62,8 @@
 0x800C4F84,z2_BgCheck_EntityCheckCeiling
 0x800C6248,z2_DynaPoly_GetActor
 0x800C99D4,z2_GetFloorPhysicsType
+0x800C99D4,z2_SurfaceType_GetFloorType
+0x800C9B90,z2_SurfaceType_IsHorseBlocked
 0x800C9E88,z2_SurfaceType_IsWallDamage
 0x800CB7CC,z2_Camera_IsHookArrival
 0x800DFAC8,z2_Camera_ChangeSetting
