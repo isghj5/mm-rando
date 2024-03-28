@@ -3422,7 +3422,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)] // 0xFE00
-        [ForbidFromScene(Scene.Woodfall, Scene.Snowhead, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
+        [ForbidFromScene(Scene.Woodfall, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         ElfBubble = 0x1B1, // En_Elfbub
 
         Empty1B2 = 0x1B2,
