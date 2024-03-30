@@ -2308,6 +2308,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         IceCavernStelagtite = 0x11F, // Bg_Icicle // also stalagmite
 
+        // what
         [FileID(260)]
         [ObjectListIndex(0x6)]
         En_Syateki_Crow = 0x120, // En_Syateki_Crow
