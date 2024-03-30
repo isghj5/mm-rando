@@ -574,7 +574,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.BlueBubble, -1)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Poe,
             Actor.Bo)] // can block the whole assension
-
+        [ClearEnemyPuzzleRooms(4)] // wizrobe room is a clear all room
         InvertedStoneTower = 0x56,
 
         [FileID(1446)]
