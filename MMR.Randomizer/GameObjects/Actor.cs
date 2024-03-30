@@ -1297,6 +1297,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xED)]
         Obj_Lift = 0x95, // Obj_Lift
 
+        // wait is this not rainbow? what is this? TODO
         [FileID(140)]
         [ObjectListIndex(0xEC)]
         HookshotBlock = 0x96, // Obj_Hsblock
@@ -5052,7 +5053,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [VariantsWithRoomMax(max:1, variant:0)]
         [UnkillableAllVariants]
-        [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast)]
+        [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast,
+            Scene.SouthernSwamp)] // dyna crash suspect, even if not in the second room
         [ForbidFromScene(Scene.IkanaCanyon, Scene.RoadToIkana)] // do not remove original
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         IkanaCanyonHookshotStump = 0x25E, // Obj_HsStump
