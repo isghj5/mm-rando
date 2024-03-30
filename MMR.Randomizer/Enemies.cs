@@ -2556,11 +2556,24 @@ namespace MMR.Randomizer
             /// So, for some flying types, they will have values to specify they should be automatically raised
             ///   a bit higher than their ground spawn which is almost always the floor
 
+            void UpdateStrayFairyHeight(Actor testActor)
+            {
+                if (thisSceneData.Scene.SceneEnum.IsFairyDroppingEnemy(roomNum: testActor.Room, actorNum: testActor.RoomActorIndex))
+                {
+                    var testStrayFairy = FindStrayFairy(thisSceneData, testActor.Position.x, testActor.Position.z);
+                    if (testStrayFairy != null)
+                    {
+                        testStrayFairy.Position.y = testActor.Position.y;
+                    }
+                }
+            }
+
             log.AppendLine(" Height adjustments: ");
 
             for (int actorIndex = 0; actorIndex < thisSceneData.Actors.Count(); actorIndex++)
             {
                 var testActor = thisSceneData.Actors[actorIndex];
+
                 var flyingVariants = testActor.ActorEnum.GetAttribute<FlyingVariantsAttribute>();
                 var oldGroundVariants = testActor.OldActorEnum.GetAttribute<GroundVariantsAttribute>();
                 var oldWaterSurfaceVariants = testActor.OldActorEnum.GetAttribute<WaterTopVariantsAttribute>();
@@ -2584,23 +2597,16 @@ namespace MMR.Randomizer
                         log.AppendLine($" + adjusted height of actor [{testActor.Name}] by [{attr.Height}]");
                     }
 
-                    // if this actor was on top of a fairy, the fairy has to match the same height or it wont spawn after the enemy death
-                    if (thisSceneData.Scene.SceneEnum.IsFairyDroppingEnemy(roomNum: testActor.Room, actorNum: testActor.RoomActorIndex))
-                    {
-                        var testStrayFairy = FindStrayFairy(thisSceneData, testActor.Position.x, testActor.Position.z);
-                        if (testStrayFairy != null)
-                        {
-                            testStrayFairy.Position.y = testActor.Position.y;
-                        }
-                    }
-
+                    UpdateStrayFairyHeight(testActor);
                 }
 
                 var oldCeilingVariants = testActor.OldActorEnum.GetAttribute<CeilingVariantsAttribute>();
                 if ((flyingVariants != null && flyingVariants.Variants.Contains(testActor.Variants[0])) && // chosen variant is flying
                     (oldCeilingVariants != null && oldCeilingVariants.Variants.Contains(testActor.OldVariant))) // previous ceiling 
                 {
-                    testActor.Position.y -= (short) 100; // always lower flying enemies on ceiling placement, its usually way too high
+                    testActor.Position.y -= (short) 50; // always lower flying enemies on ceiling placement, its usually way too high
+                    log.AppendLine($" - lowered height of actor [{testActor.Name}] by [50]");
+                    UpdateStrayFairyHeight(testActor);
                 }
 
             }
