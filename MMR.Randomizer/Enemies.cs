@@ -2556,6 +2556,8 @@ namespace MMR.Randomizer
             /// So, for some flying types, they will have values to specify they should be automatically raised
             ///   a bit higher than their ground spawn which is almost always the floor
 
+            //TODO this ONLY USES ENUM VARIANTS uhhh we shouldnt do this
+
             void UpdateStrayFairyHeight(Actor testActor)
             {
                 if (thisSceneData.Scene.SceneEnum.IsFairyDroppingEnemy(roomNum: testActor.Room, actorNum: testActor.RoomActorIndex))
@@ -2595,8 +2597,17 @@ namespace MMR.Randomizer
                         testActor.Position.y += (short) attr.Height;
 
                         log.AppendLine($" + adjusted height of actor [{testActor.Name}] by [{attr.Height}]");
+                        UpdateStrayFairyHeight(testActor);
                     }
+                }
 
+                var waterVariants = testActor.ActorEnum.GetAttribute<WaterVariantsAttribute>();
+                if ((waterVariants != null && waterVariants.Variants.Contains(testActor.Variants[0])) && // chosen variant is water (swimming)
+                    (oldWaterSurfaceVariants != null && oldWaterSurfaceVariants.Variants.Contains(testActor.OldVariant))) // previous water surface 
+                {
+                    short randomHeight = (short)(10 + (seedrng.Next() % 20));
+                    testActor.Position.y -= randomHeight; // always lower flying enemies on ceiling placement, its usually way too high
+                    log.AppendLine($" - lowered height of actor [{testActor.Name}] by [{randomHeight}] to lower below water surface");
                     UpdateStrayFairyHeight(testActor);
                 }
 
@@ -2604,8 +2615,9 @@ namespace MMR.Randomizer
                 if ((flyingVariants != null && flyingVariants.Variants.Contains(testActor.Variants[0])) && // chosen variant is flying
                     (oldCeilingVariants != null && oldCeilingVariants.Variants.Contains(testActor.OldVariant))) // previous ceiling 
                 {
-                    testActor.Position.y -= (short) 50; // always lower flying enemies on ceiling placement, its usually way too high
-                    log.AppendLine($" - lowered height of actor [{testActor.Name}] by [50]");
+                    short randomHeight = (short)(50 + (seedrng.Next() % 50));
+                    testActor.Position.y -= randomHeight; // always lower flying enemies on ceiling placement, its usually way too high
+                    log.AppendLine($" - lowered height of actor [{testActor.Name}] by [{randomHeight}] from ceiling to fly");
                     UpdateStrayFairyHeight(testActor);
                 }
 
@@ -4613,7 +4625,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 62.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 62.2\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
