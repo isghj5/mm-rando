@@ -677,6 +677,7 @@ namespace MMR.Randomizer
             BlockBabyGoronIfNoSFXRando();
             FixArmosSpawnPos();
             RandomizeTheSongMonkey();
+            MoveTheISTTTunnelTransitionBack();
 
             Shinanigans();
             //ObjectIsItemBlocked();
@@ -2320,6 +2321,18 @@ namespace MMR.Randomizer
             dekuPalaceScene.Maps[0].Actors[11].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180-40, flags: dekuPalaceScene.Maps[0].Actors[11].Rotation.y);
         }
 
+        public static void MoveTheISTTTunnelTransitionBack()
+        {
+            /// the room tranition for the scene is very close to the edge of the dexihand
+            /// this presents a problem for enemizer if playing no hit rules
+
+            var isttSceneData = RomData.MMFileList[GameObjects.Scene.InvertedStoneTowerTemple.FileID()].Data;
+            isttSceneData[0xD7] = 0xBC; // 294 -> 2BC, from pos.x = 660 to 700
+            var sceneClass = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.InvertedStoneTowerTemple.FileID());
+            // move the switch a little up the hallway
+            sceneClass.Maps[3].Actors[28].Position.x = 800;
+        }
+
 
         #endregion
 
@@ -2831,7 +2844,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Dinofos)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.HookshotWallSpot)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Snowhead, GameObjects.Actor.Bo, GameObjects.Actor.BadBat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.IkanaGravestone)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
@@ -2841,7 +2854,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.Monkey, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.SpikedMine, GameObjects.Actor.Postbox)) continue;
+                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Windows, GameObjects.Actor.HookshotWallSpot)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.MayorsResidence, GameObjects.Actor.Gorman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 

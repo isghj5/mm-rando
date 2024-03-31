@@ -147,6 +147,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x18)]
         [FairyDroppingEnemies(roomNumber: 1, actorNumber: 3)] // eygore 
         [FairyDroppingEnemies(roomNumber: 1, actorNumber: 1)] // wizrobe
+        [ClearEnemyPuzzleRooms(4)] // wizrobe room is a clear all room
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DeathArmos,
             Actor.PatrollingPirate)] // casual, causes a need for stone mask to procede through the temple
         InvertedStoneTowerTemple = 0x15,
@@ -574,7 +575,6 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.BlueBubble, -1)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Poe,
             Actor.Bo)] // can block the whole assension
-        [ClearEnemyPuzzleRooms(4)] // wizrobe room is a clear all room
         InvertedStoneTower = 0x56,
 
         [FileID(1446)]

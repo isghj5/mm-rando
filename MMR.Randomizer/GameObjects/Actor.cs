@@ -1297,10 +1297,24 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xED)]
         Obj_Lift = 0x95, // Obj_Lift
 
-        // wait is this not rainbow? what is this? TODO
-        [FileID(140)]
+        // tiny hookshot wall block
+        [ActorizerEnabled]
+        [FileID(140)] // really? its not deungeon keep?
         [ObjectListIndex(0xEC)]
-        HookshotBlock = 0x96, // Obj_Hsblock
+        // looking at the code, this object and this actor have a post version, &3 = 0 or = 1
+        // except 1 by itself does not spawn, 
+        [GroundVariants(0x0)] // blue
+        [WallVariants(0x42, // stone tower basement
+            0xC2, // pirates fortress exterior
+            0x82, // great bay temple
+            0x0002)] // ocean spiderhouse entrance
+        [VariantsWithRoomMax(max:3, variant: 0x0)]
+        [ForbidFromScene(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple, Scene.OceanSpiderHouse,
+                         Scene.GreatBayTemple, Scene.PiratesFortressExterior)]
+        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
+            Scene.StoneTower)]
+        [UnkillableAllVariants]
+        HookshotWallSpot = 0x96, // Obj_Hsblock
 
         // ??
         [FileID(141)]
@@ -5541,6 +5555,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x80)]
         FishingGameTorch = 0x293, // Obj_Jgame_Light
 
+        // the windows in the stock pot inn
         [ActorizerEnabled]
         [FileID(619)]
         [ObjectListIndex(0x26E)]
