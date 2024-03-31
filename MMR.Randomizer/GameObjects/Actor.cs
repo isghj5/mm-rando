@@ -3650,7 +3650,10 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.ItemSnowheadKey2,
                          Item.CollectableSnowheadTempleIceBlockRoomItem1,
                          Item.CollectableSnowheadTempleIceBlockRoomItem2,
-                         Item.CollectableSnowheadTempleIceBlockRoomItem3 // should be just for the sht scene but thats the only place it shows up
+                         Item.CollectableSnowheadTempleIceBlockRoomItem3, // should be just for the sht scene but thats the only place it shows up
+                         Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball3,
+                         Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball4,
+                         Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball5
             )] 
         // FF01 is the ice blocking the path north
         // 0x5AXX seems to be the blocking path ice walls from snowhead temple
