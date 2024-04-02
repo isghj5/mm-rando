@@ -1255,10 +1255,11 @@ namespace MMR.Randomizer.GameObjects
         // 0x8000 creates a Good Job jingle when you break it
         // 0x7F is switch flags
         [GroundVariants(0x807F, 0x8004, 0x8002, // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
-           0xE, // swamp spiderhouse
-           0x0114, 0x0115, 0x0116, 0x0117, 0x0118,
-           0x101,0x100, // cape covering the fairy hole
-           0x8003, 0x807F)]
+            0xE, // swamp spiderhouse
+            0x0114, 0x0115, 0x0116, 0x0117, 0x0118,
+            0x101,0x100, // cape covering the fairy hole
+            0x0114, 0x0115, 0x0116, 0x0117, 0x0118, // hotspring water
+            0x8003, 0x807F)]
         [FlyingVariants(0x44, 0x8044)] // does not exist, for fun placement
         [WaterBottomVariants(0x07F, // exists under a sign in the deku palace
             0x8077)] // does not exist, used for the bottom of the ocean signs in pinnacle rock (hack)
