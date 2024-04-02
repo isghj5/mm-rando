@@ -1098,10 +1098,9 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         SmallWoodenBox = 0x81, // Obj_Kibako
 
-        // MULTIPLE OBJECT ACTOR
+        // MULTIPLE OBJECT ACTOR, can use pot object, dungeon keep, and green pot object
         [ActorizerEnabled]
         [FileID(126)]
-        // this is marked 2 and not 1 because 0x100 pots dont spawn in dungeons
         //[ObjectListIndex(0x1)] // this is a lie, the pot DETECTS multiple objects but does NOT exist in gameplay keep
         [ObjectListIndex(0xF9)]
         // TODO randomize some more of these
@@ -1109,10 +1108,12 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.TerminaField, variant: -1, Item.CollectableTerminaFieldPot1)]
         [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
         [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
-        [CheckRestricted(Scene.StoneTower, variant: -1, Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
+        [CheckRestricted(Scene.StoneTower, variant: -1,
+            Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
         [CheckRestricted(Scene.InvertedStoneTower, variant: -1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3)]
         [CheckRestricted(Scene.StoneTowerTemple, variant: -1, Item.CollectableStoneTowerTempleInvertedWizzrobeRoomPot1)]
-        [CheckRestricted(Scene.StoneTowerTemple, variant: -1, Item.CollectableStoneTowerTempleInvertedWizzrobeRoomPot1)]
+        [CheckRestricted(Scene.SwordsmansSchool, variant: -1,
+            Item.CollectableSwordsmanSSchoolPot1, Item.CollectableSwordsmanSSchoolPot2, Item.CollectableSwordsmanSSchoolPot3, Item.CollectableSwordsmanSSchoolPot4, Item.CollectableSwordsmanSSchoolPot5)]
         // 0xF9 is pot and pot shard
         // according to CM, 0x100 is available everywhere as a pot, where 0x3F defines the drop item
         // so 1F is arrows, F is magic, B is three small rups? 7 is huge 200 rup, 17 is empty
@@ -1122,9 +1123,10 @@ namespace MMR.Randomizer.GameObjects
         // 101 is one rup, 111 SKULL TOKEN POT??!? 102 was 5 rups 112 empty
         // 103 empty, 113 is 10 deku nuts, 104 is red rup, 114 is empty
         //[GroundVariants(0x110)] // testing // 115 101 106 10E 10F
-        [GroundVariants(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E, // good variety
+        [GroundVariants(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E, // good variety to place
+            0x202, 0x602, 0x802, 0xA02, 0xC02, // swords school
             0x4110)] // TF pot
-        [ForbidFromScene(Scene.MajorasLair, Scene.RoadToIkana)]
+        [ForbidFromScene(Scene.MajorasLair)] // we want them for the fight
         [UnkillableAllVariants]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)] // 0x3FC
         ClayPot = 0x82, // Obj_Tsubo
@@ -3995,12 +3997,16 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         RaceDog = 0x1EE, // En_Racedog
 
-        //[ActorizerEnabled] // does not spawn, again with the hardcoded nonsense
+        [ActorizerEnabled] // does not spawn, again with the hardcoded nonsense
         [FileID(455)]
         [ObjectListIndex(0x10F)]
-        [GroundVariants(0xFF01)]
+        [CheckRestricted(Item.HeartPieceSwordsmanSchool,
+            Item.CollectableSwordsmanSSchoolPot1, Item.CollectableSwordsmanSSchoolPot2, Item.CollectableSwordsmanSSchoolPot3, Item.CollectableSwordsmanSSchoolPot4, Item.CollectableSwordsmanSSchoolPot5 )]
+        [GroundVariants(0xFF01, // shivering at night
+            0)] // regular
+        [VariantsWithRoomMax(max:0, variant:0xFF01, 0)] // does not spawn, missing... objects?
         [UnkillableAllVariants]
-        [ForbidFromScene(Scene.SwordsmansSchool)] // dont remove
+        //[ForbidFromScene(Scene.SwordsmansSchool)] // dont remove
         KendoSensei = 0x1EF, // En_Kendo_Js
 
         [FileID(456)]

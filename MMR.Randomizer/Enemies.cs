@@ -313,7 +313,7 @@ namespace MMR.Randomizer
             // koume?
 
             // todo: why not just add to list by category first instead of scanning
-            PrepareJunkOrganizeLists(addedJunkItems);
+            PrepareJunkOrganizeLists(addedJunkItems); // sets ActorizerKnownJunkItems
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -408,6 +408,7 @@ namespace MMR.Randomizer
             return ItemUtils.IsJunk(itemInCheck);
         }
 
+        // todo move to actorutils
         private static bool ObjectIsCheckBlocked(Scene scene, GameObjects.Actor testActor)
         {
             /// checks if randomizing the actor would interfere with getting access to a check
@@ -435,7 +436,7 @@ namespace MMR.Randomizer
                         var itemIsNotJunk = ! IsActorizerJunk(itemInCheck);
                         if (itemIsNotJunk)
                         {
-                            return true;
+                            return true; // blocked
                         }
                     }
 
@@ -678,9 +679,9 @@ namespace MMR.Randomizer
             FixArmosSpawnPos();
             RandomizeTheSongMonkey();
             MoveTheISTTTunnelTransitionBack();
+            FixSwordSchoolPotRandomization();
 
             Shinanigans();
-            //ObjectIsItemBlocked();
         }
 
         public static void EnemizerLateFixes()
@@ -870,6 +871,12 @@ namespace MMR.Randomizer
                 blastWallTorch.Rotation.y = ActorUtils.MergeRotationAndFlags(270, blastWallTorch.Rotation.y); // face the bombable wall
                 // and move a bit away from the far wall
                 blastWallTorch.Position.z -= 40;
+
+                // in spring there are two torches on top of each other, which is weird, move the other one to face the first one
+                //var mountainVillageSpring = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MountainVillageSpring.FileID());
+                //var secondTorch = mountainVillageSpring.Maps[0].Actors[13];
+                //secondTorch.Rotation.y = ActorUtils.MergeRotationAndFlags(180, secondTorch.Rotation.y);
+                //secondTorch.Position.z -= 50;
             }
         }
 
@@ -2339,6 +2346,23 @@ namespace MMR.Randomizer
             sceneClass.Maps[3].Actors[28].Position.x = 800;
         }
 
+        private static void FixSwordSchoolPotRandomization()
+        {
+            /// we cannot randomize the pots in swordschool because its dungeon keep object pots,
+            ///   that means those pots require dungeon keep which we cannot swap out, and actorizer quits early when it cannot find the object for these
+            /// however the pots just need a regular pot object, its a small scene with space for one, and the object list has 7 objects
+            ///   which means we can expand the list and add another pot object
+
+            if (!ReplacementListContains(GameObjects.Actor.ClayPot)) return;
+
+            var swordSchoolScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SwordsmansSchool.FileID());
+            swordSchoolScene.Maps[0].Objects.Add(GameObjects.Actor.ClayPot.ObjectIndex()); // add clay pot object
+
+            // room file header 0xB describes object list offset in the file, but also describes size to load into memory, need to increase to 8
+            var swordSchoolRoom0 = RomData.MMFileList[GameObjects.Scene.SwordsmansSchool.FileID() + 1].Data; // 1434
+            swordSchoolRoom0[0x29] = 8; // increase object list to 8
+        }
+
 
         #endregion
 
@@ -2870,7 +2894,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.Monkey, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Dexihand)) continue;
-                if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.MountainVillageSpring, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Monkey)) continue;

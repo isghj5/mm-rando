@@ -552,6 +552,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x54)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Clock,
             Actor.BadBat, Actor.GoldSkulltula, Actor.RealBombchu)] // z-targetable can be annoying in the sword test
+        [EnemizerSceneBlockSensitive(Actor.KendoSensei, -1)]
         SwordsmansSchool = 0x51,
 
         [FileID(1434)]
