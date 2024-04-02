@@ -3106,7 +3106,7 @@ namespace MMR.Randomizer
 
                         // if the actor is in a kill all enemy room, reduce the chances of boring enemies from showing up here
                         if ((oldActor.MustNotRespawn 
-                            && !(thisSceneData.Scene.SceneEnum == GameObjects.Scene.WoodfallTemple && oldActor.Room == 9)
+                            && !(thisSceneData.Scene.SceneEnum == GameObjects.Scene.WoodfallTemple && oldActor.Room == 9) // dark room exception
                             && !containsFairyDroppingEnemy) && seedrng.Next(100) < 25)
                         {
                             newEnemy.RemoveEasyEmemies();

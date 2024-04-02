@@ -286,7 +286,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [DifficultAllVariants]
         [VariantsWithRoomMax(max: 2, variant: 0)]
-        [ForbidFromScene(Scene.SecretShrine)] // issue: spawn is too high, needs to be lowered
+        //[ForbidFromScene(Scene.SecretShrine)] // issue: spawn is too high, needs to be lowered
         Dinofos = 0x19, // En_Dinofos
 
         // Used in snowhead and gorman race
@@ -2417,12 +2417,12 @@ namespace MMR.Randomizer.GameObjects
 
         // can we randomize him?
         // turns out he spawns on the floor in gbt
-        //[EnemizerEnabled] // spawning behavior is weird and can spawn out of bounds
+        [EnemizerEnabled]
         [FileID(270)]
         [ObjectListIndex(0x15D)]
         [GroundVariants(0)] // his placement is on the ground, cutscene?
-        [VariantsWithRoomMax(max:0, variant:0)]
-        [OnlyOneActorPerRoom]
+        [VariantsWithRoomMax(max:0, variant:0)] // spawning behavior is weird and can spawn out of bounds
+        //[OnlyOneActorPerRoom]
         [DifficultAllVariants]
         Wart = 0x12C, // Boss_04
 
@@ -2779,15 +2779,25 @@ namespace MMR.Randomizer.GameObjects
         // might be used for mikau grave, but also beta actors that teach songs...??
         MagicSlab = 0x15C, // En_Sekihi
 
-        // bad for rando because requires multiple floor pieces
+        // we can't place without a way to ensure the enemy is only placed in places that have multiple spots, but fuck this guy get rid of em
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x37D0)]
         [FileID(315)]
         [ObjectListIndex(0x178)]
+        [GroundVariants(0x007F, // ikana castle
+                        0x017F, // sht miniboss
+                        0x027F  // istt
+            )]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        [DifficultAllVariants]
+        [VariantsWithRoomMax(max:0, variant: 0x007F, 0x017F, 0x027F)] // wont work without their blocks
         Wizrobe = 0x15D, // En_Wiz
 
+        [EnemizerEnabled]
         [FileID(316)]
         [ObjectListIndex(0x178)]
+        [GroundVariants(0x0)]
+        [VariantsWithRoomMax(max:0, variant:0)]
         WizrobeSpawnBlock = 0x15E, // En_Wiz_Brock
 
         [FileID(317)]
@@ -5454,9 +5464,9 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
             )]
         [GroundVariants(0x0)]
-        [OnlyOneActorPerRoom]
+        [OnlyOneActorPerRoom] // honestly tempted to not re-randomize him at all, kinda empty and does nothing
         [UnkillableAllVariants]
-        [BlockingVariantsAll]
+        //[BlockingVariantsAll] // maybe we can try without this, hes actually kinda small
         BomberHideoutGuard = 0x281, // En_Bombers2
 
         [ActorizerEnabled]

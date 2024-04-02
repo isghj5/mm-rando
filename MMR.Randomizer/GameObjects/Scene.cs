@@ -191,6 +191,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1224)]
         [SceneInternalId(0x1D)]
+        [ClearEnemyPuzzleRooms(5)] // wizrobe room
         IkanaCastle = 0x1A,
 
         [FileID(1235)]
@@ -611,7 +612,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1459)]
         [SceneInternalId(0x60)]
-        [ClearEnemyPuzzleRooms(2,3,4,5)]
+        [ClearEnemyPuzzleRooms(2,3,4,5)] // the miniboss rooms
         SecretShrine = 0x5D,
 
         [FileID(1466)]
