@@ -688,15 +688,19 @@ namespace MMR.Randomizer.GameObjects
             Actor.LikeLike,
             Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BomberHideoutGuard,
-                Actor.Peahat, Actor.Tijo, Actor.ArmosStatue, Actor.ClocktowerGearsAndOrgan, Actor.CircleOfFire, Actor.GibdoWell, Actor.RegularIceBlock, // worried about big blocking actors
-                Actor.Wolfos)]
-        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BombersYouChase,
-        //Actor.RegularIceBlock)]
+                Actor.Peahat, Actor.Tijo
+                //Actor.ArmosStatue, // blocking
+                //Actor.ClocktowerGearsAndOrgan, 
+                //Actor.CircleOfFire, Actor.GibdoWell, Actor.RegularIceBlock, // worried about big blocking actors
+                /*Actor.Wolfos*/)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Jugglers,
+                                                           Actor.UnusedStoneTowerPlatform)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Anju,
             Actor.GaroMaster)] // if spawning in sct partial, can fall through the floor and dissapear but leave their annoying music
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Postbox,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // Flying can block the roof leading to the chest
         [EnemizerSceneBlockSensitive(Actor.BombersYouChase, -1)] // chicken holder leads to a chest
+        [EnemizerSceneBlockSensitive(Actor.BomberHideoutGuard, -1)] // leads to a whole area with like 4 things
         EastClockTown = 0x69, // ect
 
         [FileID(1512)]
