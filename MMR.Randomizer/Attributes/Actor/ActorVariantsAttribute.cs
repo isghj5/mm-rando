@@ -130,6 +130,11 @@ namespace MMR.Randomizer.Attributes.Actor
         public bool AllBlock = true;
     }
 
+    public class RequiresCompanionAttribute: Attribute
+    {
+        public RequiresCompanionAttribute(GameObjects.Actor companion, int number, int variant, params int[] additionalVariants) { }
+    }
+
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class VariantsWithRoomMax : Attribute
