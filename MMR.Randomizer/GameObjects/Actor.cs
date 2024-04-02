@@ -5094,18 +5094,18 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         IkanaCanyonHookshotStump = 0x25E, // Obj_HsStump
 
-        // placing them in the world is dumb since they dont spawn their own flower, but we can fix that with custom actor code
-        [ActorizerEnabled] // doesn't spawn with a flower, looks silly
+        [ActorizerEnabled]
         [FileID(566)]
         [ObjectListIndex(0x12B)]
-        [CheckRestricted(Item.MaskTruth)] // no idea which one is the important one... bleh
-        [GroundVariants(0x584)]
-        [VariantsWithRoomMax(max:0, variant:0x584)] // place only custom, not Vanilla
+        [GroundVariants(0x594)]
+        [VariantsWithRoomMax(max:0, variant:0x594)] // we dont place vanilla in the world because the flower is separate, looks silly
         [PathingTypeVarsPlacement(mask:0x7F, shift:0)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [CompanionActor(DekuFlower, ourVariant: -1, variant: 0x17F)]
         [CompanionActor(GrassRockCluster, ourVariant: -1, variant: 0x801)]
-        [UnkillableAllVariants] // I think?
+        [CompanionActor(Butterfly, ourVariant: -1, variant: 1, 2)]
+        [CompanionActor(Fairy, ourVariant: -1, variant: 2, 7, 9)]
+        [RespawningAllVariants] // unkillable I think? even if it wasn't, requiring sonata to kill
         [BlockingVariantsAll]
         SleepingScrub = 0x25F, // En_Hidden_Nuts
 
