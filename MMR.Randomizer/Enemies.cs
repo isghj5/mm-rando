@@ -864,6 +864,12 @@ namespace MMR.Randomizer
                 gormanInResidence = mayorsResitenceScene.Maps[2].Actors[1];
                 gormanInResidence.Rotation.y = ActorUtils.MergeRotationAndFlags(180 + 45, gormanInResidence.Rotation.y);
 
+                // bombers hideout torch is facing a funny way
+                var bombersHideoutScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.AstralObservatory.FileID());
+                var blastWallTorch = bombersHideoutScene.Maps[0].Actors[15];
+                blastWallTorch.Rotation.y = ActorUtils.MergeRotationAndFlags(270, blastWallTorch.Rotation.y); // face the bombable wall
+                // and move a bit away from the far wall
+                blastWallTorch.Position.z -= 40;
             }
         }
 
@@ -2864,7 +2870,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.Monkey, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Dexihand)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.MayorsResidence, GameObjects.Actor.Gorman, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Monkey)) continue;
