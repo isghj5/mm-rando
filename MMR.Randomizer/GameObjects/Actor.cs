@@ -2319,7 +2319,8 @@ namespace MMR.Randomizer.GameObjects
         [CeilingVariants(0xFF01, 0xFF00, 0xFF02 )]
         [EnemizerScenesPlacementBlock(Scene.GormanTrack, // dyna crash on trees
             Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.StoneTower)] // assumed same as above
-        [VariantsWithRoomMax(max:1, variant: 0x1000, 0x0B00, 0x0C00, 0x600, 0x002B, 0x003F, 0x700, 0xD00, 0xA00)]
+        [VariantsWithRoomMax(max: 1, variant: 0x1000, 0x0B00, 0x0C00, 0x600, 0x002B, 0x003F, 0x700, 0xD00, 0xA00)] // limit because of dyna
+        [VariantsWithRoomMax(max: 1, variant: 0xFF01, 0xFF00, 0xFF02)] // still dyna
         [UnkillableAllVariants]
         IceCavernStelagtite = 0x11F, // Bg_Icicle // also stalagmite
 
