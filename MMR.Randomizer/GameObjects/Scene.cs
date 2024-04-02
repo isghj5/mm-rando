@@ -684,18 +684,19 @@ namespace MMR.Randomizer.GameObjects
         //    Actor.ClocktowerGearsAndOrgan, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // organ is huge, covers the mayor's door
         [EnemizerSceneBlockSensitive(Actor.Gorman, -1)] // was moved next to mayors door, large bodies can actually block this
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+            Actor.LikeLike,
             Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BomberHideoutGuard,
                 Actor.Peahat, Actor.Tijo, Actor.ArmosStatue, Actor.ClocktowerGearsAndOrgan, Actor.CircleOfFire, Actor.GibdoWell, Actor.RegularIceBlock, // worried about big blocking actors
                 Actor.Wolfos)]
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BombersYouChase,
         //Actor.RegularIceBlock)]
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
-            Actor.LikeLike)] // If you start with one heart this can be a softlock
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Anju,
+            Actor.GaroMaster)] // if spawning in sct partial, can fall through the floor and dissapear but leave their annoying music
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Postbox,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // Flying can block the roof leading to the chest
         [EnemizerSceneBlockSensitive(Actor.BombersYouChase, -1)] // chicken holder leads to a chest
-        EastClockTown = 0x69,
+        EastClockTown = 0x69, // ect
 
         [FileID(1512)]
         [SceneInternalId(0x6D)]
@@ -706,7 +707,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BombersYouChase,
             Actor.UnusedStoneTowerStoneElevator)]//, Actor.UnusedStoneTowerPlatform)]
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
-        WestClockTown = 0x6A,
+        WestClockTown = 0x6A, // wct
 
         [FileID(1514)]
         [SceneInternalId(0x6E)]
