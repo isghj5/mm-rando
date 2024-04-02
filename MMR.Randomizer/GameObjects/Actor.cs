@@ -1126,6 +1126,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E, // good variety to place
             0x202, 0x602, 0x802, 0xA02, 0xC02, // swords school
             0x4110)] // TF pot
+        [VariantsWithRoomMax(max:0, variant: 0x202, 0x602, 0x802, 0xA02, 0xC02)] // swords school, these are dungeon_keep pots cannot place without the object
         [ForbidFromScene(Scene.MajorasLair)] // we want them for the fight
         [UnkillableAllVariants]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)] // 0x3FC

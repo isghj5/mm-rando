@@ -136,24 +136,43 @@ namespace MMR.Randomizer
         {
             List<GameObjects.Item> allSpiderTokens = _randomized.ItemList.FindAll(item => item.Item.ItemCategory() == GameObjects.ItemCategory.SkulltulaTokens).Select(u => u.Item).ToList();
 
-            // I used to do this but now that we have sphere its faster because the sphere list is smaller datasize
-            // check the token reward itself
-            //var swampSkullReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MaskTruth).Item;
-            // check if the important items has a token (which might tell us all tokens are required to 
-            //if (ItemUtils.IsJunk(swampSkullReward) )
-
-            var swampTokenImportantSearch = allSphereItems.Any(u => u.Item1 == "Swamp Skulltula Spirit");
-            if (!swampTokenImportantSearch)
+            if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic)
             {
-                var swampTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Swamp")).ToList();
-                addedJunkItems.AddRange(swampTokens);
+                // check the token reward itself
+                var swampSkullReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MaskTruth).Item;
+                // check if the important items has a token (which might tell us all tokens are required to 
+                if (ItemUtils.IsJunk(swampSkullReward) /* TODO this requires vitory mode detection */)
+                {
+                    var swampTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Swamp")).ToList();
+                    addedJunkItems.AddRange(swampTokens);
+
+                }
+                var oceanSkullReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MaskTruth).Item;
+                // check if the important items has a token (which might tell us all tokens are required to 
+                if (ItemUtils.IsJunk(swampSkullReward)                                 )
+                {
+                    var oceanTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Ocean")).ToList();
+                    addedJunkItems.AddRange(oceanTokens);
+                }
+
             }
-
-            var oceanTokenImportantSearch = allSphereItems.Any(u => u.Item1 == "Ocean Skulltula Spirit");
-            if (!oceanTokenImportantSearch)
+            else
             {
-                var oceanTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Ocean")).ToList();
-                addedJunkItems.AddRange(oceanTokens);
+                // we have logic, just use the logic spheres
+
+                var swampTokenImportantSearch = allSphereItems.Any(u => u.Item1 == "Swamp Skulltula Spirit");
+                if (!swampTokenImportantSearch)
+                {
+                    var swampTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Swamp")).ToList();
+                    addedJunkItems.AddRange(swampTokens);
+                }
+
+                var oceanTokenImportantSearch = allSphereItems.Any(u => u.Item1 == "Ocean Skulltula Spirit");
+                if (!oceanTokenImportantSearch)
+                {
+                    var oceanTokens = allSpiderTokens.FindAll(token => token.Name().Contains("Ocean")).ToList();
+                    addedJunkItems.AddRange(oceanTokens);
+                }
             }
         }
 
