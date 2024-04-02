@@ -4071,8 +4071,13 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.PinnacleRock)] // now that we have signs randomized, its almost garenteeded to happen
         ZoraEgg = 0x1F5, // En_Zoraegg
 
+        [ActorizerEnabled]
         [FileID(462)]
         [ObjectListIndex(0x1CF)]
+        [CheckRestricted(Item.UpgradeRazorSword, Item.UpgradeGildedSword)]
+        [GroundVariants(0x200)] // todo: does this variant do anything?
+        [VariantsWithRoomMax(max:8, variant:0x200)] // no reason except it can be creepy
+        [UnkillableAllVariants]
         Zubora = 0x1F6, // En_Kbt
 
         [FileID(463)]
@@ -4154,10 +4159,15 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         GoronHotSpringWater = 0x1FE, // Bg_Goron_Oyu
 
-        //todo
+        [ActorizerEnabled]
         [FileID(471)]
         [ObjectListIndex(0x1D6)]
+        [CheckRestricted(Item.UpgradeRazorSword, Item.UpgradeGildedSword)]
+        [GroundVariants(0x200)]
+        //[VariantsWithRoomMax(max:0, variant: 0x200)] // suspected double actor, without the other I doubt this works at all
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
         GaboraBlacksmith = 0x1FF, // En_Kgy
 
         // the wackest actor that controls the whole alien invasion event, and a lot of stuff at ranch
