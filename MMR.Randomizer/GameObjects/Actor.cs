@@ -55,9 +55,9 @@ namespace MMR.Randomizer.GameObjects
 
         // real fake doors
         //[ActorizerEnabled] // whiners complaining that if you open them you softlock. sounds like a perfect mimick door to me
-        // different doors have different variables for different objects, unless I program multiple objects only one can be used
         [FileID(43)]
-        [ObjectListIndex(0x231)]
+        [ObjectListIndex(0x231)]// different doors have different variables for different objects, unless I program multiple objects only one can be used
+        [DynaAttributes(12, 8)]
         [WallVariants(0x7F)]
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.ZoraHall)]
@@ -66,6 +66,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(44)]
         [ObjectListIndex(0xC)]
+        [DynaAttributes(12, 8)]
         [CheckRestricted(Scene.RoadToIkana, variant: 0x5080, Item.ChestToIkanaRedRupee)]
         [CheckRestricted(Scene.EastClockTown, variant: 0x50CA, Item.ChestEastClockTownSilverRupee)]
         [CheckRestricted(Scene.SouthClockTown, variant: -1, Item.ChestSouthClockTownPurpleRupee, Item.ChestSouthClockTownRedRupee)]
@@ -293,6 +294,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(59)]
         [ObjectListIndex(0x5F)]
+        [DynaAttributes(8, 8)]
         [GroundVariants(0x0)]
         [VariantsWithRoomMax(max: 2, variant: 0x0)] // Dyna
         [ForbidFromScene(Scene.Snowhead)]
@@ -536,6 +538,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // kinda boring, needs to be modified to it can appear after you clear the room and take you places that are interesting
         [ObjectListIndex(0x3E)]
         [FileID(78)]
+        [DynaAttributes(35, 30)]
         // params: type is 0xFF, address offset for type 0 is 0xFF00
         [GroundVariants(0x0)] // the 101 and above are for warp TO bosses
         [VariantsWithRoomMax(max: 1, variant: 0x0)]
@@ -741,6 +744,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(94)]
         [ObjectListIndex(0x5C)]
+        [DynaAttributes(12, 8)]
         [SwitchFlagsPlacement(mask: 0x7E, shift: 9)]
         //[GroundVariants(0)] // params are ignored, uses params as a variable for setting
         [FlyingVariants(0)]
@@ -896,6 +900,7 @@ namespace MMR.Randomizer.GameObjects
         // going to use new bombal without cutscene instead since that one is NOT dyna
         [FileID(102)]
         [ObjectListIndex(0x280)]
+        [DynaAttributes(186, 101)] // holy shit, no wonder I could never put it anywhere
         [FlyingVariants(1)]
         //[GroundVariants(1)] // testing
         // needs limits because it can overload the dyna
@@ -912,6 +917,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(104)]
         [ObjectListIndex(0x88)]
+        //[DynaAttributes] // multiple: the rotating room, the stone door has TWO
         TwistyTunnelClockTower = 0x61, // Bg_Ctower_Rot
 
         // unused ?
@@ -1084,6 +1090,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // not sure this works with object 1, will test later
         [FileID(125)]
         [ObjectListIndex(0x16F)] // multi-object, could be dangeon keep instead
+        // object_kibako is not dyna at least
         [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.MaskRomani)] // this might be required for objUm weirdly...
         [CheckRestricted(Scene.EastClockTown, variant: -1, Item.CollectableEastClockTownWoodenCrateSmall1)] //wasnt there a second one
         [CheckRestricted(Scene.LaundryPool, variant: -1, Item.CollectableLaundryPoolWoodenCrateSmall1)]
@@ -1093,7 +1100,7 @@ namespace MMR.Randomizer.GameObjects
             0xFF1F, // romani ranch
             0xA002, // laundry pool
             0x8181, 0x828A)] // east clock town
-        //[VariantsWithRoomMax(max: 5, variant: -1)] // might be dyna
+        //[VariantsWithRoomMax(max: 5, variant: -1)] 
         //[VariantsWithRoomMax(max: 0, variant: 0xA002, 0x8181, 0x828A)] // items
         [UnkillableAllVariants]
         SmallWoodenBox = 0x81, // Obj_Kibako
@@ -1245,6 +1252,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(137)]
         [ObjectListIndex(0x12A)]
+        // funny enough, not dynapoly
         [CheckRestricted(Scene.TerminaField, variant: -1,
             check: Item.HeartPieceTerminaGossipStones, Item.HeartPieceZoraGrotto, Item.CollectableGrottosOceanHeartPieceGrottoBeehive1)]
         [CheckRestricted(Scene.Grottos, variant: -1,
@@ -1271,8 +1279,8 @@ namespace MMR.Randomizer.GameObjects
             variant: 0x7000, 0xC000, 0xE000, 0xF000, 0xD000)] // regular unhidden grottos
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
         [ForbidFromScene(Scene.Grottos)] //Scene.ZoraCape, Scene.GreatBayCoast
-        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear // too much dyna (unverified)
-            /* Scene.Woodfall, Scene.DekuShrine */)] // blocking enemies
+        //[EnemizerScenesPlacementBlock(// Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear 
+        //    /* Scene.Woodfall, Scene.DekuShrine */)] // blocking enemies
         [BlockingVariantsAll] // especially the hotwater rocks
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         Bombiwa = 0x92, // Obj_Bombiwa
@@ -1281,7 +1289,8 @@ namespace MMR.Randomizer.GameObjects
         // floor switches, glass, eyeball, ect
         [ActorizerEnabled]
         [FileID(138)]
-        [ObjectListIndex(3)] // bleh, always with the dunegeon object
+        [ObjectListIndex(3)] // bleh, always with the dangeon object
+        [DynaAttributes(12,12)]
         //[ObjectListIndex(0x4B)] // fake for object force testing
         // params are filled
         // type is 0x7 range,0/1 are floor switches, 2 is eye switch, 3 and 4 are crystal, 5 is draw again
@@ -1298,13 +1307,15 @@ namespace MMR.Randomizer.GameObjects
         Empty94 = 0x94, // Empty94
 
         [FileID(139)]
+        [DynaAttributes(12, 8)]
         [ObjectListIndex(0xED)]
         Obj_Lift = 0x95, // Obj_Lift
 
-        // tiny hookshot wall block
+        // tiny hookshot wall block, and the pillar you can hookshot, but unused?
         [ActorizerEnabled]
-        [FileID(140)] // really? its not deungeon keep?
-        [ObjectListIndex(0xEC)]
+        [FileID(140)]
+        [ObjectListIndex(0xEC)] // really? its not deungeon keep?
+        [DynaAttributes(18, 12)] // this is for the post, the wall targets are only 2/4, but not making a different version per-variant
         // looking at the code, this object and this actor have a post version, &3 = 0 or = 1
         // except 1 by itself does not spawn, 
         [GroundVariants(0x0)] // blue
@@ -1442,6 +1453,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(153)]
         [ObjectListIndex(0x17F)]
+        [DynaAttributes(55,35)] // yikes
         [CheckRestricted(scene: Scene.SouthernSwampClear, variant: -1, Item.HeartPieceBoatArchery)]
         // problem being we would have to check ALL checks after too many
         //[CheckRestricted(scene: Scene.SouthernSwamp, variant: -1, Item.)]
@@ -1682,6 +1694,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(171)]
         [ObjectListIndex(0x5C)]
+        [DynaAttributes(28,16)]
         //[GroundVariants(0)]
         [FlyingVariants(0)]
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
@@ -1884,6 +1897,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabledFreeOnly] // too boring to get as an actor, but we should be able to place new ones if the object is already there somehow
         [FileID(218)]
         [ObjectListIndex(0x133)]
+        [DynaAttributes(10, 8)]
         // not always active, only sometimes:q
         [TreasureFlagsPlacement(mask: 0x1F, shift: 2)]
         [GroundVariants(0x7F3F, // buisness scrub and pirates fortress
@@ -2136,6 +2150,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(239)]
         [ObjectListIndex(0x30)]
+        [DynaAttributes(20, 13)]
         // 0x7F is switch flag (what is being switched?)
         // oh no z rotation is a parameter.... and there appear to be at least two based on xz rotation
         // 0x7E parameter is switch flag... for what I have no idea, but it seems we cannot set it without triggering a sfx at least
@@ -2208,6 +2223,7 @@ namespace MMR.Randomizer.GameObjects
 
         // unused actor, now used by a new injected actor
         [FileID(246)]
+        [DynaAttributes(12, 8)]
         [EnemizerScenesPlacementBlock(Scene.PinnacleRock, // super annoying warping the player all the way back
             Scene.StoneTower, Scene.SouthernSwamp, Scene.SouthernSwampClear)] // dyna crash possible
         Mimi = 0x111, // En_Bu
@@ -2225,10 +2241,11 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x2243)]
         Garo = 0x113, // En_Jso
 
-        // not that interesting, cutscene calapsing bridge
+        // not that interesting, cutscene calapsing bridge, TODO weight down
         [ActorizerEnabled]
         [FileID(249)]
         [ObjectListIndex(0xED)]
+        [DynaAttributes(12,8)]
         [BlockingVariantsAll]
         [FlyingVariants(0)]
         [UnkillableAllVariants]
@@ -2250,6 +2267,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // used in the moon
         [FileID(251)]
         [ObjectListIndex(3)] // 3 if you want the visible one, from Goron Trial
+        [DynaAttributes(28,18)]
         // params: 0x8000 is invisbile (deku playground exit)
         // 0x03C0 is unknown, it must be set to max for it to work, non-x just shows a tatl spot and does nothing else
         // 0x3F is scene exit list index
@@ -2317,6 +2335,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(259)]
         [ObjectListIndex(0x157)]
+        [DynaAttributes(13,10)]
         [GroundVariants(0x700, 0xD00, 0xA00, // greatbaytemple
                         0x003F, // goron trial
                         0x1000, 0x0B00, 0x0C00, 0x600, 0x002B)] // snowheattemple
@@ -2536,9 +2555,10 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacementXRot]
         Obj_Raillift = 0x13C, // Obj_Raillift
 
-        // ??
         [FileID(281)]
         [ObjectListIndex(0x164)]
+        // closed is smaller?? (96,48)
+        [DynaAttributes(136,72)] // big yikes (opened)
         WoodfallTempleWoodenFlower = 0x13D, // Bg_Numa_Hana
 
         [ActorizerEnabledFreeOnly] // big object, collector flag, boring actor
@@ -2578,6 +2598,7 @@ namespace MMR.Randomizer.GameObjects
         // assuming this is the block ice arrows spawns
         [FileID(288)]
         [ObjectListIndex(0x167)]
+        [DynaAttributes(12, 8)]
         Obj_Iceblock = 0x143, // Obj_Iceblock
 
         [FileID(289)]
@@ -2649,6 +2670,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(300)]
         [ObjectListIndex(0x16C)]
+        [DynaAttributes(33, 20)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(max: 3, variant: 0)]
         //[ForbidFromScene(Scene.EastClockTown)]
@@ -2769,6 +2791,7 @@ namespace MMR.Randomizer.GameObjects
         // there are actaually 3 others, but they are three separate objects, so hard to program
         [FileID(314)]
         [ObjectListIndex(0x173)]
+        [DynaAttributes(14,12)] // this is multiple object, this one is triforce
         // spreadsheet thinks 0x206 could be it
         [GroundVariants(0)]
         [WaterBottomVariants(0)]
@@ -3066,11 +3089,11 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         BedroomPostman = 0x17D, // En_Mm3
 
-        // what is this?
         [FileID(344)]
         [ObjectListIndex(0x18A)]
+        [DynaAttributes(6,8)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 7)]
-        Bg_Crace_Movebg = 0x17E, // Bg_Crace_Movebg
+        DekuRaceDoor = 0x17E, // Bg_Crace_Movebg
 
         // todo come back and figure out how to spawn regular 
         //[ActorizerEnabled]
@@ -3221,6 +3244,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // disabled because we have a custom replacement with actual collider and tree bonk
         [FileID(360)]
         [ObjectListIndex(0x169)]
+        //[DynaAttributes()] // ground surface one only
         // 0xFF is type, zero is the floor, the other three are trees
         // 0xFF00 is... unknown passed to another function
         // 0102 exists, 0202, 0103, FF00
@@ -3248,6 +3272,7 @@ namespace MMR.Randomizer.GameObjects
         // todo attempt randomize
         [FileID(363)]
         [ObjectListIndex(0x1A2)]
+        //[DynaAttributes()] // multiple: the temple itself, regular and poison are different?, the ramp that shows up after the clear, 
         RisingWoodfallTemple = 0x193, // Dm_Char01
 
         [FileID(364)]
@@ -3284,6 +3309,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled]
         [FileID(370)]
         [ObjectListIndex(0x229)]
+        [DynaAttributes(105,65)] // has two: asleep(105,65) and awake(12,8), also has a HUGE unused one
         [GroundVariants(0)]
         [WaterBottomVariants(0)]
         [VariantsWithRoomMax(max:1, variant:0)]
@@ -3407,6 +3433,7 @@ namespace MMR.Randomizer.GameObjects
         // requires ice surface type
         [FileID(384)]
         [ObjectListIndex(0x1E7)]
+        [DynaAttributes(22, 13)]
         IcePlatform = 0x1A9, // Bg_Icefloe
 
         [FileID(391)]
@@ -3498,6 +3525,7 @@ namespace MMR.Randomizer.GameObjects
         //  instead we modified it and inject changes to get it working
         [FileID(402)]
         [ObjectListIndex(0x88)]
+        [DynaAttributes(14,14)]
         [BlockingVariantsAll]
         [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, // dyna crash possible
             Scene.StoneTower, Scene.DekuPlayground)] // dyna crash possible
@@ -3520,11 +3548,13 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(404)]
         [ObjectListIndex(0x1A4)]
+        [DynaAttributes(2,4)]
         ClockTowerDoorAndStairs = 0x1B8, // Obj_Tokei_Step
 
         [ActorizerEnabled]
         [FileID(405)]
         [ObjectListIndex(0x1A5)]
+        [DynaAttributes(12, 8)]
         // params is == 0 and else
         [WaterTopVariants(0, 1)]
         [CheckRestricted(Item.HeartPieceBoatArchery)]
@@ -3566,6 +3596,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(410)]
         [ObjectListIndex(0x1A7)]
+        [DynaAttributes(2,4)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         SwampSpiderHouseCutableIvy = 0x1BE, // Bg_Dkjail_Ivy
 
@@ -3574,6 +3605,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(411)]
         [ObjectListIndex(0x1A8)]
+        [DynaAttributes(10,8)]
         [CheckRestricted(Scene.GoronVillage, variant: -1, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
         [CheckRestricted(Scene.PathToSnowhead, variant: -1, Item.HeartPieceToSnowhead)]
         [CheckRestricted(Scene.IkanaCastle, variant: -1, Item.SongElegy,
@@ -3753,6 +3785,7 @@ namespace MMR.Randomizer.GameObjects
         // more specifically it spawns Demo_Effect which crashes trying to draw its curv skeleton, reason unknown
         [FileID(424)]
         [ObjectListIndex(0x1B3)]
+        [DynaAttributes(12, 8)]
         [GroundVariants(0x101, 0x201)]
         [WaterBottomVariants(0x1)] // dont normally show up down there but its fine
         [SwitchFlagsPlacement(mask: 0xF00, shift: 8)]
@@ -3790,6 +3823,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(428)]
         [ObjectListIndex(0x1)]
+        [DynaAttributes(12,8)]
         DampeHouseElevator = 0x1D3, // Bg_Danpei_Movebg
 
         [ActorizerEnabledFreeOnly]
@@ -3894,6 +3928,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(441)]
         [ObjectListIndex(0x1BF)]
+        [DynaAttributes(6,8)]
         GoronShrineDoor = 0x1E0, // Bg_Tobira01
 
         // Unused seahourse spawner
@@ -4116,6 +4151,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(467)]
         [ObjectListIndex(0x1D2)]
+        [DynaAttributes(10, 8)]
         // no params, again with the weird vanilla param data
         [GroundVariants(0xFF)]
         [WaterBottomVariants(0x77)]
@@ -4356,19 +4392,23 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(484)]
         [ObjectListIndex(0x1E0)]
+        [DynaAttributes(2,4)]
         FlatsTombCurtain = 0x20D, // Bg_Haka_Curtain
 
         [FileID(485)]
         [ObjectListIndex(0x1F5)]
+        [DynaAttributes(3,5)] // weird
         OceanSpiderhouseBombableWall = 0x20E, // Bg_Kin2_Bombwall
 
         [FileID(486)]
         [ObjectListIndex(0x1F5)]
+        [DynaAttributes(2,4)]
         OceanSpiderhouseGrate = 0x20F, // Bg_Kin2_Fence
 
         [ActorizerEnabled]
         [FileID(487)]
         [ObjectListIndex(0x1F5)]
+        [DynaAttributes(2, 4)]
         // only 3FC is used, some sort of flag
         [WallVariants(0x3F)] // 3F has no cutscene, no camera concerns
         [GroundVariants(0x803F)] // kinda silly
@@ -4381,8 +4421,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabledFreeOnly] // big object, boring actor
         [FileID(488)]
         [ObjectListIndex(0x1F5)]
+        [DynaAttributes(18, 12)]
         [GroundVariants(0x1, // big shelf
             0x0)] // little shelf
+        [BlockingVariants(0x1)]
         [VariantsWithRoomMax(max:2, variant: 0, 1)] // dyna I think, have to limit for now
         [ForbidFromScene(Scene.OceanSpiderHouse)] // object is shared with multiple actors in this scene, breaks whole area to remove
         [UnkillableAllVariants]
@@ -4440,6 +4482,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(496)]
         [ObjectListIndex(0x203)]
+        [DynaAttributes(30,20)]
         [WallVariants(0)]
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
@@ -4547,6 +4590,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(504)]
         [ObjectListIndex(0x205)]
+        [DynaAttributes(10,8)] // has two, the other is 8/8
         SCTPillar = 0x221, // Obj_Tokei_Turret
 
         // the elevator that raise you out of water, cycling up and down
@@ -4558,6 +4602,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(506)]
         [ObjectListIndex(0x170)]
+        // not dyna?
         // 0 is great bay coast, 1 is cape, 2 is snowhead, 3 is mountain village, 4 is SCT,
         //5 is milk road, 6 is woodfall, 7 is southern swamp, 8 is ikana canyon, 9 is stonetower
         // F is WCT, is also found in woodfall, cleared swamp?
@@ -4569,7 +4614,7 @@ namespace MMR.Randomizer.GameObjects
         [ForbidFromScene(Scene.SouthClockTown, Scene.MilkRoad, Scene.WestClockTown,
              Scene.Woodfall, Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.MountainVillage, Scene.MountainVillageSpring, Scene.Snowhead,
              Scene.GreatBayCoast, Scene.ZoraCape, Scene.IkanaCanyon, Scene.StoneTower, Scene.InvertedStoneTower)]
-        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard)] // assumed dyna overflow
+        //[EnemizerScenesPlacementBlock(Scene.IkanaGraveyard)] // assumed dyna overflow
         OwlStatue = 0x223, // Obj_Warpstone
 
         [ActorizerEnabled]
@@ -4624,6 +4669,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(512)]
         [ObjectListIndex(0x20D)]
+        [DynaAttributes(31,18)] // this is just the top of the tree, the bottom is a soft collider
         // both 0 and 0xFF on oposite sides
         [CheckRestricted(Scene.NorthClockTown, variant: 0, Item.HeartPieceNorthClockTown)]
         [GroundVariants(0x0, 0xFF, 0x80FF)]
@@ -4638,6 +4684,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(513)]
         [ObjectListIndex(0x20E)]
+        [DynaAttributes(12,8)]
         [FlyingToGroundHeightAdjustment(15)]
         [FlyingVariants(0x0)]
         [GroundVariants(0x0)]
@@ -4821,9 +4868,10 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         MushroomCloud = 0x23B, // Obj_Kinoko
 
-        [ActorizerEnabledFreeOnly]
+        [ActorizerEnabledFreeOnly] // after weights we can make it available low weight
         [FileID(531)]
         [ObjectListIndex(0x218)]
+        [DynaAttributes(16,12)]
         [GroundVariants(0x8000, 0x0)]
         [UnkillableAllVariants]
         PalmTree = 0x23C, // Obj_Yasi
@@ -4929,6 +4977,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(541)]
         [ObjectListIndex(0x222)]
+        [DynaAttributes(12, 12)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         // we dont want to remove vanilla, use 0 as variant
         [GroundVariants(0)]
@@ -5094,6 +5143,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(565)]
         [ObjectListIndex(0x239)]
+        [DynaAttributes(24, 16)]
         // road to ikana is 1007
         // 0xF000, and 0x7F is switchflag, so zero is all we get
         [GroundVariants(0)]
@@ -5290,9 +5340,11 @@ namespace MMR.Randomizer.GameObjects
         [FileID(585)]
         [ObjectListIndex(0x246)]
         Eff_Lastday = 0x272, // Eff_Lastday
-        
+
+        // todo randomize
         [FileID(586)]
         [ObjectListIndex(0x203)]
+        [DynaAttributes(22,16)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         PunchableStoneTowerPillars = 0x273, // Bg_Ikana_Dharma
 
