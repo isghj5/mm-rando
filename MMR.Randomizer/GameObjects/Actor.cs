@@ -2450,6 +2450,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x3760)]
         [FileID(271)]
         [ObjectListIndex(0x15E)]
+        [DynaAttributes(10, 8, variant:0x0000, 0x0001)]  // only the variants on top, maybe this really needs a variant..
         [CheckRestricted(Scene.GreatBayTemple, variant:-1,
             Item.CollectibleStrayFairyGreatBay10)] // biobaba room
         // 0x1 is the one that hangs from the ceiling in GBT
@@ -3381,6 +3382,7 @@ namespace MMR.Randomizer.GameObjects
         // the ones you raise with goron pound
         [FileID(378)]
         [ObjectListIndex(0x190)]
+        [DynaAttributes(10,8)]
         RaisableSnowheadPillar = 0x1A3, // Bg_Hakugin_Elvpole
 
         [ActorizerEnabled] // regular romani
@@ -3461,6 +3463,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(395)]
         [ObjectListIndex(0x1A0)]
+        [DynaAttributes(58, 41)]
         HoneyAndDarlingRotationPlatform = 0x1AE, // Bg_Fu_Kaiten
 
         [FileID(396)]
@@ -3500,6 +3503,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // does not spawn
         [FileID(400)]
         [ObjectListIndex(0x1A1)]
+        [DynaAttributes(44,24)]
         [WallVariants(0x1)] // unk because spawned by H+D
         [UnkillableAllVariants] // not enemy type, right?
         BombBasket = 0x1B4, // En_Fu_Kago
@@ -3945,6 +3949,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(444)]
         [ObjectListIndex(0x1C2)]
+        [DynaAttributes(24,14)]
         // FFFF is extra?
         // 600 is night one, 702 is night 2, 801, is night 3
         // params: 0xFF00 is switch flags, 0xFF is text ID (hard coded)
@@ -4207,6 +4212,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled]
         [FileID(470)]
         [ObjectListIndex(0x1D3)]
+        //[DynaAttributes(0,0)] // this is a water box type dyna, we dont care about these
         // 0 starts the cutscene, 1 is after cutscene
         [WaterTopVariants(0x1)]
         [UnkillableAllVariants]

@@ -465,6 +465,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1358)]
         [SceneInternalId(0x45)]
+        // has to be smaller than 24, 16 as one ikana stump in room zero was an issue
+        [DynaHeadroom(10,10, room:0)] // fairly small, we can't really put anything here imo
         //[EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // bit annoying 
         //    Actor.Peahat, Actor.LikeLike, Actor.Freezard)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.DragonFly, // blocks deku flying 
@@ -571,6 +573,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1442)]
         [SceneInternalId(0x58)]
+        //[DynaHeadroom(10,10)] // fairly small, we can't really put anything here imo
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the whole assension
         StoneTower = 0x55,
