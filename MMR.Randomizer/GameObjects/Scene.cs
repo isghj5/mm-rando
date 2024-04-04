@@ -346,7 +346,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CarpentersFromCutscene,
                         Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
         //*/
-        TerminaField = 0x2A,
+        TerminaField = 0x2A, // keikoku, c800 dyna size
 
         [FileID(1312)]
         [SceneInternalId(0x2E)]
@@ -379,9 +379,10 @@ namespace MMR.Randomizer.GameObjects
                         Actor.Hiploop)] // water explosion
         TradingPost = 0x31,
 
+        // the only "small" dyna poly scene... but why
         [FileID(1326)]
         [SceneInternalId(0x35)]
-        RomaniRanch = 0x32,
+        RomaniRanch = 0x32, // F01, 0xF000 dyna size
 
         [FileID(1328)]
         [SceneInternalId(0x36)]

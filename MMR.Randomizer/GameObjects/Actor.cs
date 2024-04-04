@@ -1889,6 +1889,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(217)]
         [ObjectListIndex(0x1B9)]
         [WallVariants(0x81, 0x82, 0x83)]
+        [CeilingVariants(0x81, 0x82, 0x83)]
         [ForbidFromScene(Scene.WoodfallTemple, Scene.Grottos, Scene.SwampSpiderHouse, Scene.SouthernSwamp, Scene.PiratesFortressRooms)]
         [UnkillableAllVariants]
         [TreasureFlagsPlacement(mask: 0xFF, shift: 2)] // 0x3FC
@@ -4428,7 +4429,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:2, variant: 0, 1)] // dyna I think, have to limit for now
         [ForbidFromScene(Scene.OceanSpiderHouse)] // object is shared with multiple actors in this scene, breaks whole area to remove
         [UnkillableAllVariants]
-        OceanSpiderhouseMovableShelf = 0x211, // Bg_Kin2_Shelf
+        OceanSpiderhouseMovableShelf = 0x211, // Bg_Kin2_Shelf // tag: bookshelf
 
         // kinda want to try randomizing, but I need to check against ALL checks in the graveyard, kinda hard to do
         [FileID(489)]

@@ -12,12 +12,12 @@ namespace MMR.Randomizer.Attributes.Actor
 
     class DynaAttributes : Attribute
     {
-        public int Triangles;
+        public int Polygons;
         public int Verticies;
 
         public DynaAttributes(int triangles, int verticies)
         {
-            Triangles = triangles;
+            Polygons = triangles;
             Verticies = verticies;
         }
     }

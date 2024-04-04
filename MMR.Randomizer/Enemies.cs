@@ -4036,6 +4036,7 @@ namespace MMR.Randomizer
 
             SetSceneEnemyObjects(scene, thisSceneData.ChosenReplacementObjectsPerMap);
             SceneUtils.UpdateScene(scene); // writes scene actors back to binary
+
             WriteOutput($" time to complete randomizing [{scene.SceneEnum}]: " + GET_TIME(thisSceneData.StartTime) + "ms");
             WriteOutput($" ending timestamp : [{DateTime.Now.ToString("hh:mm:ss.fff tt")}]");
             FlushLog();
@@ -4723,12 +4724,16 @@ namespace MMR.Randomizer
         // sum of object size
         public List<int> ObjectList;
         public int ObjectRamSize;
+        public int DynaPolySize;
+        public int DynaVertSize;
         public int[] objectSizes; //debug
         // list of enemies that were used to make this
         public List<Actor> oldActorList = null;
 
         public BaseEnemiesCollection(List<Actor> actorList, List<int> objList, Scene s)
         {
+            /// values per day/night
+
             oldActorList = actorList;
             //var distinctActors = actorList.Select(act => act).DistinctBy(act => act);
             var distinctActors = actorList.DistinctBy(act => act);
@@ -4740,6 +4745,20 @@ namespace MMR.Randomizer
             this.ObjectRamSize = objectSizes.Sum();
 
             this.CalculateDefaultObjectUse(s);
+
+            this.DynaPolySize = 0;
+            this.DynaVertSize = 0;
+            for (int act = 0; act < actorList.Count; act++)
+            {
+                var actor = actorList[act];
+                var dynaProperties = actor.ActorEnum.GetAttribute<DynaAttributes>();
+                if (dynaProperties != null)
+                {
+                    this.DynaPolySize += dynaProperties.Polygons;
+                    this.DynaVertSize += dynaProperties.Verticies;
+                }
+            }
+
         }
 
         public void CalculateDefaultObjectUse(Scene s)
@@ -4813,6 +4832,7 @@ namespace MMR.Randomizer
         }
 
         // init for new replacements
+        // this doesnt set actors anywhere tho, just objects, misnomer?
         public void SetNewActors(Scene scene, List<ValueSwap> newObjChanges)
         {
             // this is the slowest part of our bogo sort, we need to try speeding it up
@@ -4973,6 +4993,14 @@ namespace MMR.Randomizer
                 PrintCombineRatioNewOld("  night:  struct  ", newMapList[map].night.ActorInstanceSum, oldMapList[map].night.ActorInstanceSum);
                 PrintCombineRatioNewOld("  night:  total  =", newNTotal, oldNTotal);
                 PrintCombineRatioNewOld("  night:  object  ", newMapList[map].night.ObjectRamSize, oldMapList[map].night.ObjectRamSize);
+
+                log.AppendLine($"     ------------------------------ ");
+
+                PrintCombineRatioNewOld("  day:    dyna poly  ", newMapList[map].day.DynaPolySize, oldMapList[map].day.DynaPolySize);
+                PrintCombineRatioNewOld("  day:    dyna vert  ", newMapList[map].day.DynaVertSize, oldMapList[map].day.DynaVertSize);
+                PrintCombineRatioNewOld("  night:  dyna poly  ", newMapList[map].night.DynaPolySize, oldMapList[map].night.DynaPolySize);
+                PrintCombineRatioNewOld("  night:  dyna vert  ", newMapList[map].night.DynaVertSize, oldMapList[map].night.DynaVertSize);
+
 
                 // print map objects size
                 var hexString = "";
