@@ -745,9 +745,14 @@ namespace MMR.Randomizer
             stonetowertempleScene.Maps[3].Actors[19].Position.x = 1530;
 
             // in WFT, the dinofos spawn is near the roof, lower
-            // TODO: do secret shrine too maybe if we randomize
             var woodfalltempleScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.WoodfallTemple.FileID());
             woodfalltempleScene.Maps[7].Actors[0].Position.y = -1208;
+
+            // same in secret shrine, all three dinofos are in the air
+            var secretShrineScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SecretShrine.FileID());
+            secretShrineScene.Maps[2].Actors[0].Position.y = 0;
+            secretShrineScene.Maps[2].Actors[1].Position.y = 0;
+            secretShrineScene.Maps[2].Actors[2].Position.y = 0;
 
             // one of the snappers is right in front of the chest, if actorizer, that actor could be something that doesnt have to be killable, could block the chest
             woodfalltempleScene.Maps[6].Actors[1].Position.z = -55; // room 7, z was -25, 
