@@ -121,8 +121,15 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
     switch (sGiantsMaskCsState) {
         case 0:
             if (player->stateFlags.state1 & PLAYER_STATE1_GIANT_MASK) {
-                if (!(player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP)) {
+                bool isShielding = player->stateFlags.state1 & PLAYER_STATE1_SHIELD;
+                if (!(player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP) || isShielding) {
+                    if (isShielding) {
+                        player->heldItemActionParam = 0;
+                    }
                     z2_PlayerWaitForGiantMask(globalCtx, player);
+                    if (isShielding) {
+                        player->heldItemActionParam = -1;
+                    }
                 }
                 // z2_800EA0D4(globalCtx, &globalCtx->csCtx);
                 sSubCamId = z2_Play_CreateSubCamera(globalCtx);
