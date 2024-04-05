@@ -27,26 +27,24 @@ void Actor_Update(Actor* actor, GlobalContext* ctxt) {
     actor->update(actor, ctxt);
     ItemDetector_AfterActorUpdate(actor, ctxt);
     if (actor->id == ACTOR_EN_HORSE) {
-        if (actor->child != NULL && actor->child->id == ACTOR_PLAYER && actor->child->parent != actor && (actor->bgcheckFlags & 1)) { // BGCHECKFLAG_GROUND
-            ActorPlayer* player = (ActorPlayer*)actor->child;
+        ActorEnHorse* horse = (ActorEnHorse*)actor;
+        if (horse->base.child != NULL && horse->base.child->id == ACTOR_PLAYER && horse->base.child->parent != horse && (horse->base.bgcheckFlags & 1)) { // BGCHECKFLAG_GROUND
+            ActorPlayer* player = (ActorPlayer*)horse->base.child;
             if (!(player->stateFlags.state1 & PLAYER_STATE1_EPONA)) {
-                s32 postDrawFunc = *(s32*)(((u8*)actor)+0x240);
-                if (!postDrawFunc) {
-                    s32* action = (s32*)(((u8*)actor)+0x144);
-                    s32* animIndex = (s32*)(((u8*)actor)+0x20C);
-                    s32* playerControlled = (s32*)(((u8*)actor)+0x208);
-                    s32* stateFlags = (s32*)(((u8*)actor)+0x1E8);
-
-                    actor->child = NULL;
-                    *playerControlled = false;
-                    *stateFlags &= ~(1 << 16); // ENHORSE_UNRIDEABLE
-                    *action = 2; // ENHORSE_ACTION_IDLE
-                    *animIndex = 1; // ENHORSE_ANIM_WHINNY
+                if (!horse->postDrawFunc) {
+                    horse->base.child = NULL;
+                    horse->playerControlled = false;
+                    horse->stateFlags &= ~ENHORSE_UNRIDEABLE;
+                    horse->action = ENHORSE_ACTION_IDLE;
+                    horse->animIndex = ENHORSE_ANIM_WHINNY;
+                    horse->colliderCylinder1.base.ocFlags1 |= OC1_ON;
+                    horse->colliderCylinder2.base.ocFlags1 |= OC1_ON;
+                    horse->colliderJntSph.base.ocFlags1 |= OC1_ON;
                     gSaveContext.perm.horseData.sceneId = ctxt->sceneNum;
-                    gSaveContext.perm.horseData.pos.x = actor->currPosRot.pos.x;
-                    gSaveContext.perm.horseData.pos.y = actor->currPosRot.pos.y;
-                    gSaveContext.perm.horseData.pos.z = actor->currPosRot.pos.z;
-                    gSaveContext.perm.horseData.yaw = actor->shape.rot.y;
+                    gSaveContext.perm.horseData.pos.x = horse->base.currPosRot.pos.x;
+                    gSaveContext.perm.horseData.pos.y = horse->base.currPosRot.pos.y;
+                    gSaveContext.perm.horseData.pos.z = horse->base.currPosRot.pos.z;
+                    gSaveContext.perm.horseData.yaw = horse->base.shape.rot.y;
                 }
             }
         }
