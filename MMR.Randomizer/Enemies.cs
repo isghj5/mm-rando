@@ -78,7 +78,7 @@ namespace MMR.Randomizer
         // outer list is item.category, inner list is items
         private static List<List<GameObjects.Item>> ActorizerKnownJunkItems { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = true;
+        private static bool ACTORSENABLED = false;
         private static Random seedrng;
         private static Models.RandomizedResult _randomized;
         private static OutputSettings _outputSettings;

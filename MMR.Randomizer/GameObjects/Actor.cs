@@ -990,6 +990,10 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(111)]
         [ObjectListIndex(0x191)]
+        // multiple think this is all horse race obstacles
+        //[DynaAttributes(2,4)] // 03918
+        //[DynaAttributes(26,20)] // 2Fb8
+        //[DynaAttributes()] // third one isn't even in the object its in the overlay 10c8
         En_Horse_Game_Check = 0x6B, // En_Horse_Game_Check
 
         [EnemizerEnabled]
@@ -1079,6 +1083,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabledFreeOnly]
         //[ActorizerEnabled]
         [FileID(121)]
+        //[DynaAttributes] // this object has a dyna in the code file... but for what? nothing we spawn anyway
         //[ObjectListIndex(1)] // multi-object actor uses 1 as its defined object, ignore
         //[ObjectListIndex(0x9E)] // GI_BOTTLE
         //[ObjectListIndex(0x13F)] // GI_RUPY
@@ -2542,6 +2547,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(278)]
         [ObjectListIndex(0x161)]
+        [DynaAttributes(12,8)]
         [WaterTopVariants(0xF81, 0xF82, 0xF83, 0xF84, 0xF85, 0xF86, 0xF87)]
         [VariantsWithRoomMax(max:1, variant: 0xF81, 0xF82, 0xF83, 0xF84, 0xF85, 0xF86, 0xF87)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
@@ -2821,6 +2827,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(316)]
         [ObjectListIndex(0x178)]
+        [DynaAttributes(10,8)]
         [GroundVariants(0x0)]
         [VariantsWithRoomMax(max:0, variant:0)]
         WizrobeSpawnBlock = 0x15E, // En_Wiz_Brock
@@ -2934,6 +2941,7 @@ namespace MMR.Randomizer.GameObjects
         Empty16B = 0x16B,
         [FileID(328)]
         [ObjectListIndex(0x17E)]
+        [DynaAttributes(4,8)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         TerminaFieldSpikedFence = 0x16C, // Bg_Keikoku_Saku
 
@@ -3358,6 +3366,7 @@ namespace MMR.Randomizer.GameObjects
         // assumed spawned rock from eyegore ground slam
         [FileID(374)]
         [ObjectListIndex(0x18D)]
+        [DynaAttributes(10,8)]
         EyegoreBlock = 0x19F, // En_Egblock
 
         [ActorizerEnabled]
@@ -3496,6 +3505,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // does not spawn
         [FileID(399)]
         [ObjectListIndex(0x1A1)]
+        [DynaAttributes(24,14)]
         [WallVariants(0x0)] // unk because spawned by H+D
         [UnkillableAllVariants] // not enemy type, right?
         Target = 0x1B3, // En_Fu_Mato
@@ -3590,6 +3600,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(408)]
         [ObjectListIndex(0x1A0)]
+        // has dyna but its a water box, dont care
         HoneyAndDarlingWaterLevel = 0x1BC, // Bg_Fu_Mizu
 
         // wrong one, the one we want is burrowed, but he also does NOT come with a flower, its secondary
@@ -4063,6 +4074,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(456)]
         [ObjectListIndex(0x1C9)]
+        [DynaAttributes(19, 12)]
         CaptainKeepaGatePost = 0x1F0, // Bg_Botihasira
 
         [ActorizerEnabled]
@@ -4395,6 +4407,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(483)]
         [ObjectListIndex(0x1F4)]
+        [DynaAttributes(2,4)] // ??
         LargeRotationGreenRupee = 0x20C, // Bg_Sinkai_Kabe
 
         [FileID(484)]
@@ -5103,6 +5116,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(555)]
         [ObjectListIndex(0x22C)]
+        [DynaAttributes(8,8)] // oh whoa there are two of them? both the same size
         PamelaHouseCloset = 0x254, // Obj_Hgdoor
         
         [FileID(556)]
@@ -5135,10 +5149,12 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(562)]
         [ObjectListIndex(0x237)]
+        // has two dyna but we dont care
         SharpsCave = 0x25B, // Bg_Iknv_Doukutu
 
         // waterwheel at the house, sakon's hideout door, and an unused stonetower door
         [FileID(563)]
+        //[DynaAttributes] multiple, but unless we randomize it doesnt matter to us right now
         [ObjectListIndex(0x237)]
         IkanaThings = 0x25C, // Bg_Iknv_Obj
 
@@ -5559,6 +5575,7 @@ namespace MMR.Randomizer.GameObjects
         // keg breaking ceiling in ikana, no use for it
         [FileID(604)]
         [ObjectListIndex(0x236)]
+        [DynaAttributes(8,9)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         IkanaCastleKegCieling = 0x285, // Bg_Ikninside
 
@@ -5592,6 +5609,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(609)]
         [ObjectListIndex(0x260)]
+        [DynaAttributes(2,4)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         UnderwaterGrate = 0x28A, // Obj_Kzsaku
         

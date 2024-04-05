@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MMR.Randomizer.Attributes.Entrance
 {
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     class DynaHeadroom : Attribute
     {
         /// <summary>

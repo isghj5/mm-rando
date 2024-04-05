@@ -466,7 +466,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1358)]
         [SceneInternalId(0x45)]
         // has to be smaller than 24, 16 as one ikana stump in room zero was an issue
-        [DynaHeadroom(10,10, room:0)] // fairly small, we can't really put anything here imo
+        //... but one 28,16 swlift was working fine???
+        [DynaHeadroom(24, 10, room: 0)] // fairly small, we can't really put anything here imo
+        [DynaHeadroom(24, 10, room: 2)] // fairly small, we can't really put anything here imo
         //[EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // bit annoying 
         //    Actor.Peahat, Actor.LikeLike, Actor.Freezard)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.DragonFly, // blocks deku flying 
