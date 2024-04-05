@@ -337,6 +337,9 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
     }
 
     if ((sGiantsMaskCsState != 0) && (sSubCamId != 0)) {
+        // prevent all other cutscenes from starting
+        z2_ActorCutscene_ClearNextCutscenes();
+
         z2_Matrix_RotateY(player->base.shape.rot.y, 0); // MTXMODE_NEW
         z2_Matrix_GetStateTranslationAndScaledZ(sSubCamDistZFromPlayer, &subCamEyeOffset);
 
