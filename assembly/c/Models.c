@@ -919,10 +919,10 @@ bool Models_DrawSmithyItem(Actor* actor, GlobalContext* ctxt) {
 
     z2_AnimatedMat_Draw(ctxt, z2_Lib_SegmentedToVirtual((void*)0x0600F6A0));
 
-    if (gSaveContext.perm.day == 1) {
-        DrawSmithyGetItem(ctxt, 0x38);
-    } else {
+    if (gSaveContext.perm.sceneFlags[ctxt->sceneNum].unk14 & 4) {
         DrawSmithyGetItem(ctxt, 0x39);
+    } else {
+        DrawSmithyGetItem(ctxt, 0x38);
     }
 
     z2_PopMatrixStack();
