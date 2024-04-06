@@ -1821,6 +1821,10 @@ namespace MMR.Randomizer
             {
                 availableItems.Remove(Item.MaskDeku);
                 availableItems.Remove(Item.SongHealing);
+                availableItems.Remove(Item.StartingSword);
+                availableItems.Remove(Item.StartingShield);
+                availableItems.Remove(Item.StartingHeartContainer1);
+                availableItems.Remove(Item.StartingHeartContainer2);
             }
 
             if (restriction != null)
