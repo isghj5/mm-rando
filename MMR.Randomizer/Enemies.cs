@@ -909,6 +909,11 @@ namespace MMR.Randomizer
                 // and move a bit away from the far wall
                 blastWallTorch.Position.z -= 40;
 
+                // the gibdos in ikana canyon, two of them are basically on top of each other can lead to weird shinanigans
+                var ikanaCanyonScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaCanyon.FileID());
+                var doubledGibdo = ikanaCanyonScene.Maps[0].Actors[64];
+                doubledGibdo.Position = new vec16(-602, 400, 972);
+
                 // in spring there are two torches on top of each other, which is weird, move the other one to face the first one
                 //var mountainVillageSpring = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MountainVillageSpring.FileID());
                 //var secondTorch = mountainVillageSpring.Maps[0].Actors[13];
