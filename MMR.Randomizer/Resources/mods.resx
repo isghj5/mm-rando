@@ -355,9 +355,6 @@
   <data name="lenient_goron_spikes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\lenient-goron-spikes.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="loadnewaudiotable" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>mods\loadnewaudiotable;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="logo_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\logo-text;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
