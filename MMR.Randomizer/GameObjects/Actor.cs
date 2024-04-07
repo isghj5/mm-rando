@@ -80,7 +80,7 @@ namespace MMR.Randomizer.GameObjects
             0x5080, // road to ikana
             0x50CA, // east clock town
             0x50A1, // south clock town
-            0xBAEE, // Invisible with switch activation, this one should be rare (0x10--(large gold) + 0x--11(spawn on switch clear))
+            //0xBAEE, // Invisible with switch activation, this one should be rare (0x10--(large gold) + 0x--11(spawn on switch clear))
             0x0AFB, 0x099C)] // two free, the rest are gold invisible
         [WaterBottomVariants(0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, //0x5A1E,
