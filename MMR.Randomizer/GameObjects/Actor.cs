@@ -2464,7 +2464,8 @@ namespace MMR.Randomizer.GameObjects
             0x0000)] // regular
         // is there a watter bottom version by default?
         [WaterBottomVariants(4)]
-        [CeilingVariants(0x0001)] // their in the ceiling now
+        [CeilingVariants(0x0001)] // they're in the ceiling now
+        [RespawningVariants(0x0001)] // doesn't respawn, but stray faries attach themselves to the lilypad
         //[ForbidFromScene(Scene.GreatBayTemple)] // need their lilipads to reach compass chest and fairy chest
         [UnkillableVariants(0)]
         BioDekuBaba = 0x12D, // Boss_05 // biobaba
