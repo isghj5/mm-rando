@@ -2794,7 +2794,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(311)]
         [ObjectListIndex(0x1C)]
-        [CheckRestricted(Scene.IkanaCanyon, variant: -1, check: Item.MaskCouple, Item.NotebookMeetKafei)]
+        [CheckRestricted(Scene.IkanaCanyon, variant: -1, check: Item.MaskCouple, Item.NotebookMeetKafei,
+            Item.NotebookEscapeFromSakonSHideout, Item.NotebookUniteAnjuAndKafei)]
         [CheckRestricted(Scene.EastClockTown, variant: -1, check: Item.MaskCouple)]
         [CheckRestricted(Scene.SouthClockTown, variant: 0x1E3, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
         [CheckRestricted(Scene.LaundryPool, variant: -1, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
