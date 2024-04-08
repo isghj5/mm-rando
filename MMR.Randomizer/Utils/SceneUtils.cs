@@ -4,6 +4,9 @@ using System.Linq;
 using MMR.Randomizer.Extensions;
 using System.Diagnostics;
 using System;
+using MMR.Randomizer.Attributes.Actor;
+using MMR.Randomizer.Attributes.Entrance;
+using MMR.Common.Extensions;
 
 namespace MMR.Randomizer.Utils
 {
@@ -453,6 +456,26 @@ namespace MMR.Randomizer.Utils
                 }
             }
         }
+
+        public static DynaHeadroom GetSceneDynaAttributes(GameObjects.Scene scene, int roomNumber)
+        {
+            var attributes = scene.GetAttributes<DynaHeadroom>().ToList();
+            if (attributes != null)
+            {
+                for (int i = 0; i < attributes.Count; i++)
+                {
+                    var attr = attributes[i];
+                    if (attr.Room == roomNumber
+                        || attr.Room == -1) // room doesn't need to match because this scene probably only has one
+                    {
+                        return attr;
+                    }
+                }
+            }
+
+            return null;
+        }
+
 
         #region Night Music
 

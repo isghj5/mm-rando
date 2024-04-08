@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MMR.Randomizer.Attributes.Entrance
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
-    class DynaHeadroom : Attribute
+    public class DynaHeadroom : Attribute
     {
         /// <summary>
         /// Defines how much headroom for dynapoly actors exists, as a delta over baseline

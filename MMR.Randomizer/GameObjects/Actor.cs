@@ -296,7 +296,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x5F)]
         [DynaAttributes(8, 8)]
         [GroundVariants(0x0)]
-        [VariantsWithRoomMax(max: 2, variant: 0x0)] // Dyna
+        [VariantsWithRoomMax(max: 10, variant: 0x0)] // Dyna
         [ForbidFromScene(Scene.Snowhead)]
         [UnkillableAllVariants]
         Flagpole = 0x1A, // En_Hata
@@ -626,6 +626,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1A0)]
         [FileID(86)]
         [ObjectListIndex(0x61)]
+        // weirdly this is NOT dynapoly actor
         [CheckRestricted(Scene.TerminaField, variant: 0x01, Item.CollectableTerminaFieldTreeItem1)]
         // bush: 0xFF0B, small tree: 0xFF02
         // big tree: 0xFF00, big tree with shop man in it: 0x0A1A
@@ -748,7 +749,7 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7E, shift: 9)]
         //[GroundVariants(0)] // params are ignored, uses params as a variable for setting
         [FlyingVariants(0)]
-        [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
+        [VariantsWithRoomMax(max: 3, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [FlyingToGroundHeightAdjustment(275)]
@@ -1328,7 +1329,7 @@ namespace MMR.Randomizer.GameObjects
             0xC2, // pirates fortress exterior
             0x82, // great bay temple
             0x0002)] // ocean spiderhouse entrance
-        [VariantsWithRoomMax(max:3, variant: 0x0)]
+        [VariantsWithRoomMax(max:10, variant: 0x0)] // bit boring
         [ForbidFromScene(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple, Scene.OceanSpiderHouse,
                          Scene.GreatBayTemple, Scene.PiratesFortressExterior)]
         [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
@@ -1702,7 +1703,8 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(28,16)]
         //[GroundVariants(0)]
         [FlyingVariants(0)]
-        [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
+        //[VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
+        [VariantsWithRoomMax(max: 5, variant: 0)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [FlyingToGroundHeightAdjustment(275)]
@@ -1714,7 +1716,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
             Scene.StockPotInn, Scene.TradingPost, Scene.MayorsResidence,
             Scene.BeneathTheWell,
-            Scene.IkanaGraveyard, Scene.StoneTower)] // dyna crash
+            Scene.IkanaGraveyard/*, Scene.StoneTower*/)] // dyna crash
         //[SwitchFlagsPlacement(mask: 0xFF, shift: 0)]
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
@@ -2162,7 +2164,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x7E parameter is switch flag... for what I have no idea, but it seems we cannot set it without triggering a sfx at least
         [GroundVariants(0x7E)]
         [WaterBottomVariants(0x77)]
-        [VariantsWithRoomMax(max: 4, variant: 0x7E)] // 11 overloaded gorman race track
+        [VariantsWithRoomMax(max: 10, variant: 0x7E)] // 11 overloaded gorman race track
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
@@ -2348,8 +2350,8 @@ namespace MMR.Randomizer.GameObjects
         [CeilingVariants(0xFF01, 0xFF00, 0xFF02 )]
         [EnemizerScenesPlacementBlock(Scene.GormanTrack, // dyna crash on trees
             Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.StoneTower)] // assumed same as above
-        [VariantsWithRoomMax(max: 1, variant: 0x1000, 0x0B00, 0x0C00, 0x600, 0x002B, 0x003F, 0x700, 0xD00, 0xA00)] // limit because of dyna
-        [VariantsWithRoomMax(max: 1, variant: 0xFF01, 0xFF00, 0xFF02)] // still dyna
+        [VariantsWithRoomMax(max: 10, variant: 0x1000, 0x0B00, 0x0C00, 0x600, 0x002B, 0x003F, 0x700, 0xD00, 0xA00)] // limit because of dyna
+        [VariantsWithRoomMax(max: 10, variant: 0xFF01, 0xFF00, 0xFF02)] // still dyna
         [UnkillableAllVariants]
         IceCavernStelagtite = 0x11F, // Bg_Icicle // also stalagmite
 
@@ -2550,7 +2552,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x161)]
         [DynaAttributes(12,8)]
         [WaterTopVariants(0xF81, 0xF82, 0xF83, 0xF84, 0xF85, 0xF86, 0xF87)]
-        [VariantsWithRoomMax(max:1, variant: 0xF81, 0xF82, 0xF83, 0xF84, 0xF85, 0xF86, 0xF87)]
+        [VariantsWithRoomMax(max:2, variant: 0xF81, 0xF82, 0xF83, 0xF84, 0xF85, 0xF86, 0xF87)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [ForbidFromScene(Scene.WoodfallTemple)]
         Raft = 0x13A, // En_Raf carniverous raft, woodfall temple
@@ -2681,13 +2683,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x16C)]
         [DynaAttributes(33, 20)]
         [GroundVariants(0)]
-        [VariantsWithRoomMax(max: 3, variant: 0)]
+        [VariantsWithRoomMax(max: 3, variant: 0)] // too many is boring
         //[ForbidFromScene(Scene.EastClockTown)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
-        [EnemizerScenesPlacementBlock(//Scene.DekuShrine, Scene.Woodfall, Scene.LaundryPool, Scene.PiratesFortress,
+        //[EnemizerScenesPlacementBlock(//Scene.DekuShrine, Scene.Woodfall, Scene.LaundryPool, Scene.PiratesFortress,
                                       //Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTower, // big blocking
-            Scene.StoneTower)] // too much dyna, only one is allowed
+        //    Scene.StoneTower)] // too much dyna, only one is allowed
         StockpotBell = 0x14E, // Obj_Bell
 
         [ActorizerEnabled] // need to replace if you replace the shooting gallery man
@@ -2804,7 +2806,7 @@ namespace MMR.Randomizer.GameObjects
         // spreadsheet thinks 0x206 could be it
         [GroundVariants(0)]
         [WaterBottomVariants(0)]
-        [VariantsWithRoomMax(max: 1, variant: 0)]
+        [VariantsWithRoomMax(max: 5, variant: 0)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
@@ -3045,6 +3047,7 @@ namespace MMR.Randomizer.GameObjects
         // flying ice platforms leading to lens cave
         [FileID(339)]
         [ObjectListIndex(0x187)]
+        [DynaAttributes(22,13)]
         // this is not enough: this does NOT take into account scoop sanity
         [CheckRestricted( scene:Scene.MountainVillage, variant:-1, check: Item.MaskGoron,
             Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
@@ -3056,7 +3059,7 @@ namespace MMR.Randomizer.GameObjects
         //[PathingTypeVarsPlacement(mask:0x7F, shift:2)]
         // TODO should we consider putting them on water top?
         // don't put too many in the world might run into BG issues
-        [VariantsWithRoomMax(max: 2, variant: 0x1000, 0x1004)]
+        [VariantsWithRoomMax(max: 5, variant: 0x1000, 0x1004)]
         [VariantsWithRoomMax(max: 0, variant: 0x1FFE, 0x1FFD)] // pathing type, and we dont want them to path
         [UnkillableAllVariants]
         //[ForbidFromScene(Scene.MountainVillage)] // IF I can't detect when the ice is important, enable this
@@ -3543,8 +3546,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x88)]
         [DynaAttributes(14,14)]
         [BlockingVariantsAll]
-        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, // dyna crash possible
-            Scene.StoneTower, Scene.DekuPlayground)] // dyna crash possible
+        //[EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, // dyna crash possible
+        //    Scene.StoneTower, Scene.DekuPlayground)] // dyna crash possible
         ClocktowerGearsAndOrgan = 0x1B6, // Bg_Ctower_Gear
 
         [ActorizerEnabled]
@@ -3562,6 +3565,7 @@ namespace MMR.Randomizer.GameObjects
         //[ForbidFromScene(Scene.WoodsOfMystery, Scene.SouthernSwamp)]
         KotakeOnBroom = 0x1B7, // En_Trt2
 
+        //[ActorizerEnabled] // kinda want to use as a test because of 2/4
         [FileID(404)]
         [ObjectListIndex(0x1A4)]
         [DynaAttributes(2,4)]
@@ -3611,10 +3615,14 @@ namespace MMR.Randomizer.GameObjects
         [ForbidFromScene(Scene.SouthClockTown, Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.GoronVillage, Scene.GoronVillageSpring, Scene.ZoraHallRooms, Scene.IkanaCanyon)]
         FlyingBuisinessScrub = 0x1BD, // En_Sellnuts
 
+        [ActorizerEnabled] // use as test for dyna with its tiny 2/4
         [FileID(410)]
         [ObjectListIndex(0x1A7)]
         [DynaAttributes(2,4)]
+        [GroundVariants(0x7F)] [FlyingVariants(0x7F)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        [UnkillableAllVariants]
+        [BlockingVariantsAll]
         SwampSpiderHouseCutableIvy = 0x1BE, // Bg_Dkjail_Ivy
 
         Empty1BF = 0x1BF,
@@ -4416,8 +4424,10 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(2,4)]
         FlatsTombCurtain = 0x20D, // Bg_Haka_Curtain
 
+        [ActorizerEnabled] // TODO disable, only enabled so I can test dyna
         [FileID(485)]
         [ObjectListIndex(0x1F5)]
+        [GroundVariants(0x19)] [FlyingVariants(0x19)]
         [DynaAttributes(3,5)] // weird
         OceanSpiderhouseBombableWall = 0x20E, // Bg_Kin2_Bombwall
 
@@ -4709,7 +4719,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingToGroundHeightAdjustment(15)]
         [FlyingVariants(0x0)]
         [GroundVariants(0x0)]
-        [VariantsWithRoomMax(variant: 0, max: 1)]
+        [VariantsWithRoomMax(variant: 0, max: 3)] // dyna should be detecable now, we can add more
         [EnemizerScenesPlacementBlock(Scene.StoneTower, Scene.IkanaGraveyard, // too much dyna
             Scene.SouthernSwamp, Scene.SouthernSwampClear,
             Scene.GormanTrack, Scene.DekuTrial)] // blocking potentially
@@ -5173,7 +5183,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [VariantsWithRoomMax(max:1, variant:0)]
         [UnkillableAllVariants]
-        [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast,
+        [EnemizerScenesPlacementBlock(Scene.TerminaField, // boring
+            //Scene.GreatBayCoast,
             Scene.SouthernSwamp)] // dyna crash suspect, even if not in the second room
         [ForbidFromScene(Scene.IkanaCanyon, Scene.RoadToIkana)] // do not remove original
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]

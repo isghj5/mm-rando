@@ -46,6 +46,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1137)]
         [SceneInternalId(0x00)]
+        [DynaHeadroom(12, 9)] // unknown, I know two organs is crash, two in different rooms so one budget per room is too much
         [EnemizerSceneEnemyReplacementBlock(Actor.Octarok,
             Actor.Wolfos, // can attack you off the boat
             Actor.LikeLike)] // can grab you on the boat ride
@@ -326,6 +327,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1310)]
         [SceneInternalId(0x2D)]
+        //[DynaHeadroom(0, 0)] // unknown but it seems higher than most 0x64/0x3D is safe
+        //[DynaHeadroom(0x64,0x3D)] // terted safe
         // this actor is mostly ignored, player might not even notice, dont waste lots of object budget on this thing
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
             Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
@@ -382,6 +385,8 @@ namespace MMR.Randomizer.GameObjects
         // the only "small" dyna poly scene... but why
         [FileID(1326)]
         [SceneInternalId(0x35)]
+        // we know nothing here, TODO recheck
+        [DynaHeadroom(12,9, room: 0)] 
         RomaniRanch = 0x32, // F01, 0xF000 dyna size
 
         [FileID(1328)]
@@ -390,12 +395,15 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1330)]
         [SceneInternalId(0x37)]
+        [DynaHeadroom(60,49, room:0)]
+        //[DynaHeadroom(16,12, room:0)] // we know 16/12 is safe, that might be too conservative
         [EnemizerSceneEnemyReplacementBlock(Actor.Seagulls,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can stop ting from falling
         GreatBayCoast = 0x34,
 
         [FileID(1332)]
         [SceneInternalId(0x38)]
+        [DynaHeadroom(60, 45)] // arbitrary, actual is unknown
         [EnemizerSceneEnemyReplacementBlock(Actor.LikeLike,
                     Actor.Japas, Actor.Bombiwa, Actor.BronzeBoulder, Actor.Mimi, Actor.TreasureChest)] // small blocking
          //    Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo,
@@ -454,6 +462,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1353)]
         [SceneInternalId(0x43)]
+        [DynaHeadroom(0,0)] // seems very low, for now disable
         [EnemizerSceneEnemyReplacementBlock(Actor.Dampe,
             Actor.Treee)]// for some reason big poe in the first room can cause camera to lock, unknown reason
         [EnemizerSceneBlockSensitive(Actor.Dampe, -1)]
@@ -467,8 +476,9 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x45)]
         // has to be smaller than 24, 16 as one ikana stump in room zero was an issue
         //... but one 28,16 swlift was working fine???
-        [DynaHeadroom(24, 10, room: 0)] // fairly small, we can't really put anything here imo
-        [DynaHeadroom(24, 10, room: 2)] // fairly small, we can't really put anything here imo
+        // one lily(12, 8) plus one darmani grave (10, 8) and one ice platform(22,13) was too much tho (43,29)
+        [DynaHeadroom(28, 16, room: 0)]
+        [DynaHeadroom(28, 16, room: 2)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // bit annoying 
         //    Actor.Peahat, Actor.LikeLike, Actor.Freezard)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.DragonFly, // blocks deku flying 
@@ -575,7 +585,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1442)]
         [SceneInternalId(0x58)]
-        //[DynaHeadroom(10,10)] // fairly small, we can't really put anything here imo
+        // one swlift, 0x1C/0x10: works
+        // one swlift, 3 cuttable ivy, 0x22/0x1C, works
+        [DynaHeadroom(0x22, 0x1C)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the whole assension
         StoneTower = 0x55,
@@ -583,8 +595,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1444)]
         [SceneInternalId(0x59)]
         [EnemizerSceneBlockSensitive(Actor.BlueBubble, -1)]
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Poe,
-            Actor.Bo)] // can block the whole assension
+        // the fuck is this? even if I meant for this to be in the temple it still makes no sense
+        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Poe,
+        //    Actor.Bo)] // can block the whole assension
         InvertedStoneTower = 0x56,
 
         [FileID(1446)]
@@ -671,6 +684,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1506)]
         [SceneInternalId(0x6A)]
+        [DynaHeadroom(28, 16)] // actual limit is unknown, but assume kinda small given the tree count
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee,
             Actor.PoeBalloon, Actor.BigPoe, // Actor.FloorMaster,
             //Actor.SleepingScrub, // too much dyna, spawns too many flowers and flower companions
