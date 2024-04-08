@@ -82,11 +82,14 @@ namespace MMR.Randomizer.GameObjects
             Actor.Hiploop// water causes instant death
             //Actor.Bumper, Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, Actor.RegularIceBlock,
             /*Actor.ClocktowerGearsAndOrgan /*, Actor.PatrollingPirate */ )]
-        [EnemizerSceneBlockSensitive(Actor.DekuBabaWithered, -1)]
+        [EnemizerSceneBlockSensitive(Actor.DekuBabaWithered, -1)] // can block the chest
         [EnemizerSceneBlockSensitive(Actor.DekuBaba, -1)] // this this is required to keep it off of withered as well
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BioDekuBaba,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // they can extend so far they can block the door leading out
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GoldSkulltula,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can get the player locked behind them near the grotto stones
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.HoneyComb,
+            Actor.Seagulls, // weird
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can get the player locked behind them near the grotto stones
         Grottos = 0x0A,
 
@@ -181,6 +184,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DragonFly,
             Actor.GiantBeee)] // issue being that the one that spins around and doesnt agro hard requires a ranged weapon because the spawn is so high
         [EnemizerSceneBlockSensitive(Actor.Bo, -1)]
+        [EnemizerSceneBlockSensitive(Actor.SwampSpiderHouseCutableIvy, -1)]
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper,
         //    Actor.WarpDoor, Actor.ClocktowerGearsAndOrgan)] // Snapper spawns just on top of its chest, its possible a non-killable actor is placed int he wya
         [EnemizerSceneBlockSensitive(Actor.Snapper, -1)]
@@ -289,6 +293,7 @@ namespace MMR.Randomizer.GameObjects
             /*Actor.Bumper, Actor.ClocktowerGearsAndOrgan*/)]
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
         [EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)]
+        [EnemizerSceneBlockSensitive(Actor.SwampSpiderHouseCutableIvy, -1)]
         // old, should no longer be needed: Actor.En_Ani, Actor.GoronElder, Actor.Cow, Actor.Tijo , Actor.Postbox,
         SwampSpiderHouse = 0x24,
 
@@ -602,6 +607,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1446)]
         [SceneInternalId(0x5A)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.HoneyComb,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // until I change the combs to be wall or flying only this is weird
         MountainVillageSpring = 0x57,
 
         [FileID(1449)]
@@ -612,13 +619,13 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x5C)]
         [EnemizerSceneBlockSensitive(originalEnemy: Actor.Flagpole, -1)] // ice block can stop access to the whole dungeon
         [EnemizerSceneEnemyReplacementBlock(Actor.Bo,
-            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the twisted path into snowhead
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the twisted path into snowhead temple
         Snowhead = 0x59,
 
         [FileID(1453)]
         [SceneInternalId(0x5D)]
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wolfos,
-            /* Actor.UnusedStoneTowerPlatform,*/ Actor.UnusedStoneTowerStoneElevator)] // can be so wide they block the hot spring grotto
+        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wolfos,
+        //    /* Actor.UnusedStoneTowerPlatform,*/ Actor.UnusedStoneTowerStoneElevator)] // can be so wide they block the hot spring grotto
         TwinIslands = 0x5A,
 
         [FileID(1455)]

@@ -1239,6 +1239,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(136)]
         [ObjectListIndex(0xEE)]
+        [CheckRestricted(Scene.RomaniRanch, variant:-1, Item.CollectableRomaniRanchSoftSoil1, Item.CollectableRomaniRanchSoftSoil2)]
         // 8 is unused crack in the wall, only exists in unused ranch setup
         // uses Z rot as a param, unknown use
         // 0xC000 unk, can change draw type
@@ -1251,7 +1252,7 @@ namespace MMR.Randomizer.GameObjects
         //[PathingVariants(0x4000)] // TODO figure out if I even can get this to work
         [PathingTypeVarsPlacement(mask: 0x3F, shift: 8)] // 0x3F00
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
-        [ForbidFromScene(Scene.RomaniRanch)]
+        //[ForbidFromScene(Scene.RomaniRanch)]
         //[ForbidFromScene()] // we can actually just use generic params to avoid this
         SoftSoilAndBeans = 0x91, // Obj_Bean
 
@@ -1925,7 +1926,8 @@ namespace MMR.Randomizer.GameObjects
             0x2002, // wft entrance room
             0x81, 0x1D11, // wft bridge room
             0x2804, // poisoned swamp
-            0x83// grottos
+            0x20C, 0x403, 0x302, // zora grotto
+            0x83// cow grotto
             )]
         //[VariantsWithRoomMax(max:0, variant:)]
         [ForbidFromScene(
@@ -1933,7 +1935,7 @@ namespace MMR.Randomizer.GameObjects
             //Scene.Grottos,
             //Scene.SwampSpiderHouse,
             //Scene.SouthernSwamp,
-            Scene.PiratesFortressRooms
+            Scene.PiratesFortressRooms // required for cutscene to get actor to leave, for now
             )]
         [UnkillableAllVariants]
         // uses weekeventarg 83_02
@@ -3657,7 +3659,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(410)]
         [ObjectListIndex(0x1A7)]
         [DynaAttributes(2,4)]
-        [GroundVariants(0x7F)] [FlyingVariants(0x7F)]
+        [GroundVariants(0x7F)]
+        [VariantsWithRoomMax(max:0, variant:0x7F)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
@@ -4462,10 +4465,9 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(2,4)]
         FlatsTombCurtain = 0x20D, // Bg_Haka_Curtain
 
-        [ActorizerEnabled] // TODO disable, only enabled so I can test dyna
+        //[ActorizerEnabled] // TODO disable, only enabled so I can test dyna
         [FileID(485)]
         [ObjectListIndex(0x1F5)]
-        [GroundVariants(0x19)] [FlyingVariants(0x19)]
         [DynaAttributes(3,5)] // weird
         OceanSpiderhouseBombableWall = 0x20E, // Bg_Kin2_Bombwall
 
