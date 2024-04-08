@@ -395,7 +395,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1330)]
         [SceneInternalId(0x37)]
-        [DynaHeadroom(60,49, room:0)]
+        [DynaHeadroom(60,49, room:0)] // actual unknown
         //[DynaHeadroom(16,12, room:0)] // we know 16/12 is safe, that might be too conservative
         [EnemizerSceneEnemyReplacementBlock(Actor.Seagulls,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can stop ting from falling

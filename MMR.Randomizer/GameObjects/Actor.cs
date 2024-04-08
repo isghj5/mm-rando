@@ -1895,10 +1895,48 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(217)]
         [ObjectListIndex(0x1B9)]
-        [WallVariants(0x81, 0x82, 0x83)]
-        [CeilingVariants(0x81, 0x82, 0x83)]
-        [ForbidFromScene(Scene.WoodfallTemple, Scene.Grottos, Scene.SwampSpiderHouse, Scene.SouthernSwamp, Scene.PiratesFortressRooms)]
+        [CheckRestricted(Scene.SwampSpiderHouse, variant: -1,
+             Item.CollectibleSwampSpiderToken18, Item.CollectibleSwampSpiderToken23, Item.CollectibleSwampSpiderToken26, Item.CollectibleSwampSpiderToken28)]
+        [CheckRestricted(Scene.Grottos, variant: -1,
+            Item.HeartPieceZoraGrotto, Item.CollectableGrottosOceanHeartPieceGrottoBeehive1)]
+        [CheckRestricted(Scene.SouthernSwamp, variant: -1,
+            Item.CollectableSouthernSwampPoisonedCentralSwampBeehive1)]
+        [CheckRestricted(Scene.WoodfallTemple, variant: -1,
+            Item.CollectibleStrayFairyWoodfall14, Item.CollectibleStrayFairyWoodfall15, Item.CollectableWoodfallTempleEntranceRoomBeehive1)]
+        // params:
+        // 0x1F can become the skulltula params, 0x3FC is treasure flags for treasure types
+        // 0x8000 and 0x80 are flags
+        // known vars:
+        // 90 is bee that spawns cutscene in pirates fortress
+        // 0x82, 0x7F0E, 0x7F3F, 0x8017, 0x801C, 0x8012,  // swamp spiderhouse
+        // 0x81, 0x1E11, 0x1D11, 0x2002, // woodfall temple
+        // 0x020C, 0x0302, 0x0403, // zora grotto
+        // 0x0083,  // cow grotto
+        // 0x82,  // ocean grotto
+        // 0x81, // mountain village
+        // 0x2804, // poisoned swamp
+        // variant issue: 81 is a ceiling AND a wall type
+        [WallVariants(
+            0x81, // mountain village spring is in a tree
+            0x1E11 // wft elevator room
+            )]
+        [CeilingVariants(0x81,  0x83,
+            0x82, 0x7F0A, 0x7F0E, 0x801A, 0x7F3F, 0x8017, 0x801C, 0x8012,  // swamp spiderhouse
+            0x2002, // wft entrance room
+            0x81, 0x1D11, // wft bridge room
+            0x2804, // poisoned swamp
+            0x83// grottos
+            )]
+        //[VariantsWithRoomMax(max:0, variant:)]
+        [ForbidFromScene(
+            //Scene.WoodfallTemple,
+            //Scene.Grottos,
+            //Scene.SwampSpiderHouse,
+            //Scene.SouthernSwamp,
+            Scene.PiratesFortressRooms
+            )]
         [UnkillableAllVariants]
+        // uses weekeventarg 83_02
         [TreasureFlagsPlacement(mask: 0xFF, shift: 2)] // 0x3FC
         HoneyComb = 0xE4, // Obj_Comb
 
