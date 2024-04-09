@@ -944,6 +944,11 @@ namespace MMR.Randomizer
                 // and move a bit away from the far wall
                 blastWallTorch.Position.z -= 40;
 
+                // the gibdos in ikana canyon, two of them are basically on top of each other can lead to weird shinanigans
+                var ikanaCanyonScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaCanyon.FileID());
+                var doubledGibdo = ikanaCanyonScene.Maps[0].Actors[64];
+                doubledGibdo.Position = new vec16(-602, 400, 972);
+
                 // in spring there are two torches on top of each other, which is weird, move the other one to face the first one
                 //var mountainVillageSpring = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MountainVillageSpring.FileID());
                 //var secondTorch = mountainVillageSpring.Maps[0].Actors[13];
@@ -4818,13 +4823,8 @@ namespace MMR.Randomizer
             for (int act = 0; act < actorList.Count; act++)
             {
                 var actor = actorList[act];
-                //var dynaProperties = actor.ActorEnum.GetAttribute<DynaAttributes>();
-                
-                //if (dynaProperties != null)
-                //{
                 this.DynaPolySize += actor.DynaLoad.poly;
                 this.DynaVertSize += actor.DynaLoad.vert;
-                //}
             }
 
         }
@@ -5033,6 +5033,13 @@ namespace MMR.Randomizer
                 log.AppendLine(text + " ratio: [" + ((float) newv / (float) oldv).ToString("F4")
                     + "] newsize: [" + newv.ToString("X6") + "] oldsize: [" + oldv.ToString("X6") + "]");
             }
+            void PrintCombineDeltaNewOld(string text, int newv, int oldv)
+            {
+                log.AppendLine(text + " delta: [" + (newv - oldv).ToString()
+                    + "] newsize: [" + newv.ToString("X6") + "] oldsize: [" + oldv.ToString("X6") + "]");
+            }
+
+
 
             if (newMapList == null)
             {
@@ -5055,19 +5062,15 @@ namespace MMR.Randomizer
                 PrintCombineRatioNewOld("  day:    overlay ", newMapList[map].day.OverlayRamSize,   oldMapList[map].day.OverlayRamSize);
                 PrintCombineRatioNewOld("  day:    struct  ", newMapList[map].day.ActorInstanceSum, oldMapList[map].day.ActorInstanceSum);
                 PrintCombineRatioNewOld("  day:    total  =", newDTotal, oldDTotal);
-                PrintCombineRatioNewOld("  day:    object  ", newMapList[map].day.ObjectRamSize, oldMapList[map].day.ObjectRamSize);
 
                 PrintCombineRatioNewOld("  night:  overlay ", newMapList[map].night.OverlayRamSize,   oldMapList[map].night.OverlayRamSize);
                 PrintCombineRatioNewOld("  night:  struct  ", newMapList[map].night.ActorInstanceSum, oldMapList[map].night.ActorInstanceSum);
                 PrintCombineRatioNewOld("  night:  total  =", newNTotal, oldNTotal);
+
+                log.AppendLine($"  ------------------------------------------------------ ");
+
+                PrintCombineRatioNewOld("  day:    object  ", newMapList[map].day.ObjectRamSize, oldMapList[map].day.ObjectRamSize);
                 PrintCombineRatioNewOld("  night:  object  ", newMapList[map].night.ObjectRamSize, oldMapList[map].night.ObjectRamSize);
-
-                log.AppendLine($"     ------------------------------ ");
-
-                PrintCombineRatioNewOld("  day:    dyna poly  ", newMapList[map].day.DynaPolySize, oldMapList[map].day.DynaPolySize);
-                PrintCombineRatioNewOld("  day:    dyna vert  ", newMapList[map].day.DynaVertSize, oldMapList[map].day.DynaVertSize);
-                PrintCombineRatioNewOld("  night:  dyna poly  ", newMapList[map].night.DynaPolySize, oldMapList[map].night.DynaPolySize);
-                PrintCombineRatioNewOld("  night:  dyna vert  ", newMapList[map].night.DynaVertSize, oldMapList[map].night.DynaVertSize);
 
 
                 // print map objects size
@@ -5078,10 +5081,16 @@ namespace MMR.Randomizer
                 }
                 var size = newMapList[map].day.objectSizes.Sum().ToString("X");
                 var allSize = newMapList[map].day.ObjectRamSize.ToString("X");
-                log.AppendLine($" object sizes: [ {hexString}]");
+                log.AppendLine($"   object sizes: [ {hexString}]");
                 log.AppendLine($"    sum: [0x{size}] allsize: [0x{allSize}]");
-                log.AppendLine($" ------------------------------------------------- ");
+                log.AppendLine($"  ------------------------------------------------------ ");
 
+                PrintCombineDeltaNewOld("  day:    dyna poly  ", newMapList[map].day.DynaPolySize, oldMapList[map].day.DynaPolySize);
+                PrintCombineDeltaNewOld("  day:    dyna vert  ", newMapList[map].day.DynaVertSize, oldMapList[map].day.DynaVertSize);
+                PrintCombineDeltaNewOld("  night:  dyna poly  ", newMapList[map].night.DynaPolySize, oldMapList[map].night.DynaPolySize);
+                PrintCombineDeltaNewOld("  night:  dyna vert  ", newMapList[map].night.DynaVertSize, oldMapList[map].night.DynaVertSize);
+
+                log.AppendLine($" ------------------------------------------------- ");
             }
         } // end PrintAllMapRamObjectOutput
     } // end actorsCollection
