@@ -514,6 +514,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1369)]
         [SceneInternalId(0x49)]
+        // 8 biobabas in the ceiling caused crash in room 8, at 10x8 and we went over by 7, so 72 should be safe
+        [DynaHeadroom(68,68)]
         //3: clear the biobabas, 5 is gekko, 8 is wart
         [ClearEnemyPuzzleRooms(3, 5, 7)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Skulltula,
