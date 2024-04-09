@@ -564,8 +564,13 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(Keese, CompanionAlignment.Above, ourVariant: -1,
             variant: 0x0, 0x2, 0x8002, 0x8004)] // todo select specific variants that are lit
         //Scene.SouthClockTown
-        [ForbidFromScene(Scene.WoodfallTemple, Scene.SouthernSwamp, Scene.DekuShrine, Scene.WestClockTown, Scene.SouthernSwampClear,
-            Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayCoast, Scene.GreatBayTemple, Scene.OceanSpiderHouse, Scene.BeneathTheWell, Scene.PiratesFortressRooms, Scene.PoeHut)]
+        [ForbidFromScene(Scene.WoodfallTemple, Scene.SouthernSwamp,
+            //Scene.DekuShrine,
+            Scene.WestClockTown, //Scene.SouthernSwampClear,
+            Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayCoast,
+            Scene.GreatBayTemple, Scene.OceanSpiderHouse,
+            Scene.BeneathTheWell,
+            Scene.PiratesFortressRooms, Scene.PoeHut)]
         [UnkillableAllVariants]
         Torch = 0x39, // Obj_Syokudai
 
@@ -1138,6 +1143,7 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x110)] // testing // 115 101 106 10E 10F
         [GroundVariants(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E, // good variety to place
             0x202, 0x602, 0x802, 0xA02, 0xC02, // swords school
+            0xF0A, // buisness scrub grotto
             0x4110)] // TF pot
         [VariantsWithRoomMax(max:0, variant: 0x202, 0x602, 0x802, 0xA02, 0xC02)] // swords school, these are dungeon_keep pots cannot place without the object
         [ForbidFromScene(Scene.MajorasLair)] // we want them for the fight
@@ -1285,7 +1291,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x7000, 0xC000, 0xE000, 0xF000, 0xD000)] // regular unhidden grottos
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
-        [ForbidFromScene(Scene.Grottos)] //Scene.ZoraCape, Scene.GreatBayCoast
+        //[ForbidFromScene(Scene.Grottos)] //Scene.ZoraCape, Scene.GreatBayCoast
         //[EnemizerScenesPlacementBlock(// Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear 
         //    /* Scene.Woodfall, Scene.DekuShrine */)] // blocking enemies
         [BlockingVariantsAll] // especially the hotwater rocks
@@ -1397,7 +1403,9 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xE6)]
         // params: 0xFC00 is paths, 0xF is type?
         // 1/2/3 are all standing around but with different... hair styles
-        [GroundVariants(1, 2, 3)]
+        // 0 is pointing in the distance
+        [GroundVariants(0,
+            1, 2, 3)]
         // pathing 0xFC00 >> A
         [UnkillableAllVariants]
         CutscenePirate = 0x9F, // En_Ge1
@@ -3221,8 +3229,9 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xBB)]
         // type: 0x3000: 0 is path, 1 air 2 water
         [WaterBottomVariants(0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x200B, 0x200C, 0x200D)]
-        //[FlyingVariants(0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // loads more, think there are flags here
-        [CeilingVariants(0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // loads more, think there are flags here
+        [CeilingVariants(0x1014, 0x1016, 0x1017, 0x1018, 
+            0x101E, 0x100D, 0x1011, 0x1019
+            )] // loads more, think there are flags here
         [PerchingVariants(0x1012)] // non-vanilla link speed 12, attempting to perch
         [PathingVariants(0x0000)] // pathing type? requires us to introduce paths which might confuse our rando tho
         // if I had a hanging from cieling thing like spiders this would work fine
@@ -4611,6 +4620,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingVariants(0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,
                 0x14EA, 0x18EA,
             0x284B, 0x144B, // hookshotroom
+
             0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
         //[GroundVariants(0xFC20, 0xFC40 /*, 0xFCE0 */)]
         [VariantsWithRoomMax(max: 0, variant: 0x4C24, 0xFC00, 0xFC01, 0x81F, 0xC1F)] // only type 7 (0xE0) should be bonkable
@@ -4622,7 +4632,9 @@ namespace MMR.Randomizer.GameObjects
         [PathingKickoutAddrVarsPlacement(mask: 0x1F, shift: 0x0)]
         [RespawningAllVariants] // think they count as enemy, but they dont die they get back up, so can't put places
         //[ForbidFromScene(Scene.PiratesFortressRooms)] // because the ones in the hookshot room need to stay around
-        [EnemizerScenesPlacementBlock(Scene.SouthClockTown, Scene.SwampSpiderHouse, Scene.MayorsResidence, Scene.RanchBuildings,
+        // getting kicked out is a pain
+        [EnemizerScenesPlacementBlock(Scene.SouthClockTown,
+            Scene.SwampSpiderHouse, Scene.MayorsResidence, Scene.RanchBuildings,
             Scene.DekuPlayground, Scene.DekuShrine, Scene.TradingPost)]
         PatrollingPirate = 0x21E, // En_Ge2
 

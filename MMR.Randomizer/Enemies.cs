@@ -354,7 +354,7 @@ namespace MMR.Randomizer
 
         #region Read and Write Scene Actors and Objects
 
-        public static List<Actor> GetSceneEnemyActors(Scene scene)
+        public static List<Actor> GetSceneEnemyActors(Scene scene, StringBuilder log)
         {
             /// Gets all actors in a scene, that we want to randomize
             /// this function is separate from object because actors and objects are a different list in the scene/room data
@@ -387,6 +387,10 @@ namespace MMR.Randomizer
                             mapActor.AllVariants = Actor.BuildVariantList(matchingEnemy);
                             mapActor.Blockable = mapActor.ActorEnum.IsBlockable(scene.SceneEnum, actorNumber);
                             sceneEnemyList.Add(mapActor);
+                        }
+                        else
+                        {
+                            log.Append($" in scene [{scene.SceneEnum}][{mapIndex}] actor was skipped over: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}]\n");
                         }
                     }
                 }
@@ -3813,7 +3817,7 @@ namespace MMR.Randomizer
             WriteOutput($" starting timestamp : [{DateTime.Now.ToString("hh:mm:ss.fff tt")}]");
             #endregion
 
-            thisSceneData.Actors = GetSceneEnemyActors(scene);
+            thisSceneData.Actors = GetSceneEnemyActors(scene, thisSceneData.Log);
             if (thisSceneData.Actors.Count == 0)
             {
                 return; // if no enemies, no point in continuing

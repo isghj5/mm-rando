@@ -100,6 +100,11 @@ namespace MMR.Randomizer.Extensions
             {
                 variants.AddRange(attrCeil.Variants);
             }
+            var attrPerch = actor.GetAttribute<PerchingVariantsAttribute>();
+            if (attrPerch != null)
+            {
+                variants.AddRange(attrPerch.Variants);
+            }
             var attrPatrol = actor.GetAttribute<PathingVariantsAttribute>();
             if (attrPatrol != null)
             {
