@@ -436,7 +436,8 @@ namespace MMR.Randomizer.Models.Rom
                 }
 
                 // we allow flying on perching and cieling types because there are so few perching/ceiling actors and perching locations
-                if ((randomVariantType == ActorType.Perching || randomVariantType == ActorType.Ceiling) && ourVariantMatches)
+                if ((randomVariantType == ActorType.Perching || (randomVariantType == ActorType.Ceiling && rng.Next(100) < 65))
+                    && ourVariantMatches)
                 {
                     var theirFlyingVariants = otherActor.AllVariants[(int)ActorType.Flying - 1];
                     if (theirFlyingVariants.Count != 0)
