@@ -4947,6 +4947,13 @@ namespace MMR.Randomizer
                 return false;
             }
 
+            var dynatest = isDynaSizeAcceptable();
+            if (dynatest != "acceptable")
+            {
+                log.AppendLine($" ---- bogo REJECTED: dyna are too big (by {dynatest})");
+                return false;
+            }
+
             for (int map = 0; map < oldMapList.Count; ++map) // per map
             {
                 // pos diff is smaller
@@ -4961,6 +4968,8 @@ namespace MMR.Randomizer
                     log.AppendLine($" ---- bogo REJECTED: map {map} does not meed RAM requirements for NIGHT");
                     return false;
                 }
+
+                // compare dyna requirements
 
             }
             return true; // all of them passed size test
@@ -5025,6 +5034,44 @@ namespace MMR.Randomizer
 
             return 0;
         }
+
+        public string isDynaSizeAcceptable()
+        {
+            for (int map = 0; map < oldMapList.Count; ++map)
+            {
+                // pull dynaheadroom for the scene, if there isnt one continue
+                var dynaHeadroomAttr = SceneUtils.GetSceneDynaAttributes(this.Scene.SceneEnum, map);
+                if (dynaHeadroomAttr == null) continue; // this room has none
+
+                // compare headroom to actual
+                var dayPolyDiff = this.newMapList[map].day.DynaPolySize - this.oldMapList[map].day.DynaPolySize;
+                if (dayPolyDiff >  dynaHeadroomAttr.Polygon)
+                {
+                    return $"map [{map}] day poly: [{dayPolyDiff}]";
+                }
+
+                var dayVertDiff = this.newMapList[map].day.DynaVertSize - this.oldMapList[map].day.DynaVertSize;
+                if (dayVertDiff > dynaHeadroomAttr.Polygon)
+                {
+                    return $"map [{map}] day vert: [{dayVertDiff}]";
+                }
+
+                var nightPolyDiff = this.newMapList[map].night.DynaPolySize - this.oldMapList[map].night.DynaPolySize;
+                if (nightPolyDiff > dynaHeadroomAttr.Polygon)
+                {
+                    return $"map [{map}] day poly: [{nightPolyDiff}]";
+                }
+
+                var nightVertDiff = this.newMapList[map].night.DynaVertSize - this.oldMapList[map].night.DynaVertSize;
+                if (nightVertDiff > dynaHeadroomAttr.Polygon)
+                {
+                    return $"map [{map}] day vert: [{nightVertDiff}]";
+                }
+            }
+
+            return "acceptable";
+        }
+
 
         // print to log function
         public void PrintAllMapRamObjectOutput(StringBuilder log)
