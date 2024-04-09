@@ -226,6 +226,13 @@ namespace MMR.Randomizer.Utils
                 a.Room = mapID;
                 a.RoomActorIndex = i;
 
+                var dynaProperties = a.ActorEnum.GetAttribute<DynaAttributes>();
+                if (dynaProperties != null)
+                {
+                    a.DynaLoad.poly = dynaProperties.Polygons;
+                    a.DynaLoad.vert = dynaProperties.Verticies;
+                }
+
                 Actors.Add(a);
             }
             Debug.WriteLine("\n");

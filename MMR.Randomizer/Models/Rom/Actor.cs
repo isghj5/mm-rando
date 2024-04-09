@@ -41,6 +41,7 @@ namespace MMR.Randomizer.Models.Rom
         // used for vanilla actors (not for replacements)
         public int ActorSize; // todo
         public int ObjectSize; // read by enemizer at scene actor reading
+        public (int poly, int vert) DynaLoad =  (0, 0);  // dyna load per actor, can be overwritten by injected actor
         public int Room;           // this specific actor, which map/room was it in
         public int RoomActorIndex; // the index of this actor in its room's actor list
         //public int Stationary; // Deathbasket used to use this, I dont see the point except around water
@@ -83,6 +84,13 @@ namespace MMR.Randomizer.Models.Rom
             this.OnlyOnePerRoom = actor.GetAttribute<OnlyOneActorPerRoom>();
             this.RespawningVariants = actor.RespawningVariants();
             this.UnplaceableVariants = actor.GetUnPlacableVariants();
+
+            var dynaProperties = actor.GetAttribute<DynaAttributes>();
+            if (dynaProperties != null)
+            {
+                this.DynaLoad.poly = dynaProperties.Polygons;
+                this.DynaLoad.vert = dynaProperties.Verticies;
+            }
         }
 
         public Actor(InjectedActor injected, string name)
@@ -118,6 +126,24 @@ namespace MMR.Randomizer.Models.Rom
             this.UnplaceableVariants = this.ActorEnum.GetUnPlacableVariants();
             this.OnlyOnePerRoom = injected.onlyOnePerRoom;
             this.InjectedActor = injected;
+
+            
+            var dynaProperties = this.ActorEnum.GetAttribute<DynaAttributes>();
+            if (dynaProperties != null)
+            {
+                this.DynaLoad.poly = dynaProperties.Polygons;
+                this.DynaLoad.vert = dynaProperties.Verticies;
+            }
+
+            if (injected.DynaLoad.poly != -1) // custom new dyna
+            {
+                this.DynaLoad.poly = injected.DynaLoad.poly;
+            }
+            if (injected.DynaLoad.vert != -1) // custom new dyna
+            {
+                this.DynaLoad.vert = injected.DynaLoad.vert;
+            }
+
         }
 
         public static List<List<int>> BuildVariantList(GameObjects.Actor actor)
@@ -204,6 +230,8 @@ namespace MMR.Randomizer.Models.Rom
             newActor.InjectedActor = this.InjectedActor;
             newActor.UnplaceableVariants = this.UnplaceableVariants;
 
+            newActor.DynaLoad = this.DynaLoad;
+
             return newActor;
         }
 
@@ -253,6 +281,15 @@ namespace MMR.Randomizer.Models.Rom
                 Variants[0] = vars;
             }
 
+            // if the new is injected, pull from injected
+            // TODO? right now we dont have any actors we are injecting that change vanilla behavior, in fact we want to avoid
+            // if not injected, pull from enum
+            var dynaProperties = this.ActorEnum.GetAttribute<DynaAttributes>();
+            if (dynaProperties != null)
+            {
+                this.DynaLoad.poly = dynaProperties.Polygons;
+                this.DynaLoad.vert = dynaProperties.Verticies;
+            }
         }
 
         public void ChangeActor(Actor otherActor, int vars = -1)
@@ -271,11 +308,61 @@ namespace MMR.Randomizer.Models.Rom
                 Variants[0] = vars;
             }
 
+            this.DynaLoad = otherActor.DynaLoad;
+
             this.InjectedActor = otherActor.InjectedActor;
+        }
+
+        public void UpdateActor(InjectedActor injectedActor)
+        {
+            /// this function exists for actor injection
+
+            this.InjectedActor = injectedActor;
+
+            this.OnlyOnePerRoom = injectedActor.onlyOnePerRoom;
+
+            // should we add or replace variants? for now we add
+            this.Variants.AddRange(injectedActor.groundVariants);
+            this.Variants.AddRange(injectedActor.flyingVariants);
+            this.Variants.AddRange(injectedActor.waterVariants);
+            this.Variants.AddRange(injectedActor.waterBottomVariants);
+            this.Variants.AddRange(injectedActor.waterTopVariants);
+            this.Variants = this.Variants.Distinct().ToList(); // if variant copies with limits we can double dip, also bloats loops
+
+            if (this.RespawningVariants == null)
+            {
+                this.RespawningVariants = new List<int>();
+            }
+            this.RespawningVariants.AddRange(injectedActor.respawningVariants);
+
+            if (injectedActor.DynaLoad.poly != -1)
+            {
+                this.DynaLoad.poly = injectedActor.DynaLoad.poly;
+            }
+            if (injectedActor.DynaLoad.vert != -1)
+            {
+                this.DynaLoad.vert = injectedActor.DynaLoad.vert;
+            }
+
+            void AddToSpecificSubtype(ActorType type, List<int> newList)
+            {
+                var variantSubList = this.AllVariants[(int)type - 1];
+                variantSubList.AddRange(newList.Except(variantSubList));
+            }
+
+            this.VariantsWithRoomMax.AddRange(injectedActor.limitedVariants);
+            AddToSpecificSubtype(ActorType.Ground, injectedActor.groundVariants);
+            //var groundVariantEntry = this.AllVariants[(int)ActorType.Ground - 1];
+            //groundVariantEntry.AddRange(injectedActor.groundVariants.Except(groundVariantEntry));
+            AddToSpecificSubtype(ActorType.Flying, injectedActor.flyingVariants);
+            AddToSpecificSubtype(ActorType.Water, injectedActor.waterVariants);
+            AddToSpecificSubtype(ActorType.WaterTop, injectedActor.waterTopVariants);
+            AddToSpecificSubtype(ActorType.WaterBottom, injectedActor.waterBottomVariants);
         }
 
         public void ChangeVariant(int variant)
         {
+            /// deep change: changes old variant as well
             this.OldVariant = this.Variants[0] = variant;
         }
 
@@ -515,45 +602,6 @@ namespace MMR.Randomizer.Models.Rom
         {
             // 10 time flags, day and night for days 0 through 4, split in the flags section of the rotation shorts
             return ((this.Rotation.x & 0x3) << 7) | (this.Rotation.z & 0x7F);
-        }
-
-        public void UpdateActor(InjectedActor injectedActor)
-        {
-            /// this function exists for actor injection
-
-            this.InjectedActor = injectedActor;
-
-            this.OnlyOnePerRoom = injectedActor.onlyOnePerRoom;
-
-            // should we add or replace variants? for now we add
-            this.Variants.AddRange(injectedActor.groundVariants);
-            this.Variants.AddRange(injectedActor.flyingVariants);
-            this.Variants.AddRange(injectedActor.waterVariants);
-            this.Variants.AddRange(injectedActor.waterBottomVariants);
-            this.Variants.AddRange(injectedActor.waterTopVariants);
-            this.Variants = this.Variants.Distinct().ToList(); // if variant copies with limits we can double dip, also bloats loops
-
-            if (this.RespawningVariants == null)
-            {
-                this.RespawningVariants = new List<int>();
-            }
-            this.RespawningVariants.AddRange(injectedActor.respawningVariants);
-
-            void AddToSpecificSubtype(ActorType type, List<int> newList)
-            {
-                var variantSubList = this.AllVariants[(int)type - 1];
-                variantSubList.AddRange(newList.Except(variantSubList));
-            }
-
-            this.VariantsWithRoomMax.AddRange(injectedActor.limitedVariants);
-            AddToSpecificSubtype(ActorType.Ground, injectedActor.groundVariants);
-            //var groundVariantEntry = this.AllVariants[(int)ActorType.Ground - 1];
-            //groundVariantEntry.AddRange(injectedActor.groundVariants.Except(groundVariantEntry));
-            AddToSpecificSubtype(ActorType.Flying, injectedActor.flyingVariants);
-            AddToSpecificSubtype(ActorType.Water, injectedActor.waterVariants);
-            AddToSpecificSubtype(ActorType.WaterTop, injectedActor.waterTopVariants);
-            AddToSpecificSubtype(ActorType.WaterBottom, injectedActor.waterBottomVariants);
-
         }
 
         // TODO merge these two, but for right now they are used differently in different places

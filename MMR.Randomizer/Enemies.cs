@@ -43,6 +43,7 @@ namespace MMR.Randomizer
         public int ObjectId  = 0;
         public int fileID    = 0;
         public int ObjectFid = 0;
+        public (int poly, int vert) DynaLoad = (-1, -1);
 
         // if all new actor, we meed to know where the old vram start was when we shift VRAM for the actor
         public uint buildVramStart = 0;
@@ -412,12 +413,15 @@ namespace MMR.Randomizer
                             mapActor.Type = matchingEnemy.GetType(mapActor.OldVariant);
                             mapActor.AllVariants = Actor.BuildVariantList(matchingEnemy);
                             mapActor.Blockable = mapActor.ActorEnum.IsBlockable(scene.SceneEnum, actorNumber);
+
                             sceneEnemyList.Add(mapActor);
                         }
+                        #if DEBUG
                         else
                         {
                             log.Append($" in scene [{scene.SceneEnum}][{mapIndex}] actor was skipped over: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}]\n");
                         }
+                        #endif
                     }
                 }
             }
@@ -4176,13 +4180,23 @@ namespace MMR.Randomizer
                     newInjectedActor.limitedVariants.Add(new VariantsWithRoomMax(max, variant));
                     continue;
                 }
+                if (command == "dyna_load")
+                {
+                    var newDynaValuePair = valueStr.Split(",").ToList();
+                    var intBase = newDynaValuePair[0].Contains("0x") ? 16 : 10;
+                    newInjectedActor.DynaLoad.poly = Convert.ToInt32(newDynaValuePair[0].Trim(), intBase);
+                    intBase = newDynaValuePair[0].Contains("0x") ? 16 : 10;
+                    newInjectedActor.DynaLoad.vert = Convert.ToInt32(newDynaValuePair[1].Trim(), intBase);
+                    continue;
+                }
+
 
                 var value = Convert.ToInt32(valueStr, fromBase: 16);
                 if (command == "actor_id")
                 {
                     newInjectedActor.ActorId = value;
                 }
-                if (command == "obj_id")
+                else if (command == "obj_id")
                 {
                     newInjectedActor.ObjectId = value;
                 }
@@ -4804,12 +4818,13 @@ namespace MMR.Randomizer
             for (int act = 0; act < actorList.Count; act++)
             {
                 var actor = actorList[act];
-                var dynaProperties = actor.ActorEnum.GetAttribute<DynaAttributes>();
-                if (dynaProperties != null)
-                {
-                    this.DynaPolySize += dynaProperties.Polygons;
-                    this.DynaVertSize += dynaProperties.Verticies;
-                }
+                //var dynaProperties = actor.ActorEnum.GetAttribute<DynaAttributes>();
+                
+                //if (dynaProperties != null)
+                //{
+                this.DynaPolySize += actor.DynaLoad.poly;
+                this.DynaVertSize += actor.DynaLoad.vert;
+                //}
             }
 
         }
