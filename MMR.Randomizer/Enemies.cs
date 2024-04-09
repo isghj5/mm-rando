@@ -1798,11 +1798,12 @@ namespace MMR.Randomizer
             // we want both ground or water types, so we are going to use multiple actors
             var randomActorCandidates = new List<(GameObjects.Actor actor, short vars)>
             {
-                (GameObjects.Actor.LikeLike, 0x2), // water bottom type
+                (GameObjects.Actor.LikeLike, 0x2),  // water bottom type
+                (GameObjects.Actor.Mikau, 0xC0F),   // water surface type
                 (GameObjects.Actor.GoGoron, 0x7FC1) // ground type (race track goron, stretching)
             };
-            int coinFlip = rng.Next(2);
-            var coinTossResultActor = randomActorCandidates[coinFlip];
+            int randomValue = rng.Next(randomActorCandidates.Count);
+            var coinTossResultActor = randomActorCandidates[randomValue];
 
             var grottosScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Grottos.FileID());
             var hotspringDekuBaba = grottosScene.Maps[14].Actors.FindAll(a => a.ActorEnum == GameObjects.Actor.DekuBabaWithered);
@@ -1821,6 +1822,12 @@ namespace MMR.Randomizer
             farEntry.Position   = new vec16(6936, -22, 824);
             leftEntry.Position  = new vec16(6935, -24, 1072);
             rightEntry.Position = new vec16(7160, -24, 916);
+            if (farEntry.ActorEnum == GameObjects.Actor.Mikau) // surface type, move up to water top
+            {
+                farEntry.Position.y = 0;
+                leftEntry.Position.y = 0;
+                rightEntry.Position.y = 0;
+            }
 
             // baba have no face, so they don't get a rotation normally, they would all face the same direction,
             // turn them to face the center of the pool and each other
