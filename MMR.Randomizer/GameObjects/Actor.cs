@@ -3103,13 +3103,16 @@ namespace MMR.Randomizer.GameObjects
             Item.BottleCatchHotSpringWater)]
         // */
         // parameters unknown, they are not even and not time (time of spawn is a different parameter)
-        [WaterTopVariants(0x1FFE, 0x1FFD, 0x1000, 0x1004)] // for replacement
+        // size and a few other things should be &0x3, so 0x1FFE is 2, D is 1, 4 and 0 are 0
+        [WaterTopVariants(0x1FFE, 0x1FFD,
+            0x1FFC, // unused &3 = 0 version
+            0x1000, 0x1004)] // for replacement, we dont have water top pathing yet
         //[PathingVariants(0x1FFD, 0x1FFE)] // 0x7F >> 2, 0x1FC
         //[PathingTypeVarsPlacement(mask:0x7F, shift:2)]
         // TODO should we consider putting them on water top?
         // don't put too many in the world might run into BG issues
-        [VariantsWithRoomMax(max: 5, variant: 0x1000, 0x1004)]
-        [VariantsWithRoomMax(max: 0, variant: 0x1FFE, 0x1FFD)] // pathing type, and we dont want them to path
+        [VariantsWithRoomMax(max: 0, variant: 0x1000, 0x1004)] // pathing type (path zero), and we dont want them to path
+        [VariantsWithRoomMax(max: 6, variant: 0x1FFE, 0x1FFD, 0x1FFC)]
         [UnkillableAllVariants]
         //[ForbidFromScene(Scene.MountainVillage)] // IF I can't detect when the ice is important, enable this
         IceWaterPlatforms = 0x179, // Obj_Driftice
