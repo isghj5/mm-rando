@@ -79,6 +79,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.RegularIceBlock)] // blocking actors
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DekuBabaWithered, // grottos are common, this can get silly
             Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, //, Actor.BomberHideoutGuard // annoying
+            Actor.Seagulls, // with new height adjust its basically invisible
             Actor.Hiploop// water causes instant death
             //Actor.Bumper, Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, Actor.RegularIceBlock,
             /*Actor.ClocktowerGearsAndOrgan /*, Actor.PatrollingPirate */ )]

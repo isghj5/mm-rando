@@ -136,7 +136,7 @@ namespace MMR.Randomizer.GameObjects
         // 81 is trapped in ice, floats back up to the ceiling after melting
         [GroundVariants(0x81)]
         [BlockingVariants(0x81)]
-        [VariantsWithRoomMax(max: 1, variant: 0x81)] // have to limit because it can block and I don't have variant blocking
+        [VariantsWithRoomMax(max: 5, variant: 1)] // have to limit because it can block and I don't have variant blocking
         [DifficultAllVariants]
         [RespawningVariants(variant: 0x81)] // if they fly away after melt they might not come down (bug), so not killable
         [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
@@ -2080,6 +2080,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1520)]
         [FileID(226)]
         [ObjectListIndex(0x6)]
+        // there should be a special really big one, not sure how to spawn
         [FlyingVariants(0, 1)]
         [RespawningAllVariants] // yes really
         [FlyingToGroundHeightAdjustment(150)]
@@ -5865,8 +5866,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled()]
         [FileID(640)]
         [ObjectListIndex(0xF0)]
-        [UnkillableAllVariants]
         [GroundVariants(0)]
+        [VariantsWithRoomMax(max:0, variant:0)] // too common and does nothing, and we have a real mutoh we can put places
+        [UnkillableAllVariants]
         MutoMoonLeaveCutscene = 0x2A9, // En_Ending_Hero3
         
         [FileID(641)]
@@ -5878,6 +5880,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(642)]
         [ObjectListIndex(0xF1)]
         [GroundVariants(0x0, 0x1, 0x2, 0x3, 0x4)]
+        [VariantsWithRoomMax(max: 0, variant: 0x0, 0x1, 0x2, 0x3, 0x4)] // often fail to spawn
         [UnkillableAllVariants]
         // placable?
         CarpentersFromCutscene = 0x2AB, // En_Ending_Hero5
