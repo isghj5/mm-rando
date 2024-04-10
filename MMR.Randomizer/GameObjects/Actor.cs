@@ -2080,11 +2080,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1520)]
         [FileID(226)]
         [ObjectListIndex(0x6)]
-        // there should be a special really big one, not sure how to spawn
-        [FlyingVariants(0, 1)]
-        [RespawningAllVariants] // yes really
+        // special big one is type 1 but that is never read at init, only accessed on respawn function, so only used internally
+        // need mmra to access biggo-crow
+        [FlyingVariants(0)]
+        [RespawningVariants(0,1)] 
         [FlyingToGroundHeightAdjustment(150)]
-        [VariantsWithRoomMax(max: 7, variant: 0, 1)]
+        [VariantsWithRoomMax(max: 7, variant: 0)]
         Guay = 0xF1, // En_Crow
 
         EmptyF2 = 0xF2,
@@ -3469,6 +3470,7 @@ namespace MMR.Randomizer.GameObjects
         // cannot turn into mmra, need to modify the actor to speed up, but even with shifting the actor will not draw, reason unknown
         [FileID(380)]
         [ObjectListIndex(0x199)]
+        [DynaAttributes(32, 32)]
         // 0xF are type, 1 is ring 2 is wall
         //[WaterVariants(0x2)]
         [UnkillableAllVariants]

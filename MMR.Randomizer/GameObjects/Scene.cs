@@ -497,6 +497,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1362)]
         [SceneInternalId(0x46)]
+        //[DynaHeadroom()]
         //  we want the hiploop to be non-blocking actors, making them killable with this flag does the job
         [FairyDroppingEnemies(roomNumber: 24, actorNumber: 25, 26)] // hiploops
         [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
