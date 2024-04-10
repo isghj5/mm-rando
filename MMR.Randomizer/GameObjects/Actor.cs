@@ -3117,7 +3117,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 6, variant: 0x1FFE, 0x1FFD, 0x1FFC)]
         [UnkillableAllVariants]
         //[ForbidFromScene(Scene.MountainVillage)] // IF I can't detect when the ice is important, enable this
-        IceWaterPlatforms = 0x179, // Obj_Driftice
+        IceBlockWaterPlatforms = 0x179, // Obj_Driftice
 
         [EnemizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
         [FileID(340)]
