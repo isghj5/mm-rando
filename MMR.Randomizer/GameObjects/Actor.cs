@@ -4893,7 +4893,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingTypeVarsPlacement(mask: 0x3F00, shift: 8)]
         [VariantsWithRoomMax(max:0, variant: 0x2FF)] // probably time gated to hell
         [UnkillableAllVariants]
-        BombShopLady = 0x236, // En_Baba
+        BombShopLady = 0x236, // En_Baba , grandma
 
         [ActorizerEnabled] // does not spawn, even the daytime frollicing one
         // both of his vars are paths, sooo I'm guessing his behavior is hard coded
