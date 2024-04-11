@@ -1426,19 +1426,19 @@ namespace MMR.Randomizer.GameObjects
 
         EmptyA3 = 0xA3,
 
-        // TODO why am I not randomizing him in the bar?
         [ActorizerEnabled]
         [FileID(150)]
         [ObjectListIndex(0x248)]
         // FF is milkbar, 00 is walking through the reception area
         // 3 exists in granny's room in the inn, for title sequence.. so you can hear him walking toward the door???
         // 3 is also present in east clock town
-        //[Check restricted NotebookMeetGorman, moving gorman performance]
-        [GroundVariants(3, 0xFF, 0)]
+        [CheckRestricted(Item.NotebookMeetGorman, Item.MaskCircusLeader, Item.NotebookMovingGorman)]
+        [PathingVariants(3,  0)]
+        [GroundVariants(0xFF)]
         // behavior too complicated, disable placement anywhere
         [VariantsWithRoomMax(max: 0, variant: 0, 3, 0xFF)]
         [UnkillableAllVariants]
-        [ForbidFromScene(Scene.MilkBar)]
+        //[ForbidFromScene(Scene.MilkBar)]
         Gorman = 0xA4, // En_Gm
 
         [ActorizerEnabled]
@@ -1979,10 +1979,15 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants()]
         GroupRupeeSpawner = 0xE8, // Obj_Mure3
 
-        // needed for honey and darling
+        // honey and darling from the credits
+        // this... cutscene actor has a damage table..
+        [ActorizerEnabled]
         [FileID(221)]
         [ObjectListIndex(0x140)]
-        TargetGame = 0xE9, // En_Tg
+        [GroundVariants(0)] // credits version with no dialogue but at least htey have a collider?
+        [VariantsWithRoomMax(max:5, variant:0)]
+        [UnkillableAllVariants]
+        HoneyAndDarlingCredits = 0xE9, // En_Tg
 
         EmptyEA = 0xEA,
         EmptyEB = 0xEB,
@@ -2533,9 +2538,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x160)]
         Majora = 0x12F, // Boss_07
 
+        //[ActorizerEnabled] // even cutscene version doesn't spawn, might be a rando thing, modification untested assumed difficult
         [FileID(274)]
         [ObjectListIndex(0x8)]
+        // doesn't have real BG right?
+        [GroundVariants(0xFE0F)] // cutscene version that is supposed to be teaching link defense
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
+        [UnkillableAllVariants]
         GreatFairy = 0x130, // Bg_Dy_Yoseizo
 
         Empty131 = 0x131,
@@ -2988,8 +2997,28 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         HallucinationScrub = 0x169, // En_Dnk
 
+        [ActorizerEnabled]
         [FileID(327)]
         [ObjectListIndex(0x18B)]
+        [CheckRestricted(Item.MaskScents,
+            Item.CollectableDekuShrineDekuButlerSRoomItem1, Item.CollectableDekuShrineDekuButlerSRoomItem2, Item.CollectableDekuShrineDekuButlerSRoomItem3,
+            Item.CollectableDekuShrineDekuButlerSRoomItem4, Item.CollectableDekuShrineDekuButlerSRoomItem5, Item.CollectableDekuShrineDekuButlerSRoomItem6,
+            Item.CollectableDekuShrineDekuButlerSRoomItem7, Item.CollectableDekuShrineDekuButlerSRoomItem8, Item.CollectableDekuShrineDekuButlerSRoomItem9,
+            Item.CollectableDekuShrineDekuButlerSRoomItem10,
+            Item.CollectableDekuShrineGreyBoulderRoomPot1,
+            Item.CollectableDekuShrineGiantRoomFloor1Item1, Item.CollectableDekuShrineGiantRoomFloor1Item2,
+            Item.CollectableDekuShrineGiantRoomFloor1Item3, Item.CollectableDekuShrineGiantRoomFloor1Item4,
+            Item.CollectableDekuShrineGiantRoomFloor1Item5, Item.CollectableDekuShrineGiantRoomFloor1Item6,
+            Item.CollectableDekuShrineGiantRoomFloor1Item7, Item.CollectableDekuShrineGiantRoomFloor1Item8,
+            Item.CollectableDekuShrineRoomBeforeFlameWallsItem1, Item.CollectableDekuShrineRoomBeforeFlameWallsItem2,
+            Item.CollectableDekuShrineRoomBeforeFlameWallsItem3, Item.CollectableDekuShrineRoomBeforeFlameWallsItem4,
+            Item.CollectableDekuShrineRoomBeforeFlameWallsItem5, Item.CollectableDekuShrineRoomBeforeFlameWallsItem6,
+            Item.CollectableDekuShrineWaterRoomWithPlatformsItem1, Item.CollectableDekuShrineWaterRoomWithPlatformsItem2,
+            Item.CollectableDekuShrineWaterRoomWithPlatformsItem3, Item.CollectableDekuShrineWaterRoomWithPlatformsItem4,
+            Item.CollectableDekuShrineWaterRoomWithPlatformsItem5, Item.CollectableDekuShrineWaterRoomWithPlatformsItem6)]
+        [GroundVariants(0)]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
         DekuKing = 0x16A, // En_Dnq
 
         Empty16B = 0x16B,
@@ -3164,17 +3193,41 @@ namespace MMR.Randomizer.GameObjects
         DekuRaceDoor = 0x17E, // Bg_Crace_Movebg
 
         // todo come back and figure out how to spawn regular 
-        //[ActorizerEnabled]
+        [ActorizerEnabled]
         [FileID(345)]
         [ObjectListIndex(0x1F3)]
+        // dont specify only to the 
+        [CheckRestricted(Item.MaskScents,
+            Item.CollectableDekuShrineDekuButlerSRoomItem1, Item.CollectableDekuShrineDekuButlerSRoomItem2, Item.CollectableDekuShrineDekuButlerSRoomItem3,
+            Item.CollectableDekuShrineDekuButlerSRoomItem4, Item.CollectableDekuShrineDekuButlerSRoomItem5, Item.CollectableDekuShrineDekuButlerSRoomItem6,
+            Item.CollectableDekuShrineDekuButlerSRoomItem7, Item.CollectableDekuShrineDekuButlerSRoomItem8, Item.CollectableDekuShrineDekuButlerSRoomItem9,
+            Item.CollectableDekuShrineDekuButlerSRoomItem10,
+            Item.CollectableDekuShrineGreyBoulderRoomPot1,
+            Item.CollectableDekuShrineGiantRoomFloor1Item1, Item.CollectableDekuShrineGiantRoomFloor1Item2,
+            Item.CollectableDekuShrineGiantRoomFloor1Item3, Item.CollectableDekuShrineGiantRoomFloor1Item4,
+            Item.CollectableDekuShrineGiantRoomFloor1Item5, Item.CollectableDekuShrineGiantRoomFloor1Item6,
+            Item.CollectableDekuShrineGiantRoomFloor1Item7, Item.CollectableDekuShrineGiantRoomFloor1Item8,
+            Item.CollectableDekuShrineRoomBeforeFlameWallsItem1, Item.CollectableDekuShrineRoomBeforeFlameWallsItem2,
+            Item.CollectableDekuShrineRoomBeforeFlameWallsItem3, Item.CollectableDekuShrineRoomBeforeFlameWallsItem4,
+            Item.CollectableDekuShrineRoomBeforeFlameWallsItem5, Item.CollectableDekuShrineRoomBeforeFlameWallsItem6,
+            Item.CollectableDekuShrineWaterRoomWithPlatformsItem1, Item.CollectableDekuShrineWaterRoomWithPlatformsItem2,
+            Item.CollectableDekuShrineWaterRoomWithPlatformsItem3, Item.CollectableDekuShrineWaterRoomWithPlatformsItem4,
+            Item.CollectableDekuShrineWaterRoomWithPlatformsItem5, Item.CollectableDekuShrineWaterRoomWithPlatformsItem6)]
         // params 0xC000 is type, 0 and 1 are params, "other" is in front of his dead son
         // 0x2F8,
         // 0x7F,
         // 0xF ???
         // 0x8000 is cutscene version, 0x7FFF is main hall but doesn't spawn?
         //[GroundVariants(0x2000)]
-        [GroundVariants(0x8000)]
+        [GroundVariants(
+            0x7FFF, // standing next to the king
+            0x8000  // credits: in front of his son
+        )]
+        [PathingVariants(
+            0x0001 // inside of the race shrine
+        )]
         // good candidate for aligned front companions, to his son
+        [VariantsWithRoomMax(max:0, variant: 0x8000,0x7FFF, 0x0001)] // none of the vanila variants spawn out of location or out of event
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 3)] // 0x3F8
         Butler = 0x17F, // En_Dno
@@ -3922,11 +3975,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x107)]
         [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat,
             Item.NotebookMeetPostman, Item.NotebookPostmansFreedom)]
-        [GroundVariants(0x0)] // 0: sitting in his room?
+        // this could be pathing, but the paths are part of the schedule
+        [GroundVariants(0x1, // inn, milkbar
+            0x0)] // patroling around the world
         //[VariantsWithRoomMax()]
         [UnkillableAllVariants]
-        [VariantsWithRoomMax(max:0, variant:0)] // do not place: hardcoded up the wazzo
-        [ForbidFromScene(Scene.WestClockTown, Scene.EastClockTown, Scene.NorthClockTown, Scene.SouthClockTown)]
+        [VariantsWithRoomMax(max:0, variant:0, 1)] // do not place: hardcoded up the wazzo
+        //[ForbidFromScene(Scene.WestClockTown, Scene.EastClockTown, Scene.NorthClockTown, Scene.SouthClockTown)]
         PostMan = 0x1D5, // En_Pm
 
         [FileID(431)]
@@ -4252,7 +4307,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(468)]
         [ObjectListIndex(0x1D4)]
-        [CheckRestricted(Item.BottleCatchPrincess, Item.MaskScents,
+        // we want to keep her object in the deku king chamber too
+        [CheckRestricted(/*Scene.WoodfallTemple, variant:-1,*/ Item.BottleCatchPrincess, Item.MaskScents,
             Item.CollectableDekuShrineDekuButlerSRoomItem1, Item.CollectableDekuShrineDekuButlerSRoomItem2, Item.CollectableDekuShrineDekuButlerSRoomItem3,
             Item.CollectableDekuShrineDekuButlerSRoomItem4, Item.CollectableDekuShrineDekuButlerSRoomItem5, Item.CollectableDekuShrineDekuButlerSRoomItem6,
             Item.CollectableDekuShrineDekuButlerSRoomItem7, Item.CollectableDekuShrineDekuButlerSRoomItem8, Item.CollectableDekuShrineDekuButlerSRoomItem9,
@@ -4270,8 +4326,14 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableDekuShrineWaterRoomWithPlatformsItem5, Item.CollectableDekuShrineWaterRoomWithPlatformsItem6)]
         // 0 is inside of tree
         // 2 is post-woodfall sitting in royal chamber, does not spawn until after a flag is set
-        [GroundVariants(0x0)]
+        [GroundVariants(
+            0x0, // regular one in the tree
+            0x2 // credits cutscene
+            )]
         [OnlyOneActorPerRoom]
+        [VariantsWithRoomMax(max:0,
+            variant:0x2 // doesn't spawn until you save monkey
+            )]
         [UnkillableAllVariants]
         [ForbidFromScene(/*Scene.WoodfallTemple,*/ Scene.DekuKingChamber)] // if her object is not in the king chamber no cutscene after bottle delivery
         DekuPrincess = 0x1FC, // En_Dnp
@@ -5005,11 +5067,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(536)]
         [ObjectListIndex(0x220)]
-        [CheckRestricted(Item.HeartPieceEvan)]
+        [CheckRestricted(Scene.ZoraHallRooms, variant:-1, Item.HeartPieceEvan)]
         [GroundVariants(0xFE01, 0xFE02, 0xFE0F)]
         [WaterBottomVariants(0xFE01, 0xFE02, 0xFE0F)] // also, do not put regular variant as water our typing system is dumb, doesnt know which is which
-        [VariantsWithRoomMax(max:0, variant:0xFE21, 0xFE02, 0xFE0F)]
-        // no limits for now, don't know what his actor does
+        [VariantsWithRoomMax(max:0, variant:0xFE21, 0xFE02/*, 0xFE0F*/)]
         [UnkillableAllVariants]
         Evan = 0x241, // En_Zos
 
@@ -5173,13 +5234,12 @@ namespace MMR.Randomizer.GameObjects
         //[ForbidFromScene(Scene.ZoraCape)]
         Lulu = 0x252, // Ee_Zov
 
-        // placable but does nothing and is waaaay too common
         [ActorizerEnabled]
         [FileID(554)]
         [ObjectListIndex(0x7)]
         //[CheckRestricted()]
-        [GroundVariants(0,2)]
-        [VariantsWithRoomMax(max:0, variant: 0, 2)]
+        [GroundVariants(0,2)] // these are vanilla params, but weirdly they dont get used by the actor code
+        [VariantsWithRoomMax(max:0, variant: 0, 2)]// placable but does nothing and is waaaay too common
         [UnkillableAllVariants]
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         AnjusMother = 0x253, // En_Ah

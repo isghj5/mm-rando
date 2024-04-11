@@ -2967,11 +2967,11 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Guay)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GreatFairy)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RomaniRanch, GameObjects.Actor.Treee, GameObjects.Actor.BadBat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Lilypad)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Wolfos, GameObjects.Actor.Gomess)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.GreatFairy)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.Keese, GameObjects.Actor.UnusedStoneTowerPlatform)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ReDead, GameObjects.Actor.OceanSpiderhouseBombableWall)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
