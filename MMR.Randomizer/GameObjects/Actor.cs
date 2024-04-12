@@ -4527,6 +4527,9 @@ namespace MMR.Randomizer.GameObjects
         [BlockingVariantsAll]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
+        // now that he gives hints we cannot remove him
+        // his INTRO version is a fakeout now, handled in :: SwapIntroSeth()
+        [ForbidFromScene(Scene.SouthClockTown)]
         // looking at moon, don't place him underground
         [EnemizerScenesPlacementBlock(Scene.Grottos, Scene.InvertedStoneTower, Scene.BeneathGraveyard, Scene.BeneathTheWell,
             Scene.GoronShrine, Scene.IkanaCastle, Scene.OceanSpiderHouse, Scene.SwampSpiderHouse,

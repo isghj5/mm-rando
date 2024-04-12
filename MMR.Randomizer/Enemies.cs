@@ -747,6 +747,7 @@ namespace MMR.Randomizer
             RandomizeTheSongMonkey();
             MoveTheISTTTunnelTransitionBack();
             FixSwordSchoolPotRandomization();
+            SwapIntroSeth();
 
             Shinanigans();
         }
@@ -2445,6 +2446,22 @@ namespace MMR.Randomizer
             // room file header 0xB describes object list offset in the file, but also describes size to load into memory, need to increase to 8
             var swordSchoolRoom0 = RomData.MMFileList[GameObjects.Scene.SwordsmansSchool.FileID() + 1].Data; // 1434
             swordSchoolRoom0[0x29] = 8; // increase object list to 8
+        }
+
+        private static void SwapIntroSeth()
+        {
+            /// for actorizer, seth is a very visible part of the intro and we want to randomize
+            ///  but we do not want to randomize the actual seth in sct because he hints the rewards for the spiderhouse, which is kinda important
+
+            if (!ReplacementListContains(GameObjects.Actor.Seth1)) return;
+
+            var sctScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthClockTown.FileID());
+            var introSeth = sctScene.Maps[3].Actors[2];
+            introSeth.ChangeActor(GameObjects.Actor.BeanSeller, vars: 0, modifyOld: true);
+            introSeth.OldName = "IntroSeth";
+
+            // change object
+            sctScene.Maps[3].Objects[14] = GameObjects.Actor.BeanSeller.ObjectIndex();
         }
 
 
