@@ -2088,7 +2088,8 @@ namespace MMR.Randomizer.GameObjects
         // special big one is type 1 but that is never read at init, only accessed on respawn function, so only used internally
         // need mmra to access biggo-crow
         [FlyingVariants(0)]
-        [RespawningVariants(0,1)] 
+        [RespawningVariants(0,1)]
+        [DifficultVariants(2)]
         [FlyingToGroundHeightAdjustment(150)]
         [VariantsWithRoomMax(max: 7, variant: 0)]
         Guay = 0xF1, // En_Crow
@@ -4031,7 +4032,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.AstralObservatory, Scene.Grottos, Scene.IkanaCastle,
             Scene.WestClockTown, Scene.EastClockTown, Scene.NorthClockTown, Scene.SouthClockTown, Scene.LaundryPool,
             Scene.TouristCenter, Scene.DekuKingChamber, Scene.DekuShrine, Scene.MountainSmithy, Scene.GoronGrave, Scene.GoronShrine, Scene.FishermansHut, Scene.ZoraHall, Scene.MarineLab, Scene.SecretShrine, Scene.IkanaCastle, Scene.IgosDuIkanasLair, Scene.SwordsmansSchool,
-            Scene.TradingPost, Scene.BombShop, Scene.PotionShop, Scene.GoronShop, Scene.ZoraHallRooms, Scene.TreasureChestShop, Scene.SwampShootingGallery, Scene.TownShootingGallery,
+            Scene.TradingPost, Scene.BombShop, Scene.PotionShop, Scene.GoronShop, Scene.ZoraHallRooms, Scene.TreasureChestShop, Scene.SwampShootingGallery, Scene.TownShootingGallery, Scene.BeneathTheWell,
             Scene.HoneyDarling, Scene.PostOffice, Scene.MayorsResidence, Scene.StockPotInn
             )]
         [OnlyOneActorPerRoom]

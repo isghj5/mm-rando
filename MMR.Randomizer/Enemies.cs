@@ -2985,7 +2985,7 @@ namespace MMR.Randomizer
                 }
 
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GreatFairy)) continue;
-                if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Monkey, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.DekuBaba, GameObjects.Actor.Hiploop)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Lilypad)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.GreatFairy)) continue;
@@ -4464,6 +4464,9 @@ namespace MMR.Randomizer
             var relocEntryLoc = relocEntryCountLocation + 4; // first overlayEntry immediately after reloc count
             var relocEntryEndLoc = relocEntryLoc + (relocEntryCount * 4);
             // traverse the whole relocation section, parse the changes, apply
+
+            uint pointer = 0; // save outside of loop incase of multiple combos
+
             while (relocEntryLoc < relocEntryEndLoc)
             {
                 // each overlayEntry in reloc is one nibble of shifted section, one nible of type, and 3 bytes of address
@@ -4482,7 +4485,7 @@ namespace MMR.Randomizer
                     // addu treats the last two bytes of our pointer as signed
                     // to fix this, the LUI command is given a carry over bit to fix it, we need to read and write knowing this
                     // combine the halves from asm back into one pointer
-                    uint pointer = 0;
+                    pointer = 0;
                     pointer |= ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2));
                     int LUIDecr = ((pointer & 0xFFFF) > 0x8000) ? 1 : 0;
                     pointer |= ((uint)(ReadWriteUtils.Arr_ReadU16(file.Data, luiLoc + 2) - LUIDecr) << 16) ;
@@ -4497,6 +4500,14 @@ namespace MMR.Randomizer
                     ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
 
                     relocEntryLoc += 8;
+                }
+                else if (commandType == 0x6) // another ADDIU after the first combo
+                {
+                    int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
+                    ushort adduPart = (ushort)(pointer & 0xFFFF);
+                    ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
+
+                    relocEntryLoc += 4; // another
                 }
                 else if (commandType == 0x4) // JAL function calls
                 {
@@ -4793,7 +4804,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 64.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 65.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
