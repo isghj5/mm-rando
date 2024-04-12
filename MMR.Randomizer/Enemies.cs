@@ -2415,7 +2415,7 @@ namespace MMR.Randomizer
 
             var dekuPalaceScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuPalace.FileID());
             dekuPalaceScene.Maps[0].Actors[11].Position = new vec16(-74, 0, 1466);
-            dekuPalaceScene.Maps[0].Actors[11].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180-40, flags: dekuPalaceScene.Maps[0].Actors[11].Rotation.y);
+            dekuPalaceScene.Maps[0].Actors[11].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 45, flags: dekuPalaceScene.Maps[0].Actors[11].Rotation.y);
         }
 
         public static void MoveTheISTTTunnelTransitionBack()
@@ -2968,7 +2968,7 @@ namespace MMR.Randomizer
                 }
 
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GreatFairy)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.RomaniRanch, GameObjects.Actor.Treee, GameObjects.Actor.BadBat)) continue;
+                if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Monkey, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Lilypad)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.GreatFairy)) continue;
