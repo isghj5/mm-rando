@@ -1541,6 +1541,7 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0xF080)] // instant talks to you with monkey dialgoue but talking doesnt end: softlock
         // there is also a variant 1000 which cannot be accessed with the 0x1F range, will have to mod to get that working
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        [ForbidFromScene(Scene.SouthernSwamp)] // since we want the hint
         // pathing I think, but pathing flying types do not currently exist in this rando
         [VariantsWithRoomMax(max: 0, variant: 0xF18B, 0x2102, 0x1102, 0x0102)]
         [VariantsWithRoomMax(max: 10, variant: 0xF000)]
