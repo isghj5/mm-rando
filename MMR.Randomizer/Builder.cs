@@ -3886,8 +3886,6 @@ namespace MMR.Randomizer
                         .ShouldTransfer()
                         .Build()
                     );
-
-                    ResourceUtils.ApplyHack(Resources.mods.skulltula_token_npc_hint);
                 }
 
                 var remains = ItemUtils.BossRemains().Where(r => _randomized.ItemList[r].Item == r);

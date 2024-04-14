@@ -1293,16 +1293,6 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] skulltula_token_npc_hint {
-            get {
-                object obj = ResourceManager.GetObject("skulltula_token_npc_hint", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] sonata_check_gentle_throw {
             get {
                 object obj = ResourceManager.GetObject("sonata_check_gentle_throw", resourceCulture);

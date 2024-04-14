@@ -118,10 +118,10 @@ extern void z2_CopyToMatrixStackTop(z_Matrix* mtx);
 
 // Function Prototypes (Scene Flags).
 // TODO parameters
-extern void z2_get_generic_flag();
+extern s32 z2_get_generic_flag(GlobalContext* ctxt, s32 flag);
 extern void z2_set_generic_flag();
 extern void z2_remove_generic_flag(GlobalContext* ctxt, s8 flag);
-extern bool z2_get_chest_flag(GlobalContext* ctxt, s8 flag);
+extern s32 z2_get_chest_flag(GlobalContext* ctxt, s8 flag);
 extern void z2_set_chest_flag();
 extern void z2_set_all_chest_flags();
 extern void z2_get_all_chest_flags();
@@ -131,7 +131,7 @@ extern void z2_remove_clear_flag();
 extern void z2_get_temp_clear_flag();
 extern void z2_set_temp_clear_flag();
 extern void z2_remove_temp_clear_flag();
-extern bool z2_get_collectible_flag(GlobalContext* ctxt, s32 flag);
+extern s32 z2_get_collectible_flag(GlobalContext* ctxt, s32 flag);
 extern void z2_set_collectibe_flag();
 extern void z2_load_scene_flags();
 extern u16 z2_check_scene_pairs(u16 sceneId);
