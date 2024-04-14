@@ -1717,8 +1717,7 @@ namespace MMR.Randomizer
 
             if (_randomized.Settings.ImprovedCamera)
             {
-                ReadWriteUtils.WriteCodeNOP(0x800DF44C);
-                ReadWriteUtils.WriteCodeNOP(0x800DF450);
+                hacks.Add(Resources.mods.improved_camera);
             }
 
             if (_randomized.Settings.TakeDamageWhileShielding)
