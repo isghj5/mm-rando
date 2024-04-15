@@ -1755,6 +1755,11 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.take_damage_from_gibdo_immediately);
             }
 
+            if (_randomized.Settings.TakeDamageFromDexihands)
+            {
+                hacks.Add(Resources.mods.take_damage_from_dexihands);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);

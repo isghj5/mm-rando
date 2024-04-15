@@ -517,6 +517,9 @@
   <data name="take_damage_from_caught" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\take-damage-from-caught.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="take_damage_from_dexihands" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\take-damage-from-dexihands.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="take_damage_from_dog" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\take-damage-from-dog.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
