@@ -461,6 +461,7 @@ namespace MMR.Randomizer
             GameObjects.ItemCategory.GreenRupees,
             GameObjects.ItemCategory.BlueRupees,
             //GameObjects.ItemCategory.RedRupees, // crimson rup in this list, removed by building into our own list
+            GameObjects.ItemCategory.PurpleRupees,
             GameObjects.ItemCategory.Arrows,
             GameObjects.ItemCategory.Bombs,
             GameObjects.ItemCategory.DekuSticks,

@@ -200,6 +200,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1224)]
         [SceneInternalId(0x1D)]
         [ClearEnemyPuzzleRooms(5)] // wizrobe room
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula,
+            Actor.Bombiwa)] // can block jumping
         IkanaCastle = 0x1A,
 
         [FileID(1235)]
@@ -665,6 +667,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1459)]
         [SceneInternalId(0x60)]
         [ClearEnemyPuzzleRooms(2,3,4,5)] // the miniboss rooms
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
+            Actor.Shabom)] // report of them not spawning or falling out of bounds and softlock
         SecretShrine = 0x5D,
 
         [FileID(1466)]
