@@ -133,7 +133,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1175)]
         [SceneInternalId(0x16)]
-        [ClearEnemyPuzzleRooms(4, 7)]// basement lava
+        [ClearEnemyPuzzleRooms(4, 7, // basement lava
+            10)] // garo master
         [FairyDroppingEnemies(roomNumber: 1, actorNumber: 2)] // eygore
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RealBombchu,
         //    Actor.WarpDoor)]
