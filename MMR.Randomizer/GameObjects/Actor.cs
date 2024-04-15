@@ -1163,6 +1163,7 @@ namespace MMR.Randomizer.GameObjects
         [DifficultAllVariants]
         [VariantsWithRoomMax(max: 2, 0xFF03, 0xFF02, 0xFF01)]
         [VariantsWithRoomMax(max: 1, 0x0103, 0x0102, 0x0101)]
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.SouthernSwampClear)] // can crash the scheduler, no I dont know why
         IronKnuckle = 0x84, // En_Ik
 
         Empty85 = 0x85,
