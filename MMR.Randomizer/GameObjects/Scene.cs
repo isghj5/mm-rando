@@ -498,8 +498,9 @@ namespace MMR.Randomizer.GameObjects
         // has to be smaller than 24, 16 as one ikana stump in room zero was an issue
         //... but one 28,16 swlift was working fine???
         // one lily(12, 8) plus one darmani grave (10, 8) and one ice platform(22,13) was too much tho (43,29)
-        [DynaHeadroom(28, 16, room: 0)]
-        [DynaHeadroom(28, 16, room: 2)]
+        //[DynaHeadroom(28, 16, room: 0)]
+        //[DynaHeadroom(28, 16, room: 2)]
+        [DynaHeadroom(10,8)] // hotfix: lower to avoid dyna collider while I wait for better data as to issue
         //[EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // bit annoying 
         //    Actor.Peahat, Actor.LikeLike, Actor.Freezard)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.DragonFly, // blocks deku flying 

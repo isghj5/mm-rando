@@ -2545,8 +2545,10 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // even cutscene version doesn't spawn, might be a rando thing, modification untested assumed difficult
         [FileID(274)]
         [ObjectListIndex(0x8)]
+        //[CheckRestricted(Scene.Great)]
         // doesn't have real BG right?
-        [GroundVariants(0xFE0F)] // cutscene version that is supposed to be teaching link defense
+        //[GroundVariants(0xFE0F)] // cutscene version that is supposed to be teaching link defense
+        [GroundVariants(0x201, 0x402, 0x602, 804)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         [UnkillableAllVariants]
         GreatFairy = 0x130, // Bg_Dy_Yoseizo
