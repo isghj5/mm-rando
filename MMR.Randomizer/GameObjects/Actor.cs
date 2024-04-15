@@ -5513,18 +5513,42 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(587)]
         [ObjectListIndex(0x1E5)]
-        //[CheckRestricted(Scene.SouthernSwamp, variant: 0xFC05, Item.ShopItemBusinessScrubMagicBean, Item.HeartPieceSwampScrub)]
-        //[CheckRestricted(Scene.SouthernSwamp, variant: 0xFC05, Item.ShopItemBusinessScrubMagicBean, Item.HeartPieceSwampScrub)]
+        [CheckRestricted(Scene.SouthClockTown, variant: 0xFC05,
+            Item.ShopItemBusinessScrubMagicBean, Item.TradeItemLandDeed, Item.ChestSouthClockTownPurpleRupee)]
+        [CheckRestricted(Scene.SouthernSwamp, variant: -1,
+            Item.ShopItemBusinessScrubMagicBean, Item.TradeItemSwampDeed, Item.HeartPieceSwampScrub, Item.UpgradeBiggestBombBag)]
+        // do we care?
+        //[CheckRestricted(Scene.SouthernSwampClear, variant: -1, Item.ShopItemBusinessScrubMagicBean, Item.HeartPieceSwampScrub, Item.UpgradeBiggestBombBag)]
+        [CheckRestricted(Scene.GoronVillage, variant: -1,
+            Item.UpgradeBiggestBombBag, Item.TradeItemMountainDeed, Item.ShopItemBusinessScrubGreenPotion, Item.HeartPieceGoronVillageScrub)]
+        [CheckRestricted(Scene.ZoraHallRooms, variant: -1,
+            Item.ShopItemBusinessScrubGreenPotion, Item.TradeItemOceanDeed, Item.HeartPieceZoraHallScrub, Item.ShopItemBusinessScrubBluePotion)]
+        [CheckRestricted(Scene.IkanaCanyon, variant: -1,
+            Item.ShopItemBusinessScrubBluePotion, Item.IkanaScrubGoldRupee, Item.HeartPieceIkana /* no scrub goes back to here */)]
         // 0xFC08, 0x1000 are clear swamp
         //0x4 is a flag, meaning the actor has a path, checks if 0xFC00 is a path or not and self terminates
         //[GroundVariants(0xFC08, 0x1000, 0xFC04, 0xFC07, 0x1001, 0x0402, 0xFC06, 0x0001, 0x1800, 0x1003)]
-        [PathingVariants(0xFC08, 0x1000, 0xFC04, 0xFC07, 0x1001, 0x0402, 0xFC06, 0x0001, 0x1800, 0x1003)]
+        [PathingVariants(0xFC08,  0xFC04, 0x1001, 0x1003,
+            0x1800, 0x7F, // southern swamp
+            0x1000, 0xFC05, // clear southern swamp
+            0xFC06, 0x0001, // goron village winter
+            0xFC07, 0x0402 // zora halls
+            )]
         [PathingTypeVarsPlacement(mask:0x3F, shift:10)]
         [OnlyOneActorPerRoom]
-        //[VariantsWithRoomMax(max: 1, variant: )]
+        [VariantsWithRoomMax(max: 0, variant: 0xFC08, 0xFC04, 0x1001, 0x1003,
+            0x1800, 0x7F, // southern swamp
+            0x1000, 0xFC05, // clear southern swamp
+            0xFC06, 0x0001, // goron village winter
+            0xFC07, 0x0402)] // this actors placemnet is a pain, needs investigation
         [UnkillableAllVariants]
         [AlignedCompanionActor(DekuFlower, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x017F)] // treasure chest shop music
-        [ForbidFromScene(Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.SouthClockTown, Scene.GoronVillage, Scene.GoronVillageSpring, Scene.ZoraHallRooms, Scene.IkanaCanyon)]
+        //[ForbidFromScene( //Scene.SouthernSwamp, Scene.SouthernSwampClear,
+            //Scene.SouthClockTown,
+            //Scene.GoronVillage,
+            //Scene.GoronVillageSpring,
+            //Scene.ZoraHallRooms,
+            //Scene.IkanaCanyon)]
         BuisnessScrub = 0x274, // En_AkinDonuts
 
         [FileID(588)]
