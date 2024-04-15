@@ -30495,7 +30495,8 @@
       "Id": "Weirdshot",
       "RequiredItems": [
         "ItemHookshot",
-        "Any Bomb Bag"
+        "Any Bomb Bag",
+        "SettingNotCharacterAdultLink"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",

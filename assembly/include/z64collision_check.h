@@ -157,9 +157,9 @@ typedef struct {
     /* 0x0C */ struct Actor* collisionOT;
     /* 0x10 */ u8 flagsAT;
     /* 0x11 */ u8 flagsAC; // bit 1 - collision occured?
-    /* 0x12 */ u8 unk12;
-    /* 0x13 */ u8 unk13;
-    /* 0x14 */ u8 unk14;
+    /* 0x12 */ u8 ocFlags1;
+    /* 0x13 */ u8 ocFlags2;
+    /* 0x14 */ u8 colType;
     /* 0x15 */ u8 type;
     /* 0x16 */ UNK_TYPE1 pad16[0x2];
 } ColCommon; // size = 0x18

@@ -118,10 +118,10 @@ extern void z2_CopyToMatrixStackTop(z_Matrix* mtx);
 
 // Function Prototypes (Scene Flags).
 // TODO parameters
-extern void z2_get_generic_flag();
+extern s32 z2_get_generic_flag(GlobalContext* ctxt, s32 flag);
 extern void z2_set_generic_flag();
 extern void z2_remove_generic_flag(GlobalContext* ctxt, s8 flag);
-extern bool z2_get_chest_flag(GlobalContext* ctxt, s8 flag);
+extern s32 z2_get_chest_flag(GlobalContext* ctxt, s8 flag);
 extern void z2_set_chest_flag();
 extern void z2_set_all_chest_flags();
 extern void z2_get_all_chest_flags();
@@ -131,7 +131,7 @@ extern void z2_remove_clear_flag();
 extern void z2_get_temp_clear_flag();
 extern void z2_set_temp_clear_flag();
 extern void z2_remove_temp_clear_flag();
-extern bool z2_get_collectible_flag(GlobalContext* ctxt, s32 flag);
+extern s32 z2_get_collectible_flag(GlobalContext* ctxt, s32 flag);
 extern void z2_set_collectibe_flag();
 extern void z2_load_scene_flags();
 extern u16 z2_check_scene_pairs(u16 sceneId);
@@ -329,6 +329,7 @@ extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 #define z2_Player_func_80838A90_VRAM     0x80838A90
 #define z2_Player_func_8083B930_VRAM     0x8083B930
 #define z2_Player_InflictDamage_VRAM     0x8085B3E0
+#define z2_Player_StopCutscene_VRAM      0x80838760
 
 #define z2_Player_Action_0_VRAM          0x808496AC
 #define z2_Player_Action_1_VRAM          0x808497A0
@@ -457,5 +458,6 @@ typedef bool (*z2_Player_func_8083B930_Func)(GlobalContext* ctxt, ActorPlayer* p
 typedef void (*z2_Player_PlayAnimationOnce_Func)(GlobalContext* ctxt, ActorPlayer* player, void* anim);
 typedef void (*z2_Player_PlayAnimationLoop_Func)(GlobalContext* ctxt, ActorPlayer* player, void* anim);
 typedef void (*z2_Player_InflictDamage_Func)(GlobalContext* ctxt, s32 damage);
+typedef void (*z2_Player_StopCutscene_Func)(ActorPlayer* player);
 
 #endif

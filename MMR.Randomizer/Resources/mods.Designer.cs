@@ -783,6 +783,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] improved_camera {
+            get {
+                object obj = ResourceManager.GetObject("improved_camera", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] init_file {
             get {
                 object obj = ResourceManager.GetObject("init_file", resourceCulture);
@@ -846,16 +856,6 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] lenient_goron_spikes {
             get {
                 object obj = ResourceManager.GetObject("lenient_goron_spikes", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] loadnewaudiotable {
-            get {
-                object obj = ResourceManager.GetObject("loadnewaudiotable", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1296,16 +1296,6 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] shorten_cutscene_wart_intro {
             get {
                 object obj = ResourceManager.GetObject("shorten_cutscene_wart_intro", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] skulltula_token_npc_hint {
-            get {
-                object obj = ResourceManager.GetObject("skulltula_token_npc_hint", resourceCulture);
                 return ((byte[])(obj));
             }
         }

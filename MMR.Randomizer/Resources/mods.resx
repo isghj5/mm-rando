@@ -334,6 +334,9 @@
   <data name="hookshot_any_surface" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\hookshot-any-surface.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="improved_camera" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\improved-camera.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="init_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\init-file;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -354,9 +357,6 @@
   </data>
   <data name="lenient_goron_spikes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\lenient-goron-spikes.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="loadnewaudiotable" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>mods\loadnewaudiotable;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="logo_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\logo-text;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -489,9 +489,6 @@
   </data>
   <data name="short_cutscenes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\short-cutscenes;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="skulltula_token_npc_hint" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>mods\skulltula-token-npc-hint.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="sonata_check_gentle_throw" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\sonata-check-gentle-throw.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

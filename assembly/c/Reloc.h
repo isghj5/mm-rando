@@ -30,6 +30,7 @@
 #define z2_Player_PlayAnimationOnce Reloc_ResolvePlayerActorFunc(z2_Player_PlayAnimationOnce)
 #define z2_Player_PlayAnimationLoop Reloc_ResolvePlayerActorFunc(z2_Player_PlayAnimationLoop)
 #define z2_Player_InflictDamage     Reloc_ResolvePlayerActorFunc(z2_Player_InflictDamage)
+#define z2_Player_StopCutscene      Reloc_ResolvePlayerActorFunc(z2_Player_StopCutscene)
 
 // Relocatable PlayerActionFunc functions.
 #define z2_Player_Action_0          Reloc_ResolvePlayerActionFunc(z2_Player_Action_0)

@@ -121,8 +121,15 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
     switch (sGiantsMaskCsState) {
         case 0:
             if (player->stateFlags.state1 & PLAYER_STATE1_GIANT_MASK) {
-                if (!(player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP)) {
+                bool isShielding = player->stateFlags.state1 & PLAYER_STATE1_SHIELD;
+                if (!(player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP) || isShielding) {
+                    if (isShielding) {
+                        player->heldItemActionParam = 0;
+                    }
                     z2_PlayerWaitForGiantMask(globalCtx, player);
+                    if (isShielding) {
+                        player->heldItemActionParam = -1;
+                    }
                 }
                 // z2_800EA0D4(globalCtx, &globalCtx->csCtx);
                 sSubCamId = z2_Play_CreateSubCamera(globalCtx);
@@ -337,6 +344,9 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
     }
 
     if ((sGiantsMaskCsState != 0) && (sSubCamId != 0)) {
+        // prevent all other cutscenes from starting
+        z2_ActorCutscene_ClearNextCutscenes();
+
         z2_Matrix_RotateY(player->base.shape.rot.y, 0); // MTXMODE_NEW
         z2_Matrix_GetStateTranslationAndScaledZ(sSubCamDistZFromPlayer, &subCamEyeOffset);
 

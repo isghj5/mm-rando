@@ -1120,7 +1120,11 @@ namespace MMR.Randomizer
                 }
             }
 
-            Func<ItemObject, bool> filter = io => !io.ItemOverride.HasValue && !_settings.CustomItemList.Contains(io.Item) && io.DependsOnItems.Count == 0 && io.Conditionals.Count == 0;
+            Func<ItemObject, bool> filter = io => !io.ItemOverride.HasValue
+                && !_settings.CustomItemList.Contains(io.Item)
+                && (!io.Item.MainLocation().HasValue || !_settings.CustomItemList.Contains(io.Item.MainLocation().Value))
+                && io.DependsOnItems.Count == 0
+                && io.Conditionals.Count == 0;
 
             var unrandomizedSphereZeroItems = ItemList
                 .Where(filter)
@@ -1821,6 +1825,10 @@ namespace MMR.Randomizer
             {
                 availableItems.Remove(Item.MaskDeku);
                 availableItems.Remove(Item.SongHealing);
+                availableItems.Remove(Item.StartingSword);
+                availableItems.Remove(Item.StartingShield);
+                availableItems.Remove(Item.StartingHeartContainer1);
+                availableItems.Remove(Item.StartingHeartContainer2);
             }
 
             if (restriction != null)

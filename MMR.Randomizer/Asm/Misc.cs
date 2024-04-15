@@ -7,6 +7,7 @@ using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace MMR.Randomizer.Asm
 {
@@ -298,6 +299,7 @@ namespace MMR.Randomizer.Asm
         public bool TakeDamageWhileShielding { get; set; }
 
         public bool TakeDamageFromVoid { get; set; }
+        public bool OceanTokensRandomized { get; set; }
 
         public MiscFlags()
         {
@@ -349,6 +351,7 @@ namespace MMR.Randomizer.Asm
             TakeDamageOnEpona = bitUnpacker.ReadBool();
             TakeDamageWhileShielding = bitUnpacker.ReadBool();
             TakeDamageFromVoid = bitUnpacker.ReadBool();
+            OceanTokensRandomized = bitUnpacker.ReadBool();
         }
 
         /// <summary>
@@ -392,6 +395,7 @@ namespace MMR.Randomizer.Asm
             bitPacker.Write(TakeDamageOnEpona);
             bitPacker.Write(TakeDamageWhileShielding);
             bitPacker.Write(TakeDamageFromVoid);
+            bitPacker.Write(OceanTokensRandomized);
             return bitPacker.ToByteArray(4);
         }
     }
@@ -713,6 +717,8 @@ namespace MMR.Randomizer.Asm
             this.Flags.EarlyMikau = settings.Character == Character.AdultLink;
 
             this.Flags.FairyChests = settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly);
+
+            this.Flags.OceanTokensRandomized = settings.UpdateNPCText && settings.CustomItemList.Any(ItemUtils.OceanSkulltulaTokens().Contains);
 
             this.DrawFlags.DrawDonGeroMask = MaskConfigUtils.DonGeroGoronDrawMask;
             this.DrawFlags.DrawPostmanHat = MaskConfigUtils.PostmanDrawHat;
