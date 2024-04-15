@@ -979,13 +979,18 @@ namespace MMR.Randomizer
                 var doubledGibdo = ikanaCanyonScene.Maps[0].Actors[64];
                 doubledGibdo.Position = new vec16(-602, 400, 972);
 
-                // in spring there are two torches on top of each other, which is weird, move the other one to face the first one
-                //var mountainVillageSpring = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MountainVillageSpring.FileID());
-                //var secondTorch = mountainVillageSpring.Maps[0].Actors[13];
-                //secondTorch.Rotation.y = ActorUtils.MergeRotationAndFlags(180, secondTorch.Rotation.y);
-                //secondTorch.Position.z -= 50;
+                // trying to fix clock, nothing
+                //var curiosityShopClock = curiosityShop.Maps[0].Actors[5];
+                //curiosityShopClock.Position.x = -130;
+
+
+                    // in spring there are two torches on top of each other, which is weird, move the other one to face the first one
+                    //var mountainVillageSpring = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MountainVillageSpring.FileID());
+                    //var secondTorch = mountainVillageSpring.Maps[0].Actors[13];
+                    //secondTorch.Rotation.y = ActorUtils.MergeRotationAndFlags(180, secondTorch.Rotation.y);
+                    //secondTorch.Position.z -= 50;
+                }
             }
-        }
 
 
         private static void EnableAllFormItems()
@@ -1389,6 +1394,21 @@ namespace MMR.Randomizer
                 ReadWriteUtils.Arr_WriteU16(ranchRoom0Data, 0x74, SMALLEST_OBJ); // carriage
                 ReadWriteUtils.Arr_WriteU16(ranchRoom0Data, 0x72, SMALLEST_OBJ); // object_ha is the donkey the cart uses
             }
+
+            var curiosityShop = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.CuriosityShop.FileID());
+            var curiosityShopClock = curiosityShop.Maps[0].Actors[5];
+            if (curiosityShopClock.ActorEnum != GameObjects.Actor.Clock)
+            {
+                //curiosityShopClock.Position.x = -129;
+            }
+
+            var terminaField = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.CuriosityShop.FileID());
+            var terminaFieldScopeNuts = curiosityShop.Maps[0].Actors[210];
+            if (terminaFieldScopeNuts.ActorEnum != GameObjects.Actor.FlyingBuisinessScrub)
+            {
+                terminaFieldScopeNuts.Position = new vec16(780, 760, 615); // move closer to the edge of ect so the player can see it
+            }
+
 
             MoveShopScurbsIfRandomized();
         }
@@ -3055,9 +3075,9 @@ namespace MMR.Randomizer
                 if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.ZoraHallRooms, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Lilypad)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Clock, GameObjects.Actor.BoatCruiseTarget)) continue;
+                if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.GreatFairy)) continue;
-                if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.DekuPatrolGuard, GameObjects.Actor.BuisnessScrub)) continue; 
+                //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.DekuPatrolGuard, GameObjects.Actor.BuisnessScrub)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ReDead, GameObjects.Actor.OceanSpiderhouseBombableWall)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;

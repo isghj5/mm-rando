@@ -5184,9 +5184,14 @@ namespace MMR.Randomizer.GameObjects
         [FileID(546)]
         [ObjectListIndex(0x1)]
         SongOfSoaringEffects = 0x24B, // Oceff_Wipe6
-        
+
+        [ActorizerEnabled] // enabled so we can get the object space back and so we can see weird shit in the telescope
         [FileID(547)]
         [ObjectListIndex(0x1E5)]
+        [CheckRestricted(Item.HeartPieceTerminaBusinessScrub)]
+        [FlyingVariants(0x1F)] // might be pathing but I dont really care until we have flying path types
+        [VariantsWithRoomMax(max:0, variant: 0x1F)] // assume pathing or whatever wack shit
+        [UnkillableAllVariants]
         FlyingFieldScrub = 0x24C, // En_Scopenuts
 
         [ActorizerEnabled]
@@ -5201,8 +5206,8 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableTerminaFieldGuay17, Item.CollectableTerminaFieldGuay18, Item.CollectableTerminaFieldGuay19, Item.CollectableTerminaFieldGuay20,
             Item.CollectableTerminaFieldGuay21, Item.CollectableTerminaFieldGuay22, Item.CollectableTerminaFieldGuay23
             )]
-        [FlyingVariants(0x5A2)]
-        [VariantsWithRoomMax(max: 0, variant: 0x5A2)] // flying pathing
+        [FlyingVariants(0x5A2, 0x0922)]
+        [VariantsWithRoomMax(max: 0, variant: 0x5A2, 0x0922)] // flying pathing
         [UnkillableAllVariants]
         TelescopeGuay = 0x24D, // En_Scopecrow
         
