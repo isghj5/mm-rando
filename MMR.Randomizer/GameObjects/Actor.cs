@@ -550,12 +550,14 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x80)]
         [FileID(79)]
+        [CheckRestricted(Scene.SouthClockTown, variant: 0x287F,
+            check: Item.CollectableSouthClockTownHitTag1, Item.CollectableSouthClockTownHitTag2, Item.CollectableSouthClockTownHitTag3)]
+        //[CheckRestricted(Scene.DekuShrine, variant: -1,
+        //    check: )]
         // 0x1180 below graveyard
         // 0x289 gold pirate torches
         // 0x287F east/south clocktown
         [GroundVariants(0x1180, 0x289, 0x287F, 0x207F)]
-        [CheckRestricted(Scene.SouthClockTown, variant:0x287F,
-            check: Item.CollectableSouthClockTownHitTag1, Item.CollectableSouthClockTownHitTag2, Item.CollectableSouthClockTownHitTag3)]
         [CompanionActor(MothSwarm, ourVariant: -1, variant: 1, 2, 3, 4, 7)] // todo select specific variants that are lit
         [CompanionActor(Keese, ourVariant: -1, variant: 0x0, 0x2, 0x8002, 0x8004)] // todo select specific variants that are lit
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
@@ -565,7 +567,7 @@ namespace MMR.Randomizer.GameObjects
             variant: 0x0, 0x2, 0x8002, 0x8004)] // todo select specific variants that are lit
         //Scene.SouthClockTown
         [ForbidFromScene(Scene.WoodfallTemple, Scene.SouthernSwamp,
-            //Scene.DekuShrine,
+            Scene.DekuShrine, // TODO re-enable if we get all of the check list fleshed out, but people use this for weirdshot
             Scene.WestClockTown, //Scene.SouthernSwampClear,
             Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayCoast,
             Scene.GreatBayTemple, Scene.OceanSpiderHouse,
