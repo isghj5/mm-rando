@@ -1402,8 +1402,8 @@ namespace MMR.Randomizer
                 //curiosityShopClock.Position.x = -129;
             }
 
-            var terminaField = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.CuriosityShop.FileID());
-            var terminaFieldScopeNuts = curiosityShop.Maps[0].Actors[210];
+            var terminaField = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TerminaField.FileID());
+            var terminaFieldScopeNuts = terminaField.Maps[0].Actors[210];
             if (terminaFieldScopeNuts.ActorEnum != GameObjects.Actor.FlyingBuisinessScrub)
             {
                 terminaFieldScopeNuts.Position = new vec16(780, 760, 615); // move closer to the edge of ect so the player can see it
