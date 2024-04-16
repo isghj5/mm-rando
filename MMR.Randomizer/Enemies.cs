@@ -1338,6 +1338,7 @@ namespace MMR.Randomizer
                 stationaryScrub.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: stationaryScrub.Rotation.y);
 
                 swampScrub.Position = new vec16(115, 170, 26);
+                SceneUtils.UpdateScene(southernSwamp);
             }
             // TODO cleared swamp
 
@@ -1347,6 +1348,7 @@ namespace MMR.Randomizer
             {
                 gvScrub.Position = new vec16(168, -200, 427);
                 gvScrub.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: gvScrub.Rotation.y); // turn back around to face the other guy
+                SceneUtils.UpdateScene(goronvillage);
             }
 
             var zoraHallrooms = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.ZoraHallRooms.FileID());
@@ -1358,6 +1360,72 @@ namespace MMR.Randomizer
 
                 zorahallScrub.Position = new vec16(-2113, 49, -71);
                 // rotation?
+                SceneUtils.UpdateScene(zoraHallrooms);
+            }
+
+        }
+
+        private static void MovePostmanIfRandomized(Scene terminaField)
+        {
+
+            var westclocktown = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.WestClockTown.FileID());
+            var westclocktownPostMan = westclocktown.Maps[0].Actors[18];
+            if (westclocktownPostMan.ActorEnum != GameObjects.Actor.PostMan)
+            {
+                westclocktownPostMan.Position = new vec16(-1523, 200, -1376); // move outside of the door
+                SceneUtils.UpdateScene(westclocktown);
+
+            }
+
+            var eastclocktown = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.EastClockTown.FileID());
+            var eastclocktownPostman = eastclocktown.Maps[0].Actors[12];
+            if (eastclocktownPostman.ActorEnum != GameObjects.Actor.PostMan)
+            {
+                eastclocktownPostman.Position = new vec16(1150, 200, -1405); // move outside of the door
+                // rot zero faces mostly to the east wall and a touch south, turn to face mayors
+                eastclocktownPostman.Rotation.y = ActorUtils.MergeRotationAndFlags(90 + 45 + 30, flags: eastclocktownPostman.Rotation.y);
+                SceneUtils.UpdateScene(eastclocktown);
+            }
+
+            var southclocktown = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthClockTown.FileID());
+            var southclocktownPostman = southclocktown.Maps[0].Actors[6];
+            if (southclocktownPostman.ActorEnum != GameObjects.Actor.PostMan)
+            {
+                southclocktownPostman.Position = new vec16(-1548, 200, -1097); // move into the visible
+                SceneUtils.UpdateScene(southclocktown);
+            }
+
+            var northclocktown = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.NorthClockTown.FileID());
+            var northclocktownPostman = northclocktown.Maps[0].Actors[20];
+            if (northclocktownPostman.ActorEnum != GameObjects.Actor.PostMan)
+            {
+                northclocktownPostman.Position = new vec16(-31, 205, -1883); // move into the visible
+                SceneUtils.UpdateScene(northclocktown);
+            }
+
+            // milkbar
+            var milkbar = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MilkBar.FileID());
+            var milkbarPostman = milkbar.Maps[0].Actors[12];
+            if (milkbarPostman.ActorEnum != GameObjects.Actor.PostMan)
+            {
+                milkbarPostman.Position = new vec16(55, 2, -172); // move next to the bar
+                // his time flags are to be there on all days, but this might be confusing? do we reduce to night 3 and day0/4?
+                milkbarPostman.Rotation.x &= ~1; // remove the day 1 day spawn flag
+                milkbarPostman.Rotation.z &= ~0x78; // remove the day 1 night flag, and all of day 2 flags, and day 3 day flag, but not day 4 or day 3 night flags
+                // turn slightly right to face bar
+                milkbarPostman.Rotation.y = ActorUtils.MergeRotationAndFlags(30, flags: milkbarPostman.Rotation.y);
+
+                SceneUtils.UpdateScene(milkbar);
+            }
+
+            var milkbarGorman = milkbar.Maps[0].Actors[12];
+            if (milkbarGorman.ActorEnum != GameObjects.Actor.PostMan)
+            {
+                milkbarGorman.Position = new vec16(57, 2, -87); // move next to the bar
+                // turn slightly right to face bar
+                milkbarGorman.Rotation.y = ActorUtils.MergeRotationAndFlags(30, flags: milkbarGorman.Rotation.y);
+
+                SceneUtils.UpdateScene(milkbar);
             }
 
         }
@@ -1410,7 +1478,9 @@ namespace MMR.Randomizer
             }
 
 
+
             MoveShopScurbsIfRandomized();
+            MovePostmanIfRandomized(terminaField);
         }
 
         public static void DisableAllLocationRestrictions()
@@ -3071,9 +3141,13 @@ namespace MMR.Randomizer
                 }
 
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BuisnessScrub)) continue;
-                if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.ZoraHallRooms, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.ZoraHallRooms, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.PostMan, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.EastClockTown, GameObjects.Actor.PostMan, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.PostMan, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.BadBat, GameObjects.Actor.Guay)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Lilypad)) continue;
                 if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.GreatFairy)) continue;

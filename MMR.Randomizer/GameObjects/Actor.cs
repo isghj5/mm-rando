@@ -2394,7 +2394,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.SwampShootingGallery, 0x000F, Item.UpgradeBiggestQuiver, Item.HeartPieceSwampArchery)]
         [CheckRestricted(Scene.TownShootingGallery, 0xFF01, Item.UpgradeBigQuiver, Item.HeartPieceTownArchery)] // town
         [GroundVariants(0x000F, 0xFF01)]
-        //[VariantsWithRoomMax(max:0, 0x000F, 0xFF01)] // assumption, you cannot see their legs
+        // 0xFF0F is found in milkbar??
         [VariantsWithRoomMax(max: 3, variant: 0x000F, 0xFF01)]
         [UnkillableAllVariants]
         ArcheryMiniGameMan = 0x11D, // En_Syateki_Man
@@ -3430,6 +3430,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1E6)]
         SnowheadMountainsSpringTransitionEffects = 0x198, // Dm_Char06
 
+        // unknown
         [FileID(369)]
         [ObjectListIndex(0x212)]
         MilkBarCutsceneObjects  = 0x199, // Dm_Char07
@@ -3984,11 +3985,12 @@ namespace MMR.Randomizer.GameObjects
             Item.NotebookMeetPostman, Item.NotebookPostmansFreedom)]
         // this could be pathing, but the paths are part of the schedule
         [GroundVariants(0x1, // inn, milkbar
+            0x2, // southclocktown
             0x0)] // patroling around the world
         [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
         //[VariantsWithRoomMax()]
         [UnkillableAllVariants]
-        [VariantsWithRoomMax(max:0, variant:0, 1)] // do not place: hardcoded up the wazzo
+        [VariantsWithRoomMax(max:0, variant:0, 1, 2)] // do not place: hardcoded up the wazzo
         //[ForbidFromScene(Scene.WestClockTown, Scene.EastClockTown, Scene.NorthClockTown, Scene.SouthClockTown)]
         PostMan = 0x1D5, // En_Pm
 
@@ -4631,6 +4633,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFF, 0x80FF)] // does this include the really big one?
         Leever = 0x216, // En_Neo_Reeba
 
+        // wait wtf, this scene has hard collision built into the scene, what is this
+        // this seems to be a real actor, but unused?? is the object used??
         [FileID(494)]
         [ObjectListIndex(0x202)]
         MilkbarChairs = 0x217, // Bg_Mbar_Chair
@@ -5783,7 +5787,8 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(2,4)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         UnderwaterGrate = 0x28A, // Obj_Kzsaku
-        
+
+        // TODO once I get weights working
         [FileID(610)]
         [ObjectListIndex(0x261)]
         Milkjar = 0x28B, // Obj_Milk_Bin
