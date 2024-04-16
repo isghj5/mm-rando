@@ -1346,8 +1346,8 @@ namespace MMR.Randomizer
             var gvScrub = goronvillage.Maps[0].Actors[4]; // first is 3
             if (gvScrub.ActorEnum != GameObjects.Actor.BuisnessScrub)
             {
-                gvScrub.Position = new vec16(168, -200, 427);
-                gvScrub.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: gvScrub.Rotation.y); // turn back around to face the other guy
+                gvScrub.Position = new vec16(168, -200, 400);
+                gvScrub.Rotation.y = ActorUtils.MergeRotationAndFlags(0, flags: gvScrub.Rotation.y); // turn back around to face the other guy
                 SceneUtils.UpdateScene(goronvillage);
             }
 
@@ -1355,11 +1355,11 @@ namespace MMR.Randomizer
             var zorahallScrub = zoraHallrooms.Maps[2].Actors[1]; // first is zero
             if (zorahallScrub.ActorEnum != GameObjects.Actor.BuisnessScrub)
             {
-                var stationaryScrub = southernSwamp.Maps[0].Actors[0]; // needs to be rotated, naturally faces the door
+                var stationaryScrub = zoraHallrooms.Maps[2].Actors[0]; // needs to be rotated, naturally faces the door
                 stationaryScrub.Rotation.y = ActorUtils.MergeRotationAndFlags(90, flags: stationaryScrub.Rotation.y);
 
-                zorahallScrub.Position = new vec16(-2113, 49, -71);
-                // rotation?
+                zorahallScrub.Position = new vec16(-2113, 40, -71);
+                zorahallScrub.Rotation.y = ActorUtils.MergeRotationAndFlags(270, flags: zorahallScrub.Rotation.y);
                 SceneUtils.UpdateScene(zoraHallrooms);
             }
 
@@ -1438,6 +1438,7 @@ namespace MMR.Randomizer
             if (secondOssan.ActorEnum != GameObjects.Actor.TradingPostShop)
             {
                 secondOssan.Position = new vec16(-35, 25, -154);
+                SceneUtils.UpdateScene(tradingpostScene);
             }
 
             // if we randomize the bombiwa in the swamp spiderhouse, replacements with colliders can block bugs
@@ -1463,21 +1464,13 @@ namespace MMR.Randomizer
                 ReadWriteUtils.Arr_WriteU16(ranchRoom0Data, 0x72, SMALLEST_OBJ); // object_ha is the donkey the cart uses
             }
 
-            var curiosityShop = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.CuriosityShop.FileID());
-            var curiosityShopClock = curiosityShop.Maps[0].Actors[5];
-            if (curiosityShopClock.ActorEnum != GameObjects.Actor.Clock)
-            {
-                //curiosityShopClock.Position.x = -129;
-            }
-
             var terminaField = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TerminaField.FileID());
             var terminaFieldScopeNuts = terminaField.Maps[0].Actors[210];
             if (terminaFieldScopeNuts.ActorEnum != GameObjects.Actor.FlyingBuisinessScrub)
             {
                 terminaFieldScopeNuts.Position = new vec16(780, 760, 615); // move closer to the edge of ect so the player can see it
+                SceneUtils.UpdateScene(terminaField);
             }
-
-
 
             MoveShopScurbsIfRandomized();
             MovePostmanIfRandomized(terminaField);
@@ -3141,9 +3134,9 @@ namespace MMR.Randomizer
                 }
 
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BuisnessScrub)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.ZoraHallRooms, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.PostMan, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.EastClockTown, GameObjects.Actor.PostMan, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.PostMan, GameObjects.Actor.BeanSeller)) continue;
@@ -3155,7 +3148,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ReDead, GameObjects.Actor.OceanSpiderhouseBombableWall)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                if (TestHardSetObject(GameObjects.Scene.Woodfall, GameObjects.Actor.Lilypad, GameObjects.Actor.IceBlockWaterPlatforms)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.Woodfall, GameObjects.Actor.Lilypad, GameObjects.Actor.IceBlockWaterPlatforms)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Dexihand)) continue;
 

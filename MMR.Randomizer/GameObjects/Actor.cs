@@ -5522,7 +5522,6 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         PunchableStoneTowerPillars = 0x273, // Bg_Ikana_Dharma
 
-        // TODO get placement shifting working so hes not always in the ground
         [ActorizerEnabled]
         [FileID(587)]
         [ObjectListIndex(0x1E5)]
