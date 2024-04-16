@@ -1270,7 +1270,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x12A)]
         // funny enough, not dynapoly
         [CheckRestricted(Scene.TerminaField, variant: -1,
-            check: Item.HeartPieceTerminaGossipStones, Item.HeartPieceZoraGrotto, Item.CollectableGrottosOceanHeartPieceGrottoBeehive1)]
+            check: Item.HeartPieceTerminaGossipStones, Item.HeartPieceZoraGrotto, Item.CollectableGrottosOceanHeartPieceGrottoBeehive1, Item.CollectableGrottosOceanGossipStonesButterflyFairy1)]
         [CheckRestricted(Scene.Grottos, variant: -1,
             check: Item.ChestHotSpringGrottoRedRupee)]
         [CheckRestricted(Scene.SwampSpiderHouse, variant: -1,
