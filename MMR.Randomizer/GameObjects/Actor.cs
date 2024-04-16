@@ -2393,9 +2393,12 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1AC)]
         [CheckRestricted(Scene.SwampShootingGallery, 0x000F, Item.UpgradeBiggestQuiver, Item.HeartPieceSwampArchery)]
         [CheckRestricted(Scene.TownShootingGallery, 0xFF01, Item.UpgradeBigQuiver, Item.HeartPieceTownArchery)] // town
-        [GroundVariants(0x000F, 0xFF01)]
+        [GroundVariants(0x000F, 0xFF01,
+            0xFF0F // secret unused version in the milkbar
+            )]
         // 0xFF0F is found in milkbar??
         [VariantsWithRoomMax(max: 3, variant: 0x000F, 0xFF01)]
+        [VariantsWithRoomMax(max: 0, variant: 0xFF0F)] // probably busted
         [UnkillableAllVariants]
         ArcheryMiniGameMan = 0x11D, // En_Syateki_Man
 

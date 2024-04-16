@@ -979,17 +979,20 @@ namespace MMR.Randomizer
                 var doubledGibdo = ikanaCanyonScene.Maps[0].Actors[64];
                 doubledGibdo.Position = new vec16(-602, 400, 972);
 
+                var milkbarScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MilkBar.FileID());
+                milkbarScene.Maps[0].Objects[10] = GameObjects.Actor.ArcheryMiniGameMan.ObjectIndex();
+
                 // trying to fix clock, nothing
                 //var curiosityShopClock = curiosityShop.Maps[0].Actors[5];
                 //curiosityShopClock.Position.x = -130;
 
 
-                    // in spring there are two torches on top of each other, which is weird, move the other one to face the first one
-                    //var mountainVillageSpring = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MountainVillageSpring.FileID());
-                    //var secondTorch = mountainVillageSpring.Maps[0].Actors[13];
-                    //secondTorch.Rotation.y = ActorUtils.MergeRotationAndFlags(180, secondTorch.Rotation.y);
-                    //secondTorch.Position.z -= 50;
-                }
+                // in spring there are two torches on top of each other, which is weird, move the other one to face the first one
+                //var mountainVillageSpring = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MountainVillageSpring.FileID());
+                //var secondTorch = mountainVillageSpring.Maps[0].Actors[13];
+                //secondTorch.Rotation.y = ActorUtils.MergeRotationAndFlags(180, secondTorch.Rotation.y);
+                //secondTorch.Position.z -= 50;
+            }
             }
 
 
