@@ -3802,6 +3802,7 @@ namespace MMR.Randomizer
                     // for now, assume all previously used companions must be left untouched, no shuffling
                     var eligibleCompanions = thisSceneData.Actors.FindAll(act =>
                                                                act.ActorId == (int) companionEnum               // correct actor
+                                                            && mainActor.Room == act.Room                       // both in the same room
                                                             && act.previouslyMovedCompanion == false            // not already used
                                                             && companion.Variants.Contains(act.Variants[0]));   // correct variant
 
