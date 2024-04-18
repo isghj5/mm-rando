@@ -3151,12 +3151,6 @@ namespace MMR.Randomizer
                 }
 
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BuisnessScrub)) continue;
-                if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.PostMan, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.EastClockTown, GameObjects.Actor.PostMan, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.PostMan, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.BadBat, GameObjects.Actor.Guay)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Lilypad)) continue;
                 if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;

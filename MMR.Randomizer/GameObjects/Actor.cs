@@ -169,7 +169,8 @@ namespace MMR.Randomizer.GameObjects
         [FlyingToGroundHeightAdjustment(150)]
         Keese = 0xC, // En_Firefly
 
-        //[ActorizerEnabled] // crashes and other weird issues
+        // cannot be easily randomized away from horse because horse object is not part of the scene list
+        //[ActorizerEnabled]
         [FileID(51)]
         [ObjectListIndex(1)]
         // 400E is child cutscene, should just sit there and neigh
@@ -179,11 +180,14 @@ namespace MMR.Randomizer.GameObjects
         // experimental: 9605 did not spawn, neither did 0x3C00, 
         // 46FF did spawn just fine
         // 0/100 are crash I think
-        [GroundVariants(0x400E, 0x4600, 0x5005)]
+        [GroundVariants(0x400E, // new day cutscene, standing behind link
+            0x4600, 0x5005)]
         [UnkillableAllVariants]
+        [VariantsWithRoomMax(max:0, variant: 0x400E, 0x4600, 0x5005)] // cannot place: weird crashes and things, but we can remove
         // if you leave or enter a room after spawning epona you crash, not sure why, but so far the known areas are all dungeons
         // also you crash if you enter a diffent room (southern swamp) without epona song
-        [EnemizerScenesPlacementBlock(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple)]
+        //[EnemizerScenesPlacementBlock(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple)]
+        [ForbidFromScene(Scene.RomaniRanch)]
         //[OnlyOneActorPerRoom]
         Horse = 0xD, // En_Horse
 
@@ -1436,8 +1440,9 @@ namespace MMR.Randomizer.GameObjects
         // 3 exists in granny's room in the inn, for title sequence.. so you can hear him walking toward the door???
         // 3 is also present in east clock town
         [CheckRestricted(Item.NotebookMeetGorman, Item.MaskCircusLeader, Item.NotebookMovingGorman)]
-        [GroundVariants(0xFF)]
-        [PathingVariants(3, 0)]
+        [GroundVariants(0xFF,
+            3,0)] // pathing we move
+        //[PathingVariants(3, 0)] // while he is technically pathing, his pathing data is always the exit door short path, boring
         [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
         // behavior too complicated, disable placement anywhere
         [VariantsWithRoomMax(max: 0, variant: 0, 3, 0xFF)]
@@ -3409,6 +3414,8 @@ namespace MMR.Randomizer.GameObjects
         //0x192 0x1BE,0x277);
         [FileID(361)]
         [ObjectListIndex(0x192)]
+        [GroundVariants(0)] // top of clocktower in intro cutscene, also new day cutscene
+        [ForbidFromScene(Scene.TerminaField)] // WARNING: not just the tower in the telescope but credits
         // != 1 is a param, 1 is a param
         SkullkidCutscene = 0x191, // Dm_Stk
 
@@ -4932,8 +4939,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // BUG: do not teach him song or cursed
         [FileID(520)]
         [ObjectListIndex(0x211)]
-        [GroundVariants(0)]
-        [WaterBottomVariants(0)]
+        [GroundVariants(//0, // this... works? but is not vanilla? where did I get this variant?
+            0x1, // concert in zora hall
+            0xF)] // credits version in milkbar, and the one in his room
+        [WaterBottomVariants(0)] // non vanilla, we dont need to put ocean things in his room
+        [VariantsWithRoomMax(max:0,
+            0x1)] // wont spawn until after you clear the temple
         [UnkillableAllVariants]
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)] // FIRE AND DARKNESS
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
