@@ -1448,15 +1448,31 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(151)]
         [ObjectListIndex(0xF4)]
-        // TODO add all of the tiny rupees from secret shrine to this
-        [CheckRestricted(Item.ItemMagicBean,
+        /* [CheckRestricted(Item.ItemMagicBean, // this got complicated, instead we need to check if the reward is important
             Item.ChestTerminaStumpRedRupee,
             Item.ChestInvertedStoneTowerBean, Item.ChestInvertedStoneTowerBombchu10, Item.ChestInvertedStoneTowerSilverRupee,
-            Item.MaskDeku,
-            Item.CollectibleSwampSpiderToken13)]
+            Item.CollectableDekuPalaceEastInnerGardenPot1, Item.CollectableDekuPalaceEastInnerGardenPot2,
+            Item.SongSonata,
+            Item.HeartPieceGreatBayCoast,
+            Item.CollectableSecretShrineEntranceRoomItem1, Item.CollectableSecretShrineEntranceRoomItem2, Item.CollectableSecretShrineEntranceRoomItem3,
+            Item.CollectableSecretShrineEntranceRoomItem4, Item.CollectableSecretShrineEntranceRoomItem5, Item.CollectableSecretShrineEntranceRoomItem6,
+            Item.CollectableSecretShrineEntranceRoomItem7, Item.CollectableSecretShrineEntranceRoomItem8, Item.CollectableSecretShrineEntranceRoomItem9,
+            Item.CollectableSecretShrineEntranceRoomItem10, Item.CollectableSecretShrineEntranceRoomItem11, Item.CollectableSecretShrineEntranceRoomItem12,
+            Item.CollectableSecretShrineEntranceRoomItem14, Item.CollectableSecretShrineEntranceRoomItem15, Item.CollectableSecretShrineEntranceRoomItem16,
+            Item.CollectableSecretShrineEntranceRoomItem17,
+            Item.ChestWellRightPurpleRupee, Item.ItemWellCowMilk,
+            Item.CollectableAncientCastleOfIkanaCastleExteriorGrass1, Item.CollectableAncientCastleOfIkanaCastleExteriorGrass2, Item.CollectableAncientCastleOfIkanaCastleExteriorGrass3, Item.CollectableAncientCastleOfIkanaCastleExteriorGrass4,
+            Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot1, Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot2, Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot3,
+            Item.CollectableIgosDuIkanaSLairPreBossRoomPot1, Item.CollectableIgosDuIkanaSLairPreBossRoomPot2,
+            Item.CollectableAncientCastleOfIkana1FWestStaircasePot1,
+            Item.CollectableAncientCastleOfIkanaFireCeilingRoomPot1,
+            Item.CollectableAncientCastleOfIkanaHoleRoomPot1, Item.CollectableAncientCastleOfIkanaHoleRoomPot2, Item.CollectableAncientCastleOfIkanaHoleRoomPot3, Item.CollectableAncientCastleOfIkanaHoleRoomPot4,
+            Item.CollectableStoneTowerInvertedStoneTowerFlippedPot1,Item.CollectableStoneTowerInvertedStoneTowerFlippedPot2,Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3,
+            Item.CollectibleSwampSpiderToken13, Item.CollectibleSwampSpiderToken25
+            )] // */
         [GroundVariants(0)]
         [UnkillableAllVariants]
-        //[ForbidFromScene(Scene.Grottos)]
+        [ForbidFromScene(Scene.Grottos)]
         BeanSeller = 0xA5, // En_Ms
 
         [ActorizerEnabled]

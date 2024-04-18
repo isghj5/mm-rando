@@ -568,13 +568,12 @@ namespace MMR.Randomizer
                         break;
 
                 }
-                if (!ItemUtils.IsJunk(map1) || !ItemUtils.IsJunk(map2))
-                //if (! junkCategories.Contains(map1.ItemCategory) || ! junkCategories.Contains(map1.ItemCategory))
+                if (!IsActorizerJunk(map1) || !IsActorizerJunk(map2))
                 {
-                    return true;
+                    return true; // we need to keep this tingle because their items are actual not-junk
                 }
-                // if heartpiece on picture is required, one of them has to remain
-                if (strawPulled && !ItemUtils.IsJunk(GameObjects.Item.HeartPiecePictobox))
+                // if heartpiece on picture is required, one of them has to remain regardless of their items
+                if (strawPulled && !IsActorizerJunk(GameObjects.Item.HeartPiecePictobox))
                 {
                     return true;
                 }
@@ -619,7 +618,22 @@ namespace MMR.Randomizer
 
                 }// else: randomize all
             }
-
+            /* // issue: this COMPLETELY ignores bean seller is vanilla and does not show up in sphere list because -- ! ZOEY ! --
+            if (testActor == GameObjects.Actor.BeanSeller
+                && (_randomized.Settings.LogicMode != Models.LogicMode.NoLogic && _randomized.Settings.LogicMode != Models.LogicMode.Vanilla))
+            {
+                var freeBeanSample = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemMagicBean).Item;
+                if (!IsActorizerJunk(freeBeanSample))
+                {
+                    return true;
+                }
+                // instead of checking the checks, we should check the items, in this case is bean important?
+                var sphereItems = _randomized.Spheres.SelectMany(u => u).ToList();
+                if (sphereItems.Any(u => u.Item1 == "Magic Bean"))
+                {
+                    return true; // bean is needed somewhere, cannot remove in case this is the requirement
+                }
+            } // */
             return false;
         }
 
@@ -2609,11 +2623,11 @@ namespace MMR.Randomizer
 
             var sctScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthClockTown.FileID());
             var introSeth = sctScene.Maps[3].Actors[2];
-            introSeth.ChangeActor(GameObjects.Actor.BeanSeller, vars: 0, modifyOld: true);
+            introSeth.ChangeActor(GameObjects.Actor.DekuBaba, vars: 0, modifyOld: true);
             introSeth.OldName = "IntroSeth";
 
             // change object
-            sctScene.Maps[3].Objects[14] = GameObjects.Actor.BeanSeller.ObjectIndex();
+            sctScene.Maps[3].Objects[14] = GameObjects.Actor.DekuBaba.ObjectIndex();
         }
 
 
