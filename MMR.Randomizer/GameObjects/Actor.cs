@@ -1258,7 +1258,8 @@ namespace MMR.Randomizer.GameObjects
         // 0xC000 unk, can change draw type
         // 0x80 determins if switch flags are active, great..
         [GroundVariants(0x4000, 0x8000)]
-        [WallVariants(0x4000, 0x8000)]
+        [WallVariants(0x4000, 0x8000,
+            0x4A94)] // ranch
         [UnkillableAllVariants]
         // c and 0 crash without a path to follow, but with a path they instant kill which is odd...
         // havent documented enough to know why
@@ -1976,7 +1977,8 @@ namespace MMR.Randomizer.GameObjects
         [TreasureFlagsPlacement(mask: 0xFF, shift: 2)] // 0x3FC
         HoneyComb = 0xE4, // Obj_Comb
 
-        [ActorizerEnabledFreeOnly] // too boring to get as an actor, but we should be able to place new ones if the object is already there somehow
+        // now that we have dyna limits, this could be randomized because it will be rare because of dyna limits anyway
+        [ActorizerEnabledFreeOnly]
         [FileID(218)]
         [ObjectListIndex(0x133)]
         [DynaAttributes(10, 8)]
@@ -1989,7 +1991,7 @@ namespace MMR.Randomizer.GameObjects
             // there are more TODO add them from spider house and a few other places
             0x2604)] // stt mirror room
         [UnkillableAllVariants]
-        LargeCrate = 0xE5, // Obj_Kibako2
+        LargeWoodenCrate = 0xE5, // Obj_Kibako2
 
         EmptyE6 = 0xE6, // EmptyE6
 
@@ -3807,9 +3809,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(413)]
         [ObjectListIndex(0x1A9)]
         [CheckRestricted(Item.MundaneItemSeahorse)]
-        [GroundVariants(0x001, 0x100, 0x101)]
-        // limit variants?
-        [VariantsWithRoomMax(max:0, variant:0x101)] // doesn't spawn correctly
+        [GroundVariants(0x001, // regular
+            0x100, 0x101)] // talking spots I think
+        [VariantsWithRoomMax(max:0, variant:0x101, 0x100)] // doesn't spawn correctly
         [UnkillableAllVariants]
         GreatBayFisherman = 0x1C2, // En_Tsn
 
@@ -4401,7 +4403,8 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.UpgradeRazorSword, Item.UpgradeGildedSword)]
         [GroundVariants(0x200)]
         //[VariantsWithRoomMax(max:0, variant: 0x200)] // suspected double actor, without the other I doubt this works at all
-        [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
+        [SwitchFlagsPlacement(mask: 0xFE, shift: 9)]
+        [PathingKickoutAddrVarsPlacement(mask:0x1F, shift:0)] // why oh why did this stupid actor need a selectable exit kickout
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         GaboraBlacksmith = 0x1FF, // En_Kgy

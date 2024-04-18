@@ -791,6 +791,7 @@ namespace MMR.Randomizer
             MoveTheISTTTunnelTransitionBack();
             FixSwordSchoolPotRandomization();
             SwapIntroSeth();
+            SwapCreditsCremia();
 
             Shinanigans();
         }
@@ -2628,6 +2629,22 @@ namespace MMR.Randomizer
 
             // change object
             sctScene.Maps[3].Objects[14] = GameObjects.Actor.DekuBaba.ObjectIndex();
+        }
+
+        private static void SwapCreditsCremia()
+        {
+            /// cremia in the credits is in the ranch, and the ranch cremia randomization is tied to actual checks
+            /// we want to swap the cremia actor in the credits for variety, we have to change the actor and object to not confuse actorizer with the regular cremias
+
+            if (!ReplacementListContains(GameObjects.Actor.Cremia)) return;
+
+            var ranchScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.RomaniRanch.FileID());
+            var creditsCremia = ranchScene.Maps[2].Actors[11];
+            creditsCremia.ChangeActor(GameObjects.Actor.DekuBaba, vars: 0, modifyOld: true);
+            creditsCremia.OldName = "CreditsCremia";
+
+            // and change the object in just that map to match
+            ranchScene.Maps[2].Objects[5] = GameObjects.Actor.DekuBaba.ObjectIndex();
         }
 
 
@@ -4971,7 +4988,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 66.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 66.2\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
