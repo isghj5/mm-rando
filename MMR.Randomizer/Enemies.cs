@@ -4661,7 +4661,7 @@ namespace MMR.Randomizer
                 var commandType = (file.Data[relocEntryLoc] & 0xF);
                 var commandTypeLookahead = (file.Data[relocEntryLoc + 4] & 0xF); // double command for LUI/ADDIU
 
-                if (commandType == 0x5 && commandTypeLookahead == 0x6) // LUI/ADDIU combo
+                if (commandType == 0x5 /* R_MIPS_HI16 */ && commandTypeLookahead == 0x6) // LUI/ADDIU combo
                 {
                     int luiLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
                     int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
@@ -4670,9 +4670,10 @@ namespace MMR.Randomizer
                     // to fix this, the LUI command is given a carry over bit to fix it, we need to read and write knowing this
                     // combine the halves from asm back into one pointer
                     pointer = 0;
-                    pointer |= ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2));
+                    pointer = ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2));
                     int LUIDecr = ((pointer & 0xFFFF) > 0x8000) ? 1 : 0;
-                    pointer |= ((uint)(ReadWriteUtils.Arr_ReadU16(file.Data, luiLoc + 2) - LUIDecr) << 16) ;
+                    uint oldLuiData = ReadWriteUtils.Arr_ReadU16(file.Data, luiLoc + 2);
+                    pointer |= ((uint)(oldLuiData - LUIDecr) << 16);
 
                     pointer += newVRAMOffset;
 
@@ -4685,7 +4686,7 @@ namespace MMR.Randomizer
 
                     relocEntryLoc += 8;
                 }
-                else if (commandType == 0x6) // another ADDIU after the first combo
+                else if (commandType == 0x6 /* R_MIPS_LO16 */) // another ADDIU after the first combo 
                 {
                     int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
                     ushort adduPart = (ushort)(pointer & 0xFFFF);
@@ -4693,7 +4694,7 @@ namespace MMR.Randomizer
 
                     relocEntryLoc += 4; // another
                 }
-                else if (commandType == 0x4) // JAL function calls
+                else if (commandType == 0x4 /* R_MIPS_24 */) // JAL function calls
                 {
                     int jalLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
                     uint jal = ReadWriteUtils.Arr_ReadU32(file.Data, jalLoc) & 0x00FFFFFF;
@@ -4704,7 +4705,7 @@ namespace MMR.Randomizer
 
                     relocEntryLoc += 4;
                 }
-                else if (commandType == 0x2) // Hard pointer (init/destroy/update/draw pointers can be here, also actual ptr in rodata)
+                else if (commandType == 0x2 /* R_MIPS_32 */) // Hard pointer (init/destroy/update/draw pointers can be here, also actual ptr in rodata)
                 {
                     int ptrLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
                     uint ptrValue = ReadWriteUtils.Arr_ReadU32(file.Data, ptrLoc);
@@ -4713,7 +4714,7 @@ namespace MMR.Randomizer
 
                     relocEntryLoc += 4;
                 }
-                else // unknown command? supposidly Z64 only uses these three although it could support more
+                else // unknown command? supposidly Z64 only uses these four although it could support more
                 {
                     throw new Exception($"UpdateOverlayVRAMReloc: unknown reloc overlayEntry value:\n" +
                         $" {ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc).ToString("X")}");
