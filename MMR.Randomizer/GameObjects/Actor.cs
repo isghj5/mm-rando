@@ -5753,6 +5753,8 @@ namespace MMR.Randomizer.GameObjects
             Item.NotebookMeetBombers, Item.NotebookLearnBombersCode 
             )] // this is duplicated in multiple places
         [GroundVariants(0x0B11, 0x0B22, 0x50F, 0x0513, 0x0910)]
+        // while you CAN put them in new places, until I write some code to have them spawn SOMETHING when the game is not active, this is disabled
+        [VariantsWithRoomMax(max:0, variant: 0x0B11, 0x0B22, 0x50F, 0x0513, 0x0910)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         BombersYouChase = 0x27F, // En_Bomjimb
