@@ -528,7 +528,7 @@ namespace MMR.Randomizer.GameObjects
         //[WallVariants(0x204)] // 0x204 is the hanging mailman backpack
         //[ObjectListIndex(0x217)] // works but a big lame, no sound, no effects, just a wall of animating texture 
         //[GroundVariants(0x6)] // storm around GBT
-        [ObjectListIndex(0x195)]
+        [ObjectListIndex(0x195)] // monkey??
         [GroundVariants(0x8)] // pot of boiling water for monkey
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
@@ -2012,7 +2012,7 @@ namespace MMR.Randomizer.GameObjects
         HoneyComb = 0xE4, // Obj_Comb
 
         // now that we have dyna limits, this could be randomized because it will be rare because of dyna limits anyway
-        [ActorizerEnabledFreeOnly]
+        [ActorizerEnabled]
         [FileID(218)]
         [ObjectListIndex(0x133)]
         [DynaAttributes(10, 8)]
@@ -2020,10 +2020,12 @@ namespace MMR.Randomizer.GameObjects
         [TreasureFlagsPlacement(mask: 0x1F, shift: 2)]
         [GroundVariants(0x7F3F, // buisness scrub and pirates fortress
             //0x1E11, // sht compass room // fairy crate
+            0x7F3F, // pirates fortess
             0x000B, // sht bridge room
             0x000F, // sht goron switch room
             // there are more TODO add them from spider house and a few other places
             0x2604)] // stt mirror room
+        [ForbidFromScene(Scene.SnowheadTemple, Scene.SwampSpiderHouse, Scene.StoneTowerTemple, Scene.Grottos, Scene.OceanSpiderHouse, Scene.GreatBayTemple)]
         [UnkillableAllVariants]
         LargeWoodenCrate = 0xE5, // Obj_Kibako2
 

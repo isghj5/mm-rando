@@ -791,6 +791,7 @@ namespace MMR.Randomizer
             MoveTheISTTTunnelTransitionBack();
             FixSwordSchoolPotRandomization();
             SwapIntroSeth();
+            SwapPiratesFortressBgBreakwall();
             SwapCreditsCremia();
 
             EnableAllCreditsCutScenes();
@@ -2632,6 +2633,31 @@ namespace MMR.Randomizer
 
             // change object
             sctScene.Maps[3].Objects[14] = GameObjects.Actor.DekuBaba.ObjectIndex();
+        }
+
+        private static void SwapPiratesFortressBgBreakwall()
+        {
+            /// BgBreakwall is an amalgamash actor that can use 10 different objects, its crazy
+            /// in pirates fortress center square its used to make multiple un-breakable crates
+            /// because of the multi-object behavior its easier to change the type here to match the crate,
+            /// esp since we can't remove the breakwall object its used for doors here
+
+            if ( ! ACTORSENABLED) return;
+
+            var piratesFortressScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PiratesFortress.FileID());
+            for(int m = 0; m < piratesFortressScene.Maps.Count; m++)
+            {
+                var map = piratesFortressScene.Maps[m];
+                for (int a = 0; a < map.Actors.Count; a++)
+                {
+                    var actor = map.Actors[a];
+                    if (actor.ActorEnum == GameObjects.Actor.Bg_Breakwall)
+                    {
+                        actor.ChangeActor(GameObjects.Actor.LargeWoodenCrate, vars: 0x7F3F, modifyOld: true);
+                        actor.OldName = "BgBreakwall";
+                    }
+                }
+            }
         }
 
         private static void SwapCreditsCremia()
