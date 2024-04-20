@@ -1639,10 +1639,11 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         SmallRock = 0xB0, // En_Ishi
 
-        //[ActorizerEnabled] // works but a bit lame
+        [ActorizerEnabled] // works but a bit lame
         [FileID(159)]
         [ObjectListIndex(0x1BA)]
         [GroundVariants(0)]
+        [PlacementWeight(12)]
         [UnkillableAllVariants]
         OrangeGraveyardFlower = 0xB1, // Obj_Hana
 
@@ -2940,6 +2941,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 5, variant: 0)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
+        [PlacementWeight(80)]
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         // might be used for mikau grave, but also beta actors that teach songs...??
         MagicSlab = 0x15C, // En_Sekihi
