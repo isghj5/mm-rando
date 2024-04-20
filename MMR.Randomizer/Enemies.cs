@@ -793,7 +793,10 @@ namespace MMR.Randomizer
             SwapIntroSeth();
             SwapCreditsCremia();
 
+            EnableAllCreditsCutScenes();
+
             Shinanigans();
+
         }
 
         public static void EnemizerLateFixes()
@@ -2645,6 +2648,32 @@ namespace MMR.Randomizer
 
             // and change the object in just that map to match
             ranchScene.Maps[2].Objects[5] = GameObjects.Actor.DekuBaba.ObjectIndex();
+        }
+
+
+        private static void EnableAllCreditsCutScenes()
+        {
+            /// some people enjoy seeing the actors randomized in the credits
+            /// however this is determined if the player found the given mask for the cutscene
+            /// we can disable this so that it always shows the cutscene irregardless if the mask exists in the inventory
+
+            if ( ! ACTORSENABLED) return;
+
+            var codeFile = RomData.MMFileList[31].Data; // file offset: 045C38 vram: 800EB6F8
+
+            // the code is verbatim: if mask == mask: go to scene, else: to go cutscene scene instead
+            // can just turn nop the branch-if-not-equal and always run the first block of code
+
+            ReadWriteUtils.Arr_WriteU32(codeFile, 0x045CE0, 0x00000000); // kamaro
+            ReadWriteUtils.Arr_WriteU32(codeFile, 0x045D48, 0x00000000); // great fairy
+            ReadWriteUtils.Arr_WriteU32(codeFile, 0x045DB0, 0x00000000); // romani mask
+            ReadWriteUtils.Arr_WriteU32(codeFile, 0x045E18, 0x00000000); // blast mask
+            ReadWriteUtils.Arr_WriteU32(codeFile, 0x045E80, 0x00000000); // circus leader
+            ReadWriteUtils.Arr_WriteU32(codeFile, 0x045EE8, 0x00000000); // breman mask
+            // section for ikana that doesnt care about mask showing the king
+            ReadWriteUtils.Arr_WriteU32(codeFile, 0x045F84, 0x00000000); // couples
+            ReadWriteUtils.Arr_WriteU32(codeFile, 0x045FEC, 0x00000000); // bunny
+            ReadWriteUtils.Arr_WriteU32(codeFile, 0x046054, 0x00000000); // postman
         }
 
 
