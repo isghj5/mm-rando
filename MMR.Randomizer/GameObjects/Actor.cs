@@ -4609,10 +4609,16 @@ namespace MMR.Randomizer.GameObjects
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple, Scene.Woodfall)]
         Seth1 = 0x20B, // En_Sth, the green shirt guy from SCT that runs to Oceanspiderhouse to hide, also cured guy in Swamp spiderhouse
 
+        // apparently this is what spawns the dragons
+        [ActorizerEnabled]
         [FileID(483)]
-        [ObjectListIndex(0x1F4)]
+        [ObjectListIndex(0x1F4)] //???
+        //[Extra Object: Dragon]
+        [CheckRestricted(Item.HeartPieceSeaHorse)]
         [DynaAttributes(2,4)] // ??
-        LargeRotationGreenRupee = 0x20C, // Bg_Sinkai_Kabe
+        [WaterVariants(0,1,2,3,4,5,6,7)]
+        [VariantsWithRoomMax(max:0, variant: 0, 1, 2, 3, 4, 5, 6, 7)] // dont place it would be really stupid I bet
+        DragonSpawner = 0x20C, // Bg_Sinkai_Kabe
 
         [FileID(484)]
         [ObjectListIndex(0x1E0)]
