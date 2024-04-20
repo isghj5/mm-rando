@@ -5290,7 +5290,6 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(554)]
         [ObjectListIndex(0x7)]
-        //[CheckRestricted()]
         [GroundVariants(0,2)] // these are vanilla params, but weirdly they dont get used by the actor code
         [VariantsWithRoomMax(max:0, variant: 0, 2)]// placable but does nothing and is waaaay too common
         [UnkillableAllVariants]
@@ -5392,9 +5391,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(569)]
         [ObjectListIndex(0xD)]
-        // TODO split them up into two separate things
-        [CheckRestricted(Item.ItemBottleMadameAroma, Item.MaskKafei,
-            Item.NotebookMeetMadameAroma, Item.NotebookPromiseMadameAroma, Item.NotebookDeliverLetterToMama)]
+        [CheckRestricted(Scene.MayorsResidence, variant:-1, 
+            Item.MaskKafei,
+            Item.NotebookMeetMadameAroma, Item.NotebookPromiseMadameAroma)]
+        [CheckRestricted(Scene.MilkBar, variant: -1,
+            Item.ItemBottleMadameAroma,
+            Item.NotebookMeetMadameAroma, Item.NotebookDeliverLetterToMama)]
         [GroundVariants(0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
