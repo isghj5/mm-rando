@@ -345,7 +345,14 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1310)]
         [SceneInternalId(0x2D)]
         //[DynaHeadroom(0, 0)] // unknown but it seems higher than most 0x64/0x3D is safe
-        [DynaHeadroom(0x64,0x3D)] // tested safe
+        //[DynaHeadroom(0x64, 0x3D)] // tested safe
+        /*
+         *   day:    dyna poly   delta: [634] newsize: [00029E] oldsize: [000024] <- was over the limit (by 14), holy shit there is lots of dyna space here
+              day:    dyna vert   delta: [446] newsize: [0001D6] oldsize: [000018]
+              night:  dyna poly   delta: [587] newsize: [00026F] oldsize: [000024]
+              night:  dyna vert   delta: [410] newsize: [0001B2] oldsize: [000018]
+         */
+        [DynaHeadroom(615, 450)] // this is aparently waaaaaaay more than I thought
         // this actor is mostly ignored, player might not even notice, dont waste lots of object budget on this thing
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
             Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
