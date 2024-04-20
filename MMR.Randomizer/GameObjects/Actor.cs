@@ -1252,22 +1252,56 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(136)]
         [ObjectListIndex(0xEE)]
-        [CheckRestricted(Scene.RomaniRanch, variant:-1, Item.CollectableRomaniRanchSoftSoil1, Item.CollectableRomaniRanchSoftSoil2)]
+        // TODO add secret shrine and swamp spiderhouse
+        [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.CollectableRomaniRanchSoftSoil1, Item.CollectableRomaniRanchSoftSoil2)]
+        [CheckRestricted(Scene.Grottos, variant: -1, Item.CollectableBeanGrottoSoftSoil1, Item.ChestBeanGrottoRedRupee)]
+        [CheckRestricted(Scene.GreatBayCoast, variant: -1, Item.CollectableGreatBayCoastSoftSoil1)]
+        [CheckRestricted(Scene.DoggyRacetrack, variant: -1, Item.CollectableDoggyRacetrackSoftSoil1)]
+        [CheckRestricted(Scene.SecretShrine, variant: -1,
+            Item.CollectableSecretShrineSoftSoil1,
+            Item.CollectableSecretShrineEntranceRoomItem1, Item.CollectableSecretShrineEntranceRoomItem2, Item.CollectableSecretShrineEntranceRoomItem3,
+            Item.CollectableSecretShrineEntranceRoomItem4, Item.CollectableSecretShrineEntranceRoomItem5, Item.CollectableSecretShrineEntranceRoomItem6,
+            Item.CollectableSecretShrineEntranceRoomItem7, Item.CollectableSecretShrineEntranceRoomItem8, Item.CollectableSecretShrineEntranceRoomItem9,
+            Item.CollectableSecretShrineEntranceRoomItem10, Item.CollectableSecretShrineEntranceRoomItem11, Item.CollectableSecretShrineEntranceRoomItem12,
+            Item.CollectableSecretShrineEntranceRoomItem13, Item.CollectableSecretShrineEntranceRoomItem14, Item.CollectableSecretShrineEntranceRoomItem15,
+            Item.CollectableSecretShrineEntranceRoomItem16, Item.CollectableSecretShrineEntranceRoomItem17
+        )]
+        [CheckRestricted(Scene.SwampSpiderHouse, variant: -1, Item.CollectableSwampSpiderHouseSoftSoil1, Item.CollectableSwampSpiderHouseSoftSoil2,
+            Item.CollectibleSwampSpiderToken9, Item.CollectibleSwampSpiderToken11, Item.CollectibleSwampSpiderToken12)]
+        [CheckRestricted(Scene.DekuPalace, variant: -1, Item.SongSonata,
+            Item.CollectableDekuPalaceSoftSoil1, Item.CollectableDekuPalaceEastInnerGardenPot1, Item.CollectableDekuPalaceEastInnerGardenPot2)]
+        [CheckRestricted(Scene.InvertedStoneTower, variant: -1, Item.CollectableStoneTowerSoftSoil1, Item.CollectableStoneTowerSoftSoil2,
+            Item.ChestInvertedStoneTowerBean, Item.ChestInvertedStoneTowerBombchu10, Item.ChestInvertedStoneTowerSilverRupee)]
+        [CheckRestricted(Scene.TerminaField, variant: -1,
+            Item.CollectableTerminaFieldPot1,
+            Item.ChestTerminaStumpRedRupee,
+            Item.CollectableTerminaFieldSoftSoil1, Item.CollectableTerminaFieldSoftSoil2, Item.CollectableTerminaFieldSoftSoil3, Item.CollectableTerminaFieldSoftSoil4
+        )]
+        // some of these are pathing type, however they will need flying pathing type to make snese
         // 8 is unused crack in the wall, only exists in unused ranch setup
         // uses Z rot as a param, unknown use
         // 0xC000 unk, can change draw type
         // 0x80 determins if switch flags are active, great..
-        [GroundVariants(0x4000, 0x8000)]
+        // TODO which of these are invisble and require action?
+        [GroundVariants(0x4000, 0x8000,
+            0x4101, 0x0102, // bean grotto
+            0x304, 0x4203, 0x4080, 0x1,// swamp spiderhouse
+            0x4D19, 0x61A, 0x071A, // great bay coast
+            0x4203, 0x0D04, // deku palace
+            0x101, // doggy race track
+            0x401, 0x0504, // inverted stone tower
+            0x4305, 0x460B, 0x478E, 0x0506, 0x070C, 0x060F // termina field
+        )]
         [WallVariants(0x4000, 0x8000,
-            0x4A94)] // ranch
+            0x468C, 0x4509, 0x480F,  // swamp spiderhouse
+            0x4A94)] // ranch and termina field
         [UnkillableAllVariants]
         // c and 0 crash without a path to follow, but with a path they instant kill which is odd...
         // havent documented enough to know why
         //[PathingVariants(0x4000)] // TODO figure out if I even can get this to work
         [PathingTypeVarsPlacement(mask: 0x3F, shift: 8)] // 0x3F00
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
-        //[ForbidFromScene(Scene.RomaniRanch)]
-        //[ForbidFromScene()] // we can actually just use generic params to avoid this
+        //[ForbidFromScene(Scene.SwampSpiderHouse )] // dont want to mess with this by accident until I know it has proper logic
         SoftSoilAndBeans = 0x91, // Obj_Bean
 
         [ActorizerEnabled]
@@ -1289,7 +1323,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x807F, 0x8004, 0x8002, // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
             0xE, // swamp spiderhouse
             0x0114, 0x0115, 0x0116, 0x0117, 0x0118,
-            0x101,0x100, // cape covering the fairy hole
+            0x101, 0x100, // cape covering the fairy hole
             0x0114, 0x0115, 0x0116, 0x0117, 0x0118, // hotspring water
             0x8003, 0x807F)]
         [FlyingVariants(0x44, 0x8044)] // does not exist, for fun placement
@@ -5609,6 +5643,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1D5)] // OBJECT_DAI same object as big goron
         [GroundVariants(0x4)] // all vanilla are 0x4, even though the actor checks 0xFF range
         [VariantsWithRoomMax(max:0, variant:0x4)] // schedule locked, wont spawn in weird locations
+        [ForbidFromScene(Scene.EastClockTown)] // sound effect rando is too important
         [UnkillableAllVariants]
         // do we need to stop him being randomized?
         LinkTheGoro = 0x276, // En_Ig
@@ -5896,6 +5931,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x27F)]
         [GroundVariants(0x0)] // all the same
         [ForbidFromScene(Scene.PiratesFortress, Scene.StoneTower)]
+        // we could remove from a few places like greatbaycoast
         [UnkillableAllVariants]
         RainbowHookshotPillar = 0x297, // Bg_Lbfshot
 
