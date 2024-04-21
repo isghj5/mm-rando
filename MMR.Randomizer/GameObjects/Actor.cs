@@ -1545,7 +1545,7 @@ namespace MMR.Randomizer.GameObjects
         SwampBoat = 0xA7, // Bg_Ingate
 
         // I'm not testing every single value, only taking vanilla for now
-        [ActorizerEnabledFreeOnly] // should not replace, just place
+        [ActorizerEnabled] // should not replace, just place
         [FileID(154)]
         [ObjectListIndex(0xFC)]
         [GroundVariants(0x5, 0x13, 0x14, 0x15, 0x19, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20, // north
@@ -1568,6 +1568,7 @@ namespace MMR.Randomizer.GameObjects
             0x20, 0x17, 0x18, 0x4, 0x3D, 0x11, 0x2, 0x3C, 0x21, 0x22, 0x23, 0x25, 0x26, 0x27, 0x28,
             0x12, 0x2A, 0x2B, 0x7, 0x9, 0xB, 0xC, 0xE, 0x2A, 0x38, 0x3A, 0x2E, 0x2F, 0x30, 0x31, 0x32, 0x33, 0x34)]
         [UnkillableAllVariants]
+        [PlacementWeight(60)]
         SquareSign = 0xA8, // En_Kanban
 
         EmptyA9 = 0xA9,
@@ -1954,7 +1955,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max: 1, variant: 0x20, 0x40, 0x60, 0x80, 0x120,
             0x22BF, 0x03FF, 0x019F, 0x02BF, 0xD9F)] // this many dogs is enough honestly
-        [ForbidFromScene(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
+        [ForbidFromScene(Scene.RanchBuildings, Scene.RomaniRanch)]//, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
         // dog safe areas: TF, roadtoSS, SS, SSC, deku palace, sspiderhouse
         // path to mountain village
         // now that I know what the path vars is, any area with at least one path per room should be safe for index:0 dogs
