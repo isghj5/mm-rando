@@ -682,6 +682,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1466)]
         [SceneInternalId(0x61)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.MysteryHand,
+            Actor.StockpotBell // so big it goes through the back of the stairs and blocks the stairs
+            )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Gorman,
             /* Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire,*/ Actor.LikeLike)]
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Anju,
