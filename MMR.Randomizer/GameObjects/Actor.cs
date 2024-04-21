@@ -269,12 +269,12 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         Insect = 0x16, // En_Insect
 
-        //[ActorizerEnabled] // this is just one fish, if you want a school summon a differemnt mure actor
+        [ActorizerEnabled] // this is just one fish, if you want a school summon a differemnt mure actor
         [FileID(120)]
-        //[ObjectListIndex(0x16B)] // gameplay keep obj 1
-        // zero is swimming, one is dropped from a bottle, -1 is just a differnt color I think
-        // 2 doesnt draw at first, it might be the one in the lab being eaten
-        [WaterVariants(0)]
+        [ObjectListIndex(1)]
+        // zero is swimming, one is dropped from a bottle (but also the trading post one, -1 is just a differnt color I think
+        // 2 is unk
+        [WaterVariants(0, 1)]
         [UnkillableAllVariants]
         Fish = 0x17, // En_Fish
 
@@ -1134,14 +1134,36 @@ namespace MMR.Randomizer.GameObjects
         // TODO randomize some more of these
         [CheckRestricted(Scene.RoadToIkana, variant: -1, Item.CollectableRoadToIkanaPot1)]
         [CheckRestricted(Scene.TerminaField, variant: -1, Item.CollectableTerminaFieldPot1)]
-        [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
-        [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
-        [CheckRestricted(Scene.StoneTower, variant: -1,
-            Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
-        [CheckRestricted(Scene.InvertedStoneTower, variant: -1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3)]
-        [CheckRestricted(Scene.StoneTowerTemple, variant: -1, Item.CollectableStoneTowerTempleInvertedWizzrobeRoomPot1)]
         [CheckRestricted(Scene.SwordsmansSchool, variant: -1,
             Item.CollectableSwordsmanSSchoolPot1, Item.CollectableSwordsmanSSchoolPot2, Item.CollectableSwordsmanSSchoolPot3, Item.CollectableSwordsmanSSchoolPot4, Item.CollectableSwordsmanSSchoolPot5)]
+        [CheckRestricted(Scene.DoggyRacetrack, variant: -1,
+            Item.CollectableDoggyRacetrackPot1, Item.CollectableDoggyRacetrackPot2, Item.CollectableDoggyRacetrackPot3, Item.CollectableDoggyRacetrackPot4)]
+        [CheckRestricted(Scene.DekuPalace, variant: -1,
+            Item.CollectableDekuPalaceEastInnerGardenPot1, Item.CollectableDekuPalaceEastInnerGardenPot2)]
+        [CheckRestricted(Scene.DekuShrine, variant: -1, Item.CollectableDekuShrineGreyBoulderRoomPot1)]
+        [CheckRestricted(Scene.Woodfall, variant: -1,
+            Item.CollectableWoodfallPot1, Item.CollectableWoodfallPot2, Item.CollectableWoodfallPot3)]
+        [CheckRestricted(Scene.SouthernSwamp, variant: -1,
+            Item.CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot1, Item.CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot2)]
+        [CheckRestricted(Scene.SouthernSwampClear, variant: -1,
+            Item.CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot1, Item.CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot2)]
+        [CheckRestricted(Scene.PinnacleRock, variant: -1,
+            Item.CollectablePinnacleRockPot1, Item.CollectablePinnacleRockPot2, Item.CollectablePinnacleRockPot3)]
+        [CheckRestricted(Scene.SecretShrine, variant: -1,
+            Item.CollectableSecretShrineMainRoomPot1, Item.CollectableSecretShrineMainRoomPot2, Item.CollectableSecretShrineMainRoomPot3, Item.CollectableSecretShrineMainRoomPot4, Item.CollectableSecretShrineMainRoomPot5)]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
+        [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
+
+        [CheckRestricted(Scene.ZoraCape, variant: -1, Item.CollectableZoraCapeJarGame1,
+            Item.CollectableZoraCapePot1, Item.CollectableZoraCapePot2, Item.CollectableZoraCapePot3, Item.CollectableZoraCapePot4, Item.CollectableZoraCapePot5)]
+        [CheckRestricted(Scene.IkanaCastle, variant: -1,
+            Item.CollectableAncientCastleOfIkana1FWestStaircasePot1, Item.CollectableAncientCastleOfIkanaCastleExteriorPot1, Item.CollectableAncientCastleOfIkanaFireCeilingRoomPot1,
+            Item.CollectableAncientCastleOfIkanaHoleRoomPot1, Item.CollectableAncientCastleOfIkanaHoleRoomPot2, Item.CollectableAncientCastleOfIkanaHoleRoomPot3, Item.CollectableAncientCastleOfIkanaHoleRoomPot4)]
+        [CheckRestricted(Scene.StoneTower, variant: -1,
+            Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
+        // cannot randomize temple pots yet, uses dungeon keep objects, this will come later
+        [CheckRestricted(Scene.InvertedStoneTower, variant: -1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3)]
+        [CheckRestricted(Scene.StoneTowerTemple, variant: -1, Item.CollectableStoneTowerTempleInvertedWizzrobeRoomPot1)]
         // 0xF9 is pot and pot shard
         // according to CM, 0x100 is available everywhere as a pot, where 0x3F defines the drop item
         // so 1F is arrows, F is magic, B is three small rups? 7 is huge 200 rup, 17 is empty
@@ -1152,11 +1174,28 @@ namespace MMR.Randomizer.GameObjects
         // 103 empty, 113 is 10 deku nuts, 104 is red rup, 114 is empty
         //[GroundVariants(0x110)] // testing // 115 101 106 10E 10F
         [GroundVariants(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E, // good variety to place
+            0x30A, // trading post (has nothing important
             0x202, 0x602, 0x802, 0xA02, 0xC02, // swords school
             0xF0A, // buisness scrub grotto
-            0x4110)] // TF pot
-        [VariantsWithRoomMax(max:0, variant: 0x202, 0x602, 0x802, 0xA02, 0xC02)] // swords school, these are dungeon_keep pots cannot place without the object
-        [ForbidFromScene(Scene.MajorasLair)] // we want them for the fight
+            0x0302, 0x0502, 0x0702, 0x0902, // doggy racetrack
+            0x4B0A, 0x4D02, 0x4F01, // southern swamp
+            0x410A, 0x4302, 0x4501, // southern swamp clear
+            0x650E, 0x670E, // deku palace
+            0x4310, 0x413, 0x4119, 0x4528, // woodfall
+            0xFE01, // deku shrine
+            0x4D10, 0xFF04, 0x4D10,// mountain village spring
+            0x410E, 0x450A, 0x470A, 0x490A, 0x4B0A, 0x4D0E, 0x530A, 0x550A, 0x570E, 0x590A, 0x5B0E, // pinnacle rock
+            0x7C10, 0x7E0B, 0x800B, 0x820E, 0x840B, 0x9C10, 0x9E0E, 0xA010, 0xB40E, 0x860B, 0x8813, 0x8A0B, 0x8C0B,// ikana castle
+            0x430A, 0x450E, 0x4710, 0x4B10, 0x4D14, 0x4F0A, 0x5114, 0x5314, 0x570A, 0x5910, 0x5B14, 0x5D0E, 0x5F1E, 0x610A, 0x630E, // stone tower
+            0x6514, 0x671E, 0x690E, 0x6B0A, 0x6D0A, 0x6F15, 0x711F, 0x7610, 0x750F, // stone tower (cont)
+            0x460B, 0x4610, 0x018D, // stone tower temple
+            0xC00B, 0xC21E, 0xC40E, 0xFE0E, 0xFC0B, 0xFA1E, 0xF81E, 0xF81E, 0xF60E, 0xF410, // secret shrine
+            0x4110)] // terminafield pot
+        [VariantsWithRoomMax(max:0, variant: 0x460B, 0x4610, 0x018D, // stone tower temple (dungeon keep)
+            0xFE01, // deku shrine (dungeon keep)
+            0x202, 0x602, 0x802, 0xA02, 0xC02)] // swords school, these are dungeon_keep pots cannot place without the object
+        [ForbidFromScene( Scene.GoronRacetrack, // these are green pots they use a different object anyway
+            Scene.MajorasLair)] // we want them for the fight
         [UnkillableAllVariants]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)] // 0x3FC
         ClayPot = 0x82, // Obj_Tsubo

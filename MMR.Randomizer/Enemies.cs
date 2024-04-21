@@ -960,6 +960,9 @@ namespace MMR.Randomizer
                 // behind table should be facing table
                 tradingPost.Maps[0].Actors[4].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 210, flags: tradingPost.Maps[0].Actors[2].Rotation.y);
 
+                var tradingPostPot = tradingPost.Maps[0].Actors[8];
+                tradingPostPot.Rotation.y = ActorUtils.MergeRotationAndFlags(270, tradingPostPot.Rotation.y); // rotate right toward player away from front wall
+
                 // we cannot randomize gorman brothers without randomizing their chasing horse counterparts
                 // except, this scene has an almost unused object: kanban, for the square sign you can only access if you go through the second fence
                 // what if we turn that into the same actor as the tree, and turn the second object into a second ingo
@@ -3318,7 +3321,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Lilypad)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.GreatFairy)) continue;
-                if (TestHardSetObject(GameObjects.Scene.FairyFountain, GameObjects.Actor.DekuBaba, GameObjects.Actor.BeanSeller)) continue; 
+                if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.ClayPot, GameObjects.Actor.BeanSeller)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ReDead, GameObjects.Actor.OceanSpiderhouseBombableWall)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
