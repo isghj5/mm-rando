@@ -782,6 +782,7 @@ namespace MMR.Randomizer
             RandomizePinnacleRockSigns();
             RandomizeDekuPalaceBombiwaSigns();
             ChangeHotwaterGrottoDekuBabaIntoSomethingElse(rng);
+            SwapGreatFairies(rng);
             ModifyFireflyKeeseForPerching();
             SplitPirateSewerMines();
             SplitSnowheadTempleBo();
@@ -1962,20 +1963,21 @@ namespace MMR.Randomizer
             dekuPalaceActors[20].Position.y = -40;
         }
 
+        private static List<(GameObjects.Actor actor, short vars)> shallowWaterReplacements = new List<(GameObjects.Actor actor, short vars)>
+        {
+            (GameObjects.Actor.LikeLike, 0x2),  // water bottom type
+            (GameObjects.Actor.Mikau, 0xC0F),   // water surface type
+            (GameObjects.Actor.GoGoron, 0x7FC1) // ground type (race track goron, stretching)
+        };
+
         public static void ChangeHotwaterGrottoDekuBabaIntoSomethingElse(Random rng)
         {
             /// I want more variety, so I want the hot spring water grotto to have a different actor in it than regular grottos
             // using likelike as a replacement, sometimes rando will put water and sometimes land
 
             // we want both ground or water types, so we are going to use multiple actors
-            var randomActorCandidates = new List<(GameObjects.Actor actor, short vars)>
-            {
-                (GameObjects.Actor.LikeLike, 0x2),  // water bottom type
-                (GameObjects.Actor.Mikau, 0xC0F),   // water surface type
-                (GameObjects.Actor.GoGoron, 0x7FC1) // ground type (race track goron, stretching)
-            };
-            int randomValue = rng.Next(randomActorCandidates.Count);
-            var coinTossResultActor = randomActorCandidates[randomValue];
+            int randomValue = rng.Next(shallowWaterReplacements.Count);
+            var coinTossResultActor = shallowWaterReplacements[randomValue];
 
             var grottosScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Grottos.FileID());
             var hotspringDekuBaba = grottosScene.Maps[14].Actors.FindAll(a => a.ActorEnum == GameObjects.Actor.DekuBabaWithered);
@@ -2011,6 +2013,95 @@ namespace MMR.Randomizer
             // change object in the room to match new fake actors
             grottosScene.Maps[14].Objects[2] = (coinTossResultActor.actor).ObjectIndex();
         }
+
+
+        private static void SwapGreatFairies(Random rng)
+        {
+            /// actorizer is currently a little silly in that, if an actor/enemy is replaced, we replace the objects in other rooms of the same scene
+            ///   which normally prevents us randomizing only one fairy since all fairy fountains are in the same scene they would all get dinged
+            /// in order to randomize just one great fairy we need to do it piecemeal
+
+            if (!ACTORSENABLED) return;
+
+            var greatfairyFountainScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.FairyFountain.FileID());
+
+            void ChangeGreatFairyActors(int mapIndex, int objectIndex, int actorIndex1, int actorIndex2, int actorIndex3,  string fairyName,
+                vec16 pos1, vec16 pos2, vec16 pos3)
+            {
+                // shallow bath water means we have options for what to replace with, pick one
+                int randomValue = rng.Next(shallowWaterReplacements.Count);
+                var coinTossResultActor = shallowWaterReplacements[randomValue];
+
+                var map = greatfairyFountainScene.Maps[mapIndex];
+                var dyYosei = map.Actors[actorIndex1]; // placed to the left
+                dyYosei.ChangeActor(coinTossResultActor.actor, vars: coinTossResultActor.vars, modifyOld: true);
+                dyYosei.OldName = fairyName;
+                dyYosei.Position = pos1;
+                dyYosei.Rotation.y = ActorUtils.MergeRotationAndFlags(90, flags: dyYosei.Rotation.y); // turn to face right
+
+
+                var elfgroup = map.Actors[actorIndex2]; // placed to the right
+                elfgroup.ChangeActor(coinTossResultActor.actor, vars: coinTossResultActor.vars, modifyOld: true);
+                elfgroup.OldName = fairyName + "Cloud";
+                elfgroup.Position = pos2;
+                elfgroup.Rotation.y = ActorUtils.MergeRotationAndFlags(270, flags: dyYosei.Rotation.y); // turn to face left
+
+                if (actorIndex3 != -1) // there isnt always a talk spot to randomize, only in ikana and town
+                {
+                    var talkalot = map.Actors[actorIndex3]; // placed in the back facing forward
+                    talkalot.ChangeActor(coinTossResultActor.actor, vars: coinTossResultActor.vars, modifyOld: true);
+                    talkalot.OldName = fairyName + "TalkSpot";
+                    talkalot.Position = pos3;
+                }
+
+                map.Objects[objectIndex] = coinTossResultActor.actor.ObjectIndex();
+            }
+
+            var mask = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.MaskGreatFairy).Item;
+            var magic = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.FairyMagic).Item;
+
+            if (IsActorizerJunk(mask) && IsActorizerJunk(magic))
+            {
+                ChangeGreatFairyActors(mapIndex: 0, objectIndex: 0,
+                            actorIndex1: 1, 2, 4,
+                            "TownFairy",
+                            pos1: new vec16(2289, -30, -750), new vec16(2523, -30, -750), new vec16(2412, -30, -929));
+            }
+            var spinattack = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.MaskGreatFairy).Item;
+            if (IsActorizerJunk(spinattack))
+            {
+                ChangeGreatFairyActors(mapIndex: 1, objectIndex: 0,
+                            actorIndex1: 0, 1, -1,
+                            "WoodfallFairy",
+                            pos1: new vec16(1095, -30, -750), new vec16(1294, -30, -750), new vec16(2412, -30, -929));
+            }
+            var doubleHappiness = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.FairyDoubleMagic).Item;
+            if (IsActorizerJunk(doubleHappiness))
+            {
+                ChangeGreatFairyActors(mapIndex: 2, objectIndex: 0,
+                            actorIndex1: 0, 1, -1,
+                            "SnowheadFairy",
+                            pos1: new vec16(-102, -30, -750), new vec16(93, -30, -750), new vec16(2412, -30, -929));
+            }
+            var doubleBeef = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.FairyDoubleDefense).Item;
+            if (IsActorizerJunk(doubleBeef))
+            {
+                ChangeGreatFairyActors(mapIndex: 3, objectIndex: 0,
+                            actorIndex1: 0, 1, -1,
+                            "GreatbayFairy",
+                            pos1: new vec16(-1299, -30, -750), new vec16(-1098, -30, -750), new vec16(2412, -30, -929));
+            }
+            var bigGoronSword = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemFairySword).Item;
+            if (IsActorizerJunk(bigGoronSword))
+            {
+                ChangeGreatFairyActors(mapIndex: 4, objectIndex: 0,
+                            actorIndex1: 0, 1, 3,
+                            "IkanaFairy",
+                            pos1: new vec16(-2481, -30, -750), new vec16(-2319, -30, -750), new vec16(-2407, -30, -872));
+            }
+
+        }
+
 
         public static void ModifyFireflyKeeseForPerching()
         {
@@ -3227,7 +3318,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Lilypad)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.GreatFairy)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.DekuPatrolGuard, GameObjects.Actor.BuisnessScrub)) continue; 
+                if (TestHardSetObject(GameObjects.Scene.FairyFountain, GameObjects.Actor.DekuBaba, GameObjects.Actor.BeanSeller)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ReDead, GameObjects.Actor.OceanSpiderhouseBombableWall)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
