@@ -1862,7 +1862,6 @@ namespace MMR.Randomizer.GameObjects
         // snowhead temple
         [CheckRestricted(Scene.PathToSnowhead, variant: -1, Item.HeartPieceToSnowhead)]
         [CheckRestricted(Scene.GreatBayCoast, variant: -1, Item.HeartPieceGreatBayCoast)]
-        // path to snowhead
         [CheckRestricted(Scene.StoneTower, variant: -1, Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
         [CheckRestricted(Scene.TwinIslandsSpring, variant: -1, Item.ItemBottleGoronRace,
             Item.CollectableGoronRacetrackPot1, Item.CollectableGoronRacetrackPot2, Item.CollectableGoronRacetrackPot3,
@@ -1893,12 +1892,11 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants( 0x3200, 0x2D00, 0x0F00, 0x1E00,
             1, 0x2800, 0x11D)]
         [WaterBottomVariants(1)]
-        [VariantsWithRoomMax(max: 2, variant: 1)]
+        [VariantsWithRoomMax(max: 5, variant: 1)]
         // below ground is kinda boring..., we want above ground placement only
         [VariantsWithRoomMax(max: 0, variant: 0x11D, 0x0F00, 0x2800, 0x2D00)]
         // except I'm okay with a few of them because then the player might stumble on one pulling out an ocarina
-        [VariantsWithRoomMax(max: 1, variant:
-            , 0x3200, 0x1E00)] 
+        [VariantsWithRoomMax(max: 1, variant: 0x3200, 0x1E00)] 
         [UnkillableAllVariants]
         // crash: if you teach song to him in TF the ice block cutscene triggers
         // if you try to teach him a song with more than one it can lock
@@ -2772,15 +2770,21 @@ namespace MMR.Randomizer.GameObjects
         WoodfallTempleWoodenFlower = 0x13D, // Bg_Numa_Hana
 
         [ActorizerEnabled] // big object, collector flag, boring actor
-        //[ActorizerEnabled]
         [FileID(282)]
         [ObjectListIndex(0x165)]
+        [CheckRestricted(Scene.CuccoShack, variant:-1, Item.CollectableCuccoShackPottedPlant1)]
         // 0xXX is the item to drop, 0x7X00 is collecable flag
         // thankfully if collectable flag is 00 it gets ignored and you can re-collect over and over again
         // A is hearts or green rup if full health
         // following that: blue rup, red, three hearts, small magic, flexible,
-        [GroundVariants(0x0A, 0x02, 0x04, 0x0B, 0x0E, 0x10, 0x13, 0x15, 0x16, 0x1E)]
+        [GroundVariants(0x0A, 0x02, 0x04, 0x0B, 0x0E, 0x10, 0x13, 0x15, 0x16, 0x1E,
+            0x010A, // smitty
+            0x030A, 0x020A, // road to swamp
+            0x7F3F, 0x0B02, // cucco shack
+            0x0C0A, 0x0D0A // spring
+        )]
         [VariantsWithRoomMax(max: 2, 0x0A, 0x02, 0x04, 0x0B, 0x0E, 0x10, 0x13, 0x15, 0x16, 0x1E)]
+        [VariantsWithRoomMax(max: 0, 0x010A, 0x020A, 0x030A, 0x0B02, 0x0C0A, 0x0D0A, 0x7F3F)] // wont respawn
         [UnkillableAllVariants]
         [PlacementWeight(50)]
         PottedPlant = 0x13E, // Obj_Flowerpot
