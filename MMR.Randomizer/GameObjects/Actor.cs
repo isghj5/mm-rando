@@ -4633,6 +4633,7 @@ namespace MMR.Randomizer.GameObjects
         //    0xFF is type, where 0 is well, 1 is suppmoned in dampe house, 2/3/4 are dampe fire subtypes
         // we should be able to use 0xFF00... but rando changes something that makes dampe po spawn instant and well po has a cutscene
         [FlyingVariants(0xFF01, // vanilla
+            0xFF00, // well poe
             0x1301)] // not vanilla, maybe we can actually place killable variants?
         [GroundVariants(0xFF01,
                         0x1301)] // not vanilla, maybe we can actually place killable variants?
@@ -4921,8 +4922,7 @@ namespace MMR.Randomizer.GameObjects
         //[SittingVariant(0x20FF)]
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max: 0, 0, 0x00FF, 0x30FF)]
-        [VariantsWithRoomMax(max: 5, 0x40FF)]
-        //[OnlyOneActorPerRoom]
+        [VariantsWithRoomMax(max: 1, 0x40FF)]
         Cremia = 0x220, // En_Ma_Yto
 
         [FileID(504)]
