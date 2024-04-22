@@ -1366,6 +1366,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x807F, 0x8004, 0x8002, // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
             0xE, // swamp spiderhouse
             0x0114, 0x0115, 0x0116, 0x0117, 0x0118,
+            0x0102, 0x103, 0x104, 0x105, 0x106, // road to ikana
             0x101, 0x100, // cape covering the fairy hole
             0x0114, 0x0115, 0x0116, 0x0117, 0x0118, // hotspring water
             0x8003, 0x807F)]
@@ -1858,6 +1859,10 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
         [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
         [CheckRestricted(Scene.RoadToIkana, variant: -1, Item.CollectableRoadToIkanaPot1)]
+        // snowhead temple
+        [CheckRestricted(Scene.PathToSnowhead, variant: -1, Item.HeartPieceToSnowhead)]
+        [CheckRestricted(Scene.GreatBayCoast, variant: -1, Item.HeartPieceGreatBayCoast)]
+        // path to snowhead
         [CheckRestricted(Scene.StoneTower, variant: -1, Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
         [CheckRestricted(Scene.TwinIslandsSpring, variant: -1, Item.ItemBottleGoronRace,
             Item.CollectableGoronRacetrackPot1, Item.CollectableGoronRacetrackPot2, Item.CollectableGoronRacetrackPot3,
@@ -1885,17 +1890,22 @@ namespace MMR.Randomizer.GameObjects
         // versions: 1200, 1B00, 2800 shows up a lot, 2D00 stonetower, 3200 zora cape, 0x11D is zora cape
         // trading post version is 1
         // wish I could spawn the ones that dance so they are always dancing when the player gets there
-        [GroundVariants(1, 0x2800, 0x11D)]
-        [WaterBottomVariants(1, 0x2800, 0x11D)]
-        [VariantsWithRoomMax(max: 1, variant: 1)]
-        [VariantsWithRoomMax(max: 0, variant: 0x11D)]
-        [VariantsWithRoomMax(max: 0, variant: 0x2800)] // below ground to replace, we want above ground placement only
+        [GroundVariants( 0x3200, 0x2D00, 0x0F00, 0x1E00,
+            1, 0x2800, 0x11D)]
+        [WaterBottomVariants(1)]
+        [VariantsWithRoomMax(max: 2, variant: 1)]
+        // below ground is kinda boring..., we want above ground placement only
+        [VariantsWithRoomMax(max: 0, variant: 0x11D, 0x0F00, 0x2800, 0x2D00)]
+        // except I'm okay with a few of them because then the player might stumble on one pulling out an ocarina
+        [VariantsWithRoomMax(max: 1, variant:
+            , 0x3200, 0x1E00)] 
         [UnkillableAllVariants]
         // crash: if you teach song to him in TF the ice block cutscene triggers
         // if you try to teach him a song with more than one it can lock
         //[EnemizerScenesPlacementBlock(Scene.TradingPost, Scene.TerminaField)]
-        [ForbidFromScene(Scene.TradingPost, Scene.SnowheadTemple, Scene.StoneTower,
-            Scene.PathToSnowhead)]//, Scene.AstralObservatory)] // re-disable this if playing Entrando
+        [ForbidFromScene(Scene.TradingPost, // he now hints song of time, would have to hard code check if hes missing
+            Scene.SnowheadTemple // difficult to identify if anything is important after, TODO
+        )]//, Scene.AstralObservatory)] // re-disable this if playing Entrando
         Scarecrow = 0xCA, // En_Kakasi
 
         // think these control the push blocks in the sewer zora push puzzle
