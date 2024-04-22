@@ -1231,9 +1231,22 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0153)]
         Demo_Shd = 0x89, // Demo_Shd
 
-        // todo
+        [ActorizerEnabled]
         [FileID(129)]
-        [ObjectListIndex(0134)]
+        [ObjectListIndex(0x134)] // 0x86
+        [GroundVariants(
+            0x8000, 0x8001, 0x8002, 0x8003, // assumed hostile?
+            0x4000, 0x4001, 0x4002, 0x4003,
+            0x0, 0x1, 0x2, 0x3 // still aggro, kicks you out from across the map
+            )]
+        // kickout params
+        // cannot place anywhere yet since the actor is hard coded based on temple clear, and the regular one is agressive
+        [VariantsWithRoomMax(max:0, 
+            0x8000, 0x8001, 0x8002, 0x8003, // assumed hostile?
+            0x4000, 0x4001, 0x4002, 0x4003,
+            0x0, 0x1, 0x2, 0x3
+        )]
+        [UnkillableAllVariants]
         DekuPalaceChamberGuard = 0x8A, // En_Dns
 
         [FileID(130)]
@@ -4513,7 +4526,7 @@ namespace MMR.Randomizer.GameObjects
             variant:0x2 // doesn't spawn until you save monkey
             )]
         [UnkillableAllVariants]
-        [ForbidFromScene(/*Scene.WoodfallTemple,*/ Scene.DekuKingChamber)] // if her object is not in the king chamber no cutscene after bottle delivery
+        //[ForbidFromScene(/*Scene.WoodfallTemple,*/ Scene.DekuKingChamber)] // if her object is not in the king chamber no cutscene after bottle delivery
         DekuPrincess = 0x1FC, // En_Dnp
 
         [ActorizerEnabled]
