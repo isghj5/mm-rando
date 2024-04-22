@@ -5367,11 +5367,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(545)]
         [ObjectListIndex(0x1B6)]
-        // check restricted NotebookMeetShiro, NotebookSaveInvisibleSoldier
-        [GroundVariants(0)] //unk
+        [CheckRestricted(Item.NotebookMeetShiro, Item.NotebookSaveInvisibleSoldier)]
+        [GroundVariants(0)]
         [VariantsWithRoomMax(max: 1, variant:0)]
         [UnkillableAllVariants]
-        [ForbidFromScene(Scene.RoadToIkana)]
+        //[ForbidFromScene(Scene.RoadToIkana)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.SouthernSwamp, Scene.SouthernSwampClear)] // the scene has lens reversed, so you can see him render without lens, but if you use lens he disspears
         Shiro = 0x24A, // En_Stone_heishi
 
