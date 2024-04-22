@@ -541,7 +541,7 @@ namespace MMR.Randomizer.GameObjects
         Empty37 = 0x37,
 
         // Boss blue warp
-        //[ActorizerEnabled] // kinda boring, needs to be modified to it can appear after you clear the room and take you places that are interesting
+        [ActorizerEnabled] // kinda boring, needs to be modified to it can appear after you clear the room and take you places that are interesting
         [ObjectListIndex(0x3E)]
         [FileID(78)]
         [DynaAttributes(35, 30)]
@@ -551,6 +551,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [ForbidFromScene(Scene.DekuTrial, Scene.GoronTrial, Scene.LinkTrial, Scene.ZoraTrial)]
+        [PlacementWeight(30)]
         WarpDoor = 0x38, // Door_Warp1
 
         [ActorizerEnabled]
@@ -1792,16 +1793,17 @@ namespace MMR.Randomizer.GameObjects
 
         EmptyBE = 0xBE,
 
-        //[ActorizerEnabled] // warp addresses are offsets, dangerous until we can hard code
+        [ActorizerEnabled] // warp addresses are offsets, dangerous until we can hard code
         [FileID(167)]
         [ObjectListIndex(0x271)]
-        //[WaterBottomVariants()] // think this would be funny
+        [WaterBottomVariants(0x11, 0x422, 0x833, 0xC44)] // think this would be funny
         [PathingVariants(0x11, 0x422, 0x833, 0xC44)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [VariantsWithRoomMax(max: 1, variant: 0x11, 0x422, 0x833, 0xC44)]
         [PathingKickoutAddrVarsPlacement(mask: 0x3F0, shift: 4)]
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.TheMoon)]
+        [PlacementWeight(5)]
         MoonChild = 0xBF, // En_Js
 
         EmptyC0 = 0xC0,
@@ -4587,6 +4589,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0, 1, 2, 3, 4, 5)]
         [VariantsWithRoomMax(max: 4, variant: 0, 1, 2, 3, 4, 5)]
         [ForbidFromScene(Scene.PiratesFortressRooms)] // pirate beehive cutscene
+        [PlacementWeight(90)]
         GiantBeee = 0x204, // En_Bee
 
         [ActorizerEnabled]
@@ -4602,6 +4605,7 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 3)] // 0x3F8
         Seahorse = 0x205, // En_Ot
 
+        // this is spawned by another actor apparently, dont use this
         [FileID(477)]
         [ObjectListIndex(0x1ED)]
         DeepPython = 0x206, // En_Dragon
