@@ -1363,6 +1363,15 @@ namespace MMR.Randomizer.GameObjects
         //[PathingVariants(0x4000)] // TODO figure out if I even can get this to work
         [PathingTypeVarsPlacement(mask: 0x3F, shift: 8)] // 0x3F00
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        [VariantsWithRoomMax(max:0, variant: 0x4000, 0x8000, // one of these crashes, not sure which yet TODO later
+            0x4101, 0x0102, // bean grotto
+            0x304, 0x4203, 0x4080, 0x1,// swamp spiderhouse
+            0x4D19, 0x61A, 0x071A, // great bay coast
+            0x4203, 0x0D04, // deku palace
+            0x101, // doggy race track
+            0x401, 0x0504, // inverted stone tower
+            0x4305, 0x460B, 0x478E, 0x0506, 0x070C, 0x060F // termina field
+        )]
         //[ForbidFromScene(Scene.SwampSpiderHouse )] // dont want to mess with this by accident until I know it has proper logic
         SoftSoilAndBeans = 0x91, // Obj_Bean
 
