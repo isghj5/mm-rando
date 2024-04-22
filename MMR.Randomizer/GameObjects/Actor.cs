@@ -120,7 +120,8 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.SouthernSwampClear, -1, Item.HeartPieceBoatArchery)]
         [WaterTopVariants(0xFF00)] // all vanilla types are the same, however param 0xFF00 and 0xFF are parameters of unkown type
         //[WaterBottomVariants(0xFF01)] // not safe check the params for safe params first
-        [ForbidFromScene(Scene.IkanaCanyon, Scene.GreatBayTemple)]
+        [ForbidFromScene(//Scene.IkanaCanyon,
+            Scene.GreatBayTemple)]
         Octarok = 0x8, // En_Okuta
 
         [FileID(47)]
@@ -2008,6 +2009,7 @@ namespace MMR.Randomizer.GameObjects
         // colors: (white, brown, dark grey, bluedog, gold)
         // 0x001F params are unknown, they aren't checked in init
         [GroundVariants(0x20, 0x40, 0x60, 0x80, 0x120,
+            0x29F, 0xA9F, // ranch
             0x03FF, 0x019F, 0x02BF)]
         [PathingVariants(0x019F, 0x0D9F, 0x03FF, 0x22BF,
             0x20, 0x40, 0x60, 0x80, 0x120)]
@@ -2015,7 +2017,9 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max: 1, variant: 0x20, 0x40, 0x60, 0x80, 0x120,
             0x22BF, 0x03FF, 0x019F, 0x02BF, 0xD9F)] // this many dogs is enough honestly
-        [ForbidFromScene(Scene.RanchBuildings, Scene.RomaniRanch)]//, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
+        [VariantsWithRoomMax(max: 0, variant: 0x29F, 0xA9F)] // too high of a path
+        [ForbidFromScene(//Scene.RanchBuildings,
+            Scene.RomaniRanch)]//, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
         // dog safe areas: TF, roadtoSS, SS, SSC, deku palace, sspiderhouse
         // path to mountain village
         // now that I know what the path vars is, any area with at least one path per room should be safe for index:0 dogs
@@ -4908,13 +4912,17 @@ namespace MMR.Randomizer.GameObjects
             Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
         [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.MaskRomani,
             Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
+        // 0x10FF and 0x11FF are in barn, dialogue focused and timegated i bet
+        // 0x20FF is in the homestead, sitting at table? probably timegated 
         [GroundVariants(0, // standing around day 1 is type 0
             0x40FF, // wedding
             0x30FF, // standing in front of ranch, final night walking?
             0x00FF)] // bottom 0xFF is unknown, not used in code?
+        //[SittingVariant(0x20FF)]
         [UnkillableAllVariants]
-        [VariantsWithRoomMax(max:0, 0, 0x40FF, 0x00FF, 0x30FF)]
-        [OnlyOneActorPerRoom]
+        [VariantsWithRoomMax(max: 0, 0, 0x00FF, 0x30FF)]
+        [VariantsWithRoomMax(max: 5, 0x40FF)]
+        //[OnlyOneActorPerRoom]
         Cremia = 0x220, // En_Ma_Yto
 
         [FileID(504)]
@@ -5204,7 +5212,7 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         MushroomCloud = 0x23B, // Obj_Kinoko
 
-        [ActorizerEnabled] // after weights we can make it available low weight
+        [ActorizerEnabled]
         [FileID(531)]
         [ObjectListIndex(0x218)]
         [DynaAttributes(16,12)]
@@ -5289,7 +5297,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         //[ForbidFromScene(Scene.StockPotInn)]
-        //[PlacementWeight]
+        [PlacementWeight(80)]
         AnjusGrandma = 0x243, // En_Nb
 
         // issue: they dont spawn without at least a pair, this can lead to areas where you get no spawns at all
@@ -5725,7 +5733,8 @@ namespace MMR.Randomizer.GameObjects
             0x1800, 0x7F, // southern swamp
             0x1000, 0xFC05, // clear southern swamp
             0xFC06, 0x0001, // goron village winter
-            0xFC07, 0x0402 // zora halls
+            0xFC07, 0x0402, // zora halls
+            0x1403, 0x0003  // ikana canyon
             )]
         [PathingTypeVarsPlacement(mask:0x3F, shift:10)]
         [OnlyOneActorPerRoom]
@@ -5733,7 +5742,8 @@ namespace MMR.Randomizer.GameObjects
             0x1800, 0x7F, // southern swamp
             0x1000, 0xFC05, // clear southern swamp
             0xFC06, 0x0001, // goron village winter
-            0xFC07, 0x0402)] // this actors placemnet is a pain, needs investigation
+            0x1403, 0x0003,
+            0xFC07, 0x0402)]
         [UnkillableAllVariants]
         [AlignedCompanionActor(DekuFlower, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x017F)] // treasure chest shop music
         //[ForbidFromScene( //Scene.SouthernSwamp, Scene.SouthernSwampClear,
@@ -5972,9 +5982,16 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         UnderwaterGrate = 0x28A, // Obj_Kzsaku
 
-        // TODO once I get weights working
+        [ActorizerEnabled]
         [FileID(610)]
         [ObjectListIndex(0x261)]
+        //[SmallVariants]
+        //[TableVariants]
+        // I think 2 is time gated behind delivery, so dont place
+        [GroundVariants(0x0, 0x1, 0x2)]
+        [VariantsWithRoomMax(max:0, 0x2)]
+        [UnkillableAllVariants]
+        [PlacementWeight(30)]
         Milkjar = 0x28B, // Obj_Milk_Bin
         
         [FileID(611)]
