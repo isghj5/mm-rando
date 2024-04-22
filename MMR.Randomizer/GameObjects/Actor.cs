@@ -1528,6 +1528,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.NotebookMeetGorman, Item.MaskCircusLeader, Item.NotebookMovingGorman)]
         [GroundVariants(0xFF,
             3,0)] // pathing we move
+        //[sitting type]
         //[PathingVariants(3, 0)] // while he is technically pathing, his pathing data is always the exit door short path, boring
         [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
         // behavior too complicated, disable placement anywhere
@@ -2092,6 +2093,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(218)]
         [ObjectListIndex(0x133)]
         [DynaAttributes(10, 8)]
+        [CheckRestricted(Scene.SwampSpiderHouse, variant:-1, Item.CollectibleSwampSpiderToken10, Item.CollectibleSwampSpiderToken27)]
         // not always active, only sometimes:q
         [TreasureFlagsPlacement(mask: 0x1F, shift: 2)]
         [GroundVariants(0x7F3F, // buisness scrub and pirates fortress
@@ -2099,9 +2101,14 @@ namespace MMR.Randomizer.GameObjects
             0x7F3F, // pirates fortess
             0x000B, // sht bridge room
             0x000F, // sht goron switch room
+            0x7F1F,// romani ranch
             // there are more TODO add them from spider house and a few other places
             0x2604)] // stt mirror room
-        [ForbidFromScene(Scene.SnowheadTemple, Scene.SwampSpiderHouse, Scene.StoneTowerTemple, Scene.Grottos, Scene.OceanSpiderHouse, Scene.GreatBayTemple)]
+        [ForbidFromScene(Scene.SnowheadTemple,
+            //Scene.SwampSpiderHouse,
+            Scene.StoneTowerTemple,
+            Scene.Grottos, // buisness scrib?>
+            Scene.OceanSpiderHouse, Scene.GreatBayTemple)]
         [UnkillableAllVariants]
         [PlacementWeight(75)]
         LargeWoodenCrate = 0xE5, // Obj_Kibako2
@@ -2446,7 +2453,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x2243)]
         Garo = 0x113, // En_Jso
 
-        // not that interesting, cutscene calapsing bridge, TODO weight down
+        // not that interesting, cutscene calapsing bridge
         [ActorizerEnabled]
         [FileID(249)]
         [ObjectListIndex(0xED)]
@@ -2457,6 +2464,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [EnemizerScenesPlacementBlock(//Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.StoneTower, // dyna crash
             Scene.TradingPost)]  // might block door?
+        [PlacementWeight(50)] // waaay too common
         UnusedFallingBridge = 0x114, // Obj_Chikuwa
 
         // TODO would not spawn because I mistyped the ID try again
@@ -2536,6 +2544,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 3, variant: 0x000F, 0xFF01)]
         [VariantsWithRoomMax(max: 0, variant: 0xFF0F)] // probably busted
         [UnkillableAllVariants]
+        [PlacementWeight(50)]
         ArcheryMiniGameMan = 0x11D, // En_Syateki_Man
 
         Empty11E = 0x11E,
@@ -3797,7 +3806,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(401)]
         [ObjectListIndex(0x1A3)]
         // there are other params forthis actor, todo explor
-        [GroundVariants(0, 0x2)] // 0 is clocktower, 2 is wiped out
+        [GroundVariants(0, // 0 is clocktower,
+            0x2, //  2 is wiped out
+            0x3)]  // in the cutscenes??
         [VariantsWithRoomMax(max: 1, variant: 0x2)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
@@ -3975,6 +3986,7 @@ namespace MMR.Randomizer.GameObjects
         [ForbidFromScene(Scene.TouristCenter)]
         [UnkillableAllVariants]
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
+        [PlacementWeight(75)]
         SwampTouristGuide = 0x1C5, // En_Shn
 
         Empty1C6 = 0x1C6,
@@ -4430,8 +4442,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(462)]
         [ObjectListIndex(0x1CF)]
-        [CheckRestricted(Item.UpgradeRazorSword, Item.UpgradeGildedSword)]
-        [GroundVariants(0x200)] // todo: does this variant do anything?
+        [CheckRestricted(Scene.MountainSmithy, variant:-1, Item.UpgradeRazorSword, Item.UpgradeGildedSword)]
+        [GroundVariants( 0xFE1F, // credits
+            0x200)] // vacation
         [VariantsWithRoomMax(max:8, variant:0x200)] // no reason except it can be creepy
         [UnkillableAllVariants]
         Zubora = 0x1F6, // En_Kbt
@@ -4527,8 +4540,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(471)]
         [ObjectListIndex(0x1D6)]
-        [CheckRestricted(Item.UpgradeRazorSword, Item.UpgradeGildedSword)]
-        [GroundVariants(0x200)]
+        [CheckRestricted(Scene.MountainSmithy, variant:-1, Item.UpgradeRazorSword, Item.UpgradeGildedSword)]
+        [GroundVariants( 0xFE1F, // credits in milkbar
+            0x200)] // regular
         //[VariantsWithRoomMax(max:0, variant: 0x200)] // suspected double actor, without the other I doubt this works at all
         [SwitchFlagsPlacement(mask: 0xFE, shift: 9)]
         [PathingKickoutAddrVarsPlacement(mask:0x1F, shift:0)] // why oh why did this stupid actor need a selectable exit kickout
@@ -4550,12 +4564,13 @@ namespace MMR.Randomizer.GameObjects
         //[CheckRestricted(Scene.TwinIslandsSpring, variant: 0x3FF1, Item.ItemBottleGoronRace)] // not sure this is required
         // all other versions are 0x13** or 0x1402
         [GroundVariants(0x1400)] // regular one in the shrine
+        [PerchingVariants(0x1400)] // regular one in the shrine
         // 0x3FF1 does not spawn in winter, even in other scenes
         //[GroundVariants(0x3FF1)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         // in 1.16 this was rescinded, we can now place it in the world again
-        [VariantsWithRoomMax(max: 0, variant: 0x3FF1)] // softlock if you enter the song teach cutscene, which in rando is proximity
+        //[VariantsWithRoomMax(max: 0, variant: 0x3FF1)] // softlock if you enter the song teach cutscene, which in rando is proximity
         //VariantsWithRoomMax(max: 0, variant: 0x1400)] // holy shit this is annoying nvm
         //[ForbidFromScene(Scene.GoronShrine, Scene.GoronRacetrack, Scene.TwinIslandsSpring)]
         [SwitchFlagsPlacement(mask: 0x3F, shift: 8)]
@@ -4637,6 +4652,7 @@ namespace MMR.Randomizer.GameObjects
         //    0xFF is type, where 0 is well, 1 is suppmoned in dampe house, 2/3/4 are dampe fire subtypes
         // we should be able to use 0xFF00... but rando changes something that makes dampe po spawn instant and well po has a cutscene
         [FlyingVariants(0xFF01, // vanilla
+            0x1, 0x0102, // damps house
             0xFF00, // well poe
             0x1301)] // not vanilla, maybe we can actually place killable variants?
         [GroundVariants(0xFF01,
@@ -4644,7 +4660,7 @@ namespace MMR.Randomizer.GameObjects
         //[ForbidFromScene(Scene.BeneathTheWell, Scene.DampesHouse)] // well and dampe house must be vanilla for scoopsanity
         //[OnlyOneActorPerRoom]
         [DifficultAllVariants]
-        [VariantsWithRoomMax(max: 0, variant: 0xFF00)]
+        [VariantsWithRoomMax(max: 0, variant: 0xFF00, 0x1, 0x0102)]
         [VariantsWithRoomMax(max: 1, variant: 0xFF01,
             0x1301)] // non-vanilla
         //[RespawningVariants(0x1301)] // if we got killable versions working, this would go back on
@@ -4902,6 +4918,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x2000 is asleep night 2 in bed
         // 0x3000 is credits cutscene, except without the cutscene they just stare in a straight line
         //[GroundVariants(0x1000, 0x2000, 0xF000, 0x30FF)]
+        [PerchingVariants(0x1000)] // chair is a type of perch
         [VariantsWithRoomMax(max: 1, variant: 0x2000)] // one asleep to hint the others are out of body
         [VariantsWithRoomMax(max: 0, variant: 0x30FF)] // boring cutscene version just stares into the distance, do not re-shuffle
         [UnkillableAllVariants]
@@ -4923,10 +4940,11 @@ namespace MMR.Randomizer.GameObjects
             0x40FF, // wedding
             0x30FF, // standing in front of ranch, final night walking?
             0x00FF)] // bottom 0xFF is unknown, not used in code?
-        //[SittingVariant(0x20FF)]
+        [PerchingVariants(0x20FF)]
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max: 0, 0, 0x00FF, 0x30FF)]
         [VariantsWithRoomMax(max: 1, 0x40FF)]
+        [PlacementWeight(50)]
         Cremia = 0x220, // En_Ma_Yto
 
         [FileID(504)]
@@ -4996,9 +5014,11 @@ namespace MMR.Randomizer.GameObjects
         // FC11 failed to spawn, TODO lookup what it is supposed to be doing
         // removed 0xFC07 because I cannot right now stop them being placed and randoed at the same time (creeper)
         [WaterBottomVariants(0xFC00, 0xFC08, 0xFC06, 0xFC13, 0xFC14, 0xFC15)] // no reason we cant talk to them underwater I dont think
-        [GroundVariants(0xFC06, 0xFC08, 0xFC0C, 0xFC0D, 0xFC0E, 0xFC0F, 0xFC10, 0xFC13, 0xFC14, 0xFC15)]
+        [GroundVariants( 0xFC08, 0xFC13, 0xFC14, 0xFC15)]
+        [PerchingVariants(0xFC06, 0xFC0B, 0xFC0C, 0xFC0D, 0xFC0E, 0xFC0F, 0xFC10, 0xFC11 )] // on cliff edge
+        //[SittingType]
         // TODO finish making these both underwater and above water where possible
-        [PathingVariants(0x140A, 0xFC05, 0x2, 0x3, 0x4)]
+        [PathingVariants(0x140A, 0xFC05, 0x2, 0x3, 0x4, 0x416, 0x16, 0x816)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [VariantsWithRoomMax(max: 1, variant: 0x140A, 0xFC05, 0x2, 0x3, 0x4)]
         [VariantsWithRoomMax(max: 1, variant: 0xFC08, 0xFC07, 0xFC06, 0xFC13, 0xFC14, 0xFC15, 0xFC00)]
@@ -5123,11 +5143,11 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x23A)]
         [CheckRestricted(Scene.MilkBar, variant:0x3FFF, Item.MaskCircusLeader, Item.NotebookMeetToto)]
         [CheckRestricted(Scene.MayorsResidence, variant:-1, Item.NotebookMeetToto)]
-        [GroundVariants(0x050B, 0x3FFF)] // sitting in mayors office
+        [GroundVariants(0x050B, 0x3FFF)] // sitting in mayors office // TODO which one
+        [PerchingVariants(0x050B, 0x3FFF)] // sitting in mayors office
         [VariantsWithRoomMax(max:0, variant:0x050B, 0x3FFF)] // we dont want a sitting npc to be placed places, just replace, also talking to is softlock, and we cannot modify because rando needs this actor for things
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask:0x7F, shift:0)]
-        [ForbidFromScene(Scene.MilkBar)]
         Toto = 0x234, // En_Toto // manager zora band member
 
         [EnemizerEnabled] // does not spawn outside of ikana
@@ -5309,6 +5329,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(539)]
         [ObjectListIndex(0xE3)]
         [GroundVariants(1,0)]
+        [PerchingVariants(1)]
+        [VariantsWithRoomMax(max: 0, variant:1,0)] // actually schedule locked stupidly, going to stop for now hes been a source of issues
         [UnkillableAllVariants]
         [EnemizerScenesPlacementBlock(Scene.RanchBuildings, Scene.ClockTowerInterior,
             Scene.HoneyDarling, Scene.PostOffice, Scene.MayorsResidence, Scene.TreasureChestShop,
@@ -5383,8 +5405,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(547)]
         [ObjectListIndex(0x1E5)]
         [CheckRestricted(Item.HeartPieceTerminaBusinessScrub)]
+        [GroundVariants(0x23)] // in the grotto selling stuff
         [FlyingVariants(0x1F)] // might be pathing but I dont really care until we have flying path types
         [VariantsWithRoomMax(max:0, variant: 0x1F)] // assume pathing or whatever wack shit
+        [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         FlyingFieldScrub = 0x24C, // En_Scopenuts
 
@@ -5432,7 +5456,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x22B)]
         [CheckRestricted(Item.MundaneItemLuluBadPictographBlueRupee, Item.MundaneItemLuluGoodPictographRedRupee)]
         // E01 is rehersal
-        [GroundVariants(0xFE0F)]
+        [GroundVariants(0xFE0F,
+            0xFE02)] // dark one from the cutscene
         [WaterBottomVariants(0xFE0F)]
         [VariantsWithRoomMax(max:0, variant:0xE01)] // failure to spawn
         [OnlyOneActorPerRoom]
@@ -5552,6 +5577,7 @@ namespace MMR.Randomizer.GameObjects
             Item.ItemBottleMadameAroma,
             Item.NotebookMeetMadameAroma, Item.NotebookDeliverLetterToMama)]
         [GroundVariants(0)]
+        [PerchingVariants(0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [PlacementWeight(60)]
@@ -6124,6 +6150,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(631)]
         [ObjectListIndex(0x4)]
         [GroundVariants(0x0)]
+        [PerchingVariants(0)] // grandma pls
         [UnkillableAllVariants]
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         [PlacementWeight(65)] // until she does something this is a kinda boring actor
@@ -6156,6 +6183,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(636)]
         [ObjectListIndex(0x142)]
         [CheckRestricted(Item.HeartPieceOceanSpiderHouse)]
+        [PerchingVariants(0xF001, 0xF002, 0xF003, 0xF004, 0xF005, 0xF006)]
         [GroundVariants(0xF001, 0xF002, 0xF003, 0xF004, 0xF005, 0xF006)]
         [VariantsWithRoomMax(max: 1, variant:0xF001, 0xF002, 0xF003, 0xF004, 0xF005, 0xF006)]
         [UnkillableAllVariants] // not enemy actor category
