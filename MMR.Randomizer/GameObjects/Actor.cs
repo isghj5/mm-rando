@@ -1153,6 +1153,12 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot1, Item.CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot2)]
         [CheckRestricted(Scene.SouthernSwampClear, variant: -1,
             Item.CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot1, Item.CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot2)]
+        [CheckRestricted(Scene.GreatBayCoast, variant: -1,
+            Item.CollectableGreatBayCoastPot1, Item.CollectableGreatBayCoastPot2, Item.CollectableGreatBayCoastPot3,
+            Item.CollectableGreatBayCoastPot4, Item.CollectableGreatBayCoastPot5, Item.CollectableGreatBayCoastPot6,
+            Item.CollectableGreatBayCoastPot7, Item.CollectableGreatBayCoastPot8, Item.CollectableGreatBayCoastPot9,
+            Item.CollectableGreatBayCoastPot10, Item.CollectableGreatBayCoastPot11
+        )]
         [CheckRestricted(Scene.PinnacleRock, variant: -1,
             Item.CollectablePinnacleRockPot1, Item.CollectablePinnacleRockPot2, Item.CollectablePinnacleRockPot3)]
         [CheckRestricted(Scene.SecretShrine, variant: -1,
@@ -5265,6 +5271,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x8000, 0x0)]
         [VariantsWithRoomMax(max: 10, 0x8000, 0x0)]
         [UnkillableAllVariants]
+        [ForbidFromScene(Scene.ZoraCape)] // giant turtle requires palm trees to function, if we remove these it crashes
         [PlacementWeight(60)]
         PalmTree = 0x23C, // Obj_Yasi
  

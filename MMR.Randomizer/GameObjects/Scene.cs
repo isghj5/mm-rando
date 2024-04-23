@@ -660,8 +660,6 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1453)]
         [SceneInternalId(0x5D)]
         [DynaHeadroom(64, 64)]  // low default to start
-        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wolfos,
-        //    /* Actor.UnusedStoneTowerPlatform,*/ Actor.UnusedStoneTowerStoneElevator)] // can be so wide they block the hot spring grotto
         TwinIslands = 0x5A,
 
         [FileID(1455)]
