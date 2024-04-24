@@ -5316,9 +5316,14 @@ namespace MMR.Randomizer.GameObjects
         [FileID(536)]
         [ObjectListIndex(0x220)]
         [CheckRestricted(Scene.ZoraHallRooms, variant:-1, Item.HeartPieceEvan)]
-        [GroundVariants(0xFE01, 0xFE02, 0xFE0F)]
-        [WaterBottomVariants(0xFE01, 0xFE02, 0xFE0F)] // also, do not put regular variant as water our typing system is dumb, doesnt know which is which
-        [VariantsWithRoomMax(max:0, variant:0xFE21, 0xFE02/*, 0xFE0F*/)]
+        // 0xF is type (1,2 and else) the 0xFEXX param does NOTHING wtf
+        [GroundVariants(
+            //0xFE01, // zora hall one, concert after the thing, does not spawn regularlly
+            //0xFE02//, // cutscene version (mikau's healing)
+            0xFE0F // both in a cutscene scene and in the milkbar cutscene
+        )]
+        [WaterBottomVariants(0xF)] // also, do not put regular variant as water our typing system is dumb, doesnt know which is which
+        [VariantsWithRoomMax(max:1, variant: 0xFE0F/*, 0xFE0F*/)]
         [UnkillableAllVariants]
         Evan = 0x241, // En_Zos
 
