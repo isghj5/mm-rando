@@ -356,6 +356,8 @@ namespace MMR.Randomizer.GameObjects
         // this actor is mostly ignored, player might not even notice, dont waste lots of object budget on this thing
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
             Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bombiwa,
+            Actor.LikeLike)] // can grab you as you LEAVE and hardlock the game
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DekuBaba,
             Actor.RegularIceBlock, // I dont want to block on all of them, but the big one is a problem for peahat grotto
             Actor.LikeLike)] // can grab you on grotto exit and softlock with only one heart, TODO make special code instead moving them?
