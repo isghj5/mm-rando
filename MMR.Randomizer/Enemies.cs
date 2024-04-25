@@ -878,6 +878,13 @@ namespace MMR.Randomizer
             piratesFortressCourtyardScene.Maps[0].Actors[17].Position.y = 319;
             piratesFortressCourtyardScene.Maps[0].Actors[20].Position.y = -200; // too high, can cause bombchu to explode
 
+            // in pre-clocktown there is a keaton grass, but it doesn't work because there is no keaton object, but we can fix that
+            var beforeClockTownFID = GameObjects.Scene.BeforeThePortalToTermina.FileID();
+            var preclocktownScene = RomData.SceneList.Find(scene => scene.File == beforeClockTownFID);
+            preclocktownScene.Maps[0].Objects.Add(GameObjects.Actor.Keaton.ObjectIndex());
+            var clocktownroomData = RomData.MMFileList[beforeClockTownFID + 1].Data;
+            clocktownroomData[0x31] = (byte) preclocktownScene.Maps[0].Objects.Count();
+
             if (ACTORSENABLED)
             {
                 var dekuPalaceScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuPalace.FileID());
@@ -1004,6 +1011,7 @@ namespace MMR.Randomizer
 
                 var milkbarScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MilkBar.FileID());
                 milkbarScene.Maps[0].Objects[10] = GameObjects.Actor.ArcheryMiniGameMan.ObjectIndex();
+
 
                 // trying to fix clock, nothing
                 //var curiosityShopClock = curiosityShop.Maps[0].Actors[5];
@@ -3318,7 +3326,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Evan)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.KeatonGrass)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.BadBat, GameObjects.Actor.MilkbarChairs)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Lilypad)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;

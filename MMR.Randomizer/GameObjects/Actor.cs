@@ -3265,13 +3265,46 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         [FileID(333)]
-        // reminder: even though its obj2, the actual keaton doesn't not spawn without its own object
-        [ObjectListIndex(2)] // field_keep
+        // this actor requires field_keep for the grass, and keaton for the keaton itself
+        //[ObjectListIndex(2)] // requires field keep
+        [ObjectListIndex(0x264)] // keaton object itself
+        // now that we allign the object, we can remove the original, that means we need to take care of the check logic
+        [CheckRestricted(Scene.NorthClockTown, variant:-1, Item.HeartPieceKeatonQuiz,
+            Item.CollectableNorthClockTownKeatonGrass1, Item.CollectableNorthClockTownKeatonGrass2, Item.CollectableNorthClockTownKeatonGrass3,
+            Item.CollectableNorthClockTownKeatonGrass4, Item.CollectableNorthClockTownKeatonGrass5, Item.CollectableNorthClockTownKeatonGrass6,
+            Item.CollectableNorthClockTownKeatonGrass7, Item.CollectableNorthClockTownKeatonGrass8, Item.CollectableNorthClockTownKeatonGrass9
+        )]
+        [CheckRestricted(Scene.MilkRoad, variant: -1, Item.HeartPieceKeatonQuiz,
+            Item.CollectableMilkRoadKeatonGrass1, Item.CollectableMilkRoadKeatonGrass2, Item.CollectableMilkRoadKeatonGrass3,
+            Item.CollectableMilkRoadKeatonGrass4, Item.CollectableMilkRoadKeatonGrass5, Item.CollectableMilkRoadKeatonGrass6,
+            Item.CollectableMilkRoadKeatonGrass7, Item.CollectableMilkRoadKeatonGrass8, Item.CollectableMilkRoadKeatonGrass9
+        )]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.HeartPieceKeatonQuiz,
+            Item.CollectableMountainVillageSpringKeatonGrass1, Item.CollectableMountainVillageSpringKeatonGrass2, Item.CollectableMountainVillageSpringKeatonGrass3,
+            Item.CollectableMountainVillageSpringKeatonGrass4, Item.CollectableMountainVillageSpringKeatonGrass5, Item.CollectableMountainVillageSpringKeatonGrass6,
+            Item.CollectableMountainVillageSpringKeatonGrass7, Item.CollectableMountainVillageSpringKeatonGrass8, Item.CollectableMountainVillageSpringKeatonGrass9
+        )]
         [AlignedCompanionActor(BugsFishButterfly, CompanionAlignment.Above, ourVariant: -1,
             variant: 0x2324, 0x4324)] // butterflies over the bushes
         [GroundVariants(0x7F00, 0x400, 0x1F00)] //400 is milkroad, 7F00 is opening area, spring is 1F00
         [UnkillableAllVariants] // untested
-        [EnemizerScenesPlacementBlock(Scene.TerminaField)] // lag
+        [EnemizerScenesPlacementBlock( // since this requires field keep, I have to block from other areas (since we dont have dual object requirements)
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
+            Scene.PiratesFortress, Scene.PiratesFortressRooms, Scene.PiratesFortressExterior,
+            Scene.BeneathTheWell, Scene.SecretShrine, Scene.IkanaCastle, Scene.IgosDuIkanasLair,
+            Scene.SwampSpiderHouse, Scene.OceanSpiderHouse,
+            Scene.DekuPlayground, // weird, has the same theme as the other grottos but only fake scene grass
+            Scene.DekuTrial, Scene.GoronTrial, Scene.ZoraTrial, Scene.LinkTrial,
+            Scene.SwordsmansSchool, Scene.ZoraHall, Scene.GoronRacetrack,
+            // these are missing special object at all
+            Scene.SPOT00, Scene.HoneyDarling, Scene.MayorsResidence, Scene.MilkBar,
+            Scene.FishermansHut, Scene.PoeHut, Scene.MusicBoxHouse, Scene.StockPotInn, Scene.BombShop, Scene.GiantsChamber,
+            Scene.TreasureChestShop, Scene.LotteryShop, Scene.GoronShop, Scene.SakonsHideout, Scene.DekuShrine,
+            Scene.OdolwasLair, Scene.GohtsLair, Scene.GyorgsLair, Scene.TwinmoldsLair,
+            Scene.SouthClockTown, Scene.WestClockTown, Scene.EastClockTown,
+            Scene.TerminaField // lag
+        )]
+        //[PlacementWeight]
         KeatonGrass = 0x171, // En_Kusa2
 
         [FileID(334)]
@@ -6057,7 +6090,8 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [PlacementWeight(30)]
         Milkjar = 0x28B, // Obj_Milk_Bin
-        
+
+        // spawned by the grass itself, no point actorizing as it dissapears if the player is not wearing the mask I think
         [FileID(611)]
         [ObjectListIndex(0x264)]
         Keaton = 0x28C, // En_Kitan
