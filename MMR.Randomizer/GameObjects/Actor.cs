@@ -5324,6 +5324,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(531)]
         [ObjectListIndex(0x218)]
+        [CheckRestricted(Scene.GreatBayCoast, variant:-1, Item.HeartPieceFishermanGame)]
         [DynaAttributes(16,12)]
         [GroundVariants(0x8000, 0x0)]
         [VariantsWithRoomMax(max: 10, 0x8000, 0x0)]
