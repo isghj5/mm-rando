@@ -294,7 +294,7 @@ namespace MMR.Randomizer.Utils
                 GameObjects.Actor.Fairy.FileListIndex(),
                 GameObjects.Actor.Arrow.FileListIndex(),
                 GameObjects.Actor.BombAndKeg.FileListIndex(),
-                GameObjects.Actor.GrassBush.FileListIndex(),
+                //GameObjects.Actor.TallGrass.FileListIndex(),
                 GameObjects.Actor.En_Clear_Tag.FileListIndex(), // bomb effects and such
                 GameObjects.Actor.Arms_Hook.FileListIndex(), // hookshot tip
                 GameObjects.Actor.ZoraFinBoomerang.FileListIndex(),

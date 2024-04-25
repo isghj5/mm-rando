@@ -1165,7 +1165,6 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableSecretShrineMainRoomPot1, Item.CollectableSecretShrineMainRoomPot2, Item.CollectableSecretShrineMainRoomPot3, Item.CollectableSecretShrineMainRoomPot4, Item.CollectableSecretShrineMainRoomPot5)]
         [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
         [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
-
         [CheckRestricted(Scene.ZoraCape, variant: -1, Item.CollectableZoraCapeJarGame1,
             Item.CollectableZoraCapePot1, Item.CollectableZoraCapePot2, Item.CollectableZoraCapePot3, Item.CollectableZoraCapePot4, Item.CollectableZoraCapePot5)]
         [CheckRestricted(Scene.IkanaCastle, variant: -1,
@@ -1306,15 +1305,40 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ActorInstanceSize(0x19C)]
         [FileID(135)]
-        [ObjectListIndex(0x1)] // gameplay_keep obj 1
-        //[ObjectListIndex(0xF8)] // 
+        //[ObjectListIndex(0x1)] // gameplay_keep obj 1, for regular single bush of grass
+        [ObjectListIndex(0xF8)] //
+        [CheckRestricted(Scene.SouthernSwampClear, variant: -1, Item.CollectableSouthernSwampClearCentralSwampGrass1, Item.CollectableSouthernSwampClearCentralSwampGrass2)]
+        [CheckRestricted(Scene.MilkRoad, variant: -1, Item.CollectableMilkRoadGrass1, Item.CollectableMilkRoadGrass2, Item.CollectableMilkRoadGrass3)]
+        // 0 uses gameplay keep to draw regular grass, like ObjGrassUnit
         // 1 creates a grass circle in termina field, 0 is grotto grass single
-        // 642B is a smaller cuttable grass from the ground in secret shrine
-        [GroundVariants(0, 1)]
-        [AlignedCompanionActor(Shot_Sun, CompanionAlignment.OnTop, ourVariant: 1, variant: 0x41)] // fairies love grass
+        // 642B is a smaller cuttable grass from the ground in secret 
+        //[GroundVariants(0, 1)]
+        [GroundVariants(
+            //0 // gossip stones use this, but its field_keep versions
+            0x0800, // single in woods of mystery, field_keep
+            0x0600, 0x700, 0xC00, 0xD00, // woodfall temple
+            0x0610, // greay bay coast
+            0x634F, 0x642B, 0x654F, 0x662B, 0x672B, 0x682B, 0x602B, 0x614F, 0x622B, 0x634F, 0x602B, // secret shrine (1)
+            0x617B, 0x622B, 0x637B, 0x642B, 0x602B, 0x617B, 0x622B, 0x632B, 0x642B, 0x657B, 0x662B, // secret shrine (2)
+            0x677B, 0x602F, 0x612B, 0x627B, 0x634F, 0x642B, 0x654F, // secret shrine (3)
+            0x203F, 0x2157, 0x227F, 0x2343, 0x463F, 0x4757, 0x487F, 0x4943, // ikana canyon
+            0x2043, 0x217F, 0x223F, //milkroad
+            // TODO FINISH
+            0x23FF, 0x24FF, 0x2667, 0x2743 // southern swamp?
+        )]
+        [VariantsWithRoomMax(max:0, 0x0800,0x0600, 0x700, 0xC00, 0xD00, 0x0610)]
         [UnkillableAllVariants]
-        [ForbidFromScene(Scene.Grottos)] // dont remove from peahat grotto
-        GrassBush = 0x90, // En_Kusa
+        //[RespawningAllVariants] // some of them come back over and over, but its a PROP type actor
+        [AlignedCompanionActor(Actor.Fairy, CompanionAlignment.OnTop, ourVariant: 1, variant: 0x41)] // fairies love grass
+        // for now, until I can identify which ones have drops we need to be careful of, going to block all randimization
+        [ForbidFromScene(Scene.SouthernSwamp, Scene.OdolwasLair,
+            Scene.IkanaCastle, Scene.StoneTowerTemple, Scene.Woodfall, Scene.GreatBayCoast,
+            Scene.SecretShrine, Scene.MountainVillageSpring, Scene.WoodsOfMystery,
+            Scene.LaundryPool, Scene.SnowheadTemple, Scene.RoadToSouthernSwamp,
+            //Scene.MilkRoad,
+            Scene.IkanaCanyon, Scene.Grottos, Scene.BeneathTheWell, Scene.WoodfallTemple)]
+        [PlacementWeight(75)] // object is tiny, the weight is gonna need to be small because of how common it is
+        TallGrass = 0x90, // En_Kusa
 
         // this one might be a pain... without modification it looks like the actor wants to be doubled up on top of itself
         [ActorizerEnabled]
