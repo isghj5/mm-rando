@@ -2161,6 +2161,7 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(10, 8)]
         [CheckRestricted(Scene.SwampSpiderHouse, variant: -1, Item.CollectibleSwampSpiderToken10, Item.CollectibleSwampSpiderToken27)]
         [CheckRestricted(Scene.RomaniRanch, variant: 0x7F1F, Item.CollectableRomaniRanchWoodenCrateLarge1)]
+        [CheckRestricted(Scene.CuccoShack, variant: 0x7F1F, Item.CollectableCuccoShackWoodenCrateLarge1)]
         // not always active, only sometimes:q
         [TreasureFlagsPlacement(mask: 0x1F, shift: 2)]
         [GroundVariants(0x7F3F, // buisness scrub and pirates fortress
@@ -3349,6 +3350,8 @@ namespace MMR.Randomizer.GameObjects
             Scene.SouthClockTown, Scene.WestClockTown, Scene.EastClockTown,
             Scene.TerminaField // lag
         )]
+        // all field_keep scenes, shouldnt be randomized because of missing object but still exists in the list for some reason...
+        [ForbidFromScene(Scene.RomaniRanch, Scene.Grottos, Scene.TerminaField)]
         //[PlacementWeight]
         KeatonGrass = 0x171, // En_Kusa2
 
