@@ -2156,7 +2156,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(218)]
         [ObjectListIndex(0x133)]
         [DynaAttributes(10, 8)]
-        [CheckRestricted(Scene.SwampSpiderHouse, variant:-1, Item.CollectibleSwampSpiderToken10, Item.CollectibleSwampSpiderToken27)]
+        [CheckRestricted(Scene.SwampSpiderHouse, variant: -1, Item.CollectibleSwampSpiderToken10, Item.CollectibleSwampSpiderToken27)]
+        [CheckRestricted(Scene.RomaniRanch, variant: 0x7F1F, Item.CollectableRomaniRanchWoodenCrateLarge1)]
         // not always active, only sometimes:q
         [TreasureFlagsPlacement(mask: 0x1F, shift: 2)]
         [GroundVariants(0x7F3F, // buisness scrub and pirates fortress
