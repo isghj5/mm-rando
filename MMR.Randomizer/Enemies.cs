@@ -4673,8 +4673,16 @@ namespace MMR.Randomizer
             {
                 if (filePath.Contains("SafeBoat.mmra") ||
                     filePath.Contains("Dinofos"))
+                {
                     //throw new Exception("SafeBoat.mmra no longer works in actorizer 1.16, \n remove the file from MMR/actors and start a new seed.");
                     continue;
+
+                }
+
+                if (_randomized.Settings.Character == Models.Character.AdultLink && filePath.Contains("Anope.mmra"))
+                {
+                    continue; // this OOT epona replacement actor does not work with adult oot link mod because it replaces horse assets
+                }
 
                 try
                 {
