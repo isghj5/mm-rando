@@ -1160,7 +1160,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableGreatBayCoastPot10, Item.CollectableGreatBayCoastPot11
         )]
         [CheckRestricted(Scene.PinnacleRock, variant: -1,
-            Item.CollectablePinnacleRockPot1, Item.CollectablePinnacleRockPot2, Item.CollectablePinnacleRockPot3)]
+            Item.CollectablePinnacleRockPot1, Item.CollectablePinnacleRockPot2, Item.CollectablePinnacleRockPot3, Item.CollectablePinnacleRockPot4)]
         [CheckRestricted(Scene.SecretShrine, variant: -1,
             Item.CollectableSecretShrineMainRoomPot1, Item.CollectableSecretShrineMainRoomPot2, Item.CollectableSecretShrineMainRoomPot3, Item.CollectableSecretShrineMainRoomPot4, Item.CollectableSecretShrineMainRoomPot5)]
         [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
@@ -1170,10 +1170,16 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.IkanaCastle, variant: -1,
             Item.CollectableAncientCastleOfIkana1FWestStaircasePot1, Item.CollectableAncientCastleOfIkanaCastleExteriorPot1, Item.CollectableAncientCastleOfIkanaFireCeilingRoomPot1,
             Item.CollectableAncientCastleOfIkanaHoleRoomPot1, Item.CollectableAncientCastleOfIkanaHoleRoomPot2, Item.CollectableAncientCastleOfIkanaHoleRoomPot3, Item.CollectableAncientCastleOfIkanaHoleRoomPot4)]
+        // IgosDuIkanasLair
+        [CheckRestricted(Scene.IgosDuIkanasLair, variant: -1,
+            Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot1, Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot2, Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot3,
+            Item.CollectableIgosDuIkanaSLairPreBossRoomPot1, Item.CollectableIgosDuIkanaSLairPreBossRoomPot2, Item.CollectableIgosDuIkanaSLairPreBossRoomPot3)]
         [CheckRestricted(Scene.StoneTower, variant: -1,
+            Item.CollectableStoneTowerPot1, Item.CollectableStoneTowerPot2, Item.CollectableStoneTowerPot3, Item.CollectableStoneTowerPot4, Item.CollectableStoneTowerPot5,
+            Item.CollectableStoneTowerPot6, Item.CollectableStoneTowerPot7, Item.CollectableStoneTowerPot8, Item.CollectableStoneTowerPot9, Item.CollectableStoneTowerPot10, 
             Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
         // cannot randomize temple pots yet, uses dungeon keep objects, this will come later
-        [CheckRestricted(Scene.InvertedStoneTower, variant: -1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3)]
+        [CheckRestricted(Scene.InvertedStoneTower, variant: -1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot2, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3)]
         [CheckRestricted(Scene.StoneTowerTemple, variant: -1, Item.CollectableStoneTowerTempleInvertedWizzrobeRoomPot1)]
         // 0xF9 is pot and pot shard
         // according to CM, 0x100 is available everywhere as a pot, where 0x3F defines the drop item
@@ -1205,7 +1211,8 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:0, variant: 0x460B, 0x4610, 0x018D, // stone tower temple (dungeon keep)
             0xFE01, // deku shrine (dungeon keep)
             0x202, 0x602, 0x802, 0xA02, 0xC02)] // swords school, these are dungeon_keep pots cannot place without the object
-        [ForbidFromScene( Scene.GoronRacetrack, // these are green pots they use a different object anyway
+        [ForbidFromScene( Scene.GoronRacetrack, // these are green pots they use a different object 
+            Scene.IkanaCastle, Scene.IgosDuIkanasLair, // dungeon pots, but treasure flags updater still messes with it
             Scene.MajorasLair)] // we want them for the fight
         [UnkillableAllVariants]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)] // 0x3FC
@@ -1741,11 +1748,15 @@ namespace MMR.Randomizer.GameObjects
         // 0xFE00 is switch flags
         // 0x1F2 you get bugs if you pick it up, best version
         // A1 is boulder type (1) and A drop table
-        [GroundVariants(0x1F2, 0xA1)]
+        [GroundVariants(0xFF00, 0xFF70, 0xFFA0, 0xFFB0, // non vanilla good drop tables
+            0x1F2, 0xA1)]
         [WaterBottomVariants(0xFE01, // silver boulder
             0xFEF0)] // regular small rock (like in pinaccle)
-        [VariantsWithRoomMax(max: 10, variant: 0xA1, 0xFE01)]
-        [BlockingVariants(0xA1, 0xFE01)]
+        [WallVariants( 0xFF00, 0xFF70, 0xFFA0, 0xFFB0, // non vanilla good drop tables
+            0x4814, 0x4214, 0x4424, 0x4014, 0x4624)] // ikana graveyard
+        [VariantsWithRoomMax(max: 3, variant: 0xFF00, 0xFF70, 0xFFA0, 0xFFB0,
+            0x4814, 0x4214, 0x4424, 0x4014, 0x4624)]
+        [BlockingVariants(0xA1, 0xFE01)] // boulder types
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
         //[ForbidFromScene(Scene.TerminaField)] // dont replace them in TF
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
@@ -1753,7 +1764,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: 1,
             variant: 0x6033, 0x603B, 0x6018, 0x605C, 0x8000, 0xA000, 0x7000, 0xC000, 0xE000, 0xF000, 0xD000)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
-        SmallRock = 0xB0, // En_Ishi
+        IshiRock = 0xB0, // En_Ishi
 
         [ActorizerEnabled] // works but a bit lame
         [FileID(159)]

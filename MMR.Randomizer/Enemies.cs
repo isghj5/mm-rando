@@ -2321,7 +2321,7 @@ namespace MMR.Randomizer
             ///   considering nothing in vanilla needs these, and because
             ///   I'm worried about setting flags for something else, lets remove that
 
-            var ishiFid = GameObjects.Actor.SmallRock.FileListIndex();
+            var ishiFid = GameObjects.Actor.IshiRock.FileListIndex();
             RomUtils.CheckCompressed(ishiFid);
             var ishiData = RomData.MMFileList[ishiFid].Data;
             ReadWriteUtils.Arr_WriteU32(ishiData, Dest: 0x12CC, val: 0x00000000); // JAL (Actor_SetSwitchFlag) -> NOP
@@ -2975,6 +2975,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.SleepingScrub.ObjectIndex(),
                 GameObjects.Actor.ElegyStatueSwitch.ObjectIndex(),
                 GameObjects.Actor.Evan.ObjectIndex(),
+                GameObjects.Actor.GaboraBlacksmith.ObjectIndex(),
                 GameObjects.Actor.GoronWithGeroMask.ObjectIndex()
             };
 
@@ -3000,6 +3001,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.SleepingScrub,
                 GameObjects.Actor.ElegyStatueSwitch,
                 GameObjects.Actor.Evan,
+                GameObjects.Actor.GaboraBlacksmith,
                 GameObjects.Actor.GoronWithGeroMask
             };
 
@@ -3332,7 +3334,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Evan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Dog, GameObjects.Actor.Evan)) continue; 
-                //if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ReDead, GameObjects.Actor.OceanSpiderhouseBombableWall)) continue; 
+                if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.RosaSisters, GameObjects.Actor.GaboraBlacksmith)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Woodfall, GameObjects.Actor.Lilypad, GameObjects.Actor.IceBlockWaterPlatforms)) continue;
