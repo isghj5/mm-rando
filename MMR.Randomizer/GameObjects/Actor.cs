@@ -1354,7 +1354,7 @@ namespace MMR.Randomizer.GameObjects
         // TODO add secret shrine and swamp spiderhouse
         [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.CollectableRomaniRanchSoftSoil1, Item.CollectableRomaniRanchSoftSoil2)]
         [CheckRestricted(Scene.Grottos, variant: -1, Item.CollectableBeanGrottoSoftSoil1, Item.ChestBeanGrottoRedRupee)]
-        [CheckRestricted(Scene.GreatBayCoast, variant: -1, Item.CollectableGreatBayCoastSoftSoil1)]
+        [CheckRestricted(Scene.GreatBayCoast, variant: -1, Item.CollectableGreatBayCoastSoftSoil1, Item.HeartPieceGreatBayCoast)]
         [CheckRestricted(Scene.DoggyRacetrack, variant: -1, Item.CollectableDoggyRacetrackSoftSoil1)]
         [CheckRestricted(Scene.SecretShrine, variant: -1,
             Item.CollectableSecretShrineSoftSoil1,
@@ -1366,10 +1366,13 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableSecretShrineEntranceRoomItem16, Item.CollectableSecretShrineEntranceRoomItem17
         )]
         [CheckRestricted(Scene.SwampSpiderHouse, variant: -1, Item.CollectableSwampSpiderHouseSoftSoil1, Item.CollectableSwampSpiderHouseSoftSoil2,
-            Item.CollectibleSwampSpiderToken9, Item.CollectibleSwampSpiderToken11, Item.CollectibleSwampSpiderToken12)]
+            Item.CollectibleSwampSpiderToken2, Item.CollectibleSwampSpiderToken13, // ride bean to reach
+            Item.CollectibleSwampSpiderToken9, Item.CollectibleSwampSpiderToken11, Item.CollectibleSwampSpiderToken12 // in soil
+        )]
         [CheckRestricted(Scene.DekuPalace, variant: -1, Item.SongSonata,
             Item.CollectableDekuPalaceSoftSoil1, Item.CollectableDekuPalaceEastInnerGardenPot1, Item.CollectableDekuPalaceEastInnerGardenPot2)]
         [CheckRestricted(Scene.InvertedStoneTower, variant: -1, Item.CollectableStoneTowerSoftSoil1, Item.CollectableStoneTowerSoftSoil2,
+            Item.CollectableStoneTowerInvertedStoneTowerFlippedPot1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot2, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3,
             Item.ChestInvertedStoneTowerBean, Item.ChestInvertedStoneTowerBombchu10, Item.ChestInvertedStoneTowerSilverRupee)]
         [CheckRestricted(Scene.TerminaField, variant: -1,
             Item.CollectableTerminaFieldPot1,
