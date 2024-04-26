@@ -2011,7 +2011,7 @@ namespace MMR.Randomizer.GameObjects
         // 40 is sun shot, 41 is storms fairy
         [GroundVariants(0x41)] // companion only
         //[FlyingVariants(0x0)] // "else" variant: gives item
-        [VariantsWithRoomMax(max: 1, variant: 0x41, 0x40)]
+        [VariantsWithRoomMax(max: 1, variant: 0x41, 0x40)] // invisible actor shouldnt get too many placements
         [UnkillableAllVariants]
         Shot_Sun = 0xD0, // Shot_Sun
 
@@ -2278,6 +2278,8 @@ namespace MMR.Randomizer.GameObjects
             0x38CF, 0x3BE4, // west
             0x3425, 0x3946, 0x3967, 0xFF, 0x3986, 0x3995, 0x3955)]
         [UnkillableAllVariants]
+        [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1)]
+        [AlignedCompanionActor(GrassRockCluster, CompanionAlignment.Above, ourVariant: -1, variant: 0x0402)] // rock circle like oot
         [ForbidFromScene(Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.SwampSpiderHouse,
             Scene.MilkRoad, Scene.RomaniRanch, Scene.CuccoShack, Scene.DoggyRacetrack,
             Scene.PathToMountainVillage, Scene.ZoraCape, Scene.GreatBayCoast, Scene.MountainVillageSpring, // Scene.MountainVillage,
@@ -2490,7 +2492,8 @@ namespace MMR.Randomizer.GameObjects
             0x901, // chance of lots of money, as this is the drop table for money enemies
             0x300, 0x301)] // this drop table is unused according to mzxrules, but looks balanced
         [UnkillableAllVariants]
-        [AlignedCompanionActor(Shot_Sun, CompanionAlignment.OnTop, ourVariant: 1, variant: 0x41)] // fairies love grass
+        [AlignedCompanionActor(Shot_Sun, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x41)] // fairies love grass
+        [AlignedCompanionActor(Fairy, CompanionAlignment.OnTop, ourVariant: -1, variant: 2, 7, 9)] // fairies love grass
         NaturalPatchOfGrass = 0x10D, // Obj_Grass_Unit
 
         Empty10E = 0x10E, // Empty10E
@@ -2505,6 +2508,7 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(12, 8)]
         [EnemizerScenesPlacementBlock(Scene.PinnacleRock//, // super annoying warping the player all the way back
             /*Scene.StoneTower, Scene.SouthernSwamp, Scene.SouthernSwampClear */)] // dyna crash possible
+        [PlacementWeight(85)]
         Mimi = 0x111, // En_Bu
 
         //[EnemizerEnabled] //crash
@@ -2557,6 +2561,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.IkanaCastle)] // wrongly warps you to the boss room but its not loaded
         [UnkillableAllVariants]
         [BlockingVariantsAll]
+        [PlacementWeight(90)]
         WarpToTrialEntrance = 0x116, // En_Warp_tag
 
         // dog race owner
@@ -2629,6 +2634,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 10, variant: 0x1000, 0x0B00, 0x0C00, 0x600, 0x002B, 0x003F, 0x700, 0xD00, 0xA00)] // limit because of dyna
         [VariantsWithRoomMax(max: 10, variant: 0xFF01, 0xFF00, 0xFF02)] // still dyna
         [UnkillableAllVariants]
+        // we need to have weights per variant, we want to downweight mites but not tites
         IceCavernStelagtite = 0x11F, // Bg_Icicle // also stalagmite
 
         // what
@@ -3380,7 +3386,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFF)]
         //[OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        [ForbidFromScene(Scene.WestClockTown)]
+        [ForbidFromScene(Scene.WestClockTown)] // his object is shared with at least two other actors, cannot remove without removing them too
         Banker = 0x177, // En_Ginko_Man
 
         [ActorizerEnabled]
@@ -3390,6 +3396,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [BlockingVariantsAll]
         [UnkillableAllVariants]
+        [PlacementWeight(85)]
         PirateTelescope = 0x178, // En_Warp_Uzu
 
         [ActorizerEnabled]
@@ -6009,7 +6016,6 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         BombersYouChase = 0x27F, // En_Bomjimb
 
-        // wait not the ones we chase...?
         [ActorizerEnabled]
         [FileID(599)]
         [ObjectListIndex(0x110)]
