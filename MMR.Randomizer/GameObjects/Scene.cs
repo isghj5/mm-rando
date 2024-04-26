@@ -267,6 +267,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ZoraEgg,
         //    Actor.Tijo, Actor.Bombiwa, Actor.Bumper)] // blocking a chest
         [EnemizerSceneBlockSensitive(Actor.ZoraEgg, -1)]
+        [EnemizerSceneBlockSensitive(Actor.WoodenBarrel, -1)] // in the cage room, can block the ability to hit the switch to leave
         PiratesFortressRooms = 0x20, // tag: Sewer
 
         // tag: archery
