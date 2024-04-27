@@ -472,7 +472,7 @@ namespace MMR.Randomizer.GameObjects
         [DifficultAllVariants]
         [VariantsWithRoomMax(max: 10, variant: 0xFF)]
         [FlyingToGroundHeightAdjustment(100)]
-        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)] // unknown crash reason
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.SouthernSwampClear)] // unknown crash reason
         DeathArmos = 0x2D, // En_Famos
 
         Empty2E = 0x2E,
