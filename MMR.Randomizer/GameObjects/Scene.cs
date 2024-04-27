@@ -433,6 +433,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1332)]
         [SceneInternalId(0x38)]
         [DynaHeadroom(64, 64)]  // low default to start
+        [EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa,
+                    Actor.LikeLike)] // can hard lock if the player leaves and gets instant-grabbed
         [EnemizerSceneEnemyReplacementBlock(Actor.LikeLike,
                     Actor.Japas, Actor.Bombiwa, Actor.BronzeBoulder, Actor.Mimi, Actor.TreasureChest)] // small blocking
          //    Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo,
@@ -759,6 +761,7 @@ namespace MMR.Randomizer.GameObjects
         //    Actor.ClocktowerGearsAndOrgan, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // organ is huge, covers the mayor's door
         [EnemizerSceneBlockSensitive(Actor.Gorman, -1)] // was moved next to mayors door, large bodies can actually block this
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+            Actor.Peahat, // small peahat can instant kill 1 heart hero
             Actor.LikeLike,
             Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BomberHideoutGuard,
@@ -783,6 +786,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
         //    Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+            Actor.Peahat, // small peahat can instant kill 1 heart hero
             Actor.LikeLike)] // If you start with one heart this can be a softlock
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BombersYouChase,
             Actor.UnusedStoneTowerStoneElevator)]//, Actor.UnusedStoneTowerPlatform)]
@@ -797,6 +801,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
         [EnemizerSceneBlockSensitive(Actor.SquareSign, -1)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+            Actor.Peahat, // small peahat can instant kill 1 heart hero
             Actor.LikeLike)] // If you start with one heart this can be a softlock
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Sakon,
             /*Actor.UnusedStoneTowerPlatform,*/ Actor.UnusedStoneTowerStoneElevator)] // can hide the grass weirdly
@@ -812,6 +817,7 @@ namespace MMR.Randomizer.GameObjects
         */
         [EnemizerSceneBlockSensitive(Actor.Carpenter, -1)] // TODO figure out which one is the issue one
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+            Actor.Peahat, // small peahat can instant kill 1 heart hero
             Actor.PatrollingPirate, // could be annoying, hard to leave
             Actor.LikeLike )] // If you start with one heart this can be a softlock
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
