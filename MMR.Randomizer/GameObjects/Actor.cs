@@ -5191,6 +5191,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x8710, 0x8711,
             0x7F3F)] // pirates fort
         [WaterBottomVariants(0x8710, 0x8711)] // 16 is flexible, 17 is big fairy
+        [UnkillableAllVariants]
         // switch flags
         //[SwitchFlagsPlacement(mask: 0x7F, shift: 0)] // this is only for half of the barrels, lets hand pick these and hope for the best
         [TreasureFlagsPlacement(0x7F, shift:8)]
