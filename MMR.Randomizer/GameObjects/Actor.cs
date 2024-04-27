@@ -1336,7 +1336,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:0, 0x0800,0x0600, 0x700, 0xC00, 0xD00, 0x0610)]
         [UnkillableAllVariants]
         //[RespawningAllVariants] // some of them come back over and over, but its a PROP type actor
-        [AlignedCompanionActor(Actor.Fairy, CompanionAlignment.OnTop, ourVariant: 1, variant: 0x41)] // fairies love grass
+        [AlignedCompanionActor(Actor.Fairy, CompanionAlignment.OnTop, ourVariant: 1, variant: 2, 7, 9)] // fairies love grass
         // for now, until I can identify which ones have drops we need to be careful of, going to block all randimization
         [ForbidFromScene(Scene.SouthernSwamp, Scene.OdolwasLair,
             Scene.IkanaCastle, Scene.StoneTowerTemple, Scene.Woodfall, Scene.GreatBayCoast,
@@ -2279,7 +2279,7 @@ namespace MMR.Randomizer.GameObjects
             0x38CF, 0x3BE4, // west
             0x3425, 0x3946, 0x3967, 0xFF, 0x3986, 0x3995, 0x3955)]
         [UnkillableAllVariants]
-        [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1)]
+        [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1, variant: 2, 7, 9)]
         [AlignedCompanionActor(GrassRockCluster, CompanionAlignment.Above, ourVariant: -1, variant: 0x0402)] // rock circle like oot
         [ForbidFromScene(Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.SwampSpiderHouse,
             Scene.MilkRoad, Scene.RomaniRanch, Scene.CuccoShack, Scene.DoggyRacetrack,
