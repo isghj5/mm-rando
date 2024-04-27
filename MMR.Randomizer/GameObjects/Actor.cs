@@ -2178,7 +2178,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.Grottos, // buisness scrib?>
             Scene.OceanSpiderHouse, Scene.GreatBayTemple)]
         [UnkillableAllVariants]
-        [PlacementWeight(75)]
+        [PlacementWeight(55)]
         LargeWoodenCrate = 0xE5, // Obj_Kibako2
 
         EmptyE6 = 0xE6, // EmptyE6
@@ -5182,7 +5182,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(516)]
         [ObjectListIndex(0x250)]
-        //[CheckRestricted(Scene.PiratesFortress)] // and 
+        //[CheckRestricted(Scene.PiratesFortress)] // and
+        //[CheckRestricted(Item.Coast)]
         // params:
         // vanilla: 0x7F3F,
         // oh god params are crraz
@@ -5195,6 +5196,7 @@ namespace MMR.Randomizer.GameObjects
         // switch flags
         //[SwitchFlagsPlacement(mask: 0x7F, shift: 0)] // this is only for half of the barrels, lets hand pick these and hope for the best
         [TreasureFlagsPlacement(0x7F, shift:8)]
+        [ForbidFromScene(Scene.PiratesFortressExterior)] // needed for a glitch I think
         [PlacementWeight(40)]
         WoodenBarrel = 0x22D, // Obj_Taru
         

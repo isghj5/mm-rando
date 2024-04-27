@@ -530,8 +530,12 @@ namespace MMR.Randomizer.GameObjects
         // (12x28,16) + (12,8) = 348, and that is 20 over the limit
         // 348 - 192 - 22 = 134 max poly
         [DynaHeadroom(130,116, room:2)]  // 116 is estimate
-        //  we want the hiploop to be non-blocking actors, making them killable with this flag does the job
-        [FairyDroppingEnemies(roomNumber: 24, actorNumber: 25, 26)] // hiploops
+        [EnemizerSceneEnemyReplacementBlock(Actor.ClayPot,
+            Actor.En_Ani, Actor.GaboraBlacksmith, Actor.BomberHideoutGuard, // their talk box is so big they can dialogue block the flower
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, // assume they will block deku flower pop-up
+            Actor.RegularIceBlock,
+            Actor.ClocktowerGearsAndOrgan // blocking the flower
+        )]
         [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
             Actor.Peahat, Actor.BabaIsUnused //Actor.Seth1, Actor.Tijo, Actor.ArmosStatue, Actor.ClocktowerGearsAndOrgan, // blocking bridges
             /* Actor.Wolfos */ )] // wolfos:iceblock
