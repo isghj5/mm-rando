@@ -5091,9 +5091,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(507)]
         [ObjectListIndex(0x206)]
-        [CheckRestricted(Item.MaskZora)]
+        [CheckRestricted(Scene.GreatBayCoast, variant: -1, Item.MaskZora)]
         [WaterTopVariants(0x80F, 0xC0F, 0x100F)]
-        [VariantsWithRoomMax(max:0, variant: 0x80F, 0xC0F, 0x100F)]
+        [VariantsWithRoomMax(max:0, variant: 0x80F, 0xC0F, 0x100F)] // do not place, they are pathing types
         [UnkillableAllVariants]
         Mikau = 0x224, // En_Zog
 
