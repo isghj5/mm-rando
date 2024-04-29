@@ -1162,7 +1162,8 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.PinnacleRock, variant: -1,
             Item.CollectablePinnacleRockPot1, Item.CollectablePinnacleRockPot2, Item.CollectablePinnacleRockPot3, Item.CollectablePinnacleRockPot4)]
         [CheckRestricted(Scene.SecretShrine, variant: -1,
-            Item.CollectableSecretShrineMainRoomPot1, Item.CollectableSecretShrineMainRoomPot2, Item.CollectableSecretShrineMainRoomPot3, Item.CollectableSecretShrineMainRoomPot4, Item.CollectableSecretShrineMainRoomPot5)]
+            Item.CollectableSecretShrineMainRoomPot1, Item.CollectableSecretShrineMainRoomPot2, Item.CollectableSecretShrineMainRoomPot3, Item.CollectableSecretShrineMainRoomPot4,
+            Item.CollectableSecretShrineMainRoomPot5)]
         [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
         [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
         [CheckRestricted(Scene.ZoraCape, variant: -1, Item.CollectableZoraCapeJarGame1,
@@ -1212,7 +1213,7 @@ namespace MMR.Randomizer.GameObjects
             0xFE01, // deku shrine (dungeon keep)
             0x202, 0x602, 0x802, 0xA02, 0xC02)] // swords school, these are dungeon_keep pots cannot place without the object
         [ForbidFromScene( Scene.GoronRacetrack, // these are green pots they use a different object 
-            Scene.IkanaCastle, Scene.IgosDuIkanasLair, // dungeon pots, but treasure flags updater still messes with it
+            Scene.SecretShrine, Scene.IkanaCastle, Scene.IgosDuIkanasLair, // dungeon pots, but treasure flags updater still messes with it
             Scene.MajorasLair)] // we want them for the fight
         [UnkillableAllVariants]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)] // 0x3FC

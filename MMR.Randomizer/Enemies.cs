@@ -442,6 +442,10 @@ namespace MMR.Randomizer
                     if (matchingEnemy > 0) {
                         var listOfAcceptableVariants = matchingEnemy.AllVariants();
                         //var listOfAcceptableVariants = matchingEnemy.vVariants;
+
+                        // TODO: check if the specific actor can be randomized, required before continue:
+                          // actor separation, scene reconstruction, object list extension,  
+
                         if (!matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)
                             && listOfAcceptableVariants.Contains(mapActor.OldVariant))
                         {
@@ -460,12 +464,12 @@ namespace MMR.Randomizer
 
                             sceneEnemyList.Add(mapActor);
                         }
-#if DEBUG
+                        #if DEBUG
                         else
                         {
                             log.Append($" in scene [{scene.SceneEnum}][{mapIndex}] actor was skipped over: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}]\n");
                         }
-#endif
+                        #endif
                     }
                 }
             }
@@ -5194,7 +5198,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 68.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 68.3\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
