@@ -993,7 +993,7 @@ namespace MMR.Randomizer
                 // we cannot randomize gorman brothers without randomizing their chasing horse counterparts
                 // except, this scene has an almost unused object: kanban, for the square sign you can only access if you go through the second fence
                 // what if we turn that into the same actor as the tree, and turn the second object into a second ingo
-                var gormanTrack = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GormanTrack.FileID());
+                var gormanTrack = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GormanRaceTrack.FileID());
                 gormanTrack.Maps[0].Objects[11] = GameObjects.Actor.GormanBros.ObjectIndex();
                 gormanTrack.Maps[0].Actors[75].ChangeActor(GameObjects.Actor.Treee, vars: 0xFF02, modifyOld: true);
 
@@ -3348,9 +3348,9 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.CarpentersFromCutscene, GameObjects.Actor.CutscenePirate)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.CarpentersFromCutscene, GameObjects.Actor.CutscenePirate)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.BadBat, GameObjects.Actor.MilkbarChairs)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.Lilypad)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.En_Boj_04)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Evan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Dog, GameObjects.Actor.Evan)) continue; 
@@ -3361,7 +3361,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Dexihand)) continue;
 
-                //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.LikeLike, GameObjects.Actor.MagicSlab)) continue;
+                if (TestHardSetObject(GameObjects.Scene.GormanRaceTrack, GameObjects.Actor.Flagpole, GameObjects.Actor.HookshotWallSpot)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.Leever, GameObjects.Actor.ButlersSon)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.SwimmingZora, GameObjects.Actor.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
@@ -4410,6 +4410,8 @@ namespace MMR.Randomizer
                     var temporaryMatchEnemyList = new List<Actor>();
                     var chosenObject = thisSceneData.ChosenReplacementObjects[objectIndex].ChosenV;
                     List<Actor> subMatches = thisSceneData.CandidatesPerObject[objectIndex].FindAll(act => act.ObjectId == chosenObject);
+
+                    Debug.Assert(subMatches.Count > 0);
 
                     AddCompanionsToCandidates(thisSceneData, objectIndex, subMatches);
                     //WriteOutput($"  companions adding time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);

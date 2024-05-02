@@ -657,10 +657,9 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 0, variant: 0xFF0D)] // 0xFF0D crashes TF do not use (is from the cucco shack)
         [VariantsWithRoomMax(max: 1, variant: 0xA1A, 0xFF1A)] // has EnAni, more than one is odd
         [VariantsWithRoomMax(max: 1, variant: 0xA)] // UGLY is also BG
-        //[GroundVariants(0xFF01, 0xFF1A)] //testing
+        //[ForbidFromScene(Scene.GormanRaceTrack)] // testing
         [UnkillableAllVariants]
         [BlockingVariantsAll]
-        //[ForbidFromScene(Scene.TerminaField, Scene.TwinIslandsSpring)] // need to keep in termina field for rupee rando
         Treee = 0x41, // En_Wood2
 
         Empty42 = 0x42,
@@ -772,7 +771,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingToGroundHeightAdjustment(275)]
         [EnemizerScenesPlacementBlock(
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.PiratesFortressRooms, Scene.DekuPalace,
-            Scene.DekuShrine, Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.GoronRacetrack,
+            Scene.DekuShrine, Scene.GoronRacetrack, Scene.WaterfallRapids, //Scene.GormanRaceTrack,
             /* Scene.RoadToIkana,*/ Scene.IkanaCastle, Scene.BeneathGraveyard, Scene.DampesHouse,
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse,
             Scene.StockPotInn, Scene.GoronShrine, Scene.DekuShrine, /*Scene.ZoraHall,*/ Scene.TradingPost, Scene.MayorsResidence,
@@ -854,7 +853,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [EnemizerScenesPlacementBlock(Scene.RomaniRanch, // skin crash, not sure why I thought I fixed that
-            Scene.GormanTrack)] // skeleton update crash... why
+            Scene.GormanRaceTrack)] // skeleton update crash... why
         En_Horse_Link_Child = 0x54, // En_Horse_Link_Child
 
         [ActorizerEnabled]
@@ -1655,7 +1654,7 @@ namespace MMR.Randomizer.GameObjects
         [ForbidFromScene(Scene.SouthernSwamp)]
         SwampBoat = 0xA7, // Bg_Ingate
 
-        [ActorizerEnabled] // should not replace, just place
+        [ActorizerEnabled]
         [FileID(154)]
         [ObjectListIndex(0xFC)]
         [GroundVariants(0x5, 0x13, 0x14, 0x15, 0x19, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20, // north
@@ -1916,7 +1915,7 @@ namespace MMR.Randomizer.GameObjects
         // TODO go through all of these and recheck now that we can modify the height correctly
         [EnemizerScenesPlacementBlock(//Scene.DekuPalace,
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
-            Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
+            Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanRaceTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, // Scene.ZoraHall,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
             Scene.StockPotInn, Scene.TradingPost, Scene.MayorsResidence,
@@ -2647,7 +2646,8 @@ namespace MMR.Randomizer.GameObjects
 
         // empty
         [FileID(261)]
-        [ObjectListIndex(0x1)]
+        //[ObjectListIndex(0x1)]
+        [ObjectListIndex(0x184)] // fake object because this test actor is being a bitch
         En_Boj_04 = 0x121, // En_Boj_04
 
         // broken actor, needs two objects (animation is in another object) such a pain
@@ -5002,7 +5002,6 @@ namespace MMR.Randomizer.GameObjects
         [PathingVariants(0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,
                 0x14EA, 0x18EA,
             0x284B, 0x144B, // hookshotroom
-
             0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         //[GroundVariants(0xFC20, 0xFC40 /*, 0xFCE0 */)]
@@ -5164,7 +5163,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(variant: 0, max: 3)] // dyna should be detecable now, we can add more
         [EnemizerScenesPlacementBlock(//Scene.StoneTower, Scene.IkanaGraveyard, // too much dyna
             //Scene.SouthernSwamp, Scene.SouthernSwampClear,
-            Scene.GormanTrack, Scene.DekuTrial)] // blocking potentially
+            Scene.GormanRaceTrack, Scene.DekuTrial)] // blocking potentially
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         //[OnlyOneActorPerRoom] // probably dyna crash to be worried about

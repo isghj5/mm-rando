@@ -741,7 +741,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1506)]
         [SceneInternalId(0x6A)]
         // TODO explore this one
-        [DynaHeadroom(28, 16)] // actual limit is unknown, but assume kinda small given the tree count
+        //[DynaHeadroom(28, 16)] // this is NOT safe, got a crash with unkown actor/values
+        // +4,0 with two large crates was fine, +2 elevator-1crate was also fine,
+        //   +3hookshotpillars-1box-3poles is also fine, recorded as 20,4 in the log, so that might be closer to the limit
+        [DynaHeadroom(20, 20)] // should be safe
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee,
             Actor.PoeBalloon, Actor.BigPoe, // Actor.FloorMaster,
             //Actor.SleepingScrub, // too much dyna, spawns too many flowers and flower companions
@@ -749,7 +752,7 @@ namespace MMR.Randomizer.GameObjects
             //Actor.GibdoIkana, Actor.ReDead, Actor.GibdoWell,
             /* Actor.CircleOfFire, Actor.LightBlock, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator */)]
         [EnemizerSceneBlockSensitive(Actor.Treee, -1)]
-        GormanTrack = 0x67,
+        GormanRaceTrack = 0x67,
 
         [FileID(1508)]
         [SceneInternalId(0x6B)]
