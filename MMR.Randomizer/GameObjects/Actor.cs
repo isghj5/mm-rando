@@ -4674,18 +4674,23 @@ namespace MMR.Randomizer.GameObjects
             Item.SongLullabyIntro)] // have to talk to kid to get intro from leader
         [CheckRestricted(Scene.GoronRacetrack, variant: 0x3FF1, Item.ItemBottleGoronRace)]
         //[CheckRestricted(Scene.TwinIslandsSpring, variant: 0x3FF1, Item.ItemBottleGoronRace)] // not sure this is required
-        // all other versions are 0x13** or 0x1402
-        [GroundVariants(0x1400)] // regular one in the shrine
-        [PerchingVariants(0x1400)] // regular one in the shrine
+        [GroundVariants(
+            0x1400, // regular one in the shrine throne room
+            // 0x1402, // loud one you can hear making sfx from the main room of shrine
+            0x1401, // standing around in spring, does not spawn without dungeon clear (why tho, you cannot reach spring without dungeon clear...)
+            0x3FF1, // race starter
+            0x3F00)] // cutscene version, if spawned in world just cries like normal and talkable
+        [PerchingVariants(0x1400)] // regular one in the shrine should be crying in a tree
         // 0x3FF1 does not spawn in winter, even in other scenes
         //[GroundVariants(0x3FF1)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         // in 1.16 this was rescinded, we can now place it in the world again
-        //[VariantsWithRoomMax(max: 0, variant: 0x3FF1)] // softlock if you enter the song teach cutscene, which in rando is proximity
+        [VariantsWithRoomMax(max: 0, variant: 0x1401, 0x3FF1, 0x1402)] // softlock if you enter the song teach cutscene, which in rando is proximity
         //VariantsWithRoomMax(max: 0, variant: 0x1400)] // holy shit this is annoying nvm
         //[ForbidFromScene(Scene.GoronShrine, Scene.GoronRacetrack, Scene.TwinIslandsSpring)]
         [SwitchFlagsPlacement(mask: 0x3F, shift: 8)]
+        [PlacementWeight(85)]
         GoronKid = 0x201, // En_Gk, baby goron, child goron
 
         [ActorizerEnabled]
