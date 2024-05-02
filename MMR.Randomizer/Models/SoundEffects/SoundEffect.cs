@@ -763,6 +763,12 @@ namespace MMR.Randomizer.Models.SoundEffects
         [ReplacableByTags(Short)]
         GetRecoveryHeart = 0x400B,
 
+        [Tags(SystemSound, Short)]
+        //[ReplacableByTags(Short, LowHpBeep)]
+        CountDownWarning = 0x4019, // gossip stone countdown leading to take off
+
+        CountDownWarningDire = 0x401A, // gossip stone countdown right before take off
+
         [Replacable(0x00B97E2A)]
         [Tags(LowHpBeep)]
         [ReplacableByTags(LowHpBeep)]
@@ -802,6 +808,9 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(SystemSound)]
         [ReplacableByTags(Short)]
         FileSelectError = 0x403D,
+
+        [Tags(Short, LowHpBeep)]
+        CuccoClock = 0x4046, // NA_SE_EV_FAIVE_LUPY_COUNT (gossip stone giving time of day)
 
         [Tags(Long)]
         [ReplacableByTags(Long)]
