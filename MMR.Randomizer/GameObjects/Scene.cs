@@ -330,11 +330,15 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1304)]
         [SceneInternalId(0x2B)]
-        [DynaHeadroom(64, 64)]  // low default to start
-        [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // can block the stairs
-            //Actor.RegularIceBlock,  // the big one can be too big
+        [DynaHeadroom(24, 20)]  // low default to start, untested
+        [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // too close to grotto
             Actor.Dexihand)] // if it grabs you as you fall into a grotto hole it can hardlock
-        [EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa, Actor.ClocktowerGearsAndOrgan)] // likely dynacrash if other actors have them too
+        [EnemizerSceneEnemyReplacementBlock(Actor.Monkey,
+            Actor.PalaceGuardDeku)] // if placed behind regular guards, they will pop up to look at you and the other guards will also rise
+        [EnemizerSceneEnemyReplacementBlock(Actor.SquareSign,
+            Actor.PalaceGuardDeku)] // if it grabs you as you fall into a grotto hole it can hardlock
+        //[EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa,
+        //    Actor.ClocktowerGearsAndOrgan)] // likely dynacrash if other actors have them too
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
         [EnemizerSceneBlockSensitive(Actor.Monkey, -1)] // giant ice block, unused stone stuff at least
         DekuPalace = 0x28,
