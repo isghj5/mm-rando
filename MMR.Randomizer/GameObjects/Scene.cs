@@ -478,6 +478,7 @@ namespace MMR.Randomizer.GameObjects
         // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
         // mirror blocks climbing
         [EnemizerSceneEnemyReplacementBlock(Actor.BadBat,
+            Actor.DeathArmos, // light arrow requirement is a bit much, no logical way right now to check if important item behind light arrow
             Actor.Bo, Actor.StoneTowerMirror,
             Actor.MothSwarm, // can block
             Actor.SpiderWeb)] // TODO would be cool if we could allow this if the item was junk, or logic require fire arrows
