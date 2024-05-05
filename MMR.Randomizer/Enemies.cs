@@ -3348,13 +3348,13 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GoronKid)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GoronKid)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.BadBat, GameObjects.Actor.MilkbarChairs)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.En_Boj_04)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Evan)) continue;
+                if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Boj_04)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Dog, GameObjects.Actor.Evan)) continue; 
-                if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.RosaSisters, GameObjects.Actor.GaboraBlacksmith)) continue; 
+                //if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.RosaSisters, GameObjects.Actor.GaboraBlacksmith)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Woodfall, GameObjects.Actor.Lilypad, GameObjects.Actor.IceBlockWaterPlatforms)) continue;
