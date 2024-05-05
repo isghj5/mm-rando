@@ -1191,6 +1191,11 @@ void Models_AfterActorDtor(Actor* actor) {
     }
 }
 
+// this is an actorizer hack, I want to know if I can use this heap for an actor, from the other side
+void Models_AllocateObject(int objId){
+  Objheap_Allocate(&gObjheap, objId);
+}
+
 /**
  * Reset object heap pointer and clear all loaded object slots.
  **/

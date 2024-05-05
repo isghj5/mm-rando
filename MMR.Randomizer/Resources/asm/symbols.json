@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
     "DPAD_CONFIG": "0381A2D0",
     "DPAD_TEXTURE": "0381D478",
     "EXT_MSG_DATA_FILE": "0381ABAC",
@@ -31,4 +32,38 @@
     "gSpriteFont": "0381AA48",
     "gSpriteIcon": "0381AA38",
     "gSpriteIcon24": "0381AA28"
+=======
+    "DPAD_CONFIG": "0381A698",
+    "DPAD_TEXTURE": "0381D848",
+    "EXT_MSG_DATA_FILE": "0381AF74",
+    "EXT_MSG_TABLE": "0381C730",
+    "EXT_MSG_TABLE_COUNT": "0381AF00",
+    "EXT_OBJECTS": "0381B0F4",
+    "FONT_TEXTURE": "0381E848",
+    "G_C_HEAP": "03820000",
+    "G_PAYLOAD_ADDR": "03800000",
+    "HASH_ICONS": "0381A72C",
+    "HUD_COLOR_CONFIG": "0381A79C",
+    "ITEM_OVERRIDE_COUNT": "0381AEFC",
+    "ITEM_OVERRIDE_ENTRIES": "0381B2B0",
+    "MISC_CONFIG": "0381AC4C",
+    "MMR_CONFIG": "0381A89C",
+    "MUSIC_CONFIG": "0381AD00",
+    "PAYLOAD_END": "0381FD10",
+    "PAYLOAD_START": "03800000",
+    "SAVE_FILE_CONFIG": "0381ADAC",
+    "TOWN_FAIRY_BYTES": "0381CAC4",
+    "WORLD_COLOR_CONFIG": "0381AE8C",
+    "gExternalEffects": "0381A6B4",
+    "gHeapNext": "0381AFE4",
+    "gObjheap": "0381C930",
+    "gObjheapItems": "0381C948",
+    "gPlayUpdateInput": "0381B298",
+    "gSetupDb": "0381AE30",
+    "gShouldForceItemSpawn": "0381AF61",
+    "gSpriteDpad": "0381AE20",
+    "gSpriteFont": "0381AE10",
+    "gSpriteIcon": "0381AE00",
+    "gSpriteIcon24": "0381ADF0"
+>>>>>>> Stashed changes
 }
