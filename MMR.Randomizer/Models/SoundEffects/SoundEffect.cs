@@ -764,6 +764,9 @@ namespace MMR.Randomizer.Models.SoundEffects
         GetRecoveryHeart = 0x400B,
 
         [Tags(SystemSound, Short)]
+        ZTargetAttention = 0x400C,
+
+        [Tags(SystemSound, Short)]
         //[ReplacableByTags(Short, LowHpBeep)]
         CountDownWarning = 0x4019, // gossip stone countdown leading to take off
 
