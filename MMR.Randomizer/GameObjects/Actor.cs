@@ -3264,7 +3264,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        [PlacementWeight(65)]
+        [PlacementWeight(60)]
         DekuKing = 0x16A, // En_Dnq
 
         Empty16B = 0x16B,
