@@ -487,6 +487,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.MothSwarm, // can block
             Actor.SpiderWeb)] // TODO would be cool if we could allow this if the item was junk, or logic require fire arrows
         [EnemizerSceneBlockSensitive(Actor.BadBat, -1)] // giant ice block, unused stone stuff at least
+        [EnemizerSceneBlockSensitive(Actor.PottedPlant, -1)] // right next to swamp shooting gallery door
         RoadToSouthernSwamp = 0x3D,
 
         [FileID(1349)]
