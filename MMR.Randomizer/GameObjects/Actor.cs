@@ -3541,6 +3541,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled] // free enemy, placed in places where enemies are normally
         [FileID(349)]
         [ObjectListIndex(0x1)] // obj 1: gameplay keep, but can't set that
+        [DynaAttributes(12,12)] // both gold and pink flowers have the same count
         [GroundVariants(0x7F, 0x17F)] // 7F is regular, 17F is big yellow
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.Woodfall, Scene.DekuPalace, Scene.WoodfallTemple, Scene.OdolwasLair,
