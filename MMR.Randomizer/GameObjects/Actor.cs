@@ -249,9 +249,10 @@ namespace MMR.Randomizer.GameObjects
         // 0 is the big one in peahat grotto, 1 is the little ones normally only spawned by the big one if you hit them at night
         [GroundVariants(0)]
         [FlyingVariants(1)]
-        [DifficultVariants(0)]
+        [DifficultVariants(0, 1)] // honestly the little ones hit for a health and can snipe the player without a shield, worthy
         [VariantsWithRoomMax(max: 3, variant: 0)]
         [VariantsWithRoomMax(max: 7, variant: 1)] // lag, not difficulty
+        [BlockingVariants(0)]
         //[EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall)] // too big, can block the butler race
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
         Peahat = 0x14, // En_Peehat

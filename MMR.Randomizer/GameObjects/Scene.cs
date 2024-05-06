@@ -543,7 +543,9 @@ namespace MMR.Randomizer.GameObjects
             Actor.ClocktowerGearsAndOrgan // blocking the flower
         )]
         [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
-            Actor.Peahat, Actor.BabaIsUnused //Actor.Seth1, Actor.Tijo, Actor.ArmosStatue, Actor.ClocktowerGearsAndOrgan, // blocking bridges
+            //Actor.Peahat, // big ground type blocks the bridge at night, can't separate the big one and the small ones
+            Actor.BabaIsUnused, // blocks the bridges
+            Actor.Grog // still blocks the bridges
             /* Actor.Wolfos */ )] // wolfos:iceblock
         [EnemizerSceneBlockSensitive(Actor.Hiploop, -1)]
         Woodfall = 0x43,
