@@ -483,6 +483,13 @@ namespace MMR.Randomizer.Utils
             return null;
         }
 
+        public static (int, int) GetSceneRoomDynaLimits(GameObjects.Scene scene, int roomNumber)
+        {
+
+
+
+            return (0, 0); // default
+        }
 
         #region Night Music
 

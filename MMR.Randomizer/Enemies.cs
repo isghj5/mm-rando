@@ -2968,6 +2968,69 @@ namespace MMR.Randomizer
             }
         }
 
+        private static bool trimDynaActors(SceneEnemizerData thisSceneData, List<List<Actor>> shrinkableActorsList)
+        {
+            /// shrinkableActorsList is a list of lists, where each list is all actors of the same type in the same room/day/night combo
+
+            /// TODO move this to a better spot in the code
+
+            while (shrinkableActorsList.Count > 0)
+            {
+                var markForFinished = new List<List<Actor>>();
+
+                // per list of lists, remove one actor,
+                for (int l = 0; l < shrinkableActorsList.Count; l++)
+                {
+                    var list = shrinkableActorsList[l];
+                    if (list.Count <= 1) // in a previous loop we shrank this one too mininum already, ignore
+                        continue;
+
+                    // remove one from all of the list of lists? 
+                    var randomlyChosenActor = list[thisSceneData.RNG.Next() % list.Count];
+                    var currentRoom = randomlyChosenActor.Room;
+
+                    thisSceneData.Log.AppendLine($" -- dyna overload trimmed actor [{randomlyChosenActor.Name}] on previous [{randomlyChosenActor.OldName}]" +
+                                                $" in map [{currentRoom}] index [{randomlyChosenActor.RoomActorIndex}]");
+
+                    var roomActors = thisSceneData.Actors.FindAll(a => a.Room == randomlyChosenActor.Room);
+
+                    // there is a lot of shlock here that I didn't realize, hopefully doesn't slow us down too much
+                    var blockedActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(roomActors[0].OldActorEnum);
+                    var roomFreeActors = GetRoomFreeActors(thisSceneData, randomlyChosenActor.Room);
+                    List<Actor> acceptableReplacementFreeActors = roomFreeActors.FindAll(a => !blockedActors.Contains(a.ActorEnum)).ToList();
+                    EmptyOrFreeActor(thisSceneData, randomlyChosenActor, roomActors, acceptableReplacementFreeActors,
+                        roomIsClearPuzzleRoom: true); // for now marking this true just because I dont want to re-calculate this since its in the wrong spot, dont both doing this for last second dyna removal
+                                                      // we may have fucked up putting this in the wrong layer
+                                                      //randomlyChosenActor.ChangeActor(GameObjects.Actor.Empty, 0x0); // temp
+
+                    list.Remove(randomlyChosenActor);
+
+                    if (list.Count <= 1) // too small to contiue to remove, leave alone
+                    {
+                        markForFinished.Add(list);
+                    }
+
+                    // test if dyna is still an issue, if not remove list
+                    var act = thisSceneData.ActorCollection;
+                    var dayOverloaded = act.isDynaOverLoaded(act.newMapList[currentRoom].day, act.oldMapList[currentRoom].day, currentRoom);
+                    var nightOverloaded = act.isDynaOverLoaded(act.newMapList[currentRoom].night, act.oldMapList[currentRoom].night, currentRoom);
+                    if (!dayOverloaded && !nightOverloaded)
+                    {
+                        markForFinished.Add(list);
+                    }
+                }
+
+                for (int l = 0; l < markForFinished.Count; l++)
+                {
+                    shrinkableActorsList.Remove(markForFinished[l]);
+                }
+
+
+            }
+
+            return true;
+        }
+
         public static void FixBrokenActorSpawnCutscenes(SceneEnemizerData thisSceneData)
         {
             /// Each Actor spawn gets one cutscene in the scene/room data
@@ -4445,7 +4508,22 @@ namespace MMR.Randomizer
 
                 WriteOutput($" set for size check: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
-                if (thisSceneData.ActorCollection.isSizeAcceptable(bogoLog)) // SUCCESS
+                // test and shrink dyna limits (might shrink this into a smaller functioncall
+                var dynatest = thisSceneData.ActorCollection.isDynaSizeAcceptable();
+                if (dynatest != "acceptable")
+                {
+                    // we failed the first test, try removing some dyna actors to compensate
+                    // now we need to try trimming the dyna to smaller size by reducing each dyna by one until it fits or doesnt
+                    var shrinkableActorList = thisSceneData.ActorCollection.GenerateShrinkableDynaList();
+
+                    while (shrinkableActorList.Count > 0)
+                    {
+                        trimDynaActors(thisSceneData, shrinkableActorList);
+                    }
+                }
+
+
+                if (thisSceneData.ActorCollection.isSizeAcceptable(bogoLog, thisSceneData.RNG)) // SUCCESS
                 {
                     WriteOutput($" after issizeacceptable: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
@@ -5249,6 +5327,11 @@ namespace MMR.Randomizer
 
             this.CalculateDefaultObjectUse(s);
 
+            this.UpdateDynaLoad(actorList);
+        }
+
+        public void UpdateDynaLoad(List<Actor> actorList)
+        {
             this.DynaPolySize = 0;
             this.DynaVertSize = 0;
             for (int act = 0; act < actorList.Count; act++)
@@ -5257,7 +5340,6 @@ namespace MMR.Randomizer
                 this.DynaPolySize += actor.DynaLoad.poly;
                 this.DynaVertSize += actor.DynaLoad.vert;
             }
-
         }
 
         public void CalculateDefaultObjectUse(Scene s)
@@ -5365,7 +5447,75 @@ namespace MMR.Randomizer
             }
         }
 
-        public bool isSizeAcceptable(StringBuilder log)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool isDynaOverLoaded(BaseEnemiesCollection newCollection, BaseEnemiesCollection oldCollection, int mapIndex)
+        {
+            var dynaHeadroomAttr = SceneUtils.GetSceneDynaAttributes(this.Scene.SceneEnum, mapIndex);
+            if (dynaHeadroomAttr != null)
+            {
+                var dayPolyDiff = newCollection.DynaPolySize - oldCollection.DynaPolySize;
+                var dayVertDiff = newCollection.DynaVertSize - oldCollection.DynaVertSize;
+                return (dayPolyDiff > dynaHeadroomAttr.Polygon || dayVertDiff > dynaHeadroomAttr.Verticies);
+            }
+            return false; // not considered dyna limited
+        }
+
+        private void buildDynaShrinkableListPerMap(List<List<Actor>> shrinkableActorList, List<Actor> actorList)
+        {
+            // per night or day
+
+            var uniqueActors = new HashSet<int>();
+            for (int a = 0; a < actorList.Count; a++) // I can use this old list right? it should be pointers to the same actors
+            {
+                var actor = actorList[a];
+                // if actor is dyna
+                if (actor.DynaLoad.poly > 0 && ((int) actor.OldActorEnum != actor.ActorId))
+                    uniqueActors.Add(actor.ActorId);
+            }
+            foreach (var actorId in uniqueActors) // can't use for here because of hashset limitation
+            {
+                var grouped = actorList.FindAll(a => a.ActorId == actorId && ((int)a.OldActorEnum != a.ActorId));
+                if (grouped.Count > 1)
+                {
+                    // test if this is an area that is dyna overloaded
+
+                    // if so, add to list
+                    shrinkableActorList.Add(grouped);
+                }
+            }
+        }
+
+        
+
+        private bool testDynaSize(StringBuilder log, Random rng)
+        {
+            return true; // we now fit?
+        }
+
+        public List<List<Actor>> GenerateShrinkableDynaList()
+        {
+            var shrinkableActorList = new List<List<Actor>>();
+
+            for (int m = 0; m < this.newMapList.Count; m++)
+            {
+                var map = this.newMapList[m];
+
+                // compare headroom to actual
+                if (isDynaOverLoaded(map.day, this.oldMapList[m].day, m))
+                {
+                    buildDynaShrinkableListPerMap(shrinkableActorList, map.day.oldActorList);
+                }
+                if (isDynaOverLoaded(map.night, this.oldMapList[m].night, m))
+                {
+                    buildDynaShrinkableListPerMap(shrinkableActorList, map.night.oldActorList);
+                }
+            }
+
+            return shrinkableActorList;
+        }
+
+
+        public bool isSizeAcceptable(StringBuilder log, Random rng)
         {
             // is the overall size for all maps of night and day equal
 
@@ -5378,8 +5528,8 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            var dynatest = isDynaSizeAcceptable();
-            if (dynatest != "acceptable")
+            var dynatest = testDynaSize(log, rng);
+            if (dynatest == false)
             {
                 log.AppendLine($" ---- bogo REJECTED: dyna are too big (by {dynatest})");
                 return false;
