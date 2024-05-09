@@ -1938,7 +1938,10 @@ namespace MMR.Randomizer.GameObjects
         // snowhead temple
         [CheckRestricted(Scene.PathToSnowhead, variant: -1, Item.HeartPieceToSnowhead)]
         [CheckRestricted(Scene.GreatBayCoast, variant: -1, Item.HeartPieceGreatBayCoast)]
-        [CheckRestricted(Scene.StoneTower, variant: -1, Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
+        [CheckRestricted(Scene.StoneTower, variant: -1,
+            Item.CollectableStoneTowerPot1, Item.CollectableStoneTowerPot2,
+            Item.CollectableStoneTowerPot6, Item.CollectableStoneTowerPot7, Item.CollectableStoneTowerPot8, Item.CollectableStoneTowerPot9,
+            Item.CollectableStoneTowerPot10, Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13)]
         [CheckRestricted(Scene.TwinIslandsSpring, variant: -1, Item.ItemBottleGoronRace,
             Item.CollectableGoronRacetrackPot1, Item.CollectableGoronRacetrackPot2, Item.CollectableGoronRacetrackPot3,
             Item.CollectableGoronRacetrackPot4, Item.CollectableGoronRacetrackPot5, Item.CollectableGoronRacetrackPot6,
