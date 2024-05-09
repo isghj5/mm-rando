@@ -5193,8 +5193,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(516)]
         [ObjectListIndex(0x250)]
+        [CheckRestricted(Scene.GreatBayTemple, variant:-1,
+            Item.CollectableGreatBayTempleEntranceRoomBarrel1,
+            Item.CollectableGreatBayTempleBlueChuchuValveRoomBarrel1, Item.CollectableGreatBayTempleBlueChuchuValveRoomBarrel2,
+            Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel1, Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel2,
+            Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel1, Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel2)]
         //[CheckRestricted(Scene.PiratesFortress)] // and
-        //[CheckRestricted(Item.Coast)]
         // params:
         // vanilla: 0x7F3F,
         // oh god params are crraz
