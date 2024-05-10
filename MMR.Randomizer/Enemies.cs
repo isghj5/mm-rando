@@ -2968,7 +2968,7 @@ namespace MMR.Randomizer
             }
         }
 
-        private static bool trimDynaActors(SceneEnemizerData thisSceneData, List<List<Actor>> shrinkableActorsList)
+        private static bool TrimDynaActors(SceneEnemizerData thisSceneData, List<List<Actor>> shrinkableActorsList)
         {
             /// shrinkableActorsList is a list of lists, where each list is all actors of the same type in the same room/day/night combo
 
@@ -4518,7 +4518,7 @@ namespace MMR.Randomizer
 
                     while (shrinkableActorList.Count > 0)
                     {
-                        trimDynaActors(thisSceneData, shrinkableActorList);
+                        TrimDynaActors(thisSceneData, shrinkableActorList);
                     }
                 }
 
@@ -5447,6 +5447,28 @@ namespace MMR.Randomizer
             }
         }
 
+        public List<List<Actor>> GenerateShrinkableDynaList()
+        {
+            var shrinkableActorList = new List<List<Actor>>();
+
+            for (int m = 0; m < this.newMapList.Count; m++)
+            {
+                var map = this.newMapList[m];
+
+                // compare headroom to actual
+                if (isDynaOverLoaded(map.day, this.oldMapList[m].day, m))
+                {
+                    buildDynaShrinkableListPerMap(shrinkableActorList, map.day.oldActorList);
+                }
+                if (isDynaOverLoaded(map.night, this.oldMapList[m].night, m))
+                {
+                    buildDynaShrinkableListPerMap(shrinkableActorList, map.night.oldActorList);
+                }
+            }
+
+            return shrinkableActorList;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool isDynaOverLoaded(BaseEnemiesCollection newCollection, BaseEnemiesCollection oldCollection, int mapIndex)
         {
@@ -5484,35 +5506,24 @@ namespace MMR.Randomizer
                 }
             }
         }
-
         
 
         private bool testDynaSize(StringBuilder log, Random rng)
         {
+            //what the fuck how did I forget about this
+
+            for(int m = 0; m < oldMapList.Count; ++m)
+            {
+                if (isDynaOverLoaded(this.newMapList[m].day, this.newMapList[m].day, m))
+                    return false;
+                if (isDynaOverLoaded(this.newMapList[m].night, this.newMapList[m].night, m))
+                    return false;
+            }
+
             return true; // we now fit?
         }
 
-        public List<List<Actor>> GenerateShrinkableDynaList()
-        {
-            var shrinkableActorList = new List<List<Actor>>();
-
-            for (int m = 0; m < this.newMapList.Count; m++)
-            {
-                var map = this.newMapList[m];
-
-                // compare headroom to actual
-                if (isDynaOverLoaded(map.day, this.oldMapList[m].day, m))
-                {
-                    buildDynaShrinkableListPerMap(shrinkableActorList, map.day.oldActorList);
-                }
-                if (isDynaOverLoaded(map.night, this.oldMapList[m].night, m))
-                {
-                    buildDynaShrinkableListPerMap(shrinkableActorList, map.night.oldActorList);
-                }
-            }
-
-            return shrinkableActorList;
-        }
+        
 
 
         public bool isSizeAcceptable(StringBuilder log, Random rng)
