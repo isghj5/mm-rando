@@ -3362,7 +3362,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.RosaSisters, GameObjects.Actor.GaboraBlacksmith)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.Woodfall, GameObjects.Actor.Lilypad, GameObjects.Actor.IceBlockWaterPlatforms)) continue;
+                if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.GoGoron, GameObjects.Actor.Bombiwa)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Monkey)) continue;
 
