@@ -542,7 +542,7 @@ namespace MMR.Randomizer.Models.Rom
             return killableVariants;
         }
 
-        public int VariantMaxCountPerRoom(int queryVariant)
+        public int VariantMaxCountPerRoom(int queryVariant = 0x0000)
         {
             if (this.OnlyOnePerRoom != null)
             {

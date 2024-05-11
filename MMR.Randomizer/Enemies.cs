@@ -2997,11 +2997,17 @@ namespace MMR.Randomizer
                     // there is a lot of shlock here that I didn't realize, hopefully doesn't slow us down too much
                     var blockedActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(roomActors[0].OldActorEnum);
                     var roomFreeActors = GetRoomFreeActors(thisSceneData, randomlyChosenActor.Room);
+                    // this is a hack, just assume if they have limits we shouldn't use them for this last second replacement
+                    roomFreeActors.RemoveAll(actor => actor.DynaLoad.poly > 0
+                                                   || (actor.Variants.Count() > 0 && actor.VariantMaxCountPerRoom(actor.Variants[0]) > 1));
                     List<Actor> acceptableReplacementFreeActors = roomFreeActors.FindAll(a => !blockedActors.Contains(a.ActorEnum)).ToList();
                     EmptyOrFreeActor(thisSceneData, randomlyChosenActor, roomActors, acceptableReplacementFreeActors,
                         roomIsClearPuzzleRoom: true); // for now marking this true just because I dont want to re-calculate this since its in the wrong spot, dont both doing this for last second dyna removal
                                                       // we may have fucked up putting this in the wrong layer
                                                       //randomlyChosenActor.ChangeActor(GameObjects.Actor.Empty, 0x0); // temp
+
+                    thisSceneData.Log.AppendLine($" --  replaced with  [{randomlyChosenActor.Name}]");
+
 
                     list.Remove(randomlyChosenActor);
 
@@ -3865,6 +3871,7 @@ namespace MMR.Randomizer
             var sceneFreeActors = thisScene.SceneFreeActors;
             var objectsInThisRoom = thisScene.ChosenReplacementObjectsPerMap[thisRoomIndex];
 
+            // todo: can we conider if the actors are already saurated?
             var roomFreeActors = ReplacementCandidateList.Where(act => act.ObjectId >= 3
                                        && objectsInThisRoom.Contains(act.ObjectId)
                                        && !(act.BlockedScenes != null && act.BlockedScenes.Contains(thisScene.Scene.SceneEnum))
@@ -4407,7 +4414,7 @@ namespace MMR.Randomizer
                             foreach (var a in actorsPerObject)
                             {
                                 thisSceneData.AcceptableCandidates.Remove(a);
-                                WriteOutput($" removing: [{a.Name}]]", bogoLog);
+                                WriteOutput($" % removing large actor to reduce time to build: [{a.Name}]]", bogoLog);
                             }
                             objectTooLargeCount = 0;
 
@@ -4508,7 +4515,7 @@ namespace MMR.Randomizer
 
                 WriteOutput($" set for size check: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
-                // test and shrink dyna limits (might shrink this into a smaller functioncall
+                // dyna overflow is a common crash concern, here we need to check if we overflow and shrink the dyna actor count
                 var dynatest = thisSceneData.ActorCollection.isDynaSizeAcceptable();
                 if (dynatest != "acceptable")
                 {
@@ -4522,8 +4529,9 @@ namespace MMR.Randomizer
                     }
                 }
 
+                WriteOutput($" set for dyna trim: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
-                if (thisSceneData.ActorCollection.isSizeAcceptable(bogoLog, thisSceneData.RNG)) // SUCCESS
+                if (thisSceneData.ActorCollection.isSizeAcceptable(bogoLog)) // SUCCESS
                 {
                     WriteOutput($" after issizeacceptable: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
@@ -5508,7 +5516,7 @@ namespace MMR.Randomizer
         }
         
 
-        private bool testDynaSize(StringBuilder log, Random rng)
+        private bool testDynaSize()
         {
             //what the fuck how did I forget about this
 
@@ -5520,13 +5528,13 @@ namespace MMR.Randomizer
                     return false;
             }
 
-            return true; // we now fit?
+            return true; // 
         }
 
         
 
 
-        public bool isSizeAcceptable(StringBuilder log, Random rng)
+        public bool isSizeAcceptable(StringBuilder log)
         {
             // is the overall size for all maps of night and day equal
 
@@ -5539,10 +5547,10 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            var dynatest = testDynaSize(log, rng);
+            var dynatest = testDynaSize();
             if (dynatest == false)
             {
-                log.AppendLine($" ---- bogo REJECTED: dyna are too big (by {dynatest})");
+                log.AppendLine($" ---- bogo REJECTED: dyna actors are too big, even after trim");
                 return false;
             }
 
