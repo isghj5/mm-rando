@@ -410,7 +410,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1319)]
         [SceneInternalId(0x32)]
         [DynaHeadroom(64, 64)]  // low default to start
-        [EnemizerSceneBlockSensitive(Actor.GoGoron, -1)] // ice block can block shop
+        [EnemizerSceneBlockSensitive(Actor.GoGoron, -1)] // ice block, tall bombiwa, can block shop
+        [EnemizerSceneBlockSensitive(Actor.GoronSGoro, -1)] // ice block, tall bombiwa, can block shop
         GoronShrine = 0x2F,
 
         [FileID(1322)]
