@@ -1255,8 +1255,8 @@ namespace MMR.Randomizer.GameObjects
         // kickout params
         // cannot place anywhere yet since the actor is hard coded based on temple clear, and the regular one is agressive
         [VariantsWithRoomMax(max:0, 
-            0x8000, 0x8001, 0x8002, 0x8003, // assumed hostile?
-            0x4000, 0x4001, 0x4002, 0x4003,
+            0x8000, 0x8001, 0x8002, 0x8003, // attentive to the king
+            0x4000, 0x4001, 0x4002, 0x4003, // dancing around the fire I think
             0x0, 0x1, 0x2, 0x3
         )]
         [UnkillableAllVariants]
@@ -3749,18 +3749,23 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(scene:Scene.DekuKingChamber, variant:0x2FF, Item.SongSonata)]
         // params
         // type (0x780) >> 7 // holy shit why
-        [GroundVariants(0xFD7F, // credits monk
-                        0x0082, // near entrance/exit of woods of mystery
-                        0x1882, // near entrance/exit of swamp
-                        0x2210, // near entrance to deku palace
+        [GroundVariants(0xFD7F, // credits monk, wish it did more than tpose...
+                        0xFC7F, // standing in front of the deku king
+                        0xFCFF, // also standing in front of the king? what the hell
                         0x6181 // near deku king
                       /*0x7B7F*/ )] // roast
-        [WallVariants(0x02FF//, // tied to a pole
-            )]
+        [WallVariants(0x02FF)] // tied to a pole
+        [PathingVariants(
+            0x0082, // near entrance/exit of woods of mystery
+            0x1882, // near entrance/exit of swamp
+            0x2210 // near entrance to deku palace
+        )]
+        [PathingTypeVarsPlacement(mask:0xF800, shift:11)] // unk test
+        [SwitchFlagsPlacement(mask:0x7F, shift:0)]
         [UnkillableAllVariants]
-        [VariantsWithRoomMax(max: 0, 0x02FF)]
-        [VariantsWithRoomMax(max: 0, 0x82, 0x1882, 0x2210, 0x6182)] // situationally appear, otherwise invisible, also assume path
-        // missing switch flags
+        [VariantsWithRoomMax(max: 0, 0xFC7F, 0xFCFF,
+            0x82, 0x1882, 0x2210, 0x6182)] // situationally appear, otherwise invisible, also assume path
+        [PlacementWeight(60)]
         Monkey = 0x19E, // En_Mnk
 
         // assumed spawned rock from eyegore ground slam
@@ -4431,6 +4436,7 @@ namespace MMR.Randomizer.GameObjects
         [CompanionActor(Flame, ourVariant: 0x300, variant: 0x3)]      // amy gets green flames
         // no scene exclusion necessary, get spawned by the poe sisters minigame but they aren't actors in the scene to be randomized
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
+        [PlacementWeight(85)]
         PoeSisters = 0x1E8, // En_Po_Sisters
 
         [EnemizerEnabled]
