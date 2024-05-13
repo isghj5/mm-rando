@@ -5210,7 +5210,11 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableGreatBayTempleBlueChuchuValveRoomBarrel1, Item.CollectableGreatBayTempleBlueChuchuValveRoomBarrel2,
             Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel1, Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel2,
             Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel1, Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel2)]
-        //[CheckRestricted(Scene.PiratesFortress)] // and
+        [CheckRestricted(Scene.PiratesFortress, variant:-1,
+            Item.CollectablePiratesFortressInteriorBarrelRoomEggPot1, // just incase colliding actor that blocks pot destruction
+            Item.CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem1, Item.CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem2,
+            Item.CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem3, Item.CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem4, Item.CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem5,
+            Item.CollectablePiratesFortressInteriorTelescopeRoomItem1, Item.CollectablePiratesFortressInteriorTelescopeRoomItem2, Item.CollectablePiratesFortressInteriorTelescopeRoomItem3)]
         // params:
         // vanilla: 0x7F3F,
         // oh god params are crraz
