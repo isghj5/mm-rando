@@ -3372,9 +3372,9 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.RosaSisters, GameObjects.Actor.GaboraBlacksmith)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.GoGoron, GameObjects.Actor.Bombiwa)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.GoGoron, GameObjects.Actor.Bombiwa)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Monkey)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Monkey)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.GormanRaceTrack, GameObjects.Actor.Flagpole, GameObjects.Actor.HookshotWallSpot)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.Leever, GameObjects.Actor.ButlersSon)) continue;
@@ -5215,7 +5215,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 68.5\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 68.6\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

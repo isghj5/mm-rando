@@ -672,6 +672,8 @@ namespace MMR.Randomizer.GameObjects
         // one swlift, 3 cuttable ivy, 0x22/0x1C, works
         // two swlift was fine?? how did I even get crashes previously??
         [DynaHeadroom(38, 32)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Keese,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the whole assension
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the whole assension
         StoneTower = 0x55,
