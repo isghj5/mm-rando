@@ -1423,8 +1423,11 @@ namespace MMR.Randomizer.GameObjects
         // funny enough, not dynapoly
         [CheckRestricted(Scene.TerminaField, variant: -1,
             check: Item.HeartPieceTerminaGossipStones, Item.HeartPieceZoraGrotto, Item.CollectableGrottosOceanHeartPieceGrottoBeehive1, Item.CollectableGrottosOceanGossipStonesButterflyFairy1)]
-        [CheckRestricted(Scene.Grottos, variant: -1,
-            check: Item.ChestHotSpringGrottoRedRupee)]
+        [CheckRestricted(Scene.Grottos, variant: -1,//0x118,
+            check: Item.ChestHotSpringGrottoRedRupee, Item.ChestLensCavePurpleRupee)] // hot spring grotto
+        // dont think per variant is working for multiple per room yet once it is these should be split
+        //[CheckRestricted(Scene.Grottos, variant: 0x104,
+        //    check: Item.ChestLensCavePurpleRupee)] // bomb grotto
         [CheckRestricted(Scene.SwampSpiderHouse, variant: -1,
             check: Item.CollectibleSwampSpiderToken13, Item.CollectableSwampSpiderHouseSoftSoil2)]
         [CheckRestricted(Scene.ZoraCape, variant: -1,

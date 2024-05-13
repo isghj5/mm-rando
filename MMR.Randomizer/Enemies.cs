@@ -808,6 +808,7 @@ namespace MMR.Randomizer
             SplitSnowheadTempleBo();
             BlockBabyGoronIfNoSFXRando();
             FixArmosSpawnPos();
+            FixEvanRotation();
             RandomizeTheSongMonkey();
             MoveTheISTTTunnelTransitionBack();
             FixSwordSchoolPotRandomization();
@@ -1031,7 +1032,6 @@ namespace MMR.Randomizer
 
                 var milkbarScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MilkBar.FileID());
                 milkbarScene.Maps[0].Objects[10] = GameObjects.Actor.ArcheryMiniGameMan.ObjectIndex();
-
 
                 // trying to fix clock, nothing
                 //var curiosityShopClock = curiosityShop.Maps[0].Actors[5];
@@ -2662,6 +2662,16 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x0EC, val: 0x0000000); // lwc
             ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x0F0, val: 0x0000000); // lwc
             ReadWriteUtils.Arr_WriteU32(armosData, Dest: 0x108, val: 0x0000000); // lwc
+        }
+
+        private static void FixEvanRotation()
+        {
+            if (!ReplacementListContains(GameObjects.Actor.Evan)) return;
+
+            // if evan is randomized, then his replacement is staring at the wall
+            var zorahallRoomsScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.ZoraHallRooms.FileID());
+            var evan = zorahallRoomsScene.Maps[3].Actors[0];
+            evan.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: evan.Rotation.y);
         }
 
         private static void RandomizeTheSongMonkey()
