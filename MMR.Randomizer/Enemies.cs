@@ -3006,6 +3006,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.ElegyStatueSwitch.ObjectIndex(),
                 GameObjects.Actor.Evan.ObjectIndex(),
                 GameObjects.Actor.GaboraBlacksmith.ObjectIndex(),
+                GameObjects.Actor.IronKnuckle.ObjectIndex(),
                 GameObjects.Actor.GoronWithGeroMask.ObjectIndex()
             };
 
@@ -3032,6 +3033,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.ElegyStatueSwitch,
                 GameObjects.Actor.Evan,
                 GameObjects.Actor.GaboraBlacksmith,
+                GameObjects.Actor.IronKnuckle,
                 GameObjects.Actor.GoronWithGeroMask
             };
 
