@@ -4263,11 +4263,15 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(12,8)]
         DampeHouseElevator = 0x1D3, // Bg_Danpei_Movebg
 
-        [ActorizerEnabledFreeOnly]
+        [ActorizerEnabled]
         [FileID(429)]
         [ObjectListIndex(0x1B7)]
-        [GroundVariants(0x0100)]
+        // 0xF80 is the drop table
+        [GroundVariants(
+            0x0100, // only vanilla param weirdly
+            0, 0x0080, 0x0180, 0x0200, 0x0280, 0x0380, 0x0400)] 
         [UnkillableAllVariants]
+        [PlacementWeight(20)]
         SnowCoveredTrees = 0x1D4, // En_Snowwd
 
         // I suspect since he has so few vars that he will be hard coded, and req decomp to fix
@@ -4342,10 +4346,72 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         Giant = 0x1DB, // En_Giant
 
+        [ActorizerEnabled]
+        [CheckRestricted(Scene.TwinIslands, variant:-1,
+            Item.CollectablePathToGoronVillageWinterSmallSnowball1, Item.CollectablePathToGoronVillageWinterSmallSnowball2, Item.CollectablePathToGoronVillageWinterSmallSnowball3, //small
+            Item.CollectablePathToGoronVillageWinterLargeSnowball1, Item.CollectablePathToGoronVillageWinterLargeSnowball2, Item.CollectablePathToGoronVillageWinterLargeSnowball3, // large
+            Item.CollectablePathToGoronVillageWinterLargeSnowball4, Item.CollectablePathToGoronVillageWinterLargeSnowball5, Item.CollectablePathToGoronVillageWinterLargeSnowball6,
+            Item.CollectablePathToGoronVillageWinterLargeSnowball7, Item.CollectablePathToGoronVillageWinterLargeSnowball8, Item.CollectablePathToGoronVillageWinterLargeSnowball9,
+            Item.CollectablePathToGoronVillageWinterLargeSnowball10, Item.CollectablePathToGoronVillageWinterLargeSnowball11, Item.CollectablePathToGoronVillageWinterLargeSnowball12,
+            Item.CollectablePathToGoronVillageWinterLargeSnowball13, Item.CollectablePathToGoronVillageWinterLargeSnowball14,
+            Item.SongLullabyIntro
+        )]
+        [CheckRestricted(Scene.GoronVillage, variant: -1,
+            Item.CollectableGoronVillageWinterLargeSnowball1, Item.CollectableGoronVillageWinterLargeSnowball2, // small
+            Item.CollectableGoronVillageWinterLargeSnowball3, Item.CollectableGoronVillageWinterLargeSnowball4,
+            Item.CollectableGoronVillageWinterSmallSnowball1, Item.CollectableGoronVillageWinterSmallSnowball2, Item.CollectableGoronVillageWinterSmallSnowball3, // large
+            Item.CollectableGoronVillageWinterSmallSnowball4, Item.CollectableGoronVillageWinterSmallSnowball5, Item.CollectableGoronVillageWinterSmallSnowball6,
+            Item.CollectableGoronVillageWinterSmallSnowball7, Item.CollectableGoronVillageWinterSmallSnowball8, Item.CollectableGoronVillageWinterSmallSnowball9,
+            Item.CollectableGoronVillageWinterSmallSnowball10)]
+        [CheckRestricted(Scene.PathToMountainVillage, variant: -1,
+            Item.CollectablePathToMountainVillageSmallSnowball1, Item.CollectablePathToMountainVillageSmallSnowball2, // small
+            Item.CollectablePathToMountainVillageSmallSnowball3, Item.CollectablePathToMountainVillageSmallSnowball4
+        )]
+        [CheckRestricted(Scene.MountainVillage, variant: -1,
+            Item.CollectableMountainVillageWinterSmallSnowball1, Item.CollectableMountainVillageWinterSmallSnowball2, // small
+            Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
+            Item.CollectableMountainVillageWinterSmallSnowball5, Item.CollectableMountainVillageWinterSmallSnowball6,
+            Item.CollectableMountainVillageWinterSmallSnowball7, Item.CollectableMountainVillageWinterSmallSnowball8,
+            Item.CollectableMountainVillageWinterLargeSnowball1, Item.CollectableMountainVillageWinterLargeSnowball2,
+            Item.CollectableMountainVillageWinterLargeSnowball3, Item.CollectableMountainVillageWinterLargeSnowball4
+        )]
+        [CheckRestricted(Scene.PathToSnowhead, variant: -1,
+            Item.CollectablePathToSnowheadSmallSnowball1, Item.CollectablePathToSnowheadSmallSnowball2, // small
+            Item.CollectablePathToSnowheadSmallSnowball3, Item.CollectablePathToSnowheadSmallSnowball4,
+            Item.CollectablePathToSnowheadLargeSnowball1, Item.CollectablePathToSnowheadLargeSnowball2, // large
+            Item.CollectablePathToSnowheadLargeSnowball3, Item.CollectablePathToSnowheadLargeSnowball4
+        )]
+        [CheckRestricted(Scene.Snowhead, variant: -1,
+            Item.CollectableSnowheadSmallSnowball1, Item.CollectableSnowheadSmallSnowball2, // small
+            Item.CollectableSnowheadSmallSnowball3, Item.CollectableSnowheadSmallSnowball10,
+            Item.CollectableSnowheadLargeSnowball1, Item.CollectableSnowheadLargeSnowball2, // large
+            Item.CollectableSnowheadLargeSnowball3, Item.CollectableSnowheadLargeSnowball4,
+            Item.CollectableSnowheadLargeSnowball5, Item.CollectableSnowheadLargeSnowball6
+        )]
+        [CheckRestricted(Scene.SnowheadTemple, variant: -1,
+            Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball1, Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball2, // small
+            Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball3, Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball4,
+            Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball4, Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball5
+        )]
+        // */ // testing
         [FileID(437)]
         [ObjectListIndex(0xEF)]
         [SwitchFlagsPlacement(mask: 0x3F, shift: 0)]
-        Obj_Snowball = 0x1DC, // Obj_Snowball
+        //ground variants
+        [GroundVariants(
+            0x0012, 0x7F3F, 0xFF00, 0x0, // path to mountain (small)
+            0x240A, 0x250A, 0x260A, 0x270A, 0x280A, 0x290A, 0x2A0A, 0x2B0A, // path to mountain village
+            0x0C0E, 0x2802, 0x2902, 0x2A0E, 0x2B0A, 0x2C0E, 0x2F0A, 0x300A,  // mountain village winter
+            0x080E, 0x040E, 0x200E, 0x210A, 0x220E, 0x230E, 0x240E, 0x250E, 0x270E, // path to goron village winter (twin islands)
+            0x2B0E, 0x2C0E, 0x2D0A, 0x2E0E, 0x2F0A, 0x300E, 0x310E, 0x320A, 0x330E, 0x340A, 0x350E, // small 20x360E, 0x370A, 0x380A, 0x3
+            0x2002, 0x2202, 0x2402, 0x210E, 0x230E, 0x250E, // goron village winter
+            0x600E, 0x610E, 0x620E, 0x630E, // path to snowhead
+            0x240E, 0x250E, 0x260E, 0x270E, 0x280E, 0x290E, // snowhead
+            0xB, 0xF // snowhead temple
+        )]
+        [UnkillableAllVariants]
+        [PlacementWeight(20)]
+        LargeSnowball = 0x1DC, // Obj_Snowball
 
         [FileID(438)]
         [ObjectListIndex(0x1BB)]
@@ -4585,9 +4651,71 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1D1)]
         SwordsmanSchoolLog = 0x1F8, // En_Maruta
 
+        [ActorizerEnabled]
+        [CheckRestricted(Scene.TwinIslands, variant: -1,
+            Item.CollectablePathToGoronVillageWinterSmallSnowball1, Item.CollectablePathToGoronVillageWinterSmallSnowball2, Item.CollectablePathToGoronVillageWinterSmallSnowball3, //small
+            Item.CollectablePathToGoronVillageWinterLargeSnowball1, Item.CollectablePathToGoronVillageWinterLargeSnowball2, Item.CollectablePathToGoronVillageWinterLargeSnowball3, // large
+            Item.CollectablePathToGoronVillageWinterLargeSnowball4, Item.CollectablePathToGoronVillageWinterLargeSnowball5, Item.CollectablePathToGoronVillageWinterLargeSnowball6,
+            Item.CollectablePathToGoronVillageWinterLargeSnowball7, Item.CollectablePathToGoronVillageWinterLargeSnowball8, Item.CollectablePathToGoronVillageWinterLargeSnowball9,
+            Item.CollectablePathToGoronVillageWinterLargeSnowball10, Item.CollectablePathToGoronVillageWinterLargeSnowball11, Item.CollectablePathToGoronVillageWinterLargeSnowball12,
+            Item.CollectablePathToGoronVillageWinterLargeSnowball13, Item.CollectablePathToGoronVillageWinterLargeSnowball14,
+            Item.SongLullabyIntro
+        )]
+        [CheckRestricted(Scene.GoronVillage, variant: -1,
+            Item.CollectableGoronVillageWinterLargeSnowball1, Item.CollectableGoronVillageWinterLargeSnowball2, // small
+            Item.CollectableGoronVillageWinterLargeSnowball3, Item.CollectableGoronVillageWinterLargeSnowball4,
+            Item.CollectableGoronVillageWinterSmallSnowball1, Item.CollectableGoronVillageWinterSmallSnowball2, Item.CollectableGoronVillageWinterSmallSnowball3, // large
+            Item.CollectableGoronVillageWinterSmallSnowball4, Item.CollectableGoronVillageWinterSmallSnowball5, Item.CollectableGoronVillageWinterSmallSnowball6,
+            Item.CollectableGoronVillageWinterSmallSnowball7, Item.CollectableGoronVillageWinterSmallSnowball8, Item.CollectableGoronVillageWinterSmallSnowball9,
+            Item.CollectableGoronVillageWinterSmallSnowball10)]
+        [CheckRestricted(Scene.PathToMountainVillage, variant: -1,
+            Item.CollectablePathToMountainVillageSmallSnowball1, Item.CollectablePathToMountainVillageSmallSnowball2, // small
+            Item.CollectablePathToMountainVillageSmallSnowball3, Item.CollectablePathToMountainVillageSmallSnowball4
+        )]
+        [CheckRestricted(Scene.MountainVillage, variant: -1,
+            Item.CollectableMountainVillageWinterSmallSnowball1, Item.CollectableMountainVillageWinterSmallSnowball2, // small
+            Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
+            Item.CollectableMountainVillageWinterSmallSnowball5, Item.CollectableMountainVillageWinterSmallSnowball6,
+            Item.CollectableMountainVillageWinterSmallSnowball7, Item.CollectableMountainVillageWinterSmallSnowball8,
+            Item.CollectableMountainVillageWinterLargeSnowball1, Item.CollectableMountainVillageWinterLargeSnowball2,
+            Item.CollectableMountainVillageWinterLargeSnowball3, Item.CollectableMountainVillageWinterLargeSnowball4
+        )]
+        [CheckRestricted(Scene.PathToSnowhead, variant: -1,
+            Item.CollectablePathToSnowheadSmallSnowball1, Item.CollectablePathToSnowheadSmallSnowball2, // small
+            Item.CollectablePathToSnowheadSmallSnowball3, Item.CollectablePathToSnowheadSmallSnowball4,
+            Item.CollectablePathToSnowheadLargeSnowball1, Item.CollectablePathToSnowheadLargeSnowball2, // large
+            Item.CollectablePathToSnowheadLargeSnowball3, Item.CollectablePathToSnowheadLargeSnowball4
+        )]
+        [CheckRestricted(Scene.Snowhead, variant: -1,
+            Item.CollectableSnowheadSmallSnowball1, Item.CollectableSnowheadSmallSnowball2, // small
+            Item.CollectableSnowheadSmallSnowball3, Item.CollectableSnowheadSmallSnowball10,
+            Item.CollectableSnowheadLargeSnowball1, Item.CollectableSnowheadLargeSnowball2, // large
+            Item.CollectableSnowheadLargeSnowball3, Item.CollectableSnowheadLargeSnowball4,
+            Item.CollectableSnowheadLargeSnowball5, Item.CollectableSnowheadLargeSnowball6
+        )]
+        [CheckRestricted(Scene.SnowheadTemple, variant: -1,
+            Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball1, Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball2, // small
+            Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball3, Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball4,
+            Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball4, Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball5
+        )] // */
         [FileID(465)]
         [ObjectListIndex(0xEF)]
-        Obj_Snowball2 = 0x1F9, // Obj_Snowball2
+        [GroundVariants(
+            0x7F3F, // multi
+            0x203F, 0x210A, 0x220A, 0x230E, // path to mountain village
+            0x200A, 0x210E, 0x220E, 0x230A, 0x240A, 0x250E, 0x260A,
+            0x210E, 0x2222, 0x250A, 0x260A, 0x270E, 0x2D0F, 0x2E0F, 0x3415, 0x351F, 0x3610, 0x370F, // mountain village
+            0x250A, 0x2915, 0x2A1F, 0x2B10, 0x2C0F,  // mountain village spring
+            0x360E, 0x370A, 0x380E, 0x390E, 0x3A0A, 0x3B0A, // path to goron village (twin islands)
+            0x290A, 0x2A0A, 0x2E0E, 0x320E, 0x2D13, 0x3113, 0x2B15, 0x3015, 0x2C19, 0x2F19, 0x331E, 0x341E, // goron village
+            0x200F, 0x210F, 0x220F, 0x230F, // path to snowhead
+            0x2015, 0x211F, 0x2210, 0x230F, 0x201F, 0x2110, 0x220F, 0x230A, 0x250E, 0x260A, 0x270E, 0x280E, 0x2915, // snowhead
+            0xE, 0xA, 0xB, 0x1E, 0x201E, 0x211E, 0x2202, 0x2302, 0x2402 //snowhead temple
+        )]
+        //[SwitchFlagsPlacement()] // does not appear to have switch flags
+        [UnkillableAllVariants]
+        [PlacementWeight(30)]
+        SmallSnowball = 0x1F9, // Obj_Snowball2
 
         [FileID(466)]
         [ObjectListIndex(0x1D0)]
