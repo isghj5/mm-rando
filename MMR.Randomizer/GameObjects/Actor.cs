@@ -4068,7 +4068,7 @@ namespace MMR.Randomizer.GameObjects
         // switch flags
         // manually sunsets switch 5, sets 5 separate switches based on player form, but I think these are all as a result of willing the game
         [PlacementWeight(75)]
-        Takaraya = 0x1C1, // En_Takaraya
+        Takaraya = 0x1C1, // En_Takaraya, "Bombchu girl"
 
         [ActorizerEnabled]
         [FileID(413)]

@@ -281,7 +281,14 @@ namespace MMR.Randomizer
                 // check if any notebook entries are in the list of important items
                 var notebookEntryImportantSearch = allSphereItems.Any(u => u.Item1.Contains("Notebook:"));
                 if (!notebookEntryImportantSearch)
-                    AddNotebookEntires();
+                {
+                    var notebookLocationSearch = allSphereItems.Any(u => u.Item2.Contains("Notebook"));
+                    if (!notebookLocationSearch)
+                    {
+
+                        AddNotebookEntires();
+                    }
+                }
             }
 
         }
