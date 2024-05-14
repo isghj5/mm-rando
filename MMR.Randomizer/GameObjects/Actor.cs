@@ -5497,8 +5497,9 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0)]
         [WaterBottomVariants(0x1)]
         [OnlyOneActorPerRoom]
+        //[EnemizerScenesPlacementBlock(Scene.GoronShrine)] // if rock sirloin falls onto him its aparently broken // but we dont want to block here we want to be able to deliver it to him in the next room
         [UnkillableAllVariants]
-        GoronWithGeroMask = 0x23A, // En_Geg : HungryGoron
+        GoronWithGeroMask = 0x23A, // En_Geg : HungryGoron, sirloin goron, "Hugo"
 
         //[ActorizerEnabled] // boring since its hidden unless you wear one often junk mask, just decreases chances of noticable enemies
         [FileID(530)]

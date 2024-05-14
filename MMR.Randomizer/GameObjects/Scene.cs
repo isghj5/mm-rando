@@ -413,6 +413,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1319)]
         [SceneInternalId(0x32)]
         [DynaHeadroom(64, 64)]  // low default to start
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GoronSGoro,
+                        Actor.GoronWithGeroMask)] // if the sirloin drops on top of him its broken
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Torch,
+                        Actor.GoronWithGeroMask)] // if the sirloin drops on top of him its broken
         [EnemizerSceneBlockSensitive(Actor.GoGoron, -1)] // ice block, tall bombiwa, can block shop
         [EnemizerSceneBlockSensitive(Actor.GoronSGoro, -1)] // ice block, tall bombiwa, can block shop
         GoronShrine = 0x2F,
