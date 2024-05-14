@@ -266,15 +266,27 @@ namespace MMR.Randomizer
             {
                 var notebookEntries = _randomized.ItemList.FindAll(itemObj => itemObj.Item.ItemCategory() == GameObjects.ItemCategory.NotebookEntries).Select(itemObj => itemObj.Item).ToList();
                 ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.NotebookEntries].AddRange(notebookEntries);
-                ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.MainInventory].Add(GameObjects.Item.ItemNotebook);
             }
+
 
             if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic)
             {
-                var reward = _randomized.ItemList.Find(i => i.NewLocation == GameObjects.Item.MaskFierceDeity).Item;
-                // check if reward is junk, if so add all fairies 
-                if (junkCategories.Contains(reward.ItemCategory() ?? GameObjects.ItemCategory.None))
-                    AddNotebookEntires();
+                var entryRewards = _randomized.ItemList.FindAll(i =>  i.NewLocation.ToString().Contains("Notebook"));
+                var nonJunkCount = 0;
+                for (int i = 0; i < entryRewards.Count(); i++)
+                {
+                    var reward = entryRewards[i].Item;
+                    var category = reward.ItemCategory() ?? GameObjects.ItemCategory.None;
+                    if ( ! junkCategories.Contains(category))
+                    {
+                        // we dont need to add the entries themselves they are already added to the junk list per-category, this is just for notebook itself
+                        nonJunkCount++;
+                    }
+                }
+                if (nonJunkCount > 0) // notebook leads to something and is not junk
+                {
+                    ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.MainInventory].Add(GameObjects.Item.ItemNotebook);
+                }
             }
             else
             {
@@ -282,11 +294,12 @@ namespace MMR.Randomizer
                 var notebookEntryImportantSearch = allSphereItems.Any(u => u.Item1.Contains("Notebook:"));
                 if (!notebookEntryImportantSearch)
                 {
-                    var notebookLocationSearch = allSphereItems.Any(u => u.Item2.Contains("Notebook"));
+                    AddNotebookEntires();
+
+                    var notebookLocationSearch = allSphereItems.Any(u => u.Item2.Contains("Notebook")); // important items BEHIND notebook
                     if (!notebookLocationSearch)
                     {
-
-                        AddNotebookEntires();
+                        ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.MainInventory].Add(GameObjects.Item.ItemNotebook);
                     }
                 }
             }
