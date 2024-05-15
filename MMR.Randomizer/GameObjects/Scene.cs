@@ -409,13 +409,15 @@ namespace MMR.Randomizer.GameObjects
         // inside of the goron village main building, with the goron shop and merrygoround
         [FileID(1319)]
         [SceneInternalId(0x32)]
-        [DynaHeadroom(64, 64)]  // low default to start
+        // 128,100 was fine
+        [DynaHeadroom(128,100)]  // limit not found
         [EnemizerSceneBlockSensitive(Actor.GoGoron, -1)] // ice block can block shop
         GoronShrine = 0x2F,
 
         [FileID(1322)]
         [SceneInternalId(0x33)]
-        [DynaHeadroom(64, 64)]  // low default to start
+        // 350, 300 was fine 
+        [DynaHeadroom(350, 300)]  // limit not found
         ZoraHall = 0x30,
 
         [FileID(1324)]
@@ -428,7 +430,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1326)]
         [SceneInternalId(0x35)]
         // we know nothing here, TODO recheck
-        [DynaHeadroom(12,9, room: 0)]
+        // TESTING 234, 162 was fine holy shit
+        //[DynaHeadroom(, room: 0)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Cremia,
             Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         [EnemizerSceneEnemyReplacementBlock(Actor.LargeWoodenCrate,
@@ -441,7 +444,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1330)]
         [SceneInternalId(0x37)]
-        [DynaHeadroom(64, 64)]  // low default to start
+        // TESTING 350,224 was okay at night time
+        [DynaHeadroom(350, 300)] // limit not found
         //[DynaHeadroom(16,12, room:0)] // we know 16/12 is safe, that might be too conservative
         [EnemizerSceneEnemyReplacementBlock(Actor.Seagulls,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can stop ting from falling
@@ -449,7 +453,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1332)]
         [SceneInternalId(0x38)]
-        [DynaHeadroom(64, 64)]  // low default to start
+        // 132,88 was working fine
+        [DynaHeadroom(132, 100)] // limit not found
         [EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa,
                     Actor.LikeLike)] // can hard lock if the player leaves and gets instant-grabbed
         [EnemizerSceneEnemyReplacementBlock(Actor.LikeLike,
@@ -468,7 +473,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1336)]
         [SceneInternalId(0x3B)]
-        [DynaHeadroom(64, 64)]  // low default to start
+        //[DynaHeadroom(64, 64)]  // since we place almost nothing here, assume no limit for now until we know what it is
         [EnemizerSceneEnemyReplacementBlock(Actor.Torch,
             Actor.ClocktowerGearsAndOrgan, Actor.RegularIceBlock)]
         PiratesFortressExterior = 0x38,
@@ -501,7 +506,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1347)]
         [SceneInternalId(0x40)]
-        [DynaHeadroom(64, 64)]  // low default to start
+        // TESTING 60, 95 was acceptable, also got 80,109 and that worked
+        [DynaHeadroom(109, 109)] // limit not found, pain with so many actors
         // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
         // mirror blocks climbing
         [EnemizerSceneEnemyReplacementBlock(Actor.BadBat,
@@ -642,7 +648,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1433)]
         [SceneInternalId(0x54)]
-        [DynaHeadroom(64, 64)]  // low default to start
+        //[DynaHeadroom(64, 64)]  // small scene, assume we have lots of budget until proven otherwise
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Clock,
             Actor.BadBat, Actor.GoldSkulltula, Actor.RealBombchu)] // z-targetable can be annoying in the sword test
         [EnemizerSceneBlockSensitive(Actor.KendoSensei, -1)]
@@ -699,12 +705,14 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1453)]
         [SceneInternalId(0x5D)]
+        // todo test after snowball merge
         [DynaHeadroom(64, 64)]  // low default to start
         TwinIslands = 0x5A,
 
         [FileID(1455)]
         [SceneInternalId(0x5E)]
-        [DynaHeadroom(64, 64)]  // low default to start
+        // 126,88 was fine
+        [DynaHeadroom(126, 126)]  // limit not seen
         TwinIslandsSpring = 0x5B,
 
         [FileID(1457)]
@@ -794,7 +802,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1510)]
         [SceneInternalId(0x6C)]
-        [DynaHeadroom(64, 64)]  // low default to start
+        // 147 111 seen working fine
+        [DynaHeadroom(145,145)]  // limit not seen
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Gorman,
         //    Actor.ClocktowerGearsAndOrgan, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // organ is huge, covers the mayor's door
         [EnemizerSceneBlockSensitive(Actor.Gorman, -1)] // was moved next to mayors door, large bodies can actually block this
@@ -833,7 +842,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1514)]
         [SceneInternalId(0x6E)]
-        [DynaHeadroom(64, 64)]  // low default to start
+        //[DynaHeadroom(64, 64)]  // low default to start
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
         //    Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]

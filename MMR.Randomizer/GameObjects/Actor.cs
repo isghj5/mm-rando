@@ -549,11 +549,11 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(35, 30)]
         // params: type is 0xFF, address offset for type 0 is 0xFF00
         [GroundVariants(0x0)] // the 101 and above are for warp TO bosses
-        [VariantsWithRoomMax(max: 1, variant: 0x0)]
+        //[VariantsWithRoomMax(max: 1, variant: 0x0)] // TESTING
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [ForbidFromScene(Scene.DekuTrial, Scene.GoronTrial, Scene.LinkTrial, Scene.ZoraTrial)]
-        [PlacementWeight(30)]
+        //[PlacementWeight(30)] // TESTING
         WarpDoor = 0x38, // Door_Warp1
 
         [ActorizerEnabled]
@@ -561,12 +561,17 @@ namespace MMR.Randomizer.GameObjects
         [FileID(79)]
         [CheckRestricted(Scene.SouthClockTown, variant: 0x287F,
             check: Item.CollectableSouthClockTownHitTag1, Item.CollectableSouthClockTownHitTag2, Item.CollectableSouthClockTownHitTag3)]
+        [CheckRestricted(Scene.GoronShrine, variant: -1,
+            check: Item.MaskDonGero)]
         //[CheckRestricted(Scene.DekuShrine, variant: -1,
         //    check: )]
-        // 0x1180 below graveyard
-        // 0x289 gold pirate torches
-        // 0x287F east/south clocktown
-        [GroundVariants(0x1180, 0x289, 0x287F, 0x207F)]
+        [GroundVariants(
+            0x287F, // east/south clocktown
+            0x159E, 0x0794,  // goron shrine
+            0x0289, // gold pirate torches
+            0x1180, // below graveyard
+            0x207F
+        )]
         [CompanionActor(MothSwarm, ourVariant: -1, variant: 1, 2, 3, 4, 7)] // todo select specific variants that are lit
         [CompanionActor(Keese, ourVariant: -1, variant: 0x0, 0x2, 0x8002, 0x8004)] // todo select specific variants that are lit
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
@@ -917,7 +922,8 @@ namespace MMR.Randomizer.GameObjects
         Empty5D = 0x5D,
         Empty5E = 0x5E,
 
-        //[ActorizerEnabled] // even one of them can overrun dyna in woodfall when you spawn the temple because of dyna
+        // TESTING
+        [ActorizerEnabled] // even one of them can overrun dyna in woodfall when you spawn the temple because of dyna
         // we really dont need dyna here, it exists to stop the player from climbing the ladder in sewer only
         // going to use new bombal without cutscene instead since that one is NOT dyna
         [FileID(102)]
@@ -926,7 +932,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(1)]
         //[GroundVariants(1)] // testing
         // needs limits because it can overload the dyna
-        [VariantsWithRoomMax(max: 1, variant: 0, 1)]
+        [VariantsWithRoomMax(max: 5, variant: 0, 1)]
         [FlyingToGroundHeightAdjustment(150)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [UnkillableAllVariants]
@@ -1166,6 +1172,12 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableSecretShrineMainRoomPot5)]
         [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
         [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
+        [CheckRestricted(Scene.GoronShrine, variant: -1,
+            Item.CollectableGoronShrineGoronKidSRoomPot1, Item.CollectableGoronShrineGoronKidSRoomPot2, Item.CollectableGoronShrineGoronKidSRoomPot3,
+            Item.CollectableGoronShrineMainRoomPot1, Item.CollectableGoronShrineMainRoomPot2, Item.CollectableGoronShrineMainRoomPot3,
+            Item.CollectableGoronShrineMainRoomPot4, Item.CollectableGoronShrineMainRoomPot5, Item.CollectableGoronShrineMainRoomPot6,
+            Item.CollectableGoronShrineMainRoomPot7, Item.CollectableGoronShrineMainRoomPot8
+        )]
         [CheckRestricted(Scene.ZoraCape, variant: -1, Item.CollectableZoraCapeJarGame1,
             Item.CollectableZoraCapePot1, Item.CollectableZoraCapePot2, Item.CollectableZoraCapePot3, Item.CollectableZoraCapePot4, Item.CollectableZoraCapePot5)]
         [CheckRestricted(Scene.IkanaCastle, variant: -1,
@@ -1202,6 +1214,7 @@ namespace MMR.Randomizer.GameObjects
             0x4310, 0x413, 0x4119, 0x4528, // woodfall
             0xFE01, // deku shrine
             0x4D10, 0xFF04, 0x4D10,// mountain village spring
+            0xC719, 0xC90E, 0xCB0E, 0xCD19, 0xCF0F, 0xD10F, 0xD30F, 0xD519, 0xC119, 0xC319, 0xC50F, 0xC709, // goron shrine
             0x410E, 0x450A, 0x470A, 0x490A, 0x4B0A, 0x4D0E, 0x530A, 0x550A, 0x570E, 0x590A, 0x5B0E, // pinnacle rock
             0x7C10, 0x7E0B, 0x800B, 0x820E, 0x840B, 0x9C10, 0x9E0E, 0xA010, 0xB40E, 0x860B, 0x8813, 0x8A0B, 0x8C0B,// ikana castle
             0x430A, 0x450E, 0x4710, 0x4B10, 0x4D14, 0x4F0A, 0x5114, 0x5314, 0x570A, 0x5910, 0x5B14, 0x5D0E, 0x5F1E, 0x610A, 0x630E, // stone tower
@@ -1909,7 +1922,7 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0)]
         [FlyingVariants(0)]
         //[VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
-        [VariantsWithRoomMax(max: 5, variant: 0)]
+        //[VariantsWithRoomMax(max: 5, variant: 0)] // TESTING
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [FlyingToGroundHeightAdjustment(275)]
@@ -2988,9 +3001,6 @@ namespace MMR.Randomizer.GameObjects
         //[ForbidFromScene(Scene.EastClockTown)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
-        //[EnemizerScenesPlacementBlock(//Scene.DekuShrine, Scene.Woodfall, Scene.LaundryPool, Scene.PiratesFortress,
-                                      //Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTower, // big blocking
-        //    Scene.StoneTower)] // too much dyna, only one is allowed
         StockpotBell = 0x14E, // Obj_Bell
 
         [ActorizerEnabled] // need to replace if you replace the shooting gallery man
@@ -3541,7 +3551,8 @@ namespace MMR.Randomizer.GameObjects
 
         [EnemizerEnabled] // free enemy, placed in places where enemies are normally
         [FileID(349)]
-        [ObjectListIndex(0x1)] // obj 1: gameplay keep, but can't set that
+        //[ObjectListIndex(0x1)] // obj 1: gameplay keep, but can't set that
+        [ObjectListIndex(0xF3)] // TESTING
         [DynaAttributes(12,12)] // both gold and pink flowers have the same count
         [GroundVariants(0x7F, 0x17F)] // 7F is regular, 17F is big yellow
         [UnkillableAllVariants]
@@ -3911,7 +3922,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // does not spawn
         [FileID(400)]
         [ObjectListIndex(0x1A1)]
-        [DynaAttributes(44,24)]
+        [DynaAttributes(44,24)] // welp
         [WallVariants(0x1)] // unk because spawned by H+D
         [UnkillableAllVariants] // not enemy type, right?
         BombBasket = 0x1B4, // En_Fu_Kago
@@ -4246,7 +4257,7 @@ namespace MMR.Randomizer.GameObjects
         DekuPlayGroundGameRupee = 0x1D2, // En_Gamelupy
 
         [FileID(428)]
-        [ObjectListIndex(0x1)]
+        [ObjectListIndex(0x1)] // what?
         [DynaAttributes(12,8)]
         DampeHouseElevator = 0x1D3, // Bg_Danpei_Movebg
 
@@ -4940,7 +4951,7 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(20,14)]
         [ObjectListIndex(0x202)]
         [GroundVariants(0)] // no params
-        [VariantsWithRoomMax(max:10, variant:0)]
+        //[VariantsWithRoomMax(max:10, variant:0)]
         [UnkillableAllVariants]
         [PlacementWeight(95)] // new actor, for now lets leave high
         MilkbarChairs = 0x217, // Bg_Mbar_Chair

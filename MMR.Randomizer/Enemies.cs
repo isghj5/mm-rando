@@ -3426,7 +3426,14 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.RosaSisters, GameObjects.Actor.GaboraBlacksmith)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.Woodfall, GameObjects.Actor.Lilypad, GameObjects.Actor.IceBlockWaterPlatforms)) continue;
+                // StockpotBell, UnusedStoneTowerPlatform , WarpDoor 35,30, MilkbarChairs 20,14, DekuFlower
+                // StockpotBell 33,20, UglyTree 31,something, MajoraBalloonSewer 186 something
+                if (TestHardSetObject(GameObjects.Scene.NorthClockTown, GameObjects.Actor.UglyTree, GameObjects.Actor.WarpDoor)) continue;
+                if (TestHardSetObject(GameObjects.Scene.NorthClockTown, GameObjects.Actor.BombersBlueHat, GameObjects.Actor.MajoraBalloonSewer)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.EastClockTown, GameObjects.Actor.Gorman, GameObjects.Actor.DekuFlower)) continue;
+                if (TestHardSetObject(GameObjects.Scene.NorthClockTown, GameObjects.Actor.PostMan, GameObjects.Actor.DekuFlower)) continue;
+                if (TestHardSetObject(GameObjects.Scene.NorthClockTown, GameObjects.Actor.Postbox, GameObjects.Actor.StockpotBell)) continue;
+                if (TestHardSetObject(GameObjects.Scene.NorthClockTown, GameObjects.Actor.SquareSign, GameObjects.Actor.MilkbarChairs)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Dexihand)) continue;
 
@@ -3436,7 +3443,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Monkey)) continue;
-                #endif
+#endif
                 #endregion
 
                 var reducedCandidateList = thisSceneData.CandidatesPerObject[objectIndex].ToList();
