@@ -1144,21 +1144,28 @@ namespace MMR.Randomizer.GameObjects
         //[ObjectListIndex(0x1)] // this is a lie, the pot DETECTS multiple objects but does NOT exist in gameplay keep
         [ObjectListIndex(0xF9)]
         // TODO randomize some more of these
-        [CheckRestricted(Scene.RoadToIkana, variant: -1, Item.CollectableRoadToIkanaPot1)]
         [CheckRestricted(Scene.TerminaField, variant: -1, Item.CollectableTerminaFieldPot1)]
         [CheckRestricted(Scene.SwordsmansSchool, variant: -1,
             Item.CollectableSwordsmanSSchoolPot1, Item.CollectableSwordsmanSSchoolPot2, Item.CollectableSwordsmanSSchoolPot3, Item.CollectableSwordsmanSSchoolPot4, Item.CollectableSwordsmanSSchoolPot5)]
         [CheckRestricted(Scene.DoggyRacetrack, variant: -1,
             Item.CollectableDoggyRacetrackPot1, Item.CollectableDoggyRacetrackPot2, Item.CollectableDoggyRacetrackPot3, Item.CollectableDoggyRacetrackPot4)]
+        [CheckRestricted(Scene.SouthernSwamp, variant: -1,
+            Item.CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot1, Item.CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot2)]
+        [CheckRestricted(Scene.SouthernSwampClear, variant: -1,
+            Item.CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot1, Item.CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot2)]
         [CheckRestricted(Scene.DekuPalace, variant: -1,
             Item.CollectableDekuPalaceEastInnerGardenPot1, Item.CollectableDekuPalaceEastInnerGardenPot2)]
         [CheckRestricted(Scene.DekuShrine, variant: -1, Item.CollectableDekuShrineGreyBoulderRoomPot1)]
         [CheckRestricted(Scene.Woodfall, variant: -1,
             Item.CollectableWoodfallPot1, Item.CollectableWoodfallPot2, Item.CollectableWoodfallPot3)]
-        [CheckRestricted(Scene.SouthernSwamp, variant: -1,
-            Item.CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot1, Item.CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot2)]
-        [CheckRestricted(Scene.SouthernSwampClear, variant: -1,
-            Item.CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot1, Item.CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot2)]
+        [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
+        [CheckRestricted(Scene.GoronShrine, variant: -1,
+            Item.CollectableGoronShrineGoronKidSRoomPot1, Item.CollectableGoronShrineGoronKidSRoomPot2, Item.CollectableGoronShrineGoronKidSRoomPot3,
+            Item.CollectableGoronShrineMainRoomPot1, Item.CollectableGoronShrineMainRoomPot2, Item.CollectableGoronShrineMainRoomPot3,
+            Item.CollectableGoronShrineMainRoomPot4, Item.CollectableGoronShrineMainRoomPot5, Item.CollectableGoronShrineMainRoomPot6,
+            Item.CollectableGoronShrineMainRoomPot7, Item.CollectableGoronShrineMainRoomPot8
+        )]
         [CheckRestricted(Scene.GreatBayCoast, variant: -1,
             Item.CollectableGreatBayCoastPot1, Item.CollectableGreatBayCoastPot2, Item.CollectableGreatBayCoastPot3,
             Item.CollectableGreatBayCoastPot4, Item.CollectableGreatBayCoastPot5, Item.CollectableGreatBayCoastPot6,
@@ -1167,26 +1174,15 @@ namespace MMR.Randomizer.GameObjects
         )]
         [CheckRestricted(Scene.PinnacleRock, variant: -1,
             Item.CollectablePinnacleRockPot1, Item.CollectablePinnacleRockPot2, Item.CollectablePinnacleRockPot3, Item.CollectablePinnacleRockPot4)]
-        [CheckRestricted(Scene.SecretShrine, variant: -1,
-            Item.CollectableSecretShrineMainRoomPot1, Item.CollectableSecretShrineMainRoomPot2, Item.CollectableSecretShrineMainRoomPot3, Item.CollectableSecretShrineMainRoomPot4,
-            Item.CollectableSecretShrineMainRoomPot5)]
-        [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
-        [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
-        [CheckRestricted(Scene.GoronShrine, variant: -1,
-            Item.CollectableGoronShrineGoronKidSRoomPot1, Item.CollectableGoronShrineGoronKidSRoomPot2, Item.CollectableGoronShrineGoronKidSRoomPot3,
-            Item.CollectableGoronShrineMainRoomPot1, Item.CollectableGoronShrineMainRoomPot2, Item.CollectableGoronShrineMainRoomPot3,
-            Item.CollectableGoronShrineMainRoomPot4, Item.CollectableGoronShrineMainRoomPot5, Item.CollectableGoronShrineMainRoomPot6,
-            Item.CollectableGoronShrineMainRoomPot7, Item.CollectableGoronShrineMainRoomPot8
-        )]
         [CheckRestricted(Scene.ZoraCape, variant: -1, Item.CollectableZoraCapeJarGame1,
             Item.CollectableZoraCapePot1, Item.CollectableZoraCapePot2, Item.CollectableZoraCapePot3, Item.CollectableZoraCapePot4, Item.CollectableZoraCapePot5)]
+        [CheckRestricted(Scene.RoadToIkana, variant: -1, Item.CollectableRoadToIkanaPot1)]
         [CheckRestricted(Scene.BeneathGraveyard, variant: -1,
             Item.CollectableBeneathTheGraveyardBadBatRoomPot1, Item.CollectableBeneathTheGraveyardInvisibleRoomPot1,
             Item.CollectableBeneathTheGraveyardMainAreaPot1, Item.CollectableBeneathTheGraveyardMainAreaPot2)]
         [CheckRestricted(Scene.IkanaCastle, variant: -1,
             Item.CollectableAncientCastleOfIkana1FWestStaircasePot1, Item.CollectableAncientCastleOfIkanaCastleExteriorPot1, Item.CollectableAncientCastleOfIkanaFireCeilingRoomPot1,
             Item.CollectableAncientCastleOfIkanaHoleRoomPot1, Item.CollectableAncientCastleOfIkanaHoleRoomPot2, Item.CollectableAncientCastleOfIkanaHoleRoomPot3, Item.CollectableAncientCastleOfIkanaHoleRoomPot4)]
-        // IgosDuIkanasLair
         [CheckRestricted(Scene.IgosDuIkanasLair, variant: -1,
             Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot1, Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot2, Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot3,
             Item.CollectableIgosDuIkanaSLairPreBossRoomPot1, Item.CollectableIgosDuIkanaSLairPreBossRoomPot2, Item.CollectableIgosDuIkanaSLairPreBossRoomPot3)]
@@ -1197,6 +1193,9 @@ namespace MMR.Randomizer.GameObjects
         // cannot randomize temple pots yet, uses dungeon keep objects, this will come later
         [CheckRestricted(Scene.InvertedStoneTower, variant: -1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot2, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3)]
         [CheckRestricted(Scene.StoneTowerTemple, variant: -1, Item.CollectableStoneTowerTempleInvertedWizzrobeRoomPot1)]
+        [CheckRestricted(Scene.SecretShrine, variant: -1,
+            Item.CollectableSecretShrineMainRoomPot1, Item.CollectableSecretShrineMainRoomPot2, Item.CollectableSecretShrineMainRoomPot3, Item.CollectableSecretShrineMainRoomPot4,
+            Item.CollectableSecretShrineMainRoomPot5)]
         // 0xF9 is pot and pot shard
         // according to CM, 0x100 is available everywhere as a pot, where 0x3F defines the drop item
         // so 1F is arrows, F is magic, B is three small rups? 7 is huge 200 rup, 17 is empty
@@ -1230,6 +1229,7 @@ namespace MMR.Randomizer.GameObjects
             0x202, 0x602, 0x802, 0xA02, 0xC02)] // swords school, these are dungeon_keep pots cannot place without the object
         [ForbidFromScene( Scene.GoronRacetrack, // these are green pots they use a different object 
             Scene.SecretShrine, Scene.IkanaCastle, Scene.IgosDuIkanasLair, // dungeon pots, but treasure flags updater still messes with it
+            Scene.DekuShrine,  Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple,
             Scene.MajorasLair)] // we want them for the fight
         [UnkillableAllVariants]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)] // 0x3FC
