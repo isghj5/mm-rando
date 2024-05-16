@@ -1180,6 +1180,9 @@ namespace MMR.Randomizer.GameObjects
         )]
         [CheckRestricted(Scene.ZoraCape, variant: -1, Item.CollectableZoraCapeJarGame1,
             Item.CollectableZoraCapePot1, Item.CollectableZoraCapePot2, Item.CollectableZoraCapePot3, Item.CollectableZoraCapePot4, Item.CollectableZoraCapePot5)]
+        [CheckRestricted(Scene.BeneathGraveyard, variant: -1,
+            Item.CollectableBeneathTheGraveyardBadBatRoomPot1, Item.CollectableBeneathTheGraveyardInvisibleRoomPot1,
+            Item.CollectableBeneathTheGraveyardMainAreaPot1, Item.CollectableBeneathTheGraveyardMainAreaPot2)]
         [CheckRestricted(Scene.IkanaCastle, variant: -1,
             Item.CollectableAncientCastleOfIkana1FWestStaircasePot1, Item.CollectableAncientCastleOfIkanaCastleExteriorPot1, Item.CollectableAncientCastleOfIkanaFireCeilingRoomPot1,
             Item.CollectableAncientCastleOfIkanaHoleRoomPot1, Item.CollectableAncientCastleOfIkanaHoleRoomPot2, Item.CollectableAncientCastleOfIkanaHoleRoomPot3, Item.CollectableAncientCastleOfIkanaHoleRoomPot4)]
