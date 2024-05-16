@@ -3428,12 +3428,6 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 // StockpotBell, UnusedStoneTowerPlatform , WarpDoor 35,30, MilkbarChairs 20,14, DekuFlower
                 // StockpotBell 33,20, UglyTree 31,something, MajoraBalloonSewer 186 something
-                if (TestHardSetObject(GameObjects.Scene.NorthClockTown, GameObjects.Actor.UglyTree, GameObjects.Actor.WarpDoor)) continue;
-                if (TestHardSetObject(GameObjects.Scene.NorthClockTown, GameObjects.Actor.BombersBlueHat, GameObjects.Actor.MajoraBalloonSewer)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.EastClockTown, GameObjects.Actor.Gorman, GameObjects.Actor.DekuFlower)) continue;
-                if (TestHardSetObject(GameObjects.Scene.NorthClockTown, GameObjects.Actor.PostMan, GameObjects.Actor.DekuFlower)) continue;
-                if (TestHardSetObject(GameObjects.Scene.NorthClockTown, GameObjects.Actor.Postbox, GameObjects.Actor.StockpotBell)) continue;
-                if (TestHardSetObject(GameObjects.Scene.NorthClockTown, GameObjects.Actor.SquareSign, GameObjects.Actor.MilkbarChairs)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Dexihand)) continue;
 
@@ -3443,7 +3437,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Monkey)) continue;
-#endif
+                #endif
                 #endregion
 
                 var reducedCandidateList = thisSceneData.CandidatesPerObject[objectIndex].ToList();
@@ -4593,8 +4587,13 @@ namespace MMR.Randomizer
             for (int a = 0; a < thisSceneData.Actors.Count; a++)
             {
                 var actor = thisSceneData.Actors[a];
-                WriteOutput($"  Old Enemy actor:[{actor.Room.ToString("D2")}] [{actor.OldName}] " +
-                    $"was replaced by new enemy: [{actor.Variants[0].ToString("X4")}]" +
+                #if DEBUG
+                var actorNameData = $"  Old actor:[{thisSceneData.Scene.SceneEnum}][{actor.Room.ToString("D2")}][{actor.OldName}] ";
+                #else
+                var actorNameData = $"  Old actor:[{actor.Room.ToString("D2")}][{actor.OldName}] ";
+                #endif
+                WriteOutput(actorNameData +
+                    $"was replaced by new actor: [{actor.Variants[0].ToString("X4")}]" +
                     $"[{actor.Name}]");
             }
 
@@ -4617,7 +4616,7 @@ namespace MMR.Randomizer
             FlushLog();
         }
 
-        #region Actor Injection
+#region Actor Injection
 
         public static InjectedActor ParseMMRAMeta(string metaFile)
         {
@@ -5233,7 +5232,7 @@ namespace MMR.Randomizer
             } // end for each injected actor
         }
 
-        #endregion
+#endregion
 
         public static void ShuffleEnemies(OutputSettings outputSettings, CosmeticSettings cosmeticSettings, Models.RandomizedResult randomized)
         {

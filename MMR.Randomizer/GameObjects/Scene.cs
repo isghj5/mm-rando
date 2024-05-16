@@ -635,6 +635,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1419)]
         [SceneInternalId(0x51)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SpiritHouseOwner,
+            Actor.Torch, Actor.IshiRock)] // very lame
         PoeHut = 0x4E, // Ghost Hut
 
         [FileID(1421)]
@@ -706,8 +708,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1453)]
         [SceneInternalId(0x5D)]
         // todo test after snowball merge
-        [DynaHeadroom(64, 64)]  // low default to start
-        TwinIslands = 0x5A,
+        [DynaHeadroom(126, 126)]  // limit not seed, but this is fine in spring
+        TwinIslands = 0x5A, // winter
 
         [FileID(1455)]
         [SceneInternalId(0x5E)]

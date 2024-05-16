@@ -569,6 +569,7 @@ namespace MMR.Randomizer.GameObjects
             0x287F, // east/south clocktown
             0x159E, 0x0794,  // goron shrine
             0x0289, // gold pirate torches
+            0x287F, // ghost hut
             0x1180, // below graveyard
             0x207F
         )]
@@ -584,6 +585,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.SouthernSwamp, Scene.SouthernSwampClear, // kinda important for entering the swamp spiderhouse
             Scene.DekuShrine, // TODO re-enable if we get all of the check list fleshed out, but people use this for weirdshot
             Scene.WestClockTown, //Scene.SouthernSwampClear,
+            Scene.WoodfallTemple, // assumed the giant flower in the middle needs the object even if all of hte other uses could be elimnated
             Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayCoast,
             Scene.GreatBayTemple, Scene.OceanSpiderHouse,
             Scene.BeneathTheWell,
