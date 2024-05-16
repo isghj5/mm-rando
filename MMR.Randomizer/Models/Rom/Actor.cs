@@ -42,8 +42,8 @@ namespace MMR.Randomizer.Models.Rom
         public int ActorSize; // todo
         public int ObjectSize; // read by enemizer at scene actor reading
         public (int poly, int vert) DynaLoad =  (0, 0);  // dyna load per actor, can be overwritten by injected actor
-        public int Room;           // this specific actor, which map/room was it in
-        public int RoomActorIndex; // the index of this actor in its room's actor list
+        public int Room;           // the room the actor is in in the scene
+        public int RoomActorIndex; // the actor index of the room the actor is in
         //public int Stationary; // Deathbasket used to use this, I dont see the point except around water
         public vec16 Position = new vec16();
         public vec16 Rotation = new vec16();
@@ -542,7 +542,7 @@ namespace MMR.Randomizer.Models.Rom
             return killableVariants;
         }
 
-        public int VariantMaxCountPerRoom(int queryVariant)
+        public int VariantMaxCountPerRoom(int queryVariant = 0x0000)
         {
             if (this.OnlyOnePerRoom != null)
             {
