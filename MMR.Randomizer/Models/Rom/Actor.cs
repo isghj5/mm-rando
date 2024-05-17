@@ -65,12 +65,14 @@ namespace MMR.Randomizer.Models.Rom
 
         public Actor() { } // default, used when building from scene/room read
 
-        public Actor(GameObjects.Actor actor)
+        // TODO we should consolidate all of this actor constructor/update code
+
+        public Actor(GameObjects.Actor actor, InjectedActor injectedData = null)
         {
             // converted from enum, used for building replacement candidate actors
 
             this.Name = this.OldName = actor.ToString();
-            this.ActorId =  (int)actor;
+            this.ActorId =  (int) actor;
             this.ActorEnum = this.OldActorEnum = actor;
             this.ObjectId = this.OldObjectId = actor.ObjectIndex();
             this.ObjectSize = ObjUtils.GetObjSize(actor.ObjectIndex());
@@ -91,6 +93,10 @@ namespace MMR.Randomizer.Models.Rom
                 this.DynaLoad.poly = dynaProperties.Polygons;
                 this.DynaLoad.vert = dynaProperties.Verticies;
             }
+
+            // missing injected actor stuff
+            if (injectedData != null)
+                this.UpdateActor(injectedData);
         }
 
         public Actor(InjectedActor injected, string name)
@@ -126,7 +132,6 @@ namespace MMR.Randomizer.Models.Rom
             this.UnplaceableVariants = this.ActorEnum.GetUnPlacableVariants();
             this.OnlyOnePerRoom = injected.onlyOnePerRoom;
             this.InjectedActor = injected;
-
             
             var dynaProperties = this.ActorEnum.GetAttribute<DynaAttributes>();
             if (dynaProperties != null)
@@ -215,7 +220,7 @@ namespace MMR.Randomizer.Models.Rom
 
             newActor.Variants = newActor.AllVariants.SelectMany(u => u).ToList(); // might as well start with all
             newActor.OnlyOnePerRoom = this.OnlyOnePerRoom;
-            newActor.VariantsWithRoomMax = this.VariantsWithRoomMax;
+            newActor.VariantsWithRoomMax = this.VariantsWithRoomMax.ToList();
 
             if (this.RespawningVariants != null)
             {
@@ -310,7 +315,10 @@ namespace MMR.Randomizer.Models.Rom
 
             this.DynaLoad = otherActor.DynaLoad;
 
-            this.InjectedActor = otherActor.InjectedActor;
+            if (otherActor.InjectedActor != null)
+                this.UpdateActor(otherActor.InjectedActor);
+
+            this.VariantsWithRoomMax = otherActor.VariantsWithRoomMax.ToList();
         }
 
         public void UpdateActor(InjectedActor injectedActor)

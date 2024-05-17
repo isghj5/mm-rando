@@ -109,7 +109,7 @@ namespace MMR.Randomizer
             {
                 if (actor.NoPlacableVariants() == false)
                 {
-                    ReplacementCandidateList.Add(new Actor(actor));
+                    ReplacementCandidateList.Add(new Actor(actor, InjectedActors.Find(i => i.ActorId == (int) actor)));
                 }
             }
 
@@ -119,7 +119,7 @@ namespace MMR.Randomizer
                                 .ToList();
 
             // because this list needs to be re-evaluated per scene, start smaller here once
-            FreeCandidateList = freeCandidates.Select(act => new Actor(act)).ToList();
+            FreeCandidateList = freeCandidates.Select(act => new Actor(act, InjectedActors.Find(i => i.ActorId == (int) act))).ToList();
 
             var freeOnlyCandidates = new List<GameObjects.Actor>();
             if (ACTORSENABLED)
@@ -130,7 +130,7 @@ namespace MMR.Randomizer
             }
 
             // because this list needs to be re-evaluated per scene, start smaller here once
-            FreeOnlyCandidateList = freeOnlyCandidates.Select(act => new Actor(act)).ToList();
+            FreeOnlyCandidateList = freeOnlyCandidates.Select(act => new Actor(act, InjectedActors.Find(i => i.ActorId == (int) act))).ToList();
         }
 
         private static void PrepareJunkSpiderTokens(List<(string, string)> allSphereItems)
@@ -3067,6 +3067,28 @@ namespace MMR.Randomizer
             return true;
         }
 
+        public static void FinalActorLimitTrim(SceneEnemizerData thisSceneData)
+        {
+            /// the final trim where we go through every actor that might be over their limit and randomly remove them
+            /// this needs to happen because during the last two, we didnt dynamically keep track of actors being put back in
+
+            for (int m = 0; m < thisSceneData.ActorCollection.newMapList.Count; m++)
+            {
+                var map = thisSceneData.ActorCollection.newMapList[m];
+
+                // per day/night
+                var dayActorList = thisSceneData.Actors.Intersect(map.day.oldActorList).ToList();
+                var dayUniqueList = dayActorList.GroupBy(elem => elem.ActorEnum).Select(group => group.First()).ToList();
+                dayUniqueList.RemoveAll(u => u.ActorEnum == GameObjects.Actor.Empty);
+                TrimAllActors(thisSceneData, dayUniqueList, dayActorList, allowLimits:false);
+
+                var nightActorList = thisSceneData.Actors.Intersect(map.night.oldActorList).ToList();
+                var nightUniqueList = nightActorList.GroupBy(elem => elem.ActorEnum).Select(group => group.First()).ToList();
+                nightUniqueList.RemoveAll(u => u.ActorEnum == GameObjects.Actor.Empty);
+                TrimAllActors(thisSceneData, nightActorList, nightActorList, allowLimits: false);
+            }
+        }
+
         public static void FixBrokenActorSpawnCutscenes(SceneEnemizerData thisSceneData)
         {
             /// Each Actor spawn gets one cutscene in the scene/room data
@@ -3705,7 +3727,7 @@ namespace MMR.Randomizer
 
         #region Trim and Free actors
 
-        public static void TrimAllActors(SceneEnemizerData thisSceneData, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList)
+        public static void TrimAllActors(SceneEnemizerData thisSceneData, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList, bool allowLimits = true)
         {
             /// Actors can have maximum per-room variants, if these show up we should cull the extra over the max
             /// e.g some Dynapoly actors cannot be placed too many times because they overload the dynapoly system
@@ -3721,7 +3743,10 @@ namespace MMR.Randomizer
                     if (roomActors.Count == 0) continue; // nothing to trim: no actors in this room
                     var roomIsClearPuzzleRoom = thisSceneData.Scene.SceneEnum.IsClearEnemyPuzzleRoom(roomIndex);
                     var roomFreeActors = GetRoomFreeActors(thisSceneData, roomIndex);
-
+                    if (!allowLimits)
+                    {
+                        roomFreeActors.RemoveAll(u => u.OnlyOnePerRoom != null || u.HasVariantsWithRoomLimits());
+                    }
 
                     if (problemActor.OnlyOnePerRoom != null)
                     {
@@ -4570,13 +4595,18 @@ namespace MMR.Randomizer
                     // now we need to try trimming the dyna to smaller size by reducing each dyna by one until it fits or doesnt
                     var shrinkableActorList = thisSceneData.ActorCollection.GenerateShrinkableDynaList();
 
-                    while (shrinkableActorList.Count > 0)
+                    while (shrinkableActorList.Count > 0) // shrinkable is curated within trimdynaactors, if its shrinks to empty we are done
                     {
                         TrimDynaActors(thisSceneData, shrinkableActorList);
                     }
                 }
 
                 WriteOutput($" set for dyna trim: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
+
+                // we need to do one last actor limit pass because we didnt keep track of limits and may have re-added more earlier during trimming
+                FinalActorLimitTrim(thisSceneData);
+
+                WriteOutput($" set after final actor trim: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                 if (thisSceneData.ActorCollection.isSizeAcceptable(bogoLog)) // SUCCESS
                 {
@@ -4941,7 +4971,16 @@ namespace MMR.Randomizer
 
                             if (injectedActor.ObjectId <= 3)
                             {
-                                FreeCandidateList.Add(replacementEnemySearch);
+                                var freeCandidateSearch = FreeCandidateList.Find(act => act.ActorId == injectedActor.ActorId);
+                                if (freeCandidateSearch == null)
+                                {
+                                    //FreeCandidateList.Add(replacementEnemySearch);
+                                    FreeCandidateList.Add( new Actor(injectedActor, filename) );
+                                }
+                                else
+                                {
+                                    freeCandidateSearch.UpdateActor(injectedActor);
+                                }
                             }
 
                             // experiment: lets not re-compress our actor and see what happens
@@ -5338,7 +5377,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 68.6\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 69.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

@@ -438,8 +438,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1326)]
         [SceneInternalId(0x35)]
         // we know nothing here, TODO recheck
-        // TESTING 234, 162 was fine holy shit
-        //[DynaHeadroom(, room: 0)]
+        // 234, 162 was fine holy shit
+        [DynaHeadroom( 235, 200 )]
         [EnemizerSceneEnemyReplacementBlock(Actor.Cremia,
             Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         [EnemizerSceneEnemyReplacementBlock(Actor.LargeWoodenCrate,
@@ -452,7 +452,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1330)]
         [SceneInternalId(0x37)]
-        // TESTING 350,224 was okay at night time
+        // 350,224 was okay at night time
         [DynaHeadroom(350, 300)] // limit not found
         //[DynaHeadroom(16,12, room:0)] // we know 16/12 is safe, that might be too conservative
         [EnemizerSceneEnemyReplacementBlock(Actor.Seagulls,
@@ -514,7 +514,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1347)]
         [SceneInternalId(0x40)]
-        // TESTING 60, 95 was acceptable, also got 80,109 and that worked
+        // 60, 95 was acceptable, also got 80,109 and that worked
         [DynaHeadroom(109, 109)] // limit not found, pain with so many actors
         // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
         // mirror blocks climbing

@@ -549,11 +549,11 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(35, 30)]
         // params: type is 0xFF, address offset for type 0 is 0xFF00
         [GroundVariants(0x0)] // the 101 and above are for warp TO bosses
-        //[VariantsWithRoomMax(max: 1, variant: 0x0)] // TESTING
+        [VariantsWithRoomMax(max: 1, variant: 0x0)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [ForbidFromScene(Scene.DekuTrial, Scene.GoronTrial, Scene.LinkTrial, Scene.ZoraTrial)]
-        //[PlacementWeight(30)] // TESTING
+        [PlacementWeight(20)]
         WarpDoor = 0x38, // Door_Warp1
 
         [ActorizerEnabled]
@@ -665,7 +665,6 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 0, variant: 0xFF0D)] // 0xFF0D crashes TF do not use (is from the cucco shack)
         [VariantsWithRoomMax(max: 1, variant: 0xA1A, 0xFF1A)] // has EnAni, more than one is odd
         [VariantsWithRoomMax(max: 1, variant: 0xA)] // UGLY is also BG
-        //[ForbidFromScene(Scene.GormanRaceTrack)] // testing
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         Treee = 0x41, // En_Wood2
@@ -926,8 +925,7 @@ namespace MMR.Randomizer.GameObjects
         Empty5D = 0x5D,
         Empty5E = 0x5E,
 
-        // TESTING
-        [ActorizerEnabled] // even one of them can overrun dyna in woodfall when you spawn the temple because of dyna
+        //[ActorizerEnabled] // even one of them can overrun dyna in woodfall when you spawn the temple because of dyna
         // we really dont need dyna here, it exists to stop the player from climbing the ladder in sewer only
         // going to use new bombal without cutscene instead since that one is NOT dyna
         [FileID(102)]
@@ -1934,8 +1932,7 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(28,16)]
         //[GroundVariants(0)]
         [FlyingVariants(0)]
-        //[VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
-        //[VariantsWithRoomMax(max: 5, variant: 0)] // TESTING
+        [VariantsWithRoomMax(max: 7, variant: 0)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [FlyingToGroundHeightAdjustment(275)]
@@ -3013,10 +3010,11 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x16C)]
         [DynaAttributes(33, 20)]
         [GroundVariants(0)]
-        [VariantsWithRoomMax(max: 3, variant: 0)] // too many is boring
+        [VariantsWithRoomMax(max: 8, variant: 0)] // too many is boring
         //[ForbidFromScene(Scene.EastClockTown)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
+        [PlacementWeight(75)]
         StockpotBell = 0x14E, // Obj_Bell
 
         [ActorizerEnabled] // need to replace if you replace the shooting gallery man
@@ -3567,8 +3565,8 @@ namespace MMR.Randomizer.GameObjects
 
         [EnemizerEnabled] // free enemy, placed in places where enemies are normally
         [FileID(349)]
-        //[ObjectListIndex(0x1)] // obj 1: gameplay keep, but can't set that
-        [ObjectListIndex(0xF3)] // TESTING
+        [ObjectListIndex(0x1)] // obj 1: gameplay keep, but can't set that
+        //[ObjectListIndex(0xF3)] // TESTING
         [DynaAttributes(12,12)] // both gold and pink flowers have the same count
         [GroundVariants(0x7F, 0x17F)] // 7F is regular, 17F is big yellow
         [UnkillableAllVariants]
@@ -4412,7 +4410,6 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball3, Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball4,
             Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball4, Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball5
         )]
-        // */ // testing
         [FileID(437)]
         [ObjectListIndex(0xEF)]
         [SwitchFlagsPlacement(mask: 0x3F, shift: 0)]
