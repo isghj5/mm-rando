@@ -832,6 +832,7 @@ namespace MMR.Randomizer
             RandomizeTheSongMonkey();
             MoveTheISTTTunnelTransitionBack();
             FixSwordSchoolPotRandomization();
+            SplitSceneSnowballIntoTwoActorObjects();
             SwapIntroSeth();
             SwapPiratesFortressBgBreakwall();
             SwapCreditsCremia();
@@ -2770,6 +2771,32 @@ namespace MMR.Randomizer
             var swordSchoolRoom0 = RomData.MMFileList[GameObjects.Scene.SwordsmansSchool.FileID() + 1].Data; // 1434
             swordSchoolRoom0[0x29] = 8; // increase object list to 8
         }
+
+        private static void SplitSceneSnowballIntoTwoActorObjects()
+        {
+            /// because the large snowballs in road to mountain village count as a logic gate, we dont want them randomized
+            /// but not randomizing them means we never randomize the small snowballs, this is lame
+            /// so we take the snapper object in the same room and replace it with another large snowball object, we're free
+
+            // if small snowball is randomized
+            if (!ReplacementListContains(GameObjects.Actor.SmallSnowball)) return;
+
+            var roadToMountainVillageScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PathToMountainVillage.FileID());
+
+            roadToMountainVillageScene.Maps[0].Objects[3] = GameObjects.Actor.LargeSnowball.ObjectIndex();
+
+            // the other large snowballs that are not part of the roadblock can be randomized,
+            // we just need to turn them into small snowballs so rando finds them
+            var largeSnowballsToConvert = new List<int> { 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 41, 42, 43, 44, 45, 46, 47, 48, };
+            foreach (var index in largeSnowballsToConvert)
+            {
+                var snowball = roadToMountainVillageScene.Maps[0].Actors[index];
+                snowball.ChangeActor(GameObjects.Actor.SmallSnowball, vars: 0x7F3F, modifyOld: true);
+                snowball.OldName = snowball.Name = "RandomizedLargeSnowball";
+            }
+
+        }
+
 
         private static void SwapIntroSeth()
         {
