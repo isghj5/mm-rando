@@ -206,6 +206,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1222)]
         [SceneInternalId(0x1C)]
+        [EnemizerSceneBlockSensitive(Actor.LargeSnowball, -1)]
         PathToMountainVillage = 0x19,
 
         [FileID(1224)]
@@ -237,6 +238,8 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wolfos, // can cover a switch, don't allow problem actors
         //    Actor.WarpDoor, Actor.WarpToTrialEntrance, Actor.ClocktowerGearsAndOrgan, Actor.Bumper, Actor.IkanaGravestone, Actor.Tijo)]
         [EnemizerSceneBlockSensitive(Actor.Wolfos, -1)]
+        [EnemizerSceneBlockSensitive(Actor.LargeSnowball, -1)]
+        [EnemizerSceneBlockSensitive(Actor.SmallSnowball, -1)] // iceicle room
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RedBubble, // spawns in hot lava, keep wood enemies out
             Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered,
             Actor.Freezard, Actor.RegularIceBlock, Actor.Eeno, Actor.Wolfos, Actor.Dinofos, Actor.Snapper)]
