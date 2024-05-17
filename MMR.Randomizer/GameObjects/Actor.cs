@@ -4382,7 +4382,19 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableGoronVillageWinterSmallSnowball10)]
         [CheckRestricted(Scene.PathToMountainVillage, variant: -1,
             Item.CollectablePathToMountainVillageSmallSnowball1, Item.CollectablePathToMountainVillageSmallSnowball2, // small
-            Item.CollectablePathToMountainVillageSmallSnowball3, Item.CollectablePathToMountainVillageSmallSnowball4
+            Item.CollectablePathToMountainVillageSmallSnowball3, Item.CollectablePathToMountainVillageSmallSnowball4,
+            // because it blocks access, at least check a few winter checks that dont require bombs or goron (single sphere influence)
+            Item.ItemLens, Item.ChestLensCavePurpleRupee, Item.ChestLensCaveRedRupee,
+            Item.ShopItemGoronRedPotion, Item.ShopItemGoronBomb10, Item.ShopItemGoronArrow10,
+            Item.ItemTingleMapSnowhead, Item.ItemTingleMapRanch,
+            Item.CollectableMountainVillageWinterPot1,
+            Item.CollectableGoronVillageWinterSmallSnowball1, Item.CollectableGoronVillageWinterSmallSnowball2, Item.CollectableGoronVillageWinterSmallSnowball3, // large
+            Item.CollectableGoronVillageWinterSmallSnowball4, Item.CollectableGoronVillageWinterSmallSnowball5, Item.CollectableGoronVillageWinterSmallSnowball6,
+            Item.CollectableGoronVillageWinterSmallSnowball7, Item.CollectableGoronVillageWinterSmallSnowball8, Item.CollectableGoronVillageWinterSmallSnowball9,
+            Item.CollectableMountainVillageWinterSmallSnowball1, Item.CollectableMountainVillageWinterSmallSnowball2, // small
+            Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
+            Item.CollectableMountainVillageWinterSmallSnowball5, Item.CollectableMountainVillageWinterSmallSnowball6,
+            Item.CollectableMountainVillageWinterSmallSnowball7, Item.CollectableMountainVillageWinterSmallSnowball8
         )]
         [CheckRestricted(Scene.MountainVillage, variant: -1,
             Item.CollectableMountainVillageWinterSmallSnowball1, Item.CollectableMountainVillageWinterSmallSnowball2, // small
@@ -4686,7 +4698,20 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableGoronVillageWinterSmallSnowball10)]
         [CheckRestricted(Scene.PathToMountainVillage, variant: -1,
             Item.CollectablePathToMountainVillageSmallSnowball1, Item.CollectablePathToMountainVillageSmallSnowball2, // small
-            Item.CollectablePathToMountainVillageSmallSnowball3, Item.CollectablePathToMountainVillageSmallSnowball4
+            Item.CollectablePathToMountainVillageSmallSnowball3, Item.CollectablePathToMountainVillageSmallSnowball4,
+            // because it blocks access, at least check a few winter checks that dont require bombs or goron (single sphere influence)
+            Item.ItemLens, Item.ChestLensCavePurpleRupee, Item.ChestLensCaveRedRupee,
+            Item.ShopItemGoronRedPotion, Item.ShopItemGoronBomb10, Item.ShopItemGoronArrow10,
+            Item.ItemTingleMapSnowhead, Item.ItemTingleMapRanch,
+            Item.CollectableMountainVillageWinterPot1,
+            Item.CollectableGoronVillageWinterSmallSnowball1, Item.CollectableGoronVillageWinterSmallSnowball2, Item.CollectableGoronVillageWinterSmallSnowball3, // large
+            Item.CollectableGoronVillageWinterSmallSnowball4, Item.CollectableGoronVillageWinterSmallSnowball5, Item.CollectableGoronVillageWinterSmallSnowball6,
+            Item.CollectableGoronVillageWinterSmallSnowball7, Item.CollectableGoronVillageWinterSmallSnowball8, Item.CollectableGoronVillageWinterSmallSnowball9,
+            Item.CollectableMountainVillageWinterSmallSnowball1, Item.CollectableMountainVillageWinterSmallSnowball2, // small
+            Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
+            Item.CollectableMountainVillageWinterSmallSnowball5, Item.CollectableMountainVillageWinterSmallSnowball6,
+            Item.CollectableMountainVillageWinterSmallSnowball7, Item.CollectableMountainVillageWinterSmallSnowball8
+
         )]
         [CheckRestricted(Scene.MountainVillage, variant: -1,
             Item.CollectableMountainVillageWinterSmallSnowball1, Item.CollectableMountainVillageWinterSmallSnowball2, // small
