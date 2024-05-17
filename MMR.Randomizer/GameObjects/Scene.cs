@@ -710,6 +710,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1449)]
         [SceneInternalId(0x5B)]
+        [EnemizerSceneBlockSensitive(originalEnemy: Actor.SmallSnowball, -1)] // can block the grotto, TODO see about just moving them instead
+        [EnemizerSceneBlockSensitive(originalEnemy: Actor.LargeSnowball, -1)] // can block the ramps
         PathToSnowhead = 0x58,
 
         [FileID(1451)]
@@ -722,6 +724,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1453)]
         [SceneInternalId(0x5D)]
+        [EnemizerSceneBlockSensitive(originalEnemy: Actor.SmallSnowball, -1)] // can block the grotto, TODO see about just moving them instead
         // todo test after snowball merge
         [DynaHeadroom(126, 126)]  // limit not seed, but this is fine in spring
         TwinIslands = 0x5A, // winter
