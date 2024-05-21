@@ -80,6 +80,7 @@ namespace MMR.UI.Forms
             this.pLocationCategories = new System.Windows.Forms.Panel();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.gGimmicksChallenges = new System.Windows.Forms.GroupBox();
+            this.cTakeDamageFromDexihands = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cTakeDamageFromGibdosFaster = new System.Windows.Forms.CheckBox();
             this.cTakeDamageGettingCaught = new System.Windows.Forms.CheckBox();
@@ -273,7 +274,6 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cTakeDamageFromDexihands = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -416,7 +416,6 @@ namespace MMR.UI.Forms
             this.cRequiredBossRemains.Name = "cRequiredBossRemains";
             this.cRequiredBossRemains.Size = new System.Drawing.Size(160, 23);
             this.cRequiredBossRemains.TabIndex = 30;
-            this.cRequiredBossRemains.SelectedIndexChanged += new System.EventHandler(this.cRequiredBossRemains_SelectedIndexChanged);
             // 
             // lRequiredRemains
             // 
@@ -439,7 +438,6 @@ namespace MMR.UI.Forms
             this.cShuffleBosses.TabIndex = 28;
             this.cShuffleBosses.Text = "Shuffle boss rooms";
             this.cShuffleBosses.UseVisualStyleBackColor = false;
-            this.cShuffleBosses.CheckedChanged += new System.EventHandler(this.cShuffleBosses_CheckedChanged);
             // 
             // cStartingItems
             // 
@@ -454,7 +452,6 @@ namespace MMR.UI.Forms
             this.cStartingItems.Name = "cStartingItems";
             this.cStartingItems.Size = new System.Drawing.Size(160, 23);
             this.cStartingItems.TabIndex = 27;
-            this.cStartingItems.SelectedIndexChanged += new System.EventHandler(this.cStartingItems_SelectedIndexChanged);
             // 
             // lStartingItems
             // 
@@ -477,7 +474,6 @@ namespace MMR.UI.Forms
             this.cProgressiveUpgrades.TabIndex = 21;
             this.cProgressiveUpgrades.Text = "Progressive Upgrades";
             this.cProgressiveUpgrades.UseVisualStyleBackColor = false;
-            this.cProgressiveUpgrades.CheckedChanged += new System.EventHandler(this.cProgressiveUpgrades_CheckedChanged);
             // 
             // cDEnt
             // 
@@ -491,7 +487,6 @@ namespace MMR.UI.Forms
             this.cDEnt.TabIndex = 7;
             this.cDEnt.Text = "Shuffle dungeon entrances";
             this.cDEnt.UseVisualStyleBackColor = false;
-            this.cDEnt.CheckedChanged += new System.EventHandler(this.cDEnt_CheckedChanged);
             // 
             // cMixSongs
             // 
@@ -505,7 +500,6 @@ namespace MMR.UI.Forms
             this.cMixSongs.TabIndex = 3;
             this.cMixSongs.Text = "Mix songs with items";
             this.cMixSongs.UseVisualStyleBackColor = false;
-            this.cMixSongs.CheckedChanged += new System.EventHandler(this.cMixSongs_CheckedChanged);
             // 
             // cEnemy
             // 
@@ -519,7 +513,6 @@ namespace MMR.UI.Forms
             this.cEnemy.TabIndex = 9;
             this.cEnemy.Text = "Enemies (BETA!)";
             this.cEnemy.UseVisualStyleBackColor = false;
-            this.cEnemy.CheckedChanged += new System.EventHandler(this.cEnemy_CheckedChanged);
             // 
             // groupBox9
             // 
@@ -573,7 +566,6 @@ namespace MMR.UI.Forms
             this.cItemPlacement.Name = "cItemPlacement";
             this.cItemPlacement.Size = new System.Drawing.Size(121, 23);
             this.cItemPlacement.TabIndex = 20;
-            this.cItemPlacement.SelectedIndexChanged += new System.EventHandler(this.cItemPlacement_SelectedIndexChanged);
             // 
             // bToggleTricks
             // 
@@ -860,6 +852,19 @@ namespace MMR.UI.Forms
             this.gGimmicksChallenges.TabStop = false;
             this.gGimmicksChallenges.Text = "Challenges";
             // 
+            // cTakeDamageFromDexihands
+            // 
+            this.cTakeDamageFromDexihands.AutoSize = true;
+            this.cTakeDamageFromDexihands.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromDexihands.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromDexihands.Location = new System.Drawing.Point(153, 213);
+            this.cTakeDamageFromDexihands.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromDexihands.Name = "cTakeDamageFromDexihands";
+            this.cTakeDamageFromDexihands.Size = new System.Drawing.Size(112, 19);
+            this.cTakeDamageFromDexihands.TabIndex = 35;
+            this.cTakeDamageFromDexihands.Text = "From Dexihands";
+            this.cTakeDamageFromDexihands.UseVisualStyleBackColor = false;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -882,7 +887,6 @@ namespace MMR.UI.Forms
             this.cTakeDamageFromGibdosFaster.TabIndex = 33;
             this.cTakeDamageFromGibdosFaster.Text = "From Gibdos Faster";
             this.cTakeDamageFromGibdosFaster.UseVisualStyleBackColor = false;
-            this.cTakeDamageFromGibdosFaster.CheckedChanged += new System.EventHandler(this.cTakeDamageFromGibdosFaster_CheckedChanged);
             // 
             // cTakeDamageGettingCaught
             // 
@@ -896,7 +900,6 @@ namespace MMR.UI.Forms
             this.cTakeDamageGettingCaught.TabIndex = 32;
             this.cTakeDamageGettingCaught.Text = "Getting Caught";
             this.cTakeDamageGettingCaught.UseVisualStyleBackColor = false;
-            this.cTakeDamageGettingCaught.CheckedChanged += new System.EventHandler(this.cTakeDamageGettingCaught_CheckedChanged);
             // 
             // cTakeDamageFromGorons
             // 
@@ -910,7 +913,6 @@ namespace MMR.UI.Forms
             this.cTakeDamageFromGorons.TabIndex = 31;
             this.cTakeDamageFromGorons.Text = "From Gorons";
             this.cTakeDamageFromGorons.UseVisualStyleBackColor = false;
-            this.cTakeDamageFromGorons.CheckedChanged += new System.EventHandler(this.cTakeDamageFromGorons_CheckedChanged);
             // 
             // cTakeDamageFromDog
             // 
@@ -924,7 +926,6 @@ namespace MMR.UI.Forms
             this.cTakeDamageFromDog.TabIndex = 30;
             this.cTakeDamageFromDog.Text = "From Dog";
             this.cTakeDamageFromDog.UseVisualStyleBackColor = false;
-            this.cTakeDamageFromDog.CheckedChanged += new System.EventHandler(this.cTakeDamageFromDog_CheckedChanged);
             // 
             // cTakeDamageFromVoid
             // 
@@ -938,7 +939,6 @@ namespace MMR.UI.Forms
             this.cTakeDamageFromVoid.TabIndex = 29;
             this.cTakeDamageFromVoid.Text = "From Void";
             this.cTakeDamageFromVoid.UseVisualStyleBackColor = false;
-            this.cTakeDamageFromVoid.CheckedChanged += new System.EventHandler(this.cTakeDamageFromVoid_CheckedChanged);
             // 
             // cTakeDamageWhileShielding
             // 
@@ -952,7 +952,6 @@ namespace MMR.UI.Forms
             this.cTakeDamageWhileShielding.TabIndex = 28;
             this.cTakeDamageWhileShielding.Text = "While Shielding";
             this.cTakeDamageWhileShielding.UseVisualStyleBackColor = false;
-            this.cTakeDamageWhileShielding.CheckedChanged += new System.EventHandler(this.cTakeDamageWhileShielding_CheckedChanged);
             // 
             // cTakeDamageOnEpona
             // 
@@ -966,7 +965,6 @@ namespace MMR.UI.Forms
             this.cTakeDamageOnEpona.TabIndex = 27;
             this.cTakeDamageOnEpona.Text = "On Epona";
             this.cTakeDamageOnEpona.UseVisualStyleBackColor = false;
-            this.cTakeDamageOnEpona.CheckedChanged += new System.EventHandler(this.cTakeDamageOnEpona_CheckedChanged);
             // 
             // cFewerHealthDrops
             // 
@@ -980,7 +978,6 @@ namespace MMR.UI.Forms
             this.cFewerHealthDrops.TabIndex = 26;
             this.cFewerHealthDrops.Text = "Fewer Health Drops";
             this.cFewerHealthDrops.UseVisualStyleBackColor = false;
-            this.cFewerHealthDrops.CheckedChanged += new System.EventHandler(this.cFewerHealthDrops_CheckedChanged);
             // 
             // cDType
             // 
@@ -998,7 +995,6 @@ namespace MMR.UI.Forms
             this.cDType.Name = "cDType";
             this.cDType.Size = new System.Drawing.Size(128, 23);
             this.cDType.TabIndex = 0;
-            this.cDType.SelectedIndexChanged += new System.EventHandler(this.cDType_SelectedIndexChanged);
             // 
             // lDType
             // 
@@ -1022,7 +1018,6 @@ namespace MMR.UI.Forms
             this.cDeathMoonCrash.TabIndex = 25;
             this.cDeathMoonCrash.Text = "Death is Moon Crash";
             this.cDeathMoonCrash.UseVisualStyleBackColor = false;
-            this.cDeathMoonCrash.CheckedChanged += new System.EventHandler(this.cDeathMoonCrash_CheckedChanged);
             // 
             // cByoAmmo
             // 
@@ -1036,7 +1031,6 @@ namespace MMR.UI.Forms
             this.cByoAmmo.TabIndex = 24;
             this.cByoAmmo.Text = "BYO Ammo";
             this.cByoAmmo.UseVisualStyleBackColor = false;
-            this.cByoAmmo.CheckedChanged += new System.EventHandler(this.cByoAmmo_CheckedChanged);
             // 
             // cDMult
             // 
@@ -1053,7 +1047,6 @@ namespace MMR.UI.Forms
             this.cDMult.Name = "cDMult";
             this.cDMult.Size = new System.Drawing.Size(129, 23);
             this.cDMult.TabIndex = 0;
-            this.cDMult.SelectedIndexChanged += new System.EventHandler(this.cDMult_SelectedIndexChanged);
             // 
             // lDMult
             // 
@@ -1096,7 +1089,6 @@ namespace MMR.UI.Forms
             this.cIronGoron.TabIndex = 29;
             this.cIronGoron.Text = "Iron Goron";
             this.cIronGoron.UseVisualStyleBackColor = false;
-            this.cIronGoron.CheckedChanged += new System.EventHandler(this.cIronGoron_CheckedChanged);
             // 
             // cClimbMostSurfaces
             // 
@@ -1110,7 +1102,6 @@ namespace MMR.UI.Forms
             this.cClimbMostSurfaces.TabIndex = 28;
             this.cClimbMostSurfaces.Text = "Climb Most Surfaces";
             this.cClimbMostSurfaces.UseVisualStyleBackColor = false;
-            this.cClimbMostSurfaces.CheckedChanged += new System.EventHandler(this.cClimbMostSurfaces_CheckedChanged);
             // 
             // cHookshotAnySurface
             // 
@@ -1124,7 +1115,6 @@ namespace MMR.UI.Forms
             this.cHookshotAnySurface.TabIndex = 27;
             this.cHookshotAnySurface.Text = "Hookshot Any Surface";
             this.cHookshotAnySurface.UseVisualStyleBackColor = false;
-            this.cHookshotAnySurface.CheckedChanged += new System.EventHandler(this.cHookshotAnySurface_CheckedChanged);
             // 
             // cFloors
             // 
@@ -1141,7 +1131,6 @@ namespace MMR.UI.Forms
             this.cFloors.Name = "cFloors";
             this.cFloors.Size = new System.Drawing.Size(176, 23);
             this.cFloors.TabIndex = 0;
-            this.cFloors.SelectedIndexChanged += new System.EventHandler(this.cFloors_SelectedIndexChanged);
             // 
             // lFloors
             // 
@@ -1178,7 +1167,6 @@ namespace MMR.UI.Forms
             this.cGravity.Name = "cGravity";
             this.cGravity.Size = new System.Drawing.Size(176, 23);
             this.cGravity.TabIndex = 0;
-            this.cGravity.SelectedIndexChanged += new System.EventHandler(this.cGravity_SelectedIndexChanged);
             // 
             // cContinuousDekuHopping
             // 
@@ -1192,7 +1180,6 @@ namespace MMR.UI.Forms
             this.cContinuousDekuHopping.TabIndex = 26;
             this.cContinuousDekuHopping.Text = "Continuous Deku Hopping";
             this.cContinuousDekuHopping.UseVisualStyleBackColor = false;
-            this.cContinuousDekuHopping.CheckedChanged += new System.EventHandler(this.cContinuousDekuHopping_CheckedChanged);
             // 
             // gTraps
             // 
@@ -1258,7 +1245,6 @@ namespace MMR.UI.Forms
             this.cTrapAmount.Name = "cTrapAmount";
             this.cTrapAmount.Size = new System.Drawing.Size(160, 23);
             this.cTrapAmount.TabIndex = 26;
-            this.cTrapAmount.SelectedIndexChanged += new System.EventHandler(this.cIceTraps_SelectedIndexChanged);
             // 
             // cTrapsAppearance
             // 
@@ -1275,7 +1261,6 @@ namespace MMR.UI.Forms
             this.cTrapsAppearance.Name = "cTrapsAppearance";
             this.cTrapsAppearance.Size = new System.Drawing.Size(160, 23);
             this.cTrapsAppearance.TabIndex = 27;
-            this.cTrapsAppearance.SelectedIndexChanged += new System.EventHandler(this.cIceTrapsAppearance_SelectedIndexChanged);
             // 
             // cIceTrapQuirks
             // 
@@ -1289,7 +1274,6 @@ namespace MMR.UI.Forms
             this.cIceTrapQuirks.TabIndex = 29;
             this.cIceTrapQuirks.Text = "Enable Quirks";
             this.cIceTrapQuirks.UseVisualStyleBackColor = false;
-            this.cIceTrapQuirks.CheckedChanged += new System.EventHandler(this.cIceTrapQuirks_CheckedChanged);
             // 
             // gGimmicksClock
             // 
@@ -1320,7 +1304,6 @@ namespace MMR.UI.Forms
             this.cAutoInvert.Name = "cAutoInvert";
             this.cAutoInvert.Size = new System.Drawing.Size(176, 23);
             this.cAutoInvert.TabIndex = 18;
-            this.cAutoInvert.SelectedIndexChanged += new System.EventHandler(this.cAutoInvert_SelectedIndexChanged);
             // 
             // lAutoInvert
             // 
@@ -1348,7 +1331,6 @@ namespace MMR.UI.Forms
             this.cClockSpeed.Name = "cClockSpeed";
             this.cClockSpeed.Size = new System.Drawing.Size(176, 23);
             this.cClockSpeed.TabIndex = 15;
-            this.cClockSpeed.SelectedIndexChanged += new System.EventHandler(this.cClockSpeed_SelectedIndexChanged);
             // 
             // lClockSpeed
             // 
@@ -1372,7 +1354,6 @@ namespace MMR.UI.Forms
             this.cHideClock.TabIndex = 17;
             this.cHideClock.Text = "Hide UI";
             this.cHideClock.UseVisualStyleBackColor = false;
-            this.cHideClock.CheckedChanged += new System.EventHandler(this.cHideClock_CheckedChanged);
             // 
             // label4
             // 
@@ -1424,7 +1405,6 @@ namespace MMR.UI.Forms
             this.cVanillaMoonTrials.TabIndex = 30;
             this.cVanillaMoonTrials.Text = "Vanilla Moon Trial Access";
             this.cVanillaMoonTrials.UseVisualStyleBackColor = false;
-            this.cVanillaMoonTrials.CheckedChanged += new System.EventHandler(this.cVanillaMoonTrials_CheckedChanged);
             // 
             // cBombArrows
             // 
@@ -1438,7 +1418,6 @@ namespace MMR.UI.Forms
             this.cBombArrows.TabIndex = 29;
             this.cBombArrows.Text = "Bomb Arrows";
             this.cBombArrows.UseVisualStyleBackColor = false;
-            this.cBombArrows.CheckedChanged += new System.EventHandler(this.cBombArrows_CheckedChanged);
             // 
             // cGiantMaskAnywhere
             // 
@@ -1452,7 +1431,6 @@ namespace MMR.UI.Forms
             this.cGiantMaskAnywhere.TabIndex = 28;
             this.cGiantMaskAnywhere.Text = "Giant\'s Mask anywhere";
             this.cGiantMaskAnywhere.UseVisualStyleBackColor = false;
-            this.cGiantMaskAnywhere.CheckedChanged += new System.EventHandler(this.cGiantMaskAnywhere_CheckedChanged);
             // 
             // cInstantTransformations
             // 
@@ -1466,7 +1444,6 @@ namespace MMR.UI.Forms
             this.cInstantTransformations.TabIndex = 28;
             this.cInstantTransformations.Text = "Instant Transformations";
             this.cInstantTransformations.UseVisualStyleBackColor = false;
-            this.cInstantTransformations.CheckedChanged += new System.EventHandler(this.cInstantTransformations_CheckedChanged);
             // 
             // cFreeScarecrow
             // 
@@ -1480,7 +1457,6 @@ namespace MMR.UI.Forms
             this.cFreeScarecrow.TabIndex = 27;
             this.cFreeScarecrow.Text = "Free Scarecrow\'s Song";
             this.cFreeScarecrow.UseVisualStyleBackColor = false;
-            this.cFreeScarecrow.CheckedChanged += new System.EventHandler(this.cFreeScarecrow_CheckedChanged);
             // 
             // cFDAnywhere
             // 
@@ -1494,7 +1470,6 @@ namespace MMR.UI.Forms
             this.cFDAnywhere.TabIndex = 23;
             this.cFDAnywhere.Text = "Fierce Deity\'s Mask anywhere";
             this.cFDAnywhere.UseVisualStyleBackColor = false;
-            this.cFDAnywhere.CheckedChanged += new System.EventHandler(this.cFDAnywhere_CheckedChanged);
             // 
             // cBlastCooldown
             // 
@@ -1512,7 +1487,6 @@ namespace MMR.UI.Forms
             this.cBlastCooldown.Name = "cBlastCooldown";
             this.cBlastCooldown.Size = new System.Drawing.Size(123, 23);
             this.cBlastCooldown.TabIndex = 20;
-            this.cBlastCooldown.SelectedIndexChanged += new System.EventHandler(this.cBlastCooldown_SelectedIndexChanged);
             // 
             // cUnderwaterOcarina
             // 
@@ -1525,7 +1499,6 @@ namespace MMR.UI.Forms
             this.cUnderwaterOcarina.TabIndex = 22;
             this.cUnderwaterOcarina.Text = "Underwater Ocarina";
             this.cUnderwaterOcarina.UseVisualStyleBackColor = false;
-            this.cUnderwaterOcarina.CheckedChanged += new System.EventHandler(this.cUnderwaterOcarina_CheckedChanged);
             // 
             // cSunsSong
             // 
@@ -1539,7 +1512,6 @@ namespace MMR.UI.Forms
             this.cSunsSong.TabIndex = 21;
             this.cSunsSong.Text = "Enable Sun\'s Song";
             this.cSunsSong.UseVisualStyleBackColor = false;
-            this.cSunsSong.CheckedChanged += new System.EventHandler(this.cSunsSong_CheckedChanged);
             // 
             // lBlastMask
             // 
@@ -1576,7 +1548,6 @@ namespace MMR.UI.Forms
             this.cNutAndStickDrops.Name = "cNutAndStickDrops";
             this.cNutAndStickDrops.Size = new System.Drawing.Size(123, 23);
             this.cNutAndStickDrops.TabIndex = 26;
-            this.cNutAndStickDrops.SelectedIndexChanged += new System.EventHandler(this.cNutAndStickDrops_SelectedIndexChanged);
             // 
             // tabComfort
             // 
@@ -1626,7 +1597,6 @@ namespace MMR.UI.Forms
             this.cHintImportance.TabIndex = 0;
             this.cHintImportance.Text = "Indicate Importance";
             this.cHintImportance.UseVisualStyleBackColor = true;
-            this.cHintImportance.CheckedChanged += new System.EventHandler(this.cHintImportance_CheckedChanged);
             // 
             // cMixGaroWithGossip
             // 
@@ -1640,7 +1610,6 @@ namespace MMR.UI.Forms
             this.cMixGaroWithGossip.TabIndex = 15;
             this.cMixGaroWithGossip.Text = "Mix Gossip and Garo Hints";
             this.cMixGaroWithGossip.UseVisualStyleBackColor = false;
-            this.cMixGaroWithGossip.CheckedChanged += new System.EventHandler(this.cMixGaroWithGossip_CheckedChanged);
             // 
             // gGaroHints
             // 
@@ -1676,7 +1645,6 @@ namespace MMR.UI.Forms
             this.cFreeGaroHints.TabIndex = 37;
             this.cFreeGaroHints.Text = "Free hints";
             this.cFreeGaroHints.UseVisualStyleBackColor = false;
-            this.cFreeGaroHints.CheckedChanged += new System.EventHandler(this.cFreeGaroHints_CheckedChanged);
             // 
             // cCustomGaroWoth
             // 
@@ -1701,7 +1669,6 @@ namespace MMR.UI.Forms
             this.nMaxGaroCT.Name = "nMaxGaroCT";
             this.nMaxGaroCT.Size = new System.Drawing.Size(31, 23);
             this.nMaxGaroCT.TabIndex = 35;
-            this.nMaxGaroCT.ValueChanged += new System.EventHandler(this.nMaxGaroCT_ValueChanged);
             // 
             // lGaroHints
             // 
@@ -1731,7 +1698,6 @@ namespace MMR.UI.Forms
             0,
             0,
             0});
-            this.nMaxGaroFoolish.ValueChanged += new System.EventHandler(this.nMaxGaroFoolish_ValueChanged);
             // 
             // cGaroHint
             // 
@@ -1747,7 +1713,6 @@ namespace MMR.UI.Forms
             this.cGaroHint.Name = "cGaroHint";
             this.cGaroHint.Size = new System.Drawing.Size(92, 23);
             this.cGaroHint.TabIndex = 19;
-            this.cGaroHint.SelectedIndexChanged += new System.EventHandler(this.cGaroHint_SelectedIndexChanged);
             // 
             // nMaxGaroWotH
             // 
@@ -1765,7 +1730,6 @@ namespace MMR.UI.Forms
             0,
             0,
             0});
-            this.nMaxGaroWotH.ValueChanged += new System.EventHandler(this.nMaxGaroWotH_ValueChanged);
             // 
             // cClearGaroHints
             // 
@@ -1779,7 +1743,6 @@ namespace MMR.UI.Forms
             this.cClearGaroHints.TabIndex = 16;
             this.cClearGaroHints.Text = "Clear hints";
             this.cClearGaroHints.UseVisualStyleBackColor = false;
-            this.cClearGaroHints.CheckedChanged += new System.EventHandler(this.cClearGaroHints_CheckedChanged);
             // 
             // label5
             // 
@@ -1836,7 +1799,6 @@ namespace MMR.UI.Forms
             this.cSpeedupBabyCucco.TabIndex = 6;
             this.cSpeedupBabyCucco.Text = "Baby Cuccos Map";
             this.cSpeedupBabyCucco.UseVisualStyleBackColor = true;
-            this.cSpeedupBabyCucco.CheckedChanged += new System.EventHandler(this.cSpeedupBabyCucco_CheckedChanged);
             // 
             // cDoubleArcheryRewards
             // 
@@ -1848,7 +1810,6 @@ namespace MMR.UI.Forms
             this.cDoubleArcheryRewards.TabIndex = 5;
             this.cDoubleArcheryRewards.Text = "Double Archery Rewards";
             this.cDoubleArcheryRewards.UseVisualStyleBackColor = true;
-            this.cDoubleArcheryRewards.CheckedChanged += new System.EventHandler(this.cDoubleArcheryRewards_CheckedChanged);
             // 
             // cFasterBank
             // 
@@ -1860,7 +1821,6 @@ namespace MMR.UI.Forms
             this.cFasterBank.TabIndex = 4;
             this.cFasterBank.Text = "Faster Bank";
             this.cFasterBank.UseVisualStyleBackColor = true;
-            this.cFasterBank.CheckedChanged += new System.EventHandler(this.cFasterBank_CheckedChanged);
             // 
             // cSkipBeaver
             // 
@@ -1872,7 +1832,6 @@ namespace MMR.UI.Forms
             this.cSkipBeaver.TabIndex = 0;
             this.cSkipBeaver.Text = "Skip Younger Beaver";
             this.cSkipBeaver.UseVisualStyleBackColor = true;
-            this.cSkipBeaver.CheckedChanged += new System.EventHandler(this.cSkipBeaver_CheckedChanged);
             // 
             // cFasterLabFish
             // 
@@ -1884,7 +1843,6 @@ namespace MMR.UI.Forms
             this.cFasterLabFish.TabIndex = 2;
             this.cFasterLabFish.Text = "Faster Lab Fish";
             this.cFasterLabFish.UseVisualStyleBackColor = true;
-            this.cFasterLabFish.CheckedChanged += new System.EventHandler(this.cFasterLabFish_CheckedChanged);
             // 
             // cGoodDogRaceRNG
             // 
@@ -1896,7 +1854,6 @@ namespace MMR.UI.Forms
             this.cGoodDogRaceRNG.TabIndex = 3;
             this.cGoodDogRaceRNG.Text = "Good Dog Race RNG";
             this.cGoodDogRaceRNG.UseVisualStyleBackColor = true;
-            this.cGoodDogRaceRNG.CheckedChanged += new System.EventHandler(this.cGoodDogRaceRNG_CheckedChanged);
             // 
             // cGoodDampeRNG
             // 
@@ -1908,7 +1865,6 @@ namespace MMR.UI.Forms
             this.cGoodDampeRNG.TabIndex = 1;
             this.cGoodDampeRNG.Text = "Good Dampe RNG";
             this.cGoodDampeRNG.UseVisualStyleBackColor = true;
-            this.cGoodDampeRNG.CheckedChanged += new System.EventHandler(this.cGoodDampeRNG_CheckedChanged);
             // 
             // gHints
             // 
@@ -1960,7 +1916,6 @@ namespace MMR.UI.Forms
             0,
             0,
             0});
-            this.nMaxGossipCT.ValueChanged += new System.EventHandler(this.nMaxGossipCT_ValueChanged);
             // 
             // nMaxGossipFoolish
             // 
@@ -1979,7 +1934,6 @@ namespace MMR.UI.Forms
             0,
             0,
             0});
-            this.nMaxGossipFoolish.ValueChanged += new System.EventHandler(this.nMaxGossipFoolish_ValueChanged);
             // 
             // nMaxGossipWotH
             // 
@@ -1998,7 +1952,6 @@ namespace MMR.UI.Forms
             0,
             0,
             0});
-            this.nMaxGossipWotH.ValueChanged += new System.EventHandler(this.nMaxGossipWotH_ValueChanged);
             // 
             // label8
             // 
@@ -2053,7 +2006,6 @@ namespace MMR.UI.Forms
             this.cGossipHints.Name = "cGossipHints";
             this.cGossipHints.Size = new System.Drawing.Size(92, 23);
             this.cGossipHints.TabIndex = 19;
-            this.cGossipHints.SelectedIndexChanged += new System.EventHandler(this.cGossipHints_SelectedIndexChanged);
             // 
             // cFreeHints
             // 
@@ -2067,7 +2019,6 @@ namespace MMR.UI.Forms
             this.cFreeHints.TabIndex = 15;
             this.cFreeHints.Text = "Free hints";
             this.cFreeHints.UseVisualStyleBackColor = false;
-            this.cFreeHints.CheckedChanged += new System.EventHandler(this.cFreeHints_CheckedChanged);
             // 
             // cClearHints
             // 
@@ -2081,7 +2032,6 @@ namespace MMR.UI.Forms
             this.cClearHints.TabIndex = 16;
             this.cClearHints.Text = "Clear hints";
             this.cClearHints.UseVisualStyleBackColor = false;
-            this.cClearHints.CheckedChanged += new System.EventHandler(this.cClearHints_CheckedChanged);
             // 
             // groupBox8
             // 
@@ -2122,7 +2072,6 @@ namespace MMR.UI.Forms
             this.cLink.Name = "cLink";
             this.cLink.Size = new System.Drawing.Size(129, 23);
             this.cLink.TabIndex = 10;
-            this.cLink.SelectedIndexChanged += new System.EventHandler(this.cLink_SelectedIndexChanged);
             // 
             // groupBox7
             // 
@@ -2173,7 +2122,6 @@ namespace MMR.UI.Forms
             this.cEasyFrameByFrame.TabIndex = 51;
             this.cEasyFrameByFrame.Text = "Easy Frame By Frame";
             this.cEasyFrameByFrame.UseVisualStyleBackColor = true;
-            this.cEasyFrameByFrame.CheckedChanged += new System.EventHandler(this.cEasyFrameByFrame_CheckedChanged);
             // 
             // cImprovedCamera
             // 
@@ -2185,7 +2133,6 @@ namespace MMR.UI.Forms
             this.cImprovedCamera.TabIndex = 50;
             this.cImprovedCamera.Text = "Improved Camera";
             this.cImprovedCamera.UseVisualStyleBackColor = true;
-            this.cImprovedCamera.CheckedChanged += new System.EventHandler(this.cImprovedCamera_CheckedChanged);
             // 
             // cGossipsTolerant
             // 
@@ -2197,7 +2144,6 @@ namespace MMR.UI.Forms
             this.cGossipsTolerant.TabIndex = 49;
             this.cGossipsTolerant.Text = "Tolerant Gossip Angle";
             this.cGossipsTolerant.UseVisualStyleBackColor = true;
-            this.cGossipsTolerant.CheckedChanged += new System.EventHandler(this.cGossipsTolerant_CheckedChanged);
             // 
             // cQuestItemKeep
             // 
@@ -2210,7 +2156,6 @@ namespace MMR.UI.Forms
             this.cQuestItemKeep.TabIndex = 48;
             this.cQuestItemKeep.Text = "Quest items through time";
             this.cQuestItemKeep.UseVisualStyleBackColor = false;
-            this.cQuestItemKeep.CheckedChanged += new System.EventHandler(this.cQuestItemKeep_CheckedChanged);
             // 
             // cUpdateNpcText
             // 
@@ -2222,7 +2167,6 @@ namespace MMR.UI.Forms
             this.cUpdateNpcText.TabIndex = 47;
             this.cUpdateNpcText.Text = "Update NPC Text";
             this.cUpdateNpcText.UseVisualStyleBackColor = true;
-            this.cUpdateNpcText.CheckedChanged += new System.EventHandler(this.cUpdateNpcText_CheckedChanged);
             // 
             // cAddBombchuDrops
             // 
@@ -2234,7 +2178,6 @@ namespace MMR.UI.Forms
             this.cAddBombchuDrops.TabIndex = 46;
             this.cAddBombchuDrops.Text = "Add Bombchu Drops";
             this.cAddBombchuDrops.UseVisualStyleBackColor = true;
-            this.cAddBombchuDrops.CheckedChanged += new System.EventHandler(this.cAddBombchuDrops_CheckedChanged);
             // 
             // lChestGame
             // 
@@ -2262,7 +2205,6 @@ namespace MMR.UI.Forms
             this.cChestGameMinimap.Name = "cChestGameMinimap";
             this.cChestGameMinimap.Size = new System.Drawing.Size(129, 23);
             this.cChestGameMinimap.TabIndex = 44;
-            this.cChestGameMinimap.SelectedIndexChanged += new System.EventHandler(this.cChestGameMinimap_SelectedIndexChanged);
             // 
             // cSaferGlitches
             // 
@@ -2274,7 +2216,6 @@ namespace MMR.UI.Forms
             this.cSaferGlitches.TabIndex = 43;
             this.cSaferGlitches.Text = "Safer Glitches";
             this.cSaferGlitches.UseVisualStyleBackColor = true;
-            this.cSaferGlitches.CheckedChanged += new System.EventHandler(this.cSaferGlitches_CheckedChanged);
             // 
             // cSkulltulaTokenSounds
             // 
@@ -2286,7 +2227,6 @@ namespace MMR.UI.Forms
             this.cSkulltulaTokenSounds.TabIndex = 44;
             this.cSkulltulaTokenSounds.Text = "Detect Skulltula Tokens";
             this.cSkulltulaTokenSounds.UseVisualStyleBackColor = true;
-            this.cSkulltulaTokenSounds.CheckedChanged += new System.EventHandler(this.cSkulltulaTokenSounds_CheckedChanged);
             // 
             // cFairyMaskShimmer
             // 
@@ -2298,7 +2238,6 @@ namespace MMR.UI.Forms
             this.cFairyMaskShimmer.TabIndex = 43;
             this.cFairyMaskShimmer.Text = "Detect Stray Fairies";
             this.cFairyMaskShimmer.UseVisualStyleBackColor = true;
-            this.cFairyMaskShimmer.CheckedChanged += new System.EventHandler(this.cFairyMaskShimmer_CheckedChanged);
             // 
             // cInvisSparkle
             // 
@@ -2310,7 +2249,6 @@ namespace MMR.UI.Forms
             this.cInvisSparkle.TabIndex = 42;
             this.cInvisSparkle.Text = "Hidden Rupees Sparkle";
             this.cInvisSparkle.UseVisualStyleBackColor = true;
-            this.cInvisSparkle.CheckedChanged += new System.EventHandler(this.cInvisSparkle_CheckedChanged);
             // 
             // cFillWallet
             // 
@@ -2322,7 +2260,6 @@ namespace MMR.UI.Forms
             this.cFillWallet.TabIndex = 41;
             this.cFillWallet.Text = "Fill wallet on upgrade";
             this.cFillWallet.UseVisualStyleBackColor = true;
-            this.cFillWallet.CheckedChanged += new System.EventHandler(this.cFillWallet_CheckedChanged);
             // 
             // cTargetHealth
             // 
@@ -2334,7 +2271,6 @@ namespace MMR.UI.Forms
             this.cTargetHealth.TabIndex = 40;
             this.cTargetHealth.Text = "Target Health Bar";
             this.cTargetHealth.UseVisualStyleBackColor = true;
-            this.cTargetHealth.CheckedChanged += new System.EventHandler(this.cTargetHealth_CheckedChanged);
             // 
             // cLenientGoronSpikes
             // 
@@ -2346,7 +2282,6 @@ namespace MMR.UI.Forms
             this.cLenientGoronSpikes.TabIndex = 39;
             this.cLenientGoronSpikes.Text = "Lenient Goron Spikes";
             this.cLenientGoronSpikes.UseVisualStyleBackColor = true;
-            this.cLenientGoronSpikes.CheckedChanged += new System.EventHandler(this.cLenientGoronSpikes_CheckedChanged);
             // 
             // cImprovedPictobox
             // 
@@ -2358,7 +2293,6 @@ namespace MMR.UI.Forms
             this.cImprovedPictobox.TabIndex = 38;
             this.cImprovedPictobox.Text = "Improved Pictobox";
             this.cImprovedPictobox.UseVisualStyleBackColor = true;
-            this.cImprovedPictobox.CheckedChanged += new System.EventHandler(this.cImprovedPictobox_CheckedChanged);
             // 
             // cElegySpeedups
             // 
@@ -2370,7 +2304,6 @@ namespace MMR.UI.Forms
             this.cElegySpeedups.TabIndex = 37;
             this.cElegySpeedups.Text = "Elegy speedups";
             this.cElegySpeedups.UseVisualStyleBackColor = true;
-            this.cElegySpeedups.CheckedChanged += new System.EventHandler(this.cElegySpeedups_CheckedChanged);
             // 
             // cCloseCows
             // 
@@ -2382,7 +2315,6 @@ namespace MMR.UI.Forms
             this.cCloseCows.TabIndex = 36;
             this.cCloseCows.Text = "Close Cows";
             this.cCloseCows.UseVisualStyleBackColor = true;
-            this.cCloseCows.CheckedChanged += new System.EventHandler(this.cCloseCows_CheckedChanged);
             // 
             // cArrowCycling
             // 
@@ -2394,7 +2326,6 @@ namespace MMR.UI.Forms
             this.cArrowCycling.TabIndex = 35;
             this.cArrowCycling.Text = "Arrow cycling";
             this.cArrowCycling.UseVisualStyleBackColor = true;
-            this.cArrowCycling.CheckedChanged += new System.EventHandler(this.cArrowCycling_CheckedChanged);
             // 
             // cFreestanding
             // 
@@ -2406,7 +2337,6 @@ namespace MMR.UI.Forms
             this.cFreestanding.TabIndex = 34;
             this.cFreestanding.Text = "Update world models";
             this.cFreestanding.UseVisualStyleBackColor = true;
-            this.cFreestanding.CheckedChanged += new System.EventHandler(this.cFreestanding_CheckedChanged);
             // 
             // cFastPush
             // 
@@ -2418,7 +2348,6 @@ namespace MMR.UI.Forms
             this.cFastPush.TabIndex = 31;
             this.cFastPush.Text = "Increase push speed";
             this.cFastPush.UseVisualStyleBackColor = true;
-            this.cFastPush.CheckedChanged += new System.EventHandler(this.cFastPush_CheckedChanged);
             // 
             // cQText
             // 
@@ -2432,7 +2361,6 @@ namespace MMR.UI.Forms
             this.cQText.TabIndex = 6;
             this.cQText.Text = "Quick text";
             this.cQText.UseVisualStyleBackColor = false;
-            this.cQText.CheckedChanged += new System.EventHandler(this.cQText_CheckedChanged);
             // 
             // cShopAppearance
             // 
@@ -2446,7 +2374,6 @@ namespace MMR.UI.Forms
             this.cShopAppearance.TabIndex = 21;
             this.cShopAppearance.Text = "Update shops";
             this.cShopAppearance.UseVisualStyleBackColor = false;
-            this.cShopAppearance.CheckedChanged += new System.EventHandler(this.cShopAppearance_CheckedChanged);
             // 
             // cEponaSword
             // 
@@ -2460,7 +2387,6 @@ namespace MMR.UI.Forms
             this.cEponaSword.TabIndex = 22;
             this.cEponaSword.Text = "Fix Epona sword";
             this.cEponaSword.UseVisualStyleBackColor = false;
-            this.cEponaSword.CheckedChanged += new System.EventHandler(this.cEponaSword_CheckedChanged);
             // 
             // cUpdateChests
             // 
@@ -2474,7 +2400,6 @@ namespace MMR.UI.Forms
             this.cUpdateChests.TabIndex = 23;
             this.cUpdateChests.Text = "Update chests";
             this.cUpdateChests.UseVisualStyleBackColor = false;
-            this.cUpdateChests.CheckedChanged += new System.EventHandler(this.cUpdateChests_CheckedChanged);
             // 
             // cDisableCritWiggle
             // 
@@ -2487,7 +2412,6 @@ namespace MMR.UI.Forms
             this.cDisableCritWiggle.TabIndex = 29;
             this.cDisableCritWiggle.Text = "Disable crit wiggle";
             this.cDisableCritWiggle.UseVisualStyleBackColor = false;
-            this.cDisableCritWiggle.CheckedChanged += new System.EventHandler(this.cDisableCritWiggle_CheckedChanged);
             // 
             // cQuestItemStorage
             // 
@@ -2500,7 +2424,6 @@ namespace MMR.UI.Forms
             this.cQuestItemStorage.TabIndex = 30;
             this.cQuestItemStorage.Text = "Quest item extra storage";
             this.cQuestItemStorage.UseVisualStyleBackColor = false;
-            this.cQuestItemStorage.CheckedChanged += new System.EventHandler(this.cQuestItemStorage_CheckedChanged);
             // 
             // cNoDowngrades
             // 
@@ -2514,7 +2437,6 @@ namespace MMR.UI.Forms
             this.cNoDowngrades.TabIndex = 18;
             this.cNoDowngrades.Text = "No downgrades";
             this.cNoDowngrades.UseVisualStyleBackColor = false;
-            this.cNoDowngrades.CheckedChanged += new System.EventHandler(this.cNoDowngrades_CheckedChanged);
             // 
             // tabShortenCutscenes
             // 
@@ -2578,7 +2500,6 @@ namespace MMR.UI.Forms
             this.cRainbowTunic.TabIndex = 44;
             this.cRainbowTunic.Text = "Rainbow Tunic";
             this.cRainbowTunic.UseVisualStyleBackColor = false;
-            this.cRainbowTunic.CheckedChanged += new System.EventHandler(this.cRainbowTunic_CheckedChanged);
             // 
             // cBombTrapTunicColors
             // 
@@ -2591,7 +2512,6 @@ namespace MMR.UI.Forms
             this.cBombTrapTunicColors.TabIndex = 43;
             this.cBombTrapTunicColors.Text = "Bomb Traps Randomize Tunic Color";
             this.cBombTrapTunicColors.UseVisualStyleBackColor = false;
-            this.cBombTrapTunicColors.CheckedChanged += new System.EventHandler(this.cBombTrapTunicColors_CheckedChanged);
             // 
             // cInstantPictobox
             // 
@@ -2604,7 +2524,6 @@ namespace MMR.UI.Forms
             this.cInstantPictobox.TabIndex = 42;
             this.cInstantPictobox.Text = "Instant Pictobox on Emulator";
             this.cInstantPictobox.UseVisualStyleBackColor = false;
-            this.cInstantPictobox.CheckedChanged += new System.EventHandler(this.cInstantPictobox_CheckedChanged);
             // 
             // cTatl
             // 
@@ -2622,7 +2541,6 @@ namespace MMR.UI.Forms
             this.cTatl.Name = "cTatl";
             this.cTatl.Size = new System.Drawing.Size(150, 23);
             this.cTatl.TabIndex = 41;
-            this.cTatl.SelectedIndexChanged += new System.EventHandler(this.cTatl_SelectedIndexChanged);
             // 
             // lTatl
             // 
@@ -2647,7 +2565,6 @@ namespace MMR.UI.Forms
             this.cTargettingStyle.TabIndex = 37;
             this.cTargettingStyle.Text = "Default Hold Z-Target";
             this.cTargettingStyle.UseVisualStyleBackColor = false;
-            this.cTargettingStyle.CheckedChanged += new System.EventHandler(this.cTargettingStyle_CheckedChanged);
             // 
             // gCosmeticMusicSound
             // 
@@ -2682,7 +2599,6 @@ namespace MMR.UI.Forms
             this.cDisableFanfares.TabIndex = 50;
             this.cDisableFanfares.Text = "Disable Fanfares";
             this.cDisableFanfares.UseVisualStyleBackColor = true;
-            this.cDisableFanfares.CheckedChanged += new System.EventHandler(this.cDisableFanfares_CheckedChanged);
             // 
             // cMusicTrackNames
             // 
@@ -2696,7 +2612,6 @@ namespace MMR.UI.Forms
             this.cMusicTrackNames.TabIndex = 49;
             this.cMusicTrackNames.Text = "Show Track Names";
             this.cMusicTrackNames.UseVisualStyleBackColor = false;
-            this.cMusicTrackNames.CheckedChanged += new System.EventHandler(this.cMusicTrackNames_CheckedChanged);
             // 
             // cRemoveMinorMusic
             // 
@@ -2710,7 +2625,6 @@ namespace MMR.UI.Forms
             this.cRemoveMinorMusic.TabIndex = 48;
             this.cRemoveMinorMusic.Text = "Remove Minor Music";
             this.cRemoveMinorMusic.UseVisualStyleBackColor = false;
-            this.cRemoveMinorMusic.CheckedChanged += new System.EventHandler(this.cRemoveMinorMusic_CheckedChanged);
             // 
             // lLuckRoll
             // 
@@ -2737,7 +2651,6 @@ namespace MMR.UI.Forms
             0,
             0,
             131072});
-            this.tLuckRollPercentage.ValueChanged += new System.EventHandler(this.tLuckRollPercentage_ValueChanged);
             // 
             // lMusic
             // 
@@ -2764,7 +2677,6 @@ namespace MMR.UI.Forms
             this.cMusic.Name = "cMusic";
             this.cMusic.Size = new System.Drawing.Size(140, 23);
             this.cMusic.TabIndex = 42;
-            this.cMusic.SelectedIndexChanged += new System.EventHandler(this.cMusic_SelectedIndexChanged);
             // 
             // cSFX
             // 
@@ -2778,7 +2690,6 @@ namespace MMR.UI.Forms
             this.cSFX.TabIndex = 36;
             this.cSFX.Text = "Randomize SFX";
             this.cSFX.UseVisualStyleBackColor = false;
-            this.cSFX.CheckedChanged += new System.EventHandler(this.cSFX_CheckedChanged);
             // 
             // cCombatMusicDisable
             // 
@@ -2790,7 +2701,6 @@ namespace MMR.UI.Forms
             this.cCombatMusicDisable.TabIndex = 45;
             this.cCombatMusicDisable.Text = "Disable Combat Music";
             this.cCombatMusicDisable.UseVisualStyleBackColor = true;
-            this.cCombatMusicDisable.CheckedChanged += new System.EventHandler(this.cCombatMusicDisable_CheckedChanged);
             // 
             // cEnableNightMusic
             // 
@@ -2802,7 +2712,6 @@ namespace MMR.UI.Forms
             this.cEnableNightMusic.TabIndex = 38;
             this.cEnableNightMusic.Text = "Enable Night BGM";
             this.cEnableNightMusic.UseVisualStyleBackColor = true;
-            this.cEnableNightMusic.CheckedChanged += new System.EventHandler(this.cEnableNightMusic_CheckedChanged);
             // 
             // cLowHealthSFXComboBox
             // 
@@ -2848,7 +2757,6 @@ namespace MMR.UI.Forms
             this.cHueShiftMiscUI.TabIndex = 1;
             this.cHueShiftMiscUI.Text = "Randomize Hue of Miscellaneous UI";
             this.cHueShiftMiscUI.UseVisualStyleBackColor = true;
-            this.cHueShiftMiscUI.CheckedChanged += new System.EventHandler(this.cHueShiftMiscUI_CheckedChanged);
             // 
             // cHUDTableLayoutPanel
             // 
@@ -2982,7 +2890,6 @@ namespace MMR.UI.Forms
             this.cHTMLLog.TabIndex = 14;
             this.cHTMLLog.Text = "Item Tracker .html";
             this.cHTMLLog.UseVisualStyleBackColor = false;
-            this.cHTMLLog.CheckedChanged += new System.EventHandler(this.cHTMLLog_CheckedChanged);
             // 
             // cPatch
             // 
@@ -3010,7 +2917,6 @@ namespace MMR.UI.Forms
             this.cSpoiler.TabIndex = 8;
             this.cSpoiler.Text = "Spoiler log .txt";
             this.cSpoiler.UseVisualStyleBackColor = false;
-            this.cSpoiler.CheckedChanged += new System.EventHandler(this.cSpoiler_CheckedChanged);
             // 
             // cN64
             // 
@@ -3026,7 +2932,6 @@ namespace MMR.UI.Forms
             this.cN64.TabIndex = 10;
             this.cN64.Text = "N64 ROM .z64";
             this.cN64.UseVisualStyleBackColor = false;
-            this.cN64.CheckedChanged += new System.EventHandler(this.cN64_CheckedChanged);
             // 
             // cVC
             // 
@@ -3040,7 +2945,6 @@ namespace MMR.UI.Forms
             this.cVC.TabIndex = 9;
             this.cVC.Text = "Wii VC .wad";
             this.cVC.UseVisualStyleBackColor = false;
-            this.cVC.CheckedChanged += new System.EventHandler(this.cVC_CheckedChanged);
             // 
             // label1
             // 
@@ -3335,20 +3239,6 @@ namespace MMR.UI.Forms
             this.bSkip.UseVisualStyleBackColor = true;
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
-            // 
-            // cTakeDamageFromDexihands
-            // 
-            this.cTakeDamageFromDexihands.AutoSize = true;
-            this.cTakeDamageFromDexihands.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageFromDexihands.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromDexihands.Location = new System.Drawing.Point(153, 213);
-            this.cTakeDamageFromDexihands.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageFromDexihands.Name = "cTakeDamageFromDexihands";
-            this.cTakeDamageFromDexihands.Size = new System.Drawing.Size(112, 19);
-            this.cTakeDamageFromDexihands.TabIndex = 35;
-            this.cTakeDamageFromDexihands.Text = "From Dexihands";
-            this.cTakeDamageFromDexihands.UseVisualStyleBackColor = false;
-            this.cTakeDamageFromDexihands.CheckedChanged += new System.EventHandler(this.cTakeDamageFromDexihands_CheckedChanged);
             // 
             // MainForm
             // 

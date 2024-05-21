@@ -12,9 +12,35 @@ using System.IO;
 using System.Linq.Expressions;
 using MMR.Randomizer.Models.Colors;
 using MMR.Randomizer.Constants;
+using System.Collections;
+using System.Drawing;
+using MMR.Common.Extensions;
+using System.Text.Json.Serialization;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
+using MMR.Randomizer.Attributes.Setting;
 
 namespace MMR.CLI
 {
+    public class SettingValue
+    {
+        public string Label { get; set; }
+        public string Tooltip { get; set; }
+        public string Value { get; set; }
+    }
+
+    public class SettingConfig
+    {
+        public string Path { get; set; }
+        public string DataType { get; set; }
+        public string Label { get; set; }
+        public string Tooltip { get; set; }
+        public object DefaultValue { get; set; }
+        public List<SettingValue> Keys { get; set; }
+        public List<SettingValue> Values { get; set; }
+        public string ValueType { get; set; }
+    }
+
     partial class Program
     {
         static int Main(string[] args)
@@ -30,6 +56,151 @@ namespace MMR.CLI
             else
             {
                 argsDictionary = DictionaryHelper.FromProgramArguments(args);
+            }
+            if (argsDictionary.ContainsKey("-settingsConfig"))
+            {
+                Regex addSpacesRegex = new Regex("(?<!^)([A-Z])");
+                var path = new Stack<string>();
+                var settings = new List<SettingConfig>();
+                void processType(object defaultValue)
+                {
+                    foreach (var property in defaultValue.GetType().GetProperties())
+                    {
+                        if (!property.CanWrite)
+                        {
+                            continue;
+                        }
+                        if (property.HasAttribute<JsonIgnoreAttribute>())
+                        {
+                            continue;
+                        }
+                        if (property.HasAttribute<SettingIgnoreAttribute>())
+                        {
+                            continue;
+                        }
+                        path.Push(property.Name);
+                        string ToLabel(string label)
+                        {
+                            return addSpacesRegex.Replace(label, " $1");
+                        }
+                        SettingConfig settingConfig = new SettingConfig
+                        {
+                            Path = string.Join(".", path.Reverse()),
+                            Label = property.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(property.Name),
+                            Tooltip = property.GetAttribute<DescriptionAttribute>()?.Description,
+                        };
+                        if (property.PropertyType == typeof(string) || property.PropertyType == typeof(decimal) || property.PropertyType == typeof(Color) || property.PropertyType.IsPrimitive)
+                        {
+                            settingConfig.DataType = property.PropertyType.Name;
+                        }
+                        else if (property.PropertyType.IsGenericType || property.PropertyType.IsArray)
+                        {
+                            if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                            {
+                                var keyType = property.PropertyType.GetGenericArguments()[0];
+                                var valueType = property.PropertyType.GetGenericArguments()[1];
+                                if (keyType == typeof(string))
+                                {
+
+                                }
+                                else if (keyType.IsEnum)
+                                {
+                                    settingConfig.DataType = "Dictionary";
+                                    settingConfig.Keys = Enum.GetValues(keyType).Cast<Enum>().Where(v => keyType == typeof(TransformationForm) ? true : Convert.ToInt32(v) > 0).Select(key => new SettingValue
+                                    {
+                                        Value = key.ToString(),
+                                        Label = key.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(key.ToString()),
+                                        Tooltip = key.GetAttribute<DescriptionAttribute>()?.Description,
+                                    }).ToList();
+                                    if (valueType.IsEnum)
+                                    {
+                                        settingConfig.Values = Enum.GetValues(valueType).Cast<Enum>().Select(v => new SettingValue
+                                        {
+                                            Value = v.ToString(),
+                                            Label = v.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(v.ToString()),
+                                        }).ToList();
+                                    }
+                                    else
+                                    {
+                                        settingConfig.ValueType = valueType.Name;
+                                    }
+                                }
+                            }
+                            else if (property.PropertyType.IsAssignableTo(typeof(IEnumerable)) || property.PropertyType.IsArray)
+                            {
+                                var itemType = property.PropertyType.IsArray ? property.PropertyType.GetElementType() : property.PropertyType.GetGenericArguments()[0];
+                                if (itemType == typeof(string) || itemType == typeof(decimal) || itemType.IsPrimitive)
+                                {
+                                    settingConfig.DataType = $"{itemType.Name}[]";
+                                }
+                                else if (itemType.IsEnum)
+                                {
+                                    settingConfig.DataType = "Enum[]";
+                                    settingConfig.Values = Enum.GetValues(itemType).Cast<Enum>().Where(v => Convert.ToInt32(v) > 0).Select(v => new SettingValue
+                                    {
+                                        Value = v.ToString(),
+                                        Label = v.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(v.ToString()),
+                                        Tooltip = v.GetAttribute<DescriptionAttribute>()?.Description,
+                                    }).ToList();
+                                }
+                                else if (itemType.IsGenericType)
+                                {
+                                    if (itemType.IsAssignableTo(typeof(IEnumerable)))
+                                    {
+                                        var itemType2 = itemType.GetGenericArguments()[0];
+                                        if (itemType2 == typeof(string))
+                                        {
+                                            settingConfig.DataType = "String[][]";
+                                        }
+                                        else if (itemType2.IsEnum)
+                                        {
+                                            //settingConfig.DataType = "Enum[][]";
+                                            //settingConfig.Values = Enum.GetNames(itemType2).ToList();
+                                        }
+                                    }
+                                }
+                                else
+                                {
+
+                                }
+                            }
+                            else if (Nullable.GetUnderlyingType(property.PropertyType) != null)
+                            {
+                                settingConfig.DataType = "Nullable " + Nullable.GetUnderlyingType(property.PropertyType);
+                            }
+                        }
+                        else if (property.PropertyType.IsEnum)
+                        {
+                            var isFlagsEnum = property.PropertyType.HasAttribute<FlagsAttribute>();
+                            settingConfig.DataType = isFlagsEnum ? "FlagEnum" : "Enum";
+                            settingConfig.Values = Enum.GetValues(property.PropertyType).Cast<Enum>().Select(v => new SettingValue
+                            {
+                                Value = v.ToString(),
+                                Label = isFlagsEnum && Convert.ToInt32(v) == 0 ? null : v.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(v.ToString()),
+                                Tooltip = v.GetAttribute<DescriptionAttribute>()?.Description,
+                            }).ToList();
+                        }
+                        else if (property.PropertyType.IsClass || property.PropertyType.IsValueType)
+                        {
+                            var propertyValue = property.GetValue(defaultValue);
+                            if (propertyValue == null)
+                            {
+                                propertyValue = Activator.CreateInstance(property.PropertyType);
+                            }
+                            processType(propertyValue);
+                            settingConfig = null;
+                        }
+                        if (settingConfig != null)
+                        {
+                            settingConfig.DefaultValue = property.GetValue(defaultValue);
+                            settings.Add(settingConfig);
+                        }
+                        path.Pop();
+                    }
+                }
+                processType(new Configuration());
+                Console.WriteLine(JsonSerializer.Serialize(settings));
+                return 0;
             }
             if (argsDictionary.ContainsKey("-help"))
             {
@@ -78,7 +249,6 @@ namespace MMR.CLI
                 Console.WriteLine(GetSettingPath(cfg => cfg.CosmeticSettings) + ":");
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.TatlColorSchema));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.Music));
-                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.DisableCombatMusic));
                 Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.Instruments), Enum.GetNames<Instrument>()));
                 Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.HeartsSelection), ColorSelectionManager.Hearts.GetItems().Select(csi => csi.Name)));
                 Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.MagicSelection), ColorSelectionManager.MagicMeter.GetItems().Select(csi => csi.Name)));

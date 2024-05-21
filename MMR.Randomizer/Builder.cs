@@ -173,7 +173,7 @@ namespace MMR.Randomizer
 
         private void WriteEnemyCombatMusicMute()
         {
-            if (_cosmeticSettings.DisableCombatMusic == CombatMusic.Normal)
+            if (!_cosmeticSettings.DisableCombatMusic)
             {
                 return;
             }

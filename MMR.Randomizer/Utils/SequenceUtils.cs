@@ -1320,7 +1320,7 @@ namespace MMR.Randomizer.Utils
                 combatVsBGMCoinToss = false; // "BGM" manually selected because of non-combat songtest
             }
 
-            if (cosmeticSettings.DisableCombatMusic == CombatMusic.All)
+            if (cosmeticSettings.DisableCombatMusic)
             {
                 combatVsBGMCoinToss = false; // "BGM" manually selected because combat music is disabled.
             }
