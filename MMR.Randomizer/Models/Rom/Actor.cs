@@ -7,7 +7,7 @@ using MMR.Randomizer.Utils;
 using MMR.Randomizer.Models.Vectors;
 using System.Collections.Generic;
 using System;
-
+using System.Runtime.CompilerServices;
 
 namespace MMR.Randomizer.Models.Rom
 {
@@ -295,6 +295,11 @@ namespace MMR.Randomizer.Models.Rom
                 this.DynaLoad.poly = dynaProperties.Polygons;
                 this.DynaLoad.vert = dynaProperties.Verticies;
             }
+            else
+            {
+                this.DynaLoad.poly = 0; // none, values are to be reset
+                this.DynaLoad.vert = 0;
+            }
         }
 
         public void ChangeActor(Actor otherActor, int vars = -1)
@@ -368,6 +373,7 @@ namespace MMR.Randomizer.Models.Rom
             AddToSpecificSubtype(ActorType.WaterBottom, injectedActor.waterBottomVariants);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ChangeVariant(int variant)
         {
             /// deep change: changes old variant as well
@@ -602,11 +608,13 @@ namespace MMR.Randomizer.Models.Rom
             return true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool HasVariantsWithRoomLimits()
         {
             return VariantsWithRoomMax != null || OnlyOnePerRoom != null;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int GetTimeFlags()
         {
             // 10 time flags, day and night for days 0 through 4, split in the flags section of the rotation shorts

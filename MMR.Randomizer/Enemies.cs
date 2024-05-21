@@ -3081,6 +3081,7 @@ namespace MMR.Randomizer
                     {
                         markForFinished.Add(list);
                     }
+                    list.Remove(randomlyChosenActor);
                 }
 
                 for (int l = 0; l < markForFinished.Count; l++)
