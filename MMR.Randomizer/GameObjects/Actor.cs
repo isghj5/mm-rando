@@ -2537,7 +2537,7 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(12, 8)]
         [EnemizerScenesPlacementBlock(Scene.PinnacleRock//, // super annoying warping the player all the way back
             /*Scene.StoneTower, Scene.SouthernSwamp, Scene.SouthernSwampClear */)] // dyna crash possible
-        [PlacementWeight(85)]
+        [PlacementWeight(50)]
         Mimi = 0x111, // En_Bu
 
         //[EnemizerEnabled] //crash

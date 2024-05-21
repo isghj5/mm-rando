@@ -179,7 +179,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1208)]
         [SceneInternalId(0x1B)]
-        [DynaHeadroom(32,32)]  // low default to start
+        [DynaHeadroom(48, 48)]  // low default to start
+        [DynaHeadroom(128, 128, room: 6)] // enemy kill rooms can be limited so far it trims all mimi, leaving an unkillable room
+        [DynaHeadroom(128, 128, room: 7)]
         [ClearEnemyPuzzleRooms(4, 6, 7, 8, 9)] // 4: mapchest, 6: snapper room, 7: bow room, 8: BK, 9:dark
         [FairyDroppingEnemies(roomNumber: 1, actorNumber: 4, 34)] // wooden flower room, deku baba and stray fairy in bubble
         [FairyDroppingEnemies(roomNumber: 3, actorNumber: 3)] // west wing, skulltula:3

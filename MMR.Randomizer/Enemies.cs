@@ -3515,7 +3515,7 @@ namespace MMR.Randomizer
                 // StockpotBell, UnusedStoneTowerPlatform , WarpDoor 35,30, MilkbarChairs 20,14, DekuFlower
                 // StockpotBell 33,20, UglyTree 31,something, MajoraBalloonSewer 186 something
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Monkey)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.Snapper, GameObjects.Actor.Mimi)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.GormanRaceTrack, GameObjects.Actor.Flagpole, GameObjects.Actor.HookshotWallSpot)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.Leever, GameObjects.Actor.ButlersSon)) continue;
