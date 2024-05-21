@@ -3518,12 +3518,13 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.Snapper, GameObjects.Actor.Mimi)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.GormanRaceTrack, GameObjects.Actor.Flagpole, GameObjects.Actor.HookshotWallSpot)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.Leever, GameObjects.Actor.ButlersSon)) continue;
+                if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ReDead, GameObjects.Actor.HookshotWallSpot)) continue;
+                if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ClayPot, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.SwimmingZora, GameObjects.Actor.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Monkey)) continue;
-                #endif
+#endif
                 #endregion
 
                 var reducedCandidateList = thisSceneData.CandidatesPerObject[objectIndex].ToList();
@@ -4634,6 +4635,10 @@ namespace MMR.Randomizer
                 FinalActorLimitTrim(thisSceneData);
 
                 WriteOutput($" set after final actor trim: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
+
+                thisSceneData.ActorCollection.SetNewActors(scene, thisSceneData.ChosenReplacementObjects);
+
+                WriteOutput($" set after second setnewactors for final data test: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                 if (thisSceneData.ActorCollection.isSizeAcceptable(bogoLog)) // SUCCESS
                 {

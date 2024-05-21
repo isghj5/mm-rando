@@ -164,7 +164,10 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x18)]
         [FairyDroppingEnemies(roomNumber: 1, actorNumber: 3)] // eygore 
         [FairyDroppingEnemies(roomNumber: 1, actorNumber: 1)] // wizrobe
+        [EnemizerSceneBlockSensitive(Actor.BlueBubble, -1)]
         [ClearEnemyPuzzleRooms(4)] // wizrobe room is a clear all room
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Poe,
+           Actor.Bo)] // they just fall down to the "floor" and its awkward
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DeathArmos,
             Actor.PatrollingPirate)] // casual, causes a need for stone mask to procede through the temple
         InvertedStoneTowerTemple = 0x15,
@@ -697,11 +700,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1444)]
         [SceneInternalId(0x59)]
-        [EnemizerSceneBlockSensitive(Actor.BlueBubble, -1)]
-        // the fuck is this? even if I meant for this to be in the temple it still makes no sense
-        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Poe,
-        //    Actor.Bo)] // can block the whole assension
-        InvertedStoneTower = 0x56,
+        InvertedStoneTower = 0x56, // NOT TEMPLE
 
         [FileID(1446)]
         [SceneInternalId(0x5A)]
