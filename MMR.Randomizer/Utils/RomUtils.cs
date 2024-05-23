@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Numerics;
+using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.Utils
 {
@@ -164,6 +165,7 @@ namespace MMR.Randomizer.Utils
 
             var startTime = DateTime.Now;
 
+            // compress time mostly scales with file length, sorting by biggest first reduces thread starvation
             // sorting the list with .Where().ToList() => OrderByDescending().ToList only takes (~ 0.400 miliseconds) on Isghj's computer
             var sortedCompressibleFiles = RomData.MMFileList
                 .Where(file => file.IsCompressed && file.WasEdited)
@@ -172,9 +174,16 @@ namespace MMR.Randomizer.Utils
 
             // Debug.WriteLine($" sort the list with Sort() : [{(DateTime.Now).Subtract(startTime).TotalMilliseconds} (ms)]");
 
+            // uncompressed files need to have their compressed rom end address zero'd, this tells the game its not compressed
+            foreach (var uncompressedFile in RomData.MMFileList.Where(file => !file.IsCompressed))
+            {
+                uncompressedFile.Cmp_End = 0x0;
+            }
+
             // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
             var previousThreadPriority = Thread.CurrentThread.Priority;
             Thread.CurrentThread.Priority = ThreadPriority.Lowest;
+
             // yaz0 encode all of the files for the rom
             Parallel.ForEach(sortedCompressibleFiles.AsParallel().AsOrdered(), file =>
             {
@@ -189,8 +198,54 @@ namespace MMR.Randomizer.Utils
             Debug.WriteLine($" compress all files time : [{(DateTime.Now).Subtract(startTime).TotalMilliseconds} (ms)]");
         }
 
-        public static byte[] BuildROM()
+        private static void SetFilesToRemainDecompressed(OutputSettings outputSettings)
         {
+            /// Now that files can remain uncompressed and be expected to work, lets leave some commonly accessed files de-compressed so they don't cost as much to load
+
+            if (outputSettings.OutputVC)
+            {
+                return; // this does not work with wiivc right now
+            }
+
+
+            var listOfFiles = new List<int>()
+            {
+                // THESE TWO are the highest priority, huge imporovement 
+                38, // player overlay
+                37, // pause menu
+
+                // actor overlays
+                53, // Fairy "En_Elf",
+                52, // Arrow "EnArrow"
+                47, // BombAndKeg "En_Bom"
+
+                149, // "En_Clear_Tag" // bomb effects and such
+                83,  // "Arms_Hook" // hookshot tip
+                64,  // "ZoraFinBoomerang"
+
+                // objects
+                649, // gameplay_keep, always loaded object
+                650, // field_keep, loaded in most of the overworld
+                651, // dangeon_keep // loaded in all dungeons
+                654, // object_child_link (regular link)
+                655, // goron form
+                656, // zora form
+                657, // deku form
+
+            };
+
+            foreach (var fileId in listOfFiles)
+            {
+                var file = RomData.MMFileList[fileId];
+                RomUtils.CheckCompressed(fileId); // if they werent preiviously modified they might still be compressed, decompress now
+
+                file.IsCompressed = false;
+            }
+        }
+
+        public static byte[] BuildROM(OutputSettings outputSettings)
+        {
+            SetFilesToRemainDecompressed(outputSettings);
             CompressMMFiles();
 
             byte[] ROM = new byte[0x2000000];
