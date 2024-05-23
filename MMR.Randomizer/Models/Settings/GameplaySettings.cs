@@ -353,7 +353,7 @@ namespace MMR.Randomizer.Models.Settings
             "SHT Lensless Walls/Ceilings",
             "Pinnacle Rock without Seahorse",
             "Run Through Poisoned Water",
-            "WFT 2nd Floor Skip",
+            "WFT 2nd Floor With Hookshot",
         };
 
         /// <summary>
