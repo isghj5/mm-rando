@@ -4232,6 +4232,15 @@ namespace MMR.Randomizer
                 }
             }
 
+            // special cases
+            if (thisSceneData.AcceptableCandidates.Any(a => a.ActorEnum == GameObjects.Actor.GaboraBlacksmith))
+            {
+                // we cannot place both the blacksmith and his acountaint in the same place, talking to one can BREAK, but almost always only does this if both are present
+                // random coin toss, remove one
+                var targetActorEnum = (thisSceneData.RNG.Next() % 2 == 1) ? (GameObjects.Actor.GaboraBlacksmith) : (GameObjects.Actor.Zubora);
+                thisSceneData.AcceptableCandidates.RemoveAll(a => a.ActorEnum == targetActorEnum);
+            }
+
         }
 
         private static void SplitSceneLikeLikesIntoTwoActorObjects(SceneEnemizerData thisSceneData)
@@ -4597,10 +4606,6 @@ namespace MMR.Randomizer
                 } // end for actors per object
 
                 WriteOutput($" exit per-object: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
-
-
-                // todo after all object enemies placed, do another TrimAllActors Pass to catch free actors being added above max
-                // todo we need a list of actors that are NOT randomized, left alone, they still exist, and we can ignore new duplicates
 
                 // this no longer works after object re-write, can just lead to rando thinking it has more objects than it does
                 // for now, disable this and test without. I dont think it is needed anymore, now that we shuffle the available candidiates every x cycles
@@ -5656,8 +5661,6 @@ namespace MMR.Randomizer
         }
 
         
-
-
         public bool isSizeAcceptable(StringBuilder log)
         {
             // is the overall size for all maps of night and day equal
