@@ -597,6 +597,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.Grog // still blocks the bridges
             /* Actor.Wolfos */ )] // wolfos:iceblock
         [EnemizerSceneBlockSensitive(Actor.Hiploop, -1)]
+        [EnemizerSceneBlockSensitive(Actor.ClayPot, -1)]
         Woodfall = 0x43,
 
         [FileID(1364)]
