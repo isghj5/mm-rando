@@ -188,6 +188,68 @@ namespace MMR.Randomizer.Utils
 
         public static byte[] BuildROM()
         {
+            /// Now that files can remain uncompressed and be expected to work, lets leave some commonly accessed files de-compressed so they don't cost as much to load
+
+            if (settings.OutputVC)
+            {
+                return; // this does not work with wiivc right now
+            }
+
+
+            var listOfFiles = new List<int>()
+            {
+                //scenes
+                //GameObjects.Scene.TerminaField.FileID(),
+                //GameObjects.Scene.TerminaField.FileID() + 1, // room 0
+                //GameObjects.Scene.SouthClockTown.FileID(),
+                //GameObjects.Scene.SouthClockTown.FileID() + 1, // room 0
+                //GameObjects.Scene.WestClockTown.FileID(),
+                //GameObjects.Scene.WestClockTown.FileID() + 1, // room 0
+                //GameObjects.Scene.EastClockTown.FileID(),
+                //GameObjects.Scene.EastClockTown.FileID() + 1, // room 0
+                //GameObjects.Scene.NorthClockTown.FileID(),
+                //GameObjects.Scene.NorthClockTown.FileID() + 1, // room 0
+                //GameObjects.Scene.Grottos.FileID(),
+                //GameObjects.Scene.Grottos.FileID() + 4, // room 4 : regular chest grotto
+
+                // THESE TWO are the highest priority, huge imporovement 
+                38, // player overlay
+                37, // pause menu
+
+                // actor overlays
+                GameObjects.Actor.Fairy.FileListIndex(),
+                GameObjects.Actor.Arrow.FileListIndex(),
+                GameObjects.Actor.BombAndKeg.FileListIndex(),
+                //GameObjects.Actor.TallGrass.FileListIndex(),
+                GameObjects.Actor.En_Clear_Tag.FileListIndex(), // bomb effects and such
+                GameObjects.Actor.Arms_Hook.FileListIndex(), // hookshot tip
+                GameObjects.Actor.ZoraFinBoomerang.FileListIndex(),
+
+                // objects
+                649, // gameplay_keep
+                650, // field_keep
+                651, // dangeon_keep
+                654, // object_child_link (regular link)
+                655, // goron 
+                656, // zora
+                657, // nuts
+
+            };
+
+            foreach (var fileId in listOfFiles)
+            {
+                var file = RomData.MMFileList[fileId];
+                RomUtils.CheckCompressed(fileId); // if they werent preiviously modified they might still be compressed, decompress now
+                //Debug.Assert(file.IsCompressed);
+
+                file.IsCompressed = false;
+            }
+        }
+
+        public static byte[] BuildROM(OutputSettings settings)
+        {
+            SetFilesToRemainDecompressed(settings);
+
             CompressMMFiles();
 
             byte[] ROM = new byte[0x2000000];
