@@ -273,18 +273,18 @@ namespace MMR.Randomizer.Utils
             var listOfFiles = new List<int>()
             {
                 //scenes
-                GameObjects.Scene.TerminaField.FileID(),
-                GameObjects.Scene.TerminaField.FileID() + 1, // room 0
-                GameObjects.Scene.SouthClockTown.FileID(),
-                GameObjects.Scene.SouthClockTown.FileID() + 1, // room 0
-                GameObjects.Scene.WestClockTown.FileID(),
-                GameObjects.Scene.WestClockTown.FileID() + 1, // room 0
-                GameObjects.Scene.EastClockTown.FileID(),
-                GameObjects.Scene.EastClockTown.FileID() + 1, // room 0
-                GameObjects.Scene.NorthClockTown.FileID(),
-                GameObjects.Scene.NorthClockTown.FileID() + 1, // room 0
-                GameObjects.Scene.Grottos.FileID(),
-                GameObjects.Scene.Grottos.FileID() + 4, // room 4 : regular chest grotto
+                //GameObjects.Scene.TerminaField.FileID(),
+                //GameObjects.Scene.TerminaField.FileID() + 1, // room 0
+                //GameObjects.Scene.SouthClockTown.FileID(),
+                //GameObjects.Scene.SouthClockTown.FileID() + 1, // room 0
+                //GameObjects.Scene.WestClockTown.FileID(),
+                //GameObjects.Scene.WestClockTown.FileID() + 1, // room 0
+                //GameObjects.Scene.EastClockTown.FileID(),
+                //GameObjects.Scene.EastClockTown.FileID() + 1, // room 0
+                //GameObjects.Scene.NorthClockTown.FileID(),
+                //GameObjects.Scene.NorthClockTown.FileID() + 1, // room 0
+                //GameObjects.Scene.Grottos.FileID(),
+                //GameObjects.Scene.Grottos.FileID() + 4, // room 4 : regular chest grotto
 
                 // THESE TWO are the highest priority, huge imporovement 
                 38, // player overlay
