@@ -4728,6 +4728,10 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableMountainVillageWinterLargeSnowball3, Item.CollectableMountainVillageWinterLargeSnowball4,
             Item.SongLullabyIntro
         )]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: -1,
+            Item.CollectableMountainVillageSpringSmallSnowball1, Item.CollectableMountainVillageSpringSmallSnowball2, // small
+            Item.CollectableMountainVillageSpringSmallSnowball3, Item.CollectableMountainVillageSpringSmallSnowball4
+        )]
         [CheckRestricted(Scene.PathToSnowhead, variant: -1,
             Item.CollectablePathToSnowheadSmallSnowball1, Item.CollectablePathToSnowheadSmallSnowball2, // small
             Item.CollectablePathToSnowheadSmallSnowball3, Item.CollectablePathToSnowheadSmallSnowball4,
@@ -6375,7 +6379,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x129)]
         [GroundVariants(5)]
         [UnkillableAllVariants]
-        [PlacementWeight(75)]
+        [PlacementWeight(60)]
         Secretary = 0x290, // En_Recepgirl, Receptionist
 
         [EnemizerEnabled]
@@ -6389,8 +6393,8 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [FlyingToGroundHeightAdjustment(100)]
         //[ForbidFromScene(Scene.TerminaField)] // do not remove original, esp with rupeeland coming soon
-        [PlacementWeight(86)]
-        Takkuri = 0x291, // En_Theifbird
+        [PlacementWeight(75)]
+        Takkuri = 0x291, // En_Thiefbird
 
         //todo
         [FileID(617)]
