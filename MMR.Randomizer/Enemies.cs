@@ -3519,13 +3519,13 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.Snapper, GameObjects.Actor.Mimi)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.GormanRaceTrack, GameObjects.Actor.Flagpole, GameObjects.Actor.HookshotWallSpot)) continue;
-                if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ReDead, GameObjects.Actor.HookshotWallSpot)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ClayPot, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.SwimmingZora, GameObjects.Actor.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Monkey)) continue;
-#endif
+                #endif
                 #endregion
 
                 var reducedCandidateList = thisSceneData.CandidatesPerObject[objectIndex].ToList();
@@ -5646,17 +5646,16 @@ namespace MMR.Randomizer
 
         private bool testDynaSize()
         {
-            //what the fuck how did I forget about this
 
             for(int m = 0; m < oldMapList.Count; ++m)
             {
-                if (isDynaOverLoaded(this.newMapList[m].day, this.newMapList[m].day, m))
+                if (isDynaOverLoaded(this.newMapList[m].day, this.oldMapList[m].day, m))
                     return false;
-                if (isDynaOverLoaded(this.newMapList[m].night, this.newMapList[m].night, m))
+                if (isDynaOverLoaded(this.newMapList[m].night, this.oldMapList[m].night, m))
                     return false;
             }
 
-            return true; // 
+            return true;
         }
 
         
