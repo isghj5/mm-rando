@@ -3454,7 +3454,7 @@ namespace MMR.Randomizer.GameObjects
         //[ForbidFromScene(Scene.MountainVillage)] // IF I can't detect when the ice is important, enable this
         IceBlockWaterPlatforms = 0x179, // Obj_Driftice
 
-        [EnemizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
+        [ActorizerEnabled]
         [FileID(340)]
         [ObjectListIndex(0x135)]
         // variants 0x7F is the switch range (unused) where 7F tells the actor to ignore switches
@@ -5187,7 +5187,7 @@ namespace MMR.Randomizer.GameObjects
         PirateColonel = 0x21D, // En_Kaizoku
 
         // TODO make the one that just looks at you a non-enemy type in the replacement
-        [EnemizerEnabled]
+        [ActorizerEnabled]
         [FileID(501)]
         [ObjectListIndex(0x12E)]
         [CheckRestricted(Scene.PiratesFortressRooms, variant:-1, Item.HeartPiecePiratesFortress)]
