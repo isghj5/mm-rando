@@ -552,6 +552,9 @@ namespace MMR.Randomizer.GameObjects
         [DynaHeadroom(0,0)] // seems very low, for now disable
         [EnemizerSceneEnemyReplacementBlock(Actor.Dampe,
             Actor.Treee)]// for some reason big poe in the first room can cause camera to lock, unknown reason
+        [EnemizerSceneEnemyReplacementBlock(Actor.Dampe,
+            Actor.En_Ani, Actor.SwampTouristGuide, Actor.Secretary, Actor.Scientist, Actor.Takaraya,
+            Actor.BombersBlueHat, Actor.BomberHideoutGuard)] // talking actors can stop gave clipping, requested blocking 
         [EnemizerSceneBlockSensitive(Actor.Dampe, -1)]
         [EnemizerSceneBlockSensitive(Actor.OrangeGraveyardFlower, -1)]
         IkanaGraveyard = 0x40,
