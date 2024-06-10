@@ -822,6 +822,7 @@ namespace MMR.Randomizer
             RandomizePinnacleRockSigns();
             RandomizeDekuPalaceBombiwaSigns();
             ChangeHotwaterGrottoDekuBabaIntoSomethingElse(rng);
+            RandomizeGrottoGossipStonesPerGrotto();
             SwapGreatFairies(rng);
             ModifyFireflyKeeseForPerching();
             SplitPirateSewerMines();
@@ -2066,6 +2067,52 @@ namespace MMR.Randomizer
             grottosScene.Maps[14].Objects[2] = (coinTossResultActor.actor).ObjectIndex();
         }
 
+        private static void RandomizeGrottoGossipStonesPerGrotto()
+        {
+            /// each gossip stone grotto has enough object space to add or switch an object
+            /// and then randomize three of the gossip stones to something new and random
+            /// should be doable without breaking the gossip stone quest
+
+            if (!ReplacementListContains(GameObjects.Actor.GossipStone)) return;
+
+            var grottosScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Grottos.FileID());
+
+            void ChangeStones(Map map, int[] actorSlots, GameObjects.Actor actorType, int actorParam, string name)
+            {
+                for(int i = 0; i < actorSlots.Length; i++)
+                {
+                    var actor = map.Actors[actorSlots[i]];
+                    actor.ChangeActor(actorType, actorParam, modifyOld: true);
+                    actor.OldName = name;
+                }
+            }
+
+            // west butterfly/comb grotto (middle right stone)
+            var westGrotto = grottosScene.Maps[0];
+            westGrotto.Objects[3] = GameObjects.Actor.Leever.ObjectIndex(); // unused deku baba object here, we can override
+            int[] westStoneSlots = { 9, 10, 12 };
+            ChangeStones(westGrotto, westStoneSlots, GameObjects.Actor.Leever, actorParam: 0xFF, "GossipStoneWest");
+
+            // south spider grotto (far left stone)
+            var southGrotto = grottosScene.Maps[1];
+            southGrotto.Objects.Add(GameObjects.Actor.Armos.ObjectIndex()); // three objects in this scene, because of padding there is a fourth free spot without scene expansion
+            var southGrottoRoomFile = RomData.MMFileList[GameObjects.Scene.Grottos.FileID() + 2].Data; // room file
+            southGrottoRoomFile[0x29] = 4; // update object list to load all four objects in-game
+            int[] southGrottoStones = { 4, 5, 6 };
+            ChangeStones(southGrotto, southGrottoStones, GameObjects.Actor.Armos, actorParam: 0x7F, "GossipStoneSouth");
+
+            // east sandy grotto (far right stone)
+            var eastGrotto = grottosScene.Maps[2];
+            eastGrotto.Objects[1] = GameObjects.Actor.Wolfos.ObjectIndex(); // unused deku baba slot can be reused
+            int[] eastStoneSlots = { 5, 6, 7 };
+            ChangeStones(eastGrotto, eastStoneSlots, GameObjects.Actor.Wolfos, actorParam: 0xFF80, "GossipStoneEast");
+
+            // north flooded grotto (middle left stone)
+            var northGrotto = grottosScene.Maps[3];
+            northGrotto.Objects[1] = GameObjects.Actor.Snapper.ObjectIndex(); // unused deku baba slot can be reused
+            int[] northGrottoSlots = { 1, 3, 4 };
+            ChangeStones(northGrotto, northGrottoSlots, GameObjects.Actor.Snapper, actorParam: 0, "GossipStoneNorth");
+        }
 
         private static void SwapGreatFairies(Random rng)
         {
