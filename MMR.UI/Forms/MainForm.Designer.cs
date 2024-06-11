@@ -79,6 +79,7 @@ namespace MMR.UI.Forms
             this.pLocationCategories = new System.Windows.Forms.Panel();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.gGimmicksChallenges = new System.Windows.Forms.GroupBox();
+            this.cTakeDamageFromDexihands = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cTakeDamageFromGibdosFaster = new System.Windows.Forms.CheckBox();
             this.cTakeDamageGettingCaught = new System.Windows.Forms.CheckBox();
@@ -273,7 +274,6 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cTakeDamageFromDexihands = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -515,9 +515,9 @@ namespace MMR.UI.Forms
             this.cEnemy.Location = new System.Drawing.Point(193, 36);
             this.cEnemy.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cEnemy.Name = "cEnemy";
-            this.cEnemy.Size = new System.Drawing.Size(110, 19);
+            this.cEnemy.Size = new System.Drawing.Size(149, 19);
             this.cEnemy.TabIndex = 9;
-            this.cEnemy.Text = "Enemies (BETA!)";
+            this.cEnemy.Text = "Enemies/Actors (BETA!)";
             this.cEnemy.UseVisualStyleBackColor = false;
             this.cEnemy.CheckedChanged += new System.EventHandler(this.cEnemy_CheckedChanged);
             // 
@@ -859,6 +859,20 @@ namespace MMR.UI.Forms
             this.gGimmicksChallenges.TabIndex = 33;
             this.gGimmicksChallenges.TabStop = false;
             this.gGimmicksChallenges.Text = "Challenges";
+            // 
+            // cTakeDamageFromDexihands
+            // 
+            this.cTakeDamageFromDexihands.AutoSize = true;
+            this.cTakeDamageFromDexihands.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromDexihands.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromDexihands.Location = new System.Drawing.Point(153, 213);
+            this.cTakeDamageFromDexihands.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromDexihands.Name = "cTakeDamageFromDexihands";
+            this.cTakeDamageFromDexihands.Size = new System.Drawing.Size(112, 19);
+            this.cTakeDamageFromDexihands.TabIndex = 35;
+            this.cTakeDamageFromDexihands.Text = "From Dexihands";
+            this.cTakeDamageFromDexihands.UseVisualStyleBackColor = false;
+            this.cTakeDamageFromDexihands.CheckedChanged += new System.EventHandler(this.cTakeDamageFromDexihands_CheckedChanged);
             // 
             // label2
             // 
@@ -3085,7 +3099,7 @@ namespace MMR.UI.Forms
             // 
             // bReroll
             // 
-            this.bReroll.Location = new System.Drawing.Point(262, 10);
+            this.bReroll.Location = new System.Drawing.Point(366, 10);
             this.bReroll.Name = "bReroll";
             this.bReroll.Size = new System.Drawing.Size(88, 23);
             this.bReroll.TabIndex = 8;
@@ -3240,7 +3254,7 @@ namespace MMR.UI.Forms
             this.tSeed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tSeed.MaxLength = 10;
             this.tSeed.Name = "tSeed";
-            this.tSeed.Size = new System.Drawing.Size(165, 23);
+            this.tSeed.Size = new System.Drawing.Size(269, 23);
             this.tSeed.TabIndex = 2;
             this.tSeed.Enter += new System.EventHandler(this.tSeed_Enter);
             this.tSeed.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tSeed_KeyDown);
@@ -3346,20 +3360,6 @@ namespace MMR.UI.Forms
             this.bSkip.UseVisualStyleBackColor = true;
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
-            // 
-            // cTakeDamageFromDexihands
-            // 
-            this.cTakeDamageFromDexihands.AutoSize = true;
-            this.cTakeDamageFromDexihands.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageFromDexihands.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromDexihands.Location = new System.Drawing.Point(153, 213);
-            this.cTakeDamageFromDexihands.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageFromDexihands.Name = "cTakeDamageFromDexihands";
-            this.cTakeDamageFromDexihands.Size = new System.Drawing.Size(112, 19);
-            this.cTakeDamageFromDexihands.TabIndex = 35;
-            this.cTakeDamageFromDexihands.Text = "From Dexihands";
-            this.cTakeDamageFromDexihands.UseVisualStyleBackColor = false;
-            this.cTakeDamageFromDexihands.CheckedChanged += new System.EventHandler(this.cTakeDamageFromDexihands_CheckedChanged);
             // 
             // MainForm
             // 
