@@ -427,8 +427,9 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)] // this might actually be free, what the hell
         [ActorInstanceSize(0x1A8)]
         // 0xFF00 is text ID space
-        [GroundVariants(0x400A, 0x420A, 0x2C09, 0x2D0A, 0x2409, 0x2909, // great bay
+        [GroundVariants(0x400A,  0x2C09, 0x2D0A, 0x2409, 0x2909, // great bay
             0x350A, 0x370A, 0x390A,
+            0x400A, 0x420A,// milkroad
             0x3B0A, 0x080A, 0x0D0A, 0x360A)]
         [UnkillableAllVariants]
         PointedSign = 0x26, // En_A_Obj
@@ -6556,7 +6557,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:0, variant:0)]
         [UnkillableAllVariants]
         [PlacementWeight(80)]
-        SoliderMoonLeaveCutscene = 0x2AA, // En_Ending_Hero4
+        SoldierMoonLeaveCutscene = 0x2AA, // En_Ending_Hero4
 
         [ActorizerEnabled]
         [FileID(642)]

@@ -445,23 +445,41 @@ namespace MMR.Randomizer
 
         #region Read and Write Scene Actors and Objects
 
-        public static List<Actor> GetSceneEnemyActors(Scene scene, StringBuilder log)
+        public static void GetSceneEnemyActors(SceneEnemizerData thisSceneData)
         {
             /// Gets all actors in a scene, that we want to randomize
             /// this function is separate from object because actors and objects are a different list in the scene/room data
 
-            // I prefer foreach, but in benchmarks it's considerably slower, and enemizer has performance issues
+            var scene = thisSceneData.Scene;
+            var log = thisSceneData.Log;
+
+            void FixActorLastSecond(Actor mapActor, GameObjects.Actor matchingEnemy, int mapIndex, int actorIndex)
+            {
+                // since not all actors are usable, save doing some of this work only for actors we actually want to modify
+                // do this only after we know this is an actor we want
+
+                mapActor.Name = mapActor.ActorEnum.ToString();
+                mapActor.ObjectSize = ObjUtils.GetObjSize(mapActor.ActorEnum.ObjectIndex());
+                mapActor.RoomActorIndex = actorIndex;
+                mapActor.MustNotRespawn = scene.SceneEnum.IsClearEnemyPuzzleRoom(mapIndex)
+                                       || scene.SceneEnum.IsFairyDroppingEnemy(mapIndex, mapActor.RoomActorIndex);
+                //Debug.Assert(actorNumber == scene.Maps[mapIndex].Actors.IndexOf(mapActor));
+                // TODO: type lookup is not always accurate
+                mapActor.Type = matchingEnemy.GetType(mapActor.OldVariant);
+                mapActor.AllVariants = Actor.BuildVariantList(matchingEnemy);
+                mapActor.Blockable = mapActor.ActorEnum.IsBlockable(scene.SceneEnum, mapActor.RoomActorIndex);
+            }
 
             var sceneEnemyList = new List<Actor>();
+            var sceneObjectlessList = new List<Actor>();
             for (int mapIndex = 0; mapIndex < scene.Maps.Count; ++mapIndex)
             {
-                for (int actorNumber = 0; actorNumber < scene.Maps[mapIndex].Actors.Count; ++actorNumber) // (var mapActor in scene.Maps[mapIndex].Actors)
+                for (int actorIndex = 0; actorIndex < scene.Maps[mapIndex].Actors.Count; ++actorIndex) // (var mapActor in scene.Maps[mapIndex].Actors)
                 {
-                    var mapActor = scene.Maps[mapIndex].Actors[actorNumber];
+                    var mapActor = scene.Maps[mapIndex].Actors[actorIndex];
                     var matchingEnemy = VanillaEnemyList.Find(act => (int)act == mapActor.ActorId);
                     if (matchingEnemy > 0) {
                         var listOfAcceptableVariants = matchingEnemy.AllVariants();
-                        //var listOfAcceptableVariants = matchingEnemy.vVariants;
 
                         // TODO: check if the specific actor can be randomized, required before continue:
                           // actor separation, scene reconstruction, object list extension,  
@@ -469,18 +487,7 @@ namespace MMR.Randomizer
                         if (!matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)
                             && listOfAcceptableVariants.Contains(mapActor.OldVariant))
                         {
-                            // since not all actors are usable, save doing some of this work only for actors we actually want to modify
-                            // do this only after we know this is an actor we want
-                            mapActor.Name = mapActor.ActorEnum.ToString();
-                            mapActor.ObjectSize = ObjUtils.GetObjSize(mapActor.ActorEnum.ObjectIndex());
-                            mapActor.MustNotRespawn = scene.SceneEnum.IsClearEnemyPuzzleRoom(mapIndex)
-                                                   || scene.SceneEnum.IsFairyDroppingEnemy(mapIndex, actorNumber);
-                            //Debug.Assert(actorNumber == scene.Maps[mapIndex].Actors.IndexOf(mapActor));
-                            mapActor.RoomActorIndex = actorNumber;
-                            // TODO: type lookup is not always accurate
-                            mapActor.Type = matchingEnemy.GetType(mapActor.OldVariant);
-                            mapActor.AllVariants = Actor.BuildVariantList(matchingEnemy);
-                            mapActor.Blockable = mapActor.ActorEnum.IsBlockable(scene.SceneEnum, actorNumber);
+                            FixActorLastSecond(mapActor, matchingEnemy, mapIndex, actorIndex);
 
                             sceneEnemyList.Add(mapActor);
                         }
@@ -491,9 +498,24 @@ namespace MMR.Randomizer
                         }
                         #endif
                     }
+                    else
+                    {
+                        var matchingFreeActor = FreeCandidateList.Find(act => act.ActorEnum == mapActor.ActorEnum);
+                        if (matchingFreeActor != null)
+                        {
+                            Debug.Assert(matchingFreeActor.ObjectId <= 3);
+                            FixActorLastSecond(mapActor, matchingFreeActor.ActorEnum, mapIndex, actorIndex);
+
+                            sceneObjectlessList.Add(mapActor);
+                        }
+                    }
                 }
+
+
             }
-            return sceneEnemyList;
+            thisSceneData.Actors = sceneEnemyList;
+            thisSceneData.Actors.AddRange(sceneObjectlessList);
+            thisSceneData.FreelanceActors = sceneObjectlessList;
         }
 
         // if one of these already exists somewhere in the logic I did not find it
@@ -674,55 +696,6 @@ namespace MMR.Randomizer
                     return true; // bean is needed somewhere, cannot remove in case this is the requirement
                 }
             } // */
-            return false;
-        }
-
-        private static bool ObjectIsItemBlocked(/* Scene scene, GameObjects.Actor testActor */)
-        {
-            /// sometimes, an actor cannot be randomized if an item+thisActor leads to more checks
-            /// IE: koume leads to boat ride, but only if red potion or picto are not-junk
-
-            //if (testActor == GameObjects.Actor.InjuredKoume)
-            {
-                // need to check if red potion is NOT randomized
-                //var itemRedPotion = _randomized.ItemList.Find(item => item.Item != null && item.Item == GameObjects.Item.ShopItemWitchRedPotion);
-                // does NOT work, shows false for no-logic, so thats an issue here
-                //var isJunk = ItemUtils.IsJunk(itemRedPotion.Item); 
-
-                //var isRequired = ItemUtils.IsRequired(itemRedPotion.Item, itemRedPotion.locationForImportance, randomizedResult
-
-
-                var end = 0xFF;
-            }
-
-
-            /*
-            var checkRestrictedAttr = testActor.GetAttributes<CheckRestrictedAttribute>();
-            if (checkRestrictedAttr != null && checkRestrictedAttr.Count() > 0) // actor has check restrictions
-            {
-                foreach (var restriction in checkRestrictedAttr) // can have multiple rules
-                {
-                    if (restriction.Scene != ANYSCENE && restriction.Scene != scene.SceneEnum) continue;
-
-                    var restrictedChecks = restriction.Checks;
-                    for (int checkIndex = 0; checkIndex < restrictedChecks.Count; checkIndex++)
-                    {
-                        if (_randomized.ItemList == null) return true; // vanilla logic
-
-                        // TODO: make it random rather than yes/no
-                        var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]).Item;
-                        //var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory)itemInCheck.ItemCategory()) == false);
-                        var itemIsNotJunk = !ItemUtils.IsJunk(itemInCheck);
-                        if (itemIsNotJunk)
-                        {
-                            return true;
-                        }
-                    }
-
-                }
-            } // */
-
-
             return false;
         }
 
@@ -3684,6 +3657,71 @@ namespace MMR.Randomizer
             } // end foreach
         } // end function
 
+
+        public static void ShuffleFreelanceActors(SceneEnemizerData thisSceneData, List<Actor> previouslyAssignedCandidates)
+        {
+            /// this is the same as above but for the actors that previously did not have an object,
+            /// so they can use ANY object require actor, or free actors
+
+            var freelanceActors = thisSceneData.FreelanceActors;
+            // we need to generate a candidate list for all actors without an object just like regular? if we want blocking sensitivity yeah
+            // sort the list of special actors into list of per type
+            var allFreelanceActorsPerEnum = new List<List<Actor>>(); // same index for both, this is a list of all actors per type
+            var allCandidatesPerFreelance = new List<List<Actor>>(); // all candidates for the type replacement
+            var uniqueFreelanceActors = thisSceneData.FreelanceActors.Select(act => act.OldActorEnum).Distinct().ToList();
+            for ( int a = 0; a < uniqueFreelanceActors.Count; a++)
+            {
+                var actorType = uniqueFreelanceActors[a];
+                var allActorInstances = thisSceneData.FreelanceActors.FindAll(act => act.OldActorEnum == actorType);
+                allFreelanceActorsPerEnum.Add(allActorInstances);
+
+                // this is ripped and modified from GenerateActorCandidates
+                //var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(act => act.ObjectIndex() == thisSceneData.Objects[objectIndex]);
+                var objectHasBlockingSensitivity = allActorInstances.Any(actor => actor.Blockable == false);
+                // get a list of matching actors that can fit in the place of the previous actor
+                // assumed that we will never have a fairy dropping object-less actor, those were only enemies
+                var newCandiateList = GetMatchPool(thisSceneData, allActorInstances, containsFairyDroppingEnemy:false, objectHasBlockingSensitivity);
+
+                //allCandidatesPerFreelance
+
+                allCandidatesPerFreelance.Add(newCandiateList);
+
+                if (newCandiateList.Count == 0)
+                    continue;
+
+                for (int actorIndex = 0; actorIndex < allActorInstances.Count(); actorIndex++)
+                {
+                    var oldActor = allActorInstances[actorIndex];
+                    // since we know there is another check later, lets remove room limits from this consideration entirely
+                    //var actorsPerRoomCount = allActorInstances.FindAll(act => act.Room == oldActor.Room).Count();
+
+                    // this isn't really a loop, 99% of the time it matches on the first loop
+                    // leaving this for now because its faster than shuffling the list even if it looks stupid
+                    // eventually: replace with .Single().Where(conditions)
+                    Actor testActor;
+                    while (true)
+                    {
+                        /// looking for a list of objects for the actors we chose that fit the actor types
+                        testActor = newCandiateList[thisSceneData.RNG.Next(newCandiateList.Count)];
+
+                        /* if (testActor.IsCompanion && (oldActor.MustNotRespawn || actorsPerRoomCount <= 2))
+                        {
+                            // so far all companions are unkillable, so we cannot put them in these rooms
+                            // also if the room has no space for companions, dont use them here
+                            continue;
+                        } */
+
+                        break;
+                    }
+
+                    var newVariant = testActor.Variants[thisSceneData.RNG.Next(testActor.Variants.Count)];
+                    oldActor.ChangeActor(testActor, vars: newVariant);
+
+                } // end foreach instance
+            } // end foreach unique actor type
+        } // end function
+
+
         public static void GenerateActorCandidates(SceneEnemizerData thisSceneData, List<GameObjects.Actor> fairyDroppingActors)
         {
             /// Generate a matching set of possible replacement objects and enemies that we can use
@@ -4277,7 +4315,7 @@ namespace MMR.Randomizer
             AddExtraObjectToPiratesInterior(thisSceneData);
         }
 
-        private static void TrimSceneAcceptableActorList(SceneEnemizerData thisSceneData)
+        private static void TrimSceneAcceptableCandidateList(SceneEnemizerData thisSceneData)
         {
             // some scenes are blocked from having enemy placements, do this ONCE before GetMatchPool, which would do it per-enemy
             thisSceneData.AcceptableCandidates = ReplacementCandidateList.FindAll(act => !act.ActorEnum.BlockedScenes().Contains(thisSceneData.Scene.SceneEnum))
@@ -4440,6 +4478,7 @@ namespace MMR.Randomizer
             public Random RNG;
             public DateTime StartTime;
             public List<Actor> Actors;
+            public List<Actor> FreelanceActors; // without an object dependency
             public List<Actor> SceneFreeActors;
             public List<int> Objects;
             public List<List<int>> AllObjects;
@@ -4501,7 +4540,7 @@ namespace MMR.Randomizer
             WriteOutput($" starting timestamp : [{DateTime.Now.ToString("hh:mm:ss.fff tt")}]");
             #endregion
 
-            thisSceneData.Actors = GetSceneEnemyActors(scene, thisSceneData.Log);
+            GetSceneEnemyActors(thisSceneData);
             if (thisSceneData.Actors.Count == 0)
             {
                 return; // if no enemies, no point in continuing
@@ -4545,7 +4584,7 @@ namespace MMR.Randomizer
 
             WriteOutput(" time to finish removing unnecessary objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
-            TrimSceneAcceptableActorList(thisSceneData);
+            TrimSceneAcceptableCandidateList(thisSceneData);
 
             // we want to check for actor types that contain fairies per-scene for speed
             var fairyDroppingActors = GetSceneFairyDroppingEnemyTypes(thisSceneData);
@@ -4669,6 +4708,22 @@ namespace MMR.Randomizer
 
                     previousyAssignedCandidate.Clear();
                 } // end for actors per object
+
+                // finally, randomize actors that have no objects
+                {
+                    var temporaryMatchEnemyList = new List<Actor>();
+                    //List<Actor> subMatches = thisSceneData.CandidatesPerObject[objectIndex].FindAll(act => act.ObjectId == chosenObject);
+
+
+                    // assuming we dont have free actors with companions
+
+                    ShuffleFreelanceActors(thisSceneData, previousyAssignedCandidate);
+                    //WriteOutput($"  match time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
+
+                    TrimAllActors(thisSceneData, previousyAssignedCandidate, temporaryMatchEnemyList);
+                    // WriteOutput($"  trim/free time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
+
+                }
 
                 WriteOutput($" exit per-object: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
