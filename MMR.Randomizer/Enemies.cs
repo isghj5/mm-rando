@@ -3680,20 +3680,32 @@ namespace MMR.Randomizer
                 var objectHasBlockingSensitivity = allActorInstances.Any(actor => actor.Blockable == false);
                 // get a list of matching actors that can fit in the place of the previous actor
                 // assumed that we will never have a fairy dropping object-less actor, those were only enemies
-                var newCandiateList = GetMatchPool(thisSceneData, allActorInstances, containsFairyDroppingEnemy:false, objectHasBlockingSensitivity);
+                //var newCandiateList = GetMatchPool(thisSceneData, allActorInstances, containsFairyDroppingEnemy:false, objectHasBlockingSensitivity);
 
-                //allCandidatesPerFreelance
+                //allCandidatesPerFreelance.Add(newCandiateList);
 
-                allCandidatesPerFreelance.Add(newCandiateList);
-
-                if (newCandiateList.Count == 0)
-                    continue;
 
                 for (int actorIndex = 0; actorIndex < allActorInstances.Count(); actorIndex++)
                 {
                     var oldActor = allActorInstances[actorIndex];
                     // since we know there is another check later, lets remove room limits from this consideration entirely
                     //var actorsPerRoomCount = allActorInstances.FindAll(act => act.Room == oldActor.Room).Count();
+
+                    // get the objects for this room
+                    // quickly grab the candidates for the available objects
+
+                    
+                    var candidatesPerActor = new List<Actor>();
+                    for (int o = 0; o < thisSceneData.AllObjects[oldActor.Room].Count; o++)
+                    {
+                        var obj = thisSceneData.AllObjects[oldActor.Room][o];
+                        var actorsForThisObject = thisSceneData.AcceptableCandidates.FindAll(act => act.ObjectId == obj);
+                        candidatesPerActor.AddRange(actorsForThisObject);
+                    }
+                    candidatesPerActor.AddRange(FreeCandidateList);
+
+                    if (candidatesPerActor.Count == 0)
+                        continue;
 
                     // this isn't really a loop, 99% of the time it matches on the first loop
                     // leaving this for now because its faster than shuffling the list even if it looks stupid
@@ -3702,7 +3714,7 @@ namespace MMR.Randomizer
                     while (true)
                     {
                         /// looking for a list of objects for the actors we chose that fit the actor types
-                        testActor = newCandiateList[thisSceneData.RNG.Next(newCandiateList.Count)];
+                        testActor = candidatesPerActor[thisSceneData.RNG.Next(candidatesPerActor.Count)];
 
                         /* if (testActor.IsCompanion && (oldActor.MustNotRespawn || actorsPerRoomCount <= 2))
                         {
@@ -4714,15 +4726,13 @@ namespace MMR.Randomizer
                     var temporaryMatchEnemyList = new List<Actor>();
                     //List<Actor> subMatches = thisSceneData.CandidatesPerObject[objectIndex].FindAll(act => act.ObjectId == chosenObject);
 
-
                     // assuming we dont have free actors with companions
 
                     ShuffleFreelanceActors(thisSceneData, previousyAssignedCandidate);
                     //WriteOutput($"  match time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
-                    TrimAllActors(thisSceneData, previousyAssignedCandidate, temporaryMatchEnemyList);
-                    // WriteOutput($"  trim/free time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
-
+                    //TrimAllActors(thisSceneData, previousyAssignedCandidate, temporaryMatchEnemyList); // lets let that last check below do this
+                    // WriteOutput($"  trim/free time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog)
                 }
 
                 WriteOutput($" exit per-object: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);

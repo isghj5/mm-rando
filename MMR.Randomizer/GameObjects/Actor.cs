@@ -905,7 +905,8 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(Butterfly, CompanionAlignment.Above, ourVariant: -1,
             variant: 0, 1, 2)]
         [BlockingVariantsAll] // might turn this off again, but at can cause issues, esp in deku palace and races
-        [ForbidFromScene(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead)]
+        [ForbidFromScene(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead,
+            Scene.TerminaField)]
         GrottoHole = 0x55, // Door_Ana
 
         Empty56 = 0x56,

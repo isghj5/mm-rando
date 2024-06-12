@@ -126,7 +126,6 @@ namespace MMR.Randomizer.Models.Rom
             };
 
             // wasnt there a list of lists to static list we had?
-            //this.Variants = injected.groundVariants.Concat(injected.flyingVariants).ToList();
             this.Variants = AllVariants.SelectMany(x => x).ToList();
             this.VariantsWithRoomMax = injected.limitedVariants;
             this.UnplaceableVariants = this.ActorEnum.GetUnPlacableVariants();
