@@ -503,7 +503,12 @@ namespace MMR.Randomizer
                         var matchingFreeActor = FreeCandidateList.Find(act => act.ActorEnum == mapActor.ActorEnum);
                         if (matchingFreeActor != null)
                         {
-                            Debug.Assert(matchingFreeActor.ObjectId <= 3);
+                            //Debug.Assert(matchingFreeActor.ObjectId <= 3);
+                            var sceneRestrictions = matchingFreeActor.ActorEnum.GetAttribute<ForbidFromSceneAttribute>();
+                            if (sceneRestrictions != null && sceneRestrictions.ScenesExcluded.Contains(thisSceneData.Scene.SceneEnum))
+                                continue; // no valid to consider this actor
+
+
                             FixActorLastSecond(mapActor, matchingFreeActor.ActorEnum, mapIndex, actorIndex);
 
                             sceneObjectlessList.Add(mapActor);
