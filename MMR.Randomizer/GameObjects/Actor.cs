@@ -5388,6 +5388,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.GreatBayTemple, variant:-1,
             Item.CollectableGreatBayTempleEntranceRoomBarrel1,
             Item.CollectableGreatBayTempleBlueChuchuValveRoomBarrel1, Item.CollectableGreatBayTempleBlueChuchuValveRoomBarrel2,
+            Item.CollectibleStrayFairyGreatBay11, Item.CollectibleStrayFairyGreatBay13,
             Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel1, Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel2,
             Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel1, Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel2)]
         [CheckRestricted(Scene.PiratesFortress, variant:-1,
