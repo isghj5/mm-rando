@@ -1374,6 +1374,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(136)]
         [ObjectListIndex(0xEE)]
+        [DynaAttributes(6,8)]
         // TODO add secret shrine and swamp spiderhouse
         [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.CollectableRomaniRanchSoftSoil1, Item.CollectableRomaniRanchSoftSoil2)]
         [CheckRestricted(Scene.Grottos, variant: -1, Item.CollectableBeanGrottoSoftSoil1, Item.ChestBeanGrottoRedRupee)]
@@ -5137,7 +5138,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)] // no params
         //[VariantsWithRoomMax(max:10, variant:0)]
         [UnkillableAllVariants]
-        [PlacementWeight(95)] // new actor, for now lets leave high
+        //[PlacementWeight(95)] // new actor, for now lets leave high
         MilkbarChairs = 0x217, // Bg_Mbar_Chair
 
         [FileID(495)]
@@ -5635,7 +5636,9 @@ namespace MMR.Randomizer.GameObjects
         // assumption 0xF is talking ID
         [GroundVariants(0x1E0, 1, 2, 3, 4, 5, 6, 7, 8, 9)]
         [VariantsWithRoomMax( max: 1,
-            0x1E0, 1, 2, 3, 4, 5, 6, 7, 8, 9)]
+            0x1E0, 1, 2, 3, 4, 6, 8, 9)]
+        [VariantsWithRoomMax(max: 0, 
+            5, 7)] // these are tposing types
         [UnkillableAllVariants]
         // we dont have logic to check if this is important enough I guess
         [ForbidFromScene(Scene.BombShop)]//, Scene.GoronShrine)]

@@ -377,7 +377,11 @@ namespace MMR.Randomizer.GameObjects
               night:  dyna poly   delta: [587] newsize: [00026F] oldsize: [000024]
               night:  dyna vert   delta: [410] newsize: [0001B2] oldsize: [000018]
          */
-        [DynaHeadroom(615, 450)] // this is aparently waaaaaaay more than I thought
+        // except the above was tested with a busted counter, needs retesting, 532 was 4 oversized
+        // hmm 498 is still broken, oversized by 2, thinking we have something mis-sized
+        // I checked every actor that spawns, their dyna matches what we should have...
+        // now I can get a crash with 471, which is spooky how is it this far off?
+        [DynaHeadroom(450, 450)] // this is aparently waaaaaaay more than I thought
         // this actor is mostly ignored, player might not even notice, dont waste lots of object budget on this thing
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
             Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]

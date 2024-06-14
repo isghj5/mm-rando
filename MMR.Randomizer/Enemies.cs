@@ -3096,74 +3096,102 @@ namespace MMR.Randomizer
             }
         }
 
-        private static bool TrimDynaActors(SceneEnemizerData thisSceneData, List<List<Actor>> shrinkableActorsList)
+        private static bool TrimDynaActors(SceneEnemizerData thisSceneData, StringBuilder dynaLog)
         {
-            /// shrinkableActorsList is a list of lists, where each list is all actors of the same type in the same room/day/night combo
+            /// too much dyna crashes the game, so we want to trim some of our dyna actors, removing them or turning them into something benign
 
             /// TODO move this to a better spot in the code
 
-            while (shrinkableActorsList.Count > 0)
+            void TrimSmaller(List<List<Actor>> shrinkTargets, List<List<Actor>> markForFinished)
             {
-                var markForFinished = new List<List<Actor>>();
+                // we want to randomize the list so that its not always the same order we remove actors by category, in case we have repeats
+                //shrinkTargets = shrinkTargets.OrderBy(x => thisSceneData.RNG.Next()).ToList();
+                // until such a time as we can detect (actor A exists in both lists and was removed earlier) this is a bit pre-mature, we always remove one from all lists for now
 
-                // per list of lists, remove one actor,
-                for (int l = 0; l < shrinkableActorsList.Count; l++)
+                // remove one from all of the list of lists
+                for (int l = 0; l < shrinkTargets.Count; l++)
                 {
-                    var list = shrinkableActorsList[l];
+                    //target actor list PerRoomTypeAndTime
+                    var list = shrinkTargets[l];
                     if (list.Count <= 1) // in a previous loop we shrank this one too mininum already, ignore
-                        continue;
+                        continue; // this is probably no longer needed 
 
-                    // remove one from all of the list of lists? 
                     var randomlyChosenActor = list[thisSceneData.RNG.Next() % list.Count];
                     var currentRoom = randomlyChosenActor.Room;
 
-                    thisSceneData.Log.AppendLine($" -- dyna overload trimmed actor [{randomlyChosenActor.Name}] on previous [{randomlyChosenActor.OldName}]" +
+                    dynaLog.AppendLine($" -- dyna overload trimmed actor [{randomlyChosenActor.Name}] on previous [{randomlyChosenActor.OldName}]" +
                                                 $" in map [{currentRoom}] index [{randomlyChosenActor.RoomActorIndex}]");
 
                     var roomActors = thisSceneData.Actors.FindAll(a => a.Room == randomlyChosenActor.Room);
 
                     // there is a lot of shlock here that I didn't realize, hopefully doesn't slow us down too much
-                    var blockedActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(roomActors[0].OldActorEnum);
+                    var blockedActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(randomlyChosenActor.OldActorEnum);
                     var roomFreeActors = GetRoomFreeActors(thisSceneData, randomlyChosenActor.Room);
                     // this is a hack, just assume if they have limits we shouldn't use them for this last second replacement
                     roomFreeActors.RemoveAll(actor => actor.DynaLoad.poly > 0
-                                                   || (actor.Variants.Count() > 0 && actor.VariantMaxCountPerRoom(actor.Variants[0]) > 1));
+                                                    || (actor.Variants.Count() > 0 && actor.VariantMaxCountPerRoom(actor.Variants[0]) > 1));
                     List<Actor> acceptableReplacementFreeActors = roomFreeActors.FindAll(a => !blockedActors.Contains(a.ActorEnum)).ToList();
+                    //var acceptableReplacementFreeActors = roomFreeActors.Except(blockedActors).ToList(); // damned default comparator
                     EmptyOrFreeActor(thisSceneData, randomlyChosenActor, roomActors, acceptableReplacementFreeActors,
-                        roomIsClearPuzzleRoom: true); // for now marking this true just because I dont want to re-calculate this since its in the wrong spot, dont both doing this for last second dyna removal
-                                                      // we may have fucked up putting this in the wrong layer
-                                                      //randomlyChosenActor.ChangeActor(GameObjects.Actor.Empty, 0x0); // temp
+                        roomIsClearPuzzleRoom: true); // for now marking this true just because I dont want to re-calculate this since its in the wrong spot,
+                                                      // dont bother doing this for last second dyna removal
+                                                        // we may have fucked up putting this in the wrong layer
 
-                    thisSceneData.Log.AppendLine($" --  replaced with  [{randomlyChosenActor.Name}]");
-
+                    dynaLog.AppendLine($" --  replaced with  [{randomlyChosenActor.Name}] ");
 
                     list.Remove(randomlyChosenActor);
 
-                    if (list.Count <= 1) // too small to contiue to remove, leave alone
+                    if (list.Count <= 1) // too small to continue to remove, leave alone
                     {
                         markForFinished.Add(list);
                     }
 
                     // test if dyna is still an issue, if not remove list
                     var act = thisSceneData.ActorCollection;
+                    act.SetNewActors(thisSceneData.Scene, thisSceneData.ChosenReplacementObjects); // have to update dyna values for the later functions to work
+
+                    //act.newMapList[currentRoom].day.DynaPolySize
                     var dayOverloaded = act.isDynaOverLoaded(act.newMapList[currentRoom].day, act.oldMapList[currentRoom].day, currentRoom);
                     var nightOverloaded = act.isDynaOverLoaded(act.newMapList[currentRoom].night, act.oldMapList[currentRoom].night, currentRoom);
                     if (!dayOverloaded && !nightOverloaded)
                     {
-                        markForFinished.Add(list);
+                        markForFinished.Add(list); // this room should be done, so this list should be removed, it might still cull from the other actors in this room tho
                     }
-                    list.Remove(randomlyChosenActor);
-                }
+                } // end for each list of lists
+            } // end trim smaller
 
-                for (int l = 0; l < markForFinished.Count; l++)
+            void TrimPass(List<List<Actor>> shrinkTargets)
+            {
+                while (shrinkTargets.Count > 0)
                 {
-                    shrinkableActorsList.Remove(markForFinished[l]);
+                    var markForFinished = new List<List<Actor>>();
+
+                    TrimSmaller(shrinkTargets, markForFinished);
+
+                    for (int l = 0; l < markForFinished.Count; l++)
+                    {
+                        shrinkTargets.Remove(markForFinished[l]);
+                    }
+
+                    // alt: we test once per pass instead of per actor removal
                 }
-
-
             }
 
-            return true;
+            // first pass: scan through large lists of large actors first, they are the biggest offenders
+            /// shrinkableActorsList is a list of lists, where each list is all actors of the same type in the same room/day/night combo
+            var shrinkableActorsList = thisSceneData.ActorCollection.GenerateShrinkableDynaList();
+            shrinkableActorsList.RemoveAll(list => list.Count <= 13);
+            TrimPass(shrinkableActorsList);
+
+            shrinkableActorsList = thisSceneData.ActorCollection.GenerateShrinkableDynaList();
+            shrinkableActorsList.RemoveAll(list => list.Count <= 5);
+            TrimPass(shrinkableActorsList);
+
+            // second pass: no, all of the large lists werent the issue, we still need to trim the small lists
+            shrinkableActorsList = thisSceneData.ActorCollection.GenerateShrinkableDynaList();
+            TrimPass(shrinkableActorsList);
+
+            return false;
         }
 
         public static void FinalActorLimitTrim(SceneEnemizerData thisSceneData)
@@ -3576,7 +3604,7 @@ namespace MMR.Randomizer
                 }
 
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GoronKid)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.BadBat, GameObjects.Actor.MilkbarChairs)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.MilkbarChairs)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.En_Boj_04)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Boj_04)) continue;
@@ -4692,17 +4720,14 @@ namespace MMR.Randomizer
                 WriteOutput($" set for size check: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                 // dyna overflow is a common crash concern, here we need to check if we overflow and shrink the dyna actor count
+                var dynaLog = new StringBuilder();
                 var dynatest = thisSceneData.ActorCollection.isDynaSizeAcceptable();
                 if (dynatest != "acceptable")
                 {
                     // we failed the first test, try removing some dyna actors to compensate
                     // now we need to try trimming the dyna to smaller size by reducing each dyna by one until it fits or doesnt
-                    var shrinkableActorList = thisSceneData.ActorCollection.GenerateShrinkableDynaList();
 
-                    while (shrinkableActorList.Count > 0) // shrinkable is curated within trimdynaactors, if its shrinks to empty we are done
-                    {
-                        TrimDynaActors(thisSceneData, shrinkableActorList);
-                    }
+                    var dynaTrimSuccess = TrimDynaActors(thisSceneData, dynaLog);
                 }
 
                 WriteOutput($" set for dyna trim: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
@@ -4718,9 +4743,10 @@ namespace MMR.Randomizer
 
                 if (thisSceneData.ActorCollection.isSizeAcceptable(bogoLog)) // SUCCESS
                 {
-                    WriteOutput($" after issizeacceptable: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
+                    WriteOutput($" after isSizeAcceptable: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                     //thisSceneData.Log.Append(objectReplacementLog);
+                    thisSceneData.Log.Append(dynaLog);
                     break; // done, break loop
                 }
                 // else: not small enough; reset loop and try again
@@ -4763,14 +4789,16 @@ namespace MMR.Randomizer
             for (int a = 0; a < thisSceneData.Actors.Count; a++)
             {
                 var actor = thisSceneData.Actors[a];
+                string dsize = actor.DynaLoad.poly > 0 ? $" dyn: [{actor.DynaLoad.poly}]" : "";
                 #if DEBUG
-                var actorNameData = $"  Old actor:[{thisSceneData.Scene.SceneEnum}][{actor.Room.ToString("D2")}][{actor.OldName}] ";
+                var actorNameData = $"  Old actor:[{thisSceneData.Scene.SceneEnum}][{actor.Room.ToString("D2")}][{actor.OldName}]";
                 #else
                 var actorNameData = $"  Old actor:[{actor.Room.ToString("D2")}][{actor.OldName}] ";
                 #endif
                 WriteOutput(actorNameData +
                     $"was replaced by new actor: [{actor.Variants[0].ToString("X4")}]" +
-                    $"[{actor.Name}]");
+                    $"[{actor.Name}]"
+                    + dsize);
             }
 
             WriteOutput("---------------------------------------------------------");
