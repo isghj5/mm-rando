@@ -1055,6 +1055,11 @@ namespace MMR.Randomizer
                 var milkbarScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MilkBar.FileID());
                 milkbarScene.Maps[0].Objects[10] = GameObjects.Actor.ArcheryMiniGameMan.ObjectIndex();
 
+                // the ceiling water drip effect actor was placed too close to the door, can softlock if it knocks the player away (skulltula)
+                var underGraveyardScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.BeneathGraveyard.FileID());
+                underGraveyardScene.Maps[0].Actors[1].Position.x = 20; // facing door from hole, move back toward door
+                underGraveyardScene.Maps[0].Actors[1].Position.z = 251; // facing door from hole, move left toward day 2
+
                 // trying to fix clock, nothing
                 //var curiosityShopClock = curiosityShop.Maps[0].Actors[5];
                 //curiosityShopClock.Position.x = -130;
