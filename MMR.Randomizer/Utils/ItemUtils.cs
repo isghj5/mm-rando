@@ -99,7 +99,6 @@ namespace MMR.Randomizer.Utils
                     Item.SongTime, // Hinted by the Scarecrow
                     Item.SongSoaring, // Hinted by the southern swamp owl
                 };
-                npcTextHintedItems.AddRange(BossRemains()); // Hinted by Tatl and Tael
 
                 if (npcTextHintedItems.Contains(item))
                 {
@@ -110,6 +109,14 @@ namespace MMR.Randomizer.Utils
             if (settings.OathHint)
             {
                 if (item == Item.SongOath) // Hinted by the Giants
+                {
+                    return true;
+                }
+            }
+
+            if (settings.RemainsHint)
+            {
+                if (BossRemains().Contains(item)) // Hinted by Tatl and Tael
                 {
                     return true;
                 }

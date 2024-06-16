@@ -145,6 +145,7 @@ namespace MMR.UI.Forms
                 { cUpdateChests, cfg => cfg.GameplaySettings.UpdateChests },
                 { cUpdateNpcText, cfg => cfg.GameplaySettings.UpdateNPCText },
                 { cOathHint, cfg => cfg.GameplaySettings.OathHint },
+                { cRemainsHint, cfg => cfg.GameplaySettings.RemainsHint },
                 { cEponaSword, cfg => cfg.GameplaySettings.FixEponaSword },
                 { cDrawHash, cfg => cfg.GameplaySettings.DrawHash },
                 { cQuestItemStorage, cfg => cfg.GameplaySettings.QuestItemStorage },
@@ -1361,6 +1362,7 @@ namespace MMR.UI.Forms
             cUpdateChests.Checked = _configuration.GameplaySettings.UpdateChests;
             cUpdateNpcText.Checked = _configuration.GameplaySettings.UpdateNPCText;
             cOathHint.Checked = _configuration.GameplaySettings.OathHint;
+            cRemainsHint.Checked = _configuration.GameplaySettings.RemainsHint;
             cSkipBeaver.Checked = _configuration.GameplaySettings.SpeedupBeavers;
             cGoodDampeRNG.Checked = _configuration.GameplaySettings.SpeedupDampe;
             cGoodDogRaceRNG.Checked = _configuration.GameplaySettings.SpeedupDogRace;

@@ -134,6 +134,7 @@ namespace MMR.UI.Forms
             this.cNutAndStickDrops = new System.Windows.Forms.ComboBox();
             this.tabComfort = new System.Windows.Forms.TabPage();
             this.gHintsGeneral = new System.Windows.Forms.GroupBox();
+            this.cOathHint = new System.Windows.Forms.CheckBox();
             this.bCustomizeHintPriorities = new System.Windows.Forms.Button();
             this.cHintImportance = new System.Windows.Forms.CheckBox();
             this.cMixGaroWithGossip = new System.Windows.Forms.CheckBox();
@@ -274,7 +275,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cOathHint = new System.Windows.Forms.CheckBox();
+            this.cRemainsHint = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1569,16 +1570,27 @@ namespace MMR.UI.Forms
             // 
             // gHintsGeneral
             // 
+            this.gHintsGeneral.Controls.Add(this.cRemainsHint);
             this.gHintsGeneral.Controls.Add(this.cOathHint);
             this.gHintsGeneral.Controls.Add(this.bCustomizeHintPriorities);
             this.gHintsGeneral.Controls.Add(this.cHintImportance);
             this.gHintsGeneral.Controls.Add(this.cMixGaroWithGossip);
             this.gHintsGeneral.Location = new System.Drawing.Point(7, 250);
             this.gHintsGeneral.Name = "gHintsGeneral";
-            this.gHintsGeneral.Size = new System.Drawing.Size(245, 96);
+            this.gHintsGeneral.Size = new System.Drawing.Size(341, 96);
             this.gHintsGeneral.TabIndex = 39;
             this.gHintsGeneral.TabStop = false;
             this.gHintsGeneral.Text = "Hints";
+            // 
+            // cOathHint
+            // 
+            this.cOathHint.AutoSize = true;
+            this.cOathHint.Location = new System.Drawing.Point(200, 45);
+            this.cOathHint.Name = "cOathHint";
+            this.cOathHint.Size = new System.Drawing.Size(52, 19);
+            this.cOathHint.TabIndex = 17;
+            this.cOathHint.Text = "Oath";
+            this.cOathHint.UseVisualStyleBackColor = true;
             // 
             // bCustomizeHintPriorities
             // 
@@ -2039,11 +2051,11 @@ namespace MMR.UI.Forms
             // 
             this.groupBox8.Controls.Add(this.lLink);
             this.groupBox8.Controls.Add(this.cLink);
-            this.groupBox8.Location = new System.Drawing.Point(260, 250);
+            this.groupBox8.Location = new System.Drawing.Point(355, 250);
             this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox8.Size = new System.Drawing.Size(246, 96);
+            this.groupBox8.Size = new System.Drawing.Size(151, 96);
             this.groupBox8.TabIndex = 35;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Cosmetic Customization";
@@ -3242,15 +3254,15 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // cOathHint
+            // cRemainsHint
             // 
-            this.cOathHint.AutoSize = true;
-            this.cOathHint.Location = new System.Drawing.Point(149, 20);
-            this.cOathHint.Name = "cOathHint";
-            this.cOathHint.Size = new System.Drawing.Size(52, 19);
-            this.cOathHint.TabIndex = 17;
-            this.cOathHint.Text = "Oath";
-            this.cOathHint.UseVisualStyleBackColor = true;
+            this.cRemainsHint.AutoSize = true;
+            this.cRemainsHint.Location = new System.Drawing.Point(200, 20);
+            this.cRemainsHint.Name = "cRemainsHint";
+            this.cRemainsHint.Size = new System.Drawing.Size(98, 19);
+            this.cRemainsHint.TabIndex = 18;
+            this.cRemainsHint.Text = "Boss Remains";
+            this.cRemainsHint.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -3589,6 +3601,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cTakeDamageWhileShielding;
         private System.Windows.Forms.CheckBox cTakeDamageFromDexihands;
         private System.Windows.Forms.CheckBox cOathHint;
+        private System.Windows.Forms.CheckBox cRemainsHint;
     }
 }
 

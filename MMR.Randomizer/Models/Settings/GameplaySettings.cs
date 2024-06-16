@@ -642,6 +642,9 @@ namespace MMR.Randomizer.Models.Settings
         [Description("When you take the boss warp after defeating a temple boss, if you have enough boss remains to go to the moon and do not have Oath to Order then a cutscene will play in which the Giants reveal to you the region where the Oath to Order is located.\n\nIf Mix Songs With Items is disabled, they will instead reveal the region of the Powder Keg, Captain's Hat, Mirror Shield, Deku Mask, Goron Mask or Zora Mask, depending on where the Oath to Order is.")]
         public bool OathHint { get; set; }
 
+        [Description("At the entrance to the Clock Tower Interior, Tatl will prompt to speak and will tell you the regions where the Boss Remains are located.")]
+        public bool RemainsHint { get; set; }
+
         /// <summary>
         /// Change epona B button behavior to prevent player losing sword if they don't have a bow.
         /// </summary>
