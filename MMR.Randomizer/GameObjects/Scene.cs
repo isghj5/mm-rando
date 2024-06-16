@@ -380,8 +380,11 @@ namespace MMR.Randomizer.GameObjects
         // except the above was tested with a busted counter, needs retesting, 532 was 4 oversized
         // hmm 498 is still broken, oversized by 2, thinking we have something mis-sized
         // I checked every actor that spawns, their dyna matches what we should have...
-        // now I can get a crash with 471, which is spooky how is it this far off?
-        [DynaHeadroom(450, 450)] // this is aparently waaaaaaay more than I thought
+        // now I can get a crash with 471, which is spooky how is it this far off? (and in-game it says its over 50 off)
+        // measurement of 446 was a pass? hmm, until I can find the cause of the measuremnet descrepency
+        [DynaHeadroom(450, 450)] // acceptably tiny risk
+        // more testing: 458 recorded was 548 (+4) in the crash screen thats 90 OFF
+        //[DynaHeadroom(490, 475)]
         // this actor is mostly ignored, player might not even notice, dont waste lots of object budget on this thing
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
             Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
@@ -701,7 +704,7 @@ namespace MMR.Randomizer.GameObjects
         // one swlift, 0x1C/0x10: works
         // one swlift, 3 cuttable ivy, 0x22/0x1C, works
         // two swlift was fine?? how did I even get crashes previously??
-        [DynaHeadroom(38, 32)]
+        [DynaHeadroom(34, 32)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Keese,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the whole assension
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,

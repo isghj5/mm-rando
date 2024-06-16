@@ -874,9 +874,9 @@ namespace MMR.Randomizer
             // the south field dekubaba to the east is facing south, because in vanilla its direction does not matter
             // rotate to face out of the field
             var southDekubaba = terminafieldScene.Maps[0].Actors[45];
-            southDekubaba.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: southDekubaba.Rotation.y); // fixes the leever spawn is too low (bombchu explode)
+            southDekubaba.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: southDekubaba.Rotation.y);
             southDekubaba = terminafieldScene.Maps[0].Actors[44];
-            southDekubaba.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: southDekubaba.Rotation.y); // fixes the leever spawn is too low (bombchu explode)
+            southDekubaba.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: southDekubaba.Rotation.y);
 
             // in STT, move the bombchu in the first room 
             //   backward several feet from the chest, so replacement cannot block the chest
@@ -3386,6 +3386,7 @@ namespace MMR.Randomizer
                 {
                     testActor.Rotation.x = ActorUtils.MergeRotationAndFlags(45, flags: testActor.Rotation.x); // pitch rotation down a bit
                 }
+                // special case: monkey spawns with an extra height offset from the floor, not at the location of the visible model
                 if (testActor.ActorEnum == GameObjects.Actor.Monkey && testActor.Variants[0] == 0x02FF
                     && wallVariants != null && wallVariants.Variants.Contains(testActor.OldVariant))
                 {
@@ -5620,8 +5621,14 @@ namespace MMR.Randomizer
             // split enemies into day and night, init two types
             int dayFlagMask = 0x2AA; // nigth is just shifted to the right by one
 
-            day = new BaseEnemiesCollection(actorList.FindAll(act => (act.GetTimeFlags() & dayFlagMask) > 0), objList, scene);
-            night = new BaseEnemiesCollection(actorList.FindAll(act => (act.GetTimeFlags() & (dayFlagMask >> 1)) > 0), objList, scene);
+            var dayActors = actorList.FindAll(act => (act.GetTimeFlags() & dayFlagMask) > 0);
+            this.day = new BaseEnemiesCollection(dayActors, objList, scene);
+            var nightActors = actorList.FindAll(act => (act.GetTimeFlags() & (dayFlagMask >> 1)) > 0);
+            this.night = new BaseEnemiesCollection(nightActors, objList, scene);
+#if DEBUG
+            //var missingElements = actorList.Except(dayActors).Except(nightActors).ToList();
+            //Debug.Assert(missingElements.Count == 0);
+#endif
         }
     }
 

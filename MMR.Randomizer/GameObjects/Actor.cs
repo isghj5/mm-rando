@@ -4777,7 +4777,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(467)]
         [ObjectListIndex(0x1D2)]
-        [DynaAttributes(10, 8)]
+        [DynaAttributes(34, 20)]
         // no params, again with the weird vanilla param data
         [GroundVariants(0xFF)]
         [WaterBottomVariants(0x77)]
