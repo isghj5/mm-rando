@@ -144,6 +144,7 @@ namespace MMR.UI.Forms
                 { cShopAppearance, cfg => cfg.GameplaySettings.UpdateShopAppearance },
                 { cUpdateChests, cfg => cfg.GameplaySettings.UpdateChests },
                 { cUpdateNpcText, cfg => cfg.GameplaySettings.UpdateNPCText },
+                { cOathHint, cfg => cfg.GameplaySettings.OathHint },
                 { cEponaSword, cfg => cfg.GameplaySettings.FixEponaSword },
                 { cDrawHash, cfg => cfg.GameplaySettings.DrawHash },
                 { cQuestItemStorage, cfg => cfg.GameplaySettings.QuestItemStorage },
@@ -1294,10 +1295,6 @@ namespace MMR.UI.Forms
             {
                 _configuration.GameplaySettings.ShortenCutsceneSettings = new ShortenCutsceneSettings();
             }
-            if (_configuration.GameplaySettings.HintAndPeekSetting == null)
-            {
-                _configuration.GameplaySettings.HintAndPeekSetting = new HintAndPeekSetting();
-            }
             foreach (TabPage shortenCutsceneTab in tShortenCutscenes.TabPages)
             {
                 var shortenCutsceneGroup = (PropertyInfo)shortenCutsceneTab.Tag;
@@ -1363,6 +1360,7 @@ namespace MMR.UI.Forms
             cEponaSword.Checked = _configuration.GameplaySettings.FixEponaSword;
             cUpdateChests.Checked = _configuration.GameplaySettings.UpdateChests;
             cUpdateNpcText.Checked = _configuration.GameplaySettings.UpdateNPCText;
+            cOathHint.Checked = _configuration.GameplaySettings.OathHint;
             cSkipBeaver.Checked = _configuration.GameplaySettings.SpeedupBeavers;
             cGoodDampeRNG.Checked = _configuration.GameplaySettings.SpeedupDampe;
             cGoodDogRaceRNG.Checked = _configuration.GameplaySettings.SpeedupDogRace;
@@ -2032,7 +2030,6 @@ namespace MMR.UI.Forms
                 GameplaySettings = new GameplaySettings
                 {
                     ShortenCutsceneSettings = new ShortenCutsceneSettings(),
-                    HintAndPeekSetting = new HintAndPeekSetting(),
                 },
                 CosmeticSettings = new CosmeticSettings(),
             };

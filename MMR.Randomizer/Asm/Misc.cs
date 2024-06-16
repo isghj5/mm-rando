@@ -711,7 +711,7 @@ namespace MMR.Randomizer.Asm
             this.Speedups.FastBankRupees = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FasterBankText);
             this.Speedups.ShortChestOpening = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.ShortChestOpening);
             this.Speedups.SkipGiantsCutscene = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.EverythingElse);
-            this.Speedups.OathHint = settings.UpdateNPCText;
+            this.Speedups.OathHint = settings.OathHint;
 
             // If using Adult Link model, allow Mikau cutscene to activate early.
             this.Flags.EarlyMikau = settings.Character == Character.AdultLink;

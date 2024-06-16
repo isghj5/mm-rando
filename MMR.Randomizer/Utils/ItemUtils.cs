@@ -92,7 +92,6 @@ namespace MMR.Randomizer.Utils
                 var npcTextHintedItems = new List<Item>
                 {
                     Item.CollectibleStrayFairyClockTown, // Hinted by the Town Fairy Fountain
-                    Item.SongOath, // Hinted by the Giants
                     Item.ItemPowderKeg, // Hinted by the Bomb Shop Goron
                     Item.ItemBottleGoronRace, // Hinted by the Smithy
                     Item.ItemBottleBeavers, // Hinted by Evan
@@ -103,6 +102,14 @@ namespace MMR.Randomizer.Utils
                 npcTextHintedItems.AddRange(BossRemains()); // Hinted by Tatl and Tael
 
                 if (npcTextHintedItems.Contains(item))
+                {
+                    return true;
+                }
+            }
+
+            if (settings.OathHint)
+            {
+                if (item == Item.SongOath) // Hinted by the Giants
                 {
                     return true;
                 }

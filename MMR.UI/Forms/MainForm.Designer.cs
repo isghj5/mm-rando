@@ -274,6 +274,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
+            this.cOathHint = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1568,6 +1569,7 @@ namespace MMR.UI.Forms
             // 
             // gHintsGeneral
             // 
+            this.gHintsGeneral.Controls.Add(this.cOathHint);
             this.gHintsGeneral.Controls.Add(this.bCustomizeHintPriorities);
             this.gHintsGeneral.Controls.Add(this.cHintImportance);
             this.gHintsGeneral.Controls.Add(this.cMixGaroWithGossip);
@@ -3240,6 +3242,16 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
+            // cOathHint
+            // 
+            this.cOathHint.AutoSize = true;
+            this.cOathHint.Location = new System.Drawing.Point(149, 20);
+            this.cOathHint.Name = "cOathHint";
+            this.cOathHint.Size = new System.Drawing.Size(52, 19);
+            this.cOathHint.TabIndex = 17;
+            this.cOathHint.Text = "Oath";
+            this.cOathHint.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3576,6 +3588,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cTakeDamageFromVoid;
         private System.Windows.Forms.CheckBox cTakeDamageWhileShielding;
         private System.Windows.Forms.CheckBox cTakeDamageFromDexihands;
+        private System.Windows.Forms.CheckBox cOathHint;
     }
 }
 

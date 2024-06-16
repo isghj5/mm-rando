@@ -3439,6 +3439,83 @@ namespace MMR.Randomizer
                 }
             }
 
+            if (_randomized.Settings.OathHint)
+            {
+                var oathItem = _randomized.ItemList[Item.SongOath];
+
+                if (!_randomized.Settings.AddSongs)
+                {
+                    switch (oathItem.NewLocation.Value)
+                    {
+                        case Item.SongTime:
+                            break;
+                        case Item.SongHealing:
+                            oathItem = null;
+                            break;
+                        case Item.SongEpona:
+                            oathItem = _randomized.ItemList[Item.ItemPowderKeg];
+                            break;
+                        case Item.SongSoaring:
+                            oathItem = _randomized.ItemList[Item.MaskDeku];
+                            break;
+                        case Item.SongStorms:
+                            oathItem = _randomized.ItemList[Item.MaskCaptainHat];
+                            break;
+                        case Item.SongSonata:
+                            oathItem = _randomized.ItemList[Item.MaskDeku];
+                            break;
+                        case Item.SongLullaby:
+                            oathItem = _randomized.ItemList[Item.MaskGoron];
+                            break;
+                        case Item.SongLullabyIntro:
+                            oathItem = _randomized.ItemList[Item.MaskGoron];
+                            break;
+                        case Item.SongNewWaveBossaNova:
+                            oathItem = _randomized.ItemList[Item.MaskZora];
+                            break;
+                        case Item.SongElegy:
+                            oathItem = _randomized.ItemList[Item.UpgradeMirrorShield];
+                            break;
+                        case Item.SongOath:
+                            oathItem = null;
+                            break;
+                    }
+                }
+
+                if (oathItem != null && oathItem.IsRandomized)
+                {
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x208B)
+                        .Message(it =>
+                        {
+                            it.StartLightBlueText()
+                            .PauseText(10)
+                            .Text("\"");
+                            var oathRegion = oathItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList).Name();
+                            for (var i = 0; i < oathRegion.Length; i++)
+                            {
+                                var c = oathRegion[i];
+                                it.Text(c.ToString());
+                                if (i == oathRegion.Length - 1)
+                                {
+                                    it.Text(".");
+                                }
+                                else if (c != ' ')
+                                {
+                                    it.PauseText(20);
+                                }
+                            }
+                            it.Text("\"").NewLine()
+                            .Text(" ").NewLine()
+                            .PauseText(10)
+                            .Text("That's what they're saying.")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                }
+            }
+
             if (_randomized.Settings.UpdateNPCText)
             {
                 var clockTownFairyItem = _randomized.ItemList[Item.CollectibleStrayFairyClockTown];
@@ -3991,78 +4068,6 @@ namespace MMR.Randomizer
                     );
 
                     ResourceUtils.ApplyHack(Resources.mods.tatl_remains_hint);
-                }
-
-                var oathItem = _randomized.ItemList[Item.SongOath];
-                if (!_randomized.Settings.AddSongs)
-                {
-                    switch (oathItem.NewLocation.Value)
-                    {
-                        case Item.SongTime:
-                            break;
-                        case Item.SongHealing:
-                            oathItem = null;
-                            break;
-                        case Item.SongEpona:
-                            oathItem = _randomized.ItemList[Item.ItemPowderKeg];
-                            break;
-                        case Item.SongSoaring:
-                            oathItem = _randomized.ItemList[Item.MaskDeku];
-                            break;
-                        case Item.SongStorms:
-                            oathItem = _randomized.ItemList[Item.MaskCaptainHat];
-                            break;
-                        case Item.SongSonata:
-                            oathItem = _randomized.ItemList[Item.MaskDeku];
-                            break;
-                        case Item.SongLullaby:
-                            oathItem = _randomized.ItemList[Item.MaskGoron];
-                            break;
-                        case Item.SongLullabyIntro:
-                            oathItem = _randomized.ItemList[Item.MaskGoron];
-                            break;
-                        case Item.SongNewWaveBossaNova:
-                            oathItem = _randomized.ItemList[Item.MaskZora];
-                            break;
-                        case Item.SongElegy:
-                            oathItem = _randomized.ItemList[Item.UpgradeMirrorShield];
-                            break;
-                        case Item.SongOath:
-                            oathItem = null;
-                            break;
-                    }
-                }
-                if (oathItem != null && oathItem.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x208B)
-                        .Message(it =>
-                        {
-                            it.StartLightBlueText()
-                            .PauseText(10)
-                            .Text("\"");
-                            var oathRegion = oathItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList).Name();
-                            for (var i = 0; i < oathRegion.Length; i++)
-                            {
-                                var c = oathRegion[i];
-                                it.Text(c.ToString());
-                                if (i == oathRegion.Length - 1)
-                                {
-                                    it.Text(".");
-                                }
-                                else if (c != ' ')
-                                {
-                                    it.PauseText(20);
-                                }
-                            }
-                            it.Text("\"").NewLine()
-                            .Text(" ").NewLine()
-                            .PauseText(10)
-                            .Text("That's what they're saying.")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
                 }
 
                 /*
