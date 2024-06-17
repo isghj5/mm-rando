@@ -424,7 +424,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         // FILE MISSING (always loaded)
         //[ObjectListIndex(0xFC)] // the spreadsheet thinks this is free but I dont think so, think its a multi-object like tsubo
-        [ObjectListIndex(0x1)] // this might actually be free, what the hell
+        [ObjectListIndex(0x1)]
         [ActorInstanceSize(0x1A8)]
         // 0xFF00 is text ID space
         [GroundVariants(0x400A, 0x420A, 0x2C09, 0x2D0A, 0x2409, 0x2909, // great bay
@@ -1588,7 +1588,12 @@ namespace MMR.Randomizer.GameObjects
         // 0 is pointing in the distance
         [GroundVariants(0,
             1, 2, 3)]
+        //[PathingVariants()]
         // pathing 0xFC00 >> A
+        // this is the cutscene version, the one that is most likely to break
+        // in some testing it just dissapears, but can it break?
+        [VariantsWithRoomMax(max: 0, variant: 0)] 
+        //[VariantsWithRoomMax(max: 0, variant: 1,2,3)] // testing
         [UnkillableAllVariants]
         CutscenePirate = 0x9F, // En_Ge1
 
@@ -3130,7 +3135,7 @@ namespace MMR.Randomizer.GameObjects
         // there are actaually 3 others, but they are three separate objects, so hard to program
         [FileID(314)]
         [ObjectListIndex(0x173)]
-        [DynaAttributes(14,12)] // this is multiple object, this one is triforce
+        [DynaAttributes(18,12)] // this is multiple object, this one is triforce
         // spreadsheet thinks 0x206 could be it
         [GroundVariants(0)]
         [WaterBottomVariants(0)]
@@ -3561,6 +3566,7 @@ namespace MMR.Randomizer.GameObjects
         [DifficultAllVariants]
         [OnlyOneActorPerRoom]
         [VariantsWithRoomMax(max:0, variant:0)] // cutscene variant is hardcoded
+        [PlacementWeight(80)]
         //[ForbidFromScene(Scene.StoneTowerTemple)]
         GaroMaster = 0x182, // En_Jso2
 
@@ -4780,7 +4786,7 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(34, 20)]
         // no params, again with the weird vanilla param data
         [GroundVariants(0xFF)]
-        [WaterBottomVariants(0x77)]
+        //[WaterBottomVariants(0x77)] // think this is an issue, getting weird waterblock crashes
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [CheckRestricted(Item.MaskGoron, Item.ChestHotSpringGrottoRedRupee,
@@ -4986,7 +4992,7 @@ namespace MMR.Randomizer.GameObjects
             // TODO how old is this? is this before I knew about the cutscene version?
             Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
         [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
-        [PlacementWeight(75)]
+        [PlacementWeight(65)]
         BigPoe = 0x208, // En_Bigpo
 
         // this is the "door" sign that you cut to find him final night, this is NOT the kanban he puts out saying hes gone away
@@ -5138,7 +5144,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)] // no params
         //[VariantsWithRoomMax(max:10, variant:0)]
         [UnkillableAllVariants]
-        //[PlacementWeight(95)] // new actor, for now lets leave high
+        //[PlacementWeight(95)] // new actor, for now lets leave high // TODO TESTING
         MilkbarChairs = 0x217, // Bg_Mbar_Chair
 
         [FileID(495)]
