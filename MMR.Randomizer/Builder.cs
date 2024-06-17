@@ -3618,10 +3618,9 @@ namespace MMR.Randomizer
 
                     ResourceUtils.ApplyHack(Resources.mods.tatl_remains_hint);
                 }
-
             }
 
-            if (_randomized.Settings.UpdateNPCText)
+            if (_randomized.Settings.FairyAndSkullHint)
             {
                 var clockTownFairyItem = _randomized.ItemList[Item.CollectibleStrayFairyClockTown];
                 if (clockTownFairyItem.NewLocation != Item.CollectibleStrayFairyClockTown)
@@ -3695,7 +3694,7 @@ namespace MMR.Randomizer
                             }
                             else
                             {
-                                return new []
+                                return new[]
                                 {
                                     new
                                     {
@@ -4073,7 +4072,10 @@ namespace MMR.Randomizer
                         .Build()
                     );
                 }
+            }
 
+            if (_randomized.Settings.UpdateNPCText)
+            {
                 /*
                 
                 The mask salesman said that if

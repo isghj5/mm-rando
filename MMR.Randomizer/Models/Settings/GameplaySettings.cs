@@ -645,6 +645,9 @@ namespace MMR.Randomizer.Models.Settings
         [Description("At the entrance to the Clock Tower Interior, Tatl will prompt to speak and will tell you the regions where the Boss Remains are located.")]
         public bool RemainsHint { get; set; }
 
+        [Description("The cursed man in the Swamp Spider House, and the Green Shirt Man in the Ocean Spider House will tell you the regions of the remaining spider tokens. The Green Shirt Man in the Ocean Spider House will appear there when you blow up the entrance wall.\n\nEach fairy fountain (including Clock Town) will tell you the regions of the remaining Stray Fairies.")]
+        public bool FairyAndSkullHint { get; set; }
+
         /// <summary>
         /// Change epona B button behavior to prevent player losing sword if they don't have a bow.
         /// </summary>

@@ -134,6 +134,7 @@ namespace MMR.UI.Forms
             this.cNutAndStickDrops = new System.Windows.Forms.ComboBox();
             this.tabComfort = new System.Windows.Forms.TabPage();
             this.gHintsGeneral = new System.Windows.Forms.GroupBox();
+            this.cRemainsHint = new System.Windows.Forms.CheckBox();
             this.cOathHint = new System.Windows.Forms.CheckBox();
             this.bCustomizeHintPriorities = new System.Windows.Forms.Button();
             this.cHintImportance = new System.Windows.Forms.CheckBox();
@@ -275,7 +276,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cRemainsHint = new System.Windows.Forms.CheckBox();
+            this.cFairyAndSkullHints = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1570,6 +1571,7 @@ namespace MMR.UI.Forms
             // 
             // gHintsGeneral
             // 
+            this.gHintsGeneral.Controls.Add(this.cFairyAndSkullHints);
             this.gHintsGeneral.Controls.Add(this.cRemainsHint);
             this.gHintsGeneral.Controls.Add(this.cOathHint);
             this.gHintsGeneral.Controls.Add(this.bCustomizeHintPriorities);
@@ -1581,6 +1583,16 @@ namespace MMR.UI.Forms
             this.gHintsGeneral.TabIndex = 39;
             this.gHintsGeneral.TabStop = false;
             this.gHintsGeneral.Text = "Hints";
+            // 
+            // cRemainsHint
+            // 
+            this.cRemainsHint.AutoSize = true;
+            this.cRemainsHint.Location = new System.Drawing.Point(200, 20);
+            this.cRemainsHint.Name = "cRemainsHint";
+            this.cRemainsHint.Size = new System.Drawing.Size(98, 19);
+            this.cRemainsHint.TabIndex = 18;
+            this.cRemainsHint.Text = "Boss Remains";
+            this.cRemainsHint.UseVisualStyleBackColor = true;
             // 
             // cOathHint
             // 
@@ -3254,15 +3266,15 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // cRemainsHint
+            // cFairyAndSkullHints
             // 
-            this.cRemainsHint.AutoSize = true;
-            this.cRemainsHint.Location = new System.Drawing.Point(200, 20);
-            this.cRemainsHint.Name = "cRemainsHint";
-            this.cRemainsHint.Size = new System.Drawing.Size(98, 19);
-            this.cRemainsHint.TabIndex = 18;
-            this.cRemainsHint.Text = "Boss Remains";
-            this.cRemainsHint.UseVisualStyleBackColor = true;
+            this.cFairyAndSkullHints.AutoSize = true;
+            this.cFairyAndSkullHints.Location = new System.Drawing.Point(200, 70);
+            this.cFairyAndSkullHints.Name = "cFairyAndSkullHints";
+            this.cFairyAndSkullHints.Size = new System.Drawing.Size(115, 19);
+            this.cFairyAndSkullHints.TabIndex = 19;
+            this.cFairyAndSkullHints.Text = "Fairies and Skulls";
+            this.cFairyAndSkullHints.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -3602,6 +3614,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cTakeDamageFromDexihands;
         private System.Windows.Forms.CheckBox cOathHint;
         private System.Windows.Forms.CheckBox cRemainsHint;
+        private System.Windows.Forms.CheckBox cFairyAndSkullHints;
     }
 }
 

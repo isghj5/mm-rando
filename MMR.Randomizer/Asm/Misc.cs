@@ -718,7 +718,7 @@ namespace MMR.Randomizer.Asm
 
             this.Flags.FairyChests = settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly);
 
-            this.Flags.OceanTokensRandomized = settings.UpdateNPCText && settings.CustomItemList.Any(ItemUtils.OceanSkulltulaTokens().Contains);
+            this.Flags.OceanTokensRandomized = settings.FairyAndSkullHint && settings.CustomItemList.Any(ItemUtils.OceanSkulltulaTokens().Contains);
 
             this.DrawFlags.DrawDonGeroMask = MaskConfigUtils.DonGeroGoronDrawMask;
             this.DrawFlags.DrawPostmanHat = MaskConfigUtils.PostmanDrawHat;

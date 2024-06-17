@@ -146,6 +146,7 @@ namespace MMR.UI.Forms
                 { cUpdateNpcText, cfg => cfg.GameplaySettings.UpdateNPCText },
                 { cOathHint, cfg => cfg.GameplaySettings.OathHint },
                 { cRemainsHint, cfg => cfg.GameplaySettings.RemainsHint },
+                { cFairyAndSkullHints, cfg => cfg.GameplaySettings.FairyAndSkullHint },
                 { cEponaSword, cfg => cfg.GameplaySettings.FixEponaSword },
                 { cDrawHash, cfg => cfg.GameplaySettings.DrawHash },
                 { cQuestItemStorage, cfg => cfg.GameplaySettings.QuestItemStorage },
@@ -1363,6 +1364,7 @@ namespace MMR.UI.Forms
             cUpdateNpcText.Checked = _configuration.GameplaySettings.UpdateNPCText;
             cOathHint.Checked = _configuration.GameplaySettings.OathHint;
             cRemainsHint.Checked = _configuration.GameplaySettings.RemainsHint;
+            cFairyAndSkullHints.Checked = _configuration.GameplaySettings.FairyAndSkullHint;
             cSkipBeaver.Checked = _configuration.GameplaySettings.SpeedupBeavers;
             cGoodDampeRNG.Checked = _configuration.GameplaySettings.SpeedupDampe;
             cGoodDogRaceRNG.Checked = _configuration.GameplaySettings.SpeedupDogRace;
