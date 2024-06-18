@@ -665,6 +665,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 0, variant: 0xFF0D)] // 0xFF0D crashes TF do not use (is from the cucco shack)
         [VariantsWithRoomMax(max: 1, variant: 0xA1A, 0xFF1A)] // has EnAni, more than one is odd
         [VariantsWithRoomMax(max: 1, variant: 0xA)] // UGLY is also BG
+        [AlignedCompanionActor(GrottoHole, CompanionAlignment.InFront, ourVariant: -1, variant: 0x8200, 0xA200)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         Treee = 0x41, // En_Wood2

@@ -98,6 +98,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can get the player locked behind them near the grotto stones
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.HoneyComb,
             Actor.Seagulls, // weird
+            Actor.UnusedFallingBridge, // might block ability to enter the grotto
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator // can get the player locked behind them near the grotto stones
         )]
         Grottos = 0x0A,
@@ -388,7 +389,7 @@ namespace MMR.Randomizer.GameObjects
         // I checked every actor that spawns, their dyna matches what we should have...
         // now I can get a crash with 471, which is spooky how is it this far off? (and in-game it says its over 50 off)
         // measurement of 446 was a pass? hmm, until I can find the cause of the measuremnet descrepency
-        [DynaHeadroom(450, 450)] // acceptably tiny risk
+        [DynaHeadroom(400, 400)] // acceptably tiny risk
         // more testing: 458 recorded was 548 (+4) in the crash screen thats 90 OFF
         //[DynaHeadroom(490, 475)]
         // this actor is mostly ignored, player might not even notice, dont waste lots of object budget on this thing
