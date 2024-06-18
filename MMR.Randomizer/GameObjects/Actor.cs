@@ -5255,6 +5255,8 @@ namespace MMR.Randomizer.GameObjects
             Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
         [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.MaskRomani,
             Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
+        [CheckRestricted(Scene.RanchBuildings, variant: -1, Item.MaskRomani,
+            Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
         // 0x10FF and 0x11FF are in barn, dialogue focused and timegated i bet
         // 0x20FF is in the homestead, sitting at table? probably timegated 
         [GroundVariants(0, // standing around day 1 is type 0
