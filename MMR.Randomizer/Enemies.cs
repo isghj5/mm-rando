@@ -1550,8 +1550,15 @@ namespace MMR.Randomizer
             if (terminaFieldScopeNuts.ActorEnum != GameObjects.Actor.FlyingBuisinessScrub)
             {
                 terminaFieldScopeNuts.Position = new vec16(780, 760, 615); // move closer to the edge of ect so the player can see it
-                SceneUtils.UpdateScene(terminaField);
             }
+
+            var terminaFieldWestGossipBombiwa = terminaField.Maps[0].Actors[198];
+            if (terminaFieldWestGossipBombiwa.ActorEnum != GameObjects.Actor.Bombiwa) // assumption: currently both have to be randomized at the same time
+            {
+                terminaFieldWestGossipBombiwa.Position.z = -1727; // move back from sitting right on top of the grotto
+                terminaField.Maps[0].Actors[199].Position.z = -642; // move back from sitting right on top of the grotto
+            }
+            SceneUtils.UpdateScene(terminaField);
 
             MoveShopScurbsIfRandomized();
             MovePostmanIfRandomized(terminaField);
@@ -5545,7 +5552,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 70.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 70.1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
