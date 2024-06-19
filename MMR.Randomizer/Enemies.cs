@@ -2092,6 +2092,7 @@ namespace MMR.Randomizer
                 }
             }
 
+
             // west butterfly/comb grotto (middle right stone)
             var westGrotto = grottosScene.Maps[0];
             westGrotto.Objects[3] = GameObjects.Actor.Leever.ObjectIndex(); // unused deku baba object here, we can override
@@ -2117,6 +2118,21 @@ namespace MMR.Randomizer
             northGrotto.Objects[1] = GameObjects.Actor.Snapper.ObjectIndex(); // unused deku baba slot can be reused
             int[] northGrottoSlots = { 1, 3, 4 };
             ChangeStones(northGrotto, northGrottoSlots, GameObjects.Actor.Snapper, actorParam: 0, "GossipStoneNorth");
+
+            void ChangeGossipHintType(Actor stone, int newHint)
+            {
+                stone.Variants[0] &= 0xFFF0; // remove previous bottom (text offset)
+                stone.Variants[0] |= newHint;
+            }
+
+            /// the hint given by the big gossip stone is always the same hint, we have to change the hint variable
+            /// where, the hint offset is +4 from the type 2 (regular hints) to use the same hint IDs with big type
+            /// so hints 0, 1, 2 become 4, 5, 6
+            //ChangeGossipHintType(southGrotto.Actors[3], 0x2); // already far left, leave alone
+            ChangeGossipHintType(northGrotto.Actors[2], 4); // middel left
+            ChangeGossipHintType(westGrotto.Actors[11], 5); // middle right
+            ChangeGossipHintType(eastGrotto.Actors[8], 6); // far right
+
         }
 
         private static void SwapGreatFairies(Random rng)
@@ -3605,7 +3621,7 @@ namespace MMR.Randomizer
                 }
 
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GoronKid)) continue;
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.MilkbarChairs)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.MilkbarChairs)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.En_Boj_04)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
                 if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.CutscenePirate)) continue;
@@ -3618,14 +3634,14 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.Snapper, GameObjects.Actor.Mimi)) continue;
 
-                if (TestHardSetObject(GameObjects.Scene.GormanRaceTrack, GameObjects.Actor.Flagpole, GameObjects.Actor.HookshotWallSpot)) continue;
-                if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
-                if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.UglyTree, GameObjects.Actor.MilkbarChairs)) continue;
-                if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.LargeSnowball, GameObjects.Actor.MilkbarChairs)) continue;
-                if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.Leever, GameObjects.Actor.DarmaniGrave)) continue;
-                if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.Leever, GameObjects.Actor.MilkbarChairs)) continue;
-                if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.SkullKidPainting)) continue;
-                if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ClayPot, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.GormanRaceTrack, GameObjects.Actor.Flagpole, GameObjects.Actor.HookshotWallSpot)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.UglyTree, GameObjects.Actor.MilkbarChairs)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.LargeSnowball, GameObjects.Actor.MilkbarChairs)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.Leever, GameObjects.Actor.DarmaniGrave)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.Leever, GameObjects.Actor.MilkbarChairs)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.SkullKidPainting)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ClayPot, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.SwimmingZora, GameObjects.Actor.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
