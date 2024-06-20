@@ -139,6 +139,8 @@ namespace MMR.UI.Forms
                 { cMixGaroWithGossip, cfg => cfg.GameplaySettings.MixGossipAndGaroHints },
                 { cClearHints, cfg => cfg.GameplaySettings.ClearHints },
                 { cClearGaroHints, cfg => cfg.GameplaySettings.ClearGaroHints },
+                { cImportanceCount, cfg => cfg.GameplaySettings.ImportanceCount },
+                { cImportanceCountGaro, cfg => cfg.GameplaySettings.ImportanceCountGaro },
                 { cHintImportance, cfg => cfg.GameplaySettings.HintsIndicateImportance },
                 { cNoDowngrades, cfg => cfg.GameplaySettings.PreventDowngrades },
                 { cShopAppearance, cfg => cfg.GameplaySettings.UpdateShopAppearance },
@@ -1337,6 +1339,8 @@ namespace MMR.UI.Forms
             cMixGaroWithGossip.Checked = _configuration.GameplaySettings.MixGossipAndGaroHints;
             cClearHints.Checked = _configuration.GameplaySettings.ClearHints;
             cClearGaroHints.Checked = _configuration.GameplaySettings.ClearGaroHints;
+            cImportanceCount.Checked = _configuration.GameplaySettings.ImportanceCount;
+            cImportanceCountGaro.Checked = _configuration.GameplaySettings.ImportanceCountGaro;
             cHintImportance.Checked = _configuration.GameplaySettings.HintsIndicateImportance;
             cHideClock.Checked = _configuration.GameplaySettings.HideClock;
             cSunsSong.Checked = _configuration.GameplaySettings.EnableSunsSong;

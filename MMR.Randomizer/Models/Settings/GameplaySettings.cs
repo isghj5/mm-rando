@@ -587,6 +587,12 @@ namespace MMR.Randomizer.Models.Settings
         [Description("Garo hints will give clear item and location names.")]
         public bool ClearGaroHints { get; set; }
 
+        [Description("Gossip stone hints that normally give a Way of the Hero hint will instead tell you the number of important items in the region. Foolish hints will say zero important items. Foolish Except The Song hints will say one important song.")]
+        public bool ImportanceCount { get; set; }
+
+        [Description("Garo hints that normally give a Way of the Hero hint will instead tell you the number of important items in the region. Foolish hints will say zero important items. Foolish Except The Song hints will say one important song.")]
+        public bool ImportanceCountGaro { get; set; }
+
         [Description("The angle at which Gossip Stones can be read will be more tolerant.")]
         public bool TolerantGossipStones { get; set; } = true;
 
