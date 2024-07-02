@@ -5484,7 +5484,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(523)]
         [ObjectListIndex(0x23A)]
-        [CheckRestricted(Scene.MilkBar, variant:0x3FFF, Item.MaskCircusLeader, Item.NotebookMeetToto)]
+        [CheckRestricted(Scene.MilkBar, variant:-1, Item.MaskCircusLeader, Item.NotebookMeetToto, Item.NotebookMovingGorman)]
         [CheckRestricted(Scene.MayorsResidence, variant:-1, Item.NotebookMeetToto)]
         [GroundVariants(0x050B, 0x3FFF)] // sitting in mayors office // TODO which one
         [PerchingVariants(0x050B, 0x3FFF)] // sitting in mayors office
