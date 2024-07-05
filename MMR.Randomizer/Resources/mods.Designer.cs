@@ -783,16 +783,6 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] improved_camera {
-            get {
-                object obj = ResourceManager.GetObject("improved_camera", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] init_file {
             get {
                 object obj = ResourceManager.GetObject("init_file", resourceCulture);

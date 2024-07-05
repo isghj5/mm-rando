@@ -2171,7 +2171,7 @@ namespace MMR.UI.Forms
             this.cImprovedCamera.Name = "cImprovedCamera";
             this.cImprovedCamera.Size = new System.Drawing.Size(121, 19);
             this.cImprovedCamera.TabIndex = 50;
-            this.cImprovedCamera.Text = "Improved Camera";
+            this.cImprovedCamera.Text = "Old Improved Camera";
             this.cImprovedCamera.UseVisualStyleBackColor = true;
             // 
             // cGossipsTolerant

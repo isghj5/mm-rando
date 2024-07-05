@@ -287,6 +287,26 @@ namespace MMR.UI.Forms
 
             TooltipBuilder.SetTooltip(lTrapWeightings, "How much to weigh each type of trap when randomizing which one to use.");
             TooltipBuilder.SetTooltip(cInstantPictobox, "Remove anti-aliasing from the Pictobox pictures, which is what makes Pictobox on emulator so slow.");
+            TooltipBuilder.SetTooltip(cBombTrapTunicColors, "When you find a Bomb Trap, Link's tunic will randomly change color.");
+            TooltipBuilder.SetTooltip(cRainbowTunic, "Link's tunic color will slowly cycle its hue.");
+            TooltipBuilder.SetTooltip(cImprovedPictobox, "Display extra text showing which type of picture was captured by the Pictobox.");
+            TooltipBuilder.SetTooltip(cLenientGoronSpikes, "Goron spikes can charge midair and keep their charge. Minimum speed for goron spikes is removed.");
+            TooltipBuilder.SetTooltip(cTargetHealth, "Targeting an enemy shows their health bar.");
+            TooltipBuilder.SetTooltip(cFreeScarecrow, "Spawn scarecrow automatically when using ocarina if within range.");
+            TooltipBuilder.SetTooltip(cFillWallet, "Fills wallet with max rupees upon finding a wallet upgrade.");
+            TooltipBuilder.SetTooltip(cInvisSparkle, "Hit Tags and Invisible Rupees will emit a sparkle.");
+            TooltipBuilder.SetTooltip(cSaferGlitches, "Makes it safer to use glitches:\n - Prevents HESS crash\n - Prevents Weirdshot crash\n - Prevents Action Swap crash\n - Prevents Song of Double Time softlock during 0th or 4th day\n - Prevents Tatl text softlock on 0th of 4th day\n - Prevents 0th day file deletion\n - Prevents hookslide crash\n - Prevents softlocks when using Remote Hookshot\n - Prevents 0th day Goron Bow crash\n - Applies safety fixes for Fierce Deity even if Fierce Deity Anywhere is not enabled\n - Index warp no longer crashes or softlocks (but you won't be able to use it to access the Debug Menu)\n - Prevents softlocks when interrupting mask transformations\n - Mayor is removed on 4th day\n - Deku Playground Employees are removed on 4th day\n - Prevents Gossip Stone time from crashing on 4th day\n - Prevents Town Shooting Gallery from crashing on 0th day and 4th day\n - TODO more...");
+            TooltipBuilder.SetTooltip(cImprovedCamera, "Improves the responsiveness of the controls with relation to the direction the camera is facing.");
+            TooltipBuilder.SetTooltip(cAddBombchuDrops, "If you have found Bombchu, then any random Bomb drop or fixed non-randomized Bomb drop will have a chance to drop Bombchu instead. Where relevant, Bombchu packs of 1 and 5 will be in logic in addition to packs of 10.");
+            TooltipBuilder.SetTooltip(cFairyMaskShimmer, "Nearby stray fairies, even randomized ones, will cause the Great Fairy Mask to shimmer.");
+            TooltipBuilder.SetTooltip(cSkulltulaTokenSounds, "Nearby skulltula tokens, even randomized ones, will emit a spider crawling sound.");
+
+            TooltipBuilder.SetTooltip(nMaxGossipWotH, "Set the number of Way of the Hero hints that will appear on Gossip Stones.");
+            TooltipBuilder.SetTooltip(nMaxGossipFoolish, "Set the number of Foolish hints that will appear on Gossip Stones.");
+            TooltipBuilder.SetTooltip(nMaxGossipCT, "Set the maximum number of Way of the Hero / Foolish hints on Gossip Stones that can be for a Clock Town region (including Laundry Pool).");
+            TooltipBuilder.SetTooltip(nMaxGaroWotH, "Set the number of Way of the Hero hints that will appear on Garos.");
+            TooltipBuilder.SetTooltip(nMaxGaroFoolish, "Set the number of Foolish hints that will appear on Garos.");
+            TooltipBuilder.SetTooltip(nMaxGaroCT, "Set the maximum number of Way of the Hero / Foolish hints on Garos that can be for a Clock Town region (including Laundry Pool).");
         }
 
         void UpdateSettingLogicMarkers()
