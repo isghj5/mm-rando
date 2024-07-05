@@ -639,7 +639,7 @@ namespace MMR.Randomizer.Utils
             }
 
             // if combat music is disabled, that slot should be usable
-            if (cosmeticSettings.DisableCombatMusic == CombatMusic.All) // I think this is what zoey has us using currently??
+            if (cosmeticSettings.DisableCombatMusic == true) // I think this is what zoey has us using currently??
             {
                 ConvertSequenceSlotToPointer(0x1A, 0x38); // combat pointed at miniboss, but its going to be replaced more than likely
             }
@@ -1383,7 +1383,7 @@ namespace MMR.Randomizer.Utils
                 combatVsBGMCoinToss = false; // "BGM" manually selected because of non-combat songtest
             }
 
-            if (cosmeticSettings.DisableCombatMusic == CombatMusic.All)
+            if (cosmeticSettings.DisableCombatMusic)
             {
                 combatVsBGMCoinToss = false; // "BGM" manually selected because combat music is disabled.
             }

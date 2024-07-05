@@ -21,73 +21,42 @@ namespace MMR.Randomizer.Utils
         public static bool DrawGaroMask { get; set; } = true;
         public static bool DrawPendantOfMemories { get; set; } = true;
 
-        public static void UpdateMaskConfig(ItemObject itemObject, GetItemEntry newItem, Item item, ushort getItemIndex)
+        public static void UpdateMaskConfig(Item location, Item displayItem)
         {
-            // catch the Keaton Mask check and set a maskID byte
-            if (getItemIndex == 0x80)
+            switch (location)
             {
-                UpdateKeatonMaskConfig(itemObject, newItem, item);
-            }
-            // catch the Don Gero Mask check and set draw flag value
-            if (getItemIndex == 0x88)
-            {
-                UpdateDonGeroMaskConfig(itemObject, newItem, item);
-            }
-            // catch the Postman's Hat check and set draw flag value
-            if (getItemIndex == 0x84)
-            {
-                UpdatePostmanHatConfig(itemObject, newItem, item);
-            }
-            // catch the Mask of Truth check and set draw flag value
-            if (getItemIndex == 0x8A)
-            {
-                UpdateMaskOfTruthConfig(itemObject, newItem, item);
-            }
-            // catch the Garo's Mask check and set draw flag value
-            if (getItemIndex == 0x81)
-            {
-                UpdateGaroMaskConfig(itemObject, newItem, item);
-            }
-            if (getItemIndex == 0xAB)
-            {
-                UpdatePendantOfMemoriesConfig(itemObject, newItem, item);
+                case Item.MaskKeaton:
+                    UpdateKeatonMaskConfig(displayItem);
+                    break;
+                case Item.MaskDonGero:
+                    UpdateDonGeroMaskConfig(displayItem);
+                    break;
+                case Item.MaskPostmanHat:
+                    UpdatePostmanHatConfig(displayItem);
+                    break;
+                case Item.MaskTruth:
+                    UpdateMaskOfTruthConfig(displayItem);
+                    break;
+                case Item.MaskGaro:
+                    UpdateGaroMaskConfig(displayItem);
+                    break;
+                case Item.TradeItemPendant:
+                    UpdatePendantOfMemoriesConfig(displayItem);
+                    break;
             }
         }
 
-        public static void UpdateKeatonMaskConfig(ItemObject itemObject, GetItemEntry newItem, Item item)
+        public static void UpdateKeatonMaskConfig(Item displayItem)
         {
-            ushort itemGet;
-            int kafeimaskID;
+            byte itemGet = displayItem.ItemCategory() == ItemCategory.Masks
+                ? displayItem.GetAttribute<StartingItemAttribute>().Value
+                : (byte)0x00;
 
-            if (newItem.ItemGained == 0xB0) //it's a trap, get what it's supposed to mimic
-            {
-                var itemGetMimic = itemObject.Mimic.Item;
-                if (itemGetMimic.ItemCategory() == ItemCategory.Masks)
-                {
-                    var mimicvalue = itemGetMimic.GetAttribute<StartingItemAttribute>();
-                    itemGet = mimicvalue.Value;
-                }
-                else
-                {
-                    itemGet = 0x00;
-                }
-            }
-            else
-            {
-                if (item.ItemCategory() == ItemCategory.Masks)
-                {
-                    itemGet = newItem.ItemGained;
-                }
-                else
-                {
-                    itemGet = 0x00;
-                }
-            }
-
+            byte kafeimaskID;
 
             if (itemGet >= 0x36 && itemGet <= 0x49) //non-transform mask itemGained ids map to playermaskID in same order, just offset
             {
-                kafeimaskID = itemGet - 0x35;
+                kafeimaskID = (byte)(itemGet - 0x35);
             }
             else if (itemGet >= 0x32) //transform masks are in a different order
             {
@@ -113,147 +82,32 @@ namespace MMR.Randomizer.Utils
                 kafeimaskID = 0x00;
             }
 
-            NpcKafeiDrawMask = (byte)kafeimaskID;
+            NpcKafeiDrawMask = kafeimaskID;
         }
 
-        public static void UpdateDonGeroMaskConfig(ItemObject itemObject, GetItemEntry newItem, Item item)
+        public static void UpdateDonGeroMaskConfig(Item displayItem)
         {
-            if (newItem.ItemGained == 0xB0)
-            {
-                string itemMimicName = itemObject.Mimic.Item.GetAttribute<ItemNameAttribute>()?.Name;
-                if (itemMimicName == "Don Gero's Mask")
-                {
-                    DonGeroGoronDrawMask = true;
-                }
-                else
-                {
-                    DonGeroGoronDrawMask = false;
-                }
-            }
-            else
-            {
-                string newItemName = item.GetAttribute<ItemNameAttribute>()?.Name;
-                if (newItemName == "Don Gero's Mask")
-                {
-                    DonGeroGoronDrawMask = true;
-                }
-                else
-                {
-                    DonGeroGoronDrawMask = false;
-                }
-            }
+            DonGeroGoronDrawMask = displayItem == Item.MaskDonGero;
         }
 
-        public static void UpdatePostmanHatConfig(ItemObject itemObject, GetItemEntry newItem, Item item)
+        public static void UpdatePostmanHatConfig(Item displayItem)
         {
-            if (newItem.ItemGained == 0xB0)
-            {
-                string itemMimicName = itemObject.Mimic.Item.GetAttribute<ItemNameAttribute>()?.Name;
-                if (itemMimicName == "Postman's Hat")
-                {
-                    PostmanDrawHat = true;
-                }
-                else
-                {
-                    PostmanDrawHat = false;
-                }
-            }
-            else
-            {
-                string newItemName = item.GetAttribute<ItemNameAttribute>()?.Name;
-                if (newItemName == "Postman's Hat")
-                {
-                    PostmanDrawHat = true;
-                }
-                else
-                {
-                    PostmanDrawHat = false;
-                }
-            }
+            PostmanDrawHat = displayItem == Item.MaskPostmanHat;
         }
 
-        public static void UpdateMaskOfTruthConfig(ItemObject itemObject, GetItemEntry newItem, Item item)
+        public static void UpdateMaskOfTruthConfig(Item displayItem)
         {
-            if (newItem.ItemGained == 0xB0)
-            {
-                string itemMimicName = itemObject.Mimic.Item.GetAttribute<ItemNameAttribute>()?.Name;
-                if (itemMimicName == "Mask of Truth")
-                {
-                    DrawMaskOfTruth = true;
-                }
-                else
-                {
-                    DrawMaskOfTruth = false;
-                }
-            }
-            else
-            {
-                string newItemName = item.GetAttribute<ItemNameAttribute>()?.Name;
-                if (newItemName == "Mask of Truth")
-                {
-                    DrawMaskOfTruth = true;
-                }
-                else
-                {
-                    DrawMaskOfTruth = false;
-                }
-            }
+            DrawMaskOfTruth = displayItem == Item.MaskTruth;
         }
 
-        public static void UpdateGaroMaskConfig(ItemObject itemObject, GetItemEntry newItem, Item item)
+        public static void UpdateGaroMaskConfig(Item displayItem)
         {
-            if (newItem.ItemGained == 0xB0)
-            {
-                string itemMimicName = itemObject.Mimic.Item.GetAttribute<ItemNameAttribute>()?.Name;
-                if (itemMimicName == "Garo's Mask")
-                {
-                    DrawGaroMask = true;
-                }
-                else
-                {
-                    DrawGaroMask = false;
-                }
-            }
-            else
-            {
-                string newItemName = item.GetAttribute<ItemNameAttribute>()?.Name;
-                if (newItemName == "Garo's Mask")
-                {
-                    DrawGaroMask = true;
-                }
-                else
-                {
-                    DrawGaroMask = false;
-                }
-            }
+            DrawGaroMask = displayItem == Item.MaskGaro;
         }
 
-        public static void UpdatePendantOfMemoriesConfig(ItemObject itemObject, GetItemEntry newItem, Item item)
+        public static void UpdatePendantOfMemoriesConfig(Item displayItem)
         {
-            if (newItem.ItemGained == 0xB0)
-            {
-                string itemMimicName = itemObject.Mimic.Item.GetAttribute<ItemNameAttribute>()?.Name;
-                if (itemMimicName == "Pendant of Memories")
-                {
-                    DrawPendantOfMemories = true;
-                }
-                else
-                {
-                    DrawPendantOfMemories = false;
-                }
-            }
-            else
-            {
-                string newItemName = item.GetAttribute<ItemNameAttribute>()?.Name;
-                if (newItemName == "Pendant of Memories")
-                {
-                    DrawPendantOfMemories = true;
-                }
-                else
-                {
-                    DrawPendantOfMemories = false;
-                }
-            }
+            DrawPendantOfMemories = displayItem == Item.TradeItemPendant;
         }
     }
 }

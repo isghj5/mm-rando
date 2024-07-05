@@ -561,12 +561,58 @@
 ;   sw      t2, 0x0000 (v0)
 .org 0x80AA32B4
     lw      a0, 0x00A0 (sp)
-    jal     Models_DrawOcarinaLimb
     or      a1, s0, r0
+    jal     Models_DrawOcarinaLimb
+    addiu   a2, r0, 0x004C
     lw      a1, 0x0030 (sp)
     nop
     nop
+
+; Replaces:
+;   ADDIU   AT, R0, 0x0003
+;   BEQ     V1, AT, 0x80AA30B0
+;   LUI     T2, 0xDE00
+;   ADDIU   AT, R0, 0x0005
+;   BEQ     V1, AT, 0x80AA3114
+;   LUI     A2, 0x4457
+;   B       0x80AA3398
+;   LW      RA, 0x0024 (SP)
+.org 0x80AA3010
+    addiu   at, r0, 0x0005
+    beq     v1, at, 0x80AA3114
+    lui     a2, 0x4457
+    addiu   at, r0, 0x0003
+    beq     v1, at, 0x80AA30B8
     nop
+    b       0x80AA30B0
+    addiu   at, r0, 0x0004
+
+; Replaces:
+;   gSPDisplayList(POLY_OPA_DISP++, gSkullKidOcarinaHoldingRightHandDL);
+;
+;   if ((play->sceneId == SCENE_LOST_WOODS) && (gSaveContext.sceneLayer == 1)) {
+;       gSPDisplayList(POLY_OPA_DISP++, gSkullKidOcarinaOfTimeDL);
+;   }
+.org 0x80AA30B0
+.area 0x64, 0
+    bne     v1, at, 0x80AA3398
+    lw      ra, 0x0024 (sp)
+    lw      a0, 0x00A0 (sp)
+    lw      a1, 0x00B0 (sp)
+    jal     Models_DrawOcarinaLimb
+    addiu   a2, r0, 0x044C
+    lw      t0, 0x005C (sp)
+    lw      v0, 0x02B0 (t0)
+    lui     t7, 0x0601
+    addiu   t7, t7, 0x9DA0
+    addiu   t5, v0, 0x0008
+    sw      t5, 0x2B0 (t0)
+    sw      t7, 0x0004 (v0)
+    lui     t2, 0xDE00
+    sw      t2, 0x0000 (v0)
+    b       0x80AA3398
+    lw      ra, 0x0024 (sp)
+.endarea
 
 ;==================================================================================================
 ; Freestanding Models (Mountain Smithy)

@@ -711,14 +711,14 @@ namespace MMR.Randomizer.Asm
             this.Speedups.FastBankRupees = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FasterBankText);
             this.Speedups.ShortChestOpening = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.ShortChestOpening);
             this.Speedups.SkipGiantsCutscene = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.EverythingElse);
-            this.Speedups.OathHint = settings.UpdateNPCText;
+            this.Speedups.OathHint = settings.OathHint;
 
             // If using Adult Link model, allow Mikau cutscene to activate early.
             this.Flags.EarlyMikau = settings.Character == Character.AdultLink;
 
             this.Flags.FairyChests = settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly);
 
-            this.Flags.OceanTokensRandomized = settings.UpdateNPCText && settings.CustomItemList.Any(ItemUtils.OceanSkulltulaTokens().Contains);
+            this.Flags.OceanTokensRandomized = settings.FairyAndSkullHint && settings.CustomItemList.Any(ItemUtils.OceanSkulltulaTokens().Contains);
 
             this.DrawFlags.DrawDonGeroMask = MaskConfigUtils.DonGeroGoronDrawMask;
             this.DrawFlags.DrawPostmanHat = MaskConfigUtils.PostmanDrawHat;
