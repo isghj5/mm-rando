@@ -250,7 +250,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1241)]
         [SceneInternalId(0x21)]
         // 11 dinofos room, 6/12 wizrobe
-        [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9)] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room
+        [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9, 12)] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room, 12: bk wizrob
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wolfos, // can cover a switch, don't allow problem actors
         //    Actor.WarpDoor, Actor.WarpToTrialEntrance, Actor.ClocktowerGearsAndOrgan, Actor.Bumper, Actor.IkanaGravestone, Actor.Tijo)]
         [EnemizerSceneBlockSensitive(Actor.Wolfos, -1)]
