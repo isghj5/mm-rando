@@ -142,14 +142,13 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1173)]
         [SceneInternalId(0x15)]
         [EnemizerSceneEnemyReplacementBlock(Actor.GuruGuru,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         [EnemizerSceneEnemyReplacementBlock(Actor.Gorman,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         [EnemizerSceneEnemyReplacementBlock(Actor.HoneyAndDarling,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         [EnemizerSceneEnemyReplacementBlock(Actor.Gorman,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
-
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         MilkBar = 0x12,
 
         [FileID(1175)]
@@ -472,9 +471,9 @@ namespace MMR.Randomizer.GameObjects
         // 234, 162 was fine holy shit
         [DynaHeadroom( 235, 200 )]
         [EnemizerSceneEnemyReplacementBlock(Actor.Cremia,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         [EnemizerSceneEnemyReplacementBlock(Actor.LargeWoodenCrate,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         RomaniRanch = 0x32, // F01, 0xF000 dyna size
 
         [FileID(1328)]
@@ -528,15 +527,15 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1342)]
         [SceneInternalId(0x3E)]
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuKing,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan )] // singing/audio actors
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan )] // singing/audio actors
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuPrincess,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
         [EnemizerSceneEnemyReplacementBlock(Actor.Butler,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
         [EnemizerSceneEnemyReplacementBlock(Actor.PalaceGuardDeku,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
         [EnemizerSceneEnemyReplacementBlock(Actor.Monkey,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
         DekuKingChamber = 0x3B,
 
         [FileID(1344)]
