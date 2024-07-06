@@ -3401,6 +3401,12 @@ namespace MMR.Randomizer
                     log.AppendLine($" - lowered height of actor [{testActor.Name}] by [{randomHeight}] from ceiling to fly");
                     UpdateStrayFairyHeight(testActor);
                 }
+                // special case: chain mine trap is too low from ceiling
+                if(oldCeilingVariants != null && testActor.ActorEnum == GameObjects.Actor.SpikedMine)
+                {
+                    // chain is too long, this is annoying, raise the actor to be a tad higher so more of its chain is in the ceiling
+                    testActor.Position.y += 90;
+                }
 
                 var wallVariants = testActor.OldActorEnum.GetAttribute<WallVariantsAttribute>();
                 // for now I want this manually just for dexihand: rotate forward a touch because its on a wall
