@@ -3252,6 +3252,7 @@ namespace MMR.Randomizer.GameObjects
         KoumeInKiosk = 0x168, // En_Dnh
 
         // TODO figure out why the hell its crashing
+        //   working theory: the objects being shuffled when moving from one room to another breaks object code
         // code suggests even more params might exist than are used in vanilla
         [ActorizerEnabled]
         [FileID(326)]
@@ -3268,6 +3269,7 @@ namespace MMR.Randomizer.GameObjects
         // seems to be room transition related, for now ban from any place where rooms change over
         [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear, Scene.SouthernSwamp, Scene.MayorsResidence, Scene.StockPotInn,
             Scene.OceanSpiderHouse, Scene.DekuPalace, Scene.SwampSpiderHouse, Scene.DekuShrine, Scene.IkanaCanyon, Scene.BeneathTheWell,
+            Scene.PiratesFortressRooms,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.OceanSpiderHouse, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         [UnkillableAllVariants]
         [PlacementWeight(80)]
@@ -5743,7 +5745,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(545)]
         [ObjectListIndex(0x1B6)]
-        [CheckRestricted(Item.NotebookMeetShiro, Item.NotebookSaveInvisibleSoldier)]
+        [CheckRestricted(Item.NotebookMeetShiro, Item.NotebookSaveInvisibleSoldier, Item.MaskStone)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(max: 1, variant:0)]
         [UnkillableAllVariants]
