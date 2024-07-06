@@ -909,7 +909,7 @@ namespace MMR.Randomizer
             // but most people dont notice where their original spawn even is so move them
             var greatbaytempleScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GreatBayTemple.FileID());
             // the bombchu along the green pipe in the double seesaw room needs to be moved in case its an unmovable enemy
-            greatbaytempleScene.Maps[10].Actors[3].Position = new vec16(3525, -180, 630);
+            greatbaytempleScene.Maps[10].Actors[3].Position.z = 344; // new vec16(3525, -180, 630); // this was hard to open if chest
             // the bombchu along the red pipe in the pre-wart room needs the same kind of moving
             greatbaytempleScene.Maps[6].Actors[7].Position = new vec16(-1840, -570, -870);
 
