@@ -3405,7 +3405,7 @@ namespace MMR.Randomizer
                 if(oldCeilingVariants != null && testActor.ActorEnum == GameObjects.Actor.SpikedMine)
                 {
                     // chain is too long, this is annoying, raise the actor to be a tad higher so more of its chain is in the ceiling
-                    testActor.Position.y += 90;
+                    testActor.Position.y += 100;
                 }
 
                 var wallVariants = testActor.OldActorEnum.GetAttribute<WallVariantsAttribute>();

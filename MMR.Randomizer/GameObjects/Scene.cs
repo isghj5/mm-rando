@@ -163,6 +163,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.SpikedMine, -1)] // the underwater spiked mines surrounded a switch
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
             Actor.IkanaGravestone, Actor.Bumper, Actor.En_Ani)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
+            Actor.Shabom)] // get's stuck in the ceiling where you cannot kill them
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Hiploop,
         //    Actor.En_Ani, Actor.Bumper, Actor.Tijo)]
         [EnemizerSceneBlockSensitive(Actor.Hiploop, -1)]
