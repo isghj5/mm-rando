@@ -1546,8 +1546,8 @@ namespace MMR.Randomizer
             }
 
             var terminaField = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TerminaField.FileID());
-            var terminaFieldScopeNuts = terminaField.Maps[0].Actors[210];
-            if (terminaFieldScopeNuts.ActorEnum != GameObjects.Actor.FlyingBuisinessScrub)
+            var terminaFieldScopeNuts = terminaField.Maps[0].Actors[210]; // buisness scrub
+            if (terminaFieldScopeNuts.ActorEnum != GameObjects.Actor.FlyingFieldScrub)
             {
                 terminaFieldScopeNuts.Position = new vec16(780, 760, 615); // move closer to the edge of ect so the player can see it
             }
@@ -3413,7 +3413,7 @@ namespace MMR.Randomizer
                 if (testActor.ActorEnum == GameObjects.Actor.Dexihand && testActor.OldActorEnum != GameObjects.Actor.Dexihand
                     && wallVariants != null && wallVariants.Variants.Contains(testActor.OldVariant))
                 {
-                    testActor.Rotation.x = ActorUtils.MergeRotationAndFlags(45, flags: testActor.Rotation.x); // pitch rotation down a bit
+                    testActor.Rotation.x = ActorUtils.MergeRotationAndFlags(60, flags: testActor.Rotation.x); // pitch rotation down a bit
                 }
                 // special case: monkey spawns with an extra height offset from the floor, not at the location of the visible model
                 if (testActor.ActorEnum == GameObjects.Actor.Monkey && testActor.Variants[0] == 0x02FF
