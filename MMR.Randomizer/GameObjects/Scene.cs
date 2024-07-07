@@ -378,6 +378,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1308)]
         [SceneInternalId(0x2C)]
+        [EnemizerSceneBlockSensitive(Actor.PottedPlant, -1)] // large actors could block the door
         MountainSmithy = 0x29,
 
         [FileID(1310)]

@@ -1060,10 +1060,24 @@ namespace MMR.Randomizer
                 underGraveyardScene.Maps[0].Actors[1].Position.x = 20; // facing door from hole, move back toward door
                 underGraveyardScene.Maps[0].Actors[1].Position.z = 251; // facing door from hole, move left toward day 2
 
+                // in blacksmith building, there are two pots that need to be rotated
+                var mountainSmithyScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MountainSmithy.FileID());
+                var leftSmithyPot = mountainSmithyScene.Maps[0].Actors[4];
+                leftSmithyPot.Rotation.y = ActorUtils.MergeRotationAndFlags(180, leftSmithyPot.Rotation.y); ;
+                var rightSmithyPot = mountainSmithyScene.Maps[0].Actors[8];
+                rightSmithyPot.Rotation.y = ActorUtils.MergeRotationAndFlags(180, rightSmithyPot.Rotation.y);
+                rightSmithyPot.Position.x = -70;
+                rightSmithyPot.Position.z = 288;
+
+                var mountainVillageScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MountainVillage.FileID());
+                var leftMountainVillagePot = mountainVillageScene.Maps[0].Actors[35];
+                leftMountainVillagePot.Rotation.y = ActorUtils.MergeRotationAndFlags(270, leftSmithyPot.Rotation.y); ;
+                var rightMountainPot = mountainVillageScene.Maps[0].Actors[36];
+                rightMountainPot.Rotation.y = ActorUtils.MergeRotationAndFlags(270, rightMountainPot.Rotation.y);
+
                 // trying to fix clock, nothing
                 //var curiosityShopClock = curiosityShop.Maps[0].Actors[5];
                 //curiosityShopClock.Position.x = -130;
-
 
                 // in spring there are two torches on top of each other, which is weird, move the other one to face the first one
                 //var mountainVillageSpring = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MountainVillageSpring.FileID());
@@ -3637,7 +3651,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.MilkbarChairs)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.En_Boj_04)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
-                if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.CutscenePirate)) continue;
+                if (TestHardSetObject(GameObjects.Scene.MountainVillage, GameObjects.Actor.PottedPlant, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Dog, GameObjects.Actor.Evan)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.RosaSisters, GameObjects.Actor.GaboraBlacksmith)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
