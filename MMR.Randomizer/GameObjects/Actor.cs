@@ -1415,7 +1415,7 @@ namespace MMR.Randomizer.GameObjects
         // for now, until I can identify which ones have drops we need to be careful of, going to block all randimization
         [ForbidFromScene(Scene.SouthernSwamp, Scene.OdolwasLair,
             Scene.IkanaCastle, Scene.StoneTowerTemple, Scene.Woodfall, Scene.GreatBayCoast,
-            Scene.SecretShrine, Scene.MountainVillageSpring, Scene.WoodsOfMystery,
+            Scene.SecretShrine, Scene.MountainVillageSpring, //Scene.WoodsOfMystery,
             Scene.LaundryPool, Scene.SnowheadTemple, Scene.RoadToSouthernSwamp,
             //Scene.MilkRoad,
             Scene.IkanaCanyon, Scene.Grottos, Scene.BeneathTheWell, Scene.WoodfallTemple)]
@@ -3640,11 +3640,16 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled] // free enemy, placed in places where enemies are normally
         [FileID(349)]
         [ObjectListIndex(0x1)] // obj 1: gameplay keep, but can't set that
+        //[CheckRestricted]
         //[ObjectListIndex(0xF3)] // TESTING
         [DynaAttributes(12,12)] // both gold and pink flowers have the same count
         [GroundVariants(0x7F, 0x17F)] // 7F is regular, 17F is big yellow
         [UnkillableAllVariants]
-        [ForbidFromScene(Scene.Woodfall, Scene.DekuPalace, Scene.WoodfallTemple, Scene.OdolwasLair,
+        [ForbidFromScene(Scene.SouthernSwamp, Scene.Woodfall, Scene.DekuPalace, Scene.WoodfallTemple, Scene.OdolwasLair,
+            Scene.ZoraHallRooms, Scene.GoronVillage, Scene.IkanaCanyon, 
+            Scene.DekuPlayground, Scene.SwampSpiderHouse, Scene.DekuTrial,
+            Scene.InvertedStoneTowerTemple,
+            Scene.StoneTowerTemple, Scene.GoronVillageSpring, Scene.GoronVillage,
             Scene.EastClockTown, Scene.NorthClockTown, Scene.IkanaCastle, Scene.SnowheadTemple)]
         DekuFlower = 0x183, // Obj_Etcetera
 
@@ -6024,6 +6029,39 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(572)]
         [ObjectListIndex(0x1)]
+        [ForbidFromScene(Scene.TerminaField)]
+        //[CheckRestricted(Scene.TerminaField)] // TODO
+        // TODO decouple the specific actors per object based on variant
+        [CheckRestricted(Scene.SouthClockTown, -1,
+            Item.CollectableSouthClockTownHitTag1, Item.CollectableSouthClockTownHitTag2, Item.CollectableSouthClockTownHitTag3)]
+        [CheckRestricted(Scene.EastClockTown, -1,
+            Item.CollectableEastClockTownHitTag1, Item.CollectableEastClockTownHitTag2, Item.CollectableEastClockTownHitTag3,
+            Item.CollectableEastClockTownHitTag4, Item.CollectableEastClockTownHitTag5, Item.CollectableEastClockTownHitTag6,
+            Item.CollectableEastClockTownHitTag7, Item.CollectableEastClockTownHitTag8, Item.CollectableEastClockTownHitTag9)]
+        [CheckRestricted(Scene.StockPotInn, -1,
+            Item.CollectableStockPotInnHitTag1, Item.CollectableStockPotInnHitTag2, Item.CollectableStockPotInnHitTag3)]
+        [CheckRestricted(Scene.SwampSpiderHouse, -1,
+            Item.CollectableSwampSpiderHouseHitTag1, Item.CollectableSwampSpiderHouseHitTag2, Item.CollectableSwampSpiderHouseHitTag3,
+            Item.CollectableSwampSpiderHouseHitTag4, Item.CollectableSwampSpiderHouseHitTag5, Item.CollectableSwampSpiderHouseHitTag6,
+            Item.CollectableSwampSpiderHouseHitTag7, Item.CollectableSwampSpiderHouseHitTag8, Item.CollectableSwampSpiderHouseHitTag9,
+            Item.CollectableSwampSpiderHouseHitTag10, Item.CollectableSwampSpiderHouseHitTag11, Item.CollectableSwampSpiderHouseHitTag12)]
+        [CheckRestricted(Scene.CuccoShack, -1,
+            Item.CollectableCuccoShackHitTag1, Item.CollectableCuccoShackHitTag2, Item.CollectableCuccoShackHitTag3,
+            Item.CollectableCuccoShackHitTag4, Item.CollectableCuccoShackHitTag5, Item.CollectableCuccoShackHitTag6)]
+        [CheckRestricted(Scene.OceanSpiderHouse, -1,
+            Item.CollectableOceansideSpiderHouseHitTag1, Item.CollectableOceansideSpiderHouseHitTag2, Item.CollectableOceansideSpiderHouseHitTag3,
+            Item.CollectableOceansideSpiderHouseHitTag4, Item.CollectableOceansideSpiderHouseHitTag5, Item.CollectableOceansideSpiderHouseHitTag6,
+            Item.CollectableOceansideSpiderHouseHitTag7, Item.CollectableOceansideSpiderHouseHitTag8, Item.CollectableOceansideSpiderHouseHitTag9)]
+        [CheckRestricted(Scene.PiratesFortressRooms, -1,
+            Item.CollectablePiratesFortressInteriorHookshotRoomHitTag1, Item.CollectablePiratesFortressInteriorHookshotRoomHitTag2, Item.CollectablePiratesFortressInteriorHookshotRoomHitTag3)]
+        [CheckRestricted(Scene.PiratesFortress, -1,
+            Item.CollectablePiratesFortressHitTag1, Item.CollectablePiratesFortressHitTag2, Item.CollectablePiratesFortressHitTag3,
+        Item.CollectablePiratesFortressHitTag4, Item.CollectablePiratesFortressHitTag5, Item.CollectablePiratesFortressHitTag6)]
+        [CheckRestricted(Scene.IkanaGraveyard, -1,
+            Item.CollectableIkanaGraveyardHitTag1, Item.CollectableIkanaGraveyardHitTag2, Item.CollectableIkanaGraveyardHitTag3,
+            Item.CollectableIkanaGraveyardHitTag4, Item.CollectableIkanaGraveyardHitTag5, Item.CollectableIkanaGraveyardHitTag6,
+            Item.CollectableIkanaGraveyardHitTag7, Item.CollectableIkanaGraveyardHitTag8, Item.CollectableIkanaGraveyardHitTag9,
+            Item.CollectableIkanaGraveyardHitTag10, Item.CollectableIkanaGraveyardHitTag11, Item.CollectableIkanaGraveyardHitTag12)]
         [WallVariants(0xFE00)]
         [CeilingVariants(0xFC00)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
