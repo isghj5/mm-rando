@@ -3629,11 +3629,11 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.MilkbarChairs)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.En_Boj_04)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
-                if (TestHardSetObject(GameObjects.Scene.MountainVillage, GameObjects.Actor.PottedPlant, GameObjects.Actor.BeanSeller)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.MountainVillage, GameObjects.Actor.PottedPlant, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Dog, GameObjects.Actor.Evan)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.RosaSisters, GameObjects.Actor.GaboraBlacksmith)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
-                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.LabFish)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.LabFish)) continue;
                 // StockpotBell, UnusedStoneTowerPlatform , WarpDoor 35,30, MilkbarChairs 20,14, DekuFlower
                 // StockpotBell 33,20, UglyTree 31,something, MajoraBalloonSewer 186 something
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;

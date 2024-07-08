@@ -871,6 +871,40 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x194)]
         [ObjectListIndex(2)] // field_keep, obj 2
         [FileID(99)]
+        //[CheckRestricted(Scene.NorthClockTown, -1,
+        //    item:Item.)] //TODO finish this
+        [ForbidFromScene(Scene.TerminaField, // too many here, and we want the hints
+            Scene.NorthClockTown, // so many checks
+            Scene.LaundryPool, Scene.MountainVillage)] // old joke
+        //[CheckRestricted(Scene.TerminaField, variant: -1,
+        //    check: Item.)]
+        [CheckRestricted(Scene.RoadToSouthernSwamp, variant: -1,
+            check: Item.ChestToSwampGrotto)]
+        [CheckRestricted(Scene.SouthernSwamp, variant: -1,
+            check: Item.ChestSwampGrotto)]
+        [CheckRestricted(Scene.WoodsOfMystery, variant: -1,
+            check: Item.ChestWoodsGrotto)]
+        [CheckRestricted(Scene.DekuPalace, variant: -1,
+            check: Item.ItemMagicBean, Item.CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1,Item.CollectableBeanGrottoSoftSoil1, Item.ChestBeanGrottoRedRupee)]
+        [CheckRestricted(Scene.PathToSnowhead, variant: -1,
+            check: Item.ChestToSnowheadGrotto)]
+        [CheckRestricted(Scene.TwinIslands, variant: -1,
+            check: Item.HeartPieceTwinIslandsChest, Item.ChestHotSpringGrottoRedRupee, Item.BottleCatchHotSpringWater)]
+        [CheckRestricted(Scene.TwinIslandsSpring, variant: -1,
+            check: Item.HeartPieceTwinIslandsChest)]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: -1,
+            check: Item.ChestMountainVillageGrottoRedRupee)]
+        [CheckRestricted(Scene.GreatBayCoast, variant: -1,
+            check: Item.ChestGreatBayCoastGrotto,
+                   Item.ItemCoastGrottoCowMilk1, Item.ItemCoastGrottoCowMilk2, Item.CollectableGrottosCowGrottoButterflyFairy2)]
+        [CheckRestricted(Scene.ZoraCape, variant: -1,
+            check: Item.ChestGreatBayCapeGrotto)]
+        [CheckRestricted(Scene.RoadToIkana, variant: -1,
+            check: Item.ChestToIkanaGrotto)]
+        [CheckRestricted(Scene.IkanaGraveyard, variant: -1,
+            check: Item.ChestGraveyardGrotto)]
+        [CheckRestricted(Scene.IkanaCanyon, variant: -1,
+            check: Item.ChestIkanaSecretShrineGrotto)]
         // FF/299 is HSG, 233 is path to snowhead, 3B is mountain village spring grot 3D is swamp grotto, , 5C is mystery woods
         // 96 is goron rock grotto, 218/2B8? is graveyard grotto, 3E is road to swamp
         // 301 is ranch grotto? 214 is log cow grotto
@@ -906,8 +940,8 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(Butterfly, CompanionAlignment.Above, ourVariant: -1,
             variant: 0, 1, 2)]
         [BlockingVariantsAll] // might turn this off again, but at can cause issues, esp in deku palace and races
-        [ForbidFromScene(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead,
-            Scene.TerminaField)]
+        //[ForbidFromScene(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead,
+        //    Scene.TerminaField)]
         GrottoHole = 0x55, // Door_Ana
 
         Empty56 = 0x56,
@@ -4645,7 +4679,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2F70)]
         [FileID(459)]
         [ObjectListIndex(0x1C3)]
-        [CheckRestricted(Item.BottleCatchPoe)]
+        [CheckRestricted(Item.BottleCatchPoe)] // only one in the istt
         [FlyingVariants(0x00FF)]
         // FF is in the game, in OOT 02 was a composer brother, but in MM 0-6 are the same as FF
         [GroundVariants(0x01FF)] // non-vanilla, params doesnt seem to matter for this actor
