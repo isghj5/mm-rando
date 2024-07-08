@@ -1795,7 +1795,10 @@ namespace MMR.Randomizer
 
             foreach (var hack in hacks)
             {
-                ResourceUtils.ApplyHack(hack);
+                if (hack != null)
+                {
+                    ResourceUtils.ApplyHack(hack);
+                }
             }
         }
 
@@ -6342,6 +6345,7 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(66, "Writing items...");
                 WriteItems(messageTable);
 
+                progressReporter.ReportProgress(66, "Writing misc hacks...");
                 WriteMiscHacks();
 
                 progressReporter.ReportProgress(67, "Writing cutscenes...");
