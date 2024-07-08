@@ -1809,6 +1809,18 @@ namespace MMR.Randomizer.GameObjects
         [FileID(158)]
         [ActorInstanceSize(0x198)]
         [ObjectListIndex(0x2)] // pick up rock version
+        [ForbidFromScene(Scene.InvertedStoneTower, Scene.SwampSpiderHouse)] // we want the bugs, I think its too much to ask players to leave to get bugs
+        [CheckRestricted(Scene.TerminaField, variant:-1,
+            Item.CollectableTerminaFieldRock1, Item.CollectableTerminaFieldRock4, Item.CollectableTerminaFieldRock3,
+            Item.CollectableTerminaFieldRock4, Item.CollectableTerminaFieldRock5, Item.CollectableTerminaFieldRock6,
+            Item.CollectableTerminaFieldRock7, Item.CollectableTerminaFieldRock8, Item.CollectableTerminaFieldRock9)]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: -1,
+            Item.CollectableMountainVillageWinterMountainVillageSpringItem1)]
+        [CheckRestricted(Scene.GreatBayCoast, variant: 0x32,
+            Item.CollectableGreatBayCoastSoftSoil1)]
+        [CheckRestricted(Scene.IkanaGraveyard, variant: -1,
+            Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock1, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock2, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock3,
+            Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock4, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock5)]
         //[ObjectListIndex(0x1F6)] // NEVER USED IN MM, damn thing lied to me, even the boulders are object 2
         // it actually uses one of two objects: gameplay_field or object_ishi, which is only in SSHouse
         //6a does not load
