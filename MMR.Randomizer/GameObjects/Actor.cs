@@ -800,6 +800,12 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(95)]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
+        [CheckRestricted(Scene.TerminaField, -1, Item.CollectableTerminaFieldButterflyFairy1)]
+        // TODO separate them
+        [CheckRestricted(Scene.Grottos, -1, Item.CollectableGrottosOceanGossipStonesButterflyFairy1, Item.CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1,
+            Item.CollectableGrottosCowGrottoButterflyFairy1, Item.CollectableGrottosCowGrottoButterflyFairy2)]
+        [CheckRestricted(Scene.MountainVillageSpring, -1, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2)]
+        [CheckRestricted(Scene.GreatBayCoast, -1, Item.CollectableGreatBayCoastButterflyFairy1)]
         [GroundVariants(0x3323, 0x2324, 0x4324)] // beatles on the floor
         //[FlyingVariants(0x2324, 0x4324)] // butterlies in the air
         [WaterVariants(0x6322)] // fish swimming in the water
@@ -1875,6 +1881,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)] // gamplaykeep obj 1
         // 801, opening scene grass, 0x1FXX are ranch and TF
         // 0402 is ikana graveyard rock circle
+        //[CheckRestricted()]
         [GroundVariants(0x801, 0x1F02, 0x1F00, 0x0402)]
         [WaterBottomVariants(0x0402)]
         [AlignedCompanionActor(Shiro, CompanionAlignment.OnTop, ourVariant: -1,
