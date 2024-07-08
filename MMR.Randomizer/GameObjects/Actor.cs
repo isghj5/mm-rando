@@ -1351,6 +1351,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(133)]
         [ObjectListIndex(1)]
+        [ForbidFromScene(Scene.MountainSmithy, Scene.SnowheadTemple, Scene.TerminaField)] // TODO figure out if I want to split these or not
+        [CheckRestricted(Scene.TwinIslands, -1,
+            check: Item.HeartPieceTwinIslandsChest, Item.ChestHotSpringGrottoRedRupee, Item.BottleCatchHotSpringWater)]
+        [CheckRestricted(Scene.GoronVillage, -1,
+            check: Item.ItemPowderKeg)]
+        //[CheckRestricted(Scene.MountainSmithy, -1,
+        //    check: )]
+        [CheckRestricted(Scene.GreatBayTemple, -1,
+            check: Item.ItemGreatBayBossKey, Item.FrogGreatBayTemple)]
         //params 0xFF is size
         // 0xFF00 is switch flag, for things like
         // if 0xFFXX then dont check flags
@@ -1362,7 +1371,7 @@ namespace MMR.Randomizer.GameObjects
         // all restricted because they add colliders which limits our BGcheck options for other things
         [VariantsWithRoomMax(max: 1, variant: 0xFF10, 0xFF20, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         //[VariantsWithRoomMax(max: 1, variant: 0xFFC8, 0xFF96, 0xFF78)]
-        [PlacementWeight(70)]
+        [PlacementWeight(60)]
         RegularIceBlock = 0x8E, // Obj_Ice_Poly
 
         [EnemizerEnabled]
