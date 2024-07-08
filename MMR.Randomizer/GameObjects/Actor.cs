@@ -3569,7 +3569,7 @@ namespace MMR.Randomizer.GameObjects
         [DifficultAllVariants]
         [OnlyOneActorPerRoom]
         [VariantsWithRoomMax(max:0, variant:0)] // cutscene variant is hardcoded
-        [PlacementWeight(80)]
+        [PlacementWeight(75)]
         //[ForbidFromScene(Scene.StoneTowerTemple)]
         GaroMaster = 0x182, // En_Jso2
 
@@ -4866,6 +4866,7 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0xFE, shift: 9)]
         [PathingKickoutAddrVarsPlacement(mask:0x1F, shift:0)] // why oh why did this stupid actor need a selectable exit kickout
         [OnlyOneActorPerRoom]
+        [EnemizerScenesPlacementBlock(Scene.MilkBar)] // can interupt balad of the windfish performance
         [UnkillableAllVariants]
         [PlacementWeight(80)]
         GaboraBlacksmith = 0x1FF, // En_Kgy
@@ -5645,6 +5646,7 @@ namespace MMR.Randomizer.GameObjects
             0xF)] // also, do not put regular variant as water our typing system is dumb, doesnt know which is which
         [VariantsWithRoomMax(max:1, variant: 0xFE0F/*, 0xFE0F*/)]
         [UnkillableAllVariants]
+        [PlacementWeight(30)]
         Evan = 0x241, // En_Zos
 
         [ActorizerEnabled]
