@@ -200,7 +200,7 @@ namespace MMR.Randomizer
 
         private void WriteEnemyCombatMusicMute()
         {
-            if (_cosmeticSettings.DisableCombatMusic == CombatMusic.Normal)
+            if (!_cosmeticSettings.DisableCombatMusic)
             {
                 return;
             }
@@ -1788,9 +1788,17 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.take_damage_from_gibdo_immediately);
             }
 
+            if (_randomized.Settings.TakeDamageFromDexihands)
+            {
+                hacks.Add(Resources.mods.take_damage_from_dexihands);
+            }
+
             foreach (var hack in hacks)
             {
-                ResourceUtils.ApplyHack(hack);
+                if (hack != null)
+                {
+                    ResourceUtils.ApplyHack(hack);
+                }
             }
         }
 
@@ -3467,7 +3475,188 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (_randomized.Settings.UpdateNPCText)
+            if (_randomized.Settings.OathHint)
+            {
+                var oathItem = _randomized.ItemList[Item.SongOath];
+
+                if (!_randomized.Settings.AddSongs)
+                {
+                    switch (oathItem.NewLocation.Value)
+                    {
+                        case Item.SongTime:
+                            break;
+                        case Item.SongHealing:
+                            oathItem = null;
+                            break;
+                        case Item.SongEpona:
+                            oathItem = _randomized.ItemList[Item.ItemPowderKeg];
+                            break;
+                        case Item.SongSoaring:
+                            oathItem = _randomized.ItemList[Item.MaskDeku];
+                            break;
+                        case Item.SongStorms:
+                            oathItem = _randomized.ItemList[Item.MaskCaptainHat];
+                            break;
+                        case Item.SongSonata:
+                            oathItem = _randomized.ItemList[Item.MaskDeku];
+                            break;
+                        case Item.SongLullaby:
+                            oathItem = _randomized.ItemList[Item.MaskGoron];
+                            break;
+                        case Item.SongLullabyIntro:
+                            oathItem = _randomized.ItemList[Item.MaskGoron];
+                            break;
+                        case Item.SongNewWaveBossaNova:
+                            oathItem = _randomized.ItemList[Item.MaskZora];
+                            break;
+                        case Item.SongElegy:
+                            oathItem = _randomized.ItemList[Item.UpgradeMirrorShield];
+                            break;
+                        case Item.SongOath:
+                            oathItem = null;
+                            break;
+                    }
+                }
+
+                if (oathItem != null && oathItem.IsRandomized)
+                {
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x208B)
+                        .Message(it =>
+                        {
+                            it.StartLightBlueText()
+                            .PauseText(10)
+                            .Text("\"");
+                            var oathRegion = oathItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList).Name();
+                            for (var i = 0; i < oathRegion.Length; i++)
+                            {
+                                var c = oathRegion[i];
+                                it.Text(c.ToString());
+                                if (i == oathRegion.Length - 1)
+                                {
+                                    it.Text(".");
+                                }
+                                else if (c != ' ')
+                                {
+                                    it.PauseText(20);
+                                }
+                            }
+                            it.Text("\"").NewLine()
+                            .Text(" ").NewLine()
+                            .PauseText(10)
+                            .Text("That's what they're saying.")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                }
+            }
+
+            if (_randomized.Settings.RemainsHint)
+            {
+                var remains = ItemUtils.BossRemains().Where(r => _randomized.ItemList[r].Item == r);
+                var remainsAreRandomized = remains.Any(r => _randomized.ItemList[r].IsRandomized)
+                    && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards)
+                    && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.ShuffleOnly)
+                    && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinTemples);
+                if (remainsAreRandomized || (remains.Count() > 0 && remains.Count() < 4))
+                {
+                    var random = new Random(_randomized.Seed);
+                    var remainRegions = remains
+                        .OrderBy(_ => random.Next())
+                        .Select(remain =>
+                        {
+                            var remainLocation = _randomized.ItemList[remain].NewLocation.Value;
+                            if (remainsAreRandomized)
+                            {
+                                return remainLocation.RegionForDirectHint(_randomized.ItemList).Name();
+                            }
+                            else
+                            {
+                                return remainLocation.RegionArea(_randomized.ItemList).Value.ToString();
+                            }
+                        })
+                        .Distinct()
+                        .ToList();
+                    var remainsCount = MessageUtils.NumberToWords(remains.Count());
+                    var isAre = remains.Count() == 1 ? "is" : "are";
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x200B)
+                        .Message(it =>
+                        {
+                            it.StartPinkText().PlaySoundEffect(0x6851).CompileTimeWrap((wrapped) =>
+                            {
+                                foreach (var remainRegion in remainRegions)
+                                {
+                                    wrapped.Text(remainRegion).Text(". ").PauseText(10);
+                                }
+                                wrapped.Text("Hurry...").Red($"The {remainsCount}").Text($" who {isAre} there... Bring them ").Red("here").Text("...");
+                            })
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x216)
+                        .Message(it =>
+                        {
+                            it.StartLightBlueText()
+                            .Text("That mask...").NewLine()
+                            .PauseText(40)
+                            .Text("The Skull Kid uses the power of").NewLine()
+                            .Text("that mask to do those terrible").NewLine()
+                            .Text("things.")
+                            .EndTextBox()
+                            .Text("Well...whatever it takes, we've").NewLine()
+                            .Text("gotta do something about it.")
+                            .EndTextBox()
+                            .CompileTimeWrap((wrapped) =>
+                            {
+                                wrapped.Text("...The ");
+                                for (var i = 0; i < remainRegions.Count; i++)
+                                {
+                                    var remainRegion = remainRegions[i];
+                                    if (!remainsAreRandomized)
+                                    {
+                                        remainRegion = remainRegion.ToLower();
+                                    }
+                                    wrapped.Red(remainRegion);
+                                    if (i < remainRegions.Count - 2)
+                                    {
+                                        wrapped.Text(", ");
+                                    }
+                                    else if (i < remainRegions.Count - 1)
+                                    {
+                                        wrapped.Text(" and ");
+                                    }
+                                }
+                                wrapped.Text(" that Tael was trying to tell us about...");
+                            })
+                            .EndTextBox()
+                            .CompileTimeWrap("I have no idea what he was talking about...")
+                            .EndTextBox()
+                            .Text("And what do you suppose he").NewLine()
+                            .Text("meant by \"").Red(() =>
+                            {
+                                it.Text($"the {remainsCount} who {isAre}").NewLine()
+                                .Text("there");
+                            })
+                            .Text("?\"")
+                            .EndTextBox()
+                            .Text("I have no idea. He always").NewLine()
+                            .Text("skips important stuff. I guess we").NewLine()
+                            .Text("should just go and find out...")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    ResourceUtils.ApplyHack(Resources.mods.tatl_remains_hint);
+                }
+            }
+
+            if (_randomized.Settings.FairyAndSkullHint)
             {
                 var clockTownFairyItem = _randomized.ItemList[Item.CollectibleStrayFairyClockTown];
                 if (clockTownFairyItem.NewLocation != Item.CollectibleStrayFairyClockTown)
@@ -3541,7 +3730,7 @@ namespace MMR.Randomizer
                             }
                             else
                             {
-                                return new []
+                                return new[]
                                 {
                                     new
                                     {
@@ -3919,180 +4108,10 @@ namespace MMR.Randomizer
                         .Build()
                     );
                 }
+            }
 
-                var remains = ItemUtils.BossRemains().Where(r => _randomized.ItemList[r].Item == r);
-                var remainsAreRandomized = remains.Any(r => _randomized.ItemList[r].IsRandomized)
-                    && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards)
-                    && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.ShuffleOnly)
-                    && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinTemples);
-                if (remainsAreRandomized || (remains.Count() > 0 && remains.Count() < 4))
-                {
-                    var random = new Random(_randomized.Seed);
-                    var remainRegions = remains
-                        .OrderBy(_ => random.Next())
-                        .Select(remain =>
-                        {
-                            var remainLocation = _randomized.ItemList[remain].NewLocation.Value;
-                            if (remainsAreRandomized)
-                            {
-                                return remainLocation.RegionForDirectHint(_randomized.ItemList).Name();
-                            }
-                            else
-                            {
-                                return remainLocation.RegionArea(_randomized.ItemList).Value.ToString();
-                            }
-                        })
-                        .Distinct()
-                        .ToList();
-                    var remainsCount = MessageUtils.NumberToWords(remains.Count());
-                    var isAre = remains.Count() == 1 ? "is" : "are";
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x200B)
-                        .Message(it =>
-                        {
-                            it.StartPinkText().PlaySoundEffect(0x6851).CompileTimeWrap((wrapped) =>
-                            {
-                                foreach (var remainRegion in remainRegions)
-                                {
-                                    wrapped.Text(remainRegion).Text(". ").PauseText(10);
-                                }
-                                wrapped.Text("Hurry...").Red($"The {remainsCount}").Text($" who {isAre} there... Bring them ").Red("here").Text("...");
-                            })
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x216)
-                        .Message(it =>
-                        {
-                            it.StartLightBlueText()
-                            .Text("That mask...").NewLine()
-                            .PauseText(40)
-                            .Text("The Skull Kid uses the power of").NewLine()
-                            .Text("that mask to do those terrible").NewLine()
-                            .Text("things.")
-                            .EndTextBox()
-                            .Text("Well...whatever it takes, we've").NewLine()
-                            .Text("gotta do something about it.")
-                            .EndTextBox()
-                            .CompileTimeWrap((wrapped) =>
-                            {
-                                wrapped.Text("...The ");
-                                for (var i = 0; i < remainRegions.Count; i++)
-                                {
-                                    var remainRegion = remainRegions[i];
-                                    if (!remainsAreRandomized)
-                                    {
-                                        remainRegion = remainRegion.ToLower();
-                                    }
-                                    wrapped.Red(remainRegion);
-                                    if (i < remainRegions.Count - 2)
-                                    {
-                                        wrapped.Text(", ");
-                                    }
-                                    else if (i < remainRegions.Count - 1)
-                                    {
-                                        wrapped.Text(" and ");
-                                    }
-                                }
-                                wrapped.Text(" that Tael was trying to tell us about...");
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap("I have no idea what he was talking about...")
-                            .EndTextBox()
-                            .Text("And what do you suppose he").NewLine()
-                            .Text("meant by \"").Red(() =>
-                            {
-                                it.Text($"the {remainsCount} who {isAre}").NewLine()
-                                .Text("there");
-                            })
-                            .Text("?\"")
-                            .EndTextBox()
-                            .Text("I have no idea. He always").NewLine()
-                            .Text("skips important stuff. I guess we").NewLine()
-                            .Text("should just go and find out...")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    ResourceUtils.ApplyHack(Resources.mods.tatl_remains_hint);
-                }
-
-                var oathItem = _randomized.ItemList[Item.SongOath];
-                if (!_randomized.Settings.AddSongs)
-                {
-                    switch (oathItem.NewLocation.Value)
-                    {
-                        case Item.SongTime:
-                            break;
-                        case Item.SongHealing:
-                            oathItem = null;
-                            break;
-                        case Item.SongEpona:
-                            oathItem = _randomized.ItemList[Item.ItemPowderKeg];
-                            break;
-                        case Item.SongSoaring:
-                            oathItem = _randomized.ItemList[Item.MaskDeku];
-                            break;
-                        case Item.SongStorms:
-                            oathItem = _randomized.ItemList[Item.MaskCaptainHat];
-                            break;
-                        case Item.SongSonata:
-                            oathItem = _randomized.ItemList[Item.MaskDeku];
-                            break;
-                        case Item.SongLullaby:
-                            oathItem = _randomized.ItemList[Item.MaskGoron];
-                            break;
-                        case Item.SongLullabyIntro:
-                            oathItem = _randomized.ItemList[Item.MaskGoron];
-                            break;
-                        case Item.SongNewWaveBossaNova:
-                            oathItem = _randomized.ItemList[Item.MaskZora];
-                            break;
-                        case Item.SongElegy:
-                            oathItem = _randomized.ItemList[Item.UpgradeMirrorShield];
-                            break;
-                        case Item.SongOath:
-                            oathItem = null;
-                            break;
-                    }
-                }
-                if (oathItem != null && oathItem.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x208B)
-                        .Message(it =>
-                        {
-                            it.StartLightBlueText()
-                            .PauseText(10)
-                            .Text("\"");
-                            var oathRegion = oathItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList).Name();
-                            for (var i = 0; i < oathRegion.Length; i++)
-                            {
-                                var c = oathRegion[i];
-                                it.Text(c.ToString());
-                                if (i == oathRegion.Length - 1)
-                                {
-                                    it.Text(".");
-                                }
-                                else if (c != ' ')
-                                {
-                                    it.PauseText(20);
-                                }
-                            }
-                            it.Text("\"").NewLine()
-                            .Text(" ").NewLine()
-                            .PauseText(10)
-                            .Text("That's what they're saying.")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
+            if (_randomized.Settings.UpdateNPCText)
+            {
                 /*
                 
                 The mask salesman said that if
@@ -6326,6 +6345,7 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(66, "Writing items...");
                 WriteItems(messageTable);
 
+                progressReporter.ReportProgress(66, "Writing misc hacks...");
                 WriteMiscHacks();
 
                 progressReporter.ReportProgress(67, "Writing cutscenes...");

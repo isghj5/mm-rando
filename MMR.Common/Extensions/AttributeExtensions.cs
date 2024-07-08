@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace MMR.Common.Extensions
 {
@@ -43,6 +44,20 @@ namespace MMR.Common.Extensions
             }
             return type.GetField(name)
                 .GetCustomAttributes(false)
+                .OfType<TAttribute>()
+                .Any();
+        }
+
+        public static TAttribute GetAttribute<TAttribute>(this MemberInfo memberInfo) where TAttribute : Attribute
+        {
+            return memberInfo.GetCustomAttributes(typeof(TAttribute), false)
+                .OfType<TAttribute>()
+                .SingleOrDefault();
+        }
+
+        public static bool HasAttribute<TAttribute>(this MemberInfo memberInfo) where TAttribute : Attribute
+        {
+            return memberInfo.GetCustomAttributes(false)
                 .OfType<TAttribute>()
                 .Any();
         }

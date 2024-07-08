@@ -151,7 +151,7 @@ namespace MMR.Randomizer.Utils
             // set values for draw flags for some mask checks (and pendant of memories)
             if (getItemIndex is 0x80 or 0x81 or 0x84 or 0x88 or 0x8A or 0xAB)
             {
-                MaskConfigUtils.UpdateMaskConfig(itemObject, newItem, item, getItemIndex);
+                MaskConfigUtils.UpdateMaskConfig(location, itemObject.DisplayItem);
             }
 
             // Attempt to resolve extended object Id, which should affect "Exclusive Items" as well.

@@ -40,6 +40,12 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1145)]
         [ClearEnemyPuzzleRooms(1, 2, 4)]
         [SceneInternalId(0x0C)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.CeilingSpawner,
+            Actor.UnusedFallingBridge, // can void the player because it forces crushing with the ceiling
+            Actor.UnusedStoneTowerPlatform, // same thing, should be disabled earlier but maybe it isnt
+            Actor.UnusedStoneTowerStoneElevator, // can void the player because it forces crushing with the ceiling
+            Actor.UnusedPirateElevator // can void the player because it forces crushing with the ceiling
+        )]
         [EnemizerSceneEnemyReplacementBlock(Actor.IronKnuckle,
             Actor.Hiploop, // hiploop dies if he touches water? happens in day 2 iron knuckle
             Actor.GibdoWell)] // bit mean to go that far to find a gibdo you have to kill, could be softlock too if no soaring/sot
@@ -86,12 +92,17 @@ namespace MMR.Randomizer.GameObjects
             /*Actor.ClocktowerGearsAndOrgan /*, Actor.PatrollingPirate */ )]
         [EnemizerSceneBlockSensitive(Actor.DekuBabaWithered, -1)] // can block the chest
         [EnemizerSceneBlockSensitive(Actor.DekuBaba, -1)] // this this is required to keep it off of withered as well
+        [EnemizerSceneBlockSensitive(Actor.Wolfos, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
+        [EnemizerSceneBlockSensitive(Actor.Snapper, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
+        [EnemizerSceneBlockSensitive(Actor.Leever, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
+        [EnemizerSceneBlockSensitive(Actor.Armos, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BioDekuBaba,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // they can extend so far they can block the door leading out
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GoldSkulltula,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can get the player locked behind them near the grotto stones
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.HoneyComb,
             Actor.Seagulls, // weird
+            Actor.UnusedFallingBridge, // might block ability to enter the grotto
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator // can get the player locked behind them near the grotto stones
         )]
         Grottos = 0x0A,
@@ -131,14 +142,13 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1173)]
         [SceneInternalId(0x15)]
         [EnemizerSceneEnemyReplacementBlock(Actor.GuruGuru,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         [EnemizerSceneEnemyReplacementBlock(Actor.Gorman,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         [EnemizerSceneEnemyReplacementBlock(Actor.HoneyAndDarling,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         [EnemizerSceneEnemyReplacementBlock(Actor.Gorman,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
-
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         MilkBar = 0x12,
 
         [FileID(1175)]
@@ -149,8 +159,11 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RealBombchu,
         //    Actor.WarpDoor)]
         [EnemizerSceneBlockSensitive(Actor.RealBombchu, -1)] // chicken holder leads to a chest
+        [EnemizerSceneBlockSensitive(Actor.SpikedMine, -1)] // the underwater spiked mines surrounded a switch
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
             Actor.IkanaGravestone, Actor.Bumper, Actor.En_Ani)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
+            Actor.Shabom)] // get's stuck in the ceiling where you cannot kill them
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Hiploop,
         //    Actor.En_Ani, Actor.Bumper, Actor.Tijo)]
         [EnemizerSceneBlockSensitive(Actor.Hiploop, -1)]
@@ -239,7 +252,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1241)]
         [SceneInternalId(0x21)]
         // 11 dinofos room, 6/12 wizrobe
-        [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9)] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room
+        [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9, 12)] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room, 12: bk wizrob
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wolfos, // can cover a switch, don't allow problem actors
         //    Actor.WarpDoor, Actor.WarpToTrialEntrance, Actor.ClocktowerGearsAndOrgan, Actor.Bumper, Actor.IkanaGravestone, Actor.Tijo)]
         [EnemizerSceneBlockSensitive(Actor.Wolfos, -1)]
@@ -365,6 +378,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1308)]
         [SceneInternalId(0x2C)]
+        [EnemizerSceneBlockSensitive(Actor.PottedPlant, -1)] // large actors could block the door
         MountainSmithy = 0x29,
 
         [FileID(1310)]
@@ -377,7 +391,14 @@ namespace MMR.Randomizer.GameObjects
               night:  dyna poly   delta: [587] newsize: [00026F] oldsize: [000024]
               night:  dyna vert   delta: [410] newsize: [0001B2] oldsize: [000018]
          */
-        [DynaHeadroom(615, 450)] // this is aparently waaaaaaay more than I thought
+        // except the above was tested with a busted counter, needs retesting, 532 was 4 oversized
+        // hmm 498 is still broken, oversized by 2, thinking we have something mis-sized
+        // I checked every actor that spawns, their dyna matches what we should have...
+        // now I can get a crash with 471, which is spooky how is it this far off? (and in-game it says its over 50 off)
+        // measurement of 446 was a pass? hmm, until I can find the cause of the measuremnet descrepency
+        [DynaHeadroom(400, 400)] // acceptably tiny risk
+        // more testing: 458 recorded was 548 (+4) in the crash screen thats 90 OFF
+        //[DynaHeadroom(490, 475)]
         // this actor is mostly ignored, player might not even notice, dont waste lots of object budget on this thing
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
             Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
@@ -451,9 +472,9 @@ namespace MMR.Randomizer.GameObjects
         // 234, 162 was fine holy shit
         [DynaHeadroom( 235, 200 )]
         [EnemizerSceneEnemyReplacementBlock(Actor.Cremia,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         [EnemizerSceneEnemyReplacementBlock(Actor.LargeWoodenCrate,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         RomaniRanch = 0x32, // F01, 0xF000 dyna size
 
         [FileID(1328)]
@@ -507,15 +528,15 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1342)]
         [SceneInternalId(0x3E)]
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuKing,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan )] // singing/audio actors
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan )] // singing/audio actors
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuPrincess,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
         [EnemizerSceneEnemyReplacementBlock(Actor.Butler,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
         [EnemizerSceneEnemyReplacementBlock(Actor.PalaceGuardDeku,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
         [EnemizerSceneEnemyReplacementBlock(Actor.Monkey,
-            Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
         DekuKingChamber = 0x3B,
 
         [FileID(1344)]
@@ -552,7 +573,7 @@ namespace MMR.Randomizer.GameObjects
         [DynaHeadroom(0,0)] // seems very low, for now disable
         [EnemizerSceneEnemyReplacementBlock(Actor.Dampe,
             Actor.Treee)]// for some reason big poe in the first room can cause camera to lock, unknown reason
-        [EnemizerSceneEnemyReplacementBlock(Actor.Dampe,
+        [EnemizerSceneEnemyReplacementBlock(Actor.OrangeGraveyardFlower,
             Actor.En_Ani, Actor.SwampTouristGuide, Actor.Secretary, Actor.Scientist, Actor.Takaraya,
             Actor.BombersBlueHat, Actor.BomberHideoutGuard)] // talking actors can stop gave clipping, requested blocking 
         [EnemizerSceneBlockSensitive(Actor.Dampe, -1)]
@@ -697,7 +718,7 @@ namespace MMR.Randomizer.GameObjects
         // one swlift, 0x1C/0x10: works
         // one swlift, 3 cuttable ivy, 0x22/0x1C, works
         // two swlift was fine?? how did I even get crashes previously??
-        [DynaHeadroom(38, 32)]
+        [DynaHeadroom(34, 32)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Keese,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the whole assension
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,

@@ -825,9 +825,11 @@ void Models_DrawOcarina(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable
     Models_DrawCutsceneItem(ctxt, actor, limbDrawTable, posRot2, 16.0, 0x4C);
 }
 
-void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
+void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
     if (!MISC_CONFIG.drawFlags.freestanding) {
-        gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x0600CAD0);
+        if (giIndex == 0x4C) { // || ((ctxt->sceneNum == SCENE_LOST_WOODS) && (gSaveContext.perm.sceneSetupIndex == 1))
+            gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x0600CAD0);
+        }
         return;
     }
 
@@ -848,7 +850,7 @@ void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
             .z = 0x4000
         }
     };
-    Models_DrawCutsceneItem(ctxt, actor, posRot, NULL, 16.0, 0x4C);
+    Models_DrawCutsceneItem(ctxt, actor, posRot, NULL, 16.0, giIndex);
 
     // Restore setup DList to that which Skull Kid's actor expects.
     ctxt->state.gfxCtx->polyOpa.p = z2_Gfx_CallSetupDL(ctxt->state.gfxCtx->polyOpa.p, 0x19);
