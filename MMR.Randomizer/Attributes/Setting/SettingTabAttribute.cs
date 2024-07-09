@@ -1,4 +1,5 @@
-﻿using MMR.Randomizer.GameObjects;
+﻿using MMR.Randomizer.Extensions;
+using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
@@ -41,10 +42,31 @@ namespace MMR.Randomizer.Attributes.Setting
     public class SettingItemListAttribute : Attribute
     {
         public IEnumerable<Item> ItemList { get; }
+        public Func<Item, string> LabelExtractor { get; }
+        public Dictionary<string, Func<Item, object>> AdditionalInformationExtractors { get; }
 
-        public SettingItemListAttribute(string itemUtilsPropertyName)
+        public SettingItemListAttribute(string itemUtilsPropertyName, bool showItemName, bool showLocationName, params string[] additionalInformation)
         {
             ItemList = (IEnumerable<Item>)typeof(ItemUtils).GetMethod(itemUtilsPropertyName).Invoke(null, new object[0]);
+
+            AdditionalInformationExtractors = additionalInformation.ToDictionary(x => x, x =>
+            {
+                Func<Item, object> result = item => typeof(ItemExtensions).GetMethod(x, new Type[] { typeof(Item) }).Invoke(null, new object[] { item });
+                return result;
+            });
+
+            if(showItemName && showLocationName)
+            {
+                LabelExtractor = (item) => $"{item.Location()} ({item.Name()})";
+            }
+            else if (showItemName)
+            {
+                LabelExtractor = (item) => item.Name();
+            }
+            else if (showLocationName)
+            {
+                LabelExtractor = (item) => item.Location();
+            }
         }
     }
 }

@@ -115,10 +115,15 @@ namespace MMR.Randomizer.Extensions
             if (regionAttribute.Reference != null)
             {
                 var reference = regionAttribute.Reference.Value;
-                var newLocation = itemList[reference].NewLocation ?? reference;
+                var newLocation = itemList?[reference].NewLocation ?? reference;
                 return newLocation.Region(itemList);
             }
             throw new System.Exception($"{nameof(RegionAttribute)} must have either {nameof(RegionAttribute.Region)} or {nameof(RegionAttribute.Reference)}");
+        }
+
+        public static Region? Region(this Item item)
+        {
+            return item.Region(null);
         }
 
         public static Region RegionForDirectHint(this Item location, ItemList itemList)

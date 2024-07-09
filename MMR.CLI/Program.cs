@@ -29,6 +29,13 @@ namespace MMR.CLI
         public string Value { get; set; }
     }
 
+    public class SettingItemListItem
+    {
+        public string Label { get; set; }
+        public int Index { get; set; }
+        public Dictionary<string, object> AdditionalInformation { get; set; }
+    }
+
     public class SettingConfig
     {
         public string Path { get; set; }
@@ -38,6 +45,7 @@ namespace MMR.CLI
         public object DefaultValue { get; set; }
         public List<SettingValue> Keys { get; set; }
         public List<SettingValue> Values { get; set; }
+        public List<SettingItemListItem> ItemList { get; set; }
         public string ValueType { get; set; }
     }
 
@@ -88,9 +96,28 @@ namespace MMR.CLI
                             Path = string.Join(".", path.Reverse()),
                             Label = property.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(property.Name),
                             Tooltip = property.GetAttribute<DescriptionAttribute>()?.Description,
-                            DataType = property.GetAttribute<SettingTypeAttribute>()?.Type,
                         };
-                        if (property.PropertyType == typeof(string) || property.PropertyType == typeof(decimal) || property.PropertyType == typeof(Color) || property.PropertyType.IsPrimitive)
+                        var settingTypeAttribute = property.GetAttribute<SettingTypeAttribute>();
+                        var settingItemListAttribute = property.GetAttribute<SettingItemListAttribute>();
+                        if (settingTypeAttribute != null)
+                        {
+                            settingConfig.DataType = property.GetAttribute<SettingTypeAttribute>().Type;
+                        }
+                        else if (settingItemListAttribute != null)
+                        {
+                            settingConfig.DataType = "ItemList";
+                            settingConfig.ItemList = settingItemListAttribute.ItemList.Select((item, index) =>
+                            {
+                                var itemListItem = new SettingItemListItem
+                                {
+                                    Index = index,
+                                    Label = settingItemListAttribute.LabelExtractor(item),
+                                    AdditionalInformation = settingItemListAttribute.AdditionalInformationExtractors.ToDictionary(kvp => kvp.Key, kvp => kvp.Value(item)),
+                                };
+                                return itemListItem;
+                            }).ToList();
+                        }
+                        else if (property.PropertyType == typeof(string) || property.PropertyType == typeof(decimal) || property.PropertyType == typeof(Color) || property.PropertyType.IsPrimitive)
                         {
                             settingConfig.DataType = property.PropertyType.Name;
                         }
