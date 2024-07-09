@@ -99,7 +99,7 @@ namespace MMR.UI.Forms
                     int k = i % 32;
                     if (((vi[j] >> k) & 1) > 0)
                     {
-                        if (i >= ItemUtils.AllLocations().Count())
+                        if (i >= BaseItemList.Count)
                         {
                             throw new IndexOutOfRangeException();
                         }

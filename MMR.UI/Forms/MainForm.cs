@@ -23,6 +23,7 @@ using MMR.Randomizer.Constants;
 using System.Threading;
 using MMR.UI.Controls;
 using System.Linq.Expressions;
+using MMR.Randomizer.Attributes.Setting;
 
 namespace MMR.UI.Forms
 {
@@ -61,7 +62,7 @@ namespace MMR.UI.Forms
 
             JunkLocationEditor = new JunkLocationEditForm();
 
-            ItemEditor = new CustomItemListEditForm(ItemUtils.AllLocations(), item => $"{item.Location()} ({item.Name()})", "Invalid custom item string");
+            ItemEditor = new CustomItemListEditForm(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.CustomItemListString)).GetAttribute<SettingItemListAttribute>().ItemList, item => $"{item.Location()} ({item.Name()})", "Invalid custom item string");
 
             LogicEditor = new LogicEditorForm();
             Manual = new ManualForm();

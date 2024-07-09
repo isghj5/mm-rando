@@ -320,11 +320,14 @@ namespace MMR.CLI
             }
             else
             {
-                configuration.GameplaySettings.CustomItemList = ConvertItemString(ItemUtils.AllLocations().ToList(), configuration.GameplaySettings.CustomItemListString).ToHashSet();
+                var itemList = typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.CustomItemListString)).GetAttribute<SettingItemListAttribute>().ItemList.ToList();
+                configuration.GameplaySettings.CustomItemList = ConvertItemString(itemList, configuration.GameplaySettings.CustomItemListString).ToHashSet();
             }
 
-            configuration.GameplaySettings.CustomStartingItemList = ConvertItemString(ItemUtils.StartingItems().Where(item => !item.Name().Contains("Heart")).ToList(), configuration.GameplaySettings.CustomStartingItemListString);
-            configuration.GameplaySettings.CustomJunkLocations = ConvertItemString(ItemUtils.AllLocations().ToList(), configuration.GameplaySettings.CustomJunkLocationsString);
+            var startingItemList = typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.CustomStartingItemListString)).GetAttribute<SettingItemListAttribute>().ItemList.ToList();
+            configuration.GameplaySettings.CustomStartingItemList = ConvertItemString(startingItemList, configuration.GameplaySettings.CustomStartingItemListString);
+            var junkItemList = typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.CustomJunkLocationsString)).GetAttribute<SettingItemListAttribute>().ItemList.ToList();
+            configuration.GameplaySettings.CustomJunkLocations = ConvertItemString(junkItemList, configuration.GameplaySettings.CustomJunkLocationsString);
 
             configuration.OutputSettings.InputPatchFilename = argsDictionary.GetValueOrDefault("-inputpatch")?.SingleOrDefault();
             configuration.OutputSettings.GeneratePatch |= argsDictionary.ContainsKey("-outputpatch");
@@ -437,50 +440,6 @@ namespace MMR.CLI
                 Console.Error.Write(e.StackTrace);
                 return -1;
             }
-        }
-
-        private static List<int> ConvertIntString(string c)
-        {
-            var result = new List<int>();
-            if (string.IsNullOrWhiteSpace(c))
-            {
-                return result;
-            }
-            try
-            {
-                result.Clear();
-                string[] v = c.Split('-');
-                int[] vi = new int[13];
-                if (v.Length != vi.Length)
-                {
-                    return null;
-                }
-                for (int i = 0; i < 13; i++)
-                {
-                    if (v[12 - i] != "")
-                    {
-                        vi[i] = Convert.ToInt32(v[12 - i], 16);
-                    }
-                }
-                for (int i = 0; i < 32 * 13; i++)
-                {
-                    int j = i / 32;
-                    int k = i % 32;
-                    if (((vi[j] >> k) & 1) > 0)
-                    {
-                        if (i >= ItemUtils.AllLocations().Count())
-                        {
-                            throw new IndexOutOfRangeException();
-                        }
-                        result.Add(i);
-                    }
-                }
-            }
-            catch
-            {
-                return null;
-            }
-            return result;
         }
 
         private static List<Item> ConvertItemString(List<Item> items, string c)

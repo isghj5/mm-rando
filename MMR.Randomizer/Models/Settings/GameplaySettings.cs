@@ -2,6 +2,7 @@
 using MMR.Randomizer.Asm;
 using MMR.Randomizer.Attributes.Setting;
 using MMR.Randomizer.GameObjects;
+using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -417,6 +418,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom item list string
         /// </summary>
+        [SettingItemList(nameof(ItemUtils.AllLocations))]
         public string CustomItemListString { get; set; } = "-------------------------40c-80000000----21ffff-ffffffff-ffffffff-f0000000-7bbeeffa-7fffffff-e6f1fffe-ffffffff";
 
         /// <summary>
@@ -428,6 +430,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom starting item list string
         /// </summary>
+        [SettingItemList(nameof(ItemUtils.CustomStartingItems))]
         public string CustomStartingItemListString { get; set; } = "--1fbfc-5800000-";
 
         /// <summary>
@@ -439,6 +442,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom junk location string
         /// </summary>
+        [SettingItemList(nameof(ItemUtils.AllLocations))]
         public string CustomJunkLocationsString { get; set; } = "------------------------------200000-----400000--f000";
 
         /// <summary>
