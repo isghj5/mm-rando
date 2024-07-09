@@ -2762,7 +2762,6 @@ namespace MMR.UI.Forms
             this.cLowHealthSFXComboBox.Name = "cLowHealthSFXComboBox";
             this.cLowHealthSFXComboBox.Size = new System.Drawing.Size(140, 23);
             this.cLowHealthSFXComboBox.TabIndex = 25;
-            this.cLowHealthSFXComboBox.SelectedIndexChanged += new System.EventHandler(this.cLowHealthSFXComboBox_SelectedIndexChanged);
             // 
             // lLowHealthSFXComboBox
             // 

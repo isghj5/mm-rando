@@ -1502,9 +1502,9 @@ namespace MMR.Randomizer
                     ReadWriteUtils.WriteToROM(address, (ushort)0);
                 }
             }
-            else if ((int) _cosmeticSettings.LowHealthSFX > (int) LowHealthSFX.Random)
+            else if (_cosmeticSettings.LowHealthSFX.HasAttribute<ValueAttribute>())
             {
-                SoundEffect.LowHealthBeep.TryReplaceWith( (SoundEffect) _cosmeticSettings.LowHealthSFX);
+                SoundEffect.LowHealthBeep.TryReplaceWith((SoundEffect)_cosmeticSettings.LowHealthSFX.GetAttribute<ValueAttribute>().Value);
             }
             else if(_cosmeticSettings.LowHealthSFX == LowHealthSFX.Random)
             {

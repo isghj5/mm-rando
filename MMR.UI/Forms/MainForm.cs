@@ -2328,15 +2328,6 @@ namespace MMR.UI.Forms
             _configuration.CosmeticSettings.MagicSelection = selected.Name;
         }
 
-        private void cLowHealthSFXComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // should probably make the object[] obj support both string and index to avoid this search, but it's low use
-            var comboboxArrayObj = cLowHealthSFXComboBox.Items[ cLowHealthSFXComboBox.SelectedIndex ];
-            var SFXOptionList = Enum.GetValues(typeof(LowHealthSFX)).Cast<LowHealthSFX>().ToList();
-            var SFXOption = SFXOptionList.Find(u => u.ToString() == comboboxArrayObj.ToString());
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.LowHealthSFX = SFXOption);
-        }
-
         private void bToggleTricks_Click(object sender, EventArgs e)
         {
             try
