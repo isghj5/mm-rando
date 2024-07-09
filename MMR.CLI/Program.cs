@@ -88,6 +88,7 @@ namespace MMR.CLI
                             Path = string.Join(".", path.Reverse()),
                             Label = property.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(property.Name),
                             Tooltip = property.GetAttribute<DescriptionAttribute>()?.Description,
+                            DataType = property.GetAttribute<SettingTypeAttribute>()?.Type,
                         };
                         if (property.PropertyType == typeof(string) || property.PropertyType == typeof(decimal) || property.PropertyType == typeof(Color) || property.PropertyType.IsPrimitive)
                         {

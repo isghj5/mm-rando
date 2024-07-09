@@ -18,7 +18,8 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Filepath to the input logic file
         /// </summary>
-        [SettingIgnore]
+        [SettingType("File")]
+        [Description("Path to a custom logic file.")]
         public string UserLogicFileName { get; set; } = "";
 
         [SettingIgnore]

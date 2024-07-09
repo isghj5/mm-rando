@@ -24,4 +24,13 @@ namespace MMR.Randomizer.Attributes.Setting
             Name = name;
         }
     }
+
+    public class SettingTypeAttribute: Attribute
+    {
+        public string Type { get; set; }
+        public SettingTypeAttribute(string type)
+        {
+            Type = type;
+        }
+    }
 }
