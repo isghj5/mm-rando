@@ -621,7 +621,7 @@ namespace MMR.Randomizer.Models.Settings
         [Description("Set the number of Foolish hints that will appear on Gossip Stones.")]
         public int? OverrideNumberOfNonRequiredGossipHints { get; set; }
 
-        [Description("Set the maximum number of Way of the Hero / Foolish hints on Gossip Stones that can be for a Clock Town region (including Laundry Pool).")]
+        [Description("Set the maximum number of Way of the Hero hints on Gossip Stones that can be for a Clock Town region (including Laundry Pool).")]
         public int? OverrideMaxNumberOfClockTownGossipHints { get; set; }
 
         [Description("Set the number of Way of the Hero hints that will appear on Garos.")]
@@ -630,7 +630,7 @@ namespace MMR.Randomizer.Models.Settings
         [Description("Set the number of Foolish hints that will appear on Garos.")]
         public int? OverrideNumberOfNonRequiredGaroHints { get; set; }
 
-        [Description("Set the maximum number of Way of the Hero / Foolish hints on Garos that can be for a Clock Town region (including Laundry Pool).")]
+        [Description("Set the maximum number of Way of the Hero hints on Garos that can be for a Clock Town region (including Laundry Pool).")]
         public int? OverrideMaxNumberOfClockTownGaroHints { get; set; }
 
         [SettingIgnore]
