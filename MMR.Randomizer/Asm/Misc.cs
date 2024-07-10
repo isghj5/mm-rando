@@ -300,6 +300,7 @@ namespace MMR.Randomizer.Asm
 
         public bool TakeDamageFromVoid { get; set; }
         public bool OceanTokensRandomized { get; set; }
+        public bool MoonCrashFileErase { get; set; }
 
         public MiscFlags()
         {
@@ -352,6 +353,7 @@ namespace MMR.Randomizer.Asm
             TakeDamageWhileShielding = bitUnpacker.ReadBool();
             TakeDamageFromVoid = bitUnpacker.ReadBool();
             OceanTokensRandomized = bitUnpacker.ReadBool();
+            MoonCrashFileErase = bitUnpacker.ReadBool();
         }
 
         /// <summary>
@@ -396,6 +398,7 @@ namespace MMR.Randomizer.Asm
             bitPacker.Write(TakeDamageWhileShielding);
             bitPacker.Write(TakeDamageFromVoid);
             bitPacker.Write(OceanTokensRandomized);
+            bitPacker.Write(MoonCrashFileErase);
             return bitPacker.ToByteArray(4);
         }
     }

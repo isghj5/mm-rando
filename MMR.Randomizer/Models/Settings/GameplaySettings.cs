@@ -536,6 +536,16 @@ namespace MMR.Randomizer.Models.Settings
         [Description("Dying causes the moon to crash, with all that that implies.")]
         public bool DeathMoonCrash { get; set; }
 
+        /// <summary>
+        /// Dying causes the moon to crash, with all that that implies.
+        /// </summary>
+        [Description("If the moon crashes, your save files will be erased.")]
+        public bool MoonCrashErasesFile
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.MoonCrashFileErase; }
+            set { this.AsmOptions.MiscConfig.Flags.MoonCrashFileErase = value; }
+        }
+
         [Description("Hookshot can hook to any surface.")]
         public bool HookshotAnySurface { get; set; }
 

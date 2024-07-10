@@ -116,7 +116,7 @@ static void HandleAutoInvert_AfterSoT(SaveContext* file) {
 /**
  * Hook function called after some savedata has been loaded into SaveContext.
  **/
-void Savedata_AfterLoad(GlobalContext* ctxt, Camera* camera, SaveContext* file, const u8* buffer, size_t size) {
+void Savedata_AfterLoad(GlobalContext* ctxt, SaveContext* file, const u8* buffer, size_t size) {
     // Read our struct from buffer with flash data
     bool owlSave = IsOwlSaveSize(size);
     u32 offset = SaveFile_GetFlashSectionOffset(owlSave);
@@ -128,6 +128,20 @@ void Savedata_AfterLoad(GlobalContext* ctxt, Camera* camera, SaveContext* file, 
     if (!owlSave) {
         HandleAutoInvert_AfterLoad(file);
     }
+}
+
+void Savedata_ResetSaveFromMoonCrashWrapper(GlobalContext* ctxt) {
+    if (MISC_CONFIG.flags.moonCrashFileErase) {
+        SramContext* sramContext = &ctxt->sram;
+
+        z2_bzero(sramContext->savefile, 0x4000); // SAVE_BUFFER_SIZE
+        z2_Sram_SetFlashPagesDefault(sramContext, 0, 0x300);
+        z2_Sram_StartWriteToFlashDefault(sramContext);
+        gSaveContext.extra.titleSetupIndex = 4; // GAMEMODE_OWL_SAVE // just exits to title screen
+        return;
+    }
+    z2_Sram_ResetSaveFromMoonCrash(&ctxt->sram);
+    Savedata_AfterLoad(ctxt, &gSaveContext, ctxt->sram.savefile, sizeof(SaveContextPerm));
 }
 
 /**

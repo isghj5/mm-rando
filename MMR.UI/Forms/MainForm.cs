@@ -99,6 +99,7 @@ namespace MMR.UI.Forms
                 { cFDAnywhere, cfg => cfg.GameplaySettings.AllowFierceDeityAnywhere },
                 { cByoAmmo, cfg => cfg.GameplaySettings.ByoAmmo },
                 { cDeathMoonCrash, cfg => cfg.GameplaySettings.DeathMoonCrash },
+                { cMoonCrashFileErase, cfg => cfg.GameplaySettings.MoonCrashErasesFile },
                 { cFewerHealthDrops, cfg => cfg.GameplaySettings.FewerHealthDrops },
                 { cTakeDamageOnEpona, cfg => cfg.GameplaySettings.TakeDamageOnEpona },
                 { cTakeDamageWhileShielding, cfg => cfg.GameplaySettings.TakeDamageWhileShielding },
@@ -305,6 +306,7 @@ namespace MMR.UI.Forms
                 { lDMult, (typeof(GameplaySettings), nameof(GameplaySettings.DamageMode)) },
                 { lDType, (typeof(GameplaySettings), nameof(GameplaySettings.DamageEffect)) },
                 { cDeathMoonCrash, (typeof(GameplaySettings), nameof(GameplaySettings.DeathMoonCrash)) },
+                { cMoonCrashFileErase, (typeof(GameplaySettings), nameof(GameplaySettings.MoonCrashErasesFile)) },
                 { cByoAmmo, (typeof(GameplaySettings), nameof(GameplaySettings.ByoAmmo)) },
                 { cFewerHealthDrops, (typeof(GameplaySettings), nameof(GameplaySettings.FewerHealthDrops)) },
                 { lBlastMask, (typeof(GameplaySettings), nameof(GameplaySettings.BlastMaskCooldown)) },
@@ -1348,6 +1350,7 @@ namespace MMR.UI.Forms
             cFDAnywhere.Checked = _configuration.GameplaySettings.AllowFierceDeityAnywhere;
             cByoAmmo.Checked = _configuration.GameplaySettings.ByoAmmo;
             cDeathMoonCrash.Checked = _configuration.GameplaySettings.DeathMoonCrash;
+            cMoonCrashFileErase.Checked = _configuration.GameplaySettings.MoonCrashErasesFile;
             cFewerHealthDrops.Checked = _configuration.GameplaySettings.FewerHealthDrops;
             cTakeDamageOnEpona.Checked = _configuration.GameplaySettings.TakeDamageOnEpona;
             cTakeDamageWhileShielding.Checked = _configuration.GameplaySettings.TakeDamageWhileShielding;
@@ -1972,6 +1975,7 @@ namespace MMR.UI.Forms
             cFDAnywhere.Enabled = v;
             cByoAmmo.Enabled = v;
             cDeathMoonCrash.Enabled = v;
+            cMoonCrashFileErase.Enabled = v;
             cFewerHealthDrops.Enabled = v;
             cTakeDamageOnEpona.Enabled = v;
             cTakeDamageWhileShielding.Enabled = v;
