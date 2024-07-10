@@ -1098,3 +1098,11 @@ void Player_OnDekuWaterVoid(GlobalContext* ctxt, ActorPlayer* player) {
         Player_ForceInflictDamage(ctxt, player, -16);
     }
 }
+
+void Player_VoidExit(u16 sfxId) {
+    z2_PlaySfx_2(sfxId);
+
+    if (MISC_CONFIG.flags.takeDamageFromVoid) {
+        Player_ForceInflictDamage(&gGlobalContext, GET_PLAYER(&gGlobalContext), -16);
+    }
+}

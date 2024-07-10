@@ -213,6 +213,7 @@
 .definelabel z2_GetAudioTable, 0x80190294
 .definelabel z2_ToggleSfxDampen, 0x8019C300
 .definelabel z2_PlaySfx, 0x8019F0C8
+.definelabel z2_PlaySfx_2, 0x8019F128
 .definelabel z2_PlaySfxDecide, 0x8019F208
 .definelabel z2_PlaySfxCancel, 0x8019F230
 .definelabel z2_Audio_PlayObjSoundBgm, 0x801A153C

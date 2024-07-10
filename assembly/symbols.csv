@@ -203,6 +203,7 @@
 0x80190294,z2_GetAudioTable
 0x8019C300,z2_ToggleSfxDampen
 0x8019F0C8,z2_PlaySfx
+0x8019F128,z2_PlaySfx_2
 0x8019F208,z2_PlaySfxDecide
 0x8019F230,z2_PlaySfxCancel
 0x801A153C,z2_Audio_PlayObjSoundBgm

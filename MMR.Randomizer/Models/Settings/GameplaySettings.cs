@@ -303,7 +303,7 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.TakeDamageWhileShielding = value; }
         }
 
-        [Description("Link will take damage when falling into most voids. Voids that have a specific destination will not deal damage.")]
+        [Description("Link will take damage when falling into voids or voiding out in water.")]
         public bool TakeDamageFromVoid
         {
             get { return this.AsmOptions.MiscConfig.Flags.TakeDamageFromVoid; }

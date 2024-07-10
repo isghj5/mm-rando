@@ -83,6 +83,7 @@ extern void z2_Matrix_GetStateTranslationAndScaledY(f32 scale, Vec3f* dst);
 extern void z2_Matrix_GetStateTranslationAndScaledZ(f32 scale, Vec3f* dst);
 extern AudioInfo* z2_GetAudioTable(u8 audioType);
 extern void z2_PlaySfx(u32 id);
+extern void z2_PlaySfx_2(u16 id);
 extern void z2_PlaySfxDecide();
 extern void z2_PlaySfxCancel();
 extern void z2_PlayPlayerSfx(ActorPlayer* player, s16 sfxId);
