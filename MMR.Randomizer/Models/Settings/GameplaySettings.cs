@@ -7,6 +7,7 @@ using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Text.Json.Serialization;
 
@@ -329,6 +330,7 @@ namespace MMR.Randomizer.Models.Settings
         /// How many boss remains are required to proceed through the final Giants cutscene.
         /// </summary>
         [Description("Set the number of Boss Remains required to proceed through the final Giants cutscene.")]
+        [Range(0, 4)]
         public byte RequiredBossRemains
         {
             get { return this.AsmOptions.MiscConfig.MMRBytes.RequiredBossRemains; }
@@ -616,21 +618,27 @@ namespace MMR.Randomizer.Models.Settings
         public bool HintsIndicateImportance { get; set; }
 
         [Description("Set the number of Way of the Hero hints that will appear on Gossip Stones.")]
+        [Range(0, 14)]
         public int? OverrideNumberOfRequiredGossipHints { get; set; }
 
         [Description("Set the number of Foolish hints that will appear on Gossip Stones.")]
+        [Range(0, 14)]
         public int? OverrideNumberOfNonRequiredGossipHints { get; set; }
 
         [Description("Set the maximum number of Way of the Hero hints on Gossip Stones that can be for a Clock Town region (including Laundry Pool).")]
+        [Range(0, 7)]
         public int? OverrideMaxNumberOfClockTownGossipHints { get; set; }
 
         [Description("Set the number of Way of the Hero hints that will appear on Garos.")]
+        [Range(0, 8)]
         public int? OverrideNumberOfRequiredGaroHints { get; set; }
 
         [Description("Set the number of Foolish hints that will appear on Garos.")]
+        [Range(0, 8)]
         public int? OverrideNumberOfNonRequiredGaroHints { get; set; }
 
         [Description("Set the maximum number of Way of the Hero hints on Garos that can be for a Clock Town region (including Laundry Pool).")]
+        [Range(0, 7)]
         public int? OverrideMaxNumberOfClockTownGaroHints { get; set; }
 
         [SettingIgnore]

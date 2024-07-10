@@ -19,6 +19,7 @@ using System.Text.Json.Serialization;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using MMR.Randomizer.Attributes.Setting;
+using System.ComponentModel.DataAnnotations;
 
 namespace MMR.CLI
 {
@@ -47,6 +48,8 @@ namespace MMR.CLI
         public List<SettingValue> Values { get; set; }
         public List<SettingItemListItem> ItemList { get; set; }
         public string ValueType { get; set; }
+        public object MinValue { get; set; }
+        public object MaxValue { get; set; }
     }
 
     partial class Program
@@ -91,11 +94,14 @@ namespace MMR.CLI
                         {
                             return addSpacesRegex.Replace(label, " $1");
                         }
+                        var rangeAttribute = property.GetAttribute<RangeAttribute>();
                         SettingConfig settingConfig = new SettingConfig
                         {
                             Path = string.Join(".", path.Reverse()),
                             Label = property.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(property.Name),
                             Tooltip = property.GetAttribute<DescriptionAttribute>()?.Description,
+                            MinValue = rangeAttribute?.Minimum,
+                            MaxValue = rangeAttribute?.Maximum,
                         };
                         var settingTypeAttribute = property.GetAttribute<SettingTypeAttribute>();
                         var settingItemListAttribute = property.GetAttribute<SettingItemListAttribute>();
