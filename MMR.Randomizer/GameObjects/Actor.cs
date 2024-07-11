@@ -6107,8 +6107,7 @@ namespace MMR.Randomizer.GameObjects
             Item.ShopItemBusinessScrubMagicBean, Item.TradeItemLandDeed, Item.ChestSouthClockTownPurpleRupee)]
         [CheckRestricted(Scene.SouthernSwamp, variant: -1,
             Item.ShopItemBusinessScrubMagicBean, Item.TradeItemSwampDeed, Item.HeartPieceSwampScrub, Item.UpgradeBiggestBombBag)]
-        // do we care?
-        //[CheckRestricted(Scene.SouthernSwampClear, variant: -1, Item.ShopItemBusinessScrubMagicBean, Item.HeartPieceSwampScrub, Item.UpgradeBiggestBombBag)]
+        [CheckRestricted(Scene.SouthernSwampClear, variant: -1, Item.ShopItemBusinessScrubMagicBean, Item.HeartPieceSwampScrub, Item.UpgradeBiggestBombBag)]
         [CheckRestricted(Scene.GoronVillage, variant: -1,
             Item.UpgradeBiggestBombBag, Item.TradeItemMountainDeed, Item.ShopItemBusinessScrubGreenPotion, Item.HeartPieceGoronVillageScrub)]
         [CheckRestricted(Scene.ZoraHallRooms, variant: -1,
