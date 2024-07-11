@@ -50,6 +50,7 @@ namespace MMR.CLI
         public string ValueType { get; set; }
         public object MinValue { get; set; }
         public object MaxValue { get; set; }
+        public Dictionary<object, List<string>> SettingExcludes { get; set; }
     }
 
     partial class Program
@@ -102,6 +103,9 @@ namespace MMR.CLI
                             Tooltip = property.GetAttribute<DescriptionAttribute>()?.Description,
                             MinValue = rangeAttribute?.Minimum,
                             MaxValue = rangeAttribute?.Maximum,
+                            SettingExcludes = property.HasAttribute<SettingExcludeAttribute>()
+                                ? property.GetAttributes<SettingExcludeAttribute>().ToDictionary(attr => attr.PropertyValue, attr => attr.SettingPaths)
+                                : null,
                         };
                         var settingTypeAttribute = property.GetAttribute<SettingTypeAttribute>();
                         var settingItemListAttribute = property.GetAttribute<SettingItemListAttribute>();

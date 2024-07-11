@@ -126,6 +126,7 @@ namespace MMR.Randomizer.Models.Settings
         /// Whether or not to enable Quest Item Storage.
         /// </summary>
         [Description("Enable Quest Item Storage, which allows for storing multiple quest items in their dedicated inventory slot. Quest items will also always be consumed when used.")]
+        [SettingExclude(false, nameof(KeepQuestTradeThroughTime))]
         public bool QuestItemStorage {
             get { return this.AsmOptions.MiscConfig.Flags.QuestItemStorage; }
             set { this.AsmOptions.MiscConfig.Flags.QuestItemStorage = value; }
@@ -345,6 +346,56 @@ namespace MMR.Randomizer.Models.Settings
         /// Selected mode of logic (affects randomization rules)
         /// </summary>
         [Description("Select mode of logic:\n - Casual: The randomization logic ensures that the game can be beaten casually.\n - Glitched: The randomization logic allows for placement of items that are only obtainable using known glitches.\n - Vanilla Layout: All items are left vanilla.\n - User Logic: Upload your own custom logic to be used in the randomization.\n - No Logic: Completely random, no guarantee the game is beatable. Uses Glitched logic with all tricks enabled for HTML tracker and Blitz junk location calculation.")]
+        [SettingExclude(LogicMode.Casual, nameof(UserLogicFileName))]
+        [SettingExclude(LogicMode.Glitched, nameof(UserLogicFileName))]
+        [SettingExclude(LogicMode.Vanilla,
+            nameof(UserLogicFileName),
+            nameof(AddSongs),
+            nameof(ItemPlacement),
+            nameof(ProgressiveUpgrades),
+            nameof(CustomJunkLocationsString),
+            nameof(CustomItemListString),
+            nameof(RandomizeDungeonEntrances),
+            nameof(RandomizeBossRooms),
+            nameof(StartingItemMode),
+            nameof(RequiredBossRemains),
+            nameof(VictoryMode),
+            nameof(PriceMode),
+            nameof(BossRemainsMode),
+            nameof(BossKeyMode),
+            nameof(SmallKeyMode),
+            nameof(StrayFairyMode),
+            nameof(DungeonNavigationMode),
+            nameof(TrapAmount),
+            nameof(TrapAppearance),
+            nameof(TrapQuirks),
+            nameof(TrapWeights),
+            nameof(GossipHintStyle),
+            nameof(GaroHintStyle),
+            nameof(ClearHints),
+            nameof(ClearGaroHints),
+            nameof(ImportanceCount),
+            nameof(ImportanceCountGaro),
+            nameof(OverrideMaxNumberOfClockTownGossipHints),
+            nameof(OverrideMaxNumberOfClockTownGaroHints),
+            nameof(OverrideNumberOfRequiredGossipHints),
+            nameof(OverrideNumberOfRequiredGaroHints),
+            nameof(OverrideNumberOfNonRequiredGossipHints),
+            nameof(OverrideNumberOfNonRequiredGaroHints),
+            nameof(HintsIndicateImportance),
+            nameof(MixGossipAndGaroHints),
+            nameof(RemainsHint),
+            nameof(OathHint),
+            nameof(FairyAndSkullHint),
+            nameof(UpdateShopAppearance),
+            nameof(UpdateChests),
+            nameof(UpdateWorldModels),
+            nameof(UpdateNPCText),
+            nameof(PreventDowngrades),
+            nameof(FairyMaskShimmer),
+            nameof(SkulltulaTokenSounds)
+        )]
+        [SettingExclude(LogicMode.NoLogic, nameof(UserLogicFileName), nameof(EnabledTricks))]
         public LogicMode LogicMode { get; set; }
         
         [Description("Select the order that items are placed. If you don't know what this does, just use Random.")]
@@ -579,9 +630,51 @@ namespace MMR.Randomizer.Models.Settings
         /// Method to write the gossip stone hints.
         /// </summary>
         [Description("Select a Gossip Stone hint style\n\n - Default: Vanilla Gossip Stone hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, and hints regarding importance or non-importance of regions")]
+        [SettingExclude(GossipHintStyle.Default, nameof(ClearHints),
+            nameof(ImportanceCount),
+            nameof(OverrideNumberOfRequiredGossipHints),
+            nameof(OverrideNumberOfNonRequiredGossipHints),
+            nameof(OverrideMaxNumberOfClockTownGossipHints),
+            nameof(MixGossipAndGaroHints)
+        )]
+        [SettingExclude(GossipHintStyle.Random,
+            nameof(ImportanceCount),
+            nameof(OverrideNumberOfRequiredGossipHints),
+            nameof(OverrideNumberOfNonRequiredGossipHints),
+            nameof(OverrideMaxNumberOfClockTownGossipHints),
+            nameof(MixGossipAndGaroHints)
+        )]
+        [SettingExclude(GossipHintStyle.Relevant,
+            nameof(ImportanceCount),
+            nameof(OverrideNumberOfRequiredGossipHints),
+            nameof(OverrideNumberOfNonRequiredGossipHints),
+            nameof(OverrideMaxNumberOfClockTownGossipHints),
+            nameof(MixGossipAndGaroHints)
+        )]
         public GossipHintStyle GossipHintStyle { get; set; } = GossipHintStyle.Competitive;
 
         [Description("Select a Garo hint style\n\n - Default: Vanilla Garo hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, and hints regarding importance or non-importance of regions.")]
+        [SettingExclude(GossipHintStyle.Default, nameof(ClearHints),
+            nameof(ImportanceCountGaro),
+            nameof(OverrideNumberOfRequiredGaroHints),
+            nameof(OverrideNumberOfNonRequiredGaroHints),
+            nameof(OverrideMaxNumberOfClockTownGaroHints),
+            nameof(MixGossipAndGaroHints)
+        )]
+        [SettingExclude(GossipHintStyle.Random,
+            nameof(ImportanceCountGaro),
+            nameof(OverrideNumberOfRequiredGaroHints),
+            nameof(OverrideNumberOfNonRequiredGaroHints),
+            nameof(OverrideMaxNumberOfClockTownGaroHints),
+            nameof(MixGossipAndGaroHints)
+        )]
+        [SettingExclude(GossipHintStyle.Relevant,
+            nameof(ImportanceCountGaro),
+            nameof(OverrideNumberOfRequiredGaroHints),
+            nameof(OverrideNumberOfNonRequiredGaroHints),
+            nameof(OverrideMaxNumberOfClockTownGaroHints),
+            nameof(MixGossipAndGaroHints)
+        )]
         public GossipHintStyle GaroHintStyle { get; set; }
 
         [Description("Garo hints distribution and gossip hint distribution will be mixed together.")]

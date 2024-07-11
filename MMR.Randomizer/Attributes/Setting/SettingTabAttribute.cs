@@ -69,4 +69,17 @@ namespace MMR.Randomizer.Attributes.Setting
             }
         }
     }
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public class SettingExcludeAttribute : Attribute
+    {
+        public object PropertyValue { get; }
+        public List<string> SettingPaths { get; }
+
+        public SettingExcludeAttribute(object propertyValue, params string[] settingPaths)
+        {
+            PropertyValue = propertyValue;
+            SettingPaths = settingPaths.ToList();
+        }
+    }
 }

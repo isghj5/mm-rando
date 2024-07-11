@@ -1830,11 +1830,13 @@ namespace MMR.UI.Forms
             }
 
             cCustomGossipWoth.Enabled = _configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Competitive;
+            cImportanceCount.Enabled = _configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Competitive;
             nMaxGossipWotH.Enabled = cCustomGossipWoth.Checked && cCustomGossipWoth.Enabled;
             nMaxGossipFoolish.Enabled = nMaxGossipWotH.Enabled;
             nMaxGossipCT.Enabled = nMaxGossipWotH.Enabled;
 
             cCustomGaroWoth.Enabled = _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
+            cImportanceCountGaro.Enabled = _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
             nMaxGaroWotH.Enabled = cCustomGaroWoth.Checked && cCustomGaroWoth.Enabled;
             nMaxGaroFoolish.Enabled = nMaxGaroWotH.Enabled;
             nMaxGaroCT.Enabled = nMaxGaroWotH.Enabled;

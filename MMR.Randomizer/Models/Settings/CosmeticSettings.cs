@@ -55,6 +55,8 @@ namespace MMR.Randomizer.Models.Settings
         /// Randomize background music (includes bgm from other video games)
         /// </summary>
         [Description("Select a music option\n\n - Default: Vanilla background music.\n - Random: Randomized background music.\n - None: No background music.")]
+        [SettingExclude(Music.Default, nameof(MusicLuckRollChance))]
+        [SettingExclude(Music.None, nameof(MusicLuckRollChance))]
         public Music Music { get; set; }
 
         /// <summary>

@@ -55,6 +55,12 @@ namespace MMR.Common.Extensions
                 .SingleOrDefault();
         }
 
+        public static IEnumerable<TAttribute> GetAttributes<TAttribute>(this MemberInfo memberInfo) where TAttribute : Attribute
+        {
+            return memberInfo.GetCustomAttributes(typeof(TAttribute), false)
+                .OfType<TAttribute>();
+        }
+
         public static bool HasAttribute<TAttribute>(this MemberInfo memberInfo) where TAttribute : Attribute
         {
             return memberInfo.GetCustomAttributes(false)
