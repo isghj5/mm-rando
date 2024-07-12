@@ -2657,7 +2657,9 @@ namespace MMR.Randomizer.GameObjects
         // 0x3F is scene exit list index
         [GroundVariants(0x3C0)] // zero index, always safe
         [WaterBottomVariants(0x3C0)]
-        [ForbidFromScene(Scene.GoronTrial)]
+        [ForbidFromScene(Scene.GoronTrial, // needed
+            Scene.DekuPlayground // door to leave
+        )]
         [EnemizerScenesPlacementBlock(Scene.IkanaCastle)] // wrongly warps you to the boss room but its not loaded
         [UnkillableAllVariants]
         [BlockingVariantsAll]
