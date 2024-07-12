@@ -3798,20 +3798,21 @@ namespace MMR.Randomizer
         } // end function
 
 
-        public static void ShuffleFreelanceActors(SceneEnemizerData thisSceneData, List<Actor> previouslyAssignedCandidates)
+        public static void ShuffleFreelanceActors(SceneEnemizerData thisSceneData/*, List<Actor> previouslyAssignedCandidates*/)
         {
             /// this is the same as above but for the actors that previously did not have an object,
             /// so they can use ANY object require actor, or free actors
 
             var freelanceActors = thisSceneData.FreelanceActors;
 
-            
+            if (freelanceActors == null) throw new Exception("freelanceActors busted");
 
             // we need to generate a candidate list for all actors without an object just like regular? if we want blocking sensitivity yeah
             // sort the list of special actors into list of per type
             var allFreelanceActorsPerEnum = new List<List<Actor>>(); // same index for both, this is a list of all actors per type
             var allCandidatesPerFreelance = new List<List<Actor>>(); // all candidates for the type replacement
             var uniqueFreelanceActorTypes = thisSceneData.FreelanceActors.Select(act => act.OldActorEnum).Distinct().ToList();
+            if (uniqueFreelanceActorTypes == null) throw new Exception("unique free actors busted");
             for ( int a = 0; a < uniqueFreelanceActorTypes.Count; a++)
             {
                 var actorType = uniqueFreelanceActorTypes[a];
@@ -3827,7 +3828,6 @@ namespace MMR.Randomizer
 
                 //allCandidatesPerFreelance.Add(newCandiateList);
 
-
                 for (int actorIndex = 0; actorIndex < allActorInstances.Count(); actorIndex++)
                 {
                     var oldActor = allActorInstances[actorIndex];
@@ -3836,7 +3836,6 @@ namespace MMR.Randomizer
 
                     // get the objects for this room
                     // quickly grab the candidates for the available objects
-
                     
                     var candidatesPerActor = new List<Actor>();
                     for (int o = 0; o < thisSceneData.AllObjects[oldActor.Room].Count; o++)
@@ -3857,7 +3856,8 @@ namespace MMR.Randomizer
                     while (true)
                     {
                         /// looking for a list of objects for the actors we chose that fit the actor types
-                        testActor = candidatesPerActor[thisSceneData.RNG.Next(candidatesPerActor.Count)];
+                        var randomIndex = thisSceneData.RNG.Next(candidatesPerActor.Count);
+                        testActor = candidatesPerActor[randomIndex];
 
                         /* if (testActor.IsCompanion && (oldActor.MustNotRespawn || actorsPerRoomCount <= 2))
                         {
@@ -3868,6 +3868,8 @@ namespace MMR.Randomizer
 
                         break;
                     }
+
+                    if (testActor.Variants == null || testActor.Variants.Count == 0) throw new Exception($"variants busted:{testActor.Name}");
 
                     var newVariant = testActor.Variants[thisSceneData.RNG.Next(testActor.Variants.Count)];
                     oldActor.ChangeActor(testActor, vars: newVariant);
@@ -4880,7 +4882,7 @@ namespace MMR.Randomizer
 
                     // assuming we dont have free actors with companions
 
-                    ShuffleFreelanceActors(thisSceneData, previousyAssignedCandidate);
+                    ShuffleFreelanceActors(thisSceneData/*, previousyAssignedCandidate*/);
                     //WriteOutput($"  match time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                     //TrimAllActors(thisSceneData, previousyAssignedCandidate, temporaryMatchEnemyList); // lets let that last check below do this
@@ -5182,12 +5184,12 @@ namespace MMR.Randomizer
 
             foreach (string filePath in GenerateMMRAFileList(directory))
             {
-                if (filePath.Contains("SafeBoat.mmra") ||
-                    filePath.Contains("Dinofos"))
+                if (filePath.Contains("SafeBoat.mmra")
+                 || filePath.Contains("FairySpot.mmra") // is missing a variant, and was not working, not even sure what it was doing, TODo
+                 || filePath.Contains("Dinofos"))
                 {
                     //throw new Exception("SafeBoat.mmra no longer works in actorizer 1.16, \n remove the file from MMR/actors and start a new seed.");
                     continue;
-
                 }
 
                 if (_randomized.Settings.Character == Models.Character.AdultLink && filePath.Contains("Anope.mmra"))
