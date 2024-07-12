@@ -553,7 +553,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [ForbidFromScene(Scene.DekuTrial, Scene.GoronTrial, Scene.LinkTrial, Scene.ZoraTrial)]
-        [PlacementWeight(20)]
+        [PlacementWeight(15)]
         WarpDoor = 0x38, // Door_Warp1
 
         [ActorizerEnabled]
