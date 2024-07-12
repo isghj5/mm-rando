@@ -207,8 +207,10 @@ namespace MMR.Randomizer.GameObjects
             Actor.Hiploop)] // dies instantly in the water
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper,
             Actor.Hiploop)] // dies instantly in the water
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula, 
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula,
             Actor.BigPoe)] // I think this was an issue? other than being annoying I mean
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.HoneyComb,
+            Actor.BigPoe)] // we've gotten a crash beacuse param changed, type change to zero, but we dont know why
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo,
             Actor.GibdoWell, Actor.DeathArmos, // Rarely Killable
             Actor.Keese // can bug out and fly out-of-bounds, difficult to kill
@@ -297,6 +299,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.ClocktowerGearsAndOrgan)] // can block the player into the wall
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.WoodenBarrel,
             Actor.TreasureChest)] // can block the player into the wall
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ZoraEgg,
+            Actor.Evan)] // can block the treasurechest
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ZoraEgg,
         //    Actor.Tijo, Actor.Bombiwa, Actor.Bumper)] // blocking a chest
         [EnemizerSceneBlockSensitive(Actor.ZoraEgg, -1)]
