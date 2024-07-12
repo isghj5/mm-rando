@@ -1183,7 +1183,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         SmallWoodenBox = 0x81, // Obj_Kibako
 
-        // MULTIPLE OBJECT ACTOR, can use pot object, dungeon keep, and green pot object
+        // MULTIPLE OBJECT ACTOR, can use object_tsubo object, dungeon keep, and green pot object
         [ActorizerEnabled]
         [FileID(126)]
         //[ObjectListIndex(0x1)] // this is a lie, the pot DETECTS multiple objects but does NOT exist in gameplay keep
@@ -1387,11 +1387,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ActorInstanceSize(0x19C)]
         [FileID(135)]
-        //[ObjectListIndex(0x1)] // gameplay_keep obj 1, for regular single bush of grass
-        [ObjectListIndex(0xF8)] //
+        [ObjectListIndex(0xF8)] // type 0 (0x3) is FIELD_KEEP, handled in code because we dont have working code for multi-object
         [CheckRestricted(Scene.SouthernSwampClear, variant: -1, Item.CollectableSouthernSwampClearCentralSwampGrass1, Item.CollectableSouthernSwampClearCentralSwampGrass2)]
         [CheckRestricted(Scene.MilkRoad, variant: -1, Item.CollectableMilkRoadGrass1, Item.CollectableMilkRoadGrass2, Item.CollectableMilkRoadGrass3)]
-        // 0 uses gameplay keep to draw regular grass, like ObjGrassUnit
+        // 0 uses field keep to draw regular grass, like ObjGrassUnit
         // 1 creates a grass circle in termina field, 0 is grotto grass single
         // 642B is a smaller cuttable grass from the ground in secret 
         //[GroundVariants(0, 1)]

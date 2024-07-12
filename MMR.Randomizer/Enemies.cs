@@ -470,6 +470,45 @@ namespace MMR.Randomizer
                 mapActor.Blockable = mapActor.ActorEnum.IsBlockable(scene.SceneEnum, mapActor.RoomActorIndex);
             }
 
+            bool SpecialMultiObjectCases(Actor targetActor, int mapIndex, int actorIndex)
+            {
+                if (thisSceneData.Scene.SpecialObject == Scene.SceneSpecialObject.FieldKeep
+                 && targetActor.OldActorEnum == GameObjects.Actor.TallGrass)
+                {
+                    int[] tallGrassFieldObjectVariants = {
+                        0x0, 0x800,
+                        0x0600, 0x700, 0xC00, 0xD00,
+                        0x0610
+                    };
+
+                    // special case: tall grass is multi object: one uses field_keep to draw a regular bush
+                    //  until we have multi-object code, this needs a special case or rando ignores it
+                    if (tallGrassFieldObjectVariants.Contains(targetActor.OldVariant))
+                    {
+                        FixActorLastSecond(targetActor, targetActor.OldActorEnum, mapIndex, actorIndex);
+                        return true;
+                    }
+                }
+                if (thisSceneData.Scene.SpecialObject == Scene.SceneSpecialObject.DungeonKeep
+                 && targetActor.OldActorEnum == GameObjects.Actor.ClayPot)
+                {
+                    int[] clayPotDungeonVariants = {
+                        0xB,
+                    };
+
+                    // special case: claypot is multi object: one uses dungeon keep to hold its assets
+                    //  until we have multi-object code, this needs a special case or rando ignores it
+                    if (clayPotDungeonVariants.Contains(targetActor.OldVariant))
+                    {
+                        FixActorLastSecond(targetActor, targetActor.OldActorEnum, mapIndex, actorIndex);
+                        return true;
+                    }
+
+                }
+
+                return false;
+            }
+
             var sceneEnemyList = new List<Actor>();
             var sceneObjectlessList = new List<Actor>();
             for (int mapIndex = 0; mapIndex < scene.Maps.Count; ++mapIndex)
@@ -478,14 +517,23 @@ namespace MMR.Randomizer
                 {
                     var mapActor = scene.Maps[mapIndex].Actors[actorIndex];
                     var matchingEnemy = VanillaEnemyList.Find(act => (int)act == mapActor.ActorId);
-                    if (matchingEnemy > 0) {
+                    if (matchingEnemy > 0)
+                    {
                         var listOfAcceptableVariants = matchingEnemy.AllVariants();
 
                         // TODO: check if the specific actor can be randomized, required before continue:
-                          // actor separation, scene reconstruction, object list extension,  
+                        // actor separation, scene reconstruction, object list extension,  
 
-                        if (!matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)
-                            && listOfAcceptableVariants.Contains(mapActor.OldVariant))
+                        if (matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum))
+                            continue;
+
+                        if(SpecialMultiObjectCases(mapActor, mapIndex, actorIndex))
+                        {
+                            sceneObjectlessList.Add(mapActor);
+                            continue;
+                        }
+
+                        if (listOfAcceptableVariants.Contains(mapActor.OldVariant)) // regular actors
                         {
                             FixActorLastSecond(mapActor, matchingEnemy, mapIndex, actorIndex);
 
@@ -498,24 +546,29 @@ namespace MMR.Randomizer
                         }
                         #endif
                     }
-                    else
+                    else // not regular actor, free actor?
                     {
-                        var matchingFreeActor = FreeCandidateList.Find(act => act.ActorEnum == mapActor.ActorEnum);
-                        if (matchingFreeActor != null)
+
+                        void AddIfNoRestrictions(Actor testActor)
                         {
-                            //Debug.Assert(matchingFreeActor.ObjectId <= 3);
-                            var sceneRestrictions = matchingFreeActor.ActorEnum.GetAttribute<ForbidFromSceneAttribute>();
+                            var sceneRestrictions = testActor.ActorEnum.GetAttribute<ForbidFromSceneAttribute>();
                             if (sceneRestrictions != null && sceneRestrictions.ScenesExcluded.Contains(thisSceneData.Scene.SceneEnum))
-                                continue; // no valid to consider this actor
+                                return; // continue // not valid to consider this actor
 
-
-                            FixActorLastSecond(mapActor, matchingFreeActor.ActorEnum, mapIndex, actorIndex);
+                            FixActorLastSecond(testActor, testActor.ActorEnum, mapIndex, actorIndex);
 
                             sceneObjectlessList.Add(mapActor);
                         }
+
+                        var matchingFreeActor = FreeCandidateList.Find(act => act.ActorEnum == mapActor.ActorEnum);
+                        if (matchingFreeActor != null)
+                        {
+                            AddIfNoRestrictions(mapActor);
+                        }
+
+                        
                     }
                 }
-
 
             }
             thisSceneData.Actors = sceneEnemyList;
@@ -3751,14 +3804,17 @@ namespace MMR.Randomizer
             /// so they can use ANY object require actor, or free actors
 
             var freelanceActors = thisSceneData.FreelanceActors;
+
+            
+
             // we need to generate a candidate list for all actors without an object just like regular? if we want blocking sensitivity yeah
             // sort the list of special actors into list of per type
             var allFreelanceActorsPerEnum = new List<List<Actor>>(); // same index for both, this is a list of all actors per type
             var allCandidatesPerFreelance = new List<List<Actor>>(); // all candidates for the type replacement
-            var uniqueFreelanceActors = thisSceneData.FreelanceActors.Select(act => act.OldActorEnum).Distinct().ToList();
-            for ( int a = 0; a < uniqueFreelanceActors.Count; a++)
+            var uniqueFreelanceActorTypes = thisSceneData.FreelanceActors.Select(act => act.OldActorEnum).Distinct().ToList();
+            for ( int a = 0; a < uniqueFreelanceActorTypes.Count; a++)
             {
-                var actorType = uniqueFreelanceActors[a];
+                var actorType = uniqueFreelanceActorTypes[a];
                 var allActorInstances = thisSceneData.FreelanceActors.FindAll(act => act.OldActorEnum == actorType);
                 allFreelanceActorsPerEnum.Add(allActorInstances);
 
