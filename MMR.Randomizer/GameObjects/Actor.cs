@@ -1555,6 +1555,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)]
         //[AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0090)]
         [UnkillableAllVariants]
+        [PlacementWeight(50)] // boring
         Carpenter = 0x9C, // En_Daiku
 
         // tag: lemons
@@ -6017,6 +6018,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingTypeVarsPlacement(mask: 0x1F80, shift: 7)]
         // restrict if not
         [UnkillableAllVariants]
+        [PlacementWeight(40)]
         MilkroadCarpenter = 0x26A, // En_Daiku2
 
         [ActorizerEnabled]
@@ -6590,6 +6592,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0, 0x1, 0x2, 0x3, 0x4)]
         [VariantsWithRoomMax(max: 0, variant: 0x0, 0x1, 0x2, 0x3, 0x4)] // often fail to spawn
         [UnkillableAllVariants]
+        [PlacementWeight(30)]
         // placable?
         CarpentersFromCutscene = 0x2AB, // En_Ending_Hero5
 
