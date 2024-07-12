@@ -4,16 +4,22 @@ using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MMR.Randomizer.Attributes.Setting
 {
     public class SettingTabAttribute : Attribute
     {
+        public Type TabType { get; }
+        public SettingTabAttribute(Type tabType)
+        {
+            TabType = tabType;
+        }
 
+        public enum Type
+        {
+            None,
+            Gimmicks
+        }
     }
 
     public class SettingIgnoreAttribute : Attribute

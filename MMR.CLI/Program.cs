@@ -51,6 +51,8 @@ namespace MMR.CLI
         public object MinValue { get; set; }
         public object MaxValue { get; set; }
         public Dictionary<object, List<string>> SettingExcludes { get; set; }
+        public Dictionary<LogicMode, Dictionary<string, List<SettingValue>>> TrickInfo { get; set; }
+        public Dictionary<LogicMode, bool> InLogic { get; set; }
     }
 
     partial class Program
@@ -71,12 +73,33 @@ namespace MMR.CLI
             }
             if (argsDictionary.ContainsKey("-settingsConfig"))
             {
+                var logicModes = new List<LogicMode> { LogicMode.Casual, LogicMode.Glitched };
+                var userLogicFileName = argsDictionary.GetValueOrDefault("-settingsConfig")?.SingleOrDefault();
+                if (userLogicFileName != default)
+                {
+                    logicModes.Add(LogicMode.UserLogic);
+                }
+
+                var itemLists = logicModes.ToDictionary(logicMode => logicMode, logicMode =>
+                {
+                    var data = LogicUtils.ReadRulesetFromResources(logicMode, userLogicFileName);
+                    try
+                    {
+                        return LogicUtils.PopulateItemListFromLogicData(data);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Error reading logic.");
+                    }
+                });
+
                 Regex addSpacesRegex = new Regex("(?<!^)([A-Z])");
                 var path = new Stack<string>();
                 var settings = new List<SettingConfig>();
                 void processType(object defaultValue)
                 {
-                    foreach (var property in defaultValue.GetType().GetProperties())
+                    var declaringType = defaultValue.GetType();
+                    foreach (var property in declaringType.GetProperties())
                     {
                         if (!property.CanWrite)
                         {
@@ -106,7 +129,31 @@ namespace MMR.CLI
                             SettingExcludes = property.HasAttribute<SettingExcludeAttribute>()
                                 ? property.GetAttributes<SettingExcludeAttribute>().ToDictionary(attr => attr.PropertyValue, attr => attr.SettingPaths)
                                 : null,
+                            InLogic = property.GetAttribute<SettingTabAttribute>()?.TabType == SettingTabAttribute.Type.Gimmicks ? itemLists.ToDictionary(kvp => kvp.Key, kvp =>
+                            {
+                                return kvp.Value.Any(io => !string.IsNullOrWhiteSpace(io.SettingExpression) && LogicUtils.ParseSettingExpression(io.SettingExpression).VisitsMember(declaringType, property.Name));
+                            }) : null,
                         };
+                        if (settingConfig.Path == $"{nameof(GameplaySettings)}.{nameof(GameplaySettings.EnabledTricks)}")
+                        {
+                            settingConfig.TrickInfo = itemLists.ToDictionary(kvp => kvp.Key, kvp =>
+                            {
+                                var tricks = kvp.Value.Where(io => io.IsTrick);
+                                var categories = tricks.Select(io => string.IsNullOrWhiteSpace(io.TrickCategory) ? "Misc" : io.TrickCategory).Distinct().ToList();
+
+                                foreach (var i in tricks)
+                                {
+                                    i.TrickCategory = string.IsNullOrWhiteSpace(i.TrickCategory) ? "Misc" : i.TrickCategory;
+                                }
+
+                                return tricks.GroupBy(io => io.TrickCategory).ToDictionary(g => g.Key, g => g.Select(io => new SettingValue
+                                {
+                                    Label = io.Name,
+                                    Tooltip = io.TrickTooltip,
+                                    Value = io.TrickUrl,
+                                }).ToList());
+                            });
+                        }
                         var settingTypeAttribute = property.GetAttribute<SettingTypeAttribute>();
                         var settingItemListAttribute = property.GetAttribute<SettingItemListAttribute>();
                         if (settingTypeAttribute != null)
