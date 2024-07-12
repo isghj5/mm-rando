@@ -554,7 +554,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [ForbidFromScene(Scene.DekuTrial, Scene.GoronTrial, Scene.LinkTrial, Scene.ZoraTrial)]
-        [PlacementWeight(20)]
+        [PlacementWeight(15)]
         WarpDoor = 0x38, // Door_Warp1
 
         [ActorizerEnabled]
@@ -1605,6 +1605,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)]
         //[AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0090)]
         [UnkillableAllVariants]
+        [PlacementWeight(50)] // boring
         Carpenter = 0x9C, // En_Daiku
 
         // tag: lemons
@@ -6118,6 +6119,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingTypeVarsPlacement(mask: 0x1F80, shift: 7)]
         // restrict if not
         [UnkillableAllVariants]
+        [PlacementWeight(40)]
         MilkroadCarpenter = 0x26A, // En_Daiku2
 
         [ActorizerEnabled]
@@ -6208,8 +6210,7 @@ namespace MMR.Randomizer.GameObjects
             Item.ShopItemBusinessScrubMagicBean, Item.TradeItemLandDeed, Item.ChestSouthClockTownPurpleRupee)]
         [CheckRestricted(Scene.SouthernSwamp, variant: -1,
             Item.ShopItemBusinessScrubMagicBean, Item.TradeItemSwampDeed, Item.HeartPieceSwampScrub, Item.UpgradeBiggestBombBag)]
-        // do we care?
-        //[CheckRestricted(Scene.SouthernSwampClear, variant: -1, Item.ShopItemBusinessScrubMagicBean, Item.HeartPieceSwampScrub, Item.UpgradeBiggestBombBag)]
+        [CheckRestricted(Scene.SouthernSwampClear, variant: -1, Item.ShopItemBusinessScrubMagicBean, Item.HeartPieceSwampScrub, Item.UpgradeBiggestBombBag)]
         [CheckRestricted(Scene.GoronVillage, variant: -1,
             Item.UpgradeBiggestBombBag, Item.TradeItemMountainDeed, Item.ShopItemBusinessScrubGreenPotion, Item.HeartPieceGoronVillageScrub)]
         [CheckRestricted(Scene.ZoraHallRooms, variant: -1,
@@ -6692,6 +6693,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0, 0x1, 0x2, 0x3, 0x4)]
         [VariantsWithRoomMax(max: 0, variant: 0x0, 0x1, 0x2, 0x3, 0x4)] // often fail to spawn
         [UnkillableAllVariants]
+        [PlacementWeight(30)]
         // placable?
         CarpentersFromCutscene = 0x2AB, // En_Ending_Hero5
 
