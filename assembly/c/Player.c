@@ -1102,7 +1102,7 @@ void Player_OnDekuWaterVoid(GlobalContext* ctxt, ActorPlayer* player) {
 void Player_VoidExit(u16 sfxId) {
     z2_PlaySfx_2(sfxId);
 
-    if (MISC_CONFIG.flags.takeDamageFromVoid) {
+    if (MISC_CONFIG.flags.takeDamageFromVoid && gGlobalContext.sceneNum != SCENE_BOTI) {
         Player_ForceInflictDamage(&gGlobalContext, GET_PLAYER(&gGlobalContext), -16);
     }
 }
