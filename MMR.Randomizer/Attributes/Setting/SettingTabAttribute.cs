@@ -1,5 +1,6 @@
 ﻿using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
+using MMR.Randomizer.Models.Colors;
 using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace MMR.Randomizer.Attributes.Setting
 
     public class SettingNameAttribute : Attribute
     {
-        public string Name { get; set; }
+        public string Name { get; }
         public SettingNameAttribute(string name)
         {
             Name = name;
@@ -38,10 +39,17 @@ namespace MMR.Randomizer.Attributes.Setting
 
     public class SettingTypeAttribute: Attribute
     {
-        public string Type { get; set; }
-        public SettingTypeAttribute(string type)
+        public string Type { get; }
+        public List<string> Values { get; }
+        public SettingTypeAttribute(string type, Type valueSourceType = null, string collectionPropertyName = null)
         {
             Type = type;
+
+            if (valueSourceType == typeof(ColorSelectionManager))
+            {
+                var colorSelectionManager = (ColorSelectionManager) valueSourceType.GetField(collectionPropertyName).GetValue(null);
+                Values = colorSelectionManager.GetItems().Select(item => item.Name).ToList();
+            }
         }
     }
 

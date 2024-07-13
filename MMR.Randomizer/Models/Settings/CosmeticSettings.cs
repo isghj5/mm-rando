@@ -23,13 +23,19 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Hearts color selection used for HUD color override.
         /// </summary>
-        [SettingIgnore]
+        [Description("Hearts color selection used for HUD color override.")]
+        [SettingType("Enum", typeof(ColorSelectionManager), nameof(ColorSelectionManager.Hearts))]
+        [SettingExclude("Random Choice", nameof(HudColors) + "." + nameof(Asm.HudColors.Heart), nameof(HudColors) + "." + nameof(Asm.HudColors.HeartDD))]
+        [SettingExclude("Completely Random", nameof(HudColors) + "." + nameof(Asm.HudColors.Heart), nameof(HudColors) + "." + nameof(Asm.HudColors.HeartDD))]
         public string HeartsSelection { get; set; } = ColorSelectionManager.Hearts.GetItems()[0].Name;
 
         /// <summary>
         /// Magic color selection used for HUD color override.
         /// </summary>
-        [SettingIgnore]
+        [Description("Magic color selection used for HUD color override.")]
+        [SettingType("Enum", typeof(ColorSelectionManager), nameof(ColorSelectionManager.MagicMeter))]
+        [SettingExclude("Random Choice", nameof(HudColors) + "." + nameof(Asm.HudColors.Magic), nameof(HudColors) + "." + nameof(Asm.HudColors.MagicInf))]
+        [SettingExclude("Completely Random", nameof(HudColors) + "." + nameof(Asm.HudColors.Magic), nameof(HudColors) + "." + nameof(Asm.HudColors.MagicInf))]
         public string MagicSelection { get; set; } = ColorSelectionManager.MagicMeter.GetItems()[0].Name;
 
         /// <summary>

@@ -515,7 +515,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom junk location string
         /// </summary>
-        [SettingItemList(nameof(ItemUtils.AllLocations), false, true, nameof(ItemExtensions.Region))]
+        [SettingItemList(nameof(ItemUtils.AllLocations), false, true, nameof(ItemExtensions.Regions))]
         public string CustomJunkLocationsString { get; set; } = "------------------------------200000-----400000--f000";
 
         /// <summary>

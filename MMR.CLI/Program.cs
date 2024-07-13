@@ -159,6 +159,14 @@ namespace MMR.CLI
                         if (settingTypeAttribute != null)
                         {
                             settingConfig.DataType = property.GetAttribute<SettingTypeAttribute>().Type;
+                            if (settingTypeAttribute.Values != null)
+                            {
+                                settingConfig.Values = settingTypeAttribute.Values.Select(val => new SettingValue
+                                {
+                                    Label = val,
+                                    Value = val,
+                                }).ToList();
+                            }
                         }
                         else if (settingItemListAttribute != null)
                         {
@@ -221,7 +229,7 @@ namespace MMR.CLI
                                 else if (itemType.IsEnum)
                                 {
                                     settingConfig.DataType = "Enum[]";
-                                    settingConfig.Values = Enum.GetValues(itemType).Cast<Enum>().Where(v => Convert.ToInt32(v) > 0).Select(v => new SettingValue
+                                    settingConfig.Values = Enum.GetValues(itemType).Cast<Enum>().Where(v => Convert.ToInt32(v) > 0 || (v.ToString() != "None" && v.ToString() != "Fake")).Select(v => new SettingValue
                                     {
                                         Value = v.ToString(),
                                         Label = v.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(v.ToString()),

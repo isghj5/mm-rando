@@ -121,9 +121,10 @@ namespace MMR.Randomizer.Extensions
             throw new System.Exception($"{nameof(RegionAttribute)} must have either {nameof(RegionAttribute.Region)} or {nameof(RegionAttribute.Reference)}");
         }
 
-        public static Region? Region(this Item item)
+        public static List<Region> Regions(this Item location)
         {
-            return item.Region(null);
+            var multiRegionLocations = location.GetAttribute<MultiLocationAttribute>()?.Locations ?? new Item[] { location };
+            return multiRegionLocations.Select(loc => loc.Region(null).Value).ToList();
         }
 
         public static Region RegionForDirectHint(this Item location, ItemList itemList)

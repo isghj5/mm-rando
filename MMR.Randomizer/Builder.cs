@@ -6157,7 +6157,7 @@ namespace MMR.Randomizer
 
             // Update override for magic meter colors
             if (_cosmeticSettings.MagicSelection != null)
-                config.MagicOverride = ColorSelectionManager.MagicMeter.GetItems().FirstOrDefault(csi => csi.Name == _cosmeticSettings.HeartsSelection)?.GetColors(random);
+                config.MagicOverride = ColorSelectionManager.MagicMeter.GetItems().FirstOrDefault(csi => csi.Name == _cosmeticSettings.MagicSelection)?.GetColors(random);
             else
                 config.MagicOverride = null;
 
