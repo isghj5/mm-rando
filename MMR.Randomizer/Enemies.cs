@@ -3831,16 +3831,17 @@ namespace MMR.Randomizer
                 for (int actorIndex = 0; actorIndex < allActorInstances.Count(); actorIndex++)
                 {
                     var oldActor = allActorInstances[actorIndex];
+                    var oldActorRoomObjects = thisSceneData.AllObjects[oldActor.Room];
                     // since we know there is another check later, lets remove room limits from this consideration entirely
                     //var actorsPerRoomCount = allActorInstances.FindAll(act => act.Room == oldActor.Room).Count();
 
                     // get the objects for this room
                     // quickly grab the candidates for the available objects
-                    
+
                     var candidatesPerActor = new List<Actor>();
-                    for (int o = 0; o < thisSceneData.AllObjects[oldActor.Room].Count; o++)
+                    for (int o = 0; o < oldActorRoomObjects.Count; o++)
                     {
-                        var obj = thisSceneData.AllObjects[oldActor.Room][o];
+                        var obj = oldActorRoomObjects[o];
                         var actorsForThisObject = thisSceneData.AcceptableCandidates.FindAll(act => act.ObjectId == obj);
                         candidatesPerActor.AddRange(actorsForThisObject);
                     }
@@ -4477,6 +4478,8 @@ namespace MMR.Randomizer
             // some scenes are blocked from having enemy placements, do this ONCE before GetMatchPool, which would do it per-enemy
             thisSceneData.AcceptableCandidates = ReplacementCandidateList.FindAll(act => !act.ActorEnum.BlockedScenes().Contains(thisSceneData.Scene.SceneEnum))
                                                                          .FindAll(act => !act.NoPlacableVariants());
+
+            //thisSceneData.AcceptableCandidates.RemoveAll(act => act.NoPlacableVariants());
 
             // if the dyna limits for this scene are low, we might as well trim all actors that cannot ever be put here,
             // no point running code on them later

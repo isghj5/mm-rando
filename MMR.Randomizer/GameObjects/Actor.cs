@@ -4910,9 +4910,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(469)]
         [ObjectListIndex(0x1D5)]
         [GroundVariants(0xFFFF)]
-        [VariantsWithRoomMax(max: 0, 0xFFFF)]
+        [VariantsWithRoomMax(max: 0, variant: 0xFFFF)]
         [ForbidFromScene(Scene.Snowhead)]
-        [OnlyOneActorPerRoom]
+        //[OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         SnowheadBiggoron = 0x1FD, // En_Dai
 

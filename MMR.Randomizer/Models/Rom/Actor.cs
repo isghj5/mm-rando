@@ -586,7 +586,8 @@ namespace MMR.Randomizer.Models.Rom
             {
                 return true;
             }
-            var variantCount = AllVariants[0].Count + AllVariants[1].Count + AllVariants[2].Count + AllVariants[3].Count + AllVariants[4].Count;
+            //var variantCount = AllVariants[0].Count + AllVariants[1].Count + AllVariants[2].Count + AllVariants[3].Count + AllVariants[4].Count;
+            var variantCount = AllVariants.Sum(childList => childList.Count);
             if (variantCount == 0)
             {
                 return true;
@@ -596,7 +597,8 @@ namespace MMR.Randomizer.Models.Rom
             {
                 for (int i = 0; i < variantList.Count(); i++)
                 {
-                    var max = this.VariantMaxCountPerRoom(i);
+                    var variant = variantList[i];
+                    var max = this.VariantMaxCountPerRoom(variant);
                     // if -1, no max. if 1 or greater, does not quality as zero
                     if (max != 0)
                     {
