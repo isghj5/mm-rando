@@ -478,6 +478,7 @@ namespace MMR.Randomizer
                     int[] tallGrassFieldObjectVariants = {
                         0x0, 0x800,
                         0x0600, 0x700, 0xC00, 0xD00,
+                        0x0E00, 0x0E10, 0x0010,
                         0x0610
                     };
 

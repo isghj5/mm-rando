@@ -1390,6 +1390,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xF8)] // type 0 (0x3) is FIELD_KEEP, handled in code because we dont have working code for multi-object
         [CheckRestricted(Scene.SouthernSwampClear, variant: -1, Item.CollectableSouthernSwampClearCentralSwampGrass1, Item.CollectableSouthernSwampClearCentralSwampGrass2)]
         [CheckRestricted(Scene.MilkRoad, variant: -1, Item.CollectableMilkRoadGrass1, Item.CollectableMilkRoadGrass2, Item.CollectableMilkRoadGrass3)]
+        [CheckRestricted(Scene.IkanaGraveyard, variant: -1,
+            Item.CollectableIkanaGraveyardIkanaGraveyardLowerGrass1, Item.CollectableIkanaGraveyardIkanaGraveyardLowerGrass2, Item.CollectableIkanaGraveyardIkanaGraveyardLowerGrass3)]
         // 0 uses field keep to draw regular grass, like ObjGrassUnit
         // 1 creates a grass circle in termina field, 0 is grotto grass single
         // 642B is a smaller cuttable grass from the ground in secret 
@@ -1399,10 +1401,12 @@ namespace MMR.Randomizer.GameObjects
             0x0800, // single in woods of mystery, field_keep
             0x0600, 0x700, 0xC00, 0xD00, // woodfall temple
             0x0610, // greay bay coast
+            0x0E00, 0x0E10, 0x0010, // secret jgrotto?
             0x634F, 0x642B, 0x654F, 0x662B, 0x672B, 0x682B, 0x602B, 0x614F, 0x622B, 0x634F, 0x602B, // secret shrine (1)
             0x617B, 0x622B, 0x637B, 0x642B, 0x602B, 0x617B, 0x622B, 0x632B, 0x642B, 0x657B, 0x662B, // secret shrine (2)
             0x677B, 0x602F, 0x612B, 0x627B, 0x634F, 0x642B, 0x654F, // secret shrine (3)
             0x203F, 0x2157, 0x227F, 0x2343, 0x463F, 0x4757, 0x487F, 0x4943, // ikana canyon
+            0x2507, 0x272B, 0x282B, 0x263B, 0x297B, 0x0203, 0x0403, 0x0107, 0x032B, 0x053B, // graveyard
             0x2043, 0x217F, 0x223F, //milkroad
             // TODO FINISH
             0x23FF, 0x24FF, 0x2667, 0x2743 // southern swamp?
@@ -1417,7 +1421,10 @@ namespace MMR.Randomizer.GameObjects
             Scene.SecretShrine, Scene.MountainVillageSpring, //Scene.WoodsOfMystery,
             Scene.LaundryPool, Scene.SnowheadTemple, Scene.RoadToSouthernSwamp,
             //Scene.MilkRoad,
-            Scene.IkanaCanyon, Scene.Grottos, Scene.BeneathTheWell, Scene.WoodfallTemple)]
+            Scene.IkanaCanyon,
+            //Scene.Grottos,
+            Scene.BeneathTheWell,
+            Scene.WoodfallTemple)]
         [PlacementWeight(75)] // object is tiny, the weight is gonna need to be small because of how common it is
         TallGrass = 0x90, // En_Kusa
 
@@ -3650,7 +3657,7 @@ namespace MMR.Randomizer.GameObjects
         [ForbidFromScene(Scene.SouthernSwamp, Scene.Woodfall, Scene.DekuPalace, Scene.WoodfallTemple, Scene.OdolwasLair,
             Scene.ZoraHallRooms, Scene.GoronVillage, Scene.IkanaCanyon, 
             Scene.DekuPlayground, Scene.SwampSpiderHouse, Scene.DekuTrial,
-            Scene.InvertedStoneTowerTemple,
+            Scene.InvertedStoneTowerTemple, Scene.DekuPalace,
             Scene.StoneTowerTemple, Scene.GoronVillageSpring, Scene.GoronVillage,
             Scene.EastClockTown, Scene.NorthClockTown, Scene.IkanaCastle, Scene.SnowheadTemple)]
         DekuFlower = 0x183, // Obj_Etcetera
