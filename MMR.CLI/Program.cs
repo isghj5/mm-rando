@@ -53,6 +53,7 @@ namespace MMR.CLI
         public Dictionary<object, List<string>> SettingExcludes { get; set; }
         public Dictionary<LogicMode, Dictionary<string, List<SettingValue>>> TrickInfo { get; set; }
         public Dictionary<LogicMode, bool> InLogic { get; set; }
+        public List<string> Index { get; set; }
     }
 
     partial class Program
@@ -154,6 +155,13 @@ namespace MMR.CLI
                                 }).ToList());
                             });
                         }
+
+                        var settingIndexLabels = property.GetAttribute<SettingIndexValuesAttribute>();
+                        if (settingIndexLabels != null)
+                        {
+                            settingConfig.Index = settingIndexLabels.Labels;
+                        }
+
                         var settingTypeAttribute = property.GetAttribute<SettingTypeAttribute>();
                         var settingItemListAttribute = property.GetAttribute<SettingItemListAttribute>();
                         if (settingTypeAttribute != null)

@@ -303,7 +303,8 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Values.
         /// </summary>
-        [SettingIgnore]
+        [SettingName("DPad")]
+        [SettingIndexValues("D-Up", "D-Right", "D-Down", "D-Left")]
         public DPadValue[] Values { get; set; }
 
         /// <summary>

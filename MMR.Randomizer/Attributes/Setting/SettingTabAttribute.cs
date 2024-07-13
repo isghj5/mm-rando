@@ -96,4 +96,13 @@ namespace MMR.Randomizer.Attributes.Setting
             SettingPaths = settingPaths.ToList();
         }
     }
+
+    public class SettingIndexValuesAttribute : Attribute
+    {
+        public List<string> Labels { get; }
+        public SettingIndexValuesAttribute(params string[] labels)
+        {
+            Labels = labels.ToList();
+        }
+    }
 }
