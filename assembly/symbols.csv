@@ -9,6 +9,7 @@
 0x80086FA0,z2_RngInt
 0x80086FD0,z2_RngSetSeed
 0x80086FDC,z2_Rand_ZeroOne
+0x80089630,z2_bzero
 0x8008D700,z2_sqrtf
 0x8008F1E0,z2_strlen
 0x800A7128,z2_BaseDrawCollectable
@@ -159,7 +160,10 @@
 0x80136CD0,z2_SkelAnime_Update
 0x80137594,z2_Animation_MorphToLoop
 0x8013A240,z2_UpdatePictoFlags
+0x80144A94,z2_Sram_ResetSaveFromMoonCrash
 0x80146F5C,z2_Sram_SaveSpecialNewDay
+0x80147008,z2_Sram_SetFlashPagesDefault
+0x80147020,z2_Sram_StartWriteToFlashDefault
 0x80147564,z2_InitButtonNoteColors
 0x80147624,z2_MessageShouldAdvance
 0x801477B4,z2_MessageClose
@@ -199,6 +203,7 @@
 0x80190294,z2_GetAudioTable
 0x8019C300,z2_ToggleSfxDampen
 0x8019F0C8,z2_PlaySfx
+0x8019F128,z2_PlaySfx_2
 0x8019F208,z2_PlaySfxDecide
 0x8019F230,z2_PlaySfxCancel
 0x801A153C,z2_Audio_PlayObjSoundBgm

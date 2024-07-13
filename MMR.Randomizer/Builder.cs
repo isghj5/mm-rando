@@ -1535,9 +1535,9 @@ namespace MMR.Randomizer
                     ReadWriteUtils.WriteToROM(address, (ushort)0);
                 }
             }
-            else if ((int) _cosmeticSettings.LowHealthSFX > (int) LowHealthSFX.Random)
+            else if (_cosmeticSettings.LowHealthSFX.HasAttribute<ValueAttribute>())
             {
-                SoundEffect.LowHealthBeep.TryReplaceWith( (SoundEffect) _cosmeticSettings.LowHealthSFX);
+                SoundEffect.LowHealthBeep.TryReplaceWith((SoundEffect)_cosmeticSettings.LowHealthSFX.GetAttribute<ValueAttribute>().Value);
             }
             else if(_cosmeticSettings.LowHealthSFX == LowHealthSFX.Random)
             {
@@ -6193,7 +6193,7 @@ namespace MMR.Randomizer
 
             // Update override for magic meter colors
             if (_cosmeticSettings.MagicSelection != null)
-                config.MagicOverride = ColorSelectionManager.MagicMeter.GetItems().FirstOrDefault(csi => csi.Name == _cosmeticSettings.HeartsSelection)?.GetColors(random);
+                config.MagicOverride = ColorSelectionManager.MagicMeter.GetItems().FirstOrDefault(csi => csi.Name == _cosmeticSettings.MagicSelection)?.GetColors(random);
             else
                 config.MagicOverride = null;
 

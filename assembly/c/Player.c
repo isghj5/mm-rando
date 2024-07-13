@@ -1069,13 +1069,22 @@ Actor* Player_GetHittingActor(ActorPlayer* player) {
     return NULL;
 }
 
+void Player_ForceInflictDamage(GlobalContext* ctxt, ActorPlayer* player, s32 damage) {
+    u32 flag = player->stateFlags.state2 & PLAYER_STATE2_LIFT_ACTOR;
+    player->stateFlags.state2 |= PLAYER_STATE2_LIFT_ACTOR;
+    z2_Player_InflictDamage(ctxt, -16);
+    if (!flag) {
+        player->stateFlags.state2 &= ~PLAYER_STATE2_LIFT_ACTOR;
+    }
+}
+
 void Player_OnMinorVoid(GlobalContext* ctxt, ActorPlayer* player) {
     // Displaced code:
     z2_Player_SetEquipmentData(ctxt, player);
     // End displaced code
 
     if (MISC_CONFIG.flags.takeDamageFromVoid) {
-        z2_Player_InflictDamage(ctxt, -16);
+        Player_ForceInflictDamage(ctxt, player, -16);
         player->unk_D6A = -2;
     }
 }
@@ -1086,6 +1095,14 @@ void Player_OnDekuWaterVoid(GlobalContext* ctxt, ActorPlayer* player) {
     // End displaced code
 
     if (ctxt->warpType) {
-        z2_Player_InflictDamage(ctxt, -16);
+        Player_ForceInflictDamage(ctxt, player, -16);
+    }
+}
+
+void Player_VoidExit(u16 sfxId) {
+    z2_PlaySfx_2(sfxId);
+
+    if (MISC_CONFIG.flags.takeDamageFromVoid && gGlobalContext.sceneNum != SCENE_BOTI) {
+        Player_ForceInflictDamage(&gGlobalContext, GET_PLAYER(&gGlobalContext), -16);
     }
 }

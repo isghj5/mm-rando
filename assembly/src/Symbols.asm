@@ -10,6 +10,7 @@
 .definelabel z2_RngInt, 0x80086FA0
 .definelabel z2_RngSetSeed, 0x80086FD0
 .definelabel z2_Rand_ZeroOne, 0x80086FDC
+.definelabel z2_bzero, 0x80089630
 .definelabel z2_sqrtf, 0x8008D700
 .definelabel z2_strlen, 0x8008F1E0
 .definelabel z2_BaseDrawCollectable, 0x800A7128
@@ -167,7 +168,10 @@
 .definelabel z2_SkelAnime_Update, 0x80136CD0
 .definelabel z2_Animation_MorphToLoop, 0x80137594
 .definelabel z2_UpdatePictoFlags, 0x8013A240
+.definelabel z2_Sram_ResetSaveFromMoonCrash, 0x80144A94
 .definelabel z2_Sram_SaveSpecialNewDay, 0x80146F5C
+.definelabel z2_Sram_SetFlashPagesDefault, 0x80147008
+.definelabel z2_Sram_StartWriteToFlashDefault, 0x80147020
 .definelabel z2_InitButtonNoteColors, 0x80147564
 .definelabel z2_MessageShouldAdvance, 0x80147624
 .definelabel z2_MessageClose, 0x801477B4
@@ -209,6 +213,7 @@
 .definelabel z2_GetAudioTable, 0x80190294
 .definelabel z2_ToggleSfxDampen, 0x8019C300
 .definelabel z2_PlaySfx, 0x8019F0C8
+.definelabel z2_PlaySfx_2, 0x8019F128
 .definelabel z2_PlaySfxDecide, 0x8019F208
 .definelabel z2_PlaySfxCancel, 0x8019F230
 .definelabel z2_Audio_PlayObjSoundBgm, 0x801A153C

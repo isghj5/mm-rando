@@ -79,6 +79,7 @@ namespace MMR.UI.Forms
             this.pLocationCategories = new System.Windows.Forms.Panel();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.gGimmicksChallenges = new System.Windows.Forms.GroupBox();
+            this.cMoonCrashFileErase = new System.Windows.Forms.CheckBox();
             this.cTakeDamageFromDexihands = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cTakeDamageFromGibdosFaster = new System.Windows.Forms.CheckBox();
@@ -140,6 +141,7 @@ namespace MMR.UI.Forms
             this.cHintImportance = new System.Windows.Forms.CheckBox();
             this.cMixGaroWithGossip = new System.Windows.Forms.CheckBox();
             this.gGaroHints = new System.Windows.Forms.GroupBox();
+            this.cImportanceCountGaro = new System.Windows.Forms.CheckBox();
             this.cFreeGaroHints = new System.Windows.Forms.CheckBox();
             this.cCustomGaroWoth = new System.Windows.Forms.CheckBox();
             this.nMaxGaroCT = new System.Windows.Forms.NumericUpDown();
@@ -160,6 +162,7 @@ namespace MMR.UI.Forms
             this.cGoodDogRaceRNG = new System.Windows.Forms.CheckBox();
             this.cGoodDampeRNG = new System.Windows.Forms.CheckBox();
             this.gHints = new System.Windows.Forms.GroupBox();
+            this.cImportanceCount = new System.Windows.Forms.CheckBox();
             this.cCustomGossipWoth = new System.Windows.Forms.CheckBox();
             this.nMaxGossipCT = new System.Windows.Forms.NumericUpDown();
             this.nMaxGossipFoolish = new System.Windows.Forms.NumericUpDown();
@@ -277,8 +280,6 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cImportanceCount = new System.Windows.Forms.CheckBox();
-            this.cImportanceCountGaro = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -832,6 +833,7 @@ namespace MMR.UI.Forms
             // 
             // gGimmicksChallenges
             // 
+            this.gGimmicksChallenges.Controls.Add(this.cMoonCrashFileErase);
             this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromDexihands);
             this.gGimmicksChallenges.Controls.Add(this.label2);
             this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromGibdosFaster);
@@ -856,6 +858,19 @@ namespace MMR.UI.Forms
             this.gGimmicksChallenges.TabIndex = 33;
             this.gGimmicksChallenges.TabStop = false;
             this.gGimmicksChallenges.Text = "Challenges";
+            // 
+            // cMoonCrashFileErase
+            // 
+            this.cMoonCrashFileErase.AutoSize = true;
+            this.cMoonCrashFileErase.BackColor = System.Drawing.Color.Transparent;
+            this.cMoonCrashFileErase.ForeColor = System.Drawing.Color.Black;
+            this.cMoonCrashFileErase.Location = new System.Drawing.Point(7, 90);
+            this.cMoonCrashFileErase.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMoonCrashFileErase.Name = "cMoonCrashFileErase";
+            this.cMoonCrashFileErase.Size = new System.Drawing.Size(147, 19);
+            this.cMoonCrashFileErase.TabIndex = 36;
+            this.cMoonCrashFileErase.Text = "Moon Crash Erases File";
+            this.cMoonCrashFileErase.UseVisualStyleBackColor = false;
             // 
             // cTakeDamageFromDexihands
             // 
@@ -976,7 +991,7 @@ namespace MMR.UI.Forms
             this.cFewerHealthDrops.AutoSize = true;
             this.cFewerHealthDrops.BackColor = System.Drawing.Color.Transparent;
             this.cFewerHealthDrops.ForeColor = System.Drawing.Color.Black;
-            this.cFewerHealthDrops.Location = new System.Drawing.Point(7, 90);
+            this.cFewerHealthDrops.Location = new System.Drawing.Point(153, 67);
             this.cFewerHealthDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFewerHealthDrops.Name = "cFewerHealthDrops";
             this.cFewerHealthDrops.Size = new System.Drawing.Size(129, 19);
@@ -1029,7 +1044,7 @@ namespace MMR.UI.Forms
             this.cByoAmmo.AutoSize = true;
             this.cByoAmmo.BackColor = System.Drawing.Color.Transparent;
             this.cByoAmmo.ForeColor = System.Drawing.Color.Black;
-            this.cByoAmmo.Location = new System.Drawing.Point(154, 67);
+            this.cByoAmmo.Location = new System.Drawing.Point(162, 90);
             this.cByoAmmo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cByoAmmo.Name = "cByoAmmo";
             this.cByoAmmo.Size = new System.Drawing.Size(89, 19);
@@ -1672,6 +1687,19 @@ namespace MMR.UI.Forms
             this.gGaroHints.TabStop = false;
             this.gGaroHints.Text = "Garo Hints";
             // 
+            // cImportanceCountGaro
+            // 
+            this.cImportanceCountGaro.AutoSize = true;
+            this.cImportanceCountGaro.BackColor = System.Drawing.Color.Transparent;
+            this.cImportanceCountGaro.ForeColor = System.Drawing.Color.Black;
+            this.cImportanceCountGaro.Location = new System.Drawing.Point(117, 55);
+            this.cImportanceCountGaro.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cImportanceCountGaro.Name = "cImportanceCountGaro";
+            this.cImportanceCountGaro.Size = new System.Drawing.Size(123, 19);
+            this.cImportanceCountGaro.TabIndex = 32;
+            this.cImportanceCountGaro.Text = "Importance Count";
+            this.cImportanceCountGaro.UseVisualStyleBackColor = false;
+            // 
             // cFreeGaroHints
             // 
             this.cFreeGaroHints.AutoSize = true;
@@ -1927,6 +1955,19 @@ namespace MMR.UI.Forms
             this.gHints.TabIndex = 36;
             this.gHints.TabStop = false;
             this.gHints.Text = "Gossip Stone Hints";
+            // 
+            // cImportanceCount
+            // 
+            this.cImportanceCount.AutoSize = true;
+            this.cImportanceCount.BackColor = System.Drawing.Color.Transparent;
+            this.cImportanceCount.ForeColor = System.Drawing.Color.Black;
+            this.cImportanceCount.Location = new System.Drawing.Point(117, 55);
+            this.cImportanceCount.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cImportanceCount.Name = "cImportanceCount";
+            this.cImportanceCount.Size = new System.Drawing.Size(123, 19);
+            this.cImportanceCount.TabIndex = 31;
+            this.cImportanceCount.Text = "Importance Count";
+            this.cImportanceCount.UseVisualStyleBackColor = false;
             // 
             // cCustomGossipWoth
             // 
@@ -2762,7 +2803,6 @@ namespace MMR.UI.Forms
             this.cLowHealthSFXComboBox.Name = "cLowHealthSFXComboBox";
             this.cLowHealthSFXComboBox.Size = new System.Drawing.Size(140, 23);
             this.cLowHealthSFXComboBox.TabIndex = 25;
-            this.cLowHealthSFXComboBox.SelectedIndexChanged += new System.EventHandler(this.cLowHealthSFXComboBox_SelectedIndexChanged);
             // 
             // lLowHealthSFXComboBox
             // 
@@ -3291,32 +3331,6 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // cImportanceCount
-            // 
-            this.cImportanceCount.AutoSize = true;
-            this.cImportanceCount.BackColor = System.Drawing.Color.Transparent;
-            this.cImportanceCount.ForeColor = System.Drawing.Color.Black;
-            this.cImportanceCount.Location = new System.Drawing.Point(117, 55);
-            this.cImportanceCount.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cImportanceCount.Name = "cImportanceCount";
-            this.cImportanceCount.Size = new System.Drawing.Size(123, 19);
-            this.cImportanceCount.TabIndex = 31;
-            this.cImportanceCount.Text = "Importance Count";
-            this.cImportanceCount.UseVisualStyleBackColor = false;
-            // 
-            // cImportanceCountGaro
-            // 
-            this.cImportanceCountGaro.AutoSize = true;
-            this.cImportanceCountGaro.BackColor = System.Drawing.Color.Transparent;
-            this.cImportanceCountGaro.ForeColor = System.Drawing.Color.Black;
-            this.cImportanceCountGaro.Location = new System.Drawing.Point(117, 55);
-            this.cImportanceCountGaro.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cImportanceCountGaro.Name = "cImportanceCountGaro";
-            this.cImportanceCountGaro.Size = new System.Drawing.Size(123, 19);
-            this.cImportanceCountGaro.TabIndex = 32;
-            this.cImportanceCountGaro.Text = "Importance Count";
-            this.cImportanceCountGaro.UseVisualStyleBackColor = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3659,6 +3673,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cFairyAndSkullHints;
         private System.Windows.Forms.CheckBox cImportanceCountGaro;
         private System.Windows.Forms.CheckBox cImportanceCount;
+        private System.Windows.Forms.CheckBox cMoonCrashFileErase;
     }
 }
 

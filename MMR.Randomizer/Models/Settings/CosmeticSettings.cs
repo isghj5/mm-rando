@@ -5,6 +5,7 @@ using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models.Colors;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Text.Json.Serialization;
 
@@ -22,13 +23,19 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Hearts color selection used for HUD color override.
         /// </summary>
-        [SettingIgnore]
+        [Description("Hearts color selection used for HUD color override.")]
+        [SettingType("Enum", typeof(ColorSelectionManager), nameof(ColorSelectionManager.Hearts))]
+        [SettingExclude("Random Choice", nameof(HudColors) + "." + nameof(Asm.HudColors.Heart), nameof(HudColors) + "." + nameof(Asm.HudColors.HeartDD))]
+        [SettingExclude("Completely Random", nameof(HudColors) + "." + nameof(Asm.HudColors.Heart), nameof(HudColors) + "." + nameof(Asm.HudColors.HeartDD))]
         public string HeartsSelection { get; set; } = ColorSelectionManager.Hearts.GetItems()[0].Name;
 
         /// <summary>
         /// Magic color selection used for HUD color override.
         /// </summary>
-        [SettingIgnore]
+        [Description("Magic color selection used for HUD color override.")]
+        [SettingType("Enum", typeof(ColorSelectionManager), nameof(ColorSelectionManager.MagicMeter))]
+        [SettingExclude("Random Choice", nameof(HudColors) + "." + nameof(Asm.HudColors.Magic), nameof(HudColors) + "." + nameof(Asm.HudColors.MagicInf))]
+        [SettingExclude("Completely Random", nameof(HudColors) + "." + nameof(Asm.HudColors.Magic), nameof(HudColors) + "." + nameof(Asm.HudColors.MagicInf))]
         public string MagicSelection { get; set; } = ColorSelectionManager.MagicMeter.GetItems()[0].Name;
 
         /// <summary>
@@ -54,6 +61,8 @@ namespace MMR.Randomizer.Models.Settings
         /// Randomize background music (includes bgm from other video games)
         /// </summary>
         [Description("Select a music option\n\n - Default: Vanilla background music.\n - Random: Randomized background music.\n - None: No background music.")]
+        [SettingExclude(Music.Default, nameof(MusicLuckRollChance))]
+        [SettingExclude(Music.None, nameof(MusicLuckRollChance))]
         public Music Music { get; set; }
 
         /// <summary>
@@ -87,6 +96,7 @@ namespace MMR.Randomizer.Models.Settings
         public bool DisableCombatMusic { get; set; }
 
         [Description("Music Rando comes with a chance to accept a song from outside of its categories.\n - This controls the percentage chance of a Luck Roll allowing out-of-category music placement\n - This is per specific slot+song check\n - Only songs with their first category being a general category (0-16) are Luck Rollable.")]
+        [Range(0.0, 100.0)]
         public decimal MusicLuckRollChance { get; set; } = 3.33m;
 
         public Dictionary<TransformationForm, bool> UseEnergyColors { get; set; } = new Dictionary<TransformationForm, bool>()

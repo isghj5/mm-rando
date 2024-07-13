@@ -19,6 +19,7 @@ using System.Text.Json.Serialization;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using MMR.Randomizer.Attributes.Setting;
+using System.ComponentModel.DataAnnotations;
 
 namespace MMR.CLI
 {
@@ -27,6 +28,13 @@ namespace MMR.CLI
         public string Label { get; set; }
         public string Tooltip { get; set; }
         public string Value { get; set; }
+    }
+
+    public class SettingItemListItem
+    {
+        public string Label { get; set; }
+        public int Index { get; set; }
+        public Dictionary<string, object> AdditionalInformation { get; set; }
     }
 
     public class SettingConfig
@@ -38,7 +46,14 @@ namespace MMR.CLI
         public object DefaultValue { get; set; }
         public List<SettingValue> Keys { get; set; }
         public List<SettingValue> Values { get; set; }
+        public List<SettingItemListItem> ItemList { get; set; }
         public string ValueType { get; set; }
+        public object MinValue { get; set; }
+        public object MaxValue { get; set; }
+        public Dictionary<object, List<string>> SettingExcludes { get; set; }
+        public Dictionary<LogicMode, Dictionary<string, List<SettingValue>>> TrickInfo { get; set; }
+        public Dictionary<LogicMode, bool> InLogic { get; set; }
+        public List<string> Index { get; set; }
     }
 
     partial class Program
@@ -59,12 +74,33 @@ namespace MMR.CLI
             }
             if (argsDictionary.ContainsKey("-settingsConfig"))
             {
+                var logicModes = new List<LogicMode> { LogicMode.Casual, LogicMode.Glitched };
+                var userLogicFileName = argsDictionary.GetValueOrDefault("-settingsConfig")?.SingleOrDefault();
+                if (userLogicFileName != default)
+                {
+                    logicModes.Add(LogicMode.UserLogic);
+                }
+
+                var itemLists = logicModes.ToDictionary(logicMode => logicMode, logicMode =>
+                {
+                    var data = LogicUtils.ReadRulesetFromResources(logicMode, userLogicFileName);
+                    try
+                    {
+                        return LogicUtils.PopulateItemListFromLogicData(data);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Error reading logic.");
+                    }
+                });
+
                 Regex addSpacesRegex = new Regex("(?<!^)([A-Z])");
                 var path = new Stack<string>();
                 var settings = new List<SettingConfig>();
                 void processType(object defaultValue)
                 {
-                    foreach (var property in defaultValue.GetType().GetProperties())
+                    var declaringType = defaultValue.GetType();
+                    foreach (var property in declaringType.GetProperties())
                     {
                         if (!property.CanWrite)
                         {
@@ -83,13 +119,78 @@ namespace MMR.CLI
                         {
                             return addSpacesRegex.Replace(label, " $1");
                         }
+                        var rangeAttribute = property.GetAttribute<RangeAttribute>();
                         SettingConfig settingConfig = new SettingConfig
                         {
                             Path = string.Join(".", path.Reverse()),
                             Label = property.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(property.Name),
                             Tooltip = property.GetAttribute<DescriptionAttribute>()?.Description,
+                            MinValue = rangeAttribute?.Minimum,
+                            MaxValue = rangeAttribute?.Maximum,
+                            SettingExcludes = property.HasAttribute<SettingExcludeAttribute>()
+                                ? property.GetAttributes<SettingExcludeAttribute>().ToDictionary(attr => attr.PropertyValue, attr => attr.SettingPaths)
+                                : null,
+                            InLogic = property.GetAttribute<SettingTabAttribute>()?.TabType == SettingTabAttribute.Type.Gimmicks ? itemLists.ToDictionary(kvp => kvp.Key, kvp =>
+                            {
+                                return kvp.Value.Any(io => !string.IsNullOrWhiteSpace(io.SettingExpression) && LogicUtils.ParseSettingExpression(io.SettingExpression).VisitsMember(declaringType, property.Name));
+                            }) : null,
                         };
-                        if (property.PropertyType == typeof(string) || property.PropertyType == typeof(decimal) || property.PropertyType == typeof(Color) || property.PropertyType.IsPrimitive)
+                        if (settingConfig.Path == $"{nameof(GameplaySettings)}.{nameof(GameplaySettings.EnabledTricks)}")
+                        {
+                            settingConfig.TrickInfo = itemLists.ToDictionary(kvp => kvp.Key, kvp =>
+                            {
+                                var tricks = kvp.Value.Where(io => io.IsTrick);
+                                var categories = tricks.Select(io => string.IsNullOrWhiteSpace(io.TrickCategory) ? "Misc" : io.TrickCategory).Distinct().ToList();
+
+                                foreach (var i in tricks)
+                                {
+                                    i.TrickCategory = string.IsNullOrWhiteSpace(i.TrickCategory) ? "Misc" : i.TrickCategory;
+                                }
+
+                                return tricks.GroupBy(io => io.TrickCategory).ToDictionary(g => g.Key, g => g.Select(io => new SettingValue
+                                {
+                                    Label = io.Name,
+                                    Tooltip = io.TrickTooltip,
+                                    Value = io.TrickUrl,
+                                }).ToList());
+                            });
+                        }
+
+                        var settingIndexLabels = property.GetAttribute<SettingIndexValuesAttribute>();
+                        if (settingIndexLabels != null)
+                        {
+                            settingConfig.Index = settingIndexLabels.Labels;
+                        }
+
+                        var settingTypeAttribute = property.GetAttribute<SettingTypeAttribute>();
+                        var settingItemListAttribute = property.GetAttribute<SettingItemListAttribute>();
+                        if (settingTypeAttribute != null)
+                        {
+                            settingConfig.DataType = property.GetAttribute<SettingTypeAttribute>().Type;
+                            if (settingTypeAttribute.Values != null)
+                            {
+                                settingConfig.Values = settingTypeAttribute.Values.Select(val => new SettingValue
+                                {
+                                    Label = val,
+                                    Value = val,
+                                }).ToList();
+                            }
+                        }
+                        else if (settingItemListAttribute != null)
+                        {
+                            settingConfig.DataType = "ItemList";
+                            settingConfig.ItemList = settingItemListAttribute.ItemList.Select((item, index) =>
+                            {
+                                var itemListItem = new SettingItemListItem
+                                {
+                                    Index = index,
+                                    Label = settingItemListAttribute.LabelExtractor(item),
+                                    AdditionalInformation = settingItemListAttribute.AdditionalInformationExtractors.ToDictionary(kvp => kvp.Key, kvp => kvp.Value(item)),
+                                };
+                                return itemListItem;
+                            }).ToList();
+                        }
+                        else if (property.PropertyType == typeof(string) || property.PropertyType == typeof(decimal) || property.PropertyType == typeof(Color) || property.PropertyType.IsPrimitive)
                         {
                             settingConfig.DataType = property.PropertyType.Name;
                         }
@@ -136,7 +237,7 @@ namespace MMR.CLI
                                 else if (itemType.IsEnum)
                                 {
                                     settingConfig.DataType = "Enum[]";
-                                    settingConfig.Values = Enum.GetValues(itemType).Cast<Enum>().Where(v => Convert.ToInt32(v) > 0).Select(v => new SettingValue
+                                    settingConfig.Values = Enum.GetValues(itemType).Cast<Enum>().Where(v => Convert.ToInt32(v) > 0 || (v.ToString() != "None" && v.ToString() != "Fake")).Select(v => new SettingValue
                                     {
                                         Value = v.ToString(),
                                         Label = v.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(v.ToString()),
@@ -319,11 +420,14 @@ namespace MMR.CLI
             }
             else
             {
-                configuration.GameplaySettings.CustomItemList = ConvertItemString(ItemUtils.AllLocations().ToList(), configuration.GameplaySettings.CustomItemListString).ToHashSet();
+                var itemList = typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.CustomItemListString)).GetAttribute<SettingItemListAttribute>().ItemList.ToList();
+                configuration.GameplaySettings.CustomItemList = ConvertItemString(itemList, configuration.GameplaySettings.CustomItemListString).ToHashSet();
             }
 
-            configuration.GameplaySettings.CustomStartingItemList = ConvertItemString(ItemUtils.StartingItems().Where(item => !item.Name().Contains("Heart")).ToList(), configuration.GameplaySettings.CustomStartingItemListString);
-            configuration.GameplaySettings.CustomJunkLocations = ConvertItemString(ItemUtils.AllLocations().ToList(), configuration.GameplaySettings.CustomJunkLocationsString);
+            var startingItemList = typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.CustomStartingItemListString)).GetAttribute<SettingItemListAttribute>().ItemList.ToList();
+            configuration.GameplaySettings.CustomStartingItemList = ConvertItemString(startingItemList, configuration.GameplaySettings.CustomStartingItemListString);
+            var junkItemList = typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.CustomJunkLocationsString)).GetAttribute<SettingItemListAttribute>().ItemList.ToList();
+            configuration.GameplaySettings.CustomJunkLocations = ConvertItemString(junkItemList, configuration.GameplaySettings.CustomJunkLocationsString);
 
             configuration.OutputSettings.InputPatchFilename = argsDictionary.GetValueOrDefault("-inputpatch")?.SingleOrDefault();
             configuration.OutputSettings.GeneratePatch |= argsDictionary.ContainsKey("-outputpatch");
@@ -436,50 +540,6 @@ namespace MMR.CLI
                 Console.Error.Write(e.StackTrace);
                 return -1;
             }
-        }
-
-        private static List<int> ConvertIntString(string c)
-        {
-            var result = new List<int>();
-            if (string.IsNullOrWhiteSpace(c))
-            {
-                return result;
-            }
-            try
-            {
-                result.Clear();
-                string[] v = c.Split('-');
-                int[] vi = new int[13];
-                if (v.Length != vi.Length)
-                {
-                    return null;
-                }
-                for (int i = 0; i < 13; i++)
-                {
-                    if (v[12 - i] != "")
-                    {
-                        vi[i] = Convert.ToInt32(v[12 - i], 16);
-                    }
-                }
-                for (int i = 0; i < 32 * 13; i++)
-                {
-                    int j = i / 32;
-                    int k = i % 32;
-                    if (((vi[j] >> k) & 1) > 0)
-                    {
-                        if (i >= ItemUtils.AllLocations().Count())
-                        {
-                            throw new IndexOutOfRangeException();
-                        }
-                        result.Add(i);
-                    }
-                }
-            }
-            catch
-            {
-                return null;
-            }
-            return result;
         }
 
         private static List<Item> ConvertItemString(List<Item> items, string c)
