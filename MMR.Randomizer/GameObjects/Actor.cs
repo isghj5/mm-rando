@@ -1183,6 +1183,11 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.BeneathGraveyard, variant: -1,
             Item.CollectableBeneathTheGraveyardBadBatRoomPot1, Item.CollectableBeneathTheGraveyardInvisibleRoomPot1,
             Item.CollectableBeneathTheGraveyardMainAreaPot1, Item.CollectableBeneathTheGraveyardMainAreaPot2)]
+        [CheckRestricted(Scene.DampesHouse, variant: -1,
+            Item.CollectableDampesHouseBasementPot1, Item.CollectableDampesHouseBasementPot2,
+            Item.CollectableDampesHouseBasementPot3, Item.CollectableDampesHouseBasementPot4,
+            Item.CollectableDampesHouseBasementPot5, Item.CollectableDampesHouseBasementPot6,
+            Item.CollectableDampesHouseBasementPot7, Item.CollectableDampesHouseBasementPot8)]
         [CheckRestricted(Scene.IkanaCastle, variant: -1,
             Item.CollectableAncientCastleOfIkana1FWestStaircasePot1, Item.CollectableAncientCastleOfIkanaCastleExteriorPot1, Item.CollectableAncientCastleOfIkanaFireCeilingRoomPot1,
             Item.CollectableAncientCastleOfIkanaHoleRoomPot1, Item.CollectableAncientCastleOfIkanaHoleRoomPot2, Item.CollectableAncientCastleOfIkanaHoleRoomPot3, Item.CollectableAncientCastleOfIkanaHoleRoomPot4)]
@@ -1216,12 +1221,13 @@ namespace MMR.Randomizer.GameObjects
             0x4B0A, 0x4D02, 0x4F01, // southern swamp
             0x410A, 0x4302, 0x4501, // southern swamp clear
             0x650E, 0x670E, // deku palace
-            0x4310, 0x413, 0x4119, 0x4528, 0x4516, // woodfall
+            0x4310, 0x413, 0x4119, 0x4528, 0x4516, 0x4513,// woodfall
             0xFE01, // deku shrine
             0x4D10, 0xFF04, 0x4D10,// mountain village spring
             0xC719, 0xC90E, 0xCB0E, 0xCD19, 0xCF0F, 0xD10F, 0xD30F, 0xD519, 0xC119, 0xC319, 0xC50F, 0xC709, // goron shrine
             0x410E, 0x450A, 0x470A, 0x490A, 0x4B0A, 0x4D0E, 0x530A, 0x550A, 0x570E, 0x590A, 0x5B0E, // pinnacle rock
             0x471E, 0x590E, 0x531E, 0x4114, 0x4314, 0x4B1E, 0x4D0A, 0x5D0A, 0x5F0A, // beneath the graveyard
+            0x0B01, 0x0D01, 0x0F1E, 0x110A, 0x1301, 0x151E, 0x1705, 0x191E, 0x1B1E, 0x1D0A, // damps house
             0x7C10, 0x7E0B, 0x800B, 0x820E, 0x840B, 0x9C10, 0x9E0E, 0xA010, 0xB40E, 0x860B, 0x8813, 0x8A0B, 0x8C0B,// ikana castle
             0x430A, 0x450E, 0x4710, 0x4B10, 0x4D14, 0x4F0A, 0x5114, 0x5314, 0x570A, 0x5910, 0x5B14, 0x5D0E, 0x5F1E, 0x610A, 0x630E, // stone tower
             0x6514, 0x671E, 0x690E, 0x6B0A, 0x6D0A, 0x6F15, 0x711F, 0x7610, 0x750F, // stone tower (cont)
@@ -1551,7 +1557,9 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(1, 2,
             0)] // in mayor meeting
         [VariantsWithRoomMax(max: 0, variant: 0)]
-        [PathingVariants(0x603, 0x503)]
+        [PathingVariants(0x603, 0x503,
+            0x0303// in southclock town doing what?
+        )]
         [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)]
         //[AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0090)]
         [UnkillableAllVariants]
@@ -2473,7 +2481,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x7F is switch flag (what is being switched?)
         // oh no z rotation is a parameter.... and there appear to be at least two based on xz rotation
         // 0x7E parameter is switch flag... for what I have no idea, but it seems we cannot set it without triggering a sfx at least
-        [GroundVariants(0x7E)]
+        [GroundVariants(0x7E, 0x7F)]
         [WaterBottomVariants(0x77)]
         [VariantsWithRoomMax(max: 10, variant: 0x7E)] // 11 overloaded gorman race track
         [UnkillableAllVariants]
