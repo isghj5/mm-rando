@@ -124,7 +124,7 @@ namespace MMR.Randomizer.Extensions
         public static List<Region> Regions(this Item location)
         {
             var multiRegionLocations = location.GetAttribute<MultiLocationAttribute>()?.Locations ?? new Item[] { location };
-            return multiRegionLocations.Select(loc => loc.Region(null).Value).ToList();
+            return multiRegionLocations.Select(loc => loc.Region(null).Value).Distinct().ToList();
         }
 
         public static Region RegionForDirectHint(this Item location, ItemList itemList)
