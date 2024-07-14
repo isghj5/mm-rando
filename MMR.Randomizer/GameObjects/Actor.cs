@@ -6008,9 +6008,30 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         SwimmingZora = 0x260, // En_Zow
 
+        // multiple talk spots but also a hit spot? hmm
+        [ActorizerEnabled]
         [FileID(568)]
         [ObjectListIndex(0x1)]
-        IndigoGosPosterTalkSpot = 0x261, // En_Talk
+        [WallVariants(
+            0xFE00, // zora band poster
+            0xFE01, // construction recruitment poster
+            0xFE03, // treasure chest game poster
+            0xFE06, // soldier recruitment poster
+            0xFE0A, // sword school sign
+            0xFE0C, // honey and darling sign
+            0xFE0D, // postoffice sign
+            0xFE0E, // bombshop sign
+            0xFE0F, // blackmarket sign
+            0xFE10, // trading post sign
+            0xFE11, // stockpot inn sign
+            0xFE12, // mayors residence sign
+            0xFE13, // lottery sign
+            0xFE14, // bank sign
+            0xFE15, // town archery sign
+            0xFE18  // bank poster
+            )]
+        [UnkillableAllVariants]
+        WallTalkSpot = 0x261, // En_Talk
 
         [ActorizerEnabled]
         [FileID(569)]
@@ -6051,10 +6072,11 @@ namespace MMR.Randomizer.GameObjects
         // TODO decouple the specific actors per object based on variant
         [CheckRestricted(Scene.SouthClockTown, -1,
             Item.CollectableSouthClockTownHitTag1, Item.CollectableSouthClockTownHitTag2, Item.CollectableSouthClockTownHitTag3)]
-        [CheckRestricted(Scene.EastClockTown, -1,
+        [CheckRestricted(Scene.EastClockTown, 0xFE00, // both are 0xFE00, uhhhh
             Item.CollectableEastClockTownHitTag1, Item.CollectableEastClockTownHitTag2, Item.CollectableEastClockTownHitTag3,
             Item.CollectableEastClockTownHitTag4, Item.CollectableEastClockTownHitTag5, Item.CollectableEastClockTownHitTag6,
-            Item.CollectableEastClockTownHitTag7, Item.CollectableEastClockTownHitTag8, Item.CollectableEastClockTownHitTag9)]
+            Item.CollectableEastClockTownHitTag7, Item.CollectableEastClockTownHitTag8, Item.CollectableEastClockTownHitTag9,
+            Item.ChestEastClockTownSilverRupee)]
         [CheckRestricted(Scene.StockPotInn, -1,
             Item.CollectableStockPotInnHitTag1, Item.CollectableStockPotInnHitTag2, Item.CollectableStockPotInnHitTag3)]
         [CheckRestricted(Scene.SwampSpiderHouse, -1,
@@ -6083,7 +6105,7 @@ namespace MMR.Randomizer.GameObjects
         [CeilingVariants(0xFC00)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         [OnlyOneActorPerRoom]
-        HitSpot = 0x265, // En_Hit_Tag
+        HitSpot = 0x265, // En_Hit_Tag // hittag
 
         [ActorizerEnabled]
         [FileID(573)]
