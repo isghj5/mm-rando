@@ -472,6 +472,8 @@ namespace MMR.Randomizer
 
             bool SpecialMultiObjectCases(Actor targetActor, int mapIndex, int actorIndex)
             {
+                // some actors are special: can use multiple objects: these actors can use a special object
+
                 if (thisSceneData.Scene.SpecialObject == Scene.SceneSpecialObject.FieldKeep
                  && targetActor.OldActorEnum == GameObjects.Actor.TallGrass)
                 {
@@ -552,9 +554,14 @@ namespace MMR.Randomizer
 
                         void AddIfNoRestrictions(Actor testActor)
                         {
+                            /// twas separated because I thought it would be reused
                             var sceneRestrictions = testActor.ActorEnum.GetAttribute<ForbidFromSceneAttribute>();
                             if (sceneRestrictions != null && sceneRestrictions.ScenesExcluded.Contains(thisSceneData.Scene.SceneEnum))
                                 return; // continue // not valid to consider this actor
+
+                            var checkBlocked = ObjectIsCheckBlocked(scene, testActor.ActorEnum, testActor.OldVariant);
+                            if (checkBlocked)
+                                return;
 
                             FixActorLastSecond(testActor, testActor.ActorEnum, mapIndex, actorIndex);
 
@@ -566,7 +573,6 @@ namespace MMR.Randomizer
                         {
                             AddIfNoRestrictions(mapActor);
                         }
-
                         
                     }
                 }
@@ -613,12 +619,15 @@ namespace MMR.Randomizer
         }
 
         // todo move to actorutils
-        private static bool ObjectIsCheckBlocked(Scene scene, GameObjects.Actor testActor)
+        // TODO rename to ACTOR is check blocked, as we will soon need to do this for actors not whole actor objects
+        // for now its just the objectlessactors
+        private static bool ObjectIsCheckBlocked(Scene scene, GameObjects.Actor testActor, int variant = -1)
         {
             /// checks if randomizing the actor would interfere with getting access to a check
             /// and then checks if the item is junk, before allowing randimization
             /// tags: itemblocked, item restricted, check restricted
             const GameObjects.Scene ANYSCENE = (GameObjects.Scene)GameObjects.ActorConst.ANY_SCENE;
+
 
             var checkRestrictedAttr = testActor.GetAttributes<CheckRestrictedAttribute>();
             if (checkRestrictedAttr != null && checkRestrictedAttr.Count() > 0) // actor has check restrictions
@@ -626,6 +635,9 @@ namespace MMR.Randomizer
                 foreach (var restriction in checkRestrictedAttr) // can have multiple rules
                 {
                     if (restriction.Scene != ANYSCENE && restriction.Scene != scene.SceneEnum) continue;
+
+                    if (variant != -1 && restriction.Variant != variant)
+                        continue; // we dont care about this variant being restricted
 
                     var restrictedChecks = restriction.Checks;
                     for (int checkIndex = 0; checkIndex < restrictedChecks.Count; checkIndex++)
@@ -699,17 +711,6 @@ namespace MMR.Randomizer
                     return true;
                 }
             }
-            /* if ((scene.SceneEnum == GameObjects.Scene.GoronVillage || scene.SceneEnum == GameObjects.Scene.GoronVillageSpring)
-                && testActor == GameObjects.Actor.GoGoron) // smithy goron
-            {
-                //var goronRaceIsBaren = ItemUtils.IsRequired(GameObjects.Item.ItemPowderKeg);//.Contains(GameObjects.Item.Race)
-                var importantItems = _randomized.ImportantLocations.ToList(); // this is a list of checks not regions considered important
-                var importantGoronRaceItems = importantItems.FindAll(item => item.Region() == GameObjects.Region.GoronRaceItems); //GameObjects.Region.GoronRaceItems.
-                if (importantGoronRaceItems.Count > 0) // not barren
-                {
-                    return true;
-                }
-            }// */
             if (testActor == GameObjects.Actor.Postbox)
             {
                 GameObjects.Item[] checksPostBoxLeadsTo = {
@@ -3839,11 +3840,16 @@ namespace MMR.Randomizer
                     // get the objects for this room
                     // quickly grab the candidates for the available objects
 
+                    // ZZZ
+                    // TODO this is terribly broken, does not consider type or blocking restrictions
                     var candidatesPerActor = new List<Actor>();
                     for (int o = 0; o < oldActorRoomObjects.Count; o++)
                     {
                         var obj = oldActorRoomObjects[o];
                         var actorsForThisObject = thisSceneData.AcceptableCandidates.FindAll(act => act.ObjectId == obj);
+                        // todo check if the replacment is banned on a per actor bassis
+                        // TODO check if the actor is banned for replacement because of check restrictions
+                        //   no those actors shouldnt even get this far
                         candidatesPerActor.AddRange(actorsForThisObject);
                     }
                     candidatesPerActor.AddRange(FreeCandidateList);
@@ -4706,7 +4712,9 @@ namespace MMR.Randomizer
             }
 
             if (scene.SceneEnum == GameObjects.Scene.TerminaField || scene.SceneEnum == GameObjects.Scene.IkanaCanyon)
-                Thread.CurrentThread.Priority = ThreadPriority.AboveNormal; // more time than the other small scenes
+            {
+                Thread.CurrentThread.Priority = ThreadPriority.AboveNormal; // need more time than the other small scenes
+            }
             WriteOutput($" starting timestamp : [{DateTime.Now.ToString("hh:mm:ss.fff tt")}]");
             #endregion
 
@@ -4859,7 +4867,7 @@ namespace MMR.Randomizer
                 for (int objectIndex = 0; objectIndex < thisSceneData.ChosenReplacementObjects.Count; objectIndex++)
                 {
                     // todo consider attempting to make this multithreaded at this upper level
-                    //   issues: we would need to do a final actor trim pass after
+                    //   issues: we would need to do a final actor trim pass after (edit: we do this now anyway, we still need an accurate type read)
 
                     var temporaryMatchEnemyList = new List<Actor>();
                     var chosenObject = thisSceneData.ChosenReplacementObjects[objectIndex].ChosenV;
@@ -4876,7 +4884,7 @@ namespace MMR.Randomizer
                     TrimAllActors(thisSceneData, previousyAssignedCandidate, temporaryMatchEnemyList);
                     // WriteOutput($"  trim/free time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
-                    previousyAssignedCandidate.Clear();
+                    previousyAssignedCandidate.Clear(); // TODO this might not be needed at all anymore
                 } // end for actors per object
 
                 // finally, randomize actors that have no objects
