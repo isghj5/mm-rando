@@ -2004,9 +2004,10 @@ namespace MMR.Randomizer.GameObjects
         [WaterBottomVariants(1)]
         [VariantsWithRoomMax(max: 5, variant: 1)]
         // below ground is kinda boring..., we want above ground placement only
-        [VariantsWithRoomMax(max: 0, variant: 0x11D, 0x0F00, 0x2800, 0x2D00)]
+        [VariantsWithRoomMax(max: 0, variant: 0x11D, 0x0F00, 0x2800, 0x2D00, 0x3200, 0x1E00)]
         // except I'm okay with a few of them because then the player might stumble on one pulling out an ocarina
-        [VariantsWithRoomMax(max: 1, variant: 0x3200, 0x1E00)] 
+        // turns out if the player is glitching with ocarina items it can softlock
+        //[VariantsWithRoomMax(max: 1, variant: 0x3200, 0x1E00)]
         [UnkillableAllVariants]
         // crash: if you teach song to him in TF the ice block cutscene triggers
         // if you try to teach him a song with more than one it can lock
