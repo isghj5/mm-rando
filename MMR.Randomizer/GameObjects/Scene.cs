@@ -488,7 +488,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1330)]
         [SceneInternalId(0x37)]
         // 350,224 was okay at night time
-        [DynaHeadroom(350, 300)] // limit not found
+        // ^- this might be old, pre-realization that our counting is off
+        // 342poly crashes room 1
+        [DynaHeadroom(350, 300, room: 0)] // limit not found
+        [DynaHeadroom(250, 250, room: 1)] // 342, X was too big, limit not found (annoying to test)
         //[DynaHeadroom(16,12, room:0)] // we know 16/12 is safe, that might be too conservative
         [EnemizerSceneEnemyReplacementBlock(Actor.Seagulls,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can stop ting from falling
