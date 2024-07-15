@@ -4795,6 +4795,7 @@ namespace MMR.Randomizer.GameObjects
         [BlockingVariantsAll]
         [CheckRestricted(Item.MaskGoron, Item.ChestHotSpringGrottoRedRupee,
             Item.UpgradeRazorSword, Item.UpgradeGildedSword,
+            Item.BottleCatchHotSpringWater,
             Item.ItemPowderKeg)]
         [OnlyOneActorPerRoom] // dyna crash hazard
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
