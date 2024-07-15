@@ -3806,8 +3806,11 @@ namespace MMR.Randomizer
             /// so they can use ANY object require actor, or free actors
 
             var freelanceActors = thisSceneData.FreelanceActors;
+            var sceneFreeActors = GetSceneFreeActors(thisSceneData.Scene);
 
             if (freelanceActors == null) throw new Exception("freelanceActors busted");
+
+            // we need to split this per-room so we can can get a slimmer candidate list? maybe that can wait until its working optimize later
 
             // we need to generate a candidate list for all actors without an object just like regular? if we want blocking sensitivity yeah
             // sort the list of special actors into list of per type
@@ -3826,7 +3829,7 @@ namespace MMR.Randomizer
                 var objectHasBlockingSensitivity = allActorInstances.Any(actor => actor.Blockable == false);
                 // get a list of matching actors that can fit in the place of the previous actor
                 // assumed that we will never have a fairy dropping object-less actor, those were only enemies
-                //var newCandiateList = GetMatchPool(thisSceneData, allActorInstances, containsFairyDroppingEnemy:false, objectHasBlockingSensitivity);
+                var newCandiateList = GetMatchPool(thisSceneData, allActorInstances, containsFairyDroppingEnemy:false, objectHasBlockingSensitivity);
 
                 //allCandidatesPerFreelance.Add(newCandiateList);
 
@@ -3846,13 +3849,13 @@ namespace MMR.Randomizer
                     for (int o = 0; o < oldActorRoomObjects.Count; o++)
                     {
                         var obj = oldActorRoomObjects[o];
-                        var actorsForThisObject = thisSceneData.AcceptableCandidates.FindAll(act => act.ObjectId == obj);
+                        var oldList = thisSceneData.AcceptableCandidates;
+                        //var actorsForThisObject = thisSceneData.AcceptableCandidates.FindAll(act => act.ObjectId == obj); // waay too permissive
+                        var actorsForThisObject = newCandiateList.FindAll(act => act.ObjectId == obj);
                         // todo check if the replacment is banned on a per actor bassis
-                        // TODO check if the actor is banned for replacement because of check restrictions
-                        //   no those actors shouldnt even get this far
                         candidatesPerActor.AddRange(actorsForThisObject);
                     }
-                    candidatesPerActor.AddRange(FreeCandidateList);
+                    candidatesPerActor.AddRange(thisSceneData.SceneFreeActors);
 
                     if (candidatesPerActor.Count == 0)
                         continue;

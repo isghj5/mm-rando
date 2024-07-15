@@ -6016,8 +6016,10 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(
             0xFE00, // zora band poster
             0xFE01, // construction recruitment poster
+            // TODO why are there gaps?
             0xFE03, // treasure chest game poster
             0xFE06, // soldier recruitment poster
+            0xFE07, // laundry pool bell
             0xFE0A, // sword school sign
             0xFE0C, // honey and darling sign
             0xFE0D, // postoffice sign
@@ -6030,7 +6032,7 @@ namespace MMR.Randomizer.GameObjects
             0xFE14, // bank sign
             0xFE15, // town archery sign
             0xFE18  // bank poster
-            )]
+        )]
         [UnkillableAllVariants]
         WallTalkSpot = 0x261, // En_Talk
 
@@ -6106,6 +6108,7 @@ namespace MMR.Randomizer.GameObjects
         [CeilingVariants(0xFC00)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         [OnlyOneActorPerRoom]
+        [PlacementWeight(40)]
         HitSpot = 0x265, // En_Hit_Tag // hittag
 
         [ActorizerEnabled]
