@@ -1535,9 +1535,9 @@ namespace MMR.Randomizer
                     ReadWriteUtils.WriteToROM(address, (ushort)0);
                 }
             }
-            else if ((int) _cosmeticSettings.LowHealthSFX > (int) LowHealthSFX.Random)
+            else if (_cosmeticSettings.LowHealthSFX.HasAttribute<ValueAttribute>())
             {
-                SoundEffect.LowHealthBeep.TryReplaceWith( (SoundEffect) _cosmeticSettings.LowHealthSFX);
+                SoundEffect.LowHealthBeep.TryReplaceWith((SoundEffect)_cosmeticSettings.LowHealthSFX.GetAttribute<ValueAttribute>().Value);
             }
             else if(_cosmeticSettings.LowHealthSFX == LowHealthSFX.Random)
             {
@@ -6083,6 +6083,14 @@ namespace MMR.Randomizer
             // and after that second stack trace there is an extra wait, have to press two A buttons to get through it so remove
             ReadWriteUtils.Arr_WriteU32(bootFile, 0x3A4C, 0x00000000); // jal to Fault_WaitForInput -> NOP
 
+            // except, I want to attempt to make a save here instead
+            // 0C051BD7 0x0C050EC3:Sram_SaveEndOfCycle is not working
+            // 0x0C051BD7 new save function instead, crashes on lib memory swap, annoying
+            //ReadWriteUtils.Arr_WriteU32(bootFile, 0x3A3C, 0x0C051BD7);
+            //ReadWriteUtils.Arr_WriteU32(bootFile, 0x3A34, 0x3C04803E); // load (lui) 803E< 6B20 into a0 for Sram_SaveEndOfCycle
+            //ReadWriteUtils.Arr_WriteU32(bootFile, 0x3A38, 0x24846B20); // load (addiu 803E >6B20 into a0 for Sram_SaveEndOfCycle
+
+
             // the stack dump page, if you get there without autoscroll, resets the pos offset with the A button... but it seems broken
             //  instead, A should just leave the stack dump, we can re-set to SP or PC from C buttons
             ReadWriteUtils.Arr_WriteU32(bootFile, 0x2EBC, 0x10000022); // branch all the way down to the function exit
@@ -6193,7 +6201,7 @@ namespace MMR.Randomizer
 
             // Update override for magic meter colors
             if (_cosmeticSettings.MagicSelection != null)
-                config.MagicOverride = ColorSelectionManager.MagicMeter.GetItems().FirstOrDefault(csi => csi.Name == _cosmeticSettings.HeartsSelection)?.GetColors(random);
+                config.MagicOverride = ColorSelectionManager.MagicMeter.GetItems().FirstOrDefault(csi => csi.Name == _cosmeticSettings.MagicSelection)?.GetColors(random);
             else
                 config.MagicOverride = null;
 

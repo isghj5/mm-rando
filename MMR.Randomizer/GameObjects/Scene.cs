@@ -96,6 +96,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.Snapper, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
         [EnemizerSceneBlockSensitive(Actor.Leever, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
         [EnemizerSceneBlockSensitive(Actor.Armos, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
+        [EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)] // chests under it in bomb grotto and hot spring grotto
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BioDekuBaba,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // they can extend so far they can block the door leading out
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GoldSkulltula,
@@ -488,8 +489,14 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1330)]
         [SceneInternalId(0x37)]
         // 350,224 was okay at night time
-        [DynaHeadroom(350, 300)] // limit not found
+        // ^- this might be old, pre-realization that our counting is off
+        // 342poly crashes room 1
+        [DynaHeadroom(350, 300, room: 0)] // limit not found
+        [DynaHeadroom(250, 250, room: 1)] // 342, X was too big, limit not found (annoying to test)
         //[DynaHeadroom(16,12, room:0)] // we know 16/12 is safe, that might be too conservative
+        [EnemizerSceneBlockSensitive(Actor.SquareSign,
+            0x21, // too close to fisherman door
+            0x23)] // too close to lab door
         [EnemizerSceneEnemyReplacementBlock(Actor.Seagulls,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can stop ting from falling
         GreatBayCoast = 0x34,

@@ -216,6 +216,12 @@ namespace MMR.Randomizer.Utils
         }
 
         // todo cache
+        public static IEnumerable<Item> CustomStartingItems()
+        {
+            return StartingItems().Where(item => !item.Name().Contains("Heart"));
+        }
+
+        // todo cache
         public static IEnumerable<Item> StartingItems()
         {
             return Enum.GetValues(typeof(Item))

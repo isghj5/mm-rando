@@ -83,6 +83,7 @@ extern void z2_Matrix_GetStateTranslationAndScaledY(f32 scale, Vec3f* dst);
 extern void z2_Matrix_GetStateTranslationAndScaledZ(f32 scale, Vec3f* dst);
 extern AudioInfo* z2_GetAudioTable(u8 audioType);
 extern void z2_PlaySfx(u32 id);
+extern void z2_PlaySfx_2(u16 id);
 extern void z2_PlaySfxDecide();
 extern void z2_PlaySfxCancel();
 extern void z2_PlayPlayerSfx(ActorPlayer* player, s16 sfxId);
@@ -204,7 +205,10 @@ extern void z2_SkelAnime_DrawFlexLod(GlobalContext* ctxt, void** skeleton, Vec3s
 extern void z2_801660B8(GlobalContext* ctxt, Gfx* gfx);
 
 // Function Prototypes (File Loading).
+extern void z2_Sram_ResetSaveFromMoonCrash(SramContext* sramCtxt);
 extern void z2_Sram_SaveSpecialNewDay(GlobalContext* ctxt);
+extern void z2_Sram_SetFlashPagesDefault(SramContext* sramCtxt, u32 curPage, u32 numPages);
+extern void z2_Sram_StartWriteToFlashDefault(SramContext* sramCtxt);
 extern s32 z2_RomToRam(u32 src, void* dst, u32 length);
 extern s16 z2_GetFileNumber(u32 vromAddr);
 extern u32 z2_GetFilePhysAddr(u32 vromAddr);
@@ -267,6 +271,7 @@ extern bool z2_SkelAnime_Update(SkelAnime* skelAnime);
 extern void z2_Animation_MorphToLoop(SkelAnime* skelAnime, AnimationHeader* animation, f32 morphFrames);
 
 // Function Prototypes (OS).
+extern void z2_bzero(void* dest, u32 size);
 extern void z2_memcpy(void* dest, const void* src, u32 size);
 extern size_t z2_strlen(const unsigned char* s);
 extern f32 z2_sqrtf(f32 f);

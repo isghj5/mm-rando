@@ -70,7 +70,8 @@ typedef struct {
     u32 takeDamageOnShield  : 1;
     u32 takeDamageFromVoid  : 1;
     u32 oceanTokensRandomized : 1;
-    u32                     : 26;
+    u32 moonCrashFileErase  : 1;
+    u32                     : 25;
 } MiscFlags;
 
 typedef union {

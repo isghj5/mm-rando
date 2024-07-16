@@ -7,6 +7,8 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using MMR.Randomizer.Extensions;
+using MMR.Common.Extensions;
+using MMR.Randomizer.Attributes.Setting;
 
 namespace MMR.UI.Forms
 {
@@ -24,7 +26,7 @@ namespace MMR.UI.Forms
         {
             InitializeComponent();
 
-            _startingItems = ItemUtils.StartingItems().Where(item => !item.Name().Contains("Heart")).ToList();
+            _startingItems = typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.CustomStartingItemListString)).GetAttribute<SettingItemListAttribute>().ItemList.ToList();
 
             PrintToListView();
 

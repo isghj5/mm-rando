@@ -24,6 +24,7 @@ using MMR.Randomizer.Constants;
 using System.Threading;
 using MMR.UI.Controls;
 using System.Linq.Expressions;
+using MMR.Randomizer.Attributes.Setting;
 
 namespace MMR.UI.Forms
 {
@@ -62,7 +63,7 @@ namespace MMR.UI.Forms
 
             JunkLocationEditor = new JunkLocationEditForm();
 
-            ItemEditor = new CustomItemListEditForm(ItemUtils.AllLocations(), item => $"{item.Location()} ({item.Name()})", "Invalid custom item string");
+            ItemEditor = new CustomItemListEditForm(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.CustomItemListString)).GetAttribute<SettingItemListAttribute>().ItemList, item => $"{item.Location()} ({item.Name()})", "Invalid custom item string");
 
             LogicEditor = new LogicEditorForm();
             Manual = new ManualForm();
@@ -78,7 +79,7 @@ namespace MMR.UI.Forms
             #if DEBUG
             Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + DEBUG ON";
             #else
-            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + Isghj's Objectless Test Alpha1";
+            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + Isghj's Objectless Test Alpha2";
             #endif
 
             var args = Environment.GetCommandLineArgs();
@@ -121,6 +122,7 @@ namespace MMR.UI.Forms
                 { cFDAnywhere, cfg => cfg.GameplaySettings.AllowFierceDeityAnywhere },
                 { cByoAmmo, cfg => cfg.GameplaySettings.ByoAmmo },
                 { cDeathMoonCrash, cfg => cfg.GameplaySettings.DeathMoonCrash },
+                { cMoonCrashFileErase, cfg => cfg.GameplaySettings.MoonCrashErasesFile },
                 { cFewerHealthDrops, cfg => cfg.GameplaySettings.FewerHealthDrops },
                 { cTakeDamageOnEpona, cfg => cfg.GameplaySettings.TakeDamageOnEpona },
                 { cTakeDamageWhileShielding, cfg => cfg.GameplaySettings.TakeDamageWhileShielding },
@@ -327,6 +329,7 @@ namespace MMR.UI.Forms
                 { lDMult, (typeof(GameplaySettings), nameof(GameplaySettings.DamageMode)) },
                 { lDType, (typeof(GameplaySettings), nameof(GameplaySettings.DamageEffect)) },
                 { cDeathMoonCrash, (typeof(GameplaySettings), nameof(GameplaySettings.DeathMoonCrash)) },
+                { cMoonCrashFileErase, (typeof(GameplaySettings), nameof(GameplaySettings.MoonCrashErasesFile)) },
                 { cByoAmmo, (typeof(GameplaySettings), nameof(GameplaySettings.ByoAmmo)) },
                 { cFewerHealthDrops, (typeof(GameplaySettings), nameof(GameplaySettings.FewerHealthDrops)) },
                 { lBlastMask, (typeof(GameplaySettings), nameof(GameplaySettings.BlastMaskCooldown)) },
@@ -1443,6 +1446,7 @@ namespace MMR.UI.Forms
             cFDAnywhere.Checked = _configuration.GameplaySettings.AllowFierceDeityAnywhere;
             cByoAmmo.Checked = _configuration.GameplaySettings.ByoAmmo;
             cDeathMoonCrash.Checked = _configuration.GameplaySettings.DeathMoonCrash;
+            cMoonCrashFileErase.Checked = _configuration.GameplaySettings.MoonCrashErasesFile;
             cFewerHealthDrops.Checked = _configuration.GameplaySettings.FewerHealthDrops;
             cTakeDamageOnEpona.Checked = _configuration.GameplaySettings.TakeDamageOnEpona;
             cTakeDamageWhileShielding.Checked = _configuration.GameplaySettings.TakeDamageWhileShielding;
@@ -1922,11 +1926,13 @@ namespace MMR.UI.Forms
             }
 
             cCustomGossipWoth.Enabled = _configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Competitive;
+            cImportanceCount.Enabled = _configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Competitive;
             nMaxGossipWotH.Enabled = cCustomGossipWoth.Checked && cCustomGossipWoth.Enabled;
             nMaxGossipFoolish.Enabled = nMaxGossipWotH.Enabled;
             nMaxGossipCT.Enabled = nMaxGossipWotH.Enabled;
 
             cCustomGaroWoth.Enabled = _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
+            cImportanceCountGaro.Enabled = _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
             nMaxGaroWotH.Enabled = cCustomGaroWoth.Checked && cCustomGaroWoth.Enabled;
             nMaxGaroFoolish.Enabled = nMaxGaroWotH.Enabled;
             nMaxGaroCT.Enabled = nMaxGaroWotH.Enabled;
@@ -2067,6 +2073,7 @@ namespace MMR.UI.Forms
             cFDAnywhere.Enabled = v;
             cByoAmmo.Enabled = v;
             cDeathMoonCrash.Enabled = v;
+            cMoonCrashFileErase.Enabled = v;
             cFewerHealthDrops.Enabled = v;
             cTakeDamageOnEpona.Enabled = v;
             cTakeDamageWhileShielding.Enabled = v;
@@ -2437,15 +2444,6 @@ namespace MMR.UI.Forms
             var combobox = (ComboBox)sender;
             var selected = (ColorSelectionItem)combobox.SelectedItem;
             _configuration.CosmeticSettings.MagicSelection = selected.Name;
-        }
-
-        private void cLowHealthSFXComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // should probably make the object[] obj support both string and index to avoid this search, but it's low use
-            var comboboxArrayObj = cLowHealthSFXComboBox.Items[ cLowHealthSFXComboBox.SelectedIndex ];
-            var SFXOptionList = Enum.GetValues(typeof(LowHealthSFX)).Cast<LowHealthSFX>().ToList();
-            var SFXOption = SFXOptionList.Find(u => u.ToString() == comboboxArrayObj.ToString());
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.LowHealthSFX = SFXOption);
         }
 
         private void bToggleTricks_Click(object sender, EventArgs e)

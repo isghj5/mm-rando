@@ -12,7 +12,7 @@ namespace MMR.Randomizer.Models
 
         Quadruple,
 
-        [SettingName("One")]
+        [SettingName("One-Hit KO")]
         OHKO,
 
         Doom
