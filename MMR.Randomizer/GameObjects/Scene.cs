@@ -494,6 +494,9 @@ namespace MMR.Randomizer.GameObjects
         [DynaHeadroom(350, 300, room: 0)] // limit not found
         [DynaHeadroom(250, 250, room: 1)] // 342, X was too big, limit not found (annoying to test)
         //[DynaHeadroom(16,12, room:0)] // we know 16/12 is safe, that might be too conservative
+        [EnemizerSceneBlockSensitive(Actor.SquareSign,
+            0x21, // too close to fisherman door
+            0x23)] // too close to lab door
         [EnemizerSceneEnemyReplacementBlock(Actor.Seagulls,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can stop ting from falling
         GreatBayCoast = 0x34,
