@@ -4636,6 +4636,9 @@ namespace MMR.Randomizer.GameObjects
         [CompanionActor(LetterToPostman, ourVariant: -1, variant: 0)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
+        // I once got a crash putting type 1 into eastclock town, crashed on the schedule code
+        // not sure, but might be beacuse we put the wrong one in the wrong area, TODO investigate
+        [EnemizerScenesPlacementBlock(Scene.WestClockTown, Scene.SouthClockTown, Scene.NorthClockTown, Scene.EastClockTown)]
         //[ForbidFromScene(Scene.WestClockTown, Scene.SouthClockTown, Scene.NorthClockTown, Scene.EastClockTown)]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
