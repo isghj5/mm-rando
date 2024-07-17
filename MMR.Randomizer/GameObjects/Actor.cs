@@ -1559,7 +1559,9 @@ namespace MMR.Randomizer.GameObjects
         // subtype describes if its set once or toggle or if it resets once you step off
         [GroundVariants(0x0, 0x20, 0x1, 0x43, 0x14, 0x5)]
         // TODO get wall rotations working so I can just set some on the wall, wall crystal switches make sense
-        [WallVariants(0x2)]
+        [WallVariants(0x2,
+            0x1D82 // stone tower temple
+        )]
         [WaterBottomVariants(0x0, 0x1, 0x3, 0x4)]
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
@@ -2443,6 +2445,7 @@ namespace MMR.Randomizer.GameObjects
         //[CheckRestricted(Scene.Grottos, variant: 0x0, Item.ItemCoastGrottoCowMilk1, Item.ItemCoastGrottoCowMilk2, Item.ItemTerminaGrottoCowMilk1, Item.ItemTerminaGrottoCowMilk2)]
         [GroundVariants(0, 2)]  // 2 is from romani ranch, 0 is cow grotto, well is also 0
         [WallVariants(0, 2)]  // 2 is from romani ranch, 0 is cow grotto, well is also 0
+        [WaterBottomVariants(0)] // silly
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [ForbidFromScene(Scene.RanchBuildings, Scene.RomaniRanch, Scene.Grottos, Scene.BeneathTheWell)]

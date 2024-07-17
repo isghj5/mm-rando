@@ -3871,20 +3871,19 @@ namespace MMR.Randomizer
                     var trimmedCandidates = new List<Actor>();
                     for (int aa = 0; aa < candidatesPerActor.Count; aa++)
                     {
-                        var actor = candidatesPerActor[aa];
-                        var compatibleVariants = actor.CompatibleVariants(oldActor, thisSceneData.RNG); // do we want clear enemy room data?
+                        var compatibilityTestActor = candidatesPerActor[aa];
+                        var compatibleVariants = oldActor.CompatibleVariants(compatibilityTestActor, thisSceneData.RNG); // do we want clear enemy room data?
                         if (compatibleVariants != null && compatibleVariants.Count > 0)
                         {
-                            actor.Variants = compatibleVariants;
-                            trimmedCandidates.Add(actor);
+                            compatibilityTestActor.Variants = compatibleVariants;
+                            trimmedCandidates.Add(compatibilityTestActor);
                         }
                     }
-
 
                     if (trimmedCandidates.Count == 0)
                         continue;
 
-                    Debug.Assert(trimmedCandidates.Count > 1);
+                    Debug.Assert(trimmedCandidates.Count > 1); // == 1, means our testing is super limiting (usually broken)
 
                     // this isn't really a loop, 99% of the time it matches on the first loop
                     // leaving this for now because its faster than shuffling the list even if it looks stupid
@@ -4487,13 +4486,13 @@ namespace MMR.Randomizer
 
                         // todo: use x and z, with actor rotation, to figure out where to move the actors to
                         thisSceneData.Log.AppendLine(
-                                      " Moved companion: [" + randomCompanion.ActorEnum.ToString()
-                                    + "][" + randomCompanion.Variants[0].ToString("X2")
-                                    + "] to actor: [" + mainActor.ActorEnum.ToString()
-                                    + "][" + randomCompanion.Variants[0].ToString("X2")
-                                    + "] at cords: [" + randomCompanion.Position.x + ","
-                                                    + randomCompanion.Position.y + ","
-                                                    + randomCompanion.Position.z + "]");
+                            "Moved companion: [" + randomCompanion.Variants[0].ToString("X4")
+                            + "][" + randomCompanion.ActorEnum.ToString()
+                            + "] to actor: [" + mainActor.ActorEnum.ToString()
+                            + "][" + randomCompanion.Variants[0].ToString("X4")
+                            + "] at cords: [" + randomCompanion.Position.x + ","
+                                            + randomCompanion.Position.y + ","
+                                            + randomCompanion.Position.z + "]");
                         randomCompanion.previouslyMovedCompanion = true;
                     }
                 }
