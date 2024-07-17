@@ -2491,9 +2491,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(233)]
         [ObjectListIndex(0x2)]
+        // parameters unknown
         [WaterBottomVariants(0)]
+        [GroundVariants(0xFF)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [BlockingVariantsAll]
+        [PlacementWeight(65)] // bit boring
         BronzeBoulder = 0xFC, // Obj_Hamishi
 
         // glitchy early version of skullkid

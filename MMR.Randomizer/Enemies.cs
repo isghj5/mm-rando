@@ -3829,7 +3829,9 @@ namespace MMR.Randomizer
                 var objectHasBlockingSensitivity = allActorInstances.Any(actor => actor.Blockable == false);
                 // get a list of matching actors that can fit in the place of the previous actor
                 // assumed that we will never have a fairy dropping object-less actor, those were only enemies
+                // issue: this doesnt account for which room we are in, this pool is roomless in consideration
                 var newCandiateList = GetMatchPool(thisSceneData, allActorInstances, containsFairyDroppingEnemy:false, objectHasBlockingSensitivity);
+
 
                 //allCandidatesPerFreelance.Add(newCandiateList);
 
@@ -3849,15 +3851,36 @@ namespace MMR.Randomizer
                     for (int o = 0; o < oldActorRoomObjects.Count; o++)
                     {
                         var obj = oldActorRoomObjects[o];
-                        var oldList = thisSceneData.AcceptableCandidates;
+                        var oldList = thisSceneData.AcceptableCandidates; // debug
                         //var actorsForThisObject = thisSceneData.AcceptableCandidates.FindAll(act => act.ObjectId == obj); // waay too permissive
                         var actorsForThisObject = newCandiateList.FindAll(act => act.ObjectId == obj);
                         // todo check if the replacment is banned on a per actor bassis
+
+                        // assume not possible for free actors for now // TODO once we start splitting actor lists this is dangerous
+                        //var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(act => act.ObjectIndex() == thisSceneData.Objects[objectIndex]);
+                        //var objectHasBlockingSensitivity = currentTargetActors.Any(actor => actor.Blockable == false);
+                        // get a list of matching actors that can fit in the place of the previous actor
+                        //var specificCandidateList = GetMatchPool(thisSceneData, thisSceneData.ActorsPerObject[objectIndex], containsFairyDroppingEnemy:false, objectHasBlockingSensitivity);
+                        // except we already did this above? should we limit to one?
+
                         candidatesPerActor.AddRange(actorsForThisObject);
                     }
                     candidatesPerActor.AddRange(thisSceneData.SceneFreeActors);
 
-                    if (candidatesPerActor.Count == 0)
+                    // now we need to go through candidates and reduce to variants we can use
+                    var trimmedCandidates = new List<Actor>();
+                    for (int aa = 0; aa < candidatesPerActor.Count; aa++)
+                    {
+                        var actor = candidatesPerActor[aa];
+                        var compatibleVariants = actor.CompatibleVariants(oldActor, thisSceneData.RNG); // do we want clear enemy room data?
+                        if (compatibleVariants != null && compatibleVariants.Count > 0)
+                        {
+                            actor.Variants = compatibleVariants;
+                            trimmedCandidates.Add(actor);
+                        }
+                    }
+
+                    if (trimmedCandidates.Count == 0)
                         continue;
 
                     // this isn't really a loop, 99% of the time it matches on the first loop
@@ -3867,8 +3890,8 @@ namespace MMR.Randomizer
                     while (true)
                     {
                         /// looking for a list of objects for the actors we chose that fit the actor types
-                        var randomIndex = thisSceneData.RNG.Next(candidatesPerActor.Count);
-                        testActor = candidatesPerActor[randomIndex];
+                        var randomIndex = thisSceneData.RNG.Next(trimmedCandidates.Count);
+                        testActor = trimmedCandidates[randomIndex];
 
                         /* if (testActor.IsCompanion && (oldActor.MustNotRespawn || actorsPerRoomCount <= 2))
                         {
