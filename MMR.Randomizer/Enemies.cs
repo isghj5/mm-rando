@@ -3880,8 +3880,11 @@ namespace MMR.Randomizer
                         }
                     }
 
+
                     if (trimmedCandidates.Count == 0)
                         continue;
+
+                    Debug.Assert(trimmedCandidates.Count > 1);
 
                     // this isn't really a loop, 99% of the time it matches on the first loop
                     // leaving this for now because its faster than shuffling the list even if it looks stupid

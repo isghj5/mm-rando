@@ -1120,9 +1120,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         OOTFishing = 0x79, // En_Fishing
 
+        // TODO
         [FileID(115)]
         [ObjectListIndex(0003)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
+        [UnkillableAllVariants]
+        [PlacementWeight(30)]
         PushableBlock = 0x7A, // Obj_Oshihiki
 
         [FileID(116)]
@@ -2536,6 +2539,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0x000, 0x100, 0x200, 0x300, 0x400, 0x500, 0x600, 0x700)]
         [BlockingVariantsAll]
         [UnkillableAllVariants]
+        [PlacementWeight(50)] // boring: its just a block
         PuzzleBlock = 0x102, // Obj_Pzlblock
 
         //[ActorizerEnabled] // doesnt spawn without 2 node path, if you remove the code to allow for more:crash
@@ -6602,13 +6606,14 @@ namespace MMR.Randomizer.GameObjects
         Demo_Moonend = 0x296, // Demo_Moonend
 
         // the pillars you hookshot in stonetower and pirates fortress
-        [ActorizerEnabledFreeOnly] // do not remove, we just want to add as variety IF the object is there
+        [ActorizerEnabled]
         [FileID(622)]
         [ObjectListIndex(0x27F)]
         [GroundVariants(0x0)] // all the same
         [ForbidFromScene(Scene.PiratesFortress, Scene.StoneTower)]
         // we could remove from a few places like greatbaycoast
         [UnkillableAllVariants]
+        [PlacementWeight(40)] // boring
         RainbowHookshotPillar = 0x297, // Bg_Lbfshot
 
         // the bombchu walls you blow up in the link trial
