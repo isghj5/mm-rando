@@ -825,9 +825,11 @@ void Models_DrawOcarina(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable
     Models_DrawCutsceneItem(ctxt, actor, limbDrawTable, posRot2, 16.0, 0x4C);
 }
 
-void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
+void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
     if (!MISC_CONFIG.drawFlags.freestanding) {
-        gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x0600CAD0);
+        if (giIndex == 0x4C) { // || ((ctxt->sceneNum == SCENE_LOST_WOODS) && (gSaveContext.perm.sceneSetupIndex == 1))
+            gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x0600CAD0);
+        }
         return;
     }
 
@@ -848,7 +850,7 @@ void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
             .z = 0x4000
         }
     };
-    Models_DrawCutsceneItem(ctxt, actor, posRot, NULL, 16.0, 0x4C);
+    Models_DrawCutsceneItem(ctxt, actor, posRot, NULL, 16.0, giIndex);
 
     // Restore setup DList to that which Skull Kid's actor expects.
     ctxt->state.gfxCtx->polyOpa.p = z2_Gfx_CallSetupDL(ctxt->state.gfxCtx->polyOpa.p, 0x19);
@@ -919,10 +921,10 @@ bool Models_DrawSmithyItem(Actor* actor, GlobalContext* ctxt) {
 
     z2_AnimatedMat_Draw(ctxt, z2_Lib_SegmentedToVirtual((void*)0x0600F6A0));
 
-    if (gSaveContext.perm.day == 1) {
-        DrawSmithyGetItem(ctxt, 0x38);
-    } else {
+    if (gSaveContext.perm.sceneFlags[ctxt->sceneNum].unk14 & 4) {
         DrawSmithyGetItem(ctxt, 0x39);
+    } else {
+        DrawSmithyGetItem(ctxt, 0x38);
     }
 
     z2_PopMatrixStack();

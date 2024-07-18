@@ -24,11 +24,11 @@ static void ProcessActorGiIndex(Actor* actor, GlobalContext* ctxt, u16 giIndex) 
 
     u8 item = MMR_GetGiEntry(MMR_GetNewGiIndex(ctxt, NULL, giIndex, false))->item;
 
-    if (item == CUSTOM_ITEM_STRAY_FAIRY) {
+    if (item == CUSTOM_ITEM_STRAY_FAIRY && MISC_CONFIG.flags.fairyMaskShimmer) {
         ctxt->actorCtx.unk5 |= 0x8;
     }
 
-    if (item == ITEM_SKULLTULA_SPIRIT && skulltulaSoundTimer >= 0) {
+    if (item == ITEM_SKULLTULA_SPIRIT && skulltulaSoundTimer >= 0 && MISC_CONFIG.flags.skullTokenSounds) {
         if (skulltulaSoundTimer == 1) {
             z2_PlaySfxAtActor(actor, 0x39DA);
             if (z2_Rand_ZeroOne() < 0.1f) {

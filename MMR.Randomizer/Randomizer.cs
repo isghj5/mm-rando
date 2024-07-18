@@ -33,6 +33,7 @@ namespace MMR.Randomizer
         #region Dependence and Conditions
         List<Item> ConditionsChecked { get; set; }
         Dictionary<Item, Dependence> DependenceChecked { get; set; }
+        List<int[]> ConditionRemoves { get; set; }
 
         private class Dependence
         {
@@ -1119,7 +1120,11 @@ namespace MMR.Randomizer
                 }
             }
 
-            Func<ItemObject, bool> filter = io => !io.ItemOverride.HasValue && !_settings.CustomItemList.Contains(io.Item) && io.DependsOnItems.Count == 0 && io.Conditionals.Count == 0;
+            Func<ItemObject, bool> filter = io => !io.ItemOverride.HasValue
+                && !_settings.CustomItemList.Contains(io.Item)
+                && (!io.Item.MainLocation().HasValue || !_settings.CustomItemList.Contains(io.Item.MainLocation().Value))
+                && io.DependsOnItems.Count == 0
+                && io.Conditionals.Count == 0;
 
             var unrandomizedSphereZeroItems = ItemList
                 .Where(filter)
@@ -1239,6 +1244,7 @@ namespace MMR.Randomizer
 
                 int k = 0;
                 var circularDependencies = new List<Item>();
+                var conditionRemoves = new List<int[]>();
                 for (int i = 0; i < currentTargetObject.Conditionals.Count; i++)
                 {
                     bool match = false;
@@ -1283,7 +1289,16 @@ namespace MMR.Randomizer
                             {
                                 DependenceChecked[d] = Dependence.Dependent;
                             }
-                            if (DependenceChecked[d].Type != DependenceType.Dependent)
+                            if (DependenceChecked[d].Type == DependenceType.Dependent)
+                            {
+                                int[] check = new int[] { (int)target, i, j };
+
+                                if (!conditionRemoves.Any(c => c.SequenceEqual(check)))
+                                {
+                                    conditionRemoves.Add(check);
+                                }
+                            }
+                            else
                             {
                                 circularDependencies = circularDependencies.Union(DependenceChecked[d].Items).ToList();
                             }
@@ -1304,6 +1319,16 @@ namespace MMR.Randomizer
                     }
                     Debug.WriteLine($"All conditionals of {targetName} failed dependency check for {currentItem}.");
                     return Dependence.Dependent;
+                }
+                else
+                {
+                    foreach (var cr in conditionRemoves)
+                    {
+                        if (!ConditionRemoves.Any(c => c.SequenceEqual(cr)))
+                        {
+                            ConditionRemoves.Add(cr);
+                        }
+                    }
                 }
             }
 
@@ -1380,6 +1405,22 @@ namespace MMR.Randomizer
             }
 
             return Dependence.NotDependent;
+        }
+
+        private void RemoveConditionals(Item currentItem)
+        {
+            foreach (var conditionRemove in ConditionRemoves)
+            {
+                int x = conditionRemove[0];
+                int y = conditionRemove[1];
+                int z = conditionRemove[2];
+                ItemList[x].Conditionals[y] = null;
+            }
+
+            foreach (var itemObject in ItemList)
+            {
+                itemObject.Conditionals.RemoveAll(u => u == null);
+            }
         }
 
         private void UpdateConditionals(Item currentItem, Item target)
@@ -1589,6 +1630,7 @@ namespace MMR.Randomizer
             }
 
             //check direct dependence
+            ConditionRemoves = new List<int[]>();
             DependenceChecked = new Dictionary<Item, Dependence> { { target, new Dependence { Type = DependenceType.Dependent } } };
             var dependencyPath = new List<Item> { target };
 
@@ -1598,6 +1640,7 @@ namespace MMR.Randomizer
             }
 
             //check conditional dependence
+            RemoveConditionals(currentItem);
             ConditionsChecked = new List<Item>();
             CheckConditionals(currentItem, target, dependencyPath);
 
@@ -1782,6 +1825,10 @@ namespace MMR.Randomizer
             {
                 availableItems.Remove(Item.MaskDeku);
                 availableItems.Remove(Item.SongHealing);
+                availableItems.Remove(Item.StartingSword);
+                availableItems.Remove(Item.StartingShield);
+                availableItems.Remove(Item.StartingHeartContainer1);
+                availableItems.Remove(Item.StartingHeartContainer2);
             }
 
             if (restriction != null)

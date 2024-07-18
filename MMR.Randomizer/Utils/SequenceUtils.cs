@@ -900,11 +900,21 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteToROM(0x00C2739C, new byte[] { 0x3C, 0x08, 0x80, 0x0A, 0x8D, 0x05, (byte)(offset >> 8), (byte)(offset & 0xFF) });
         }
 
-        public static void MoveAudioBankTableToFile()
+        public static void MoveAudioBankTable()
         {
             // grab original audiobanktable out of code, plus extra for modifying
             var table = ReadWriteUtils.ReadBytes(0xB3C000 + 0x13B6C0, 0x820);
-            New_AudioBankTable = RomUtils.AddNewFile(table);
+            // Move to unused fbdemo.c (0x80163DC0)
+            ReadWriteUtils.WriteToROM(0xB3C000 + 0xBE300, table);
+
+            ReadWriteUtils.WriteU16ToROM(0xB3C000 + 0xBE300, 0x0080); // Increase AudioBankTable amount
+            ReadWriteUtils.WriteCodeUInt32(0x80190E18, 0x3C0A8016);
+            ReadWriteUtils.WriteCodeUInt32(0x80190E28, 0x254A3DC0);
+            NewInstrumentSetAddress = 0xB3C000 + 0xBE300 + 0x10;
+
+            // clear old audiobank
+            var zero = new byte[0x2A0];
+            ReadWriteUtils.WriteToROM(0xB3C000 + 0x13B6C0, zero);
 
             // instrumentset_patch: modifies audiobank metadata read and writes, instrument/drum/sfx pointer read and writes,
             // nops a metadata copy function, and sets a fixed size for the audiobank pointer index
@@ -915,30 +925,6 @@ namespace MMR.Randomizer.Utils
             // if these don't get moved, new banks at 0x30 and up will overflow into sequence states and can knock out sound
             ResourceUtils.ApplyHack(Resources.mods.moveaudiostatebytes);
 
-            // loadnewaudiotable: where the copy metadata function loop was, sets a jump to code placed at the old instrumentset list
-            // which DMAs new audiobanktable from a file, relocates the addresses in the table, and sets the
-            // instrumentset table pointer to the new file
-            ResourceUtils.ApplyHack(Resources.mods.loadnewaudiotable);
-
-            // can't update addresses in an audiobank table that's moved and not loaded yet
-            ReadWriteUtils.WriteCodeNOP(0x80190E70);
-            ReadWriteUtils.WriteCodeNOP(0x80190E74);
-            ReadWriteUtils.WriteCodeNOP(0x80190E78);
-            ReadWriteUtils.WriteCodeNOP(0x80190E7C);
-            ReadWriteUtils.WriteCodeNOP(0x80190E80);
-
-            var symbols = Symbols.FromROM();
-            var tableAddr = 0x80720000 + (symbols.PayloadEnd - symbols.PayloadStart); //payload ram address + length
-            ReadWriteUtils.WriteU32ToROM(0xC776C0, tableAddr); //RAM address to move audiobanktable into
-
-            int f = RomUtils.GetFileIndexForWriting(New_AudioBankTable);
-            var fileData = RomData.MMFileList[f].Addr;
-            ReadWriteUtils.WriteToROM(0xC776C4, (uint)fileData ); //VROM address of new audiobanktable
-            ReadWriteUtils.WriteU32ToROM(0xC776C8, 0x00000820); //file length
-
-            NewInstrumentSetAddress = RomData.MMFileList[f].Addr + 0x10;
-
-            ReadWriteUtils.WriteU16ToROM(RomData.MMFileList[f].Addr, 0x0080); // Increase AudioBankTable amount
 
             // insert dummy metadata (kamaro's dance bank duplicates)
             int dummybankindexOffset = NewInstrumentSetAddress + 0x280;
@@ -1334,7 +1320,7 @@ namespace MMR.Randomizer.Utils
                 combatVsBGMCoinToss = false; // "BGM" manually selected because of non-combat songtest
             }
 
-            if (cosmeticSettings.DisableCombatMusic == CombatMusic.All)
+            if (cosmeticSettings.DisableCombatMusic)
             {
                 combatVsBGMCoinToss = false; // "BGM" manually selected because combat music is disabled.
             }

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using MMR.Randomizer.Extensions;
+using MMR.Common.Extensions;
+using MMR.Randomizer.Attributes.Setting;
 
 namespace MMR.UI.Forms
 {
@@ -23,7 +25,7 @@ namespace MMR.UI.Forms
         {
             InitializeComponent();
 
-            _junkLocations = ItemUtils.AllLocations().ToList();
+            _junkLocations = typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.CustomJunkLocationsString)).GetAttribute<SettingItemListAttribute>().ItemList.ToList();
             ItemGroupCount = (int)Math.Ceiling((decimal)_junkLocations.Count / 32);
 
             PrintToListView();
@@ -102,7 +104,7 @@ namespace MMR.UI.Forms
                     int k = i % 32;
                     if (((vi[j] >> k) & 1) > 0)
                     {
-                        if (i >= ItemUtils.AllLocations().Count())
+                        if (i >= _junkLocations.Count)
                         {
                             throw new IndexOutOfRangeException();
                         }

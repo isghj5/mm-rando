@@ -7,6 +7,7 @@ using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace MMR.Randomizer.Asm
 {
@@ -293,6 +294,14 @@ namespace MMR.Randomizer.Asm
 
         public bool SkulltulaTokenSounds { get; set; }
 
+        public bool TakeDamageOnEpona { get; set; }
+
+        public bool TakeDamageWhileShielding { get; set; }
+
+        public bool TakeDamageFromVoid { get; set; }
+        public bool OceanTokensRandomized { get; set; }
+        public bool MoonCrashFileErase { get; set; }
+
         public MiscFlags()
         {
         }
@@ -340,6 +349,11 @@ namespace MMR.Randomizer.Asm
             EasyFrameByFrame = bitUnpacker.ReadBool();
             FairyMaskShimmer = bitUnpacker.ReadBool();
             SkulltulaTokenSounds = bitUnpacker.ReadBool();
+            TakeDamageOnEpona = bitUnpacker.ReadBool();
+            TakeDamageWhileShielding = bitUnpacker.ReadBool();
+            TakeDamageFromVoid = bitUnpacker.ReadBool();
+            OceanTokensRandomized = bitUnpacker.ReadBool();
+            MoonCrashFileErase = bitUnpacker.ReadBool();
         }
 
         /// <summary>
@@ -380,6 +394,11 @@ namespace MMR.Randomizer.Asm
             bitPacker.Write(EasyFrameByFrame);
             bitPacker.Write(FairyMaskShimmer);
             bitPacker.Write(SkulltulaTokenSounds);
+            bitPacker.Write(TakeDamageOnEpona);
+            bitPacker.Write(TakeDamageWhileShielding);
+            bitPacker.Write(TakeDamageFromVoid);
+            bitPacker.Write(OceanTokensRandomized);
+            bitPacker.Write(MoonCrashFileErase);
             return bitPacker.ToByteArray(4);
         }
     }
@@ -695,12 +714,14 @@ namespace MMR.Randomizer.Asm
             this.Speedups.FastBankRupees = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FasterBankText);
             this.Speedups.ShortChestOpening = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.ShortChestOpening);
             this.Speedups.SkipGiantsCutscene = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.EverythingElse);
-            this.Speedups.OathHint = settings.UpdateNPCText;
+            this.Speedups.OathHint = settings.OathHint;
 
             // If using Adult Link model, allow Mikau cutscene to activate early.
             this.Flags.EarlyMikau = settings.Character == Character.AdultLink;
 
             this.Flags.FairyChests = settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly);
+
+            this.Flags.OceanTokensRandomized = settings.FairyAndSkullHint && settings.CustomItemList.Any(ItemUtils.OceanSkulltulaTokens().Contains);
 
             this.DrawFlags.DrawDonGeroMask = MaskConfigUtils.DonGeroGoronDrawMask;
             this.DrawFlags.DrawPostmanHat = MaskConfigUtils.PostmanDrawHat;

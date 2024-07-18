@@ -1,4 +1,5 @@
-﻿using MMR.Randomizer.Models.SoundEffects;
+﻿using MMR.Randomizer.Attributes;
+using MMR.Randomizer.Models.SoundEffects;
 
 namespace MMR.Randomizer.Models.Settings
 {
@@ -9,17 +10,41 @@ namespace MMR.Randomizer.Models.Settings
         Random = 2,
 
         // specific sfx
-        CuccoChicks = SoundEffect.LittleChickChirp,
-        CuccoClucking = SoundEffect.CuccoClucking,
-        LinkPanting = SoundEffect.ChildLinkPantLowHealth,
-        DogBark = SoundEffect.DogBark,
-        SilverRupee = SoundEffect.SilverRupeeGet,
-        TatlDash = SoundEffect.TatlDashNormal,
-        TatlMessage = SoundEffect.TatlMessage,
-        MikauBaby = SoundEffect.MikauBaybee,
-        CowMooing = SoundEffect.CowMoo,
-        LadderWarp = SoundEffect.SecretLadderAppears,
-        AmusedFather = SoundEffect.SwampTouristProprietorHehHeh,
-        TingleChuckle = SoundEffect.TingleChuckle,
+        [Value(SoundEffect.LittleChickChirp)]
+        CuccoChicks,
+
+        [Value(SoundEffect.CuccoClucking)]
+        CuccoClucking,
+
+        [Value(SoundEffect.ChildLinkPantLowHealth)]
+        LinkPanting,
+
+        [Value(SoundEffect.DogBark)]
+        DogBark,
+
+        [Value(SoundEffect.SilverRupeeGet)]
+        SilverRupee,
+
+        [Value(SoundEffect.TatlDashNormal)]
+        TatlDash,
+
+        [Value(SoundEffect.TatlMessage)]
+        TatlMessage,
+
+        [Value(SoundEffect.MikauBaybee)]
+        MikauBaby,
+
+        [Value(SoundEffect.CowMoo)]
+        CowMooing,
+
+        [Value(SoundEffect.SecretLadderAppears)]
+        LadderWarp,
+
+        [Value(SoundEffect.SwampTouristProprietorHehHeh)]
+        AmusedFather,
+
+        [Value(SoundEffect.TingleChuckle)]
+        TingleChuckle,
+
     }
 }

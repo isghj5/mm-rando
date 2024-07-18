@@ -391,7 +391,8 @@ typedef struct ActorPlayer {
     /* 0x384 */ u16 getItem;
     /* 0x386 */ u16 unk386; // Some kind of rotation?
     /* 0x388 */ Actor* givingActor;
-    /* 0x38C */ UNK_TYPE1 pad38C[0x8];
+    /* 0x38C */ s8 mountSide;
+    /* 0x390 */ Actor* rideActor;
     /* 0x394 */ u8 unk394;
     /* 0x395 */ UNK_TYPE1 pad395[0x37];
     /* 0x3CC */ s16 unk3CC;
@@ -402,7 +403,9 @@ typedef struct ActorPlayer {
     /* 0x504 */ z_Light* lightNode;
     /* 0x508 */ LightInfo lightInfo;
     /* 0x518 */ ColCylinder collisionCylinder;
-    /* 0x564 */ UNK_TYPE1 pad564[0x1CC];
+    /* 0x564 */ ColQuad meleeWeaponQuads[2];
+    /* 0x664 */ ColQuad shieldQuad;
+    /* 0x6E4 */ ColCylinder shieldCylinder;
     /* 0x730 */ Actor* target;
     /* 0x734 */ char unk_734[4];
     /* 0x738 */ s32 unk_738;
@@ -470,7 +473,16 @@ typedef struct ActorPlayer {
     /* 0xD04 */ z_Matrix attachmentMtx1; //used by mirror shield lightray actor
     /* 0xD44 */ UNK_TYPE1 padD44[0x18];
     /* 0xD5C */ s8 invincibilityFrames;
-    /* 0xD5D */ UNK_TYPE1 padD5D[0x1B];
+    /* 0xD5D */ u8 floorTypeTimer; // Unused remnant of OoT
+    /* 0xD5E */ u8 floorProperty; // FloorProperty enum
+    /* 0xD5F */ u8 prevFloorType; // Unused remnant of OoT
+    /* 0xD60 */ f32 prevControlStickMagnitude;
+    /* 0xD64 */ s16 prevControlStickAngle;
+    /* 0xD66 */ u16 prevFloorSfxOffset;
+    /* 0xD68 */ s16 unk_D68;
+    /* 0xD6A */ s8 unk_D6A;
+    /* 0xD6B */ u8 unk_D6B;
+    /* 0xD6C */ Vec3f unk_D6C; // previous body part 0 position
 } ActorPlayer; // size = 0xD78
 
 typedef enum {

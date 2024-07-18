@@ -79,7 +79,17 @@ namespace MMR.UI.Forms
             this.tableItemPool = new System.Windows.Forms.TableLayoutPanel();
             this.pLocationCategories = new System.Windows.Forms.Panel();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.gGimmicksChallenges = new System.Windows.Forms.GroupBox();
+            this.cMoonCrashFileErase = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageFromDexihands = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cTakeDamageFromGibdosFaster = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageGettingCaught = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageFromGorons = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageFromDog = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageFromVoid = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageWhileShielding = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageOnEpona = new System.Windows.Forms.CheckBox();
             this.cFewerHealthDrops = new System.Windows.Forms.CheckBox();
             this.cDType = new System.Windows.Forms.ComboBox();
             this.lDType = new System.Windows.Forms.Label();
@@ -87,7 +97,7 @@ namespace MMR.UI.Forms
             this.cByoAmmo = new System.Windows.Forms.CheckBox();
             this.cDMult = new System.Windows.Forms.ComboBox();
             this.lDMult = new System.Windows.Forms.Label();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.gGimmicksMovement = new System.Windows.Forms.GroupBox();
             this.cIronGoron = new System.Windows.Forms.CheckBox();
             this.cClimbMostSurfaces = new System.Windows.Forms.CheckBox();
             this.cHookshotAnySurface = new System.Windows.Forms.CheckBox();
@@ -103,14 +113,14 @@ namespace MMR.UI.Forms
             this.cTrapAmount = new System.Windows.Forms.ComboBox();
             this.cTrapsAppearance = new System.Windows.Forms.ComboBox();
             this.cIceTrapQuirks = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gGimmicksClock = new System.Windows.Forms.GroupBox();
             this.cAutoInvert = new System.Windows.Forms.ComboBox();
             this.lAutoInvert = new System.Windows.Forms.Label();
             this.cClockSpeed = new System.Windows.Forms.ComboBox();
             this.lClockSpeed = new System.Windows.Forms.Label();
             this.cHideClock = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.gGimmicksOther = new System.Windows.Forms.GroupBox();
             this.cVanillaMoonTrials = new System.Windows.Forms.CheckBox();
             this.cBombArrows = new System.Windows.Forms.CheckBox();
             this.cGiantMaskAnywhere = new System.Windows.Forms.CheckBox();
@@ -125,10 +135,14 @@ namespace MMR.UI.Forms
             this.cNutAndStickDrops = new System.Windows.Forms.ComboBox();
             this.tabComfort = new System.Windows.Forms.TabPage();
             this.gHintsGeneral = new System.Windows.Forms.GroupBox();
+            this.cFairyAndSkullHints = new System.Windows.Forms.CheckBox();
+            this.cRemainsHint = new System.Windows.Forms.CheckBox();
+            this.cOathHint = new System.Windows.Forms.CheckBox();
             this.bCustomizeHintPriorities = new System.Windows.Forms.Button();
             this.cHintImportance = new System.Windows.Forms.CheckBox();
             this.cMixGaroWithGossip = new System.Windows.Forms.CheckBox();
             this.gGaroHints = new System.Windows.Forms.GroupBox();
+            this.cImportanceCountGaro = new System.Windows.Forms.CheckBox();
             this.cFreeGaroHints = new System.Windows.Forms.CheckBox();
             this.cCustomGaroWoth = new System.Windows.Forms.CheckBox();
             this.nMaxGaroCT = new System.Windows.Forms.NumericUpDown();
@@ -149,6 +163,7 @@ namespace MMR.UI.Forms
             this.cGoodDogRaceRNG = new System.Windows.Forms.CheckBox();
             this.cGoodDampeRNG = new System.Windows.Forms.CheckBox();
             this.gHints = new System.Windows.Forms.GroupBox();
+            this.cImportanceCount = new System.Windows.Forms.CheckBox();
             this.cCustomGossipWoth = new System.Windows.Forms.CheckBox();
             this.nMaxGossipCT = new System.Windows.Forms.NumericUpDown();
             this.nMaxGossipFoolish = new System.Windows.Forms.NumericUpDown();
@@ -274,11 +289,11 @@ namespace MMR.UI.Forms
             this.groupBox4.SuspendLayout();
             this.tabItemPool.SuspendLayout();
             this.tabGimmicks.SuspendLayout();
-            this.groupBox11.SuspendLayout();
-            this.groupBox10.SuspendLayout();
+            this.gGimmicksChallenges.SuspendLayout();
+            this.gGimmicksMovement.SuspendLayout();
             this.gTraps.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox12.SuspendLayout();
+            this.gGimmicksClock.SuspendLayout();
+            this.gGimmicksOther.SuspendLayout();
             this.tabComfort.SuspendLayout();
             this.gHintsGeneral.SuspendLayout();
             this.gGaroHints.SuspendLayout();
@@ -407,7 +422,6 @@ namespace MMR.UI.Forms
             this.cRequiredBossRemains.Name = "cRequiredBossRemains";
             this.cRequiredBossRemains.Size = new System.Drawing.Size(160, 23);
             this.cRequiredBossRemains.TabIndex = 30;
-            this.cRequiredBossRemains.SelectedIndexChanged += new System.EventHandler(this.cRequiredBossRemains_SelectedIndexChanged);
             // 
             // lRequiredRemains
             // 
@@ -430,7 +444,6 @@ namespace MMR.UI.Forms
             this.cShuffleBosses.TabIndex = 28;
             this.cShuffleBosses.Text = "Shuffle boss rooms";
             this.cShuffleBosses.UseVisualStyleBackColor = false;
-            this.cShuffleBosses.CheckedChanged += new System.EventHandler(this.cShuffleBosses_CheckedChanged);
             // 
             // cStartingItems
             // 
@@ -445,7 +458,6 @@ namespace MMR.UI.Forms
             this.cStartingItems.Name = "cStartingItems";
             this.cStartingItems.Size = new System.Drawing.Size(160, 23);
             this.cStartingItems.TabIndex = 27;
-            this.cStartingItems.SelectedIndexChanged += new System.EventHandler(this.cStartingItems_SelectedIndexChanged);
             // 
             // lStartingItems
             // 
@@ -468,7 +480,6 @@ namespace MMR.UI.Forms
             this.cProgressiveUpgrades.TabIndex = 21;
             this.cProgressiveUpgrades.Text = "Progressive Upgrades";
             this.cProgressiveUpgrades.UseVisualStyleBackColor = false;
-            this.cProgressiveUpgrades.CheckedChanged += new System.EventHandler(this.cProgressiveUpgrades_CheckedChanged);
             // 
             // cDEnt
             // 
@@ -482,7 +493,6 @@ namespace MMR.UI.Forms
             this.cDEnt.TabIndex = 7;
             this.cDEnt.Text = "Shuffle dungeon entrances";
             this.cDEnt.UseVisualStyleBackColor = false;
-            this.cDEnt.CheckedChanged += new System.EventHandler(this.cDEnt_CheckedChanged);
             // 
             // cMixSongs
             // 
@@ -496,7 +506,6 @@ namespace MMR.UI.Forms
             this.cMixSongs.TabIndex = 3;
             this.cMixSongs.Text = "Mix songs with items";
             this.cMixSongs.UseVisualStyleBackColor = false;
-            this.cMixSongs.CheckedChanged += new System.EventHandler(this.cMixSongs_CheckedChanged);
             // 
             // cEnemy
             // 
@@ -510,7 +519,6 @@ namespace MMR.UI.Forms
             this.cEnemy.TabIndex = 9;
             this.cEnemy.Text = "Enemies (BETA!)";
             this.cEnemy.UseVisualStyleBackColor = false;
-            this.cEnemy.CheckedChanged += new System.EventHandler(this.cEnemy_CheckedChanged);
             // 
             // groupBox9
             // 
@@ -564,7 +572,6 @@ namespace MMR.UI.Forms
             this.cItemPlacement.Name = "cItemPlacement";
             this.cItemPlacement.Size = new System.Drawing.Size(121, 23);
             this.cItemPlacement.TabIndex = 20;
-            this.cItemPlacement.SelectedIndexChanged += new System.EventHandler(this.cItemPlacement_SelectedIndexChanged);
             // 
             // bToggleTricks
             // 
@@ -809,12 +816,12 @@ namespace MMR.UI.Forms
             // 
             // tabGimmicks
             // 
-            this.tabGimmicks.Controls.Add(this.groupBox11);
-            this.tabGimmicks.Controls.Add(this.groupBox10);
+            this.tabGimmicks.Controls.Add(this.gGimmicksChallenges);
+            this.tabGimmicks.Controls.Add(this.gGimmicksMovement);
             this.tabGimmicks.Controls.Add(this.gTraps);
-            this.tabGimmicks.Controls.Add(this.groupBox1);
+            this.tabGimmicks.Controls.Add(this.gGimmicksClock);
             this.tabGimmicks.Controls.Add(this.label4);
-            this.tabGimmicks.Controls.Add(this.groupBox12);
+            this.tabGimmicks.Controls.Add(this.gGimmicksOther);
             this.tabGimmicks.Location = new System.Drawing.Point(4, 24);
             this.tabGimmicks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabGimmicks.Name = "tabGimmicks";
@@ -824,37 +831,173 @@ namespace MMR.UI.Forms
             this.tabGimmicks.Text = "Gimmicks";
             this.tabGimmicks.UseVisualStyleBackColor = true;
             // 
-            // groupBox11
+            // gGimmicksChallenges
             // 
-            this.groupBox11.Controls.Add(this.cFewerHealthDrops);
-            this.groupBox11.Controls.Add(this.cDType);
-            this.groupBox11.Controls.Add(this.lDType);
-            this.groupBox11.Controls.Add(this.cDeathMoonCrash);
-            this.groupBox11.Controls.Add(this.cByoAmmo);
-            this.groupBox11.Controls.Add(this.cDMult);
-            this.groupBox11.Controls.Add(this.lDMult);
-            this.groupBox11.Location = new System.Drawing.Point(504, 92);
-            this.groupBox11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox11.Size = new System.Drawing.Size(174, 259);
-            this.groupBox11.TabIndex = 33;
-            this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "Challenges";
+            this.gGimmicksChallenges.Controls.Add(this.cMoonCrashFileErase);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromDexihands);
+            this.gGimmicksChallenges.Controls.Add(this.label2);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromGibdosFaster);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageGettingCaught);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromGorons);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromDog);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromVoid);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageWhileShielding);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageOnEpona);
+            this.gGimmicksChallenges.Controls.Add(this.cFewerHealthDrops);
+            this.gGimmicksChallenges.Controls.Add(this.cDType);
+            this.gGimmicksChallenges.Controls.Add(this.lDType);
+            this.gGimmicksChallenges.Controls.Add(this.cDeathMoonCrash);
+            this.gGimmicksChallenges.Controls.Add(this.cByoAmmo);
+            this.gGimmicksChallenges.Controls.Add(this.cDMult);
+            this.gGimmicksChallenges.Controls.Add(this.lDMult);
+            this.gGimmicksChallenges.Location = new System.Drawing.Point(388, 92);
+            this.gGimmicksChallenges.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksChallenges.Name = "gGimmicksChallenges";
+            this.gGimmicksChallenges.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksChallenges.Size = new System.Drawing.Size(290, 259);
+            this.gGimmicksChallenges.TabIndex = 33;
+            this.gGimmicksChallenges.TabStop = false;
+            this.gGimmicksChallenges.Text = "Challenges";
+            // 
+            // cMoonCrashFileErase
+            // 
+            this.cMoonCrashFileErase.AutoSize = true;
+            this.cMoonCrashFileErase.BackColor = System.Drawing.Color.Transparent;
+            this.cMoonCrashFileErase.ForeColor = System.Drawing.Color.Black;
+            this.cMoonCrashFileErase.Location = new System.Drawing.Point(7, 90);
+            this.cMoonCrashFileErase.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMoonCrashFileErase.Name = "cMoonCrashFileErase";
+            this.cMoonCrashFileErase.Size = new System.Drawing.Size(147, 19);
+            this.cMoonCrashFileErase.TabIndex = 36;
+            this.cMoonCrashFileErase.Text = "Moon Crash Erases File";
+            this.cMoonCrashFileErase.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageFromDexihands
+            // 
+            this.cTakeDamageFromDexihands.AutoSize = true;
+            this.cTakeDamageFromDexihands.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromDexihands.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromDexihands.Location = new System.Drawing.Point(153, 213);
+            this.cTakeDamageFromDexihands.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromDexihands.Name = "cTakeDamageFromDexihands";
+            this.cTakeDamageFromDexihands.Size = new System.Drawing.Size(112, 19);
+            this.cTakeDamageFromDexihands.TabIndex = 35;
+            this.cTakeDamageFromDexihands.Text = "From Dexihands";
+            this.cTakeDamageFromDexihands.UseVisualStyleBackColor = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 120);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(126, 15);
+            this.label2.TabIndex = 34;
+            this.label2.Text = "More Damage Sources";
+            // 
+            // cTakeDamageFromGibdosFaster
+            // 
+            this.cTakeDamageFromGibdosFaster.AutoSize = true;
+            this.cTakeDamageFromGibdosFaster.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromGibdosFaster.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromGibdosFaster.Location = new System.Drawing.Point(154, 138);
+            this.cTakeDamageFromGibdosFaster.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromGibdosFaster.Name = "cTakeDamageFromGibdosFaster";
+            this.cTakeDamageFromGibdosFaster.Size = new System.Drawing.Size(128, 19);
+            this.cTakeDamageFromGibdosFaster.TabIndex = 33;
+            this.cTakeDamageFromGibdosFaster.Text = "From Gibdos Faster";
+            this.cTakeDamageFromGibdosFaster.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageGettingCaught
+            // 
+            this.cTakeDamageGettingCaught.AutoSize = true;
+            this.cTakeDamageGettingCaught.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageGettingCaught.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageGettingCaught.Location = new System.Drawing.Point(153, 163);
+            this.cTakeDamageGettingCaught.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageGettingCaught.Name = "cTakeDamageGettingCaught";
+            this.cTakeDamageGettingCaught.Size = new System.Drawing.Size(107, 19);
+            this.cTakeDamageGettingCaught.TabIndex = 32;
+            this.cTakeDamageGettingCaught.Text = "Getting Caught";
+            this.cTakeDamageGettingCaught.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageFromGorons
+            // 
+            this.cTakeDamageFromGorons.AutoSize = true;
+            this.cTakeDamageFromGorons.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromGorons.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromGorons.Location = new System.Drawing.Point(7, 213);
+            this.cTakeDamageFromGorons.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromGorons.Name = "cTakeDamageFromGorons";
+            this.cTakeDamageFromGorons.Size = new System.Drawing.Size(95, 19);
+            this.cTakeDamageFromGorons.TabIndex = 31;
+            this.cTakeDamageFromGorons.Text = "From Gorons";
+            this.cTakeDamageFromGorons.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageFromDog
+            // 
+            this.cTakeDamageFromDog.AutoSize = true;
+            this.cTakeDamageFromDog.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromDog.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromDog.Location = new System.Drawing.Point(153, 188);
+            this.cTakeDamageFromDog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromDog.Name = "cTakeDamageFromDog";
+            this.cTakeDamageFromDog.Size = new System.Drawing.Size(79, 19);
+            this.cTakeDamageFromDog.TabIndex = 30;
+            this.cTakeDamageFromDog.Text = "From Dog";
+            this.cTakeDamageFromDog.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageFromVoid
+            // 
+            this.cTakeDamageFromVoid.AutoSize = true;
+            this.cTakeDamageFromVoid.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromVoid.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromVoid.Location = new System.Drawing.Point(8, 188);
+            this.cTakeDamageFromVoid.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromVoid.Name = "cTakeDamageFromVoid";
+            this.cTakeDamageFromVoid.Size = new System.Drawing.Size(80, 19);
+            this.cTakeDamageFromVoid.TabIndex = 29;
+            this.cTakeDamageFromVoid.Text = "From Void";
+            this.cTakeDamageFromVoid.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageWhileShielding
+            // 
+            this.cTakeDamageWhileShielding.AutoSize = true;
+            this.cTakeDamageWhileShielding.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageWhileShielding.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageWhileShielding.Location = new System.Drawing.Point(8, 163);
+            this.cTakeDamageWhileShielding.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageWhileShielding.Name = "cTakeDamageWhileShielding";
+            this.cTakeDamageWhileShielding.Size = new System.Drawing.Size(108, 19);
+            this.cTakeDamageWhileShielding.TabIndex = 28;
+            this.cTakeDamageWhileShielding.Text = "While Shielding";
+            this.cTakeDamageWhileShielding.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageOnEpona
+            // 
+            this.cTakeDamageOnEpona.AutoSize = true;
+            this.cTakeDamageOnEpona.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageOnEpona.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageOnEpona.Location = new System.Drawing.Point(8, 138);
+            this.cTakeDamageOnEpona.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageOnEpona.Name = "cTakeDamageOnEpona";
+            this.cTakeDamageOnEpona.Size = new System.Drawing.Size(78, 19);
+            this.cTakeDamageOnEpona.TabIndex = 27;
+            this.cTakeDamageOnEpona.Text = "On Epona";
+            this.cTakeDamageOnEpona.UseVisualStyleBackColor = false;
             // 
             // cFewerHealthDrops
             // 
             this.cFewerHealthDrops.AutoSize = true;
             this.cFewerHealthDrops.BackColor = System.Drawing.Color.Transparent;
             this.cFewerHealthDrops.ForeColor = System.Drawing.Color.Black;
-            this.cFewerHealthDrops.Location = new System.Drawing.Point(7, 165);
+            this.cFewerHealthDrops.Location = new System.Drawing.Point(153, 67);
             this.cFewerHealthDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFewerHealthDrops.Name = "cFewerHealthDrops";
             this.cFewerHealthDrops.Size = new System.Drawing.Size(129, 19);
             this.cFewerHealthDrops.TabIndex = 26;
             this.cFewerHealthDrops.Text = "Fewer Health Drops";
             this.cFewerHealthDrops.UseVisualStyleBackColor = false;
-            this.cFewerHealthDrops.CheckedChanged += new System.EventHandler(this.cFewerHealthDrops_CheckedChanged);
             // 
             // cDType
             // 
@@ -867,17 +1010,16 @@ namespace MMR.UI.Forms
             "Shock",
             "Knockdown",
             "Random"});
-            this.cDType.Location = new System.Drawing.Point(7, 82);
+            this.cDType.Location = new System.Drawing.Point(154, 38);
             this.cDType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDType.Name = "cDType";
-            this.cDType.Size = new System.Drawing.Size(159, 23);
+            this.cDType.Size = new System.Drawing.Size(128, 23);
             this.cDType.TabIndex = 0;
-            this.cDType.SelectedIndexChanged += new System.EventHandler(this.cDType_SelectedIndexChanged);
             // 
             // lDType
             // 
             this.lDType.AutoSize = true;
-            this.lDType.Location = new System.Drawing.Point(7, 66);
+            this.lDType.Location = new System.Drawing.Point(154, 22);
             this.lDType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lDType.Name = "lDType";
             this.lDType.Size = new System.Drawing.Size(89, 15);
@@ -889,28 +1031,26 @@ namespace MMR.UI.Forms
             this.cDeathMoonCrash.AutoSize = true;
             this.cDeathMoonCrash.BackColor = System.Drawing.Color.Transparent;
             this.cDeathMoonCrash.ForeColor = System.Drawing.Color.Black;
-            this.cDeathMoonCrash.Location = new System.Drawing.Point(7, 113);
+            this.cDeathMoonCrash.Location = new System.Drawing.Point(7, 67);
             this.cDeathMoonCrash.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDeathMoonCrash.Name = "cDeathMoonCrash";
             this.cDeathMoonCrash.Size = new System.Drawing.Size(136, 19);
             this.cDeathMoonCrash.TabIndex = 25;
             this.cDeathMoonCrash.Text = "Death is Moon Crash";
             this.cDeathMoonCrash.UseVisualStyleBackColor = false;
-            this.cDeathMoonCrash.CheckedChanged += new System.EventHandler(this.cDeathMoonCrash_CheckedChanged);
             // 
             // cByoAmmo
             // 
             this.cByoAmmo.AutoSize = true;
             this.cByoAmmo.BackColor = System.Drawing.Color.Transparent;
             this.cByoAmmo.ForeColor = System.Drawing.Color.Black;
-            this.cByoAmmo.Location = new System.Drawing.Point(7, 140);
+            this.cByoAmmo.Location = new System.Drawing.Point(162, 90);
             this.cByoAmmo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cByoAmmo.Name = "cByoAmmo";
             this.cByoAmmo.Size = new System.Drawing.Size(89, 19);
             this.cByoAmmo.TabIndex = 24;
             this.cByoAmmo.Text = "BYO Ammo";
             this.cByoAmmo.UseVisualStyleBackColor = false;
-            this.cByoAmmo.CheckedChanged += new System.EventHandler(this.cByoAmmo_CheckedChanged);
             // 
             // cDMult
             // 
@@ -925,9 +1065,8 @@ namespace MMR.UI.Forms
             this.cDMult.Location = new System.Drawing.Point(7, 38);
             this.cDMult.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDMult.Name = "cDMult";
-            this.cDMult.Size = new System.Drawing.Size(159, 23);
+            this.cDMult.Size = new System.Drawing.Size(129, 23);
             this.cDMult.TabIndex = 0;
-            this.cDMult.SelectedIndexChanged += new System.EventHandler(this.cDMult_SelectedIndexChanged);
             // 
             // lDMult
             // 
@@ -939,24 +1078,24 @@ namespace MMR.UI.Forms
             this.lDMult.TabIndex = 1;
             this.lDMult.Text = "Damage mode";
             // 
-            // groupBox10
+            // gGimmicksMovement
             // 
-            this.groupBox10.Controls.Add(this.cIronGoron);
-            this.groupBox10.Controls.Add(this.cClimbMostSurfaces);
-            this.groupBox10.Controls.Add(this.cHookshotAnySurface);
-            this.groupBox10.Controls.Add(this.cFloors);
-            this.groupBox10.Controls.Add(this.lFloors);
-            this.groupBox10.Controls.Add(this.lGravity);
-            this.groupBox10.Controls.Add(this.cGravity);
-            this.groupBox10.Controls.Add(this.cContinuousDekuHopping);
-            this.groupBox10.Location = new System.Drawing.Point(7, 7);
-            this.groupBox10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox10.Size = new System.Drawing.Size(190, 211);
-            this.groupBox10.TabIndex = 32;
-            this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "Movement";
+            this.gGimmicksMovement.Controls.Add(this.cIronGoron);
+            this.gGimmicksMovement.Controls.Add(this.cClimbMostSurfaces);
+            this.gGimmicksMovement.Controls.Add(this.cHookshotAnySurface);
+            this.gGimmicksMovement.Controls.Add(this.cFloors);
+            this.gGimmicksMovement.Controls.Add(this.lFloors);
+            this.gGimmicksMovement.Controls.Add(this.lGravity);
+            this.gGimmicksMovement.Controls.Add(this.cGravity);
+            this.gGimmicksMovement.Controls.Add(this.cContinuousDekuHopping);
+            this.gGimmicksMovement.Location = new System.Drawing.Point(7, 7);
+            this.gGimmicksMovement.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksMovement.Name = "gGimmicksMovement";
+            this.gGimmicksMovement.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksMovement.Size = new System.Drawing.Size(190, 211);
+            this.gGimmicksMovement.TabIndex = 32;
+            this.gGimmicksMovement.TabStop = false;
+            this.gGimmicksMovement.Text = "Movement";
             // 
             // cIronGoron
             // 
@@ -970,7 +1109,6 @@ namespace MMR.UI.Forms
             this.cIronGoron.TabIndex = 29;
             this.cIronGoron.Text = "Iron Goron";
             this.cIronGoron.UseVisualStyleBackColor = false;
-            this.cIronGoron.CheckedChanged += new System.EventHandler(this.cIronGoron_CheckedChanged);
             // 
             // cClimbMostSurfaces
             // 
@@ -984,7 +1122,6 @@ namespace MMR.UI.Forms
             this.cClimbMostSurfaces.TabIndex = 28;
             this.cClimbMostSurfaces.Text = "Climb Most Surfaces";
             this.cClimbMostSurfaces.UseVisualStyleBackColor = false;
-            this.cClimbMostSurfaces.CheckedChanged += new System.EventHandler(this.cClimbMostSurfaces_CheckedChanged);
             // 
             // cHookshotAnySurface
             // 
@@ -998,7 +1135,6 @@ namespace MMR.UI.Forms
             this.cHookshotAnySurface.TabIndex = 27;
             this.cHookshotAnySurface.Text = "Hookshot Any Surface";
             this.cHookshotAnySurface.UseVisualStyleBackColor = false;
-            this.cHookshotAnySurface.CheckedChanged += new System.EventHandler(this.cHookshotAnySurface_CheckedChanged);
             // 
             // cFloors
             // 
@@ -1015,7 +1151,6 @@ namespace MMR.UI.Forms
             this.cFloors.Name = "cFloors";
             this.cFloors.Size = new System.Drawing.Size(176, 23);
             this.cFloors.TabIndex = 0;
-            this.cFloors.SelectedIndexChanged += new System.EventHandler(this.cFloors_SelectedIndexChanged);
             // 
             // lFloors
             // 
@@ -1052,7 +1187,6 @@ namespace MMR.UI.Forms
             this.cGravity.Name = "cGravity";
             this.cGravity.Size = new System.Drawing.Size(176, 23);
             this.cGravity.TabIndex = 0;
-            this.cGravity.SelectedIndexChanged += new System.EventHandler(this.cGravity_SelectedIndexChanged);
             // 
             // cContinuousDekuHopping
             // 
@@ -1066,7 +1200,6 @@ namespace MMR.UI.Forms
             this.cContinuousDekuHopping.TabIndex = 26;
             this.cContinuousDekuHopping.Text = "Continuous Deku Hopping";
             this.cContinuousDekuHopping.UseVisualStyleBackColor = false;
-            this.cContinuousDekuHopping.CheckedChanged += new System.EventHandler(this.cContinuousDekuHopping_CheckedChanged);
             // 
             // gTraps
             // 
@@ -1132,7 +1265,6 @@ namespace MMR.UI.Forms
             this.cTrapAmount.Name = "cTrapAmount";
             this.cTrapAmount.Size = new System.Drawing.Size(160, 23);
             this.cTrapAmount.TabIndex = 26;
-            this.cTrapAmount.SelectedIndexChanged += new System.EventHandler(this.cIceTraps_SelectedIndexChanged);
             // 
             // cTrapsAppearance
             // 
@@ -1149,7 +1281,6 @@ namespace MMR.UI.Forms
             this.cTrapsAppearance.Name = "cTrapsAppearance";
             this.cTrapsAppearance.Size = new System.Drawing.Size(160, 23);
             this.cTrapsAppearance.TabIndex = 27;
-            this.cTrapsAppearance.SelectedIndexChanged += new System.EventHandler(this.cIceTrapsAppearance_SelectedIndexChanged);
             // 
             // cIceTrapQuirks
             // 
@@ -1163,23 +1294,22 @@ namespace MMR.UI.Forms
             this.cIceTrapQuirks.TabIndex = 29;
             this.cIceTrapQuirks.Text = "Enable Quirks";
             this.cIceTrapQuirks.UseVisualStyleBackColor = false;
-            this.cIceTrapQuirks.CheckedChanged += new System.EventHandler(this.cIceTrapQuirks_CheckedChanged);
             // 
-            // groupBox1
+            // gGimmicksClock
             // 
-            this.groupBox1.Controls.Add(this.cAutoInvert);
-            this.groupBox1.Controls.Add(this.lAutoInvert);
-            this.groupBox1.Controls.Add(this.cClockSpeed);
-            this.groupBox1.Controls.Add(this.lClockSpeed);
-            this.groupBox1.Controls.Add(this.cHideClock);
-            this.groupBox1.Location = new System.Drawing.Point(7, 221);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Size = new System.Drawing.Size(190, 130);
-            this.groupBox1.TabIndex = 30;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Clock";
+            this.gGimmicksClock.Controls.Add(this.cAutoInvert);
+            this.gGimmicksClock.Controls.Add(this.lAutoInvert);
+            this.gGimmicksClock.Controls.Add(this.cClockSpeed);
+            this.gGimmicksClock.Controls.Add(this.lClockSpeed);
+            this.gGimmicksClock.Controls.Add(this.cHideClock);
+            this.gGimmicksClock.Location = new System.Drawing.Point(7, 221);
+            this.gGimmicksClock.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksClock.Name = "gGimmicksClock";
+            this.gGimmicksClock.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksClock.Size = new System.Drawing.Size(190, 130);
+            this.gGimmicksClock.TabIndex = 30;
+            this.gGimmicksClock.TabStop = false;
+            this.gGimmicksClock.Text = "Clock";
             // 
             // cAutoInvert
             // 
@@ -1194,7 +1324,6 @@ namespace MMR.UI.Forms
             this.cAutoInvert.Name = "cAutoInvert";
             this.cAutoInvert.Size = new System.Drawing.Size(176, 23);
             this.cAutoInvert.TabIndex = 18;
-            this.cAutoInvert.SelectedIndexChanged += new System.EventHandler(this.cAutoInvert_SelectedIndexChanged);
             // 
             // lAutoInvert
             // 
@@ -1222,7 +1351,6 @@ namespace MMR.UI.Forms
             this.cClockSpeed.Name = "cClockSpeed";
             this.cClockSpeed.Size = new System.Drawing.Size(176, 23);
             this.cClockSpeed.TabIndex = 15;
-            this.cClockSpeed.SelectedIndexChanged += new System.EventHandler(this.cClockSpeed_SelectedIndexChanged);
             // 
             // lClockSpeed
             // 
@@ -1246,7 +1374,6 @@ namespace MMR.UI.Forms
             this.cHideClock.TabIndex = 17;
             this.cHideClock.Text = "Hide UI";
             this.cHideClock.UseVisualStyleBackColor = false;
-            this.cHideClock.CheckedChanged += new System.EventHandler(this.cHideClock_CheckedChanged);
             // 
             // label4
             // 
@@ -1263,28 +1390,28 @@ namespace MMR.UI.Forms
     "dered in logic.";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // groupBox12
+            // gGimmicksOther
             // 
-            this.groupBox12.Controls.Add(this.cVanillaMoonTrials);
-            this.groupBox12.Controls.Add(this.cBombArrows);
-            this.groupBox12.Controls.Add(this.cGiantMaskAnywhere);
-            this.groupBox12.Controls.Add(this.cInstantTransformations);
-            this.groupBox12.Controls.Add(this.cFreeScarecrow);
-            this.groupBox12.Controls.Add(this.cFDAnywhere);
-            this.groupBox12.Controls.Add(this.cBlastCooldown);
-            this.groupBox12.Controls.Add(this.cUnderwaterOcarina);
-            this.groupBox12.Controls.Add(this.cSunsSong);
-            this.groupBox12.Controls.Add(this.lBlastMask);
-            this.groupBox12.Controls.Add(this.lNutAndStickDrops);
-            this.groupBox12.Controls.Add(this.cNutAndStickDrops);
-            this.groupBox12.Location = new System.Drawing.Point(686, 7);
-            this.groupBox12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox12.Size = new System.Drawing.Size(190, 344);
-            this.groupBox12.TabIndex = 34;
-            this.groupBox12.TabStop = false;
-            this.groupBox12.Text = "Other";
+            this.gGimmicksOther.Controls.Add(this.cVanillaMoonTrials);
+            this.gGimmicksOther.Controls.Add(this.cBombArrows);
+            this.gGimmicksOther.Controls.Add(this.cGiantMaskAnywhere);
+            this.gGimmicksOther.Controls.Add(this.cInstantTransformations);
+            this.gGimmicksOther.Controls.Add(this.cFreeScarecrow);
+            this.gGimmicksOther.Controls.Add(this.cFDAnywhere);
+            this.gGimmicksOther.Controls.Add(this.cBlastCooldown);
+            this.gGimmicksOther.Controls.Add(this.cUnderwaterOcarina);
+            this.gGimmicksOther.Controls.Add(this.cSunsSong);
+            this.gGimmicksOther.Controls.Add(this.lBlastMask);
+            this.gGimmicksOther.Controls.Add(this.lNutAndStickDrops);
+            this.gGimmicksOther.Controls.Add(this.cNutAndStickDrops);
+            this.gGimmicksOther.Location = new System.Drawing.Point(686, 7);
+            this.gGimmicksOther.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksOther.Name = "gGimmicksOther";
+            this.gGimmicksOther.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksOther.Size = new System.Drawing.Size(190, 344);
+            this.gGimmicksOther.TabIndex = 34;
+            this.gGimmicksOther.TabStop = false;
+            this.gGimmicksOther.Text = "Other";
             // 
             // cVanillaMoonTrials
             // 
@@ -1298,7 +1425,6 @@ namespace MMR.UI.Forms
             this.cVanillaMoonTrials.TabIndex = 30;
             this.cVanillaMoonTrials.Text = "Vanilla Moon Trial Access";
             this.cVanillaMoonTrials.UseVisualStyleBackColor = false;
-            this.cVanillaMoonTrials.CheckedChanged += new System.EventHandler(this.cVanillaMoonTrials_CheckedChanged);
             // 
             // cBombArrows
             // 
@@ -1312,7 +1438,6 @@ namespace MMR.UI.Forms
             this.cBombArrows.TabIndex = 29;
             this.cBombArrows.Text = "Bomb Arrows";
             this.cBombArrows.UseVisualStyleBackColor = false;
-            this.cBombArrows.CheckedChanged += new System.EventHandler(this.cBombArrows_CheckedChanged);
             // 
             // cGiantMaskAnywhere
             // 
@@ -1326,7 +1451,6 @@ namespace MMR.UI.Forms
             this.cGiantMaskAnywhere.TabIndex = 28;
             this.cGiantMaskAnywhere.Text = "Giant\'s Mask anywhere";
             this.cGiantMaskAnywhere.UseVisualStyleBackColor = false;
-            this.cGiantMaskAnywhere.CheckedChanged += new System.EventHandler(this.cGiantMaskAnywhere_CheckedChanged);
             // 
             // cInstantTransformations
             // 
@@ -1340,7 +1464,6 @@ namespace MMR.UI.Forms
             this.cInstantTransformations.TabIndex = 28;
             this.cInstantTransformations.Text = "Instant Transformations";
             this.cInstantTransformations.UseVisualStyleBackColor = false;
-            this.cInstantTransformations.CheckedChanged += new System.EventHandler(this.cInstantTransformations_CheckedChanged);
             // 
             // cFreeScarecrow
             // 
@@ -1354,7 +1477,6 @@ namespace MMR.UI.Forms
             this.cFreeScarecrow.TabIndex = 27;
             this.cFreeScarecrow.Text = "Free Scarecrow\'s Song";
             this.cFreeScarecrow.UseVisualStyleBackColor = false;
-            this.cFreeScarecrow.CheckedChanged += new System.EventHandler(this.cFreeScarecrow_CheckedChanged);
             // 
             // cFDAnywhere
             // 
@@ -1368,7 +1490,6 @@ namespace MMR.UI.Forms
             this.cFDAnywhere.TabIndex = 23;
             this.cFDAnywhere.Text = "Fierce Deity\'s Mask anywhere";
             this.cFDAnywhere.UseVisualStyleBackColor = false;
-            this.cFDAnywhere.CheckedChanged += new System.EventHandler(this.cFDAnywhere_CheckedChanged);
             // 
             // cBlastCooldown
             // 
@@ -1386,7 +1507,6 @@ namespace MMR.UI.Forms
             this.cBlastCooldown.Name = "cBlastCooldown";
             this.cBlastCooldown.Size = new System.Drawing.Size(123, 23);
             this.cBlastCooldown.TabIndex = 20;
-            this.cBlastCooldown.SelectedIndexChanged += new System.EventHandler(this.cBlastCooldown_SelectedIndexChanged);
             // 
             // cUnderwaterOcarina
             // 
@@ -1399,7 +1519,6 @@ namespace MMR.UI.Forms
             this.cUnderwaterOcarina.TabIndex = 22;
             this.cUnderwaterOcarina.Text = "Underwater Ocarina";
             this.cUnderwaterOcarina.UseVisualStyleBackColor = false;
-            this.cUnderwaterOcarina.CheckedChanged += new System.EventHandler(this.cUnderwaterOcarina_CheckedChanged);
             // 
             // cSunsSong
             // 
@@ -1413,7 +1532,6 @@ namespace MMR.UI.Forms
             this.cSunsSong.TabIndex = 21;
             this.cSunsSong.Text = "Enable Sun\'s Song";
             this.cSunsSong.UseVisualStyleBackColor = false;
-            this.cSunsSong.CheckedChanged += new System.EventHandler(this.cSunsSong_CheckedChanged);
             // 
             // lBlastMask
             // 
@@ -1450,7 +1568,6 @@ namespace MMR.UI.Forms
             this.cNutAndStickDrops.Name = "cNutAndStickDrops";
             this.cNutAndStickDrops.Size = new System.Drawing.Size(123, 23);
             this.cNutAndStickDrops.TabIndex = 26;
-            this.cNutAndStickDrops.SelectedIndexChanged += new System.EventHandler(this.cNutAndStickDrops_SelectedIndexChanged);
             // 
             // tabComfort
             // 
@@ -1471,15 +1588,48 @@ namespace MMR.UI.Forms
             // 
             // gHintsGeneral
             // 
+            this.gHintsGeneral.Controls.Add(this.cFairyAndSkullHints);
+            this.gHintsGeneral.Controls.Add(this.cRemainsHint);
+            this.gHintsGeneral.Controls.Add(this.cOathHint);
             this.gHintsGeneral.Controls.Add(this.bCustomizeHintPriorities);
             this.gHintsGeneral.Controls.Add(this.cHintImportance);
             this.gHintsGeneral.Controls.Add(this.cMixGaroWithGossip);
             this.gHintsGeneral.Location = new System.Drawing.Point(7, 250);
             this.gHintsGeneral.Name = "gHintsGeneral";
-            this.gHintsGeneral.Size = new System.Drawing.Size(245, 96);
+            this.gHintsGeneral.Size = new System.Drawing.Size(341, 96);
             this.gHintsGeneral.TabIndex = 39;
             this.gHintsGeneral.TabStop = false;
             this.gHintsGeneral.Text = "Hints";
+            // 
+            // cFairyAndSkullHints
+            // 
+            this.cFairyAndSkullHints.AutoSize = true;
+            this.cFairyAndSkullHints.Location = new System.Drawing.Point(200, 70);
+            this.cFairyAndSkullHints.Name = "cFairyAndSkullHints";
+            this.cFairyAndSkullHints.Size = new System.Drawing.Size(115, 19);
+            this.cFairyAndSkullHints.TabIndex = 19;
+            this.cFairyAndSkullHints.Text = "Fairies and Skulls";
+            this.cFairyAndSkullHints.UseVisualStyleBackColor = true;
+            // 
+            // cRemainsHint
+            // 
+            this.cRemainsHint.AutoSize = true;
+            this.cRemainsHint.Location = new System.Drawing.Point(200, 20);
+            this.cRemainsHint.Name = "cRemainsHint";
+            this.cRemainsHint.Size = new System.Drawing.Size(98, 19);
+            this.cRemainsHint.TabIndex = 18;
+            this.cRemainsHint.Text = "Boss Remains";
+            this.cRemainsHint.UseVisualStyleBackColor = true;
+            // 
+            // cOathHint
+            // 
+            this.cOathHint.AutoSize = true;
+            this.cOathHint.Location = new System.Drawing.Point(200, 45);
+            this.cOathHint.Name = "cOathHint";
+            this.cOathHint.Size = new System.Drawing.Size(52, 19);
+            this.cOathHint.TabIndex = 17;
+            this.cOathHint.Text = "Oath";
+            this.cOathHint.UseVisualStyleBackColor = true;
             // 
             // bCustomizeHintPriorities
             // 
@@ -1500,7 +1650,6 @@ namespace MMR.UI.Forms
             this.cHintImportance.TabIndex = 0;
             this.cHintImportance.Text = "Indicate Importance";
             this.cHintImportance.UseVisualStyleBackColor = true;
-            this.cHintImportance.CheckedChanged += new System.EventHandler(this.cHintImportance_CheckedChanged);
             // 
             // cMixGaroWithGossip
             // 
@@ -1514,10 +1663,10 @@ namespace MMR.UI.Forms
             this.cMixGaroWithGossip.TabIndex = 15;
             this.cMixGaroWithGossip.Text = "Mix Gossip and Garo Hints";
             this.cMixGaroWithGossip.UseVisualStyleBackColor = false;
-            this.cMixGaroWithGossip.CheckedChanged += new System.EventHandler(this.cMixGaroWithGossip_CheckedChanged);
             // 
             // gGaroHints
             // 
+            this.gGaroHints.Controls.Add(this.cImportanceCountGaro);
             this.gGaroHints.Controls.Add(this.cFreeGaroHints);
             this.gGaroHints.Controls.Add(this.cCustomGaroWoth);
             this.gGaroHints.Controls.Add(this.nMaxGaroCT);
@@ -1538,26 +1687,38 @@ namespace MMR.UI.Forms
             this.gGaroHints.TabStop = false;
             this.gGaroHints.Text = "Garo Hints";
             // 
+            // cImportanceCountGaro
+            // 
+            this.cImportanceCountGaro.AutoSize = true;
+            this.cImportanceCountGaro.BackColor = System.Drawing.Color.Transparent;
+            this.cImportanceCountGaro.ForeColor = System.Drawing.Color.Black;
+            this.cImportanceCountGaro.Location = new System.Drawing.Point(117, 55);
+            this.cImportanceCountGaro.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cImportanceCountGaro.Name = "cImportanceCountGaro";
+            this.cImportanceCountGaro.Size = new System.Drawing.Size(123, 19);
+            this.cImportanceCountGaro.TabIndex = 32;
+            this.cImportanceCountGaro.Text = "Importance Count";
+            this.cImportanceCountGaro.UseVisualStyleBackColor = false;
+            // 
             // cFreeGaroHints
             // 
             this.cFreeGaroHints.AutoSize = true;
             this.cFreeGaroHints.BackColor = System.Drawing.Color.Transparent;
             this.cFreeGaroHints.ForeColor = System.Drawing.Color.Black;
-            this.cFreeGaroHints.Location = new System.Drawing.Point(117, 20);
+            this.cFreeGaroHints.Location = new System.Drawing.Point(117, 13);
             this.cFreeGaroHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFreeGaroHints.Name = "cFreeGaroHints";
             this.cFreeGaroHints.Size = new System.Drawing.Size(77, 19);
             this.cFreeGaroHints.TabIndex = 37;
             this.cFreeGaroHints.Text = "Free hints";
             this.cFreeGaroHints.UseVisualStyleBackColor = false;
-            this.cFreeGaroHints.CheckedChanged += new System.EventHandler(this.cFreeGaroHints_CheckedChanged);
             // 
             // cCustomGaroWoth
             // 
             this.cCustomGaroWoth.AutoSize = true;
             this.cCustomGaroWoth.Checked = true;
             this.cCustomGaroWoth.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cCustomGaroWoth.Location = new System.Drawing.Point(15, 88);
+            this.cCustomGaroWoth.Location = new System.Drawing.Point(15, 94);
             this.cCustomGaroWoth.Name = "cCustomGaroWoth";
             this.cCustomGaroWoth.Size = new System.Drawing.Size(15, 14);
             this.cCustomGaroWoth.TabIndex = 36;
@@ -1566,7 +1727,7 @@ namespace MMR.UI.Forms
             // 
             // nMaxGaroCT
             // 
-            this.nMaxGaroCT.Location = new System.Drawing.Point(160, 85);
+            this.nMaxGaroCT.Location = new System.Drawing.Point(160, 91);
             this.nMaxGaroCT.Maximum = new decimal(new int[] {
             9,
             0,
@@ -1575,7 +1736,6 @@ namespace MMR.UI.Forms
             this.nMaxGaroCT.Name = "nMaxGaroCT";
             this.nMaxGaroCT.Size = new System.Drawing.Size(31, 23);
             this.nMaxGaroCT.TabIndex = 35;
-            this.nMaxGaroCT.ValueChanged += new System.EventHandler(this.nMaxGaroCT_ValueChanged);
             // 
             // lGaroHints
             // 
@@ -1591,7 +1751,7 @@ namespace MMR.UI.Forms
             // 
             // nMaxGaroFoolish
             // 
-            this.nMaxGaroFoolish.Location = new System.Drawing.Point(108, 85);
+            this.nMaxGaroFoolish.Location = new System.Drawing.Point(108, 91);
             this.nMaxGaroFoolish.Maximum = new decimal(new int[] {
             9,
             0,
@@ -1605,7 +1765,6 @@ namespace MMR.UI.Forms
             0,
             0,
             0});
-            this.nMaxGaroFoolish.ValueChanged += new System.EventHandler(this.nMaxGaroFoolish_ValueChanged);
             // 
             // cGaroHint
             // 
@@ -1621,11 +1780,10 @@ namespace MMR.UI.Forms
             this.cGaroHint.Name = "cGaroHint";
             this.cGaroHint.Size = new System.Drawing.Size(92, 23);
             this.cGaroHint.TabIndex = 19;
-            this.cGaroHint.SelectedIndexChanged += new System.EventHandler(this.cGaroHint_SelectedIndexChanged);
             // 
             // nMaxGaroWotH
             // 
-            this.nMaxGaroWotH.Location = new System.Drawing.Point(58, 85);
+            this.nMaxGaroWotH.Location = new System.Drawing.Point(58, 91);
             this.nMaxGaroWotH.Maximum = new decimal(new int[] {
             9,
             0,
@@ -1639,26 +1797,24 @@ namespace MMR.UI.Forms
             0,
             0,
             0});
-            this.nMaxGaroWotH.ValueChanged += new System.EventHandler(this.nMaxGaroWotH_ValueChanged);
             // 
             // cClearGaroHints
             // 
             this.cClearGaroHints.AutoSize = true;
             this.cClearGaroHints.BackColor = System.Drawing.Color.Transparent;
             this.cClearGaroHints.ForeColor = System.Drawing.Color.Black;
-            this.cClearGaroHints.Location = new System.Drawing.Point(117, 47);
+            this.cClearGaroHints.Location = new System.Drawing.Point(117, 34);
             this.cClearGaroHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cClearGaroHints.Name = "cClearGaroHints";
             this.cClearGaroHints.Size = new System.Drawing.Size(82, 19);
             this.cClearGaroHints.TabIndex = 16;
             this.cClearGaroHints.Text = "Clear hints";
             this.cClearGaroHints.UseVisualStyleBackColor = false;
-            this.cClearGaroHints.CheckedChanged += new System.EventHandler(this.cClearGaroHints_CheckedChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(145, 87);
+            this.label5.Location = new System.Drawing.Point(145, 93);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(12, 15);
             this.label5.TabIndex = 32;
@@ -1667,7 +1823,7 @@ namespace MMR.UI.Forms
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(58, 70);
+            this.label10.Location = new System.Drawing.Point(58, 76);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(141, 15);
             this.label10.TabIndex = 30;
@@ -1676,7 +1832,7 @@ namespace MMR.UI.Forms
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(95, 87);
+            this.label9.Location = new System.Drawing.Point(95, 93);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(12, 15);
             this.label9.TabIndex = 31;
@@ -1710,7 +1866,6 @@ namespace MMR.UI.Forms
             this.cSpeedupBabyCucco.TabIndex = 6;
             this.cSpeedupBabyCucco.Text = "Baby Cuccos Map";
             this.cSpeedupBabyCucco.UseVisualStyleBackColor = true;
-            this.cSpeedupBabyCucco.CheckedChanged += new System.EventHandler(this.cSpeedupBabyCucco_CheckedChanged);
             // 
             // cDoubleArcheryRewards
             // 
@@ -1722,7 +1877,6 @@ namespace MMR.UI.Forms
             this.cDoubleArcheryRewards.TabIndex = 5;
             this.cDoubleArcheryRewards.Text = "Double Archery Rewards";
             this.cDoubleArcheryRewards.UseVisualStyleBackColor = true;
-            this.cDoubleArcheryRewards.CheckedChanged += new System.EventHandler(this.cDoubleArcheryRewards_CheckedChanged);
             // 
             // cFasterBank
             // 
@@ -1734,7 +1888,6 @@ namespace MMR.UI.Forms
             this.cFasterBank.TabIndex = 4;
             this.cFasterBank.Text = "Faster Bank";
             this.cFasterBank.UseVisualStyleBackColor = true;
-            this.cFasterBank.CheckedChanged += new System.EventHandler(this.cFasterBank_CheckedChanged);
             // 
             // cSkipBeaver
             // 
@@ -1746,7 +1899,6 @@ namespace MMR.UI.Forms
             this.cSkipBeaver.TabIndex = 0;
             this.cSkipBeaver.Text = "Skip Younger Beaver";
             this.cSkipBeaver.UseVisualStyleBackColor = true;
-            this.cSkipBeaver.CheckedChanged += new System.EventHandler(this.cSkipBeaver_CheckedChanged);
             // 
             // cFasterLabFish
             // 
@@ -1758,7 +1910,6 @@ namespace MMR.UI.Forms
             this.cFasterLabFish.TabIndex = 2;
             this.cFasterLabFish.Text = "Faster Lab Fish";
             this.cFasterLabFish.UseVisualStyleBackColor = true;
-            this.cFasterLabFish.CheckedChanged += new System.EventHandler(this.cFasterLabFish_CheckedChanged);
             // 
             // cGoodDogRaceRNG
             // 
@@ -1770,7 +1921,6 @@ namespace MMR.UI.Forms
             this.cGoodDogRaceRNG.TabIndex = 3;
             this.cGoodDogRaceRNG.Text = "Good Dog Race RNG";
             this.cGoodDogRaceRNG.UseVisualStyleBackColor = true;
-            this.cGoodDogRaceRNG.CheckedChanged += new System.EventHandler(this.cGoodDogRaceRNG_CheckedChanged);
             // 
             // cGoodDampeRNG
             // 
@@ -1782,10 +1932,10 @@ namespace MMR.UI.Forms
             this.cGoodDampeRNG.TabIndex = 1;
             this.cGoodDampeRNG.Text = "Good Dampe RNG";
             this.cGoodDampeRNG.UseVisualStyleBackColor = true;
-            this.cGoodDampeRNG.CheckedChanged += new System.EventHandler(this.cGoodDampeRNG_CheckedChanged);
             // 
             // gHints
             // 
+            this.gHints.Controls.Add(this.cImportanceCount);
             this.gHints.Controls.Add(this.cCustomGossipWoth);
             this.gHints.Controls.Add(this.nMaxGossipCT);
             this.gHints.Controls.Add(this.nMaxGossipFoolish);
@@ -1806,12 +1956,25 @@ namespace MMR.UI.Forms
             this.gHints.TabStop = false;
             this.gHints.Text = "Gossip Stone Hints";
             // 
+            // cImportanceCount
+            // 
+            this.cImportanceCount.AutoSize = true;
+            this.cImportanceCount.BackColor = System.Drawing.Color.Transparent;
+            this.cImportanceCount.ForeColor = System.Drawing.Color.Black;
+            this.cImportanceCount.Location = new System.Drawing.Point(117, 55);
+            this.cImportanceCount.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cImportanceCount.Name = "cImportanceCount";
+            this.cImportanceCount.Size = new System.Drawing.Size(123, 19);
+            this.cImportanceCount.TabIndex = 31;
+            this.cImportanceCount.Text = "Importance Count";
+            this.cImportanceCount.UseVisualStyleBackColor = false;
+            // 
             // cCustomGossipWoth
             // 
             this.cCustomGossipWoth.AutoSize = true;
             this.cCustomGossipWoth.Checked = true;
             this.cCustomGossipWoth.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cCustomGossipWoth.Location = new System.Drawing.Point(15, 88);
+            this.cCustomGossipWoth.Location = new System.Drawing.Point(15, 94);
             this.cCustomGossipWoth.Name = "cCustomGossipWoth";
             this.cCustomGossipWoth.Size = new System.Drawing.Size(15, 14);
             this.cCustomGossipWoth.TabIndex = 30;
@@ -1820,7 +1983,7 @@ namespace MMR.UI.Forms
             // 
             // nMaxGossipCT
             // 
-            this.nMaxGossipCT.Location = new System.Drawing.Point(153, 85);
+            this.nMaxGossipCT.Location = new System.Drawing.Point(153, 91);
             this.nMaxGossipCT.Maximum = new decimal(new int[] {
             9,
             0,
@@ -1834,12 +1997,11 @@ namespace MMR.UI.Forms
             0,
             0,
             0});
-            this.nMaxGossipCT.ValueChanged += new System.EventHandler(this.nMaxGossipCT_ValueChanged);
             // 
             // nMaxGossipFoolish
             // 
             this.nMaxGossipFoolish.Enabled = false;
-            this.nMaxGossipFoolish.Location = new System.Drawing.Point(101, 85);
+            this.nMaxGossipFoolish.Location = new System.Drawing.Point(101, 91);
             this.nMaxGossipFoolish.Maximum = new decimal(new int[] {
             9,
             0,
@@ -1853,12 +2015,11 @@ namespace MMR.UI.Forms
             0,
             0,
             0});
-            this.nMaxGossipFoolish.ValueChanged += new System.EventHandler(this.nMaxGossipFoolish_ValueChanged);
             // 
             // nMaxGossipWotH
             // 
             this.nMaxGossipWotH.Enabled = false;
-            this.nMaxGossipWotH.Location = new System.Drawing.Point(51, 85);
+            this.nMaxGossipWotH.Location = new System.Drawing.Point(51, 91);
             this.nMaxGossipWotH.Maximum = new decimal(new int[] {
             9,
             0,
@@ -1872,12 +2033,11 @@ namespace MMR.UI.Forms
             0,
             0,
             0});
-            this.nMaxGossipWotH.ValueChanged += new System.EventHandler(this.nMaxGossipWotH_ValueChanged);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(138, 87);
+            this.label8.Location = new System.Drawing.Point(138, 93);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(12, 15);
             this.label8.TabIndex = 25;
@@ -1886,7 +2046,7 @@ namespace MMR.UI.Forms
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(88, 87);
+            this.label7.Location = new System.Drawing.Point(88, 93);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(12, 15);
             this.label7.TabIndex = 23;
@@ -1895,7 +2055,7 @@ namespace MMR.UI.Forms
             // lGossipWothConfig
             // 
             this.lGossipWothConfig.AutoSize = true;
-            this.lGossipWothConfig.Location = new System.Drawing.Point(51, 70);
+            this.lGossipWothConfig.Location = new System.Drawing.Point(51, 76);
             this.lGossipWothConfig.Name = "lGossipWothConfig";
             this.lGossipWothConfig.Size = new System.Drawing.Size(141, 15);
             this.lGossipWothConfig.TabIndex = 21;
@@ -1927,45 +2087,42 @@ namespace MMR.UI.Forms
             this.cGossipHints.Name = "cGossipHints";
             this.cGossipHints.Size = new System.Drawing.Size(92, 23);
             this.cGossipHints.TabIndex = 19;
-            this.cGossipHints.SelectedIndexChanged += new System.EventHandler(this.cGossipHints_SelectedIndexChanged);
             // 
             // cFreeHints
             // 
             this.cFreeHints.AutoSize = true;
             this.cFreeHints.BackColor = System.Drawing.Color.Transparent;
             this.cFreeHints.ForeColor = System.Drawing.Color.Black;
-            this.cFreeHints.Location = new System.Drawing.Point(117, 20);
+            this.cFreeHints.Location = new System.Drawing.Point(117, 13);
             this.cFreeHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFreeHints.Name = "cFreeHints";
             this.cFreeHints.Size = new System.Drawing.Size(77, 19);
             this.cFreeHints.TabIndex = 15;
             this.cFreeHints.Text = "Free hints";
             this.cFreeHints.UseVisualStyleBackColor = false;
-            this.cFreeHints.CheckedChanged += new System.EventHandler(this.cFreeHints_CheckedChanged);
             // 
             // cClearHints
             // 
             this.cClearHints.AutoSize = true;
             this.cClearHints.BackColor = System.Drawing.Color.Transparent;
             this.cClearHints.ForeColor = System.Drawing.Color.Black;
-            this.cClearHints.Location = new System.Drawing.Point(117, 47);
+            this.cClearHints.Location = new System.Drawing.Point(117, 34);
             this.cClearHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cClearHints.Name = "cClearHints";
             this.cClearHints.Size = new System.Drawing.Size(82, 19);
             this.cClearHints.TabIndex = 16;
             this.cClearHints.Text = "Clear hints";
             this.cClearHints.UseVisualStyleBackColor = false;
-            this.cClearHints.CheckedChanged += new System.EventHandler(this.cClearHints_CheckedChanged);
             // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.lLink);
             this.groupBox8.Controls.Add(this.cLink);
-            this.groupBox8.Location = new System.Drawing.Point(260, 250);
+            this.groupBox8.Location = new System.Drawing.Point(355, 250);
             this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox8.Size = new System.Drawing.Size(246, 96);
+            this.groupBox8.Size = new System.Drawing.Size(151, 96);
             this.groupBox8.TabIndex = 35;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Cosmetic Customization";
@@ -1996,7 +2153,6 @@ namespace MMR.UI.Forms
             this.cLink.Name = "cLink";
             this.cLink.Size = new System.Drawing.Size(129, 23);
             this.cLink.TabIndex = 10;
-            this.cLink.SelectedIndexChanged += new System.EventHandler(this.cLink_SelectedIndexChanged);
             // 
             // groupBox7
             // 
@@ -2047,7 +2203,6 @@ namespace MMR.UI.Forms
             this.cEasyFrameByFrame.TabIndex = 51;
             this.cEasyFrameByFrame.Text = "Easy Frame By Frame";
             this.cEasyFrameByFrame.UseVisualStyleBackColor = true;
-            this.cEasyFrameByFrame.CheckedChanged += new System.EventHandler(this.cEasyFrameByFrame_CheckedChanged);
             // 
             // cImprovedCamera
             // 
@@ -2059,7 +2214,6 @@ namespace MMR.UI.Forms
             this.cImprovedCamera.TabIndex = 50;
             this.cImprovedCamera.Text = "Improved Camera";
             this.cImprovedCamera.UseVisualStyleBackColor = true;
-            this.cImprovedCamera.CheckedChanged += new System.EventHandler(this.cImprovedCamera_CheckedChanged);
             // 
             // cGossipsTolerant
             // 
@@ -2071,7 +2225,6 @@ namespace MMR.UI.Forms
             this.cGossipsTolerant.TabIndex = 49;
             this.cGossipsTolerant.Text = "Tolerant Gossip Angle";
             this.cGossipsTolerant.UseVisualStyleBackColor = true;
-            this.cGossipsTolerant.CheckedChanged += new System.EventHandler(this.cGossipsTolerant_CheckedChanged);
             // 
             // cQuestItemKeep
             // 
@@ -2084,7 +2237,6 @@ namespace MMR.UI.Forms
             this.cQuestItemKeep.TabIndex = 48;
             this.cQuestItemKeep.Text = "Quest items through time";
             this.cQuestItemKeep.UseVisualStyleBackColor = false;
-            this.cQuestItemKeep.CheckedChanged += new System.EventHandler(this.cQuestItemKeep_CheckedChanged);
             // 
             // cUpdateNpcText
             // 
@@ -2096,7 +2248,6 @@ namespace MMR.UI.Forms
             this.cUpdateNpcText.TabIndex = 47;
             this.cUpdateNpcText.Text = "Update NPC Text";
             this.cUpdateNpcText.UseVisualStyleBackColor = true;
-            this.cUpdateNpcText.CheckedChanged += new System.EventHandler(this.cUpdateNpcText_CheckedChanged);
             // 
             // cAddBombchuDrops
             // 
@@ -2108,7 +2259,6 @@ namespace MMR.UI.Forms
             this.cAddBombchuDrops.TabIndex = 46;
             this.cAddBombchuDrops.Text = "Add Bombchu Drops";
             this.cAddBombchuDrops.UseVisualStyleBackColor = true;
-            this.cAddBombchuDrops.CheckedChanged += new System.EventHandler(this.cAddBombchuDrops_CheckedChanged);
             // 
             // lChestGame
             // 
@@ -2136,7 +2286,6 @@ namespace MMR.UI.Forms
             this.cChestGameMinimap.Name = "cChestGameMinimap";
             this.cChestGameMinimap.Size = new System.Drawing.Size(129, 23);
             this.cChestGameMinimap.TabIndex = 44;
-            this.cChestGameMinimap.SelectedIndexChanged += new System.EventHandler(this.cChestGameMinimap_SelectedIndexChanged);
             // 
             // cSaferGlitches
             // 
@@ -2148,7 +2297,6 @@ namespace MMR.UI.Forms
             this.cSaferGlitches.TabIndex = 43;
             this.cSaferGlitches.Text = "Safer Glitches";
             this.cSaferGlitches.UseVisualStyleBackColor = true;
-            this.cSaferGlitches.CheckedChanged += new System.EventHandler(this.cSaferGlitches_CheckedChanged);
             // 
             // cSkulltulaTokenSounds
             // 
@@ -2160,7 +2308,6 @@ namespace MMR.UI.Forms
             this.cSkulltulaTokenSounds.TabIndex = 44;
             this.cSkulltulaTokenSounds.Text = "Detect Skulltula Tokens";
             this.cSkulltulaTokenSounds.UseVisualStyleBackColor = true;
-            this.cSkulltulaTokenSounds.CheckedChanged += new System.EventHandler(this.cSkulltulaTokenSounds_CheckedChanged);
             // 
             // cFairyMaskShimmer
             // 
@@ -2172,7 +2319,6 @@ namespace MMR.UI.Forms
             this.cFairyMaskShimmer.TabIndex = 43;
             this.cFairyMaskShimmer.Text = "Detect Stray Fairies";
             this.cFairyMaskShimmer.UseVisualStyleBackColor = true;
-            this.cFairyMaskShimmer.CheckedChanged += new System.EventHandler(this.cFairyMaskShimmer_CheckedChanged);
             // 
             // cInvisSparkle
             // 
@@ -2184,7 +2330,6 @@ namespace MMR.UI.Forms
             this.cInvisSparkle.TabIndex = 42;
             this.cInvisSparkle.Text = "Hidden Rupees Sparkle";
             this.cInvisSparkle.UseVisualStyleBackColor = true;
-            this.cInvisSparkle.CheckedChanged += new System.EventHandler(this.cInvisSparkle_CheckedChanged);
             // 
             // cFillWallet
             // 
@@ -2196,7 +2341,6 @@ namespace MMR.UI.Forms
             this.cFillWallet.TabIndex = 41;
             this.cFillWallet.Text = "Fill wallet on upgrade";
             this.cFillWallet.UseVisualStyleBackColor = true;
-            this.cFillWallet.CheckedChanged += new System.EventHandler(this.cFillWallet_CheckedChanged);
             // 
             // cTargetHealth
             // 
@@ -2208,7 +2352,6 @@ namespace MMR.UI.Forms
             this.cTargetHealth.TabIndex = 40;
             this.cTargetHealth.Text = "Target Health Bar";
             this.cTargetHealth.UseVisualStyleBackColor = true;
-            this.cTargetHealth.CheckedChanged += new System.EventHandler(this.cTargetHealth_CheckedChanged);
             // 
             // cLenientGoronSpikes
             // 
@@ -2220,7 +2363,6 @@ namespace MMR.UI.Forms
             this.cLenientGoronSpikes.TabIndex = 39;
             this.cLenientGoronSpikes.Text = "Lenient Goron Spikes";
             this.cLenientGoronSpikes.UseVisualStyleBackColor = true;
-            this.cLenientGoronSpikes.CheckedChanged += new System.EventHandler(this.cLenientGoronSpikes_CheckedChanged);
             // 
             // cImprovedPictobox
             // 
@@ -2232,7 +2374,6 @@ namespace MMR.UI.Forms
             this.cImprovedPictobox.TabIndex = 38;
             this.cImprovedPictobox.Text = "Improved Pictobox";
             this.cImprovedPictobox.UseVisualStyleBackColor = true;
-            this.cImprovedPictobox.CheckedChanged += new System.EventHandler(this.cImprovedPictobox_CheckedChanged);
             // 
             // cElegySpeedups
             // 
@@ -2244,7 +2385,6 @@ namespace MMR.UI.Forms
             this.cElegySpeedups.TabIndex = 37;
             this.cElegySpeedups.Text = "Elegy speedups";
             this.cElegySpeedups.UseVisualStyleBackColor = true;
-            this.cElegySpeedups.CheckedChanged += new System.EventHandler(this.cElegySpeedups_CheckedChanged);
             // 
             // cCloseCows
             // 
@@ -2256,7 +2396,6 @@ namespace MMR.UI.Forms
             this.cCloseCows.TabIndex = 36;
             this.cCloseCows.Text = "Close Cows";
             this.cCloseCows.UseVisualStyleBackColor = true;
-            this.cCloseCows.CheckedChanged += new System.EventHandler(this.cCloseCows_CheckedChanged);
             // 
             // cArrowCycling
             // 
@@ -2268,7 +2407,6 @@ namespace MMR.UI.Forms
             this.cArrowCycling.TabIndex = 35;
             this.cArrowCycling.Text = "Arrow cycling";
             this.cArrowCycling.UseVisualStyleBackColor = true;
-            this.cArrowCycling.CheckedChanged += new System.EventHandler(this.cArrowCycling_CheckedChanged);
             // 
             // cFreestanding
             // 
@@ -2280,7 +2418,6 @@ namespace MMR.UI.Forms
             this.cFreestanding.TabIndex = 34;
             this.cFreestanding.Text = "Update world models";
             this.cFreestanding.UseVisualStyleBackColor = true;
-            this.cFreestanding.CheckedChanged += new System.EventHandler(this.cFreestanding_CheckedChanged);
             // 
             // cFastPush
             // 
@@ -2292,7 +2429,6 @@ namespace MMR.UI.Forms
             this.cFastPush.TabIndex = 31;
             this.cFastPush.Text = "Increase push speed";
             this.cFastPush.UseVisualStyleBackColor = true;
-            this.cFastPush.CheckedChanged += new System.EventHandler(this.cFastPush_CheckedChanged);
             // 
             // cQText
             // 
@@ -2306,7 +2442,6 @@ namespace MMR.UI.Forms
             this.cQText.TabIndex = 6;
             this.cQText.Text = "Quick text";
             this.cQText.UseVisualStyleBackColor = false;
-            this.cQText.CheckedChanged += new System.EventHandler(this.cQText_CheckedChanged);
             // 
             // cShopAppearance
             // 
@@ -2320,7 +2455,6 @@ namespace MMR.UI.Forms
             this.cShopAppearance.TabIndex = 21;
             this.cShopAppearance.Text = "Update shops";
             this.cShopAppearance.UseVisualStyleBackColor = false;
-            this.cShopAppearance.CheckedChanged += new System.EventHandler(this.cShopAppearance_CheckedChanged);
             // 
             // cEponaSword
             // 
@@ -2334,7 +2468,6 @@ namespace MMR.UI.Forms
             this.cEponaSword.TabIndex = 22;
             this.cEponaSword.Text = "Fix Epona sword";
             this.cEponaSword.UseVisualStyleBackColor = false;
-            this.cEponaSword.CheckedChanged += new System.EventHandler(this.cEponaSword_CheckedChanged);
             // 
             // cUpdateChests
             // 
@@ -2348,7 +2481,6 @@ namespace MMR.UI.Forms
             this.cUpdateChests.TabIndex = 23;
             this.cUpdateChests.Text = "Update chests";
             this.cUpdateChests.UseVisualStyleBackColor = false;
-            this.cUpdateChests.CheckedChanged += new System.EventHandler(this.cUpdateChests_CheckedChanged);
             // 
             // cDisableCritWiggle
             // 
@@ -2361,7 +2493,6 @@ namespace MMR.UI.Forms
             this.cDisableCritWiggle.TabIndex = 29;
             this.cDisableCritWiggle.Text = "Disable crit wiggle";
             this.cDisableCritWiggle.UseVisualStyleBackColor = false;
-            this.cDisableCritWiggle.CheckedChanged += new System.EventHandler(this.cDisableCritWiggle_CheckedChanged);
             // 
             // cQuestItemStorage
             // 
@@ -2374,7 +2505,6 @@ namespace MMR.UI.Forms
             this.cQuestItemStorage.TabIndex = 30;
             this.cQuestItemStorage.Text = "Quest item extra storage";
             this.cQuestItemStorage.UseVisualStyleBackColor = false;
-            this.cQuestItemStorage.CheckedChanged += new System.EventHandler(this.cQuestItemStorage_CheckedChanged);
             // 
             // cNoDowngrades
             // 
@@ -2388,7 +2518,6 @@ namespace MMR.UI.Forms
             this.cNoDowngrades.TabIndex = 18;
             this.cNoDowngrades.Text = "No downgrades";
             this.cNoDowngrades.UseVisualStyleBackColor = false;
-            this.cNoDowngrades.CheckedChanged += new System.EventHandler(this.cNoDowngrades_CheckedChanged);
             // 
             // tabShortenCutscenes
             // 
@@ -2452,7 +2581,6 @@ namespace MMR.UI.Forms
             this.cRainbowTunic.TabIndex = 44;
             this.cRainbowTunic.Text = "Rainbow Tunic";
             this.cRainbowTunic.UseVisualStyleBackColor = false;
-            this.cRainbowTunic.CheckedChanged += new System.EventHandler(this.cRainbowTunic_CheckedChanged);
             // 
             // cBombTrapTunicColors
             // 
@@ -2465,7 +2593,6 @@ namespace MMR.UI.Forms
             this.cBombTrapTunicColors.TabIndex = 43;
             this.cBombTrapTunicColors.Text = "Bomb Traps Randomize Tunic Color";
             this.cBombTrapTunicColors.UseVisualStyleBackColor = false;
-            this.cBombTrapTunicColors.CheckedChanged += new System.EventHandler(this.cBombTrapTunicColors_CheckedChanged);
             // 
             // cInstantPictobox
             // 
@@ -2478,7 +2605,6 @@ namespace MMR.UI.Forms
             this.cInstantPictobox.TabIndex = 42;
             this.cInstantPictobox.Text = "Instant Pictobox on Emulator";
             this.cInstantPictobox.UseVisualStyleBackColor = false;
-            this.cInstantPictobox.CheckedChanged += new System.EventHandler(this.cInstantPictobox_CheckedChanged);
             // 
             // cTatl
             // 
@@ -2496,7 +2622,6 @@ namespace MMR.UI.Forms
             this.cTatl.Name = "cTatl";
             this.cTatl.Size = new System.Drawing.Size(150, 23);
             this.cTatl.TabIndex = 41;
-            this.cTatl.SelectedIndexChanged += new System.EventHandler(this.cTatl_SelectedIndexChanged);
             // 
             // lTatl
             // 
@@ -2521,7 +2646,6 @@ namespace MMR.UI.Forms
             this.cTargettingStyle.TabIndex = 37;
             this.cTargettingStyle.Text = "Default Hold Z-Target";
             this.cTargettingStyle.UseVisualStyleBackColor = false;
-            this.cTargettingStyle.CheckedChanged += new System.EventHandler(this.cTargettingStyle_CheckedChanged);
             // 
             // gCosmeticMusicSound
             // 
@@ -2556,7 +2680,6 @@ namespace MMR.UI.Forms
             this.cDisableFanfares.TabIndex = 50;
             this.cDisableFanfares.Text = "Disable Fanfares";
             this.cDisableFanfares.UseVisualStyleBackColor = true;
-            this.cDisableFanfares.CheckedChanged += new System.EventHandler(this.cDisableFanfares_CheckedChanged);
             // 
             // cMusicTrackNames
             // 
@@ -2570,7 +2693,6 @@ namespace MMR.UI.Forms
             this.cMusicTrackNames.TabIndex = 49;
             this.cMusicTrackNames.Text = "Show Track Names";
             this.cMusicTrackNames.UseVisualStyleBackColor = false;
-            this.cMusicTrackNames.CheckedChanged += new System.EventHandler(this.cMusicTrackNames_CheckedChanged);
             // 
             // cRemoveMinorMusic
             // 
@@ -2584,7 +2706,6 @@ namespace MMR.UI.Forms
             this.cRemoveMinorMusic.TabIndex = 48;
             this.cRemoveMinorMusic.Text = "Remove Minor Music";
             this.cRemoveMinorMusic.UseVisualStyleBackColor = false;
-            this.cRemoveMinorMusic.CheckedChanged += new System.EventHandler(this.cRemoveMinorMusic_CheckedChanged);
             // 
             // lLuckRoll
             // 
@@ -2611,7 +2732,6 @@ namespace MMR.UI.Forms
             0,
             0,
             131072});
-            this.tLuckRollPercentage.ValueChanged += new System.EventHandler(this.tLuckRollPercentage_ValueChanged);
             // 
             // lMusic
             // 
@@ -2638,7 +2758,6 @@ namespace MMR.UI.Forms
             this.cMusic.Name = "cMusic";
             this.cMusic.Size = new System.Drawing.Size(140, 23);
             this.cMusic.TabIndex = 42;
-            this.cMusic.SelectedIndexChanged += new System.EventHandler(this.cMusic_SelectedIndexChanged);
             // 
             // cSFX
             // 
@@ -2652,7 +2771,6 @@ namespace MMR.UI.Forms
             this.cSFX.TabIndex = 36;
             this.cSFX.Text = "Randomize SFX";
             this.cSFX.UseVisualStyleBackColor = false;
-            this.cSFX.CheckedChanged += new System.EventHandler(this.cSFX_CheckedChanged);
             // 
             // cCombatMusicDisable
             // 
@@ -2664,7 +2782,6 @@ namespace MMR.UI.Forms
             this.cCombatMusicDisable.TabIndex = 45;
             this.cCombatMusicDisable.Text = "Disable Combat Music";
             this.cCombatMusicDisable.UseVisualStyleBackColor = true;
-            this.cCombatMusicDisable.CheckedChanged += new System.EventHandler(this.cCombatMusicDisable_CheckedChanged);
             // 
             // cEnableNightMusic
             // 
@@ -2676,7 +2793,6 @@ namespace MMR.UI.Forms
             this.cEnableNightMusic.TabIndex = 38;
             this.cEnableNightMusic.Text = "Enable Night BGM";
             this.cEnableNightMusic.UseVisualStyleBackColor = true;
-            this.cEnableNightMusic.CheckedChanged += new System.EventHandler(this.cEnableNightMusic_CheckedChanged);
             // 
             // cLowHealthSFXComboBox
             // 
@@ -2687,7 +2803,6 @@ namespace MMR.UI.Forms
             this.cLowHealthSFXComboBox.Name = "cLowHealthSFXComboBox";
             this.cLowHealthSFXComboBox.Size = new System.Drawing.Size(140, 23);
             this.cLowHealthSFXComboBox.TabIndex = 25;
-            this.cLowHealthSFXComboBox.SelectedIndexChanged += new System.EventHandler(this.cLowHealthSFXComboBox_SelectedIndexChanged);
             // 
             // lLowHealthSFXComboBox
             // 
@@ -2722,7 +2837,6 @@ namespace MMR.UI.Forms
             this.cHueShiftMiscUI.TabIndex = 1;
             this.cHueShiftMiscUI.Text = "Randomize Hue of Miscellaneous UI";
             this.cHueShiftMiscUI.UseVisualStyleBackColor = true;
-            this.cHueShiftMiscUI.CheckedChanged += new System.EventHandler(this.cHueShiftMiscUI_CheckedChanged);
             // 
             // cHUDTableLayoutPanel
             // 
@@ -2856,7 +2970,6 @@ namespace MMR.UI.Forms
             this.cHTMLLog.TabIndex = 14;
             this.cHTMLLog.Text = "Item Tracker .html";
             this.cHTMLLog.UseVisualStyleBackColor = false;
-            this.cHTMLLog.CheckedChanged += new System.EventHandler(this.cHTMLLog_CheckedChanged);
             // 
             // cPatch
             // 
@@ -2884,7 +2997,6 @@ namespace MMR.UI.Forms
             this.cSpoiler.TabIndex = 8;
             this.cSpoiler.Text = "Spoiler log .txt";
             this.cSpoiler.UseVisualStyleBackColor = false;
-            this.cSpoiler.CheckedChanged += new System.EventHandler(this.cSpoiler_CheckedChanged);
             // 
             // cN64
             // 
@@ -2900,7 +3012,6 @@ namespace MMR.UI.Forms
             this.cN64.TabIndex = 10;
             this.cN64.Text = "N64 ROM .z64";
             this.cN64.UseVisualStyleBackColor = false;
-            this.cN64.CheckedChanged += new System.EventHandler(this.cN64_CheckedChanged);
             // 
             // cVC
             // 
@@ -2914,7 +3025,6 @@ namespace MMR.UI.Forms
             this.cVC.TabIndex = 9;
             this.cVC.Text = "Wii VC .wad";
             this.cVC.UseVisualStyleBackColor = false;
-            this.cVC.CheckedChanged += new System.EventHandler(this.cVC_CheckedChanged);
             // 
             // label1
             // 
@@ -3250,16 +3360,16 @@ namespace MMR.UI.Forms
             this.tabItemPool.PerformLayout();
             this.tabGimmicks.ResumeLayout(false);
             this.tabGimmicks.PerformLayout();
-            this.groupBox11.ResumeLayout(false);
-            this.groupBox11.PerformLayout();
-            this.groupBox10.ResumeLayout(false);
-            this.groupBox10.PerformLayout();
+            this.gGimmicksChallenges.ResumeLayout(false);
+            this.gGimmicksChallenges.PerformLayout();
+            this.gGimmicksMovement.ResumeLayout(false);
+            this.gGimmicksMovement.PerformLayout();
             this.gTraps.ResumeLayout(false);
             this.gTraps.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox12.ResumeLayout(false);
-            this.groupBox12.PerformLayout();
+            this.gGimmicksClock.ResumeLayout(false);
+            this.gGimmicksClock.PerformLayout();
+            this.gGimmicksOther.ResumeLayout(false);
+            this.gGimmicksOther.PerformLayout();
             this.tabComfort.ResumeLayout(false);
             this.gHintsGeneral.ResumeLayout(false);
             this.gHintsGeneral.PerformLayout();
@@ -3451,12 +3561,12 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.GroupBox gCosmeticMusicSound;
         private System.Windows.Forms.TabPage tabShortenCutscenes;
         private System.Windows.Forms.TabControl tShortenCutscenes;
-        private System.Windows.Forms.GroupBox groupBox12;
-        private System.Windows.Forms.GroupBox groupBox11;
-        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.GroupBox gGimmicksOther;
+        private System.Windows.Forms.GroupBox gGimmicksChallenges;
+        private System.Windows.Forms.GroupBox gGimmicksMovement;
         private System.Windows.Forms.GroupBox gTraps;
         private System.Windows.Forms.Label lTrapsAppearance;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gGimmicksClock;
         private System.Windows.Forms.TabControl tOtherCustomizations;
         private System.Windows.Forms.TabPage tOtherCustomization;
         private System.Windows.Forms.TabPage tabItemPool;
@@ -3537,6 +3647,21 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cSkulltulaTokenSounds;
         private System.Windows.Forms.CheckBox cFairyMaskShimmer;
         private System.Windows.Forms.CheckBox cVanillaMoonTrials;
+        private System.Windows.Forms.CheckBox cTakeDamageOnEpona;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox cTakeDamageFromGibdosFaster;
+        private System.Windows.Forms.CheckBox cTakeDamageGettingCaught;
+        private System.Windows.Forms.CheckBox cTakeDamageFromGorons;
+        private System.Windows.Forms.CheckBox cTakeDamageFromDog;
+        private System.Windows.Forms.CheckBox cTakeDamageFromVoid;
+        private System.Windows.Forms.CheckBox cTakeDamageWhileShielding;
+        private System.Windows.Forms.CheckBox cTakeDamageFromDexihands;
+        private System.Windows.Forms.CheckBox cOathHint;
+        private System.Windows.Forms.CheckBox cRemainsHint;
+        private System.Windows.Forms.CheckBox cFairyAndSkullHints;
+        private System.Windows.Forms.CheckBox cImportanceCountGaro;
+        private System.Windows.Forms.CheckBox cImportanceCount;
+        private System.Windows.Forms.CheckBox cMoonCrashFileErase;
     }
 }
 

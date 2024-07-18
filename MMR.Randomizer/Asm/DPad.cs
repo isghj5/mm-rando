@@ -1,5 +1,6 @@
 ﻿using Be.IO;
 using MMR.Common.Extensions;
+using MMR.Randomizer.Attributes.Setting;
 using System.IO;
 using System.Linq;
 
@@ -35,7 +36,6 @@ namespace MMR.Randomizer.Asm
     {
         Disabled,
         Enabled,
-        Defaults,
     }
 
     /// <summary>
@@ -303,6 +303,8 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Values.
         /// </summary>
+        [SettingName("DPad")]
+        [SettingIndexValues("D-Up", "D-Right", "D-Down", "D-Left")]
         public DPadValue[] Values { get; set; }
 
         /// <summary>

@@ -1390,6 +1390,86 @@
     jal     Player_GetGoronPunchCollisionActor
 
 ;==================================================================================================
+; Take Damage on Epona
+;==================================================================================================
+
+.org 0x80845648
+    bnezl   t8, 0x8084573C
+    nop
+
+.org 0x8084565C
+    bltzl   t1, 0x8084573C
+    nop
+
+.org 0x8084566C
+    bnez    t2, 0x8084573C
+
+.org 0x8084567C
+    beqzl   v0, 0x8084573C
+    nop
+
+.org 0x80845710
+    b       0x8084572C
+
+.org 0x8084571C
+    lui     a2, 0x0401
+    beqzl   t1, .+0xC
+    addiu   a2, a2, 0xD698
+    addiu   a2, a2, 0xDC28
+    jal     0x80831F34 ; TODO relocation
+    or      a1, s0, r0
+    b       0x80845800
+    lw      a3, 0x0074 (sp)
+    jal     Player_ShouldSkipParentDamageCheck
+    or      a0, s0, r0
+    bnez    v0, .+0x14
+    nop
+
+; Relocation
+.org 0x808606CC
+    .dw 0x44017C9C
+
+;==================================================================================================
+; Take Damage while shielding
+;==================================================================================================
+
+.org 0x808349EC
+    jal     Player_GetHittingActor_Hook
+    nop
+    beqz    v0, 0x80834B24
+    or      t5, v0, r0
+
+;==================================================================================================
+; Take Damage after minor void
+;==================================================================================================
+
+; Replaces:
+;   JAL     Player_SetEquipmentData
+.org 0x808498B8
+    jal     Player_OnMinorVoid
+
+; Replaces:
+;   JAL     z2_PerformEnterWaterEffects
+.org 0x8083BDF8
+    jal     Player_OnDekuWaterVoid
+
+; Fix relocations.
+; Replaces:
+;   .dw 0x4400E368
+.org 0x8085FA04
+    .dw 0x00000000
+
+; Replaces:
+;   JAL     Audio_PlaySfx_2
+.org 0x8083584C
+    jal     Player_VoidExit
+
+; Replaces:
+;   JAL     Audio_PlaySfx_2
+.org 0x8083589C
+    jal     Player_VoidExit
+
+;==================================================================================================
 ; Player Lib
 ;==================================================================================================
 ;==================================================================================================

@@ -22,6 +22,8 @@ static PlayerActionFunc sPlayer_Idle = NULL;
 static PlayerActionFunc sPlayer_BackwalkBraking = NULL;
 static PlayerActionFunc sPlayer_Falling = NULL;
 static PlayerActionFunc sPlayer_Action_43 = NULL;
+static PlayerActionFunc sPlayer_Action_52 = NULL;
+static PlayerActionFunc sPlayer_Action_53 = NULL;
 static PlayerActionFunc sPlayer_Action_54 = NULL;
 static PlayerActionFunc sPlayer_Action_55 = NULL;
 static PlayerActionFunc sPlayer_Action_56 = NULL;
@@ -44,6 +46,8 @@ void Player_InitFuncPointers() {
     sPlayer_BackwalkBraking = z2_Player_Action_8;
     sPlayer_Falling = z2_Player_Action_25;
     sPlayer_Action_43 = z2_Player_Action_43;
+    sPlayer_Action_52 = z2_Player_Action_52;
+    sPlayer_Action_53 = z2_Player_Action_53;
     sPlayer_Action_54 = z2_Player_Action_54;
     sPlayer_Action_55 = z2_Player_Action_55;
     sPlayer_Action_56 = z2_Player_Action_56;
@@ -83,21 +87,23 @@ void Player_PreventDangerousStates(ActorPlayer* player) {
             player->base.parent = NULL;
         }
         Actor* door = player->doorActor;
-        if ((player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP) && door) {
-            if (player->doorType == 4) { // PLAYER_DOORTYPE_STAIRCASE
-                ActorDoorSpiral* doorStaircase = (ActorDoorSpiral*)door;
-                if (doorStaircase->shouldClimb) {
-                    player->base.parent = NULL;
+        if (door) {
+            if (player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP) {
+                if (player->doorType == 4) { // PLAYER_DOORTYPE_STAIRCASE
+                    ActorDoorSpiral* doorStaircase = (ActorDoorSpiral*)door;
+                    if (doorStaircase->shouldClimb) {
+                        player->base.parent = NULL;
+                    }
+                } else if (player->doorType == 2) { // PLAYER_DOORTYPE_SLIDING
+                    SlidingDoorActor* doorSliding = (SlidingDoorActor*)door;
+                    if (doorSliding->unk_15C) {
+                        player->base.parent = NULL;
+                    }
                 }
-            } else if (player->doorType == 2) { // PLAYER_DOORTYPE_SLIDING
-                SlidingDoorActor* doorSliding = (SlidingDoorActor*)door;
-                if (doorSliding->unk_15C) {
-                    player->base.parent = NULL;
-                }
-            } else {
+            } else if (door->id == ACTOR_EN_DOOR) {
                 KnobDoorActor* doorHandle = (KnobDoorActor*)door;
                 if (doorHandle->playOpenAnim) {
-                    player->base.parent = NULL;
+                    z2_Player_StopCutscene(player);
                 }
             }
         }
@@ -925,7 +931,7 @@ void Player_AfterCrushed(void) {
 
 s32 Player_GetWeaponDamageFlags(ActorPlayer* player, s32 dmgFlags) {
     if (GiantMask_IsGiant()) {
-        return 0xC0000108; // DMG_POWDER_KEG | DMG_EXPLOSIVES | DMG_GORON_PUNCH | DMG_UNK_0x1E // DMG_UNK_0x1E is used to trigger different damage calculation algorithm.
+        return DMG_POWDER_KEG | DMG_EXPLOSIVES | DMG_GORON_PUNCH | DMG_UNK_0x1E; // DMG_UNK_0x1E is used to trigger different damage calculation algorithm.
     }
     return dmgFlags;
 }
@@ -935,11 +941,27 @@ bool Player_ShouldBeKnockedOver(GlobalContext* ctxt, ActorPlayer* player, s32 da
         return false;
     }
 
+    if (MISC_CONFIG.flags.takeDamageOnEpona && (player->stateFlags.state1 & PLAYER_STATE1_EPONA)) {
+        s32* gHorseIsMounted = (s32*)0x801BDA9C;
+        z2_Camera_ChangeSetting(z2_Play_GetCamera(ctxt, 0), 1); // CAM_ID_MAIN, CAM_SET_NORMAL0
+        player->stateFlags.state1 &= ~PLAYER_STATE1_EPONA;
+        player->base.parent = NULL;
+        *gHorseIsMounted = false;
+        return true;
+    }
+
     // Displaced code:
     return damageType == 1
         || damageType == 2
         || !(player->base.bgcheckFlags & 1) // BGCHECKFLAG_GROUND
         || (player->stateFlags.state1 & (PLAYER_STATE1_LEDGE_CLIMB | PLAYER_STATE1_LEDGE_HANG | PLAYER_STATE1_CLIMB_UP | PLAYER_STATE1_LADDER));
+}
+
+bool Player_ShouldSkipParentDamageCheck(ActorPlayer* player) {
+    return MISC_CONFIG.flags.takeDamageOnEpona
+        && (player->stateFlags.state1 & PLAYER_STATE1_EPONA)
+        && (WEEKEVENTREG(92) & 7) == 0 // Not Gorman Race
+        && (player->actionFunc == sPlayer_Action_52 || player->actionFunc == sPlayer_Action_53); // Mounting/Mounted/Dismounting
 }
 
 bool Player_CantBeGrabbed(GlobalContext* ctxt, ActorPlayer* player) {
@@ -1024,4 +1046,63 @@ Actor* Player_GetGoronPunchCollisionActor(CollisionContext* colCtx, s32 bgId) {
 
 bool Player_ShouldNotSetGlobalVoidFlag(CollisionContext* colCtx, BgPolygon* poly, s32 bgId) {
     return gSaveContext.extra.voidFlag == -7 || z2_SurfaceType_IsWallDamage(colCtx, poly, bgId);
+}
+
+Actor* Player_GetHittingActor(ActorPlayer* player) {
+    if (MISC_CONFIG.flags.takeDamageOnEpona && player->base.colChkInfo.acHitEffect == 2 && (player->stateFlags.state1 & PLAYER_STATE1_EPONA)) {
+        player->base.colChkInfo.acHitEffect = 0;
+        if (player->base.colChkInfo.damage == 0) {
+            player->base.colChkInfo.damage = 4;
+        }
+    }
+    if (player->collisionCylinder.base.flagsAC & AC_HIT) {
+        return player->collisionCylinder.base.collisionAC;
+    }
+    if (MISC_CONFIG.flags.takeDamageOnShield) {
+        if (player->shieldQuad.base.flagsAC & AC_HIT) {
+            return player->shieldQuad.base.collisionAC;
+        }
+        if (player->shieldCylinder.base.flagsAC & AC_HIT) {
+            return player->shieldCylinder.base.collisionAC;
+        }
+    }
+    return NULL;
+}
+
+void Player_ForceInflictDamage(GlobalContext* ctxt, ActorPlayer* player, s32 damage) {
+    u32 flag = player->stateFlags.state2 & PLAYER_STATE2_LIFT_ACTOR;
+    player->stateFlags.state2 |= PLAYER_STATE2_LIFT_ACTOR;
+    z2_Player_InflictDamage(ctxt, -16);
+    if (!flag) {
+        player->stateFlags.state2 &= ~PLAYER_STATE2_LIFT_ACTOR;
+    }
+}
+
+void Player_OnMinorVoid(GlobalContext* ctxt, ActorPlayer* player) {
+    // Displaced code:
+    z2_Player_SetEquipmentData(ctxt, player);
+    // End displaced code
+
+    if (MISC_CONFIG.flags.takeDamageFromVoid) {
+        Player_ForceInflictDamage(ctxt, player, -16);
+        player->unk_D6A = -2;
+    }
+}
+
+void Player_OnDekuWaterVoid(GlobalContext* ctxt, ActorPlayer* player) {
+    // Displaced code:
+    z2_PerformEnterWaterEffects(ctxt, player);
+    // End displaced code
+
+    if (ctxt->warpType) {
+        Player_ForceInflictDamage(ctxt, player, -16);
+    }
+}
+
+void Player_VoidExit(u16 sfxId) {
+    z2_PlaySfx_2(sfxId);
+
+    if (MISC_CONFIG.flags.takeDamageFromVoid && gGlobalContext.sceneNum != SCENE_BOTI) {
+        Player_ForceInflictDamage(&gGlobalContext, GET_PLAYER(&gGlobalContext), -16);
+    }
 }

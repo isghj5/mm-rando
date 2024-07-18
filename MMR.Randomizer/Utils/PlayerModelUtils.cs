@@ -1,7 +1,4 @@
-﻿using MMR.Randomizer.Constants;
-using System.IO;
-
-namespace MMR.Randomizer.Utils
+﻿namespace MMR.Randomizer.Utils
 {
     public static class PlayerModelUtils
     {
@@ -13,7 +10,7 @@ namespace MMR.Randomizer.Utils
             // Overwrite segmented address: 0x0601E244
             ReadWriteUtils.WriteU32ToROM(0xC56350, 0x060122C4); // Physical: 0xBA5E70
 
-            // ???
+            // data for boots
             ReadWriteUtils.WriteU16ToROM(0xC5637E, 0x02BC);
             ReadWriteUtils.WriteU16ToROM(0xC56380, 0x0226);
             ReadWriteUtils.WriteU16ToROM(0xC56382, 0x010E);

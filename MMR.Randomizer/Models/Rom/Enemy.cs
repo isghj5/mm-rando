@@ -10,9 +10,10 @@ namespace MMR.Randomizer.Models.Rom
         public int Actor;
         public int Object;
         public int ObjectSize;
-        public List<int> Variables = new List<int>();
+        public List<ushort> Variables = new List<ushort>();
         public int Type;
-        public int Stationary;
-        public List<int> SceneExclude = new List<int>();
+        public bool Stationary;
+        public List<byte> ForbidFromScene = new List<byte>();
+        public List<byte> ForbidToScene = new List<byte>();
     }
 }

@@ -52,6 +52,7 @@
 extern int z2_CanInteract(GlobalContext* ctxt);
 extern u8 z2_Player_MaskIdToItemId(s32 maskIdMinusOne);
 extern void z2_Player_SetBootData(GlobalContext* ctxt, ActorPlayer* player);
+extern void z2_Player_SetEquipmentData(GlobalContext* ctxt, ActorPlayer* player);
 extern int z2_Player_InBlockingCsMode(GlobalContext* ctxt, ActorPlayer* player);
 extern int z2_Inventory_GetBtnItem(GlobalContext* ctxt, ActorPlayer* player, s32 buttonIndex);
 extern void z2_DrawButtonAmounts(GlobalContext* ctxt, u32 arg1, u16 alpha);
@@ -61,8 +62,11 @@ extern BgMeshHeader* z2_BgCheck_GetCollisionHeader(CollisionContext* colCtx, s32
 extern bool z2_BgCheck_EntityCheckCeiling(CollisionContext* colCtx, f32* outY, Vec3f* pos, f32 checkHeight, BgPolygon** outPoly, s32* outBgId, Actor* actor);
 extern Actor* z2_DynaPoly_GetActor(CollisionContext* colCtx, s32 bgId);
 extern u32 z2_GetFloorPhysicsType(void* arg0, void* arg1, u8 arg2);
+extern bool z2_SurfaceType_GetFloorType(CollisionContext* colCtx, BgPolygon* poly, s32 bgId);
+extern bool z2_SurfaceType_IsHorseBlocked(CollisionContext* colCtx, BgPolygon* poly, s32 bgId);
 extern bool z2_SurfaceType_IsWallDamage(CollisionContext* colCtx, BgPolygon* poly, s32 bgId);
 extern bool z2_Camera_IsHookArrival(Camera* camera);
+extern bool z2_Camera_ChangeSetting(Camera* camera, s16 setting);
 extern void z2_PushMatrixStackCopy();
 extern void z2_PopMatrixStack();
 extern f32* z2_GetMatrixStackTop();
@@ -79,6 +83,7 @@ extern void z2_Matrix_GetStateTranslationAndScaledY(f32 scale, Vec3f* dst);
 extern void z2_Matrix_GetStateTranslationAndScaledZ(f32 scale, Vec3f* dst);
 extern AudioInfo* z2_GetAudioTable(u8 audioType);
 extern void z2_PlaySfx(u32 id);
+extern void z2_PlaySfx_2(u16 id);
 extern void z2_PlaySfxDecide();
 extern void z2_PlaySfxCancel();
 extern void z2_PlayPlayerSfx(ActorPlayer* player, s16 sfxId);
@@ -114,10 +119,10 @@ extern void z2_CopyToMatrixStackTop(z_Matrix* mtx);
 
 // Function Prototypes (Scene Flags).
 // TODO parameters
-extern void z2_get_generic_flag();
+extern s32 z2_get_generic_flag(GlobalContext* ctxt, s32 flag);
 extern void z2_set_generic_flag();
 extern void z2_remove_generic_flag(GlobalContext* ctxt, s8 flag);
-extern bool z2_get_chest_flag(GlobalContext* ctxt, s8 flag);
+extern s32 z2_get_chest_flag(GlobalContext* ctxt, s8 flag);
 extern void z2_set_chest_flag();
 extern void z2_set_all_chest_flags();
 extern void z2_get_all_chest_flags();
@@ -127,7 +132,7 @@ extern void z2_remove_clear_flag();
 extern void z2_get_temp_clear_flag();
 extern void z2_set_temp_clear_flag();
 extern void z2_remove_temp_clear_flag();
-extern bool z2_get_collectible_flag(GlobalContext* ctxt, s32 flag);
+extern s32 z2_get_collectible_flag(GlobalContext* ctxt, s32 flag);
 extern void z2_set_collectibe_flag();
 extern void z2_load_scene_flags();
 extern u16 z2_check_scene_pairs(u16 sceneId);
@@ -200,7 +205,10 @@ extern void z2_SkelAnime_DrawFlexLod(GlobalContext* ctxt, void** skeleton, Vec3s
 extern void z2_801660B8(GlobalContext* ctxt, Gfx* gfx);
 
 // Function Prototypes (File Loading).
+extern void z2_Sram_ResetSaveFromMoonCrash(SramContext* sramCtxt);
 extern void z2_Sram_SaveSpecialNewDay(GlobalContext* ctxt);
+extern void z2_Sram_SetFlashPagesDefault(SramContext* sramCtxt, u32 curPage, u32 numPages);
+extern void z2_Sram_StartWriteToFlashDefault(SramContext* sramCtxt);
 extern s32 z2_RomToRam(u32 src, void* dst, u32 length);
 extern s16 z2_GetFileNumber(u32 vromAddr);
 extern u32 z2_GetFilePhysAddr(u32 vromAddr);
@@ -263,6 +271,7 @@ extern bool z2_SkelAnime_Update(SkelAnime* skelAnime);
 extern void z2_Animation_MorphToLoop(SkelAnime* skelAnime, AnimationHeader* animation, f32 morphFrames);
 
 // Function Prototypes (OS).
+extern void z2_bzero(void* dest, u32 size);
 extern void z2_memcpy(void* dest, const void* src, u32 size);
 extern size_t z2_strlen(const unsigned char* s);
 extern f32 z2_sqrtf(f32 f);
@@ -306,6 +315,7 @@ extern void ShrinkWindow_SetLetterboxTarget(s16 unkA0);
 extern s16 z2_Play_CreateSubCamera(GlobalContext* ctxt);
 extern void z2_Play_CameraChangeStatus(GlobalContext* ctxt, s16 camId, s16 status);
 extern void z2_Play_ClearCamera(GlobalContext* ctxt, s16 camId);
+extern Camera* z2_Play_GetCamera(GlobalContext* ctxt, s16 camId);
 extern void z2_Play_CameraSetAtEyeUp(GlobalContext* ctxt, s16 camId, Vec3f* at, Vec3f* eye, Vec3f* up);
 extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 
@@ -323,6 +333,8 @@ extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 #define z2_Player_func_8083692C_VRAM     0x8083692C
 #define z2_Player_func_80838A90_VRAM     0x80838A90
 #define z2_Player_func_8083B930_VRAM     0x8083B930
+#define z2_Player_InflictDamage_VRAM     0x8085B3E0
+#define z2_Player_StopCutscene_VRAM      0x80838760
 
 #define z2_Player_Action_0_VRAM          0x808496AC
 #define z2_Player_Action_1_VRAM          0x808497A0
@@ -450,5 +462,7 @@ typedef bool (*z2_Player_func_80838A90_Func)(ActorPlayer* player, GlobalContext*
 typedef bool (*z2_Player_func_8083B930_Func)(GlobalContext* ctxt, ActorPlayer* player);
 typedef void (*z2_Player_PlayAnimationOnce_Func)(GlobalContext* ctxt, ActorPlayer* player, void* anim);
 typedef void (*z2_Player_PlayAnimationLoop_Func)(GlobalContext* ctxt, ActorPlayer* player, void* anim);
+typedef void (*z2_Player_InflictDamage_Func)(GlobalContext* ctxt, s32 damage);
+typedef void (*z2_Player_StopCutscene_Func)(ActorPlayer* player);
 
 #endif

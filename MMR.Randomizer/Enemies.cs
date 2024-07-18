@@ -1,10 +1,13 @@
 ﻿using MMR.Common.Extensions;
 using MMR.Randomizer.Attributes.Actor;
+using MMR.Randomizer.Attributes.Enemy;
+using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Enemy = MMR.Randomizer.Models.Rom.Enemy;
 
 namespace MMR.Randomizer
 {
@@ -20,94 +23,77 @@ namespace MMR.Randomizer
 
         public static void ReadEnemyList()
         {
-            EnemyList = new List<Enemy>();
-            string[] lines = Properties.Resources.ENEMIES.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-            int i = 0;
-            while (i < lines.Length)
+            EnemyList = Enum.GetValues<GameObjects.Enemy>().Select(e =>
             {
-                if (lines[i].StartsWith("-"))
+                var enemy = new Enemy
                 {
-                    i++;
-                    continue;
-                }
-                Enemy e = new Enemy();
-                e.Actor = Convert.ToInt32(lines[i], 16);
-                e.Object = Convert.ToInt32(lines[i + 1], 16);
-                e.ObjectSize = ObjUtils.GetObjSize(e.Object);
-                string[] varlist = lines[i + 2].Split(',');
-                for (int j = 0; j <  varlist.Length; j++)
-                {
-                    e.Variables.Add(Convert.ToInt32(varlist[j], 16));
-                }
-                e.Type = Convert.ToInt32(lines[i + 3], 16);
-                e.Stationary = Convert.ToInt32(lines[i + 4], 16);
-                if (lines[i + 5] != "")
-                {
-                    string[] selist = lines[i + 5].Split(',');
-                    for (int j = 0; j < selist.Length; j++)
-                    {
-                        e.SceneExclude.Add(Convert.ToInt32(selist[j], 16));
-                    }
-                }
-                EnemyList.Add(e);
-                i += 6;
-            }
+                    Actor = e.GetAttribute<ActorIdAttribute>().Id,
+                    Object = e.GetAttribute<ObjectIdAttribute>().Id,
+                    Stationary = !e.HasAttribute<IsMovingAttribute>(),
+                    Type = (int)e.GetAttribute<ActorTypeAttribute>().Type,
+                    Variables = e.GetAttributes<VariableAttribute>().Select(va => va.Variable).ToList(),
+                    ForbidFromScene = e.GetAttributes<ForbidFromSceneAttribute>().Select(sea => sea.Scene.Id()).ToList(),
+                    ForbidToScene = e.GetAttributes<ForbidToSceneAttribute>().Select(sea => sea.Scene.Id()).ToList(),
+                };
+                enemy.ObjectSize = ObjUtils.GetObjSize(enemy.Object);
+                return enemy;
+            }).ToList();
         }
 
         public static List<int> GetSceneEnemyActors(Scene scene)
         {
-            List<int> ActorList = new List<int>();
-            for (int i = 0; i < scene.Maps.Count; i++)
+            var actorList = new List<int>();
+            foreach (var map in scene.Maps)
             {
-                for (int j = 0; j < scene.Maps[i].Actors.Count; j++)
+                foreach (var actor in map.Actors)
                 {
-                    int k = EnemyList.FindIndex(u => u.Actor == scene.Maps[i].Actors[j].n);
-                    if (k != -1)
+                    var enemy = EnemyList.FirstOrDefault(u => u.Actor == actor.n);
+                    if (enemy != null)
                     {
-                        if (!EnemyList[k].SceneExclude.Contains(scene.Number))
+                        if (!enemy.ForbidFromScene.Contains(scene.Number))
                         {
-                            ActorList.Add(EnemyList[k].Actor);
+                            actorList.Add(enemy.Actor);
                         }
                     }
                 }
             }
-            return ActorList;
+            return actorList;
         }
 
         public static List<int> GetSceneEnemyObjects(Scene scene)
         {
-            List<int> ObjList = new List<int>();
-            for (int i = 0; i < scene.Maps.Count; i++)
+            var objList = new List<int>();
+            foreach (var map in scene.Maps)
             {
-                for (int j = 0; j < scene.Maps[i].Objects.Count; j++)
+                foreach (var obj in map.Objects)
                 {
-                    int k = EnemyList.FindIndex(u => u.Object == scene.Maps[i].Objects[j]);
-                    if (k != -1)
+                    var enemy = EnemyList.FirstOrDefault(u => u.Object == obj);
+                    if (enemy != null)
                     {
-                        if (!ObjList.Contains(EnemyList[k].Object))
+                        if (!objList.Contains(enemy.Object))
                         {
-                            if (!EnemyList[k].SceneExclude.Contains(scene.Number))
+                            if (!enemy.ForbidFromScene.Contains(scene.Number))
                             {
-                                ObjList.Add(EnemyList[k].Object);
+                                objList.Add(enemy.Object);
                             }
                         }
                     }
                 }
             }
-            return ObjList;
+            return objList;
         }
 
         public static void SetSceneEnemyActors(Scene scene, List<ValueSwap[]> A)
         {
-            for (int i = 0; i < scene.Maps.Count; i++)
+            foreach (var map in scene.Maps)
             {
-                for (int j = 0; j < scene.Maps[i].Actors.Count; j++)
+                foreach (var actor in map.Actors)
                 {
-                    int k = A.FindIndex(u => u[0].OldV == scene.Maps[i].Actors[j].n);
+                    int k = A.FindIndex(u => u[0].OldV == actor.n);
                     if (k != -1)
                     {
-                        scene.Maps[i].Actors[j].n = A[k][0].NewV;
-                        scene.Maps[i].Actors[j].v = A[k][1].NewV;
+                        actor.n = A[k][0].NewV;
+                        actor.v = A[k][1].NewV;
                         A.RemoveAt(k);
                     }
                 }
@@ -116,100 +102,98 @@ namespace MMR.Randomizer
 
         public static void SetSceneEnemyObjects(Scene scene, List<ValueSwap> O)
         {
-            for (int i = 0; i < scene.Maps.Count; i++)
+            foreach (var map in scene.Maps)
             {
-                for (int j = 0; j < scene.Maps[i].Objects.Count; j++)
+                for (int j = 0; j < map.Objects.Count; j++)
                 {
-                    int k = O.FindIndex(u => u.OldV == scene.Maps[i].Objects[j]);
-                    if (k != -1)
+                    var swap = O.FirstOrDefault(u => u.OldV == map.Objects[j]);
+                    if (swap != null)
                     {
-                        scene.Maps[i].Objects[j] = O[k].NewV;
+                        map.Objects[j] = swap.NewV;
                     }
                 }
             }
         }
 
-        public static List<Enemy> GetMatchPool(List<Enemy> Actors, Random R)
+        public static List<Enemy> GetMatchPool(List<Enemy> sceneObjectEnemies, List<Enemy> allowedEnemies, Random R)
         {
-            List<Enemy> Pool = new List<Enemy>();
-            for (int i = 0; i < Actors.Count; i++)
+            var pool = new List<Enemy>();
+            foreach (var sceneObjectEnemy in sceneObjectEnemies)
             {
-                Enemy E = EnemyList.Find(u => u.Actor == Actors[i].Actor);
-                for (int j = 0; j < EnemyList.Count; j++)
+                foreach (var enemy in allowedEnemies)
                 {
-                    if ((EnemyList[j].Type == E.Type) && (EnemyList[j].Stationary == E.Stationary))
+                    if ((enemy.Type == sceneObjectEnemy.Type) && (enemy.Stationary == sceneObjectEnemy.Stationary))
                     {
-                        if (!Pool.Contains(EnemyList[j]))
+                        if (!pool.Contains(enemy))
                         {
-                            Pool.Add(EnemyList[j]);
+                            pool.Add(enemy);
                         }
                     }
-                    else if ((EnemyList[j].Type == E.Type) && (R.Next(5) == 0))
+                    else if ((enemy.Type == sceneObjectEnemy.Type) && (R.Next(5) == 0))
                     {
-                        if (!Pool.Contains(EnemyList[j]))
+                        if (!pool.Contains(enemy))
                         {
-                            Pool.Add(EnemyList[j]);
+                            pool.Add(enemy);
                         }
                     }
                 }
             }
-            return Pool;
+            return pool;
         }
 
         public static void SwapSceneEnemies(Scene scene, Random rng)
         {
-            List<int> Actors = GetSceneEnemyActors(scene);
-            if (Actors.Count == 0)
+            var sceneActors = GetSceneEnemyActors(scene);
+            if (sceneActors.Count == 0)
             {
                 return;
             }
-            List<int> Objects = GetSceneEnemyObjects(scene);
-            if (Objects.Count == 0)
+            var sceneObjects = GetSceneEnemyObjects(scene);
+            if (sceneObjects.Count == 0)
             {
                 return;
             }
             // if actor doesn't exist but object does, probably spawned by something else
-            List<int> ObjRemove = new List<int>();
-            foreach (int o in Objects)
+            var objRemove = new List<int>();
+            foreach (var sceneObject in sceneObjects)
             {
-                List<Enemy> ObjectMatch = EnemyList.FindAll(u => u.Object == o);
-                bool exists = false;
-                for (int i = 0; i < ObjectMatch.Count; i++)
+                var objectMatch = EnemyList.FindAll(u => u.Object == sceneObject);
+                if (!objectMatch.Any(o => sceneActors.Contains(o.Actor)))
                 {
-                    exists |= Actors.Contains(ObjectMatch[i].Actor);
-                }
-                if (!exists)
-                {
-                    ObjRemove.Add(o); ;
+                    objRemove.Add(sceneObject);
                 }
             }
-            foreach (int o in ObjRemove)
+            foreach (var o in objRemove)
             {
-                Objects.Remove(o);
+                sceneObjects.Remove(o);
             }
-            List<ValueSwap[]> ActorsUpdate = new List<ValueSwap[]>();
-            List<ValueSwap> ObjsUpdate;
-            List<List<Enemy>> Updates;
-            List<List<Enemy>> Matches;
+            var actorsUpdate = new List<ValueSwap[]>();
+            List<ValueSwap> objUpdates;
+            List<List<Enemy>> updates;
+            List<List<Enemy>> matches;
             while (true)
             {
-                ObjsUpdate = new List<ValueSwap>();
-                Updates = new List<List<Enemy>>();
-                Matches = new List<List<Enemy>>();
-                int oldsize = 0;
-                int newsize = 0;
-                for (int i = 0; i < Objects.Count; i++)
+                objUpdates = new List<ValueSwap>();
+                updates = new List<List<Enemy>>();
+                matches = new List<List<Enemy>>();
+                var oldsize = 0;
+                var newsize = 0;
+                foreach (var sceneObject in sceneObjects)
                 {
-                    Updates.Add(EnemyList.FindAll(u => ((u.Object == Objects[i]) && (Actors.Contains(u.Actor)))));
-                    Matches.Add(GetMatchPool(Updates[i], rng));
-                    int k = rng.Next(Matches[i].Count);
-                    int newobj = Matches[i][k].Object;
-                    newsize += Matches[i][k].ObjectSize;
-                    oldsize += Updates[i][0].ObjectSize;
-                    ValueSwap NewObject = new ValueSwap();
-                    NewObject.OldV = Objects[i];
-                    NewObject.NewV = newobj;
-                    ObjsUpdate.Add(NewObject);
+                    var sceneObjectEnemies = EnemyList.FindAll(u => u.Object == sceneObject && sceneActors.Contains(u.Actor));
+                    var allowedEnemies = EnemyList.FindAll(u => !u.ForbidToScene.Contains(scene.Number));
+                    var matchPool = GetMatchPool(sceneObjectEnemies, allowedEnemies, rng);
+                    var randomMatch = matchPool.Random(rng);
+                    var newobj = randomMatch.Object;
+                    newsize += randomMatch.ObjectSize;
+                    oldsize += sceneObjectEnemies[0].ObjectSize;
+                    var newObject = new ValueSwap();
+                    newObject.OldV = sceneObject;
+                    newObject.NewV = newobj;
+
+                    objUpdates.Add(newObject);
+                    updates.Add(sceneObjectEnemies);
+                    matches.Add(matchPool);
                 }
                 if (newsize <= oldsize)
                 {
@@ -218,42 +202,46 @@ namespace MMR.Randomizer
                     break;
                 }
             }
-            for (int i = 0; i < ObjsUpdate.Count; i++)
+            for (var i = 0; i < objUpdates.Count; i++)
             {
-                int j = 0;
-                while (j != Actors.Count)
+                var objUpdate = objUpdates[i];
+                var update = updates[i];
+                var match = matches[i];
+                var j = 0;
+                while (j != sceneActors.Count)
                 {
-                    Enemy Old = Updates[i].Find(u => u.Actor == Actors[j]);
-                    if (Old != null)
+                    var sceneActor = sceneActors[j];
+                    var old = update.Find(u => u.Actor == sceneActor);
+                    if (old != null)
                     {
-                        List<Enemy> SubMatches = Matches[i].FindAll(u => u.Object == ObjsUpdate[i].NewV);
-                        int l;
+                        var subMatches = match.FindAll(u => u.Object == objUpdate.NewV);
+                        Enemy enemy;
                         while (true)
                         {
-                            l = rng.Next(SubMatches.Count);
-                            if ((Old.Type == SubMatches[l].Type) && (Old.Stationary == SubMatches[l].Stationary))
+                            enemy = subMatches.Random(rng);
+                            if (old.Type == enemy.Type && old.Stationary == enemy.Stationary)
                             {
                                 break;
                             }
                             else
                             {
-                                if ((Old.Type == SubMatches[l].Type) && (rng.Next(5) == 0))
+                                if (old.Type == enemy.Type && rng.Next(5) == 0)
                                 {
                                     break;
                                 }
                             }
-                            if (SubMatches.FindIndex(u => u.Type == Old.Type) == -1)
+                            if (!subMatches.Any(u => u.Type == old.Type))
                             {
                                 break;
                             }
                         }
-                        ValueSwap NewActor = new ValueSwap();
-                        NewActor.OldV = Actors[j];
-                        NewActor.NewV = SubMatches[l].Actor;
-                        ValueSwap NewVar = new ValueSwap();
-                        NewVar.NewV = SubMatches[l].Variables[rng.Next(SubMatches[l].Variables.Count)];
-                        ActorsUpdate.Add(new ValueSwap[] { NewActor, NewVar });
-                        Actors.RemoveAt(j);
+                        var newActor = new ValueSwap();
+                        newActor.OldV = sceneActor;
+                        newActor.NewV = enemy.Actor;
+                        var newVar = new ValueSwap();
+                        newVar.NewV = enemy.Variables.Random(rng);
+                        actorsUpdate.Add(new ValueSwap[] { newActor, newVar });
+                        sceneActors.RemoveAt(j);
                     }
                     else
                     {
@@ -261,14 +249,14 @@ namespace MMR.Randomizer
                     }
                 }
             }
-            SetSceneEnemyActors(scene, ActorsUpdate);
-            SetSceneEnemyObjects(scene, ObjsUpdate);
+            SetSceneEnemyActors(scene, actorsUpdate);
+            SetSceneEnemyObjects(scene, objUpdates);
             SceneUtils.UpdateScene(scene);
         }
 
         public static void ShuffleEnemies(Random random)
         {
-            int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69 };
+            int[] sceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69 };
             ReadEnemyList();
             SceneUtils.ReadSceneTable();
             SceneUtils.GetMaps();
@@ -276,7 +264,7 @@ namespace MMR.Randomizer
             SceneUtils.GetActors();
             for (int i = 0; i < RomData.SceneList.Count; i++)
             {
-                if (!SceneSkip.Contains(RomData.SceneList[i].Number))
+                if (!sceneSkip.Contains(RomData.SceneList[i].Number))
                 {
                     SwapSceneEnemies(RomData.SceneList[i], random);
                 }

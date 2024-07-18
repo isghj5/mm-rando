@@ -10,6 +10,7 @@
 .definelabel z2_RngInt, 0x80086FA0
 .definelabel z2_RngSetSeed, 0x80086FD0
 .definelabel z2_Rand_ZeroOne, 0x80086FDC
+.definelabel z2_bzero, 0x80089630
 .definelabel z2_sqrtf, 0x8008D700
 .definelabel z2_strlen, 0x8008F1E0
 .definelabel z2_BaseDrawCollectable, 0x800A7128
@@ -64,8 +65,11 @@
 .definelabel z2_BgCheck_EntityCheckCeiling, 0x800C4F84
 .definelabel z2_DynaPoly_GetActor, 0x800C6248
 .definelabel z2_GetFloorPhysicsType, 0x800C99D4
+.definelabel z2_SurfaceType_GetFloorType, 0x800C99D4
+.definelabel z2_SurfaceType_IsHorseBlocked, 0x800C9B90
 .definelabel z2_SurfaceType_IsWallDamage, 0x800C9E88
 .definelabel z2_Camera_IsHookArrival, 0x800CB7CC
+.definelabel z2_Camera_ChangeSetting, 0x800DFAC8
 .definelabel z2_CollisionCheck_GetDamageAndEffectOnBumper, 0x800E0410
 .definelabel z2_CollisionCheck_GetToucherDamage, 0x800E04EC
 .definelabel z2_Collider_UpdateCylinder, 0x800E7DF8
@@ -133,6 +137,7 @@
 .definelabel z2_Player_InBlockingCsMode, 0x80123358
 .definelabel z2_CanInteract, 0x801233E4
 .definelabel z2_Inventory_GetBtnItem, 0x8012364C
+.definelabel z2_Player_SetEquipmentData, 0x80123C90
 .definelabel z2_801242DC, 0x801242DC
 .definelabel z2_Player_DrawGetItem, 0x8012697C
 .definelabel z2_PlayerGormanTears, 0x80127594
@@ -163,7 +168,10 @@
 .definelabel z2_SkelAnime_Update, 0x80136CD0
 .definelabel z2_Animation_MorphToLoop, 0x80137594
 .definelabel z2_UpdatePictoFlags, 0x8013A240
+.definelabel z2_Sram_ResetSaveFromMoonCrash, 0x80144A94
 .definelabel z2_Sram_SaveSpecialNewDay, 0x80146F5C
+.definelabel z2_Sram_SetFlashPagesDefault, 0x80147008
+.definelabel z2_Sram_StartWriteToFlashDefault, 0x80147020
 .definelabel z2_InitButtonNoteColors, 0x80147564
 .definelabel z2_MessageShouldAdvance, 0x80147624
 .definelabel z2_MessageClose, 0x801477B4
@@ -178,6 +186,7 @@
 .definelabel z2_Play_CreateSubCamera, 0x801694DC
 .definelabel z2_Play_CameraChangeStatus, 0x80169590
 .definelabel z2_Play_ClearCamera, 0x80169600
+.definelabel z2_Play_GetCamera, 0x801696D4
 .definelabel z2_Play_CameraSetAtEyeUp, 0x8016981C
 .definelabel z2_80169AFC, 0x80169AFC
 .definelabel z2_check_scene_pairs, 0x80169CBC
@@ -204,6 +213,7 @@
 .definelabel z2_GetAudioTable, 0x80190294
 .definelabel z2_ToggleSfxDampen, 0x8019C300
 .definelabel z2_PlaySfx, 0x8019F0C8
+.definelabel z2_PlaySfx_2, 0x8019F128
 .definelabel z2_PlaySfxDecide, 0x8019F208
 .definelabel z2_PlaySfxCancel, 0x8019F230
 .definelabel z2_Audio_PlayObjSoundBgm, 0x801A153C

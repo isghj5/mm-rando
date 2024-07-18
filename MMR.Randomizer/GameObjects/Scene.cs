@@ -300,7 +300,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x68)]
         BombShop = 0x65,
 
-        // GiantsChamber = 0x66,
+        [SceneInternalId(0x69)]
+        GiantsChamber = 0x66,
 
         [SceneInternalId(0x6A)]
         GormanTrack = 0x67,

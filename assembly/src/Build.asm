@@ -66,6 +66,7 @@
 .include "GossipStone.Patch.asm"
 .include "Gyorg.Patch.asm"
 .include "HitTag.Patch.asm"
+.include "Horse.Patch.asm"
 .include "HudColors.Patch.asm"
 .include "Input.Patch.asm"
 .include "InvisibleRupee.Patch.asm"

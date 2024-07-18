@@ -22,6 +22,8 @@ using System.Text.RegularExpressions;
 using MMR.Randomizer.Constants;
 using System.Threading;
 using MMR.UI.Controls;
+using System.Linq.Expressions;
+using MMR.Randomizer.Attributes.Setting;
 
 namespace MMR.UI.Forms
 {
@@ -47,7 +49,7 @@ namespace MMR.UI.Forms
         {
             InitializeComponent();
             InitializeSettings();
-            InitializeTooltips();
+            InitializeSimpleControls();
             InitializeHUDGroupBox();
             InitializeTransformationFormSettings();
             InitializeShortenCutsceneSettings();
@@ -60,7 +62,7 @@ namespace MMR.UI.Forms
 
             JunkLocationEditor = new JunkLocationEditForm();
 
-            ItemEditor = new CustomItemListEditForm(ItemUtils.AllLocations(), item => $"{item.Location()} ({item.Name()})", "Invalid custom item string");
+            ItemEditor = new CustomItemListEditForm(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.CustomItemListString)).GetAttribute<SettingItemListAttribute>().ItemList, item => $"{item.Location()} ({item.Name()})", "Invalid custom item string");
 
             LogicEditor = new LogicEditorForm();
             Manual = new ManualForm();
@@ -71,124 +73,199 @@ namespace MMR.UI.Forms
             Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion}";
         }
 
-        private void InitializeTooltips()
+        private void InitializeSimpleControls()
         {
-            // ROM Settings
-            TooltipBuilder.SetTooltip(cN64, "Output a randomized .z64 ROM that can be loaded into a N64 Emulator.");
-            TooltipBuilder.SetTooltip(cVC, "Output a randomized .WAD file that can be loaded into a Wii Virtual Channel.");
-            TooltipBuilder.SetTooltip(cSpoiler, "Output a spoiler log.\n\n The spoiler log contains a list over all items, and their shuffled locations.\n In addition, the spoiler log contains version information, seed and settings string used in the randomization.");
-            TooltipBuilder.SetTooltip(cHTMLLog, "Output a html spoiler log (Requires spoiler log to be checked).\n\n Similar to the regular spoiler log, but readable in browsers. The locations/items are hidden by default, and hovering over them will make them visible.");
-            TooltipBuilder.SetTooltip(cPatch, "Output a patch file that can be applied using the Patch settings tab to reproduce the same ROM.\nPatch file includes all settings except Tunic and Tatl color.");
+            Dictionary<Control, Expression<Func<Configuration, object>>> simpleControls = new Dictionary<Control, Expression<Func<Configuration, object>>>
+            {
+                // ROM Settings
+                { cN64, cfg => cfg.OutputSettings.GenerateROM },
+                { cVC, cfg => cfg.OutputSettings.OutputVC },
+                { cSpoiler, cfg => cfg.OutputSettings.GenerateSpoilerLog },
+                { cHTMLLog, cfg => cfg.OutputSettings.GenerateHTMLLog },
+                { cPatch, cfg => cfg.OutputSettings.GeneratePatch },
 
-            // Main Settings
-            TooltipBuilder.SetTooltip(cMode, "Select mode of logic:\n - Casual: The randomization logic ensures that the game can be beaten casually.\n - Glitched: The randomization logic allows for placement of items that are only obtainable using known glitches.\n - Vanilla Layout: All items are left vanilla.\n - User Logic: Upload your own custom logic to be used in the randomization.\n - No Logic: Completely random, no guarantee the game is beatable. Uses Glitched logic with all tricks enabled for HTML tracker and Blitz junk location calculation.");
+                // Main Settings
+                { cMixSongs, cfg => cfg.GameplaySettings.AddSongs },
+                { cProgressiveUpgrades, cfg => cfg.GameplaySettings.ProgressiveUpgrades },
+                { cDEnt, cfg => cfg.GameplaySettings.RandomizeDungeonEntrances },
+                { cShuffleBosses, cfg => cfg.GameplaySettings.RandomizeBossRooms },
+                { cEnemy, cfg => cfg.GameplaySettings.RandomizeEnemies },
+                { cMode, cfg => cfg.GameplaySettings.LogicMode },
 
-            TooltipBuilder.SetTooltip(cMixSongs, "Enable songs being placed among items in the randomization pool.");
-            TooltipBuilder.SetTooltip(cProgressiveUpgrades, "Enable swords, wallets, magic, bomb bags, quivers and the Goron Lullaby to be found in the intended order.");
-            TooltipBuilder.SetTooltip(cDEnt, "Enable randomization of dungeon entrances. \n\nStone Tower Temple is always vanilla, but Inverted Stone Tower Temple is randomized.");
-            TooltipBuilder.SetTooltip(cShuffleBosses, "Enable randomization of boss rooms. The boss door texture will match the boss behind the door.");
-            TooltipBuilder.SetTooltip(cEnemy, "Enable randomization of enemies. May cause softlocks in some circumstances, use at your own risk.");
+                // Gimmicks
+                { cHideClock, cfg => cfg.GameplaySettings.HideClock },
+                { cSunsSong, cfg => cfg.GameplaySettings.EnableSunsSong },
+                { cUnderwaterOcarina, cfg => cfg.GameplaySettings.OcarinaUnderwater },
+                { cFDAnywhere, cfg => cfg.GameplaySettings.AllowFierceDeityAnywhere },
+                { cByoAmmo, cfg => cfg.GameplaySettings.ByoAmmo },
+                { cDeathMoonCrash, cfg => cfg.GameplaySettings.DeathMoonCrash },
+                { cMoonCrashFileErase, cfg => cfg.GameplaySettings.MoonCrashErasesFile },
+                { cFewerHealthDrops, cfg => cfg.GameplaySettings.FewerHealthDrops },
+                { cTakeDamageOnEpona, cfg => cfg.GameplaySettings.TakeDamageOnEpona },
+                { cTakeDamageWhileShielding, cfg => cfg.GameplaySettings.TakeDamageWhileShielding },
+                { cTakeDamageFromVoid, cfg => cfg.GameplaySettings.TakeDamageFromVoid },
+                { cTakeDamageFromGorons, cfg => cfg.GameplaySettings.TakeDamageFromGorons },
+                { cTakeDamageFromGibdosFaster, cfg => cfg.GameplaySettings.TakeDamageFromGibdosFaster },
+                { cTakeDamageGettingCaught, cfg => cfg.GameplaySettings.TakeDamageGettingCaught },
+                { cTakeDamageFromDog, cfg => cfg.GameplaySettings.TakeDamageFromDog },
+                { cTakeDamageFromDexihands, cfg => cfg.GameplaySettings.TakeDamageFromDexihands },
+                { cContinuousDekuHopping, cfg => cfg.GameplaySettings.ContinuousDekuHopping },
+                { cIronGoron, cfg => cfg.GameplaySettings.IronGoron },
+                { cHookshotAnySurface, cfg => cfg.GameplaySettings.HookshotAnySurface },
+                { cClimbMostSurfaces, cfg => cfg.GameplaySettings.ClimbMostSurfaces },
+                { cIceTrapQuirks, cfg => cfg.GameplaySettings.TrapQuirks },
+                { cInstantTransformations, cfg => cfg.GameplaySettings.InstantTransform },
+                { cBombArrows, cfg => cfg.GameplaySettings.BombArrows },
+                { cVanillaMoonTrials, cfg => cfg.GameplaySettings.VanillaMoonTrialAccess },
+                { cGiantMaskAnywhere, cfg => cfg.GameplaySettings.GiantMaskAnywhere },
+                { cDMult, cfg => cfg.GameplaySettings.DamageMode },
+                { cDType, cfg => cfg.GameplaySettings.DamageEffect },
+                { cGravity, cfg => cfg.GameplaySettings.MovementMode },
+                { cNutAndStickDrops, cfg => cfg.GameplaySettings.NutandStickDrops },
+                { cChestGameMinimap, cfg => cfg.GameplaySettings.ChestGameMinimap },
+                { cFloors, cfg => cfg.GameplaySettings.FloorType },
+                { cClockSpeed, cfg => cfg.GameplaySettings.ClockSpeed },
+                { cAutoInvert, cfg => cfg.GameplaySettings.AutoInvert },
+                { cStartingItems, cfg => cfg.GameplaySettings.StartingItemMode },
+                { cRequiredBossRemains, cfg => cfg.GameplaySettings.RequiredBossRemains },
+                { cBlastCooldown, cfg => cfg.GameplaySettings.BlastMaskCooldown },
+                { cTrapAmount, cfg => cfg.GameplaySettings.TrapAmount },
+                { cTrapsAppearance, cfg => cfg.GameplaySettings.TrapAppearance },
 
-            // Gimmicks
-            TooltipBuilder.SetTooltip(cDMult, "Select a damage mode, affecting how much damage Link takes:\n\n - Default: Link takes normal damage.\n - 2x: Link takes double damage.\n - 4x: Link takes quadruple damage.\n - 1-hit KO: Any damage kills Link.\n - Doom: Hardcore mode. Link's hearts are slowly being drained continuously.");
-            TooltipBuilder.SetTooltip(cDType, "Select an effect to occur whenever Link is being damaged:\n\n - Default: Vanilla effects occur.\n - Fire: All damage burns Link.\n - Ice: All damage freezes Link.\n - Shock: All damage shocks link.\n - Knockdown: All damage knocks Link down.\n - Random: Any random effect of the above.");
-            TooltipBuilder.SetTooltip(cGravity, "Select a movement modifier:\n\n - Default: No movement modifier.\n - High speed: Link moves at a much higher velocity.\n - Super low gravity: Link can jump very high.\n - Low gravity: Link can jump high.\n - High gravity: Link can barely jump.");
-            TooltipBuilder.SetTooltip(cLowHealthSFXComboBox, "Select a Low Health SFX setting:\n\n - Default: Vanilla sound.\n - Disabled: No sound will play.\n - Random: a random SFX will be chosen.\n - Specific SFX: a specific SFX will play as the low health sfx.");
-            TooltipBuilder.SetTooltip(cNutAndStickDrops, "Adds Deku nuts and Deku sticks to drop tables in the field:\n\n - Default: No change, vanilla behavior.\n - Light: one stick and nut 1/16 chance termina bush.\n - Medium: More nuts, twice the chance\n - Extra: More sticks, more nuts, more drop locations.\n - Mayhem: You're crazy in the coconut!");
-            TooltipBuilder.SetTooltip(cChestGameMinimap, "Draws a minimap during the Treasure Chest Game if you have the Map of Clock Town:\n\n - Off: No minimap, default vanilla behaviour.\n - Minimal: Minimap is displayed, blocks appear on minimap when triggered.\n - Conditional Spoiler: Minimal behaviour, and if the Mask of Truth is aquired along with Map of Clock Town, spoil the maze layout.\n - Spoiler: Only Map of Clock Town needed to spoil the maze layout.");
-            TooltipBuilder.SetTooltip(cFloors, "Select a floortype for every floor ingame:\n\n - Default: Vanilla floortypes.\n - Sand: Link sinks slowly into every floor, affecting movement speed.\n - Ice: Every floor is slippery.\n - Snow: Similar to sand. \n - Random: Any random floortypes of the above.");
-            TooltipBuilder.SetTooltip(cClockSpeed, "Modify the speed of time.");
-            TooltipBuilder.SetTooltip(cAutoInvert, "Auto-invert time at the start of a cycle.");
-            TooltipBuilder.SetTooltip(cHideClock, "Clock UI will be hidden.");
-            TooltipBuilder.SetTooltip(cStartingItems, "Select a starting item mode:\n\nNone - You will not start with any randomized starting items.\nRandom - You will start with randomized starting items.\nAllow Temporary Items - You will start with randomized starting items including Keg, Magic Bean and Bottles with X.");
-            TooltipBuilder.SetTooltip(cRequiredBossRemains, "Set the number of Boss Remains required to proceed through the final Giants cutscene.");
-            TooltipBuilder.SetTooltip(cBlastCooldown, "Adjust the cooldown timer after using the Blast Mask.");
-            TooltipBuilder.SetTooltip(cTrapAmount, "Amount of ice traps to be added to pool by replacing junk items.");
+                // Comfort
+                { cQText, cfg => cfg.GameplaySettings.QuickTextEnabled },
+                { cFreeHints, cfg => cfg.GameplaySettings.FreeHints },
+                { cFreeGaroHints, cfg => cfg.GameplaySettings.FreeGaroHints },
+                { cGossipsTolerant, cfg => cfg.GameplaySettings.TolerantGossipStones },
+                { cEasyFrameByFrame, cfg => cfg.GameplaySettings.EasyFrameByFrame },
+                { cMixGaroWithGossip, cfg => cfg.GameplaySettings.MixGossipAndGaroHints },
+                { cClearHints, cfg => cfg.GameplaySettings.ClearHints },
+                { cClearGaroHints, cfg => cfg.GameplaySettings.ClearGaroHints },
+                { cImportanceCount, cfg => cfg.GameplaySettings.ImportanceCount },
+                { cImportanceCountGaro, cfg => cfg.GameplaySettings.ImportanceCountGaro },
+                { cHintImportance, cfg => cfg.GameplaySettings.HintsIndicateImportance },
+                { cNoDowngrades, cfg => cfg.GameplaySettings.PreventDowngrades },
+                { cShopAppearance, cfg => cfg.GameplaySettings.UpdateShopAppearance },
+                { cUpdateChests, cfg => cfg.GameplaySettings.UpdateChests },
+                { cUpdateNpcText, cfg => cfg.GameplaySettings.UpdateNPCText },
+                { cOathHint, cfg => cfg.GameplaySettings.OathHint },
+                { cRemainsHint, cfg => cfg.GameplaySettings.RemainsHint },
+                { cFairyAndSkullHints, cfg => cfg.GameplaySettings.FairyAndSkullHint },
+                { cEponaSword, cfg => cfg.GameplaySettings.FixEponaSword },
+                { cDrawHash, cfg => cfg.GameplaySettings.DrawHash },
+                { cQuestItemStorage, cfg => cfg.GameplaySettings.QuestItemStorage },
+                { cQuestItemKeep, cfg => cfg.GameplaySettings.KeepQuestTradeThroughTime },
+                { cDisableCritWiggle, cfg => cfg.GameplaySettings.CritWiggleDisable },
+                { cLink, cfg => cfg.GameplaySettings.Character },
+                { cGossipHints, cfg => cfg.GameplaySettings.GossipHintStyle },
+                { cGaroHint, cfg => cfg.GameplaySettings.GaroHintStyle },
+                { cSkipBeaver, cfg => cfg.GameplaySettings.SpeedupBeavers },
+                { cGoodDampeRNG, cfg => cfg.GameplaySettings.SpeedupDampe },
+                { cGoodDogRaceRNG, cfg => cfg.GameplaySettings.SpeedupDogRace },
+                { cFasterLabFish, cfg => cfg.GameplaySettings.SpeedupLabFish },
+                { cFasterBank, cfg => cfg.GameplaySettings.SpeedupBank },
+                { cDoubleArcheryRewards, cfg => cfg.GameplaySettings.DoubleArcheryRewards },
+                { cSpeedupBabyCucco, cfg => cfg.GameplaySettings.SpeedupBabyCuccos },
+                { cFastPush, cfg => cfg.GameplaySettings.FastPush },
+                { cFreestanding, cfg => cfg.GameplaySettings.UpdateWorldModels },
+                { cArrowCycling, cfg => cfg.GameplaySettings.ArrowCycling },
+                { cCloseCows, cfg => cfg.GameplaySettings.CloseCows },
+                { cElegySpeedups, cfg => cfg.GameplaySettings.ElegySpeedup },
+                { cImprovedPictobox, cfg => cfg.GameplaySettings.EnablePictoboxSubject },
+                { cLenientGoronSpikes, cfg => cfg.GameplaySettings.LenientGoronSpikes },
+                { cTargetHealth, cfg => cfg.GameplaySettings.TargetHealthBar },
+                { cFreeScarecrow, cfg => cfg.GameplaySettings.FreeScarecrow },
+                { cFillWallet, cfg => cfg.GameplaySettings.FillWallet },
+                { cInvisSparkle, cfg => cfg.GameplaySettings.HiddenRupeesSparkle },
+                { cSaferGlitches, cfg => cfg.GameplaySettings.SaferGlitches },
+                { cImprovedCamera, cfg => cfg.GameplaySettings.ImprovedCamera },
+                { cAddBombchuDrops, cfg => cfg.GameplaySettings.BombchuDrops },
+                { cFairyMaskShimmer, cfg => cfg.GameplaySettings.FairyMaskShimmer },
+                { cSkulltulaTokenSounds, cfg => cfg.GameplaySettings.SkulltulaTokenSounds },
+                { nMaxGossipWotH, cfg => cfg.GameplaySettings.OverrideNumberOfRequiredGossipHints },
+                { nMaxGossipFoolish, cfg => cfg.GameplaySettings.OverrideNumberOfNonRequiredGossipHints },
+                { nMaxGossipCT, cfg => cfg.GameplaySettings.OverrideMaxNumberOfClockTownGossipHints },
+                { nMaxGaroWotH, cfg => cfg.GameplaySettings.OverrideNumberOfRequiredGaroHints },
+                { nMaxGaroFoolish, cfg => cfg.GameplaySettings.OverrideNumberOfNonRequiredGaroHints },
+                { nMaxGaroCT, cfg => cfg.GameplaySettings.OverrideMaxNumberOfClockTownGaroHints },
+
+                // Cosmetics
+                { cTargettingStyle, cfg => cfg.CosmeticSettings.EnableHoldZTargeting },
+                { cLowHealthSFXComboBox, cfg => cfg.CosmeticSettings.LowHealthSFX },
+                { cSFX, cfg => cfg.CosmeticSettings.RandomizeSounds },
+                { cMusic, cfg => cfg.CosmeticSettings.Music },
+                { lLuckRoll, cfg => cfg.CosmeticSettings.MusicLuckRollChance },
+                { tLuckRollPercentage, cfg => cfg.CosmeticSettings.MusicLuckRollChance },
+                { cTatl, cfg => cfg.CosmeticSettings.TatlColorSchema },
+                { cEnableNightMusic, cfg => cfg.CosmeticSettings.EnableNightBGM },
+                { cRemoveMinorMusic, cfg => cfg.CosmeticSettings.RemoveMinorMusic },
+                { cMusicTrackNames, cfg => cfg.CosmeticSettings.ShowTrackName },
+                { cDisableFanfares, cfg => cfg.CosmeticSettings.DisableFanfares },
+                { cCombatMusicDisable, cfg => cfg.CosmeticSettings.DisableCombatMusic },
+                { cHueShiftMiscUI, cfg => cfg.CosmeticSettings.ShiftHueMiscUI },
+                { cBombTrapTunicColors, cfg => cfg.CosmeticSettings.BombTrapsRandomizeTunicColor },
+                { cRainbowTunic, cfg => cfg.CosmeticSettings.RainbowTunic },
+            };
+
+            foreach (var (control, expression) in simpleControls)
+            {
+                var body = expression.Body;
+                if (body is UnaryExpression)
+                {
+                    body = ((UnaryExpression)body).Operand;
+                }
+                var memberExpression = body as MemberExpression;
+                if (memberExpression != null)
+                {
+                    var description = memberExpression.Member.GetCustomAttribute<DescriptionAttribute>()?.Description;
+                    if (description != null)
+                    {
+                        TooltipBuilder.SetTooltip(control, description);
+                    }
+                }
+
+                var checkBox = control as CheckBox;
+                if (checkBox != null)
+                {
+                    var newValueParameter = Expression.Parameter(typeof(bool), "newValue");
+                    var assignExpression = Expression.Assign(body, newValueParameter);
+                    var func = Expression.Lambda<Action<Configuration, bool>>(assignExpression, expression.Parameters[0], newValueParameter).Compile();
+
+                    checkBox.CheckedChanged += (object sender, EventArgs e) =>
+                    {
+                        UpdateSingleSetting(() => func(_configuration, checkBox.Checked));
+                    };
+                }
+
+                var comboBox = control as ComboBox;
+                if (comboBox != null)
+                {
+                    var newValueParameter = Expression.Parameter(typeof(int), "newValue");
+                    var assignExpression = Expression.Assign(body, Expression.Convert(newValueParameter, body.Type));
+                    var func = Expression.Lambda<Action<Configuration, int>>(assignExpression, expression.Parameters[0], newValueParameter).Compile();
+
+                    comboBox.SelectedIndexChanged += (object sender, EventArgs e) =>
+                    {
+                        UpdateSingleSetting(() => func(_configuration, comboBox.SelectedIndex));
+                    };
+                }
+
+                var numericUpDown = control as NumericUpDown;
+                if (numericUpDown != null)
+                {
+                    var newValueParameter = Expression.Parameter(typeof(decimal), "newValue");
+                    var assignExpression = Expression.Assign(body, Expression.Convert(newValueParameter, body.Type));
+                    var func = Expression.Lambda<Action<Configuration, decimal>>(assignExpression, expression.Parameters[0], newValueParameter).Compile();
+
+                    numericUpDown.ValueChanged += (object sender, EventArgs e) =>
+                    {
+                        UpdateSingleSetting(() => func(_configuration, numericUpDown.Value));
+                    };
+                }
+            }
+
             TooltipBuilder.SetTooltip(lTrapWeightings, "How much to weigh each type of trap when randomizing which one to use.");
-            TooltipBuilder.SetTooltip(cTrapsAppearance, "Appearance of ice traps in pool for world models.");
-            TooltipBuilder.SetTooltip(cSunsSong, "Enable using the Sun's Song, which speeds up time to 400 units per frame (normal time speed is 3 units per frame) until dawn or dusk or a loading zone.");
-            TooltipBuilder.SetTooltip(cUnderwaterOcarina, "Enable using the ocarina underwater.");
-            TooltipBuilder.SetTooltip(cTargettingStyle, "Default Z-Targeting style to Hold.");
-            TooltipBuilder.SetTooltip(cFDAnywhere, "Allow the Fierce Deity's Mask to be used anywhere. Also addresses some softlocks caused by Fierce Deity.");
-            TooltipBuilder.SetTooltip(cByoAmmo, "Arrows, Bombs, and Bombchu will not be provided for minigames. You must bring your own. Logic Modes other than No Logic will account for this.");
-            TooltipBuilder.SetTooltip(cDeathMoonCrash, "Dying causes the moon to crash, with all that that implies.");
-            TooltipBuilder.SetTooltip(cFewerHealthDrops, "Recovery Hearts will not drop, and re-acquiring random items will turn into Green Rupees instead. Fairies will not heal except on death.");
-            TooltipBuilder.SetTooltip(cContinuousDekuHopping, "Press A while hopping across water to keep hopping.");
-            TooltipBuilder.SetTooltip(cIronGoron, "Goron Link will sink in water instead of drowning.");
-            TooltipBuilder.SetTooltip(cHookshotAnySurface, "Hookshot can hook to any surface.");
-            TooltipBuilder.SetTooltip(cClimbMostSurfaces, "Link can climb most surfaces.");
-            TooltipBuilder.SetTooltip(cIceTrapQuirks, "Ice traps will behave slightly differently from other items in certain situations.");
-            TooltipBuilder.SetTooltip(cInstantTransformations, "Transforming using Deku Mask, Goron Mask, Zora Mask and Fierce Deity's Mask will be almost instant. These items can no longer be used as \"cutscene items\".");
-            TooltipBuilder.SetTooltip(cBombArrows, "Use a bomb while an arrow is out when using the bow to attach the bomb to the tip of the arrow.");
-            TooltipBuilder.SetTooltip(cVanillaMoonTrials, "Entering the trials on the Moon will require masks, as per the vanilla behavior, but this is not considered by logic. Without this enabled, the trials will not require any masks to enter.");
-            TooltipBuilder.SetTooltip(cGiantMaskAnywhere, "Allows the Giant's Mask to be used anywhere with a high enough (or no) ceiling.");
-
-            // Comforts/cosmetics
-            TooltipBuilder.SetTooltip(cQText, "Enable quick text. Dialogs are fast-forwarded to choices/end of dialog.");
-            TooltipBuilder.SetTooltip(cSFX, "Randomize sound effects that are played throughout the game.");
-            TooltipBuilder.SetTooltip(cMusic, "Select a music option\n\n - Default: Vanilla background music.\n - Random: Randomized background music.\n - None: No background music.");
-            TooltipBuilder.SetTooltip(lLuckRoll, "Music Rando comes with a chance to accept a song from outside of its categories.\n - This controls the percentage chance of a Luck Roll allowing out-of-category music placement\n - This is per specific slot+song check\n - Only songs with their first category being a general category (0-16) are Luck Rollable.");
-            TooltipBuilder.SetTooltip(tLuckRollPercentage, "Music Rando comes with a chance to accept a song from outside of its categories.\n - This controls the percentage chance of a Luck Roll allowing out-of-category music placement\n - This is per specific slot+song check\n - Only songs with their first category being a general category (0-16) are Luck Rollable.");
-            TooltipBuilder.SetTooltip(cFreeHints, "Enable reading gossip stone hints without requiring the Mask of Truth.");
-            TooltipBuilder.SetTooltip(cFreeGaroHints, "Enable fighting Garos by speaking to Tatl instead of wearing the Garo's Mask.");
-            TooltipBuilder.SetTooltip(cGossipsTolerant, "The angle at which Gossip Stones can be read will be more tolerant.");
-            TooltipBuilder.SetTooltip(cEasyFrameByFrame, "Hold Start while unpausing to pause again after one frame passes.");
-            TooltipBuilder.SetTooltip(cMixGaroWithGossip, "Garo hints distribution and gossip hint distribution will be mixed together.");
-            TooltipBuilder.SetTooltip(cClearHints, "Gossip stone hints will give clear item and location names.");
-            TooltipBuilder.SetTooltip(cClearGaroHints, "Garo hints will give clear item and location names.");
-            TooltipBuilder.SetTooltip(cHintImportance, "Location hints indicate the importance of the item.");
-            TooltipBuilder.SetTooltip(cNoDowngrades, "Downgrading items will be prevented.");
-            TooltipBuilder.SetTooltip(cShopAppearance, "Shops models and text will be updated to match the item they give.");
-            TooltipBuilder.SetTooltip(cUpdateChests, "Chest appearance will be updated to match the item they contain.");
-            TooltipBuilder.SetTooltip(cUpdateNpcText, "NPC text that refers to items and their locations will be updated.");
-            TooltipBuilder.SetTooltip(cEponaSword, "Change Epona's B button behavior to prevent you from losing your sword if you don't have a bow.\nMay affect vanilla glitches that use Epona's B button.");
-            TooltipBuilder.SetTooltip(cDrawHash, "Draw hash icons on the File Select screen.");
-            TooltipBuilder.SetTooltip(cQuestItemStorage, "Enable Quest Item Storage, which allows for storing multiple quest items in their dedicated inventory slot. Quest items will also always be consumed when used.");
-            TooltipBuilder.SetTooltip(cQuestItemKeep, "Quest items will return to your inventory after Song of Time.");
-            TooltipBuilder.SetTooltip(cDisableCritWiggle, "Disable crit wiggle movement modification when 1 heart of health or less.");
-            TooltipBuilder.SetTooltip(cLink, "Select a character model to replace Link's default model.");
-            TooltipBuilder.SetTooltip(cTatl, "Select a color scheme to replace Tatl's default color scheme.");
-            TooltipBuilder.SetTooltip(cGossipHints, "Select a Gossip Stone hint style\n\n - Default: Vanilla Gossip Stone hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, and hints regarding importance or non-importance of regions");
-            TooltipBuilder.SetTooltip(cGaroHint, "Select a Garo hint style\n\n - Default: Vanilla Garo hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, and hints regarding importance or non-importance of regions.");
-            TooltipBuilder.SetTooltip(cSkipBeaver, "Modify Beavers to not have to race the younger beaver.");
-            TooltipBuilder.SetTooltip(cGoodDampeRNG, "Change Dampe ghost flames to always have two on the ground floor and one up the ladder.");
-            TooltipBuilder.SetTooltip(cGoodDogRaceRNG, "Make Gold Dog always win if you have the Mask of Truth.");
-            TooltipBuilder.SetTooltip(cFasterLabFish, "Change Lab Fish to only need to be fed one fish.");
-            TooltipBuilder.SetTooltip(cFasterBank, "Change the Bank reward thresholds to 200/500/1000 instead of 200/1000/5000. Also reduces maximum bank capacity from 5000 to 1000.");
-            TooltipBuilder.SetTooltip(cDoubleArcheryRewards, "Grant both archery rewards with a sufficient score.");
-            TooltipBuilder.SetTooltip(cSpeedupBabyCucco, "Makes the location of baby cuccos show on the minimap.");
-            TooltipBuilder.SetTooltip(cFastPush, "Increase the speed of pushing and pulling blocks and faucets.");
-            TooltipBuilder.SetTooltip(cFreestanding, "Show world models as their actual item instead of the original item. This includes Pieces of Heart, Heart Containers, Skulltula Tokens, Stray Fairies, Moon's Tear and the Seahorse.");
-            TooltipBuilder.SetTooltip(cEnableNightMusic, "Enables playing daytime Background music during nighttime in the field.\n(Clocktown night music can be weird)");
-            TooltipBuilder.SetTooltip(cRemoveMinorMusic, "Minor music such as indoors and grottos will not play. Background music that is already playing will instead continue.");
-            TooltipBuilder.SetTooltip(cMusicTrackNames, "When a new track starts playing in-game, show the name of the track at the bottom left of the screen.");
-            TooltipBuilder.SetTooltip(cDisableFanfares, "Replace item fanfares and swamp shooting gallery fanfares with sound effects.");
-            TooltipBuilder.SetTooltip(cArrowCycling, "Cycle through arrow types when pressing R while an arrow is out when using the bow.");
-            TooltipBuilder.SetTooltip(cCloseCows, "When playing Epona's Song for a group of cows, the closest cow will respond, instead of the default behavior.");
-            TooltipBuilder.SetTooltip(cCombatMusicDisable, "Disables combat music around all regular (non boss or miniboss) enemies in the game.");
-            TooltipBuilder.SetTooltip(cHueShiftMiscUI, "Shifts the color of miscellaneous UI elements.");
-            TooltipBuilder.SetTooltip(cElegySpeedups, "Applies various Elegy of Emptiness speedups.");
             TooltipBuilder.SetTooltip(cInstantPictobox, "Remove anti-aliasing from the Pictobox pictures, which is what makes Pictobox on emulator so slow.");
-            TooltipBuilder.SetTooltip(cBombTrapTunicColors, "When you find a Bomb Trap, Link's tunic will randomly change color.");
-            TooltipBuilder.SetTooltip(cRainbowTunic, "Link's tunic color will slowly cycle its hue.");
-            TooltipBuilder.SetTooltip(cImprovedPictobox, "Display extra text showing which type of picture was captured by the Pictobox.");
-            TooltipBuilder.SetTooltip(cLenientGoronSpikes, "Goron spikes can charge midair and keep their charge. Minimum speed for goron spikes is removed.");
-            TooltipBuilder.SetTooltip(cTargetHealth, "Targeting an enemy shows their health bar.");
-            TooltipBuilder.SetTooltip(cFreeScarecrow, "Spawn scarecrow automatically when using ocarina if within range.");
-            TooltipBuilder.SetTooltip(cFillWallet, "Fills wallet with max rupees upon finding a wallet upgrade.");
-            TooltipBuilder.SetTooltip(cInvisSparkle, "Hit Tags and Invisible Rupees will emit a sparkle.");
-            TooltipBuilder.SetTooltip(cSaferGlitches, "Makes it safer to use glitches:\n - Prevents HESS crash\n - Prevents Weirdshot crash\n - Prevents Action Swap crash\n - Prevents Song of Double Time softlock during 0th or 4th day\n - Prevents Tatl text softlock on 0th of 4th day\n - Prevents 0th day file deletion\n - Prevents hookslide crash\n - Prevents softlocks when using Remote Hookshot\n - Prevents 0th day Goron Bow crash\n - Applies safety fixes for Fierce Deity even if Fierce Deity Anywhere is not enabled\n - Index warp no longer crashes or softlocks (but you won't be able to use it to access the Debug Menu)\n - Prevents softlocks when interrupting mask transformations\n - Mayor is removed on 4th day\n - Deku Playground Employees are removed on 4th day\n - Prevents Gossip Stone time from crashing on 4th day\n - TODO more...");
-            TooltipBuilder.SetTooltip(cImprovedCamera, "Improves the responsiveness of the controls with relation to the direction the camera is facing.");
-            TooltipBuilder.SetTooltip(cAddBombchuDrops, "If you have found Bombchu, then any random Bomb drop or fixed non-randomized Bomb drop will have a chance to drop Bombchu instead. Where relevant, Bombchu packs of 1 and 5 will be in logic in addition to packs of 10.");
-            TooltipBuilder.SetTooltip(cFairyMaskShimmer, "Nearby stray fairies, even randomized ones, will cause the Great Fairy Mask to shimmer.");
-            TooltipBuilder.SetTooltip(cSkulltulaTokenSounds, "Nearby skulltula tokens, even randomized ones, will emit a spider crawling sound.");
-
-            TooltipBuilder.SetTooltip(nMaxGossipWotH, "Set the number of Way of the Hero hints that will appear on Gossip Stones.");
-            TooltipBuilder.SetTooltip(nMaxGossipFoolish, "Set the number of Foolish hints that will appear on Gossip Stones.");
-            TooltipBuilder.SetTooltip(nMaxGossipCT, "Set the maximum number of Way of the Hero / Foolish hints on Gossip Stones that can be for a Clock Town region (including Laundry Pool).");
-            TooltipBuilder.SetTooltip(nMaxGaroWotH, "Set the number of Way of the Hero hints that will appear on Garos.");
-            TooltipBuilder.SetTooltip(nMaxGaroFoolish, "Set the number of Foolish hints that will appear on Garos.");
-            TooltipBuilder.SetTooltip(nMaxGaroCT, "Set the maximum number of Way of the Hero / Foolish hints on Garos that can be for a Clock Town region (including Laundry Pool).");
         }
 
         void UpdateSettingLogicMarkers()
@@ -229,6 +306,7 @@ namespace MMR.UI.Forms
                 { lDMult, (typeof(GameplaySettings), nameof(GameplaySettings.DamageMode)) },
                 { lDType, (typeof(GameplaySettings), nameof(GameplaySettings.DamageEffect)) },
                 { cDeathMoonCrash, (typeof(GameplaySettings), nameof(GameplaySettings.DeathMoonCrash)) },
+                { cMoonCrashFileErase, (typeof(GameplaySettings), nameof(GameplaySettings.MoonCrashErasesFile)) },
                 { cByoAmmo, (typeof(GameplaySettings), nameof(GameplaySettings.ByoAmmo)) },
                 { cFewerHealthDrops, (typeof(GameplaySettings), nameof(GameplaySettings.FewerHealthDrops)) },
                 { lBlastMask, (typeof(GameplaySettings), nameof(GameplaySettings.BlastMaskCooldown)) },
@@ -240,6 +318,15 @@ namespace MMR.UI.Forms
                 { cGiantMaskAnywhere, (typeof(GameplaySettings), nameof(GameplaySettings.GiantMaskAnywhere)) },
                 { cInstantTransformations, (typeof(GameplaySettings), nameof(GameplaySettings.InstantTransform)) },
                 { cBombArrows, (typeof(GameplaySettings), nameof(GameplaySettings.BombArrows)) },
+                { cTakeDamageOnEpona, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageOnEpona))},
+                { cTakeDamageWhileShielding, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageWhileShielding))},
+                { cTakeDamageFromVoid, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromVoid))},
+                { cTakeDamageFromGorons, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromGorons))},
+                { cTakeDamageFromGibdosFaster, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromGibdosFaster))},
+                { cTakeDamageGettingCaught, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageGettingCaught))},
+                { cTakeDamageFromDog, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromDog))},
+                { cTakeDamageFromDexihands, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromDexihands))},
+
             };
 
             foreach (var (control, settingInfo) in settingToControlMapping2)
@@ -1196,11 +1283,6 @@ namespace MMR.UI.Forms
             _isUpdating = false;
         }
 
-        private void tLuckRollPercentage_ValueChanged(object sender, EventArgs e)
-        {
-            _configuration.CosmeticSettings.MusicLuckRollChance = tLuckRollPercentage.Value;
-        }
-
         private void UpdateCheckboxes()
         {
             cSpoiler.Checked = _configuration.OutputSettings.GenerateSpoilerLog;
@@ -1260,13 +1342,24 @@ namespace MMR.UI.Forms
             cMixGaroWithGossip.Checked = _configuration.GameplaySettings.MixGossipAndGaroHints;
             cClearHints.Checked = _configuration.GameplaySettings.ClearHints;
             cClearGaroHints.Checked = _configuration.GameplaySettings.ClearGaroHints;
+            cImportanceCount.Checked = _configuration.GameplaySettings.ImportanceCount;
+            cImportanceCountGaro.Checked = _configuration.GameplaySettings.ImportanceCountGaro;
             cHintImportance.Checked = _configuration.GameplaySettings.HintsIndicateImportance;
             cHideClock.Checked = _configuration.GameplaySettings.HideClock;
             cSunsSong.Checked = _configuration.GameplaySettings.EnableSunsSong;
             cFDAnywhere.Checked = _configuration.GameplaySettings.AllowFierceDeityAnywhere;
             cByoAmmo.Checked = _configuration.GameplaySettings.ByoAmmo;
             cDeathMoonCrash.Checked = _configuration.GameplaySettings.DeathMoonCrash;
+            cMoonCrashFileErase.Checked = _configuration.GameplaySettings.MoonCrashErasesFile;
             cFewerHealthDrops.Checked = _configuration.GameplaySettings.FewerHealthDrops;
+            cTakeDamageOnEpona.Checked = _configuration.GameplaySettings.TakeDamageOnEpona;
+            cTakeDamageWhileShielding.Checked = _configuration.GameplaySettings.TakeDamageWhileShielding;
+            cTakeDamageFromVoid.Checked = _configuration.GameplaySettings.TakeDamageFromVoid;
+            cTakeDamageFromGorons.Checked = _configuration.GameplaySettings.TakeDamageFromGorons;
+            cTakeDamageFromGibdosFaster.Checked = _configuration.GameplaySettings.TakeDamageFromGibdosFaster;
+            cTakeDamageGettingCaught.Checked = _configuration.GameplaySettings.TakeDamageGettingCaught;
+            cTakeDamageFromDog.Checked = _configuration.GameplaySettings.TakeDamageFromDog;
+            cTakeDamageFromDexihands.Checked = _configuration.GameplaySettings.TakeDamageFromDexihands;
             cIceTrapQuirks.Checked = _configuration.GameplaySettings.TrapQuirks;
             cClockSpeed.SelectedIndex = (int)_configuration.GameplaySettings.ClockSpeed;
             cAutoInvert.SelectedIndex = (int)_configuration.GameplaySettings.AutoInvert;
@@ -1277,6 +1370,9 @@ namespace MMR.UI.Forms
             cEponaSword.Checked = _configuration.GameplaySettings.FixEponaSword;
             cUpdateChests.Checked = _configuration.GameplaySettings.UpdateChests;
             cUpdateNpcText.Checked = _configuration.GameplaySettings.UpdateNPCText;
+            cOathHint.Checked = _configuration.GameplaySettings.OathHint;
+            cRemainsHint.Checked = _configuration.GameplaySettings.RemainsHint;
+            cFairyAndSkullHints.Checked = _configuration.GameplaySettings.FairyAndSkullHint;
             cSkipBeaver.Checked = _configuration.GameplaySettings.SpeedupBeavers;
             cGoodDampeRNG.Checked = _configuration.GameplaySettings.SpeedupDampe;
             cGoodDogRaceRNG.Checked = _configuration.GameplaySettings.SpeedupDogRace;
@@ -1368,7 +1464,7 @@ namespace MMR.UI.Forms
             cFreestanding.Checked = _configuration.GameplaySettings.UpdateWorldModels;
             cArrowCycling.Checked = _configuration.GameplaySettings.ArrowCycling;
             cCloseCows.Checked = _configuration.GameplaySettings.CloseCows;
-            cCombatMusicDisable.Checked = _configuration.CosmeticSettings.DisableCombatMusic != CombatMusic.Normal;
+            cCombatMusicDisable.Checked = _configuration.CosmeticSettings.DisableCombatMusic;
             cHueShiftMiscUI.Checked = _configuration.CosmeticSettings.ShiftHueMiscUI;
             cElegySpeedups.Checked = _configuration.GameplaySettings.ElegySpeedup;
             cImprovedPictobox.Checked = _configuration.GameplaySettings.EnablePictoboxSubject;
@@ -1438,356 +1534,22 @@ namespace MMR.UI.Forms
             }
         }
 
-        private void cN64_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.OutputSettings.GenerateROM = cN64.Checked);
-        }
-
-        private void cSpoiler_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.OutputSettings.GenerateSpoilerLog = cSpoiler.Checked);
-        }
-
         private bool _drawHashChecked;
         private void cPatch_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateSingleSetting(() => _configuration.OutputSettings.GeneratePatch = cPatch.Checked);
-
-            cDrawHash.CheckedChanged -= cDrawHash_CheckedChanged;
+            var oldDrawHashChecked = _drawHashChecked;
             cDrawHash.Checked = cPatch.Checked ? true : _drawHashChecked && (_configuration.OutputSettings.GenerateROM || _configuration.OutputSettings.OutputVC);
             _configuration.GameplaySettings.DrawHash = cDrawHash.Checked;
-            cDrawHash.CheckedChanged += cDrawHash_CheckedChanged;
-        }
-
-        private void cHTMLLog_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.OutputSettings.GenerateHTMLLog = cHTMLLog.Checked);
-        }
-
-        private void cSFX_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.RandomizeSounds = cSFX.Checked);
-        }
-
-        private void cRemoveMinorMusic_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.RemoveMinorMusic = cRemoveMinorMusic.Checked);
-        }
-
-        private void cMusicTrackNames_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.ShowTrackName = cMusicTrackNames.Checked);
-        }
-
-        private void cDisableFanfares_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.DisableFanfares = cDisableFanfares.Checked);
-        }
-
-        private void cEnableNightMusic_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.EnableNightBGM = cEnableNightMusic.Checked);
-        }
-
-        private void cMusic_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.Music = (Music)cMusic.SelectedIndex);
-        }
-
-        private void cDEnt_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.RandomizeDungeonEntrances = cDEnt.Checked);
-        }
-
-        private void cShuffleBosses_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.RandomizeBossRooms = cShuffleBosses.Checked);
-        }
-
-        private void cDMult_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.DamageMode = (DamageMode)cDMult.SelectedIndex);
-        }
-
-        private void cDType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.DamageEffect = (DamageEffect)cDType.SelectedIndex);
-        }
-
-        private void cEnemy_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.RandomizeEnemies = cEnemy.Checked);
-        }
-
-        private void cFloors_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.FloorType = (FloorType)cFloors.SelectedIndex);
-        }
-
-        private void cGravity_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.MovementMode = (MovementMode)cGravity.SelectedIndex);
-        }
-
-        private void cNutAndStickDrops_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.NutandStickDrops = (NutAndStickDrops)cNutAndStickDrops.SelectedIndex);
-        }
-
-        private void cLink_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.Character = (Character)cLink.SelectedIndex);
-        }
-
-        private void cMixSongs_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.AddSongs = cMixSongs.Checked);
-        }
-
-        private void cProgressiveUpgrades_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ProgressiveUpgrades = cProgressiveUpgrades.Checked);
-        }
-
-        private void cFreeHints_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.FreeHints = cFreeHints.Checked);
-        }
-
-        private void cFreeGaroHints_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.FreeGaroHints = cFreeGaroHints.Checked);
-        }
-
-        private void cGossipsTolerant_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.TolerantGossipStones = cGossipsTolerant.Checked);
-        }
-
-        private void cEasyFrameByFrame_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.EasyFrameByFrame = cEasyFrameByFrame.Checked);
-        }
-
-        private void cMixGaroWithGossip_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.MixGossipAndGaroHints = cMixGaroWithGossip.Checked);
-        }
-
-        private void cClearHints_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ClearHints = cClearHints.Checked);
-        }
-
-        private void cClearGaroHints_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ClearGaroHints = cClearGaroHints.Checked);
-        }
-
-        private void cHintImportance_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.HintsIndicateImportance = cHintImportance.Checked);
-        }
-
-        private void cNoDowngrades_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.PreventDowngrades = cNoDowngrades.Checked);
-        }
-
-        private void cShopAppearance_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.UpdateShopAppearance = cShopAppearance.Checked);
-        }
-
-        private void cUpdateChests_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.UpdateChests = cUpdateChests.Checked);
-        }
-
-        private void cUpdateNpcText_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.UpdateNPCText = cUpdateNpcText.Checked);
-        }
-
-        private void cEponaSword_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.FixEponaSword = cEponaSword.Checked);
-        }
-
-        private void cHideClock_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.HideClock = cHideClock.Checked);
-        }
-
-        private void cSunsSong_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.EnableSunsSong = cSunsSong.Checked);
-        }
-
-        private void cFDAnywhere_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.AllowFierceDeityAnywhere = cFDAnywhere.Checked);
-        }
-
-        private void cByoAmmo_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ByoAmmo = cByoAmmo.Checked);
-        }
-
-        private void cDeathMoonCrash_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.DeathMoonCrash = cDeathMoonCrash.Checked);
-        }
-
-        private void cFewerHealthDrops_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.FewerHealthDrops = cFewerHealthDrops.Checked);
-        }
-
-        private void cIceTrapQuirks_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.TrapQuirks = cIceTrapQuirks.Checked);
-        }
-
-        private void cStartingItems_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.StartingItemMode = (StartingItemMode)cStartingItems.SelectedIndex);
-        }
-
-        private void cRequiredBossRemains_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.RequiredBossRemains = (byte)(cRequiredBossRemains.SelectedIndex));
-        }
-
-        private void cQText_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.QuickTextEnabled = cQText.Checked);
-        }
-
-        private void cTatl_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.TatlColorSchema = (TatlColorSchema)cTatl.SelectedIndex);
-        }
-
-        private void cSkipBeaver_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.SpeedupBeavers = cSkipBeaver.Checked);
-        }
-
-        private void cGoodDampeRNG_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.SpeedupDampe = cGoodDampeRNG.Checked);
-        }
-
-        private void cGoodDogRaceRNG_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.SpeedupDogRace = cGoodDogRaceRNG.Checked);
-        }
-
-        private void cFasterLabFish_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.SpeedupLabFish = cFasterLabFish.Checked);
-        }
-
-        private void cFasterBank_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.SpeedupBank = cFasterBank.Checked);
-        }
-
-        private void cSpeedupBabyCucco_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.SpeedupBabyCuccos = cSpeedupBabyCucco.Checked);
+            _drawHashChecked = oldDrawHashChecked;
         }
 
         private void cDrawHash_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.DrawHash = cDrawHash.Checked);
             _drawHashChecked = cDrawHash.Checked;
-        }
-
-        private void cQuestItemStorage_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.QuestItemStorage = cQuestItemStorage.Checked);
-        }
-
-        private void cQuestItemKeep_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.KeepQuestTradeThroughTime = cQuestItemKeep.Checked);
-        }
-
-        private void cContinuousDekuHopping_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ContinuousDekuHopping = cContinuousDekuHopping.Checked);
-        }
-
-        private void cIronGoron_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.IronGoron = cIronGoron.Checked);
-        }
-
-        private void cHookshotAnySurface_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.HookshotAnySurface = cHookshotAnySurface.Checked);
-        }
-
-        private void cClimbMostSurfaces_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ClimbMostSurfaces = cClimbMostSurfaces.Checked);
-        }
-
-        private void cDisableCritWiggle_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.CritWiggleDisable = cDisableCritWiggle.Checked);
-        }
-
-        private void cFastPush_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.FastPush = cFastPush.Checked);
-        }
-
-        private void cUnderwaterOcarina_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.OcarinaUnderwater = cUnderwaterOcarina.Checked);
-        }
-
-        private void cFreestanding_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.UpdateWorldModels = cFreestanding.Checked);
-        }
-
-        private void cTargettingStyle_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.EnableHoldZTargeting = cTargettingStyle.Checked);
-        }
-
-        private void cArrowCycling_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ArrowCycling = cArrowCycling.Checked);
-        }
-
-        private void cCloseCows_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.CloseCows = cCloseCows.Checked);
-        }
-
-        private void cCombatMusicDisable_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.DisableCombatMusic = cCombatMusicDisable.Checked ? CombatMusic.All : CombatMusic.Normal);
-        }
-
-        private void cHueShiftMiscUI_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.ShiftHueMiscUI = cHueShiftMiscUI.Checked);
-        }
-
-        private void cElegySpeedups_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ElegySpeedup = cElegySpeedups.Checked);
         }
 
         private void cMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             if (_isUpdating)
             {
                 return;
@@ -1930,47 +1692,6 @@ namespace MMR.UI.Forms
             lNumTricksEnabled.Text = $"{count} trick{(count != 1 ? "s" : "")} enabled";
         }
 
-        private void cItemPlacement_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ItemPlacement = (ItemPlacement)cItemPlacement.SelectedIndex);
-        }
-
-        private void cClockSpeed_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ClockSpeed = (ClockSpeed)cClockSpeed.SelectedIndex);
-        }
-
-        private void cGossipHints_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.GossipHintStyle = (GossipHintStyle)cGossipHints.SelectedIndex);
-        }
-
-        private void cGaroHint_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.GaroHintStyle = (GossipHintStyle)cGaroHint.SelectedIndex);
-        }
-
-
-        private void cBlastCooldown_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.BlastMaskCooldown = (BlastMaskCooldown)cBlastCooldown.SelectedIndex);
-        }
-
-        private void cIceTraps_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.TrapAmount = (TrapAmount)cTrapAmount.SelectedIndex);
-        }
-
-        private void cIceTrapsAppearance_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.TrapAppearance = (TrapAppearance)cTrapsAppearance.SelectedIndex);
-        }
-
-        private void cVC_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.OutputSettings.OutputVC = cVC.Checked);
-        }
-
         private void mExit_Click(object sender, EventArgs e)
         {
             SaveAndClose();
@@ -2086,7 +1807,7 @@ namespace MMR.UI.Forms
             if (cDrawHash.Enabled != oldEnabled)
             {
                 cDrawHash.CheckedChanged -= cDrawHash_CheckedChanged;
-                cDrawHash.Checked = cDrawHash.Enabled ? _drawHashChecked : false;
+                cDrawHash.Checked = cDrawHash.Enabled ? _drawHashChecked : _configuration.OutputSettings.GeneratePatch;
                 cDrawHash.CheckedChanged += cDrawHash_CheckedChanged;
             }
 
@@ -2109,11 +1830,13 @@ namespace MMR.UI.Forms
             }
 
             cCustomGossipWoth.Enabled = _configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Competitive;
+            cImportanceCount.Enabled = _configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Competitive;
             nMaxGossipWotH.Enabled = cCustomGossipWoth.Checked && cCustomGossipWoth.Enabled;
             nMaxGossipFoolish.Enabled = nMaxGossipWotH.Enabled;
             nMaxGossipCT.Enabled = nMaxGossipWotH.Enabled;
 
             cCustomGaroWoth.Enabled = _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
+            cImportanceCountGaro.Enabled = _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
             nMaxGaroWotH.Enabled = cCustomGaroWoth.Checked && cCustomGaroWoth.Enabled;
             nMaxGaroFoolish.Enabled = nMaxGaroWotH.Enabled;
             nMaxGaroCT.Enabled = nMaxGaroWotH.Enabled;
@@ -2254,7 +1977,16 @@ namespace MMR.UI.Forms
             cFDAnywhere.Enabled = v;
             cByoAmmo.Enabled = v;
             cDeathMoonCrash.Enabled = v;
+            cMoonCrashFileErase.Enabled = v;
             cFewerHealthDrops.Enabled = v;
+            cTakeDamageOnEpona.Enabled = v;
+            cTakeDamageWhileShielding.Enabled = v;
+            cTakeDamageFromVoid.Enabled = v;
+            cTakeDamageFromGorons.Enabled = v;
+            cTakeDamageFromGibdosFaster.Enabled = v;
+            cTakeDamageGettingCaught.Enabled = v;
+            cTakeDamageFromDog.Enabled = v;
+            cTakeDamageFromDexihands.Enabled = v;
             cIceTrapQuirks.Enabled = v;
             cHookshotAnySurface.Enabled = v;
             cClimbMostSurfaces.Enabled = v;
@@ -2603,15 +2335,6 @@ namespace MMR.UI.Forms
             _configuration.CosmeticSettings.MagicSelection = selected.Name;
         }
 
-        private void cLowHealthSFXComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // should probably make the object[] obj support both string and index to avoid this search, but it's low use
-            var comboboxArrayObj = cLowHealthSFXComboBox.Items[ cLowHealthSFXComboBox.SelectedIndex ];
-            var SFXOptionList = Enum.GetValues(typeof(LowHealthSFX)).Cast<LowHealthSFX>().ToList();
-            var SFXOption = SFXOptionList.Find(u => u.ToString() == comboboxArrayObj.ToString());
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.LowHealthSFX = SFXOption);
-        }
-
         private void bToggleTricks_Click(object sender, EventArgs e)
         {
             try
@@ -2650,131 +2373,11 @@ namespace MMR.UI.Forms
             UpdateItemPoolCheckboxes();
         }
 
-        private void cInstantPictobox_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.KeepPictoboxAntialiasing = !cInstantPictobox.Checked);
-        }
-
-        private void cImprovedPictobox_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.EnablePictoboxSubject = cImprovedPictobox.Checked);
-        }
-
-        private void cLenientGoronSpikes_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.LenientGoronSpikes = cLenientGoronSpikes.Checked);
-        }
-
-        private void cTargetHealth_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.TargetHealthBar = cTargetHealth.Checked);
-        }
-
-        private void cFreeScarecrow_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.FreeScarecrow = cFreeScarecrow.Checked);
-        }
-
-        private void cDoubleArcheryRewards_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.DoubleArcheryRewards = cDoubleArcheryRewards.Checked);
-        }
-
-        private void cFillWallet_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.FillWallet = cFillWallet.Checked);
-        }
-
-        private void cAutoInvert_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.AutoInvert = (AutoInvertState)cAutoInvert.SelectedIndex);
-        }
-
-        private void cGiantMaskAnywhere_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.GiantMaskAnywhere = cGiantMaskAnywhere.Checked);
-        }
-
-        private void cInvisSparkle_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.HiddenRupeesSparkle = cInvisSparkle.Checked);
-        }
-
-        private void cSaferGlitches_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.SaferGlitches = cSaferGlitches.Checked);
-        }
-
-        private void cImprovedCamera_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ImprovedCamera = cImprovedCamera.Checked);
-        }
-
-        private void cAddBombchuDrops_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.BombchuDrops = cAddBombchuDrops.Checked);
-        }
-
-        private void cInstantTransformations_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.InstantTransform = cInstantTransformations.Checked);
-        }
-
-        private void cBombArrows_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.BombArrows = cBombArrows.Checked);
-        }
-
-        private void cVanillaMoonTrials_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.VanillaMoonTrialAccess = cVanillaMoonTrials.Checked);
-        }
-
-        private void cFairyMaskShimmer_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.FairyMaskShimmer = cFairyMaskShimmer.Checked);
-        }
-
-        private void cSkulltulaTokenSounds_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.SkulltulaTokenSounds = cSkulltulaTokenSounds.Checked);
-        }
-
         private void cItemPoolAdvanced_CheckedChanged(object sender, EventArgs e)
         {
             pLocationCategories.Visible = cItemPoolAdvanced.Checked;
             tableItemPool.Visible = cItemPoolAdvanced.Checked;
             pClassicItemPool.Visible = !cItemPoolAdvanced.Checked;
-        }
-
-        private void nMaxGossipWotH_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints = (int)nMaxGossipWotH.Value);
-        }
-
-        private void nMaxGossipFoolish_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints = (int)nMaxGossipFoolish.Value);
-        }
-
-        private void nMaxGossipCT_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGossipHints = (int)nMaxGossipCT.Value);
-        }
-
-        private void nMaxGaroWotH_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideNumberOfRequiredGaroHints = (int)nMaxGaroWotH.Value);
-        }
-
-        private void nMaxGaroFoolish_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideNumberOfNonRequiredGaroHints = (int)nMaxGaroFoolish.Value);
-        }
-
-        private void nMaxGaroCT_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGaroHints = (int)nMaxGaroCT.Value);
         }
 
         private void cCustomGossipWoth_CheckedChanged(object sender, EventArgs e)
@@ -2840,21 +2443,6 @@ namespace MMR.UI.Forms
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void cChestGameMinimap_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ChestGameMinimap = (ChestGameMinimapState)cChestGameMinimap.SelectedIndex);
-        }
-
-        private void cRainbowTunic_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.RainbowTunic = cRainbowTunic.Checked);
-        }
-
-        private void cBombTrapTunicColors_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.CosmeticSettings.BombTrapsRandomizeTunicColor = cBombTrapTunicColors.Checked);
         }
     }
 }
