@@ -489,6 +489,8 @@ namespace MMR.Randomizer
                     if (tallGrassFieldObjectVariants.Contains(targetActor.OldVariant))
                     {
                         FixActorLastSecond(targetActor, targetActor.OldActorEnum, mapIndex, actorIndex);
+                        targetActor.Variants.AddRange(tallGrassFieldObjectVariants);
+                        targetActor.AllVariants[(int)GameObjects.ActorType.Ground] = targetActor.Variants; // have to update the types for variant compatiblity later
                         return true;
                     }
                 }
@@ -497,6 +499,14 @@ namespace MMR.Randomizer
                 {
                     int[] clayPotDungeonVariants = {
                         0xB,
+                        // beneath the well (todo)
+                        0x5C0E, 0x601E, 0x621E, 0x4C0E, 0x660E, 0x741E,// ospiderhouse
+                        0x761E, 0x001A, 0x400A, 0x0186, 0x018A, 0x680A, 0x6E0A, 0x700A, 0x720E, // ospiderhouse
+                        0x5A1E, 0x5C1E, 0x400B, 0x420A, 0x521F, 0x440B, 0x4602, 0x561E, 0x4E0B, // pirate bay rooms
+                        0x5013, 0x581E, 0x480B, 0x4A1E, 0x101F, 0x1203, 0x480B, 0x541E, // pirate bay rooms
+                        0x0186, 0x0187, 0x018A, 0x018C, 0x018A, 0x440A, 0x460A, 0x480A, 0x440B, 0x018B, 0x000F, 0x4210, 0x0015, 0x001E, // istt
+                        0x018A, 0x000F, 0x3811, 0x0015, 0x001E, 0x4210, 0x000A, 0x001E, 0x4C02, 0x4E02, 0x5002, 0x5202, // wft
+                        0xC00B, 0xC21E, 0xC40E, 0xFE0E, 0xFC0B, 0xFA1E, 0xF81E, 0xF81E, 0xF60E, 0xF410 // secret shrine
                     };
 
                     // special case: claypot is multi object: one uses dungeon keep to hold its assets
@@ -504,16 +514,17 @@ namespace MMR.Randomizer
                     if (clayPotDungeonVariants.Contains(targetActor.OldVariant))
                     {
                         FixActorLastSecond(targetActor, targetActor.OldActorEnum, mapIndex, actorIndex);
+                        targetActor.Variants.AddRange(clayPotDungeonVariants);
+                        targetActor.AllVariants[(int)GameObjects.ActorType.Ground] = targetActor.Variants; // have to update the types for variant compatiblity later
                         return true;
                     }
-
                 }
 
                 return false;
             }
 
             var sceneEnemyList = new List<Actor>();
-            var sceneObjectlessList = new List<Actor>();
+            var sceneObjectlessActors = new List<Actor>();
             for (int mapIndex = 0; mapIndex < scene.Maps.Count; ++mapIndex)
             {
                 for (int actorIndex = 0; actorIndex < scene.Maps[mapIndex].Actors.Count; ++actorIndex) // (var mapActor in scene.Maps[mapIndex].Actors)
@@ -522,7 +533,7 @@ namespace MMR.Randomizer
                     var matchingEnemy = VanillaEnemyList.Find(act => (int)act == mapActor.ActorId);
                     if (matchingEnemy > 0)
                     {
-                        var listOfAcceptableVariants = matchingEnemy.AllVariants();
+                        var listOfAcceptableVariants = matchingEnemy.AllVariants(); 
 
                         // TODO: check if the specific actor can be randomized, required before continue:
                         // actor separation, scene reconstruction, object list extension,  
@@ -532,7 +543,7 @@ namespace MMR.Randomizer
 
                         if(SpecialMultiObjectCases(mapActor, mapIndex, actorIndex))
                         {
-                            sceneObjectlessList.Add(mapActor);
+                            sceneObjectlessActors.Add(mapActor);
                             continue;
                         }
 
@@ -549,7 +560,7 @@ namespace MMR.Randomizer
                         }
                         #endif
                     }
-                    else // not regular actor, free actor?
+                    else // non-object based actors, standalone
                     {
 
                         void AddIfNoRestrictions(Actor testActor)
@@ -563,9 +574,15 @@ namespace MMR.Randomizer
                             if (checkBlocked)
                                 return;
 
+                            if ( ! testActor.Variants.Contains(mapActor.OldVariant))
+                            {
+                                log.Append($" in scene [{scene.SceneEnum}][{mapIndex}] standalone was skipped over: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}]\n");
+                                return; // non valid
+                            }
+
                             FixActorLastSecond(testActor, testActor.ActorEnum, mapIndex, actorIndex);
 
-                            sceneObjectlessList.Add(mapActor);
+                            sceneObjectlessActors.Add(mapActor);
                         }
 
                         var matchingFreeActor = FreeCandidateList.Find(act => act.ActorEnum == mapActor.ActorEnum);
@@ -573,14 +590,13 @@ namespace MMR.Randomizer
                         {
                             AddIfNoRestrictions(mapActor);
                         }
-                        
                     }
                 }
 
             }
             thisSceneData.Actors = sceneEnemyList;
-            thisSceneData.Actors.AddRange(sceneObjectlessList);
-            thisSceneData.FreelanceActors = sceneObjectlessList;
+            thisSceneData.Actors.AddRange(sceneObjectlessActors); // might want to rethink this eventually
+            thisSceneData.StandaloneActors = sceneObjectlessActors;
         }
 
         // if one of these already exists somewhere in the logic I did not find it
@@ -3800,28 +3816,28 @@ namespace MMR.Randomizer
         } // end function
 
 
-        public static void ShuffleFreelanceActors(SceneEnemizerData thisSceneData/*, List<Actor> previouslyAssignedCandidates*/)
+        public static void ShuffleStandaloneActors(SceneEnemizerData thisSceneData)
         {
             /// this is the same as above but for the actors that previously did not have an object,
             /// so they can use ANY object require actor, or free actors
 
-            var freelanceActors = thisSceneData.FreelanceActors; // slots
+            var StandaloneActors = thisSceneData.StandaloneActors; // slots
 
-            if (freelanceActors == null) throw new Exception("freelanceActors busted");
+            if (StandaloneActors == null) throw new Exception("StandaloneActors busted");
 
             // we need to split this per-room so we can can get a slimmer candidate list? maybe that can wait until its working optimize later
 
             // we need to generate a candidate list for all actors without an object just like regular? if we want blocking sensitivity yeah
             // sort the list of special actors into list of per type
-            var allFreelanceActorsPerEnum = new List<List<Actor>>(); // same index for both, this is a list of all actors per type
-            var allCandidatesPerFreelance = new List<List<Actor>>(); // all candidates for the type replacement
-            var uniqueFreelanceActorTypes = thisSceneData.FreelanceActors.Select(act => act.OldActorEnum).Distinct().ToList();
-            if (uniqueFreelanceActorTypes == null) throw new Exception("unique free actors busted");
-            for ( int a = 0; a < uniqueFreelanceActorTypes.Count; a++)
+            var allStandaloneActorsPerEnum = new List<List<Actor>>(); // same index for both, this is a list of all actors per type
+            var allCandidatesPerStandalone = new List<List<Actor>>(); // all candidates for the type replacement
+            var uniqueStandaloneActorTypes = thisSceneData.StandaloneActors.Select(act => act.OldActorEnum).Distinct().ToList();
+            if (uniqueStandaloneActorTypes == null) throw new Exception("unique free actors busted");
+            for ( int a = 0; a < uniqueStandaloneActorTypes.Count; a++)
             {
-                var actorType = uniqueFreelanceActorTypes[a];
-                var allActorInstances = thisSceneData.FreelanceActors.FindAll(act => act.OldActorEnum == actorType);
-                allFreelanceActorsPerEnum.Add(allActorInstances);
+                var actorType = uniqueStandaloneActorTypes[a];
+                var allActorInstances = thisSceneData.StandaloneActors.FindAll(act => act.OldActorEnum == actorType);
+                allStandaloneActorsPerEnum.Add(allActorInstances);
 
                 // this is ripped and modified from GenerateActorCandidates
                 //var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(act => act.ObjectIndex() == thisSceneData.Objects[objectIndex]);
@@ -3832,7 +3848,7 @@ namespace MMR.Randomizer
                 var newCandiateList = GetMatchPool(thisSceneData, allActorInstances, containsFairyDroppingEnemy:false, objectHasBlockingSensitivity);
 
 
-                //allCandidatesPerFreelance.Add(newCandiateList);
+                //allCandidatesPerStandalone.Add(newCandiateList);
 
                 for (int actorIndex = 0; actorIndex < allActorInstances.Count(); actorIndex++)
                 {
@@ -4252,6 +4268,7 @@ namespace MMR.Randomizer
                                                           ).ToList();
 
             // special cases: these actors have dual objects where one object is a special object
+            // we have to add special versions for replacmeent to match the special object variants
             if (VanillaEnemyList.Contains(GameObjects.Actor.ClayPot) && sceneIsDungeon)
             {
                 var newDungeonOnlyPot = new Actor(GameObjects.Actor.ClayPot);
@@ -4259,6 +4276,13 @@ namespace MMR.Randomizer
                 newDungeonOnlyPot.Variants = new List<int>()
                 {
                     0x460B, 0x4610, 0x018D, // stone tower temple
+                    // beneath the well (todo)
+                    0x5C0E, 0x601E, 0x621E, 0x4C0E, 0x660E, 0x741E,// ospiderhouse
+                    0x761E, 0x001A, 0x400A, 0x0186, 0x018A, 0x680A, 0x6E0A, 0x700A, 0x720E, // ospiderhouse
+                    0x5A1E, 0x5C1E, 0x400B, 0x420A, 0x521F, 0x440B, 0x4602, 0x561E, 0x4E0B, // pirate bay rooms
+                    0x5013, 0x581E, 0x480B, 0x4A1E, 0x101F, 0x1203, 0x480B, 0x541E, // pirate bay rooms
+                    0x0186, 0x0187, 0x018A, 0x018C, 0x018A, 0x440A, 0x460A, 0x480A, 0x440B, 0x018B, 0x000F, 0x4210, 0x0015, 0x001E, // istt
+                    0x018A, 0x000F, 0x3811, 0x0015, 0x001E, 0x4210, 0x000A, 0x001E, 0x4C02, 0x4E02, 0x5002, 0x5202, // wft
                     0xC00B, 0xC21E, 0xC40E, 0xFE0E, 0xFC0B, 0xFA1E, 0xF81E, 0xF81E, 0xF60E, 0xF410 // secret shrine
                 };
                 newDungeonOnlyPot.AllVariants[(int)GameObjects.ActorType.Ground] = newDungeonOnlyPot.Variants;
@@ -4710,7 +4734,7 @@ namespace MMR.Randomizer
             public Random RNG;
             public DateTime StartTime;
             public List<Actor> Actors;
-            public List<Actor> FreelanceActors; // without an object dependency
+            public List<Actor> StandaloneActors; // without an object dependency
             public List<Actor> SceneFreeActors;
             public List<int> Objects;
             public List<List<int>> AllObjects;
@@ -4943,14 +4967,14 @@ namespace MMR.Randomizer
                     previousyAssignedCandidate.Clear(); // TODO this might not be needed at all anymore
                 } // end for actors per object
 
-                // finally, randomize actors that have no objects
+                // finally, randomize actors that have no objects (standalone)
                 {
                     var temporaryMatchEnemyList = new List<Actor>();
                     //List<Actor> subMatches = thisSceneData.CandidatesPerObject[objectIndex].FindAll(act => act.ObjectId == chosenObject);
 
                     // assuming we dont have free actors with companions
 
-                    ShuffleFreelanceActors(thisSceneData/*, previousyAssignedCandidate*/);
+                    ShuffleStandaloneActors(thisSceneData/*, previousyAssignedCandidate*/);
                     //WriteOutput($"  match time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                     //TrimAllActors(thisSceneData, previousyAssignedCandidate, temporaryMatchEnemyList); // lets let that last check below do this
@@ -5768,7 +5792,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Objectless Test Alpha2\n");
+                    sw.Write("Enemizer version: Isghj's Objectless Test Alpha3\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

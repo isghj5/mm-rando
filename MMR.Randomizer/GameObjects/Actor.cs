@@ -800,15 +800,18 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(95)]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
-        [CheckRestricted(Scene.TerminaField, -1, Item.CollectableTerminaFieldButterflyFairy1)]
-        // TODO separate them
+        [CheckRestricted(Scene.TerminaField, -1, Item.CollectableTerminaFieldButterflyFairy1)] // TODO which is it?
+        // TODO finish separating them
+        [CheckRestricted(Scene.Grottos, 0x5323, Item.BottleCatchBug)] // north grotto
+        [CheckRestricted(Scene.Grottos, 0x6322, Item.BottleCatchFish)] // regular grotto, TODO do we want to force a fish in a unique place instead?
         [CheckRestricted(Scene.Grottos, -1, Item.CollectableGrottosOceanGossipStonesButterflyFairy1, Item.CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1,
             Item.CollectableGrottosCowGrottoButterflyFairy1, Item.CollectableGrottosCowGrottoButterflyFairy2,
-            Item.BottleCatchFish)]
+            Item.BottleCatchFish
+            )]
         [CheckRestricted(Scene.MountainVillageSpring, -1, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2)]
         [CheckRestricted(Scene.GreatBayCoast, -1, Item.CollectableGreatBayCoastButterflyFairy1)]
-        [GroundVariants(0x3323, 0x2324, 0x4324)] // beatles on the floor
-        //[FlyingVariants(0x2324, 0x4324)] // butterlies in the air
+        [GroundVariants(0x3323, 0x2324, 0x4324, 0x5323)] // beatles on the floor
+        [FlyingVariants(0x2323, 0x4324)] // butterlies in the air
         [WaterVariants(0x6322)] // fish swimming in the water
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max: 2, 0x3323, 0x2324, 0x4324)]
@@ -2618,6 +2621,7 @@ namespace MMR.Randomizer.GameObjects
             0x400, 0x401, // ikana rocks, seems reasonable
             0xF00, 0xF01, // tektite, weirdly this is the nost variable of all the drop tables
             0x901, // chance of lots of money, as this is the drop table for money enemies
+            0x1F01, // I put this in peahat grotto
             0x300, 0x301)] // this drop table is unused according to mzxrules, but looks balanced
         [UnkillableAllVariants]
         [AlignedCompanionActor(Shot_Sun, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x41)] // fairies love grass
@@ -5678,12 +5682,18 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         GoronWithGeroMask = 0x23A, // En_Geg : HungryGoron, sirloin goron, "Hugo"
 
-        //[ActorizerEnabled] // boring since its hidden unless you wear one often junk mask, just decreases chances of noticable enemies
+        [ActorizerEnabled]
         [FileID(530)]
         [ObjectListIndex(1)]
-        [GroundVariants(0x7F)]
+        [GroundVariants( 0x1, 0x2, 0x5, 0x6, 0x8, 0x9,
+            0xA, 0xB, 0xC, 0xD, 0xE, 0xF,
+            0x10, 0x11, 0x12, 0x13, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1F, 
+            0x7F)]
+        //[VariantsWithRoomMax(max:0, variant:0x7F)]
+        [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        [PlacementWeight(60)] // dont waste too many spots
         MushroomCloud = 0x23B, // Obj_Kinoko
 
         [ActorizerEnabled]
