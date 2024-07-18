@@ -3805,8 +3805,7 @@ namespace MMR.Randomizer
             /// this is the same as above but for the actors that previously did not have an object,
             /// so they can use ANY object require actor, or free actors
 
-            var freelanceActors = thisSceneData.FreelanceActors;
-            var sceneFreeActors = GetSceneFreeActors(thisSceneData.Scene);
+            var freelanceActors = thisSceneData.FreelanceActors; // slots
 
             if (freelanceActors == null) throw new Exception("freelanceActors busted");
 
@@ -4251,6 +4250,35 @@ namespace MMR.Randomizer
                                                                 || (sceneIsDungeon && act.ObjectId == (int)Scene.SceneSpecialObject.DungeonKeep))
                                                            && !(act.BlockedScenes != null && act.BlockedScenes.Contains(scene.SceneEnum))
                                                           ).ToList();
+
+            // special cases: these actors have dual objects where one object is a special object
+            if (VanillaEnemyList.Contains(GameObjects.Actor.ClayPot) && sceneIsDungeon)
+            {
+                var newDungeonOnlyPot = new Actor(GameObjects.Actor.ClayPot);
+                // todo trim variants
+                newDungeonOnlyPot.Variants = new List<int>()
+                {
+                    0x460B, 0x4610, 0x018D, // stone tower temple
+                    0xC00B, 0xC21E, 0xC40E, 0xFE0E, 0xFC0B, 0xFA1E, 0xF81E, 0xF81E, 0xF60E, 0xF410 // secret shrine
+                };
+                newDungeonOnlyPot.AllVariants[(int)GameObjects.ActorType.Ground] = newDungeonOnlyPot.Variants;
+
+                SceneFreeActors.Add(newDungeonOnlyPot);
+            }
+            // todo do this for tall grass too
+            if (VanillaEnemyList.Contains(GameObjects.Actor.TallGrass) && sceneIsField)
+            {
+                var newFieldTallGrass = new Actor(GameObjects.Actor.TallGrass);
+                newFieldTallGrass.Variants = new List<int>() {
+                    0x0, 0x800,
+                    0x0600, 0x700, 0xC00, 0xD00,
+                    0x0E00, 0x0E10, 0x0010,
+                    0x0610
+                };
+                newFieldTallGrass.AllVariants[(int)GameObjects.ActorType.Ground] = newFieldTallGrass.Variants;
+                // todo trim variants
+                SceneFreeActors.Add(newFieldTallGrass);
+            }
 
             return SceneFreeActors;
         }

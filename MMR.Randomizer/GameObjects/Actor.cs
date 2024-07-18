@@ -803,7 +803,8 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.TerminaField, -1, Item.CollectableTerminaFieldButterflyFairy1)]
         // TODO separate them
         [CheckRestricted(Scene.Grottos, -1, Item.CollectableGrottosOceanGossipStonesButterflyFairy1, Item.CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1,
-            Item.CollectableGrottosCowGrottoButterflyFairy1, Item.CollectableGrottosCowGrottoButterflyFairy2)]
+            Item.CollectableGrottosCowGrottoButterflyFairy1, Item.CollectableGrottosCowGrottoButterflyFairy2,
+            Item.BottleCatchFish)]
         [CheckRestricted(Scene.MountainVillageSpring, -1, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2)]
         [CheckRestricted(Scene.GreatBayCoast, -1, Item.CollectableGreatBayCoastButterflyFairy1)]
         [GroundVariants(0x3323, 0x2324, 0x4324)] // beatles on the floor
@@ -1406,7 +1407,7 @@ namespace MMR.Randomizer.GameObjects
         // 642B is a smaller cuttable grass from the ground in secret 
         //[GroundVariants(0, 1)]
         [GroundVariants(
-            //0 // gossip stones use this, but its field_keep versions
+            0, // gossip stones use this, but its field_keep versions
             0x0800, // single in woods of mystery, field_keep
             0x0600, 0x700, 0xC00, 0xD00, // woodfall temple
             0x0610, // greay bay coast
