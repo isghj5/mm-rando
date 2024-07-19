@@ -488,6 +488,10 @@ namespace MMR.Randomizer
                     //  until we have multi-object code, this needs a special case or rando ignores it
                     if (tallGrassFieldObjectVariants.Contains(targetActor.OldVariant))
                     {
+                        var checkBlocked = ObjectIsCheckBlocked(scene, targetActor.ActorEnum, targetActor.OldVariant);
+                        if (checkBlocked)
+                            return false;
+
                         FixActorLastSecond(targetActor, targetActor.OldActorEnum, mapIndex, actorIndex);
                         targetActor.Variants.AddRange(tallGrassFieldObjectVariants);
                         targetActor.AllVariants[(int)GameObjects.ActorType.Ground] = targetActor.Variants; // have to update the types for variant compatiblity later
@@ -500,7 +504,7 @@ namespace MMR.Randomizer
                     int[] clayPotDungeonVariants = {
                         0xB,
                         // beneath the well (todo)
-                        0x5C0E, 0x601E, 0x621E, 0x4C0E, 0x660E, 0x741E,// ospiderhouse
+                        0x5C0E, 0x601E, 0x621E, 0x4C0E, 0x660E, 0x741E, 0x5A0A, // ospiderhouse
                         0x761E, 0x001A, 0x400A, 0x0186, 0x018A, 0x680A, 0x6E0A, 0x700A, 0x720E, // ospiderhouse
                         0x5A1E, 0x5C1E, 0x400B, 0x420A, 0x521F, 0x440B, 0x4602, 0x561E, 0x4E0B, // pirate bay rooms
                         0x5013, 0x581E, 0x480B, 0x4A1E, 0x101F, 0x1203, 0x480B, 0x541E, // pirate bay rooms
@@ -513,6 +517,10 @@ namespace MMR.Randomizer
                     //  until we have multi-object code, this needs a special case or rando ignores it
                     if (clayPotDungeonVariants.Contains(targetActor.OldVariant))
                     {
+                        var checkBlocked = ObjectIsCheckBlocked(scene, targetActor.ActorEnum, targetActor.OldVariant);
+                        if (checkBlocked)
+                            return false;
+
                         FixActorLastSecond(targetActor, targetActor.OldActorEnum, mapIndex, actorIndex);
                         targetActor.Variants.AddRange(clayPotDungeonVariants);
                         targetActor.AllVariants[(int)GameObjects.ActorType.Ground] = targetActor.Variants; // have to update the types for variant compatiblity later
@@ -644,15 +652,16 @@ namespace MMR.Randomizer
             /// tags: itemblocked, item restricted, check restricted
             const GameObjects.Scene ANYSCENE = (GameObjects.Scene)GameObjects.ActorConst.ANY_SCENE;
 
-
             var checkRestrictedAttr = testActor.GetAttributes<CheckRestrictedAttribute>();
             if (checkRestrictedAttr != null && checkRestrictedAttr.Count() > 0) // actor has check restrictions
             {
-                foreach (var restriction in checkRestrictedAttr) // can have multiple rules
+                var reducedList = checkRestrictedAttr.ToList().FindAll(attr => attr.Scene == scene.SceneEnum);
+
+                foreach (var restriction in reducedList) // can have multiple rules
                 {
                     if (restriction.Scene != ANYSCENE && restriction.Scene != scene.SceneEnum) continue;
 
-                    if (variant != -1 && restriction.Variant != variant)
+                    if (restriction.Variant != -1 && restriction.Variant != variant)
                         continue; // we dont care about this variant being restricted
 
                     var restrictedChecks = restriction.Checks;
@@ -4277,7 +4286,7 @@ namespace MMR.Randomizer
                 {
                     0x460B, 0x4610, 0x018D, // stone tower temple
                     // beneath the well (todo)
-                    0x5C0E, 0x601E, 0x621E, 0x4C0E, 0x660E, 0x741E,// ospiderhouse
+                    0x5C0E, 0x601E, 0x621E, 0x4C0E, 0x660E, 0x741E, 0x5A0A,// ospiderhouse
                     0x761E, 0x001A, 0x400A, 0x0186, 0x018A, 0x680A, 0x6E0A, 0x700A, 0x720E, // ospiderhouse
                     0x5A1E, 0x5C1E, 0x400B, 0x420A, 0x521F, 0x440B, 0x4602, 0x561E, 0x4E0B, // pirate bay rooms
                     0x5013, 0x581E, 0x480B, 0x4A1E, 0x101F, 0x1203, 0x480B, 0x541E, // pirate bay rooms
