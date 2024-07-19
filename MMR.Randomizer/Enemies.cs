@@ -85,6 +85,24 @@ namespace MMR.Randomizer
         private static OutputSettings _outputSettings;
         private static CosmeticSettings _cosmeticSettings;
 
+        // these have to be separate from Actor Enum for now beacuse they are for special objects, not regular types
+        static int[] clayPotDungeonVariants = {
+            0xB,
+            // beneath the well (todo)
+            0x5C0E, 0x601E, 0x621E, 0x4C0E, 0x660E, 0x741E, 0x5A0A, // ospiderhouse
+            0x761E, 0x001A, 0x400A, 0x0186, 0x018A, 0x680A, 0x6E0A, 0x700A, 0x720E, // ospiderhouse
+            0x5A1E, 0x5C1E, 0x400B, 0x420A, 0x521F, 0x440B, 0x4602, 0x561E,         // pirate bay rooms
+            0x5013, 0x581E, 0x480B, 0x4A1E, 0x101F, 0x1203, 0x480B, 0x541E, 0x4E0B, // pirate bay rooms
+            0x0186, 0x0187, 0x018A, 0x018C, 0x018A, 0x440A, 0x460A, 0x480A, 0x440B, 0x018B, 0x000F, 0x4210, 0x0015, 0x001E, // istt
+            0x018A, 0x000F, 0x3811, 0x0015, 0x001E, 0x4210, 0x000A, 0x001E, 0x4C02, 0x4E02, 0x5002, 0x5202, // wft
+            0xC00B, 0xC21E, 0xC40E, 0xFE0E, 0xFC0B, 0xFA1E, 0xF81E, 0xF81E, 0xF60E, 0xF410 // secret shrine
+        };
+        static int[] tallGrassFieldObjectVariants = {
+            0x0, 0x800,
+            0x0600, 0x700, 0xC00, 0xD00,
+            0x0E00, 0x0E10, 0x0010,
+            0x0610
+        };
 
         public static void PrepareEnemyLists()
         {
@@ -477,12 +495,6 @@ namespace MMR.Randomizer
                 if (thisSceneData.Scene.SpecialObject == Scene.SceneSpecialObject.FieldKeep
                  && targetActor.OldActorEnum == GameObjects.Actor.TallGrass)
                 {
-                    int[] tallGrassFieldObjectVariants = {
-                        0x0, 0x800,
-                        0x0600, 0x700, 0xC00, 0xD00,
-                        0x0E00, 0x0E10, 0x0010,
-                        0x0610
-                    };
 
                     // special case: tall grass is multi object: one uses field_keep to draw a regular bush
                     //  until we have multi-object code, this needs a special case or rando ignores it
@@ -501,17 +513,6 @@ namespace MMR.Randomizer
                 if (thisSceneData.Scene.SpecialObject == Scene.SceneSpecialObject.DungeonKeep
                  && targetActor.OldActorEnum == GameObjects.Actor.ClayPot)
                 {
-                    int[] clayPotDungeonVariants = {
-                        0xB,
-                        // beneath the well (todo)
-                        0x5C0E, 0x601E, 0x621E, 0x4C0E, 0x660E, 0x741E, 0x5A0A, // ospiderhouse
-                        0x761E, 0x001A, 0x400A, 0x0186, 0x018A, 0x680A, 0x6E0A, 0x700A, 0x720E, // ospiderhouse
-                        0x5A1E, 0x5C1E, 0x400B, 0x420A, 0x521F, 0x440B, 0x4602, 0x561E, 0x4E0B, // pirate bay rooms
-                        0x5013, 0x581E, 0x480B, 0x4A1E, 0x101F, 0x1203, 0x480B, 0x541E, // pirate bay rooms
-                        0x0186, 0x0187, 0x018A, 0x018C, 0x018A, 0x440A, 0x460A, 0x480A, 0x440B, 0x018B, 0x000F, 0x4210, 0x0015, 0x001E, // istt
-                        0x018A, 0x000F, 0x3811, 0x0015, 0x001E, 0x4210, 0x000A, 0x001E, 0x4C02, 0x4E02, 0x5002, 0x5202, // wft
-                        0xC00B, 0xC21E, 0xC40E, 0xFE0E, 0xFC0B, 0xFA1E, 0xF81E, 0xF81E, 0xF60E, 0xF410 // secret shrine
-                    };
 
                     // special case: claypot is multi object: one uses dungeon keep to hold its assets
                     //  until we have multi-object code, this needs a special case or rando ignores it
@@ -3530,10 +3531,15 @@ namespace MMR.Randomizer
             }
 
             var usableSwitches = new List<int>();
-            usableSwitches.AddRange(Enumerable.Range(1, 0x7E)); // 0x7F is popular non-valid value
-            usableSwitches.RemoveAll(sflag => claimedSwitchFlags.Contains(sflag));
-            usableSwitches.Reverse(); // we want to start at 0x7F and decend, under the assumption that they always used lower values
+            void CreateUsableSwitchesList()
+            {
+                usableSwitches.AddRange(Enumerable.Range(1, 0x7E)); // 0x7F is popular non-valid value
+                usableSwitches.RemoveAll(sflag => claimedSwitchFlags.Contains(sflag));
+                usableSwitches.Reverse(); // we want to start at 0x7F and decend, under the assumption that they always used lower values
 
+            }
+
+            CreateUsableSwitchesList();
 
             var actorsWithSwitchFlags = thisSceneData.Actors.ToList();
 
@@ -3593,6 +3599,11 @@ namespace MMR.Randomizer
 
                     if (switchFlags == -1) continue; // some actors can set th switch flag to -1 and ignore
 
+                    if (usableSwitches.Count == 0) // we ran out, recreate list
+                    {
+                        CreateUsableSwitchesList();
+                    }
+
                     if (usableSwitches.Contains(switchFlags)) // not used yet, claim
                     {
                         usableSwitches.Remove(switchFlags);
@@ -3603,12 +3614,11 @@ namespace MMR.Randomizer
                         //{
                         //   ActorUtils.SetActorSwitchFlags(actor, (short)switchChestFlag);
                         //} else
-                        {
-                            var newSwitch = usableSwitches[0];
-                            ActorUtils.SetActorSwitchFlags(actor, (short)newSwitch);
-                            usableSwitches.Remove(newSwitch);
-                            log.AppendLine($" +++ [{actorIndex}][{actor.ActorEnum}] had switch flags modified to [{newSwitch}] +++");
-                        }
+                        var newSwitch = usableSwitches[0];
+                        
+                        ActorUtils.SetActorSwitchFlags(actor, (short)newSwitch);
+                        usableSwitches.Remove(newSwitch);
+                        log.AppendLine($" +++ [{actorIndex}][{actor.ActorEnum}] had switch flags modified to [{newSwitch}] +++");
 
                     }
                 }
@@ -4282,18 +4292,7 @@ namespace MMR.Randomizer
             {
                 var newDungeonOnlyPot = new Actor(GameObjects.Actor.ClayPot);
                 // todo trim variants
-                newDungeonOnlyPot.Variants = new List<int>()
-                {
-                    0x460B, 0x4610, 0x018D, // stone tower temple
-                    // beneath the well (todo)
-                    0x5C0E, 0x601E, 0x621E, 0x4C0E, 0x660E, 0x741E, 0x5A0A,// ospiderhouse
-                    0x761E, 0x001A, 0x400A, 0x0186, 0x018A, 0x680A, 0x6E0A, 0x700A, 0x720E, // ospiderhouse
-                    0x5A1E, 0x5C1E, 0x400B, 0x420A, 0x521F, 0x440B, 0x4602, 0x561E, 0x4E0B, // pirate bay rooms
-                    0x5013, 0x581E, 0x480B, 0x4A1E, 0x101F, 0x1203, 0x480B, 0x541E, // pirate bay rooms
-                    0x0186, 0x0187, 0x018A, 0x018C, 0x018A, 0x440A, 0x460A, 0x480A, 0x440B, 0x018B, 0x000F, 0x4210, 0x0015, 0x001E, // istt
-                    0x018A, 0x000F, 0x3811, 0x0015, 0x001E, 0x4210, 0x000A, 0x001E, 0x4C02, 0x4E02, 0x5002, 0x5202, // wft
-                    0xC00B, 0xC21E, 0xC40E, 0xFE0E, 0xFC0B, 0xFA1E, 0xF81E, 0xF81E, 0xF60E, 0xF410 // secret shrine
-                };
+                newDungeonOnlyPot.Variants = clayPotDungeonVariants.ToList();
                 newDungeonOnlyPot.AllVariants[(int)GameObjects.ActorType.Ground] = newDungeonOnlyPot.Variants;
 
                 SceneFreeActors.Add(newDungeonOnlyPot);
@@ -4302,12 +4301,7 @@ namespace MMR.Randomizer
             if (VanillaEnemyList.Contains(GameObjects.Actor.TallGrass) && sceneIsField)
             {
                 var newFieldTallGrass = new Actor(GameObjects.Actor.TallGrass);
-                newFieldTallGrass.Variants = new List<int>() {
-                    0x0, 0x800,
-                    0x0600, 0x700, 0xC00, 0xD00,
-                    0x0E00, 0x0E10, 0x0010,
-                    0x0610
-                };
+                newFieldTallGrass.Variants = tallGrassFieldObjectVariants.ToList();
                 newFieldTallGrass.AllVariants[(int)GameObjects.ActorType.Ground] = newFieldTallGrass.Variants;
                 // todo trim variants
                 SceneFreeActors.Add(newFieldTallGrass);
@@ -5801,7 +5795,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Objectless Test Alpha3\n");
+                    sw.Write("Enemizer version: Isghj's Objectless Test Alpha4\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

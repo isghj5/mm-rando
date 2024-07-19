@@ -1224,7 +1224,18 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableGreatBayCoastPot7, Item.CollectableGreatBayCoastPot8, Item.CollectableGreatBayCoastPot9,
             Item.CollectableGreatBayCoastPot10, Item.CollectableGreatBayCoastPot11
         )]
+        /* 
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x601E, Item.CollectableOceansideSpiderHouseEntrancePot1)] 
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x621E, Item.CollectableOceansideSpiderHouseEntrancePot2)]
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x5C0E, Item.CollectableOceansideSpiderHouseEntrancePot3)]// done
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x018A, Item.CollectableOceansideSpiderHouseMainRoomPot1)]
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0xB, Item.CollectableOceansideSpiderHouseMainRoomPot2)]
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x741E, Item.CollectableOceansideSpiderHouseMaskRoomPot1)]
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x761E, Item.CollectableOceansideSpiderHouseMaskRoomPot2)]         
+         */
         [CheckRestricted(Scene.OceanSpiderHouse, variant: -1,
+            Item.CollectableOceansideSpiderHouseEntrancePot1, Item.CollectableOceansideSpiderHouseEntrancePot2, Item.CollectableOceansideSpiderHouseEntrancePot3,
+            Item.CollectableOceansideSpiderHouseMainRoomPot1, Item.CollectableOceansideSpiderHouseMainRoomPot2,
             Item.CollectableOceansideSpiderHouseMaskRoomPot1, Item.CollectableOceansideSpiderHouseMaskRoomPot2)]
         [CheckRestricted(Scene.PinnacleRock, variant: -1,
             Item.CollectablePinnacleRockPot1, Item.CollectablePinnacleRockPot2, Item.CollectablePinnacleRockPot3, Item.CollectablePinnacleRockPot4)]
