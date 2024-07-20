@@ -656,13 +656,13 @@ namespace MMR.Randomizer
             var checkRestrictedAttr = testActor.GetAttributes<CheckRestrictedAttribute>();
             if (checkRestrictedAttr != null && checkRestrictedAttr.Count() > 0) // actor has check restrictions
             {
-                var reducedList = checkRestrictedAttr.ToList().FindAll(attr => attr.Scene == scene.SceneEnum);
+                var reducedList = checkRestrictedAttr.ToList().FindAll(attr => attr.Scene == scene.SceneEnum || (int) attr.Scene == -1);
 
                 foreach (var restriction in reducedList) // can have multiple rules
                 {
                     if (restriction.Scene != ANYSCENE && restriction.Scene != scene.SceneEnum) continue;
 
-                    if (restriction.Variant != -1 && restriction.Variant != variant)
+                    if (restriction.Variant != GameObjects.ActorConst.ANY_VARIANT && restriction.Variant != variant)
                         continue; // we dont care about this variant being restricted
 
                     var restrictedChecks = restriction.Checks;
