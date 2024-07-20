@@ -1840,19 +1840,21 @@ namespace MMR.Randomizer.GameObjects
         [FileID(157)]
         [ObjectListIndex(0xFD)]
         [CheckRestricted(Scene.GoronVillage, variant: -1, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
-        // // never going to put him anywhere I dont think, so just mark his spawn as flying
+        // path is 0xF000, if you set to max (F) then its none-pathing and just auto flies away
         [PerchingVariants(0xF18B, // southern swamp // and clear swamp??? he was there??
             0xF000,
+            0xF180,
             0x2102, 0x1102, 0x0102)] // three different days of goron village
-        // variant 0/else
-        [GroundVariants(0xF000)] // just sits there and stares at you, neat
+        // type: 1 is unused monkey text, broken, 3 is soaring hint, 2 is lens cave, 30 is falling feathers I think
+        [GroundVariants(0xF180, // soaring hint version, works without path sweet
+            0xF000)] // just sits there and stares at you, neat
+        //[FlyingVariants()] // if we could make sure flying is never used alone, putting some falling feathers could be cool
         // variant 1
         //[GroundVariants(0xF080)] // instant talks to you with monkey dialgoue but talking doesnt end: softlock
-        // there is also a variant 1000 which cannot be accessed with the 0x1F range, will have to mod to get that working
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [ForbidFromScene(Scene.SouthernSwamp)] // since we want the hint
-        // pathing I think, but pathing flying types do not currently exist in this rando
-        [VariantsWithRoomMax(max: 0, variant: 0xF18B, 0x2102, 0x1102, 0x0102)]
+        [VariantsWithRoomMax(max: 1, variant: 0xF180)] // only want to waste one slot on the hint owl
+        [VariantsWithRoomMax(max: 0, variant: 0x2102, 0x1102, 0x0102)] // these are pathing, do not place
         [VariantsWithRoomMax(max: 10, variant: 0xF000)]
         [UnkillableAllVariants]
         En_Owl = 0xAF, // En_Owl
