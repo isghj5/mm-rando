@@ -811,6 +811,8 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.MountainVillageSpring, -1, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2)]
         [CheckRestricted(Scene.GreatBayCoast, -1, Item.CollectableGreatBayCoastButterflyFairy1)]
         [GroundVariants(0x3323, 0x2324, 0x4324, 0x5323)] // beatles on the floor
+        // they dont stick to the wall, they climb in the air
+        //[WallVariants(0x3323, 0x2324, 0x4324, 0x5323)] // beatles on the... wall?
         [FlyingVariants(0x2323, 0x4324)] // butterlies in the air
         [WaterVariants(0x6322)] // fish swimming in the water
         [UnkillableAllVariants]
@@ -1224,19 +1226,19 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableGreatBayCoastPot7, Item.CollectableGreatBayCoastPot8, Item.CollectableGreatBayCoastPot9,
             Item.CollectableGreatBayCoastPot10, Item.CollectableGreatBayCoastPot11
         )]
-        /* 
+        ///* 
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x601E, Item.CollectableOceansideSpiderHouseEntrancePot1)] 
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x621E, Item.CollectableOceansideSpiderHouseEntrancePot2)]
-        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x5C0E, Item.CollectableOceansideSpiderHouseEntrancePot3)]// done
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x5C0E, Item.CollectableOceansideSpiderHouseEntrancePot3)]
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x018A, Item.CollectableOceansideSpiderHouseMainRoomPot1)]
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0xB, Item.CollectableOceansideSpiderHouseMainRoomPot2)]
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x741E, Item.CollectableOceansideSpiderHouseMaskRoomPot1)]
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x761E, Item.CollectableOceansideSpiderHouseMaskRoomPot2)]         
-         */
-        [CheckRestricted(Scene.OceanSpiderHouse, variant: -1,
+        // */
+        /*[CheckRestricted(Scene.OceanSpiderHouse, variant: -1,
             Item.CollectableOceansideSpiderHouseEntrancePot1, Item.CollectableOceansideSpiderHouseEntrancePot2, Item.CollectableOceansideSpiderHouseEntrancePot3,
             Item.CollectableOceansideSpiderHouseMainRoomPot1, Item.CollectableOceansideSpiderHouseMainRoomPot2,
-            Item.CollectableOceansideSpiderHouseMaskRoomPot1, Item.CollectableOceansideSpiderHouseMaskRoomPot2)]
+            Item.CollectableOceansideSpiderHouseMaskRoomPot1, Item.CollectableOceansideSpiderHouseMaskRoomPot2)] */
         [CheckRestricted(Scene.PinnacleRock, variant: -1,
             Item.CollectablePinnacleRockPot1, Item.CollectablePinnacleRockPot2, Item.CollectablePinnacleRockPot3, Item.CollectablePinnacleRockPot4)]
         [CheckRestricted(Scene.ZoraCape, variant: -1, Item.CollectableZoraCapeJarGame1,
@@ -5275,7 +5277,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)] // no params
         //[VariantsWithRoomMax(max:10, variant:0)]
         [UnkillableAllVariants]
-        [PlacementWeight(50)] // new actor, for now lets leave high
+        [PlacementWeight(45)] // new actor, for now lets leave high
         MilkbarChairs = 0x217, // Bg_Mbar_Chair
 
         [FileID(495)]

@@ -3721,7 +3721,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.MountainVillage, GameObjects.Actor.PottedPlant, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Dog, GameObjects.Actor.Evan)) continue; 
-                //if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.RosaSisters, GameObjects.Actor.GaboraBlacksmith)) continue; 
+                //if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.WallTalkSpot, GameObjects.Actor.BugsFishButterfly)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.LabFish)) continue;
                 // StockpotBell, UnusedStoneTowerPlatform , WarpDoor 35,30, MilkbarChairs 20,14, DekuFlower
@@ -5042,10 +5042,10 @@ namespace MMR.Randomizer
             ////////////////////////////////////////////
             ///////   DEBUGGING: force an actor  ///////
             ////////////////////////////////////////////
-            if (scene.SceneEnum == GameObjects.Scene.Grottos) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.WestClockTown) // force specific actor/variant for debugging
             {
                 //thisSceneData.Actors[12].ChangeActor(GameObjects.Actor.Empty, vars: 0x000); // first torc
-                thisSceneData.Scene.Maps[11].Actors[4].ChangeActor(GameObjects.Actor.Fish, vars: 0);
+                thisSceneData.Scene.Maps[0].Actors[10].ChangeActor(GameObjects.Actor.BugsFishButterfly, vars: 0x5323);
             }
             /////////////////////////////
             #endif
