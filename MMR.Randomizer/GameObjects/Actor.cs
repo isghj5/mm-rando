@@ -792,9 +792,11 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesPlacementBlock(Scene.DekuPalace, Scene.BeneathTheWell, Scene.BeneathGraveyard, Scene.RoadToIkana, Scene.StoneTower)]
         UnusedStoneTowerStoneElevator = 0x4D, // Bg_F40_Flift
 
-        // Has no File
+        //[ActorizerEnabled] // TODO
+        // Has no File, burried in [code] file
         [ActorInstanceSize(0)] // unknown, never seen though
-        [ObjectListIndex(0x0)]
+        [ObjectListIndex(0x1)]
+        //[GroundVariants]
         Bg_Heavy_Block = 0x4E, // Bg_Heavy_Block
 
         [EnemizerEnabled]
