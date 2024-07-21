@@ -2637,6 +2637,7 @@ namespace MMR.Randomizer.GameObjects
         // params: 0x1F00 is drop table index, and 0x0001 is shape, 0 is octagon, 1 is loose shuffled
         // all the regular drop tables that can be attached to grass
         [GroundVariants(0x0, 0x1, 0x100, 0x101, 0x600, 0x601, 0x800, 0x801, 0xA00, 0xA01, 0xB00, 0xB01, 0xC00, 0xC01,
+            0x01, 0x21, 0x31, 0x41, 0x11,  // just regular drop table, multiple for higher chance
             0x400, 0x401, // ikana rocks, seems reasonable
             0xF00, 0xF01, // tektite, weirdly this is the nost variable of all the drop tables
             0x901, // chance of lots of money, as this is the drop table for money enemies

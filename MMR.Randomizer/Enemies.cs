@@ -3413,6 +3413,100 @@ namespace MMR.Randomizer
             return null;
         }
 
+        public static void ActorizerForceDropHeavyGrassMinimum(SceneEnemizerData thisSceneData)
+        {
+            /// people are complaining that in high sanity they need at least one place where they can get drops of some kind
+
+            GameObjects.Scene[] scenesToForce = new GameObjects.Scene[]{
+                GameObjects.Scene.TerminaField,
+                GameObjects.Scene.GreatBayCoast,
+                GameObjects.Scene.IkanaCanyon, // none, TODO
+                GameObjects.Scene.IkanaGraveyard 
+            };
+
+            if (_randomized.Settings.LogicMode != Models.LogicMode.NoLogic // crazy bitches need their juice
+                && scenesToForce.Contains(thisSceneData.Scene.SceneEnum))
+            {
+                #if DEBUG
+                var debuggingActorList = thisSceneData.Actors;
+                #endif
+
+                var firstRestrictions = thisSceneData.Actors.FindAll(act => act.Type == GameObjects.ActorType.Ground || act.Type == GameObjects.ActorType.Pathing);
+                if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.TerminaField || thisSceneData.Scene.SceneEnum == GameObjects.Scene.GreatBayCoast)
+                {
+                    firstRestrictions = firstRestrictions.FindAll(act => act.Room == 0); // these scenes have hidden second rooms that are harder to reach
+                }
+                if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.GreatBayCoast)
+                {
+                    //firstRestrictions.RemoveAll(act => act.ActorEnum == GameObjects.Actor.RainbowHookshotPillar); // out of range
+                    firstRestrictions = firstRestrictions.FindAll(act => act.OldActorEnum == GameObjects.Actor.Leever); // tired of this alg keeps putting it in stupid locations ENOUGH
+                }
+                if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.IkanaCanyon)
+                {
+                    firstRestrictions.RemoveAll(act => act.OldActorEnum == GameObjects.Actor.Guay); // this should be flying not ground type, TODO fix
+                }
+
+
+                // find one actor that is either empty or standalone
+                // and ground variety
+                var replacementCandidates = firstRestrictions.FindAll(act =>   thisSceneData.StandaloneActors.Contains(act)
+                                                                       || act.ActorEnum == GameObjects.Actor.Empty);
+
+                if (replacementCandidates.Count == 0) // did not find empty or standalone ground types we could replace
+                {
+                    /// lets try actors that are special object
+                    replacementCandidates = firstRestrictions.FindAll(act => act.ActorEnum.ObjectIndex() <= 3);
+                }
+
+                if (replacementCandidates.Count == 0) // did not find any cheap object actors
+                {
+                    /// lets try actors that have lots of copies, those can sometimes have too many
+                    //var sortedGroups = firstRestrictions.OrderBy(x => x).GroupBy(x => x.ActorEnum);
+                    //List<List<Actor>> bucketSortedList = sortedGroups.Select(g => g.ToList()).ToList(); // not working and I dont know this system enough to get it working, screw it writing it manually
+                    List<(int type, int count)> bucketList = new List<(int type, int count)>();
+                    foreach (var actor in firstRestrictions)
+                    {
+                        var searchIndex = bucketList.FindIndex(bucket => bucket.type == actor.ActorId);
+                        if (searchIndex == -1) // not in bucketlist yet, add new bucket
+                        {
+                            bucketList.Add((actor.ActorId, 1));
+                        }
+                        else // previously existing bucket
+                        {
+                            var countPtr = bucketList[searchIndex].count; // can't inline increment tuple value, c# weirdness
+                            countPtr++;
+                        }
+                    }
+
+                    var largestIndex = 0;
+                    for(int i = 0; i < bucketList.Count; i++)
+                    {
+                        var newList = bucketList[i];
+                        var oldList = bucketList[largestIndex];
+                        if (newList.count > oldList.count)
+                        {
+                            largestIndex = i;
+                        }
+                    }
+                    replacementCandidates = firstRestrictions.FindAll( act => act.ActorId == bucketList[largestIndex].type);
+                }
+
+                if (replacementCandidates.Count == 0)//Debug.Assert(replacementCandidates.Count > 0);
+                    throw new Exception("Could not place supply bush, please try another seed.");
+
+                // change them to a bush containing things
+                var actorChoice = replacementCandidates[thisSceneData.RNG.Next(replacementCandidates.Count)];
+
+                thisSceneData.Log.AppendLine($" +++ BUSH SUPPLIES at index:[{actorChoice.RoomActorIndex}]"
+                           + $" replacing new choice [{actorChoice.Name}][{actorChoice.Variants[0].ToString("X4")}]"
+                           + $" where old actor was [{actorChoice.OldName}][{actorChoice.OldVariant.ToString("X4")}] ");
+
+                // dont need to modify old as this happens dead last
+                actorChoice.ChangeActor(GameObjects.Actor.NaturalPatchOfGrass, vars:0x0001, modifyOld: false);
+            }
+        }
+
+
         public static void FixGroundToFlyingActorHeights(SceneEnemizerData thisSceneData, StringBuilder log)
         {
             /// For variety, I wanted to be able to put flying enemies where ground enemies used to be.
@@ -5067,6 +5161,8 @@ namespace MMR.Randomizer
 
             var flagLog = new StringBuilder();
 
+            ActorizerForceDropHeavyGrassMinimum(thisSceneData);
+
             FixGroundToFlyingActorHeights(thisSceneData, flagLog); // putting flying actors on ground spawns can be weird
             FixRedeadSpawnScew(thisSceneData); // redeads don't like x/z rotation
             FixBrokenActorSpawnCutscenes(thisSceneData); // some actors dont like having bad cutscenes
@@ -5808,7 +5904,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Objectless Test Alpha4\n");
+                    sw.Write("Enemizer version: Isghj's Objectless Test Alpha5\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
