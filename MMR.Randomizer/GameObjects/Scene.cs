@@ -267,6 +267,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo,
             Actor.Bombiwa /* Actor.RegularIceBlock, Actor.IkanaCanyonHookshotStump, */ )] // could block the fairy bubble
         [EnemizerSceneBlockSensitive(Actor.Bo, -1)]
+        [EnemizerSceneBlockSensitive(Actor.IceCavernStelagtite, -1)] // can block the door
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Freezard,
             Actor.PoeSisters, // weird behavior, if the killing blow of meg at long range can stop chests from spawning
             Actor.CircleOfFire, // if it gets placed on the one on top of a chest the player is screwed
@@ -282,7 +283,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1256)]
         [SceneInternalId(0x22)]
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Carpenter,
-            //Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
+        //Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
         MilkRoad = 0x1F,
 
         // this is both the sewer and all of the smaller rooms up top
@@ -311,7 +312,7 @@ namespace MMR.Randomizer.GameObjects
         // tag: archery
         [FileID(1276)]
         [SceneInternalId(0x24)]
-        [EnemizerSceneEnemyReplacementBlock( originalEnemy: Actor.Clock,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Clock,
             Actor.Keese, Actor.Takkuri)]
         SwampShootingGallery = 0x21,
 
@@ -439,7 +440,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1316)]
         [SceneInternalId(0x30)]
         [EnemizerSceneBlockSensitive(Actor.BigPoe, -1)]
-            [EnemizerSceneBlockSensitive( Actor.Dampe, -1)] // not sure which one it is, but if its a big thing they cant get past the entrance
+        [EnemizerSceneBlockSensitive(Actor.Dampe, -1)] // not sure which one it is, but if its a big thing they cant get past the entrance
         // [ClearEnemyPuzzleRooms(   )] // is big poe reward a clear room reward?
         DampesHouse = 0x2D,
 
@@ -449,7 +450,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1319)]
         [SceneInternalId(0x32)]
         // 128,100 was fine
-        [DynaHeadroom(128,100)]  // limit not found
+        [DynaHeadroom(128, 100)]  // limit not found
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GoronSGoro,
                         Actor.GoronWithGeroMask)] // if the sirloin drops on top of him its broken
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Torch,
@@ -475,7 +476,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x35)]
         // we know nothing here, TODO recheck
         // 234, 162 was fine holy shit
-        [DynaHeadroom( 235, 200 )]
+        [DynaHeadroom(235, 200)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Cremia,
             Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors can break credits
         [EnemizerSceneEnemyReplacementBlock(Actor.LargeWoodenCrate,
@@ -509,9 +510,9 @@ namespace MMR.Randomizer.GameObjects
                     Actor.LikeLike)] // can hard lock if the player leaves and gets instant-grabbed
         [EnemizerSceneEnemyReplacementBlock(Actor.LikeLike,
                     Actor.Japas, Actor.Bombiwa, Actor.BronzeBoulder, Actor.Mimi, Actor.TreasureChest)] // small blocking
-         //    Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo,
-        //    Actor.Bombiwa, Actor.BronzeBoulder, Actor.CircleOfFire,
-        //    Actor.RegularZora, Actor.SwimmingZora, Actor.WarpDoor)]
+                                                                                                       //    Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo,
+                                                                                                       //    Actor.Bombiwa, Actor.BronzeBoulder, Actor.CircleOfFire,
+                                                                                                       //    Actor.RegularZora, Actor.SwimmingZora, Actor.WarpDoor)]
         [EnemizerSceneBlockSensitive(Actor.LikeLike, -1)]
         ZoraCape = 0x35,
 
@@ -539,7 +540,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1342)]
         [SceneInternalId(0x3E)]
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuKing,
-            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan )] // singing/audio actors
+            Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuPrincess,
             Actor.IronKnuckle, Actor.GuruGuru, Actor.RomaniYts, Actor.CutsceneZelda, Actor.Japas, Actor.Tijo, Actor.Evan)] // singing/audio actors
         [EnemizerSceneEnemyReplacementBlock(Actor.Butler,
@@ -581,7 +582,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1353)]
         [SceneInternalId(0x43)]
-        [DynaHeadroom(0,0)] // seems very low, for now disable
+        [DynaHeadroom(0, 0)] // seems very low, for now disable
         [EnemizerSceneEnemyReplacementBlock(Actor.Dampe,
             Actor.Treee)]// for some reason big poe in the first room can cause camera to lock, unknown reason
         [EnemizerSceneEnemyReplacementBlock(Actor.OrangeGraveyardFlower,
@@ -602,12 +603,12 @@ namespace MMR.Randomizer.GameObjects
         // one lily(12, 8) plus one darmani grave (10, 8) and one ice platform(22,13) was too much tho (43,29)
         //[DynaHeadroom(28, 16, room: 0)]
         //[DynaHeadroom(28, 16, room: 2)]
-        [DynaHeadroom(10,8)] // hotfix: lower to avoid dyna collider while I wait for better data as to issue
+        [DynaHeadroom(10, 8)] // hotfix: lower to avoid dyna collider while I wait for better data as to issue
         //[EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // bit annoying 
         //    Actor.Peahat, Actor.LikeLike, Actor.Freezard)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.DragonFly, // blocks deku flying 
         //    Actor.UnusedStoneTowerPlatform, Actor.UnusedPirateElevator)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.Octarok, 
+        [EnemizerSceneEnemyReplacementBlock(Actor.Octarok,
             Actor.Obj_Boat, Actor.SwampBoat)] // dyna crashing from just one boat and nothing else
         [EnemizerSceneBlockSensitive(Actor.DragonFly, -1)]
         [EnemizerSceneBlockSensitive(Actor.En_Owl, -1)]
@@ -619,7 +620,7 @@ namespace MMR.Randomizer.GameObjects
         // replaced by 12 platforms and one elevator
         // (12x28,16) + (12,8) = 348, and that is 20 over the limit
         // 348 - 192 - 22 = 134 max poly
-        [DynaHeadroom(130,116, room:2)]  // 116 is estimate
+        [DynaHeadroom(130, 116, room: 2)]  // 116 is estimate
         [EnemizerSceneEnemyReplacementBlock(Actor.ClayPot,
             Actor.En_Ani, Actor.GaboraBlacksmith, Actor.BomberHideoutGuard, // their talk box is so big they can dialogue block the flower
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, // assume they will block deku flower pop-up
@@ -627,7 +628,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.ClocktowerGearsAndOrgan // blocking the flower
         )]
         [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
-            //Actor.Peahat, // big ground type blocks the bridge at night, can't separate the big one and the small ones
+                                                           //Actor.Peahat, // big ground type blocks the bridge at night, can't separate the big one and the small ones
             Actor.BabaIsUnused, // blocks the bridges
             Actor.Grog // still blocks the bridges
             /* Actor.Wolfos */ )] // wolfos:iceblock
@@ -646,7 +647,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1369)]
         [SceneInternalId(0x49)]
         // 8 biobabas in the ceiling caused crash in room 8, at 10x8 and we went over by 7, so 72 should be safe
-        [DynaHeadroom(68,68)]
+        [DynaHeadroom(68, 68)]
         //3: clear the biobabas, 5 is gekko, 8 is wart
         [ClearEnemyPuzzleRooms(3, 5, 7)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Skulltula,
@@ -665,7 +666,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1388)]
         [SceneInternalId(0x4B)]
-        [ClearEnemyPuzzleRooms( 12 )] // 12 is big poe
+        [ClearEnemyPuzzleRooms(12)] // 12 is big poe
         BeneathTheWell = 0x48,
 
         [FileID(1403)]
@@ -682,7 +683,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1414)]
         [SceneInternalId(0x4F)]
-        [ClearEnemyPuzzleRooms( 0x1 )] // the guantlet is only one big room
+        [ClearEnemyPuzzleRooms(0x1)] // the guantlet is only one big room
         SakonsHideout = 0x4C,
 
         [FileID(1417)]
@@ -780,7 +781,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1459)]
         [SceneInternalId(0x60)]
-        [ClearEnemyPuzzleRooms(2,3,4,5)] // the miniboss rooms
+        [ClearEnemyPuzzleRooms(2, 3, 4, 5)] // the miniboss rooms
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
             Actor.Shabom)] // report of them not spawning or falling out of bounds and softlock
         SecretShrine = 0x5D,
@@ -843,6 +844,9 @@ namespace MMR.Randomizer.GameObjects
         // +4,0 with two large crates was fine, +2 elevator-1crate was also fine,
         //   +3hookshotpillars-1box-3poles is also fine, recorded as 20,4 in the log, so that might be closer to the limit
         [DynaHeadroom(20, 20)] // should be safe
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.LargeWoodenCrate,
+            Actor.LikeLike // can grab and spit you from behind the fense
+        )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee,
             Actor.PoeBalloon, Actor.BigPoe, // Actor.FloorMaster,
             //Actor.SleepingScrub, // too much dyna, spawns too many flowers and flower companions
@@ -850,7 +854,7 @@ namespace MMR.Randomizer.GameObjects
             //Actor.GibdoIkana, Actor.ReDead, Actor.GibdoWell,
             /* Actor.CircleOfFire, Actor.LightBlock, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator */)]
         [EnemizerSceneBlockSensitive(Actor.Treee, -1)]
-        GormanRaceTrack = 0x67,
+        GormanRaceTrack = 0x67, // tag gormantrack
 
         [FileID(1508)]
         [SceneInternalId(0x6B)]
