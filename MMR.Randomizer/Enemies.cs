@@ -808,7 +808,7 @@ namespace MMR.Randomizer
                        && !matchingEnum.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
 
-                        if (ObjectIsCheckBlocked(scene, matchingEnum))
+                        if (ObjectIsCheckBlocked(scene, matchingEnum, matchingEnemy.OldVariant))
                         {
                             thisSceneData.Actors.RemoveAll(act => act.ObjectId == obj);
                         }
@@ -1133,6 +1133,17 @@ namespace MMR.Randomizer
                 leftMountainVillagePot.Rotation.y = ActorUtils.MergeRotationAndFlags(270, leftSmithyPot.Rotation.y); ;
                 var rightMountainPot = mountainVillageScene.Maps[0].Actors[36];
                 rightMountainPot.Rotation.y = ActorUtils.MergeRotationAndFlags(270, rightMountainPot.Rotation.y);
+
+                // if the clocktown talk points are randomized, we want to rotate them as they dont have set rotation
+                // this shit does nothing because something funky is going on, the rotation is not what it is in vanilla and its being ignored????
+                /* var westClocktownScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.WestClockTown.FileID());
+                var curiosityshopSign = westClocktownScene.Maps[0].Actors[22];
+                curiosityshopSign.Rotation.y = ActorUtils.MergeRotationAndFlags(180 , flags: curiosityshopSign.Rotation.y);
+                var tradingpostSign = westClocktownScene.Maps[0].Actors[9];
+                tradingpostSign.Rotation.y = ActorUtils.MergeRotationAndFlags(0, flags: tradingpostSign.Rotation.y);
+                var bombshopSign = westClocktownScene.Maps[0].Actors[2];
+                bombshopSign.Rotation.y = ActorUtils.MergeRotationAndFlags(0, flags: bombshopSign.Rotation.y);
+                // */
 
                 // trying to fix clock, nothing
                 //var curiosityShopClock = curiosityShop.Maps[0].Actors[5];
@@ -3715,13 +3726,13 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.En_Owl)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.En_Owl)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.MilkbarChairs)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.En_Boj_04)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.MountainVillage, GameObjects.Actor.PottedPlant, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Dog, GameObjects.Actor.Evan)) continue; 
-                //if (TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.WallTalkSpot, GameObjects.Actor.BugsFishButterfly)) continue; 
+                if (TestHardSetObject(GameObjects.Scene.PiratesFortress, GameObjects.Actor.PatrollingPirate, GameObjects.Actor.PatrollingPirate)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.LabFish)) continue;
                 // StockpotBell, UnusedStoneTowerPlatform , WarpDoor 35,30, MilkbarChairs 20,14, DekuFlower
@@ -5045,7 +5056,9 @@ namespace MMR.Randomizer
             if (scene.SceneEnum == GameObjects.Scene.WestClockTown) // force specific actor/variant for debugging
             {
                 //thisSceneData.Actors[12].ChangeActor(GameObjects.Actor.Empty, vars: 0x000); // first torc
-                thisSceneData.Scene.Maps[0].Actors[10].ChangeActor(GameObjects.Actor.BugsFishButterfly, vars: 0x5323);
+                thisSceneData.Scene.Maps[0].Actors[22].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
+                thisSceneData.Scene.Maps[0].Actors[9].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
+                thisSceneData.Scene.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
             }
             /////////////////////////////
             #endif
