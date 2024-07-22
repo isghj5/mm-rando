@@ -69,7 +69,7 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(12, 8)]
         [CheckRestricted(Scene.RoadToIkana, variant: 0x5080, Item.ChestToIkanaRedRupee)]
         [CheckRestricted(Scene.EastClockTown, variant: 0x50CA, Item.ChestEastClockTownSilverRupee)]
-        [CheckRestricted(Scene.SouthClockTown, variant: -1, Item.ChestSouthClockTownPurpleRupee, Item.ChestSouthClockTownRedRupee)]
+        [CheckRestricted(Scene.SouthClockTown, variant: ActorConst.ANY_VARIANT, Item.ChestSouthClockTownPurpleRupee, Item.ChestSouthClockTownRedRupee)]
         // these three are from inverted stone tower, however when placed in TF, 2/3 were invisible chests
         // type: 0x7 seems to be enemy clear, also type 1, 0x5 is woodentype, 0xC is switch activated
         // 0xF000 is type, 0x001F are chest flags, 0x0FE0 would be the item then
@@ -117,7 +117,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(46)]
         [ActorInitVarOffset(0x2A60)]
         [ObjectListIndex(0x5)]
-        [CheckRestricted(Scene.SouthernSwampClear, -1, Item.HeartPieceBoatArchery)]
+        [CheckRestricted(Scene.SouthernSwampClear, ActorConst.ANY_VARIANT, Item.HeartPieceBoatArchery)]
         [WaterTopVariants(0xFF00)] // all vanilla types are the same, however param 0xFF00 and 0xFF are parameters of unkown type
         //[WaterBottomVariants(0xFF01)] // not safe check the params for safe params first
         [ForbidFromScene(//Scene.IkanaCanyon,
@@ -377,7 +377,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.SouthernSwamp, variant: 0x3, Item.HeartPieceChoir, Item.FrogSwamp)]
         [CheckRestricted(Scene.SouthernSwampClear, variant: 0x3, Item.HeartPieceChoir, Item.FrogSwamp)]
         [CheckRestricted(Scene.LaundryPool, variant: 0x4, Item.HeartPieceChoir, Item.FrogLaundryPool)]
-        [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.HeartPieceChoir)]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT, Item.HeartPieceChoir)]
         [GroundVariants(1, 2, 3, 4,
             0xF,
             0xF0, 0xF1, 0xF2, 0xF3, 0xF4)] // 3 is southern swamp, 4 is laundry pool, the versions in teh mountaion have the F flag, think the rest are numbered
@@ -562,9 +562,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(79)]
         [CheckRestricted(Scene.SouthClockTown, variant: 0x287F,
             check: Item.CollectableSouthClockTownHitTag1, Item.CollectableSouthClockTownHitTag2, Item.CollectableSouthClockTownHitTag3)]
-        [CheckRestricted(Scene.GoronShrine, variant: -1,
+        [CheckRestricted(Scene.GoronShrine, variant: ActorConst.ANY_VARIANT,
             check: Item.MaskDonGero)]
-        //[CheckRestricted(Scene.DekuShrine, variant: -1,
+        //[CheckRestricted(Scene.DekuShrine, variant: ActorConst.ANY_VARIANT,
         //    check: )]
         [GroundVariants(
             0x287F, // east/south clocktown
@@ -802,16 +802,16 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(95)]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
-        [CheckRestricted(Scene.TerminaField, -1, Item.CollectableTerminaFieldButterflyFairy1)] // TODO which is it?
+        [CheckRestricted(Scene.TerminaField, ActorConst.ANY_VARIANT, Item.CollectableTerminaFieldButterflyFairy1)] // TODO which is it?
         // TODO finish separating them
         [CheckRestricted(Scene.Grottos, 0x5323, Item.BottleCatchBug)] // north grotto
         [CheckRestricted(Scene.Grottos, 0x6322, Item.BottleCatchFish)] // regular grotto, TODO do we want to force a fish in a unique place instead?
-        [CheckRestricted(Scene.Grottos, -1, Item.CollectableGrottosOceanGossipStonesButterflyFairy1, Item.CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1,
+        [CheckRestricted(Scene.Grottos, ActorConst.ANY_VARIANT, Item.CollectableGrottosOceanGossipStonesButterflyFairy1, Item.CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1,
             Item.CollectableGrottosCowGrottoButterflyFairy1, Item.CollectableGrottosCowGrottoButterflyFairy2,
             Item.BottleCatchFish
             )]
-        [CheckRestricted(Scene.MountainVillageSpring, -1, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2)]
-        [CheckRestricted(Scene.GreatBayCoast, -1, Item.CollectableGreatBayCoastButterflyFairy1)]
+        [CheckRestricted(Scene.MountainVillageSpring, ActorConst.ANY_VARIANT, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2)]
+        [CheckRestricted(Scene.GreatBayCoast, ActorConst.ANY_VARIANT, Item.CollectableGreatBayCoastButterflyFairy1)]
         [GroundVariants(0x3323, 0x2324, 0x4324, 0x5323)] // beatles on the floor
         // they dont stick to the wall, they climb in the air
         //[WallVariants(0x3323, 0x2324, 0x4324, 0x5323)] // beatles on the... wall?
@@ -885,39 +885,39 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x194)]
         [ObjectListIndex(2)] // field_keep, obj 2
         [FileID(99)]
-        //[CheckRestricted(Scene.NorthClockTown, -1,
+        //[CheckRestricted(Scene.NorthClockTown, ActorConst.ANY_VARIANT,
         //    item:Item.)] //TODO finish this
         [ForbidFromScene(Scene.TerminaField, // too many here, and we want the hints
             Scene.NorthClockTown, // so many checks
             Scene.LaundryPool, Scene.MountainVillage)] // old joke
-        //[CheckRestricted(Scene.TerminaField, variant: -1,
+        //[CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT,
         //    check: Item.)]
-        [CheckRestricted(Scene.RoadToSouthernSwamp, variant: -1,
+        [CheckRestricted(Scene.RoadToSouthernSwamp, variant: ActorConst.ANY_VARIANT,
             check: Item.ChestToSwampGrotto)]
-        [CheckRestricted(Scene.SouthernSwamp, variant: -1,
+        [CheckRestricted(Scene.SouthernSwamp, variant: ActorConst.ANY_VARIANT,
             check: Item.ChestSwampGrotto)]
-        [CheckRestricted(Scene.WoodsOfMystery, variant: -1,
+        [CheckRestricted(Scene.WoodsOfMystery, variant: ActorConst.ANY_VARIANT,
             check: Item.ChestWoodsGrotto)]
-        [CheckRestricted(Scene.DekuPalace, variant: -1,
+        [CheckRestricted(Scene.DekuPalace, variant: ActorConst.ANY_VARIANT,
             check: Item.ItemMagicBean, Item.CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1,Item.CollectableBeanGrottoSoftSoil1, Item.ChestBeanGrottoRedRupee)]
-        [CheckRestricted(Scene.PathToSnowhead, variant: -1,
+        [CheckRestricted(Scene.PathToSnowhead, variant: ActorConst.ANY_VARIANT,
             check: Item.ChestToSnowheadGrotto)]
-        [CheckRestricted(Scene.TwinIslands, variant: -1,
+        [CheckRestricted(Scene.TwinIslands, variant: ActorConst.ANY_VARIANT,
             check: Item.HeartPieceTwinIslandsChest, Item.ChestHotSpringGrottoRedRupee, Item.BottleCatchHotSpringWater)]
-        [CheckRestricted(Scene.TwinIslandsSpring, variant: -1,
+        [CheckRestricted(Scene.TwinIslandsSpring, variant: ActorConst.ANY_VARIANT,
             check: Item.HeartPieceTwinIslandsChest)]
-        [CheckRestricted(Scene.MountainVillageSpring, variant: -1,
+        [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT,
             check: Item.ChestMountainVillageGrottoRedRupee)]
-        [CheckRestricted(Scene.GreatBayCoast, variant: -1,
+        [CheckRestricted(Scene.GreatBayCoast, variant: ActorConst.ANY_VARIANT,
             check: Item.ChestGreatBayCoastGrotto,
                    Item.ItemCoastGrottoCowMilk1, Item.ItemCoastGrottoCowMilk2, Item.CollectableGrottosCowGrottoButterflyFairy2)]
-        [CheckRestricted(Scene.ZoraCape, variant: -1,
+        [CheckRestricted(Scene.ZoraCape, variant: ActorConst.ANY_VARIANT,
             check: Item.ChestGreatBayCapeGrotto)]
-        [CheckRestricted(Scene.RoadToIkana, variant: -1,
+        [CheckRestricted(Scene.RoadToIkana, variant: ActorConst.ANY_VARIANT,
             check: Item.ChestToIkanaGrotto)]
-        [CheckRestricted(Scene.IkanaGraveyard, variant: -1,
+        [CheckRestricted(Scene.IkanaGraveyard, variant: ActorConst.ANY_VARIANT,
             check: Item.ChestGraveyardGrotto)]
-        [CheckRestricted(Scene.IkanaCanyon, variant: -1,
+        [CheckRestricted(Scene.IkanaCanyon, variant: ActorConst.ANY_VARIANT,
             check: Item.ChestIkanaSecretShrineGrotto)]
         // FF/299 is HSG, 233 is path to snowhead, 3B is mountain village spring grot 3D is swamp grotto, , 5C is mystery woods
         // 96 is goron rock grotto, 218/2B8? is graveyard grotto, 3E is road to swamp
@@ -1180,10 +1180,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(125)]
         [ObjectListIndex(0x16F)] // multi-object, could be dangeon keep instead
         // object_kibako is not dyna at least
-        [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.MaskRomani)] // this might be required for objUm weirdly...
-        [CheckRestricted(Scene.EastClockTown, variant: -1, Item.CollectableEastClockTownWoodenCrateSmall1)] //wasnt there a second one
-        [CheckRestricted(Scene.LaundryPool, variant: -1, Item.CollectableLaundryPoolWoodenCrateSmall1)]
-        [CheckRestricted(Scene.GreatBayTemple, variant: -1, Item.ItemIceArrow)] // in case we really want these for the fight
+        [CheckRestricted(Scene.RomaniRanch, variant: ActorConst.ANY_VARIANT, Item.MaskRomani)] // this might be required for objUm weirdly...
+        [CheckRestricted(Scene.EastClockTown, variant: ActorConst.ANY_VARIANT, Item.CollectableEastClockTownWoodenCrateSmall1)] //wasnt there a second one
+        [CheckRestricted(Scene.LaundryPool, variant: ActorConst.ANY_VARIANT, Item.CollectableLaundryPoolWoodenCrateSmall1)]
+        [CheckRestricted(Scene.GreatBayTemple, variant: ActorConst.ANY_VARIANT, Item.ItemIceArrow)] // in case we really want these for the fight
         [GroundVariants(0x000B, 0x001E, 0x001F, 0x000F, 0x0015,  // stone tower
             0x060B, 0x200B, // inverted stone tower
             0xFF1F, // romani ranch
@@ -1200,29 +1200,29 @@ namespace MMR.Randomizer.GameObjects
         //[ObjectListIndex(0x1)] // this is a lie, the pot DETECTS multiple objects but does NOT exist in gameplay keep
         [ObjectListIndex(0xF9)]
         // TODO randomize some more of these
-        [CheckRestricted(Scene.TerminaField, variant: -1, Item.CollectableTerminaFieldPot1)]
-        [CheckRestricted(Scene.SwordsmansSchool, variant: -1,
+        [CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT, Item.CollectableTerminaFieldPot1)]
+        [CheckRestricted(Scene.SwordsmansSchool, variant: ActorConst.ANY_VARIANT,
             Item.CollectableSwordsmanSSchoolPot1, Item.CollectableSwordsmanSSchoolPot2, Item.CollectableSwordsmanSSchoolPot3, Item.CollectableSwordsmanSSchoolPot4, Item.CollectableSwordsmanSSchoolPot5)]
-        [CheckRestricted(Scene.DoggyRacetrack, variant: -1,
+        [CheckRestricted(Scene.DoggyRacetrack, variant: ActorConst.ANY_VARIANT,
             Item.CollectableDoggyRacetrackPot1, Item.CollectableDoggyRacetrackPot2, Item.CollectableDoggyRacetrackPot3, Item.CollectableDoggyRacetrackPot4)]
-        [CheckRestricted(Scene.SouthernSwamp, variant: -1,
+        [CheckRestricted(Scene.SouthernSwamp, variant: ActorConst.ANY_VARIANT,
             Item.CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot1, Item.CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot2)]
-        [CheckRestricted(Scene.SouthernSwampClear, variant: -1,
+        [CheckRestricted(Scene.SouthernSwampClear, variant: ActorConst.ANY_VARIANT,
             Item.CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot1, Item.CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot2)]
-        [CheckRestricted(Scene.DekuPalace, variant: -1,
+        [CheckRestricted(Scene.DekuPalace, variant: ActorConst.ANY_VARIANT,
             Item.CollectableDekuPalaceEastInnerGardenPot1, Item.CollectableDekuPalaceEastInnerGardenPot2)]
-        [CheckRestricted(Scene.DekuShrine, variant: -1, Item.CollectableDekuShrineGreyBoulderRoomPot1)]
-        [CheckRestricted(Scene.Woodfall, variant: -1,
+        [CheckRestricted(Scene.DekuShrine, variant: ActorConst.ANY_VARIANT, Item.CollectableDekuShrineGreyBoulderRoomPot1)]
+        [CheckRestricted(Scene.Woodfall, variant: ActorConst.ANY_VARIANT,
             Item.CollectableWoodfallPot1, Item.CollectableWoodfallPot2, Item.CollectableWoodfallPot3)]
-        [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
-        [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
-        [CheckRestricted(Scene.GoronShrine, variant: -1,
+        [CheckRestricted(Scene.MountainVillage, variant: ActorConst.ANY_VARIANT, Item.CollectableMountainVillageWinterPot1)]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT, Item.CollectableMountainVillageSpringPot1)]
+        [CheckRestricted(Scene.GoronShrine, variant: ActorConst.ANY_VARIANT,
             Item.CollectableGoronShrineGoronKidSRoomPot1, Item.CollectableGoronShrineGoronKidSRoomPot2, Item.CollectableGoronShrineGoronKidSRoomPot3,
             Item.CollectableGoronShrineMainRoomPot1, Item.CollectableGoronShrineMainRoomPot2, Item.CollectableGoronShrineMainRoomPot3,
             Item.CollectableGoronShrineMainRoomPot4, Item.CollectableGoronShrineMainRoomPot5, Item.CollectableGoronShrineMainRoomPot6,
             Item.CollectableGoronShrineMainRoomPot7, Item.CollectableGoronShrineMainRoomPot8
         )]
-        [CheckRestricted(Scene.GreatBayCoast, variant: -1,
+        [CheckRestricted(Scene.GreatBayCoast, variant: ActorConst.ANY_VARIANT,
             Item.CollectableGreatBayCoastPot1, Item.CollectableGreatBayCoastPot2, Item.CollectableGreatBayCoastPot3,
             Item.CollectableGreatBayCoastPot4, Item.CollectableGreatBayCoastPot5, Item.CollectableGreatBayCoastPot6,
             Item.CollectableGreatBayCoastPot7, Item.CollectableGreatBayCoastPot8, Item.CollectableGreatBayCoastPot9,
@@ -1235,39 +1235,39 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x018A, Item.CollectableOceansideSpiderHouseMainRoomPot1)]
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0xB, Item.CollectableOceansideSpiderHouseMainRoomPot2)]
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x741E, Item.CollectableOceansideSpiderHouseMaskRoomPot1)]
-        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x761E, Item.CollectableOceansideSpiderHouseMaskRoomPot2)]         
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x761E, Item.CollectableOceansideSpiderHouseMaskRoomPot2)]
         // */
-        /*[CheckRestricted(Scene.OceanSpiderHouse, variant: -1,
+        /*[CheckRestricted(Scene.OceanSpiderHouse, variant: ActorConst.ANY_VARIANT,
             Item.CollectableOceansideSpiderHouseEntrancePot1, Item.CollectableOceansideSpiderHouseEntrancePot2, Item.CollectableOceansideSpiderHouseEntrancePot3,
             Item.CollectableOceansideSpiderHouseMainRoomPot1, Item.CollectableOceansideSpiderHouseMainRoomPot2,
             Item.CollectableOceansideSpiderHouseMaskRoomPot1, Item.CollectableOceansideSpiderHouseMaskRoomPot2)] */
-        [CheckRestricted(Scene.PinnacleRock, variant: -1,
+        [CheckRestricted(Scene.PinnacleRock, variant: ActorConst.ANY_VARIANT,
             Item.CollectablePinnacleRockPot1, Item.CollectablePinnacleRockPot2, Item.CollectablePinnacleRockPot3, Item.CollectablePinnacleRockPot4)]
-        [CheckRestricted(Scene.ZoraCape, variant: -1, Item.CollectableZoraCapeJarGame1,
+        [CheckRestricted(Scene.ZoraCape, variant: ActorConst.ANY_VARIANT, Item.CollectableZoraCapeJarGame1,
             Item.CollectableZoraCapePot1, Item.CollectableZoraCapePot2, Item.CollectableZoraCapePot3, Item.CollectableZoraCapePot4, Item.CollectableZoraCapePot5)]
-        [CheckRestricted(Scene.RoadToIkana, variant: -1, Item.CollectableRoadToIkanaPot1)]
-        [CheckRestricted(Scene.BeneathGraveyard, variant: -1,
+        [CheckRestricted(Scene.RoadToIkana, variant: ActorConst.ANY_VARIANT, Item.CollectableRoadToIkanaPot1)]
+        [CheckRestricted(Scene.BeneathGraveyard, variant: ActorConst.ANY_VARIANT,
             Item.CollectableBeneathTheGraveyardBadBatRoomPot1, Item.CollectableBeneathTheGraveyardInvisibleRoomPot1,
             Item.CollectableBeneathTheGraveyardMainAreaPot1, Item.CollectableBeneathTheGraveyardMainAreaPot2)]
-        [CheckRestricted(Scene.DampesHouse, variant: -1,
+        [CheckRestricted(Scene.DampesHouse, variant: ActorConst.ANY_VARIANT,
             Item.CollectableDampesHouseBasementPot1, Item.CollectableDampesHouseBasementPot2,
             Item.CollectableDampesHouseBasementPot3, Item.CollectableDampesHouseBasementPot4,
             Item.CollectableDampesHouseBasementPot5, Item.CollectableDampesHouseBasementPot6,
             Item.CollectableDampesHouseBasementPot7, Item.CollectableDampesHouseBasementPot8)]
-        [CheckRestricted(Scene.IkanaCastle, variant: -1,
+        [CheckRestricted(Scene.IkanaCastle, variant: ActorConst.ANY_VARIANT,
             Item.CollectableAncientCastleOfIkana1FWestStaircasePot1, Item.CollectableAncientCastleOfIkanaCastleExteriorPot1, Item.CollectableAncientCastleOfIkanaFireCeilingRoomPot1,
             Item.CollectableAncientCastleOfIkanaHoleRoomPot1, Item.CollectableAncientCastleOfIkanaHoleRoomPot2, Item.CollectableAncientCastleOfIkanaHoleRoomPot3, Item.CollectableAncientCastleOfIkanaHoleRoomPot4)]
-        [CheckRestricted(Scene.IgosDuIkanasLair, variant: -1,
+        [CheckRestricted(Scene.IgosDuIkanasLair, variant: ActorConst.ANY_VARIANT,
             Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot1, Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot2, Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot3,
             Item.CollectableIgosDuIkanaSLairPreBossRoomPot1, Item.CollectableIgosDuIkanaSLairPreBossRoomPot2, Item.CollectableIgosDuIkanaSLairPreBossRoomPot3)]
-        [CheckRestricted(Scene.StoneTower, variant: -1,
+        [CheckRestricted(Scene.StoneTower, variant: ActorConst.ANY_VARIANT,
             Item.CollectableStoneTowerPot1, Item.CollectableStoneTowerPot2, Item.CollectableStoneTowerPot3, Item.CollectableStoneTowerPot4, Item.CollectableStoneTowerPot5,
             Item.CollectableStoneTowerPot6, Item.CollectableStoneTowerPot7, Item.CollectableStoneTowerPot8, Item.CollectableStoneTowerPot9, Item.CollectableStoneTowerPot10, 
             Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
         // cannot randomize temple pots yet, uses dungeon keep objects, this will come later
-        [CheckRestricted(Scene.InvertedStoneTower, variant: -1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot2, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3)]
-        [CheckRestricted(Scene.StoneTowerTemple, variant: -1, Item.CollectableStoneTowerTempleInvertedWizzrobeRoomPot1)]
-        [CheckRestricted(Scene.SecretShrine, variant: -1,
+        [CheckRestricted(Scene.InvertedStoneTower, variant: ActorConst.ANY_VARIANT, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot2, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3)]
+        [CheckRestricted(Scene.StoneTowerTemple, variant: ActorConst.ANY_VARIANT, Item.CollectableStoneTowerTempleInvertedWizzrobeRoomPot1)]
+        [CheckRestricted(Scene.SecretShrine, variant: ActorConst.ANY_VARIANT,
             Item.CollectableSecretShrineMainRoomPot1, Item.CollectableSecretShrineMainRoomPot2, Item.CollectableSecretShrineMainRoomPot3, Item.CollectableSecretShrineMainRoomPot4,
             Item.CollectableSecretShrineMainRoomPot5)]
         // 0xF9 is pot and pot shard
@@ -1382,13 +1382,13 @@ namespace MMR.Randomizer.GameObjects
         [FileID(133)]
         [ObjectListIndex(1)]
         [ForbidFromScene(Scene.MountainSmithy, Scene.SnowheadTemple, Scene.TerminaField)] // TODO figure out if I want to split these or not
-        [CheckRestricted(Scene.TwinIslands, -1,
+        [CheckRestricted(Scene.TwinIslands, ActorConst.ANY_VARIANT,
             check: Item.HeartPieceTwinIslandsChest, Item.ChestHotSpringGrottoRedRupee, Item.BottleCatchHotSpringWater)]
-        [CheckRestricted(Scene.GoronVillage, -1,
+        [CheckRestricted(Scene.GoronVillage, ActorConst.ANY_VARIANT,
             check: Item.ItemPowderKeg)]
-        //[CheckRestricted(Scene.MountainSmithy, -1,
+        //[CheckRestricted(Scene.MountainSmithy, ActorConst.ANY_VARIANT,
         //    check: )]
-        [CheckRestricted(Scene.GreatBayTemple, -1,
+        [CheckRestricted(Scene.GreatBayTemple, ActorConst.ANY_VARIANT,
             check: Item.ItemGreatBayBossKey, Item.FrogGreatBayTemple)]
         //params 0xFF is size
         // 0xFF00 is switch flag, for things like
@@ -1418,9 +1418,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x19C)]
         [FileID(135)]
         [ObjectListIndex(0xF8)] // type 0 (0x3) is FIELD_KEEP, handled in code because we dont have working code for multi-object
-        [CheckRestricted(Scene.SouthernSwampClear, variant: -1, Item.CollectableSouthernSwampClearCentralSwampGrass1, Item.CollectableSouthernSwampClearCentralSwampGrass2)]
-        [CheckRestricted(Scene.MilkRoad, variant: -1, Item.CollectableMilkRoadGrass1, Item.CollectableMilkRoadGrass2, Item.CollectableMilkRoadGrass3)]
-        [CheckRestricted(Scene.IkanaGraveyard, variant: -1,
+        [CheckRestricted(Scene.SouthernSwampClear, variant: ActorConst.ANY_VARIANT, Item.CollectableSouthernSwampClearCentralSwampGrass1, Item.CollectableSouthernSwampClearCentralSwampGrass2)]
+        [CheckRestricted(Scene.MilkRoad, variant: ActorConst.ANY_VARIANT, Item.CollectableMilkRoadGrass1, Item.CollectableMilkRoadGrass2, Item.CollectableMilkRoadGrass3)]
+        [CheckRestricted(Scene.IkanaGraveyard, variant: ActorConst.ANY_VARIANT,
             Item.CollectableIkanaGraveyardIkanaGraveyardLowerGrass1, Item.CollectableIkanaGraveyardIkanaGraveyardLowerGrass2, Item.CollectableIkanaGraveyardIkanaGraveyardLowerGrass3)]
         // 0 uses field keep to draw regular grass, like ObjGrassUnit
         // 1 creates a grass circle in termina field, 0 is grotto grass single
@@ -1464,11 +1464,11 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xEE)]
         [DynaAttributes(6,8)]
         // TODO add secret shrine and swamp spiderhouse
-        [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.CollectableRomaniRanchSoftSoil1, Item.CollectableRomaniRanchSoftSoil2)]
-        [CheckRestricted(Scene.Grottos, variant: -1, Item.CollectableBeanGrottoSoftSoil1, Item.ChestBeanGrottoRedRupee)]
-        [CheckRestricted(Scene.GreatBayCoast, variant: -1, Item.CollectableGreatBayCoastSoftSoil1, Item.HeartPieceGreatBayCoast)]
-        [CheckRestricted(Scene.DoggyRacetrack, variant: -1, Item.CollectableDoggyRacetrackSoftSoil1)]
-        [CheckRestricted(Scene.SecretShrine, variant: -1,
+        [CheckRestricted(Scene.RomaniRanch, variant: ActorConst.ANY_VARIANT, Item.CollectableRomaniRanchSoftSoil1, Item.CollectableRomaniRanchSoftSoil2)]
+        [CheckRestricted(Scene.Grottos, variant: ActorConst.ANY_VARIANT, Item.CollectableBeanGrottoSoftSoil1, Item.ChestBeanGrottoRedRupee)]
+        [CheckRestricted(Scene.GreatBayCoast, variant: ActorConst.ANY_VARIANT, Item.CollectableGreatBayCoastSoftSoil1, Item.HeartPieceGreatBayCoast)]
+        [CheckRestricted(Scene.DoggyRacetrack, variant: ActorConst.ANY_VARIANT, Item.CollectableDoggyRacetrackSoftSoil1)]
+        [CheckRestricted(Scene.SecretShrine, variant: ActorConst.ANY_VARIANT,
             Item.CollectableSecretShrineSoftSoil1,
             Item.CollectableSecretShrineEntranceRoomItem1, Item.CollectableSecretShrineEntranceRoomItem2, Item.CollectableSecretShrineEntranceRoomItem3,
             Item.CollectableSecretShrineEntranceRoomItem4, Item.CollectableSecretShrineEntranceRoomItem5, Item.CollectableSecretShrineEntranceRoomItem6,
@@ -1477,16 +1477,16 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableSecretShrineEntranceRoomItem13, Item.CollectableSecretShrineEntranceRoomItem14, Item.CollectableSecretShrineEntranceRoomItem15,
             Item.CollectableSecretShrineEntranceRoomItem16, Item.CollectableSecretShrineEntranceRoomItem17
         )]
-        [CheckRestricted(Scene.SwampSpiderHouse, variant: -1, Item.CollectableSwampSpiderHouseSoftSoil1, Item.CollectableSwampSpiderHouseSoftSoil2,
+        [CheckRestricted(Scene.SwampSpiderHouse, variant: ActorConst.ANY_VARIANT, Item.CollectableSwampSpiderHouseSoftSoil1, Item.CollectableSwampSpiderHouseSoftSoil2,
             Item.CollectibleSwampSpiderToken2, Item.CollectibleSwampSpiderToken13, // ride bean to reach
             Item.CollectibleSwampSpiderToken9, Item.CollectibleSwampSpiderToken11, Item.CollectibleSwampSpiderToken12 // in soil
         )]
-        [CheckRestricted(Scene.DekuPalace, variant: -1, Item.SongSonata,
+        [CheckRestricted(Scene.DekuPalace, variant: ActorConst.ANY_VARIANT, Item.SongSonata,
             Item.CollectableDekuPalaceSoftSoil1, Item.CollectableDekuPalaceEastInnerGardenPot1, Item.CollectableDekuPalaceEastInnerGardenPot2)]
-        [CheckRestricted(Scene.InvertedStoneTower, variant: -1, Item.CollectableStoneTowerSoftSoil1, Item.CollectableStoneTowerSoftSoil2,
+        [CheckRestricted(Scene.InvertedStoneTower, variant: ActorConst.ANY_VARIANT, Item.CollectableStoneTowerSoftSoil1, Item.CollectableStoneTowerSoftSoil2,
             Item.CollectableStoneTowerInvertedStoneTowerFlippedPot1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot2, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3,
             Item.ChestInvertedStoneTowerBean, Item.ChestInvertedStoneTowerBombchu10, Item.ChestInvertedStoneTowerSilverRupee)]
-        [CheckRestricted(Scene.TerminaField, variant: -1,
+        [CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT,
             Item.CollectableTerminaFieldPot1,
             Item.ChestTerminaStumpRedRupee,
             Item.CollectableTerminaFieldSoftSoil1, Item.CollectableTerminaFieldSoftSoil2, Item.CollectableTerminaFieldSoftSoil3, Item.CollectableTerminaFieldSoftSoil4
@@ -1531,16 +1531,16 @@ namespace MMR.Randomizer.GameObjects
         [FileID(137)]
         [ObjectListIndex(0x12A)]
         // funny enough, not dynapoly
-        [CheckRestricted(Scene.TerminaField, variant: -1,
+        [CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT,
             check: Item.HeartPieceTerminaGossipStones, Item.HeartPieceZoraGrotto, Item.CollectableGrottosOceanHeartPieceGrottoBeehive1, Item.CollectableGrottosOceanGossipStonesButterflyFairy1)]
-        [CheckRestricted(Scene.Grottos, variant: -1,//0x118,
+        [CheckRestricted(Scene.Grottos, variant: ActorConst.ANY_VARIANT,//0x118,
             check: Item.ChestHotSpringGrottoRedRupee, Item.ChestLensCavePurpleRupee)] // hot spring grotto
         // dont think per variant is working for multiple per room yet once it is these should be split
         //[CheckRestricted(Scene.Grottos, variant: 0x104,
         //    check: Item.ChestLensCavePurpleRupee)] // bomb grotto
-        [CheckRestricted(Scene.SwampSpiderHouse, variant: -1,
+        [CheckRestricted(Scene.SwampSpiderHouse, variant: ActorConst.ANY_VARIANT,
             check: Item.CollectibleSwampSpiderToken13, Item.CollectableSwampSpiderHouseSoftSoil2)]
-        [CheckRestricted(Scene.ZoraCape, variant: -1,
+        [CheckRestricted(Scene.ZoraCape, variant: ActorConst.ANY_VARIANT,
             check: Item.ChestGreatBayCapeGrotto, Item.FairyDoubleDefense)]
         // 0x0114-8 are the bombable rocks in hotspring water
         // params: 0x100 is the big bombable one only, no goron punch
@@ -1769,9 +1769,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(153)]
         [ObjectListIndex(0x17F)]
         [DynaAttributes(55,35)] // yikes
-        [CheckRestricted(scene: Scene.SouthernSwampClear, variant: -1, Item.HeartPieceBoatArchery)]
+        [CheckRestricted(scene: Scene.SouthernSwampClear, variant: ActorConst.ANY_VARIANT, Item.HeartPieceBoatArchery)]
         // problem being we would have to check ALL checks after too many
-        //[CheckRestricted(scene: Scene.SouthernSwamp, variant: -1, Item.)]
+        //[CheckRestricted(scene: Scene.SouthernSwamp, variant: ActorConst.ANY_VARIANT, Item.)]
         //[] path are 0xFF, bleh, paths, hope they dont crash without ANY path
         [WaterTopVariants(0x01)] // only vanilla version
         [VariantsWithRoomMax(max: 0, variant: 0x01)] // TODO try making version without paths as mmra
@@ -1843,7 +1843,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(157)]
         [ObjectListIndex(0xFD)]
-        [CheckRestricted(Scene.GoronVillage, variant: -1, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
+        [CheckRestricted(Scene.GoronVillage, variant: ActorConst.ANY_VARIANT, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
         // path is 0xF000, if you set to max (F) then its none-pathing and just auto flies away
         [PerchingVariants(0xF18B, // southern swamp // and clear swamp??? he was there??
             0xF000,
@@ -1869,15 +1869,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x198)]
         [ObjectListIndex(0x2)] // pick up rock version
         [ForbidFromScene(Scene.InvertedStoneTower, Scene.SwampSpiderHouse)] // we want the bugs, I think its too much to ask players to leave to get bugs
-        [CheckRestricted(Scene.TerminaField, variant:-1,
+        [CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT,
             Item.CollectableTerminaFieldRock1, Item.CollectableTerminaFieldRock4, Item.CollectableTerminaFieldRock3,
             Item.CollectableTerminaFieldRock4, Item.CollectableTerminaFieldRock5, Item.CollectableTerminaFieldRock6,
             Item.CollectableTerminaFieldRock7, Item.CollectableTerminaFieldRock8, Item.CollectableTerminaFieldRock9)]
-        [CheckRestricted(Scene.MountainVillageSpring, variant: -1,
+        [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT,
             Item.CollectableMountainVillageWinterMountainVillageSpringItem1)]
         [CheckRestricted(Scene.GreatBayCoast, variant: 0x32,
             Item.CollectableGreatBayCoastSoftSoil1)]
-        [CheckRestricted(Scene.IkanaGraveyard, variant: -1,
+        [CheckRestricted(Scene.IkanaGraveyard, variant: ActorConst.ANY_VARIANT,
             Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock1, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock2, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock3,
             Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock4, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock5)]
         //[ObjectListIndex(0x1F6)] // NEVER USED IN MM, damn thing lied to me, even the boulders are object 2
@@ -2070,17 +2070,17 @@ namespace MMR.Randomizer.GameObjects
         [FileID(172)]
         [ActorInstanceSize(0x2A0)]
         [ObjectListIndex(0x11D)]
-        [CheckRestricted(Scene.MountainVillage, variant: -1, Item.CollectableMountainVillageWinterPot1)]
-        [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.CollectableMountainVillageSpringPot1)]
-        [CheckRestricted(Scene.RoadToIkana, variant: -1, Item.CollectableRoadToIkanaPot1)]
+        [CheckRestricted(Scene.MountainVillage, variant: ActorConst.ANY_VARIANT, Item.CollectableMountainVillageWinterPot1)]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT, Item.CollectableMountainVillageSpringPot1)]
+        [CheckRestricted(Scene.RoadToIkana, variant: ActorConst.ANY_VARIANT, Item.CollectableRoadToIkanaPot1)]
         // snowhead temple
-        [CheckRestricted(Scene.PathToSnowhead, variant: -1, Item.HeartPieceToSnowhead)]
-        [CheckRestricted(Scene.GreatBayCoast, variant: -1, Item.HeartPieceGreatBayCoast)]
-        [CheckRestricted(Scene.StoneTower, variant: -1,
+        [CheckRestricted(Scene.PathToSnowhead, variant: ActorConst.ANY_VARIANT, Item.HeartPieceToSnowhead)]
+        [CheckRestricted(Scene.GreatBayCoast, variant: ActorConst.ANY_VARIANT, Item.HeartPieceGreatBayCoast)]
+        [CheckRestricted(Scene.StoneTower, variant: ActorConst.ANY_VARIANT,
             Item.CollectableStoneTowerPot1, Item.CollectableStoneTowerPot2,
             Item.CollectableStoneTowerPot6, Item.CollectableStoneTowerPot7, Item.CollectableStoneTowerPot8, Item.CollectableStoneTowerPot9,
             Item.CollectableStoneTowerPot10, Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13)]
-        [CheckRestricted(Scene.TwinIslandsSpring, variant: -1, Item.ItemBottleGoronRace,
+        [CheckRestricted(Scene.TwinIslandsSpring, variant: ActorConst.ANY_VARIANT, Item.ItemBottleGoronRace,
             Item.CollectableGoronRacetrackPot1, Item.CollectableGoronRacetrackPot2, Item.CollectableGoronRacetrackPot3,
             Item.CollectableGoronRacetrackPot4, Item.CollectableGoronRacetrackPot5, Item.CollectableGoronRacetrackPot6,
             Item.CollectableGoronRacetrackPot7, Item.CollectableGoronRacetrackPot8, Item.CollectableGoronRacetrackPot9, Item.CollectableGoronRacetrackPot10,
@@ -2091,7 +2091,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableGoronRacetrackPot24, Item.CollectableGoronRacetrackPot25, Item.CollectableGoronRacetrackPot26,
             Item.CollectableGoronRacetrackPot27, Item.CollectableGoronRacetrackPot28, Item.CollectableGoronRacetrackPot29, Item.CollectableGoronRacetrackPot30
             )]
-        [CheckRestricted(Scene.TwinIslands, variant: -1, Item.ItemBottleGoronRace, Item.ChestToGoronRaceGrotto,
+        [CheckRestricted(Scene.TwinIslands, variant: ActorConst.ANY_VARIANT, Item.ItemBottleGoronRace, Item.ChestToGoronRaceGrotto,
             Item.CollectableGoronRacetrackPot1, Item.CollectableGoronRacetrackPot2, Item.CollectableGoronRacetrackPot3,
             Item.CollectableGoronRacetrackPot4, Item.CollectableGoronRacetrackPot5, Item.CollectableGoronRacetrackPot6,
             Item.CollectableGoronRacetrackPot7, Item.CollectableGoronRacetrackPot8, Item.CollectableGoronRacetrackPot9, Item.CollectableGoronRacetrackPot10,
@@ -2252,13 +2252,13 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(217)]
         [ObjectListIndex(0x1B9)]
-        [CheckRestricted(Scene.SwampSpiderHouse, variant: -1,
+        [CheckRestricted(Scene.SwampSpiderHouse, variant: ActorConst.ANY_VARIANT,
              Item.CollectibleSwampSpiderToken18, Item.CollectibleSwampSpiderToken23, Item.CollectibleSwampSpiderToken26, Item.CollectibleSwampSpiderToken28)]
-        [CheckRestricted(Scene.Grottos, variant: -1,
+        [CheckRestricted(Scene.Grottos, variant: ActorConst.ANY_VARIANT,
             Item.HeartPieceZoraGrotto, Item.CollectableGrottosOceanHeartPieceGrottoBeehive1)]
-        [CheckRestricted(Scene.SouthernSwamp, variant: -1,
+        [CheckRestricted(Scene.SouthernSwamp, variant: ActorConst.ANY_VARIANT,
             Item.CollectableSouthernSwampPoisonedCentralSwampBeehive1)]
-        [CheckRestricted(Scene.WoodfallTemple, variant: -1,
+        [CheckRestricted(Scene.WoodfallTemple, variant: ActorConst.ANY_VARIANT,
             Item.CollectibleStrayFairyWoodfall14, Item.CollectibleStrayFairyWoodfall15, Item.CollectableWoodfallTempleEntranceRoomBeehive1)]
         // params:
         // 0x1F can become the skulltula params, 0x3FC is treasure flags for treasure types
@@ -2303,7 +2303,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(218)]
         [ObjectListIndex(0x133)]
         [DynaAttributes(10, 8)]
-        [CheckRestricted(Scene.SwampSpiderHouse, variant: -1, Item.CollectibleSwampSpiderToken10, Item.CollectibleSwampSpiderToken27)]
+        [CheckRestricted(Scene.SwampSpiderHouse, variant: ActorConst.ANY_VARIANT, Item.CollectibleSwampSpiderToken10, Item.CollectibleSwampSpiderToken27)]
         [CheckRestricted(Scene.RomaniRanch, variant: 0x7F1F, Item.CollectableRomaniRanchWoodenCrateLarge1)]
         [CheckRestricted(Scene.CuccoShack, variant: 0x7F1F, Item.CollectableCuccoShackWoodenCrateLarge1)]
         // not always active, only sometimes:q
@@ -2896,7 +2896,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(271)]
         [ObjectListIndex(0x15E)]
         [DynaAttributes(10, 8, variant:0x0000, 0x0001)]  // only the variants on top, maybe this really needs a variant..
-        [CheckRestricted(Scene.GreatBayTemple, variant:-1,
+        [CheckRestricted(Scene.GreatBayTemple, variant: ActorConst.ANY_VARIANT,
             Item.CollectibleStrayFairyGreatBay10)] // biobaba room
         // 0x1 is the one that hangs from the ceiling in GBT
         // TODO if I get wall sideways working with dexihand, do it for baba too
@@ -3019,7 +3019,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // big object, collector flag, boring actor
         [FileID(282)]
         [ObjectListIndex(0x165)]
-        [CheckRestricted(Scene.CuccoShack, variant:-1, Item.CollectableCuccoShackPottedPlant1)]
+        [CheckRestricted(Scene.CuccoShack, variant: ActorConst.ANY_VARIANT, Item.CollectableCuccoShackPottedPlant1)]
         // 0xXX is the item to drop, 0x7X00 is collecable flag
         // thankfully if collectable flag is 00 it gets ignored and you can re-collect over and over again
         // A is hearts or green rup if full health
@@ -3205,12 +3205,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(311)]
         [ObjectListIndex(0x1C)]
-        [CheckRestricted(Scene.IkanaCanyon, variant: -1, check: Item.MaskCouple, Item.NotebookMeetKafei,
+        [CheckRestricted(Scene.IkanaCanyon, variant: ActorConst.ANY_VARIANT, check: Item.MaskCouple, Item.NotebookMeetKafei,
             Item.NotebookEscapeFromSakonSHideout, Item.NotebookUniteAnjuAndKafei)]
-        [CheckRestricted(Scene.EastClockTown, variant: -1, check: Item.MaskCouple)]
+        [CheckRestricted(Scene.EastClockTown, variant: ActorConst.ANY_VARIANT, check: Item.MaskCouple)]
         [CheckRestricted(Scene.SouthClockTown, variant: 0x1E3, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
-        [CheckRestricted(Scene.LaundryPool, variant: -1, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
-        [CheckRestricted(Scene.CuriosityShop, variant: -1, Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter,
+        [CheckRestricted(Scene.LaundryPool, variant: ActorConst.ANY_VARIANT, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
+        [CheckRestricted(Scene.CuriosityShop, variant: ActorConst.ANY_VARIANT, Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter,
             Item.NotebookMeetKafei, Item.NotebookUniteAnjuAndKafei, Item.NotebookPromiseKafei,
             Item.NotebookMeetCuriosityShopMan, Item.NotebookCuriosityShopManSGift, Item.NotebookPromiseCuriosityShopMan)] // can't meet him without kafei I dont think
         // E2 is hidden in ikana somewhere?? since its path its prob running after final hours or something
@@ -3469,17 +3469,17 @@ namespace MMR.Randomizer.GameObjects
         //[ObjectListIndex(2)] // requires field keep
         [ObjectListIndex(0x264)] // keaton object itself
         // now that we allign the object, we can remove the original, that means we need to take care of the check logic
-        [CheckRestricted(Scene.NorthClockTown, variant:-1, Item.HeartPieceKeatonQuiz,
+        [CheckRestricted(Scene.NorthClockTown, variant: ActorConst.ANY_VARIANT, Item.HeartPieceKeatonQuiz,
             Item.CollectableNorthClockTownKeatonGrass1, Item.CollectableNorthClockTownKeatonGrass2, Item.CollectableNorthClockTownKeatonGrass3,
             Item.CollectableNorthClockTownKeatonGrass4, Item.CollectableNorthClockTownKeatonGrass5, Item.CollectableNorthClockTownKeatonGrass6,
             Item.CollectableNorthClockTownKeatonGrass7, Item.CollectableNorthClockTownKeatonGrass8, Item.CollectableNorthClockTownKeatonGrass9
         )]
-        [CheckRestricted(Scene.MilkRoad, variant: -1, Item.HeartPieceKeatonQuiz,
+        [CheckRestricted(Scene.MilkRoad, variant: ActorConst.ANY_VARIANT, Item.HeartPieceKeatonQuiz,
             Item.CollectableMilkRoadKeatonGrass1, Item.CollectableMilkRoadKeatonGrass2, Item.CollectableMilkRoadKeatonGrass3,
             Item.CollectableMilkRoadKeatonGrass4, Item.CollectableMilkRoadKeatonGrass5, Item.CollectableMilkRoadKeatonGrass6,
             Item.CollectableMilkRoadKeatonGrass7, Item.CollectableMilkRoadKeatonGrass8, Item.CollectableMilkRoadKeatonGrass9
         )]
-        [CheckRestricted(Scene.MountainVillageSpring, variant: -1, Item.HeartPieceKeatonQuiz,
+        [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT, Item.HeartPieceKeatonQuiz,
             Item.CollectableMountainVillageSpringKeatonGrass1, Item.CollectableMountainVillageSpringKeatonGrass2, Item.CollectableMountainVillageSpringKeatonGrass3,
             Item.CollectableMountainVillageSpringKeatonGrass4, Item.CollectableMountainVillageSpringKeatonGrass5, Item.CollectableMountainVillageSpringKeatonGrass6,
             Item.CollectableMountainVillageSpringKeatonGrass7, Item.CollectableMountainVillageSpringKeatonGrass8, Item.CollectableMountainVillageSpringKeatonGrass9
@@ -3562,7 +3562,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x187)]
         [DynaAttributes(22,13)]
         // this is not enough: this does NOT take into account scoop sanity
-        [CheckRestricted( scene:Scene.MountainVillage, variant:-1, check: Item.MaskGoron,
+        [CheckRestricted( scene:Scene.MountainVillage, variant: ActorConst.ANY_VARIANT, check: Item.MaskGoron,
             Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
             Item.BottleCatchHotSpringWater)]
         // */
@@ -3959,7 +3959,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xB7)] // 100 and FF00
         // cremia shows up if you repel the aliens even if romani is gone
         [CheckRestricted(Item.SongEpona, Item.ItemBottleAliens, Item.NotebookPromiseRomani, Item.NotebookSaveTheCows)]
-        //[CheckRestricted(Scene.RanchBuildings, variant:-1, check: Item.Notebook)]
+        //[CheckRestricted(Scene.RanchBuildings, variant:ActorConst.ANY_VARIANT, check: Item.Notebook)]
         [PathingVariants(0xFF00, 0x100)]
         [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)]
         [UnkillableAllVariants]
@@ -4139,8 +4139,8 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.HeartPieceBoatArchery)]
         [UnkillableAllVariants]
         // this could work but is a headache, we need to make sure all checks that are reachable by deku and nut are included...
-        //[CheckRestricted(Scene.DekuPalace, -1, Item.MaskScents)]
-        [CheckRestricted(Scene.Woodfall, -1, Item.ChestWoodfallBlueRupee, Item.ChestWoodfallRedRupee,
+        //[CheckRestricted(Scene.DekuPalace, ActorConst.ANY_VARIANT,Item.MaskScents)]
+        [CheckRestricted(Scene.Woodfall, ActorConst.ANY_VARIANT, Item.ChestWoodfallBlueRupee, Item.ChestWoodfallRedRupee,
             Item.CollectableWoodfallItem1, Item.CollectableWoodfallPot1, Item.CollectableWoodfallPot2)]
         [ForbidFromScene(Scene.SouthernSwamp, // no easy way to identify if we need deku hopping
             Scene.DekuPalace)] // see above
@@ -4191,9 +4191,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(411)]
         [ObjectListIndex(0x1A8)]
         [DynaAttributes(10,8)]
-        [CheckRestricted(Scene.GoronVillage, variant: -1, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
-        [CheckRestricted(Scene.PathToSnowhead, variant: -1, Item.HeartPieceToSnowhead)]
-        [CheckRestricted(Scene.IkanaCastle, variant: -1, Item.SongElegy,
+        [CheckRestricted(Scene.GoronVillage, variant: ActorConst.ANY_VARIANT, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
+        [CheckRestricted(Scene.PathToSnowhead, variant: ActorConst.ANY_VARIANT, Item.HeartPieceToSnowhead)]
+        [CheckRestricted(Scene.IkanaCastle, variant: ActorConst.ANY_VARIANT, Item.SongElegy,
             Item.CollectableAncientCastleOfIkana1FWestStaircasePot1, Item.CollectableAncientCastleOfIkanaFireCeilingRoomPot1,
             Item.CollectableAncientCastleOfIkanaHoleRoomPot1, Item.CollectableAncientCastleOfIkanaHoleRoomPot2,
             Item.CollectableAncientCastleOfIkanaHoleRoomPot3, Item.CollectableAncientCastleOfIkanaHoleRoomPot4,
@@ -4241,7 +4241,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(415)]
         [ObjectListIndex(0x1AB)]
-        [CheckRestricted(Scene.CuriosityShop, variant: -1,
+        [CheckRestricted(Scene.CuriosityShop, variant: ActorConst.ANY_VARIANT,
             Item.MaskKeaton, Item.TradeItemMamaLetter,
             Item.MaskAllNight,
             Item.MundaneItemCuriosityShopBlueRupee, Item.MundaneItemCuriosityShopGoldRupee, Item.MundaneItemCuriosityShopPurpleRupee, Item.MundaneItemCuriosityShopRedRupee,
@@ -4303,7 +4303,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(419)]
         [ObjectListIndex(0x1E5)]
-        [CheckRestricted(Scene.DekuPlayground, variant: -1,
+        [CheckRestricted(Scene.DekuPlayground, variant: ActorConst.ANY_VARIANT,
             Item.CollectableDekuPlaygroundItem1, Item.CollectableDekuPlaygroundItem2, Item.CollectableDekuPlaygroundItem3,
             Item.CollectableDekuPlaygroundItem4, Item.CollectableDekuPlaygroundItem5, Item.CollectableDekuPlaygroundItem6,
             Item.CollectableDekuPlaygroundItem7, Item.CollectableDekuPlaygroundItem8, Item.CollectableDekuPlaygroundItem9,
@@ -4341,7 +4341,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(422)]
         [ObjectListIndex(0x163)]
-        [CheckRestricted(Scene.DekuPlayground, variant: -1,
+        [CheckRestricted(Scene.DekuPlayground, variant: ActorConst.ANY_VARIANT,
             Item.CollectableDekuPlaygroundItem1, Item.CollectableDekuPlaygroundItem2, Item.CollectableDekuPlaygroundItem3,
             Item.CollectableDekuPlaygroundItem4, Item.CollectableDekuPlaygroundItem5, Item.CollectableDekuPlaygroundItem6,
             Item.CollectableDekuPlaygroundItem7, Item.CollectableDekuPlaygroundItem8, Item.CollectableDekuPlaygroundItem9,
@@ -4466,7 +4466,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(435)]
         [ObjectListIndex(0x75)]
         // issue, we dont know how to check if the scoop is important or not, could be a lot of checks
-        //[CheckRestricted(Scene.BeneathTheWell, variant: -1, Item.Curi)]
+        //[CheckRestricted(Scene.BeneathTheWell, variant: ActorConst.ANY_VARIANT, Item.Curi)]
         // params: switch flag(xFF0) and item used(0xF)
         // 8 is bigpo, 0 is blue pot, 7 is hot spring, 9 is milk
         [GroundVariants(1, 2, 3, 4, 5, 6)]
@@ -4497,7 +4497,7 @@ namespace MMR.Randomizer.GameObjects
         Giant = 0x1DB, // En_Giant
 
         [ActorizerEnabled]
-        [CheckRestricted(Scene.TwinIslands, variant:-1,
+        [CheckRestricted(Scene.TwinIslands, variant: ActorConst.ANY_VARIANT,
             Item.CollectablePathToGoronVillageWinterSmallSnowball1, Item.CollectablePathToGoronVillageWinterSmallSnowball2, Item.CollectablePathToGoronVillageWinterSmallSnowball3, //small
             Item.CollectablePathToGoronVillageWinterLargeSnowball1, Item.CollectablePathToGoronVillageWinterLargeSnowball2, Item.CollectablePathToGoronVillageWinterLargeSnowball3, // large
             Item.CollectablePathToGoronVillageWinterLargeSnowball4, Item.CollectablePathToGoronVillageWinterLargeSnowball5, Item.CollectablePathToGoronVillageWinterLargeSnowball6,
@@ -4506,7 +4506,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectablePathToGoronVillageWinterLargeSnowball13, Item.CollectablePathToGoronVillageWinterLargeSnowball14,
             Item.SongLullabyIntro
         )]
-        [CheckRestricted(Scene.GoronVillage, variant: -1,
+        [CheckRestricted(Scene.GoronVillage, variant: ActorConst.ANY_VARIANT,
             Item.CollectableGoronVillageWinterLargeSnowball1, Item.CollectableGoronVillageWinterLargeSnowball2, // small
             Item.CollectableGoronVillageWinterLargeSnowball3, Item.CollectableGoronVillageWinterLargeSnowball4,
             Item.CollectableGoronVillageWinterLargeSnowball5, Item.CollectableGoronVillageWinterLargeSnowball6,
@@ -4514,7 +4514,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableGoronVillageWinterSmallSnowball4, Item.CollectableGoronVillageWinterSmallSnowball5, Item.CollectableGoronVillageWinterSmallSnowball6,
             Item.CollectableGoronVillageWinterSmallSnowball7, Item.CollectableGoronVillageWinterSmallSnowball8, Item.CollectableGoronVillageWinterSmallSnowball9,
             Item.CollectableGoronVillageWinterSmallSnowball10)]
-        /* [CheckRestricted(Scene.PathToMountainVillage, variant: -1,
+        /* [CheckRestricted(Scene.PathToMountainVillage, variant: ActorConst.ANY_VARIANT,
             Item.CollectablePathToMountainVillageSmallSnowball1, Item.CollectablePathToMountainVillageSmallSnowball2, // small
             Item.CollectablePathToMountainVillageSmallSnowball3, Item.CollectablePathToMountainVillageSmallSnowball4,
             // because it blocks access, at least check a few winter checks that dont require bombs or goron (single sphere influence)
@@ -4530,7 +4530,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableMountainVillageWinterSmallSnowball5, Item.CollectableMountainVillageWinterSmallSnowball6,
             Item.CollectableMountainVillageWinterSmallSnowball7, Item.CollectableMountainVillageWinterSmallSnowball8
         )] // */
-        [CheckRestricted(Scene.MountainVillage, variant: -1,
+        [CheckRestricted(Scene.MountainVillage, variant: ActorConst.ANY_VARIANT,
             Item.CollectableMountainVillageWinterSmallSnowball1, Item.CollectableMountainVillageWinterSmallSnowball2, // small
             Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
             Item.CollectableMountainVillageWinterSmallSnowball5, Item.CollectableMountainVillageWinterSmallSnowball6,
@@ -4539,20 +4539,20 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableMountainVillageWinterLargeSnowball3, Item.CollectableMountainVillageWinterLargeSnowball4,
             Item.SongLullabyIntro
         )]
-        [CheckRestricted(Scene.PathToSnowhead, variant: -1,
+        [CheckRestricted(Scene.PathToSnowhead, variant: ActorConst.ANY_VARIANT,
             Item.CollectablePathToSnowheadSmallSnowball1, Item.CollectablePathToSnowheadSmallSnowball2, // small
             Item.CollectablePathToSnowheadSmallSnowball3, Item.CollectablePathToSnowheadSmallSnowball4,
             Item.CollectablePathToSnowheadLargeSnowball1, Item.CollectablePathToSnowheadLargeSnowball2, // large
             Item.CollectablePathToSnowheadLargeSnowball3, Item.CollectablePathToSnowheadLargeSnowball4
         )]
-        [CheckRestricted(Scene.Snowhead, variant: -1,
+        [CheckRestricted(Scene.Snowhead, variant: ActorConst.ANY_VARIANT,
             Item.CollectableSnowheadSmallSnowball1, Item.CollectableSnowheadSmallSnowball2, // small
             Item.CollectableSnowheadSmallSnowball3, Item.CollectableSnowheadSmallSnowball10,
             Item.CollectableSnowheadLargeSnowball1, Item.CollectableSnowheadLargeSnowball2, // large
             Item.CollectableSnowheadLargeSnowball3, Item.CollectableSnowheadLargeSnowball4,
             Item.CollectableSnowheadLargeSnowball5, Item.CollectableSnowheadLargeSnowball6
         )]
-        [CheckRestricted(Scene.SnowheadTemple, variant: -1,
+        [CheckRestricted(Scene.SnowheadTemple, variant: ActorConst.ANY_VARIANT,
             Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball1, Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball2, // small
             Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball3, Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball4,
             Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball5
@@ -4804,7 +4804,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(462)]
         [ObjectListIndex(0x1CF)]
-        [CheckRestricted(Scene.MountainSmithy, variant:-1, Item.UpgradeRazorSword, Item.UpgradeGildedSword)]
+        [CheckRestricted(Scene.MountainSmithy, variant: ActorConst.ANY_VARIANT, Item.UpgradeRazorSword, Item.UpgradeGildedSword)]
         [GroundVariants( 0xFE1F, // credits
             0x200)] // vacation
         [VariantsWithRoomMax(max:8, variant:0x200)] // no reason except it can be creepy
@@ -4820,7 +4820,7 @@ namespace MMR.Randomizer.GameObjects
         SwordsmanSchoolLog = 0x1F8, // En_Maruta
 
         [ActorizerEnabled]
-        [CheckRestricted(Scene.TwinIslands, variant: -1,
+        [CheckRestricted(Scene.TwinIslands, variant: ActorConst.ANY_VARIANT,
             Item.CollectablePathToGoronVillageWinterSmallSnowball1, Item.CollectablePathToGoronVillageWinterSmallSnowball2, Item.CollectablePathToGoronVillageWinterSmallSnowball3, //small
             Item.CollectablePathToGoronVillageWinterLargeSnowball1, Item.CollectablePathToGoronVillageWinterLargeSnowball2, Item.CollectablePathToGoronVillageWinterLargeSnowball3, // large
             Item.CollectablePathToGoronVillageWinterLargeSnowball4, Item.CollectablePathToGoronVillageWinterLargeSnowball5, Item.CollectablePathToGoronVillageWinterLargeSnowball6,
@@ -4829,7 +4829,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectablePathToGoronVillageWinterLargeSnowball13, Item.CollectablePathToGoronVillageWinterLargeSnowball14,
             Item.SongLullabyIntro
         )]
-        [CheckRestricted(Scene.GoronVillage, variant: -1,
+        [CheckRestricted(Scene.GoronVillage, variant: ActorConst.ANY_VARIANT,
             Item.CollectableGoronVillageWinterLargeSnowball1, Item.CollectableGoronVillageWinterLargeSnowball2, // small
             Item.CollectableGoronVillageWinterLargeSnowball3, Item.CollectableGoronVillageWinterLargeSnowball4,
             Item.CollectableGoronVillageWinterLargeSnowball5, Item.CollectableGoronVillageWinterLargeSnowball6,
@@ -4837,7 +4837,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableGoronVillageWinterSmallSnowball4, Item.CollectableGoronVillageWinterSmallSnowball5, Item.CollectableGoronVillageWinterSmallSnowball6,
             Item.CollectableGoronVillageWinterSmallSnowball7, Item.CollectableGoronVillageWinterSmallSnowball8, Item.CollectableGoronVillageWinterSmallSnowball9,
             Item.CollectableGoronVillageWinterSmallSnowball10)]
-        [CheckRestricted(Scene.PathToMountainVillage, variant: -1,
+        [CheckRestricted(Scene.PathToMountainVillage, variant: ActorConst.ANY_VARIANT,
             Item.CollectablePathToMountainVillageSmallSnowball1, Item.CollectablePathToMountainVillageSmallSnowball2, // small
             Item.CollectablePathToMountainVillageSmallSnowball3, Item.CollectablePathToMountainVillageSmallSnowball4
             /*
@@ -4855,7 +4855,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableMountainVillageWinterSmallSnowball7, Item.CollectableMountainVillageWinterSmallSnowball8
             // */
         )]
-        [CheckRestricted(Scene.MountainVillage, variant: -1,
+        [CheckRestricted(Scene.MountainVillage, variant: ActorConst.ANY_VARIANT,
             Item.CollectableMountainVillageWinterSmallSnowball1, Item.CollectableMountainVillageWinterSmallSnowball2, // small
             Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
             Item.CollectableMountainVillageWinterSmallSnowball5, Item.CollectableMountainVillageWinterSmallSnowball6,
@@ -4864,24 +4864,24 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableMountainVillageWinterLargeSnowball3, Item.CollectableMountainVillageWinterLargeSnowball4,
             Item.SongLullabyIntro
         )]
-        [CheckRestricted(Scene.MountainVillageSpring, variant: -1,
+        [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT,
             Item.CollectableMountainVillageSpringSmallSnowball1, Item.CollectableMountainVillageSpringSmallSnowball2, // small
             Item.CollectableMountainVillageSpringSmallSnowball3, Item.CollectableMountainVillageSpringSmallSnowball4
         )]
-        [CheckRestricted(Scene.PathToSnowhead, variant: -1,
+        [CheckRestricted(Scene.PathToSnowhead, variant: ActorConst.ANY_VARIANT,
             Item.CollectablePathToSnowheadSmallSnowball1, Item.CollectablePathToSnowheadSmallSnowball2, // small
             Item.CollectablePathToSnowheadSmallSnowball3, Item.CollectablePathToSnowheadSmallSnowball4,
             Item.CollectablePathToSnowheadLargeSnowball1, Item.CollectablePathToSnowheadLargeSnowball2, // large
             Item.CollectablePathToSnowheadLargeSnowball3, Item.CollectablePathToSnowheadLargeSnowball4
         )]
-        [CheckRestricted(Scene.Snowhead, variant: -1,
+        [CheckRestricted(Scene.Snowhead, variant: ActorConst.ANY_VARIANT,
             Item.CollectableSnowheadSmallSnowball1, Item.CollectableSnowheadSmallSnowball2, // small
             Item.CollectableSnowheadSmallSnowball3, Item.CollectableSnowheadSmallSnowball10,
             Item.CollectableSnowheadLargeSnowball1, Item.CollectableSnowheadLargeSnowball2, // large
             Item.CollectableSnowheadLargeSnowball3, Item.CollectableSnowheadLargeSnowball4,
             Item.CollectableSnowheadLargeSnowball5, Item.CollectableSnowheadLargeSnowball6
         )]
-        [CheckRestricted(Scene.SnowheadTemple, variant: -1,
+        [CheckRestricted(Scene.SnowheadTemple, variant: ActorConst.ANY_VARIANT,
             Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball1, Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball2, // small
             Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball3, Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball4,
             Item.CollectableSnowheadTempleIceBlockRoomSmallSnowball5
@@ -4986,7 +4986,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(471)]
         [ObjectListIndex(0x1D6)]
-        [CheckRestricted(Scene.MountainSmithy, variant:-1, Item.UpgradeRazorSword, Item.UpgradeGildedSword)]
+        [CheckRestricted(Scene.MountainSmithy, variant: ActorConst.ANY_VARIANT, Item.UpgradeRazorSword, Item.UpgradeGildedSword)]
         [GroundVariants( 0xFE1F, // credits in milkbar
             0x200)] // regular
         //[VariantsWithRoomMax(max:0, variant: 0x200)] // suspected double actor, without the other I doubt this works at all
@@ -5240,7 +5240,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(490)]
         [ObjectListIndex(0x1F8)]
         // his actor isnt here, gets spanwed by snowball, this is just for refernece
-        [CheckRestricted(Scene.TwinIslands, variant:-1, Item.SongLullabyIntro)]
+        [CheckRestricted(Scene.TwinIslands, variant: ActorConst.ANY_VARIANT, Item.SongLullabyIntro)]
         // 1 is standing in the hall during spring
         [GroundVariants(1)]
         [OnlyOneActorPerRoom]
@@ -5255,7 +5255,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled]
         [FileID(491)]
         [ObjectListIndex(0x18E)]
-        [CheckRestricted(scene: Scene.SouthernSwampClear, variant: -1, Item.HeartPieceBoatArchery)]
+        [CheckRestricted(scene: Scene.SouthernSwampClear, variant: ActorConst.ANY_VARIANT, Item.HeartPieceBoatArchery)]
         [UnkillableAllVariants]
         BoatArcheryKoume = 0x214, // En_Tru_Mt
 
@@ -5333,7 +5333,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(501)]
         [ObjectListIndex(0x12E)]
-        [CheckRestricted(Scene.PiratesFortressRooms, variant:-1, Item.HeartPiecePiratesFortress)]
+        [CheckRestricted(Scene.PiratesFortressRooms, variant: ActorConst.ANY_VARIANT, Item.HeartPiecePiratesFortress)]
         // vanilla variants:
         // Aviels room: 0xCB1
         // path == 0x3F ignores path, just stands in one spot
@@ -5367,7 +5367,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // romani talking to cremia and dinner and sleeping in bed
         [FileID(502)]
         [ObjectListIndex(0xB7)]
-        //[CheckRestricted(Scene.RanchBuildings, variant:-1, check: Item.Notebook)]
+        //[CheckRestricted(Scene.RanchBuildings, variant:ActorConst.ANY_VARIANT, check: Item.Notebook)]
         // 0xF000 is type, 0x00FF range is ignored by her actual code?
         // 0xF000 is just standing there, wont talk or do anything, it falls under "default"
         // 0x1000 is sitting at a table, we want to replace with the mmra version that comes with a box
@@ -5388,9 +5388,9 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xA7)]
         [CheckRestricted(Scene.TerminaField, variant: 0x40FF, Item.MaskRomani,
             Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
-        [CheckRestricted(Scene.RomaniRanch, variant: -1, Item.MaskRomani,
+        [CheckRestricted(Scene.RomaniRanch, variant: ActorConst.ANY_VARIANT, Item.MaskRomani,
             Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
-        [CheckRestricted(Scene.RanchBuildings, variant: -1, Item.MaskRomani,
+        [CheckRestricted(Scene.RanchBuildings, variant: ActorConst.ANY_VARIANT, Item.MaskRomani,
             Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
         // 0x10FF and 0x11FF are in barn, dialogue focused and timegated i bet
         // 0x20FF is in the homestead, sitting at table? probably timegated 
@@ -5438,7 +5438,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(507)]
         [ObjectListIndex(0x206)]
-        [CheckRestricted(Scene.GreatBayCoast, variant: -1, Item.MaskZora)]
+        [CheckRestricted(Scene.GreatBayCoast, variant: ActorConst.ANY_VARIANT, Item.MaskZora)]
         [WaterTopVariants(0x80F, 0xC0F, 0x100F)]
         [VariantsWithRoomMax(max:0, variant: 0x80F, 0xC0F, 0x100F)] // do not place, they are pathing types
         [UnkillableAllVariants]
@@ -5532,13 +5532,13 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(516)]
         [ObjectListIndex(0x250)]
-        [CheckRestricted(Scene.GreatBayTemple, variant:-1,
+        [CheckRestricted(Scene.GreatBayTemple, variant: ActorConst.ANY_VARIANT,
             Item.CollectableGreatBayTempleEntranceRoomBarrel1,
             Item.CollectableGreatBayTempleBlueChuchuValveRoomBarrel1, Item.CollectableGreatBayTempleBlueChuchuValveRoomBarrel2,
             Item.CollectibleStrayFairyGreatBay11, Item.CollectibleStrayFairyGreatBay13,
             Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel1, Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel2,
             Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel1, Item.CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel2)]
-        [CheckRestricted(Scene.PiratesFortress, variant:-1,
+        [CheckRestricted(Scene.PiratesFortress, variant: ActorConst.ANY_VARIANT,
             Item.CollectablePiratesFortressInteriorBarrelRoomEggPot1, // just incase colliding actor that blocks pot destruction
             Item.CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem1, Item.CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem2,
             Item.CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem3, Item.CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem4, Item.CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem5,
@@ -5614,8 +5614,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(523)]
         [ObjectListIndex(0x23A)]
-        [CheckRestricted(Scene.MilkBar, variant:-1, Item.MaskCircusLeader, Item.NotebookMeetToto, Item.NotebookMovingGorman)]
-        [CheckRestricted(Scene.MayorsResidence, variant:-1, Item.NotebookMeetToto)]
+        [CheckRestricted(Scene.MilkBar, variant: ActorConst.ANY_VARIANT, Item.MaskCircusLeader, Item.NotebookMeetToto, Item.NotebookMovingGorman)]
+        [CheckRestricted(Scene.MayorsResidence, variant: ActorConst.ANY_VARIANT, Item.NotebookMeetToto)]
         [GroundVariants(0x050B, 0x3FFF)] // sitting in mayors office // TODO which one
         [PerchingVariants(0x050B, 0x3FFF)] // sitting in mayors office
         [VariantsWithRoomMax(max:0, variant:0x050B, 0x3FFF)] // we dont want a sitting npc to be placed places, just replace, also talking to is softlock, and we cannot modify because rando needs this actor for things
@@ -5719,7 +5719,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(531)]
         [ObjectListIndex(0x218)]
-        [CheckRestricted(Scene.GreatBayCoast, variant:-1, Item.HeartPieceFishermanGame)]
+        [CheckRestricted(Scene.GreatBayCoast, variant: ActorConst.ANY_VARIANT, Item.HeartPieceFishermanGame)]
         [DynaAttributes(16,12)]
         [GroundVariants(0x8000, 0x0)]
         [VariantsWithRoomMax(max: 10, 0x8000, 0x0)]
@@ -5768,7 +5768,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(536)]
         [ObjectListIndex(0x220)]
-        [CheckRestricted(Scene.ZoraHallRooms, variant:-1, Item.HeartPieceEvan)]
+        [CheckRestricted(Scene.ZoraHallRooms, variant: ActorConst.ANY_VARIANT, Item.HeartPieceEvan)]
         // 0xF is type (1,2 and else) the 0xFEXX param does NOTHING wtf
         [GroundVariants(
             //0xFE01, // zora hall one, concert after the thing, does not spawn regularlly
@@ -5906,7 +5906,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(548)]
         [ObjectListIndex(0x6)]
-        [CheckRestricted(Scene.TerminaField, variant: -1, Item.CollectableTerminaFieldTelescopeGuay1,
+        [CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT, Item.CollectableTerminaFieldTelescopeGuay1,
             Item.CollectableTerminaFieldGuay1, Item.CollectableTerminaFieldGuay2, Item.CollectableTerminaFieldGuay3,
             Item.CollectableTerminaFieldGuay4, Item.CollectableTerminaFieldGuay5, Item.CollectableTerminaFieldGuay6,
             Item.CollectableTerminaFieldGuay7, Item.CollectableTerminaFieldGuay8, Item.CollectableTerminaFieldGuay9, Item.CollectableTerminaFieldGuay10,
@@ -6085,10 +6085,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(569)]
         [ObjectListIndex(0xD)]
-        [CheckRestricted(Scene.MayorsResidence, variant:-1, 
+        [CheckRestricted(Scene.MayorsResidence, variant: ActorConst.ANY_VARIANT,
             Item.MaskKafei,
             Item.NotebookMeetMadameAroma, Item.NotebookPromiseMadameAroma)]
-        [CheckRestricted(Scene.MilkBar, variant: -1,
+        [CheckRestricted(Scene.MilkBar, variant: ActorConst.ANY_VARIANT,
             Item.ItemBottleMadameAroma,
             Item.NotebookMeetMadameAroma, Item.NotebookDeliverLetterToMama)]
         [GroundVariants(0)]
@@ -6119,33 +6119,33 @@ namespace MMR.Randomizer.GameObjects
         [ForbidFromScene(Scene.TerminaField)]
         //[CheckRestricted(Scene.TerminaField)] // TODO
         // TODO decouple the specific actors per object based on variant
-        [CheckRestricted(Scene.SouthClockTown, -1,
+        [CheckRestricted(Scene.SouthClockTown, ActorConst.ANY_VARIANT,
             Item.CollectableSouthClockTownHitTag1, Item.CollectableSouthClockTownHitTag2, Item.CollectableSouthClockTownHitTag3)]
         [CheckRestricted(Scene.EastClockTown, 0xFE00, // both are 0xFE00, uhhhh
             Item.CollectableEastClockTownHitTag1, Item.CollectableEastClockTownHitTag2, Item.CollectableEastClockTownHitTag3,
             Item.CollectableEastClockTownHitTag4, Item.CollectableEastClockTownHitTag5, Item.CollectableEastClockTownHitTag6,
             Item.CollectableEastClockTownHitTag7, Item.CollectableEastClockTownHitTag8, Item.CollectableEastClockTownHitTag9,
             Item.ChestEastClockTownSilverRupee)]
-        [CheckRestricted(Scene.StockPotInn, -1,
+        [CheckRestricted(Scene.StockPotInn, ActorConst.ANY_VARIANT,
             Item.CollectableStockPotInnHitTag1, Item.CollectableStockPotInnHitTag2, Item.CollectableStockPotInnHitTag3)]
-        [CheckRestricted(Scene.SwampSpiderHouse, -1,
+        [CheckRestricted(Scene.SwampSpiderHouse, ActorConst.ANY_VARIANT,
             Item.CollectableSwampSpiderHouseHitTag1, Item.CollectableSwampSpiderHouseHitTag2, Item.CollectableSwampSpiderHouseHitTag3,
             Item.CollectableSwampSpiderHouseHitTag4, Item.CollectableSwampSpiderHouseHitTag5, Item.CollectableSwampSpiderHouseHitTag6,
             Item.CollectableSwampSpiderHouseHitTag7, Item.CollectableSwampSpiderHouseHitTag8, Item.CollectableSwampSpiderHouseHitTag9,
             Item.CollectableSwampSpiderHouseHitTag10, Item.CollectableSwampSpiderHouseHitTag11, Item.CollectableSwampSpiderHouseHitTag12)]
-        [CheckRestricted(Scene.CuccoShack, -1,
+        [CheckRestricted(Scene.CuccoShack, ActorConst.ANY_VARIANT,
             Item.CollectableCuccoShackHitTag1, Item.CollectableCuccoShackHitTag2, Item.CollectableCuccoShackHitTag3,
             Item.CollectableCuccoShackHitTag4, Item.CollectableCuccoShackHitTag5, Item.CollectableCuccoShackHitTag6)]
-        [CheckRestricted(Scene.OceanSpiderHouse, -1,
+        [CheckRestricted(Scene.OceanSpiderHouse, ActorConst.ANY_VARIANT,
             Item.CollectableOceansideSpiderHouseHitTag1, Item.CollectableOceansideSpiderHouseHitTag2, Item.CollectableOceansideSpiderHouseHitTag3,
             Item.CollectableOceansideSpiderHouseHitTag4, Item.CollectableOceansideSpiderHouseHitTag5, Item.CollectableOceansideSpiderHouseHitTag6,
             Item.CollectableOceansideSpiderHouseHitTag7, Item.CollectableOceansideSpiderHouseHitTag8, Item.CollectableOceansideSpiderHouseHitTag9)]
-        [CheckRestricted(Scene.PiratesFortressRooms, -1,
+        [CheckRestricted(Scene.PiratesFortressRooms, ActorConst.ANY_VARIANT,
             Item.CollectablePiratesFortressInteriorHookshotRoomHitTag1, Item.CollectablePiratesFortressInteriorHookshotRoomHitTag2, Item.CollectablePiratesFortressInteriorHookshotRoomHitTag3)]
-        [CheckRestricted(Scene.PiratesFortress, -1,
+        [CheckRestricted(Scene.PiratesFortress, ActorConst.ANY_VARIANT,
             Item.CollectablePiratesFortressHitTag1, Item.CollectablePiratesFortressHitTag2, Item.CollectablePiratesFortressHitTag3,
         Item.CollectablePiratesFortressHitTag4, Item.CollectablePiratesFortressHitTag5, Item.CollectablePiratesFortressHitTag6)]
-        [CheckRestricted(Scene.IkanaGraveyard, -1,
+        [CheckRestricted(Scene.IkanaGraveyard, ActorConst.ANY_VARIANT,
             Item.CollectableIkanaGraveyardHitTag1, Item.CollectableIkanaGraveyardHitTag2, Item.CollectableIkanaGraveyardHitTag3,
             Item.CollectableIkanaGraveyardHitTag4, Item.CollectableIkanaGraveyardHitTag5, Item.CollectableIkanaGraveyardHitTag6,
             Item.CollectableIkanaGraveyardHitTag7, Item.CollectableIkanaGraveyardHitTag8, Item.CollectableIkanaGraveyardHitTag9,
@@ -6160,7 +6160,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(573)]
         [ObjectListIndex(0x6)]
-        [CheckRestricted(Scene.TerminaField, variant: -1, Item.CollectableTerminaFieldTelescopeGuay1,
+        [CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT, Item.CollectableTerminaFieldTelescopeGuay1,
             Item.CollectableTerminaFieldGuay1, Item.CollectableTerminaFieldGuay2, Item.CollectableTerminaFieldGuay3,
             Item.CollectableTerminaFieldGuay4, Item.CollectableTerminaFieldGuay5, Item.CollectableTerminaFieldGuay6,
             Item.CollectableTerminaFieldGuay7, Item.CollectableTerminaFieldGuay8, Item.CollectableTerminaFieldGuay9, Item.CollectableTerminaFieldGuay10,
@@ -6297,14 +6297,14 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1E5)]
         [CheckRestricted(Scene.SouthClockTown, variant: 0xFC05,
             Item.ShopItemBusinessScrubMagicBean, Item.TradeItemLandDeed, Item.ChestSouthClockTownPurpleRupee)]
-        [CheckRestricted(Scene.SouthernSwamp, variant: -1,
+        [CheckRestricted(Scene.SouthernSwamp, variant: ActorConst.ANY_VARIANT,
             Item.ShopItemBusinessScrubMagicBean, Item.TradeItemSwampDeed, Item.HeartPieceSwampScrub, Item.UpgradeBiggestBombBag)]
-        [CheckRestricted(Scene.SouthernSwampClear, variant: -1, Item.ShopItemBusinessScrubMagicBean, Item.HeartPieceSwampScrub, Item.UpgradeBiggestBombBag)]
-        [CheckRestricted(Scene.GoronVillage, variant: -1,
+        [CheckRestricted(Scene.SouthernSwampClear, variant: ActorConst.ANY_VARIANT, Item.ShopItemBusinessScrubMagicBean, Item.HeartPieceSwampScrub, Item.UpgradeBiggestBombBag)]
+        [CheckRestricted(Scene.GoronVillage, variant: ActorConst.ANY_VARIANT,
             Item.UpgradeBiggestBombBag, Item.TradeItemMountainDeed, Item.ShopItemBusinessScrubGreenPotion, Item.HeartPieceGoronVillageScrub)]
-        [CheckRestricted(Scene.ZoraHallRooms, variant: -1,
+        [CheckRestricted(Scene.ZoraHallRooms, variant: ActorConst.ANY_VARIANT,
             Item.ShopItemBusinessScrubGreenPotion, Item.TradeItemOceanDeed, Item.HeartPieceZoraHallScrub, Item.ShopItemBusinessScrubBluePotion)]
-        [CheckRestricted(Scene.IkanaCanyon, variant: -1,
+        [CheckRestricted(Scene.IkanaCanyon, variant: ActorConst.ANY_VARIANT,
             Item.ShopItemBusinessScrubBluePotion, Item.IkanaScrubGoldRupee, Item.HeartPieceIkana, Item.CollectableIkanaCanyonSakonSHideoutAreaGossipFairy1)]
         // 0xFC08, 0x1000 are clear swamp
         //0x4 is a flag, meaning the actor has a path, checks if 0xFC00 is a path or not and self terminates
@@ -6386,7 +6386,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x24B)]
         [FileID(594)]
         [CheckRestricted(Scene.WestClockTown, variant:0x7E02, Item.HeartPieceNotebookRosa, Item.NotebookMeetRosaSisters, Item.NotebookRosaSistersThanks)]
-        [CheckRestricted(Scene.StockPotInn, variant:-1, Item.NotebookMeetRosaSisters)]
+        [CheckRestricted(Scene.StockPotInn, variant: ActorConst.ANY_VARIANT, Item.NotebookMeetRosaSisters)]
         // 0xA00 is lobby pacing
         // params: 8000 is a talking flag, 0x7E00 >> 9 is pathing, 0x7E00 is non-pathing though, the one value
         [GroundVariants(0x7E01, 0xFE00, 0xFE01,

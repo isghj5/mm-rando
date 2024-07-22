@@ -645,7 +645,7 @@ namespace MMR.Randomizer
 
         // todo move to actorutils
         // TODO rename to ACTOR is check blocked, as we will soon need to do this for actors not whole actor objects
-        // for now its just the objectlessactors
+        // for now its just the objectlessactors, checkrestricted
         private static bool ObjectIsCheckBlocked(Scene scene, GameObjects.Actor testActor, int variant = -1)
         {
             /// checks if randomizing the actor would interfere with getting access to a check
@@ -5904,7 +5904,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Objectless Test Alpha5\n");
+                    sw.Write("Enemizer version: Isghj's Objectless Test Alpha6\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
