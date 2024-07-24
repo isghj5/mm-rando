@@ -90,6 +90,12 @@ namespace MMR.Randomizer.GameObjects
             Actor.Hiploop// water causes instant death
                          //Actor.Bumper, Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, Actor.RegularIceBlock,
             /*Actor.ClocktowerGearsAndOrgan /*, Actor.PatrollingPirate */ )]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.TallGrass, // grottos are common, this can get silly
+            Actor.RegularIceBlock, // big one can block the door or even block the whole hallway
+            Actor.Beamos, Actor.LikeLike, Actor.Freezard, //, Actor.BomberHideoutGuard // annoying
+            Actor.Seagulls, // with new height adjust its basically invisible
+            Actor.Hiploop// water causes instant death
+        )]
         [EnemizerSceneBlockSensitive(Actor.DekuBabaWithered, -1)] // can block the chest
         [EnemizerSceneBlockSensitive(Actor.DekuBaba, -1)] // this this is required to keep it off of withered as well
         [EnemizerSceneBlockSensitive(Actor.Wolfos, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
