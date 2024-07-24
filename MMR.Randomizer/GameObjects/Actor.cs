@@ -1674,6 +1674,7 @@ namespace MMR.Randomizer.GameObjects
 
         // pirate that tells leader they cant get near the eggs because of seasnakes
         // we can use though as-is though it seems
+        // white shirt gerudo
         [ActorizerEnabled]
         [FileID(146)]
         [ObjectListIndex(0xE6)]
@@ -1686,7 +1687,8 @@ namespace MMR.Randomizer.GameObjects
         // pathing 0xFC00 >> A
         // this is the cutscene version, the one that is most likely to break
         // in some testing it just dissapears, but can it break?
-        [VariantsWithRoomMax(max: 0, variant: 0)] 
+        [VariantsWithRoomMax(max: 0, variant: 0)]
+        [AlignedCompanionActor(Cow, CompanionAlignment.InFront, ourVariant:-1)]
         //[VariantsWithRoomMax(max: 0, variant: 1,2,3)] // testing
         [UnkillableAllVariants]
         CutscenePirate = 0x9F, // En_Ge1

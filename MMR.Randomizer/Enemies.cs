@@ -3424,8 +3424,9 @@ namespace MMR.Randomizer
                 GameObjects.Scene.IkanaGraveyard 
             };
 
-            if (_randomized.Settings.LogicMode != Models.LogicMode.NoLogic // crazy bitches need their juice
-                && scenesToForce.Contains(thisSceneData.Scene.SceneEnum))
+            if (ACTORSENABLED == true
+             && _randomized.Settings.LogicMode != Models.LogicMode.NoLogic // crazy bitches need their juice
+             && scenesToForce.Contains(thisSceneData.Scene.SceneEnum))
             {
                 #if DEBUG
                 var debuggingActorList = thisSceneData.Actors;
