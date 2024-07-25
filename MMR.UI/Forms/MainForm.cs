@@ -79,7 +79,7 @@ namespace MMR.UI.Forms
             #if DEBUG
             Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + DEBUG ON";
             #else
-            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + Isghj's Objectless Test Alpha6";
+            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + Isghj's Objectless Test Alpha7";
             #endif
 
             var args = Environment.GetCommandLineArgs();

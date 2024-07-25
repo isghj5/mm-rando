@@ -1200,7 +1200,7 @@ namespace MMR.Randomizer.GameObjects
         //[ObjectListIndex(0x1)] // this is a lie, the pot DETECTS multiple objects but does NOT exist in gameplay keep
         [ObjectListIndex(0xF9)]
         // TODO randomize some more of these
-        [CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT, Item.CollectableTerminaFieldPot1)]
+        [CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT, Item.CollectableTerminaFieldPot1)] // only one after all
         [CheckRestricted(Scene.SwordsmansSchool, variant: ActorConst.ANY_VARIANT,
             Item.CollectableSwordsmanSSchoolPot1, Item.CollectableSwordsmanSSchoolPot2, Item.CollectableSwordsmanSSchoolPot3, Item.CollectableSwordsmanSSchoolPot4, Item.CollectableSwordsmanSSchoolPot5)]
         [CheckRestricted(Scene.DoggyRacetrack, variant: ActorConst.ANY_VARIANT,
@@ -1214,6 +1214,12 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.DekuShrine, variant: ActorConst.ANY_VARIANT, Item.CollectableDekuShrineGreyBoulderRoomPot1)]
         [CheckRestricted(Scene.Woodfall, variant: ActorConst.ANY_VARIANT,
             Item.CollectableWoodfallPot1, Item.CollectableWoodfallPot2, Item.CollectableWoodfallPot3)]
+        //[CheckRestricted(Scene.WoodfallTemple, variant: ActorConst.ANY_VARIANT,
+        //    Item.CollectableWoodfallTempleGekkoRoomPot1, Item.CollectableWoodfallTempleGekkoRoomPot2, Item.CollectableWoodfallTempleGekkoRoomPot3, Item.CollectableWoodfallTempleGekkoRoomPot4)]
+        [CheckRestricted(Scene.WoodfallTemple, variant: 0x4C02, Item.CollectableWoodfallTempleGekkoRoomPot1)]
+        [CheckRestricted(Scene.WoodfallTemple, variant: 0x4E02, Item.CollectableWoodfallTempleGekkoRoomPot2)]
+        [CheckRestricted(Scene.WoodfallTemple, variant: 0x5002, Item.CollectableWoodfallTempleGekkoRoomPot3)]
+        [CheckRestricted(Scene.WoodfallTemple, variant: 0x5202, Item.CollectableWoodfallTempleGekkoRoomPot4)]
         [CheckRestricted(Scene.MountainVillage, variant: ActorConst.ANY_VARIANT, Item.CollectableMountainVillageWinterPot1)]
         [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT, Item.CollectableMountainVillageSpringPot1)]
         [CheckRestricted(Scene.GoronShrine, variant: ActorConst.ANY_VARIANT,
