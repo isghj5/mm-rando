@@ -1871,17 +1871,26 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x198)]
         [ObjectListIndex(0x2)] // pick up rock version
         [ForbidFromScene(Scene.InvertedStoneTower, Scene.SwampSpiderHouse)] // we want the bugs, I think its too much to ask players to leave to get bugs
-        [CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT,
-            Item.CollectableTerminaFieldRock1, Item.CollectableTerminaFieldRock4, Item.CollectableTerminaFieldRock3,
-            Item.CollectableTerminaFieldRock4, Item.CollectableTerminaFieldRock5, Item.CollectableTerminaFieldRock6,
-            Item.CollectableTerminaFieldRock7, Item.CollectableTerminaFieldRock8, Item.CollectableTerminaFieldRock9)]
+        [CheckRestricted(Scene.TerminaField, 0x2844, Item.CollectableTerminaFieldRock1)]
+        [CheckRestricted(Scene.TerminaField, 0x2A44, Item.CollectableTerminaFieldRock2)]
+        [CheckRestricted(Scene.TerminaField, 0x2014, Item.CollectableTerminaFieldRock3)]
+        [CheckRestricted(Scene.TerminaField, 0x2214, Item.CollectableTerminaFieldRock4)]
+        [CheckRestricted(Scene.TerminaField, 0x2414, Item.CollectableTerminaFieldRock5)]
+        [CheckRestricted(Scene.TerminaField, 0x2C14, Item.CollectableTerminaFieldRock6)]
+        [CheckRestricted(Scene.TerminaField, 0x1E14, Item.CollectableTerminaFieldRock7)]
+        [CheckRestricted(Scene.TerminaField, 0x1A24, Item.CollectableTerminaFieldRock8)]
+        [CheckRestricted(Scene.TerminaField, 0x1C24, Item.CollectableTerminaFieldRock9)]
+        [CheckRestricted(Scene.RomaniRanch, 0x3C, Item.CollectableRomaniRanchInvisibleItem6)]
         [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT,
             Item.CollectableMountainVillageWinterMountainVillageSpringItem1)]
         [CheckRestricted(Scene.GreatBayCoast, variant: 0x32,
             Item.CollectableGreatBayCoastSoftSoil1)]
-        [CheckRestricted(Scene.IkanaGraveyard, variant: ActorConst.ANY_VARIANT,
-            Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock1, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock2, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock3,
-            Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock4, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock5)]
+        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4014, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock1)]
+        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4234, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock2)]
+        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4624, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock3)]
+        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4214, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock4)]
+        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4814, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock5)]
+
         //[ObjectListIndex(0x1F6)] // NEVER USED IN MM, damn thing lied to me, even the boulders are object 2
         // it actually uses one of two objects: gameplay_field or object_ishi, which is only in SSHouse
         //6a does not load
@@ -1898,6 +1907,7 @@ namespace MMR.Randomizer.GameObjects
         [WaterBottomVariants(0xFE01, // silver boulder
             0xFEF0)] // regular small rock (like in pinaccle)
         [WallVariants( 0xFF00, 0xFF70, 0xFFA0, 0xFFB0, // non vanilla good drop tables
+            0x2A44, 0x2014, 0x2214, 0x2414, 0x2C14, 0x1E14, 0x1A24, 0x1C24, // tf wall
             0x4814, 0x4214, 0x4424, 0x4014, 0x4624)] // ikana graveyard
         [VariantsWithRoomMax(max: 3, variant: 0xFF00, 0xFF70, 0xFFA0, 0xFFB0,
             0x4814, 0x4214, 0x4424, 0x4014, 0x4624)]
@@ -6806,12 +6816,40 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         SpawnsItemFromSoil = 0x2AE, // Obj_Swprize
 
-        // todo add as companion actor to a rich actor?
-        //[ActorizerEnabled]
+        // this is the actor you have to walk into , not the one you hit with ranged attacks
+        [ActorizerEnabled]
         [FileID(646)]
-        [GroundVariants(0)] // todo search
-        [ObjectListIndex(0x1)] // ooo free
+        [ObjectListIndex(0x1)]
+        [CheckRestricted(Scene.TerminaField, 0x45, Item.CollectableTerminaFieldInvisibleItem1)] // hollow stump goron jump
+        [CheckRestricted(Scene.TerminaField, 0x4C, Item.CollectableTerminaFieldInvisibleItem2)] // grasses
+        [CheckRestricted(Scene.TerminaField, 0x5C, Item.CollectableTerminaFieldInvisibleItem3)]
+        [CheckRestricted(Scene.TerminaField, 0x60, Item.CollectableTerminaFieldInvisibleItem4)]
+        [CheckRestricted(Scene.TerminaField, 0x64, Item.CollectableTerminaFieldInvisibleItem5)]
+        [CheckRestricted(Scene.TerminaField, 0x68, Item.CollectableTerminaFieldInvisibleItem6)]
+        [CheckRestricted(Scene.TerminaField, 0x6D, Item.CollectableTerminaFieldInvisibleItem7)] // water fountains
+        [CheckRestricted(Scene.TerminaField, 0x71, Item.CollectableTerminaFieldInvisibleItem8)]
+        [CheckRestricted(Scene.TerminaField, 0x79, Item.CollectableTerminaFieldInvisibleItem9)]  // goron jump ocean ramp
+        [CheckRestricted(Scene.TerminaField, 0x7D, Item.CollectableTerminaFieldInvisibleItem10)] // goron jump ocean chest
+        [CheckRestricted(Scene.TerminaField, 0x75, Item.CollectableTerminaFieldInvisibleItem11)] // goron jump snowfield
+        [CheckRestricted(Scene.RomaniRanch, 0x29, Item.CollectableRomaniRanchInvisibleItem1)] // ranch fence items
+        [CheckRestricted(Scene.RomaniRanch, 0x2D, Item.CollectableRomaniRanchInvisibleItem2)]
+        [CheckRestricted(Scene.RomaniRanch, 0x30, Item.CollectableRomaniRanchInvisibleItem3)]
+        [CheckRestricted(Scene.RomaniRanch, 0x34, Item.CollectableRomaniRanchInvisibleItem4)]
+        [CheckRestricted(Scene.RomaniRanch, 0x38, Item.CollectableRomaniRanchInvisibleItem5)]
+        [CheckRestricted(Scene.RomaniRanch, 0x3C, Item.CollectableRomaniRanchInvisibleItem6)]
+        // TODO find at least one that gives rup without items
+        [FlyingVariants(0x45, 0x79, 0x7D, 0x75)] // tf goron jumps
+        [PerchingVariants(0x29, 0x2D, 0x30, 0x34, 0x38, 0x3C)] // romani ranch fence
+        [WaterBottomVariants(0x6D, 0x71)] // tf water fountains
+        [GroundVariants(
+            0x4C, 0x5C, 0x60, 0x64, 0x68, // tf grass
+            0x6D, 0x71, // tf water fountains
+            0x29, 0x2D, 0x30, 0x34, 0x38, 0x3C // romani ranch fence
+        )] // todo search
+        // TODO find one that is non-vanilla for wall
+        [OnlyOneActorPerRoom] // as they give items or money, limit to one
         [UnkillableAllVariants]
+        [PlacementWeight(40)] // free stuff, make it more rare
         En_Invisible_Ruppe = 0x2AF, // En_Invisible_Ruppe
         
         [FileID(647)]

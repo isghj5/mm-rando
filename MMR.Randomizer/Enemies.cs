@@ -581,7 +581,10 @@ namespace MMR.Randomizer
 
                             var checkBlocked = ObjectIsCheckBlocked(scene, testActor.ActorEnum, testActor.OldVariant);
                             if (checkBlocked)
+                            {
+                                log.Append($" in scene [{scene.SceneEnum}][{mapIndex}][{mapActor.RoomActorIndex}] actor: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}] was blocked by item.\n");
                                 return;
+                            }
 
                             if ( ! testActor.Variants.Contains(mapActor.OldVariant))
                             {
@@ -810,6 +813,7 @@ namespace MMR.Randomizer
 
                         if (ObjectIsCheckBlocked(scene, matchingEnum, matchingEnemy.OldVariant))
                         {
+                            thisSceneData.Log.Append($" in scene [{scene.SceneEnum}] actor type: [{matchingEnemy.ActorEnum}] was blocked by item.\n");
                             thisSceneData.Actors.RemoveAll(act => act.ObjectId == obj);
                         }
                         else
@@ -3319,7 +3323,7 @@ namespace MMR.Randomizer
                 var nightActorList = thisSceneData.Actors.Intersect(map.night.oldActorList).ToList();
                 var nightUniqueList = nightActorList.GroupBy(elem => elem.ActorEnum).Select(group => group.First()).ToList();
                 nightUniqueList.RemoveAll(u => u.ActorEnum == GameObjects.Actor.Empty);
-                TrimAllActors(thisSceneData, nightActorList, nightActorList, allowLimits: false);
+                TrimAllActors(thisSceneData, nightUniqueList, nightActorList, allowLimits: false);
             }
         }
 
