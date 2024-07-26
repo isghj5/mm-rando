@@ -1593,7 +1593,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         [ForbidFromScene(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
-            Scene.BeneathTheWell, Scene.DekuShrine, Scene.IkanaCastle, Scene.PiratesFortressRooms)]
+            Scene.BeneathTheWell, Scene.DekuShrine, Scene.IkanaCastle, Scene.PiratesFortressRooms, Scene.SwampSpiderHouse)]
         ObjSwitch = 0x93, // Obj_Switch
 
         Empty94 = 0x94, // Empty94
