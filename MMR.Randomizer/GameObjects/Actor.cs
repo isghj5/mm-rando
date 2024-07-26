@@ -1963,6 +1963,7 @@ namespace MMR.Randomizer.GameObjects
             variant: 0x8200, 0xA200, // secret japanese grottos, hidden
             0x6233, 0x623B, 0x6218, 0x625C)] // grottos that might hold checks, also hidden
         [AlignedCompanionActor(Shot_Sun, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x41)] // fairies love grass
+        [ForbidFromScene(Scene.RoadToIkana)] // its right on top of shirou which gets confusing if two actors are on top of each other, visually it makes sense to leave this as a land mark
         [UnkillableAllVariants]
         GrassRockCluster = 0xB3, // Obj_Mure2
 
