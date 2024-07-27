@@ -242,7 +242,7 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Speedups.ChestGameMinimap = value; }
         }
 
-        [Description("Makes it safer to use glitches:\n - Prevents HESS crash\n - Prevents Weirdshot crash\n - Prevents Action Swap crash\n - Prevents Song of Double Time softlock during 0th or 4th day\n - Prevents Tatl text softlock on 0th of 4th day\n - Prevents 0th day file deletion\n - Prevents hookslide crash\n - Prevents softlocks when using Remote Hookshot\n - Prevents 0th day Goron Bow crash\n - Applies safety fixes for Fierce Deity even if Fierce Deity Anywhere is not enabled\n - Index warp no longer crashes or softlocks (but you won't be able to use it to access the Debug Menu)\n - Prevents softlocks when interrupting mask transformations\n - Mayor is removed on 4th day\n - Deku Playground Employees are removed on 4th day\n - Prevents Gossip Stone time from crashing on 4th day\n - Prevents Town Shooting Gallery from crashing on 0th day and 4th day\n - TODO more...")]
+        [Description("Makes it safer to use glitches:\n - Prevents HESS crash\n - Prevents Weirdshot crash\n - Prevents Action Swap crash\n - Prevents Song of Double Time softlock during 0th or 4th day\n - Prevents Tatl text softlock on 0th of 4th day\n - Prevents 0th day file deletion\n - Prevents hookslide crash\n - Prevents softlocks when using Remote Hookshot\n - Prevents 0th day Goron Bow crash\n - Applies safety fixes for Fierce Deity even if Fierce Deity Anywhere is not enabled\n - Index warp no longer crashes or softlocks (but you won't be able to use it to access the Debug Menu)\n - Prevents softlocks when interrupting mask transformations\n - Mayor is removed on 4th day\n - Deku Playground Employees are removed on 4th day\n - Prevents Gossip Stone time from crashing on 4th day\n - Prevents Town Shooting Gallery from crashing on 0th day and 4th day")]
         public bool SaferGlitches
         {
             get { return this.AsmOptions.MiscConfig.Flags.SaferGlitches; }
@@ -572,6 +572,7 @@ namespace MMR.Randomizer.Models.Settings
 
         [Description("Adds Deku nuts and Deku sticks to drop tables in the field:\n\n - Default: No change, vanilla behavior.\n - Light: one stick and nut 1/16 chance termina bush.\n - Medium: More nuts, twice the chance\n - Extra: More sticks, more nuts, more drop locations.\n - Mayhem: You're crazy in the coconut!")]
         [SettingTab(SettingTabAttribute.Type.Gimmicks)]
+        [SettingName("Nut and Stick Drops")]
         public NutAndStickDrops NutandStickDrops { get; set; }
 
         /// <summary>
@@ -825,9 +826,6 @@ namespace MMR.Randomizer.Models.Settings
 
         [Description("Quest items will return to your inventory after Song of Time.")]
         public bool KeepQuestTradeThroughTime { get; set; }
-
-        [Description("When the camera swings after grabbing a ledge, ensure the player's controls match Link's movement. Also makes the camera move to behind Link faster when Z-targeting.")]
-        public bool ImprovedCamera { get; set; }
 
         #endregion
 

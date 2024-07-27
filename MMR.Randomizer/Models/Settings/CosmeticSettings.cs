@@ -66,6 +66,12 @@ namespace MMR.Randomizer.Models.Settings
         public Music Music { get; set; }
 
         /// <summary>
+        /// Replaces Tatl's colors
+        /// </summary>
+        [Description("Select a camera style.\n\n - Default: Vanilla camera.\n - Responsive: Link's movement will always be relative to the direction the camera is facing.\n - Instant: When Z-Targeting to move the camera behind Link, it will do it very quickly. Camera panning when climbing ledges is also sped up.")]
+        public CameraStyle CameraStyle { get; set; }
+
+        /// <summary>
         /// Default Z-Targeting style to Hold
         /// </summary>
         [Description("Default Z-Targeting style to Hold.")]

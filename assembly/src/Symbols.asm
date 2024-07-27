@@ -169,6 +169,7 @@
 .definelabel z2_Animation_MorphToLoop, 0x80137594
 .definelabel z2_UpdatePictoFlags, 0x8013A240
 .definelabel z2_Sram_ResetSaveFromMoonCrash, 0x80144A94
+.definelabel z2_Sram_SyncWriteToFlash, 0x80146EBC
 .definelabel z2_Sram_SaveSpecialNewDay, 0x80146F5C
 .definelabel z2_Sram_SetFlashPagesDefault, 0x80147008
 .definelabel z2_Sram_StartWriteToFlashDefault, 0x80147020

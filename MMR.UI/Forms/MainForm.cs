@@ -201,7 +201,6 @@ namespace MMR.UI.Forms
                 { cFillWallet, cfg => cfg.GameplaySettings.FillWallet },
                 { cInvisSparkle, cfg => cfg.GameplaySettings.HiddenRupeesSparkle },
                 { cSaferGlitches, cfg => cfg.GameplaySettings.SaferGlitches },
-                { cImprovedCamera, cfg => cfg.GameplaySettings.ImprovedCamera },
                 { cAddBombchuDrops, cfg => cfg.GameplaySettings.BombchuDrops },
                 { cFairyMaskShimmer, cfg => cfg.GameplaySettings.FairyMaskShimmer },
                 { cSkulltulaTokenSounds, cfg => cfg.GameplaySettings.SkulltulaTokenSounds },
@@ -228,6 +227,7 @@ namespace MMR.UI.Forms
                 { cHueShiftMiscUI, cfg => cfg.CosmeticSettings.ShiftHueMiscUI },
                 { cBombTrapTunicColors, cfg => cfg.CosmeticSettings.BombTrapsRandomizeTunicColor },
                 { cRainbowTunic, cfg => cfg.CosmeticSettings.RainbowTunic },
+                { cCameraStyle, cfg => cfg.CosmeticSettings.CameraStyle },
             };
 
             foreach (var (control, expression) in simpleControls)
@@ -1483,6 +1483,7 @@ namespace MMR.UI.Forms
             cMode.SelectedIndex = (int)_configuration.GameplaySettings.LogicMode;
             cLink.SelectedIndex = (int)_configuration.GameplaySettings.Character;
             cTatl.SelectedIndex = (int)_configuration.CosmeticSettings.TatlColorSchema;
+            cCameraStyle.SelectedIndex = (int)_configuration.CosmeticSettings.CameraStyle;
             cGravity.SelectedIndex = (int)_configuration.GameplaySettings.MovementMode;
             cLowHealthSFXComboBox.SelectedIndex = cLowHealthSFXComboBox.Items.IndexOf(_configuration.CosmeticSettings.LowHealthSFX.ToString());
             cNutAndStickDrops.SelectedIndex = (int)_configuration.GameplaySettings.NutandStickDrops;
@@ -1570,7 +1571,6 @@ namespace MMR.UI.Forms
             cFillWallet.Checked = _configuration.GameplaySettings.FillWallet;
             cInvisSparkle.Checked = _configuration.GameplaySettings.HiddenRupeesSparkle;
             cSaferGlitches.Checked = _configuration.GameplaySettings.SaferGlitches;
-            cImprovedCamera.Checked = _configuration.GameplaySettings.ImprovedCamera;
             cAddBombchuDrops.Checked = _configuration.GameplaySettings.BombchuDrops;
             cInstantTransformations.Checked = _configuration.GameplaySettings.InstantTransform;
             cBombArrows.Checked = _configuration.GameplaySettings.BombArrows;
@@ -2015,6 +2015,7 @@ namespace MMR.UI.Forms
             cMixGaroWithGossip.Enabled = v;
             cHintImportance.Enabled = v;
 
+            cCameraStyle.Enabled = v;
             cTargettingStyle.Enabled = v;
             cInstantPictobox.Enabled = v;
             cRainbowTunic.Enabled = v;
@@ -2041,7 +2042,6 @@ namespace MMR.UI.Forms
             cFillWallet.Enabled = v;
             cInvisSparkle.Enabled = v;
             cSaferGlitches.Enabled = v;
-            cImprovedCamera.Enabled = v;
             cAddBombchuDrops.Enabled = v;
             cInstantTransformations.Enabled = v;
             cBombArrows.Enabled = v;

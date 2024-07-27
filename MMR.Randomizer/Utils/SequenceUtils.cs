@@ -49,6 +49,7 @@ namespace MMR.Randomizer.Utils
         public static int New_AudioBankTable = 0; // for mmfilelist
         public static int NewInstrumentSetAddress; // for bgm shuffle functions to work on
         public static int CurrentFreeBank = 0x29;
+        public const int MARK_REQUIRES_NEW_BANK = 0x28; // 28 used to be the only free bank, this is legacy supported
 
         public static MD5 md5lib; // used for zip
 
@@ -455,16 +456,32 @@ namespace MMR.Randomizer.Utils
 
                 var commentSplit = sequenceFilename.Split('_'); // everything before _ is a comment, readability, discard here
                 var fileNameInstrumentSet = commentSplit.Length > 1 ? commentSplit[commentSplit.Length - 1] : sequenceFilename;
-                song.Instrument = Convert.ToInt32(fileNameInstrumentSet, 16);
-
-                if (song.Instrument > 0x28) // mmrs instrument set too high
+                try
                 {
-                    throw new Exception($"MMRS file [{song.Name}]" +
-                        $" has a zseq named after an instrument set that does not exist: [{song.Instrument.ToString("X")}]" +
-                        $" zseq filename: [{sequenceFile.Name}]");
+                    song.Instrument = Convert.ToInt32(fileNameInstrumentSet, 16);
+                }
+                catch (FormatException e)
+                {
+                    song.Instrument = MARK_REQUIRES_NEW_BANK; // filename was not an intrument set at all, assume we need a new bank
                 }
 
-                claimedBankCount += ScanForMMRSSequenceInstrumentSet(song, sequenceFilename, sequence, zip);
+                var customBankIncluded = ScanForMMRSSequenceInstrumentSet(song, sequenceFilename, sequence, zip);
+
+                // now that we have bank expansion working without known issues, bank overwriting causes more glitches for us than it helps
+                if (song.Instrument > 0x28 || customBankIncluded == 1)
+                {
+                    song.Instrument = MARK_REQUIRES_NEW_BANK;
+                }
+                if (song.Instrument == MARK_REQUIRES_NEW_BANK && customBankIncluded == 0)
+                {
+                    #if DEBUG
+                    throw new Exception($"File with no bank has a bad sequence filename: {sequenceFilename}");
+                    #else
+                    continue; // currently, we do NOT throw errors for regular users
+                    #endif
+                }
+
+                claimedBankCount += customBankIncluded;
 
                 ScanForMMRSFormMask(song, sequenceFilename, sequence, zip); // TODO this probably doesn't have to run per-sequence               
 
