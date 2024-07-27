@@ -572,6 +572,7 @@ namespace MMR.Randomizer.Models.Settings
 
         [Description("Adds Deku nuts and Deku sticks to drop tables in the field:\n\n - Default: No change, vanilla behavior.\n - Light: one stick and nut 1/16 chance termina bush.\n - Medium: More nuts, twice the chance\n - Extra: More sticks, more nuts, more drop locations.\n - Mayhem: You're crazy in the coconut!")]
         [SettingTab(SettingTabAttribute.Type.Gimmicks)]
+        [SettingName("Nut and Stick Drops")]
         public NutAndStickDrops NutandStickDrops { get; set; }
 
         /// <summary>

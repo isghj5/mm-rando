@@ -41,6 +41,7 @@ namespace MMR.CLI
     {
         public string Path { get; set; }
         public string DataType { get; set; }
+        public bool Nullable { get; set; }
         public string Label { get; set; }
         public string Tooltip { get; set; }
         public object DefaultValue { get; set; }
@@ -215,6 +216,7 @@ namespace MMR.CLI
                                     }).ToList();
                                     if (valueType.IsEnum)
                                     {
+                                        settingConfig.ValueType = "Enum";
                                         settingConfig.Values = Enum.GetValues(valueType).Cast<Enum>().Select(v => new SettingValue
                                         {
                                             Value = v.ToString(),
@@ -267,7 +269,8 @@ namespace MMR.CLI
                             }
                             else if (Nullable.GetUnderlyingType(property.PropertyType) != null)
                             {
-                                settingConfig.DataType = "Nullable " + Nullable.GetUnderlyingType(property.PropertyType);
+                                settingConfig.DataType = Nullable.GetUnderlyingType(property.PropertyType).Name;
+                                settingConfig.Nullable = true;
                             }
                         }
                         else if (property.PropertyType.IsEnum)
