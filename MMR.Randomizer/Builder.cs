@@ -345,6 +345,17 @@ namespace MMR.Randomizer
                 ResourceUtils.ApplyHack(Resources.mods.instant_pictobox);
             }
 
+            switch (_cosmeticSettings.CameraStyle)
+            {
+                case CameraStyle.Responsive:
+                    ReadWriteUtils.WriteCodeNOP(0x800DF44C);
+                    ReadWriteUtils.WriteCodeNOP(0x800DF450);
+                    break;
+                case CameraStyle.Instant:
+                    ResourceUtils.ApplyHack(Resources.mods.improved_camera);
+                    break;
+            }
+
             // Allow player to equip over masks handled by the DPad.
             if (_cosmeticSettings.DPad.State != DPadState.Disabled)
             {
@@ -1713,11 +1724,6 @@ namespace MMR.Randomizer
                 var hack = Resources.mods.update_remains_required.ToArray();
                 hack[0x33] = _randomized.Settings.RequiredBossRemains;
                 hacks.Add(hack);
-            }
-
-            if (_randomized.Settings.ImprovedCamera)
-            {
-                hacks.Add(Resources.mods.improved_camera);
             }
 
             if (_randomized.Settings.TakeDamageWhileShielding)

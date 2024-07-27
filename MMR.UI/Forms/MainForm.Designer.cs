@@ -180,7 +180,6 @@ namespace MMR.UI.Forms
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.cEasyFrameByFrame = new System.Windows.Forms.CheckBox();
-            this.cImprovedCamera = new System.Windows.Forms.CheckBox();
             this.cGossipsTolerant = new System.Windows.Forms.CheckBox();
             this.cQuestItemKeep = new System.Windows.Forms.CheckBox();
             this.cUpdateNpcText = new System.Windows.Forms.CheckBox();
@@ -211,6 +210,8 @@ namespace MMR.UI.Forms
             this.tShortenCutscenes = new System.Windows.Forms.TabControl();
             this.tabCosmetics = new System.Windows.Forms.TabPage();
             this.gCosmeticOther = new System.Windows.Forms.GroupBox();
+            this.cCameraStyle = new System.Windows.Forms.ComboBox();
+            this.lCameraStyle = new System.Windows.Forms.Label();
             this.cRainbowTunic = new System.Windows.Forms.CheckBox();
             this.cBombTrapTunicColors = new System.Windows.Forms.CheckBox();
             this.cInstantPictobox = new System.Windows.Forms.CheckBox();
@@ -2156,8 +2157,6 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.cEasyFrameByFrame);
-            this.groupBox7.Controls.Add(this.cImprovedCamera);
             this.groupBox7.Controls.Add(this.cGossipsTolerant);
             this.groupBox7.Controls.Add(this.cQuestItemKeep);
             this.groupBox7.Controls.Add(this.cUpdateNpcText);
@@ -2184,6 +2183,7 @@ namespace MMR.UI.Forms
             this.groupBox7.Controls.Add(this.cDisableCritWiggle);
             this.groupBox7.Controls.Add(this.cQuestItemStorage);
             this.groupBox7.Controls.Add(this.cNoDowngrades);
+            this.groupBox7.Controls.Add(this.cEasyFrameByFrame);
             this.groupBox7.Location = new System.Drawing.Point(513, 7);
             this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox7.Name = "groupBox7";
@@ -2196,24 +2196,13 @@ namespace MMR.UI.Forms
             // cEasyFrameByFrame
             // 
             this.cEasyFrameByFrame.AutoSize = true;
-            this.cEasyFrameByFrame.Location = new System.Drawing.Point(10, 267);
+            this.cEasyFrameByFrame.Location = new System.Drawing.Point(10, 245);
             this.cEasyFrameByFrame.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cEasyFrameByFrame.Name = "cEasyFrameByFrame";
             this.cEasyFrameByFrame.Size = new System.Drawing.Size(137, 19);
             this.cEasyFrameByFrame.TabIndex = 51;
             this.cEasyFrameByFrame.Text = "Easy Frame By Frame";
             this.cEasyFrameByFrame.UseVisualStyleBackColor = true;
-            // 
-            // cImprovedCamera
-            // 
-            this.cImprovedCamera.AutoSize = true;
-            this.cImprovedCamera.Location = new System.Drawing.Point(10, 245);
-            this.cImprovedCamera.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cImprovedCamera.Name = "cImprovedCamera";
-            this.cImprovedCamera.Size = new System.Drawing.Size(121, 19);
-            this.cImprovedCamera.TabIndex = 50;
-            this.cImprovedCamera.Text = "Improved Camera";
-            this.cImprovedCamera.UseVisualStyleBackColor = true;
             // 
             // cGossipsTolerant
             // 
@@ -2555,6 +2544,8 @@ namespace MMR.UI.Forms
             // 
             // gCosmeticOther
             // 
+            this.gCosmeticOther.Controls.Add(this.cCameraStyle);
+            this.gCosmeticOther.Controls.Add(this.lCameraStyle);
             this.gCosmeticOther.Controls.Add(this.cRainbowTunic);
             this.gCosmeticOther.Controls.Add(this.cBombTrapTunicColors);
             this.gCosmeticOther.Controls.Add(this.cInstantPictobox);
@@ -2570,11 +2561,37 @@ namespace MMR.UI.Forms
             this.gCosmeticOther.TabStop = false;
             this.gCosmeticOther.Text = "Other";
             // 
+            // cCameraStyle
+            // 
+            this.cCameraStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cCameraStyle.FormattingEnabled = true;
+            this.cCameraStyle.Items.AddRange(new object[] {
+            "Default",
+            "Responsive",
+            "Instant"});
+            this.cCameraStyle.Location = new System.Drawing.Point(10, 78);
+            this.cCameraStyle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cCameraStyle.Name = "cCameraStyle";
+            this.cCameraStyle.Size = new System.Drawing.Size(150, 23);
+            this.cCameraStyle.TabIndex = 46;
+            // 
+            // lCameraStyle
+            // 
+            this.lCameraStyle.AutoSize = true;
+            this.lCameraStyle.BackColor = System.Drawing.Color.Transparent;
+            this.lCameraStyle.ForeColor = System.Drawing.Color.Black;
+            this.lCameraStyle.Location = new System.Drawing.Point(7, 63);
+            this.lCameraStyle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lCameraStyle.Name = "lCameraStyle";
+            this.lCameraStyle.Size = new System.Drawing.Size(75, 15);
+            this.lCameraStyle.TabIndex = 45;
+            this.lCameraStyle.Text = "Camera style";
+            // 
             // cRainbowTunic
             // 
             this.cRainbowTunic.AutoSize = true;
             this.cRainbowTunic.BackColor = System.Drawing.Color.Transparent;
-            this.cRainbowTunic.Location = new System.Drawing.Point(10, 115);
+            this.cRainbowTunic.Location = new System.Drawing.Point(199, 112);
             this.cRainbowTunic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cRainbowTunic.Name = "cRainbowTunic";
             this.cRainbowTunic.Size = new System.Drawing.Size(104, 19);
@@ -2598,7 +2615,7 @@ namespace MMR.UI.Forms
             // 
             this.cInstantPictobox.AutoSize = true;
             this.cInstantPictobox.BackColor = System.Drawing.Color.Transparent;
-            this.cInstantPictobox.Location = new System.Drawing.Point(10, 90);
+            this.cInstantPictobox.Location = new System.Drawing.Point(199, 87);
             this.cInstantPictobox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cInstantPictobox.Name = "cInstantPictobox";
             this.cInstantPictobox.Size = new System.Drawing.Size(180, 19);
@@ -2639,7 +2656,7 @@ namespace MMR.UI.Forms
             // 
             this.cTargettingStyle.AutoSize = true;
             this.cTargettingStyle.BackColor = System.Drawing.Color.Transparent;
-            this.cTargettingStyle.Location = new System.Drawing.Point(10, 65);
+            this.cTargettingStyle.Location = new System.Drawing.Point(199, 62);
             this.cTargettingStyle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cTargettingStyle.Name = "cTargettingStyle";
             this.cTargettingStyle.Size = new System.Drawing.Size(140, 19);
@@ -3640,7 +3657,6 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cMusicTrackNames;
         private System.Windows.Forms.CheckBox cDisableFanfares;
         private System.Windows.Forms.CheckBox cGiantMaskAnywhere;
-        private System.Windows.Forms.CheckBox cImprovedCamera;
         private System.Windows.Forms.CheckBox cFewerHealthDrops;
         private System.Windows.Forms.CheckBox cIronGoron;
         private System.Windows.Forms.CheckBox cEasyFrameByFrame;
@@ -3662,6 +3678,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cImportanceCountGaro;
         private System.Windows.Forms.CheckBox cImportanceCount;
         private System.Windows.Forms.CheckBox cMoonCrashFileErase;
+        private System.Windows.Forms.ComboBox cCameraStyle;
+        private System.Windows.Forms.Label lCameraStyle;
     }
 }
 

@@ -827,9 +827,6 @@ namespace MMR.Randomizer.Models.Settings
         [Description("Quest items will return to your inventory after Song of Time.")]
         public bool KeepQuestTradeThroughTime { get; set; }
 
-        [Description("When the camera swings after grabbing a ledge, ensure the player's controls match Link's movement. Also makes the camera move to behind Link faster when Z-targeting.")]
-        public bool ImprovedCamera { get; set; }
-
         #endregion
 
         #region Speedups
