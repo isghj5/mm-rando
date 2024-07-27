@@ -135,8 +135,7 @@ void Savedata_ResetSaveFromMoonCrashWrapper(GlobalContext* ctxt) {
         SramContext* sramContext = &ctxt->sram;
 
         z2_bzero(sramContext->savefile, 0x4000); // SAVE_BUFFER_SIZE
-        z2_Sram_SetFlashPagesDefault(sramContext, 0, 0x300);
-        z2_Sram_StartWriteToFlashDefault(sramContext);
+        z2_Sram_SyncWriteToFlash(sramContext, 0, 0x300);
         gSaveContext.extra.titleSetupIndex = 4; // GAMEMODE_OWL_SAVE // just exits to title screen
         return;
     }

@@ -161,6 +161,7 @@
 0x80137594,z2_Animation_MorphToLoop
 0x8013A240,z2_UpdatePictoFlags
 0x80144A94,z2_Sram_ResetSaveFromMoonCrash
+0x80146EBC,z2_Sram_SyncWriteToFlash
 0x80146F5C,z2_Sram_SaveSpecialNewDay
 0x80147008,z2_Sram_SetFlashPagesDefault
 0x80147020,z2_Sram_StartWriteToFlashDefault

@@ -209,6 +209,7 @@ extern void z2_Sram_ResetSaveFromMoonCrash(SramContext* sramCtxt);
 extern void z2_Sram_SaveSpecialNewDay(GlobalContext* ctxt);
 extern void z2_Sram_SetFlashPagesDefault(SramContext* sramCtxt, u32 curPage, u32 numPages);
 extern void z2_Sram_StartWriteToFlashDefault(SramContext* sramCtxt);
+extern void z2_Sram_SyncWriteToFlash(SramContext* sramCtxt, s32 curPage, s32 numPages);
 extern s32 z2_RomToRam(u32 src, void* dst, u32 length);
 extern s16 z2_GetFileNumber(u32 vromAddr);
 extern u32 z2_GetFilePhysAddr(u32 vromAddr);
