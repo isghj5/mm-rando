@@ -812,10 +812,10 @@ namespace MMR.Randomizer.GameObjects
             )]
         [CheckRestricted(Scene.MountainVillageSpring, ActorConst.ANY_VARIANT, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2)]
         [CheckRestricted(Scene.GreatBayCoast, ActorConst.ANY_VARIANT, Item.CollectableGreatBayCoastButterflyFairy1)]
-        [GroundVariants(0x3323, 0x2324, 0x4324, 0x5323)] // beatles on the floor
+        [GroundVariants(0x3323, 0x4324, 0x5323)] // beatles on the floor
         // they dont stick to the wall, they climb in the air
         //[WallVariants(0x3323, 0x2324, 0x4324, 0x5323)] // beatles on the... wall?
-        [FlyingVariants(0x2323, 0x4324)] // butterlies in the air
+        [FlyingVariants(0x2323, 0x2324, 0x4324)] // butterlies in the air
         [WaterVariants(0x6322)] // fish swimming in the water
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max: 2, 0x3323, 0x2324, 0x4324)]
