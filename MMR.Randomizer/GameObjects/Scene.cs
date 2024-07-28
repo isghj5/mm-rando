@@ -116,6 +116,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1520)]
         [SceneInternalId(0x08)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.HappyMaskSalesman,
+            Actor.IkanaGravestone // crashes on n64 because there is no floor below it to matrix rotate to
+        )]
         SPOT00 = 0x0E, // cutscene map
 
         // Unused = 0x0F,

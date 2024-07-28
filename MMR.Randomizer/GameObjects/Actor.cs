@@ -4517,9 +4517,8 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // actually I'm not sure, it has health
         [BlockingVariantsAll]
         [ForbidFromScene(Scene.IkanaGraveyard)]
-        //[EnemizerScenesPlacementBlock(Scene.Woodfall, // blocking enemies
-        //    Scene.SouthernSwamp)] // 75% chance of crash, reason unk
-        [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.SouthernSwamp)] // crash cause is unknown, mtx calculation crash
+        //[SwitchFlagsPlacement(mask: 0xFF, shift: 8)] // not actually used by vanilla variants, we can ignore
         IkanaGravestone = 0x1E3, // Obj_Hakaisi
 
         [FileID(445)]
