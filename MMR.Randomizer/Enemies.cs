@@ -624,13 +624,19 @@ namespace MMR.Randomizer
                             var importantItem = ObjectIsCheckBlocked(scene, testActor.ActorEnum, testActor.OldVariant);
                             if (importantItem != null)
                             {
-                                log.Append($" in scene [{scene.SceneEnum}][{mapIndex}][{mapActor.RoomActorIndex}] actor: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}] was blocked by item.\n");
+                                #if DEBUG
+                                var itemText = $"blocked by item [{ importantItem }]";
+                                #else
+                                var itemText = $"blocked by item [{ (int) importantItem}]";
+                                #endif
+
+                                log.AppendLine($" in scene [{scene.SceneEnum}][{mapIndex}][{mapActor.RoomActorIndex}] actor: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}] was " + itemText);
                                 return;
                             }
 
                             if ( ! testActor.Variants.Contains(mapActor.OldVariant))
                             {
-                                log.Append($" in scene [{scene.SceneEnum}][{mapIndex}] standalone was skipped over: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}]\n");
+                                log.AppendLine($" in scene [{scene.SceneEnum}][{mapIndex}] standalone was skipped over: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}]");
                                 return; // non valid
                             }
 
