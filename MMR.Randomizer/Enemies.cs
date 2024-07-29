@@ -77,6 +77,7 @@ namespace MMR.Randomizer
         private static List<Actor> FreeCandidateList { get; set; }
         private static List<Actor> FreeOnlyCandidateList { get; set; } // not worthy by themselves, only if object was already selected
         // outer list is item.category, inner list is items
+        private static List<GameObjects.ItemCategory> ActorizerKnownJunkCategories { get; set; }
         private static List<List<GameObjects.Item>> ActorizerKnownJunkItems { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
         private static bool ACTORSENABLED = true;
@@ -133,13 +134,20 @@ namespace MMR.Randomizer
             FreeOnlyCandidateList = freeOnlyCandidates.Select(act => new Actor(act, InjectedActors.Find(i => i.ActorId == (int) act))).ToList();
         }
 
-        private static void PrepareJunkSpiderTokens(List<(string, string)> allSphereItems)
+        private static void PrepareJunkSpiderTokens(List<(string, string)> allSphereItems) // tag: spiderhouse
         {
             /// TODO this can be simplified, it was more complex before I realized spheres are kinda useless
             List<GameObjects.Item> allSpiderTokens = _randomized.ItemList.FindAll(item => item.Item.ItemCategory() == GameObjects.ItemCategory.SkulltulaTokens).Select(u => u.Item).ToList();
 
             if ((_randomized.Settings.VictoryMode & Models.VictoryMode.SkullTokens) > 0)
                 return; // victory mode for fairies is enabled, none are junk: leave early
+
+            // some items we didnt consider junk for short depth checks, are junk here just because these are really late game
+            var extendedJunkCategories = ActorizerKnownJunkCategories.ToList();
+            extendedJunkCategories.Add(GameObjects.ItemCategory.Milk);
+            extendedJunkCategories.Add(GameObjects.ItemCategory.SilverRupees);
+            var swampSkullJunk = false;
+
 
             void AddTokens(string tokenSearch)
             {
@@ -151,20 +159,26 @@ namespace MMR.Randomizer
             {
                 var swampSkullReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MaskTruth).Item;
                 // check if the reward is important, if not add them 
-                if (junkCategories.Contains(swampSkullReward.ItemCategory() ?? GameObjects.ItemCategory.None))
+                if (extendedJunkCategories.Contains(swampSkullReward.ItemCategory() ?? GameObjects.ItemCategory.None))
                 {
                     AddTokens("Swamp");
+                    swampSkullJunk = true;
                 }
 
                 var oceanSkullReward1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.UpgradeGiantWallet).Item;
                 var oceanSkullReward2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MundaneItemOceanSpiderHouseDay2PurpleRupee).Item;
                 var oceanSkullReward3 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MundaneItemOceanSpiderHouseDay3RedRupee).Item;
                 // check if the reward is important, if not add them 
-                if (junkCategories.Contains(oceanSkullReward1.ItemCategory() ?? GameObjects.ItemCategory.None)
-                    && junkCategories.Contains(oceanSkullReward2.ItemCategory() ?? GameObjects.ItemCategory.None)
-                    && junkCategories.Contains(oceanSkullReward3.ItemCategory() ?? GameObjects.ItemCategory.None))
+                if (extendedJunkCategories.Contains(oceanSkullReward1.ItemCategory() ?? GameObjects.ItemCategory.None)
+                    && extendedJunkCategories.Contains(oceanSkullReward2.ItemCategory() ?? GameObjects.ItemCategory.None)
+                    && extendedJunkCategories.Contains(oceanSkullReward3.ItemCategory() ?? GameObjects.ItemCategory.None))
                 {
                     AddTokens("Ocean");
+
+                    if (swampSkullJunk) // both were junk, we can consider all of the tokens to be junk
+                    {
+                        ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.SkulltulaTokens);
+                    }
                 }
 
             }
@@ -173,29 +187,33 @@ namespace MMR.Randomizer
                 // we have logic, just use the logic spheres
 
                 var swampSkullReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MaskTruth).Item;
-                if (junkCategories.Contains(swampSkullReward.ItemCategory() ?? GameObjects.ItemCategory.None))
+                if (extendedJunkCategories.Contains(swampSkullReward.ItemCategory() ?? GameObjects.ItemCategory.None))
                 {
                     var swampTokenImportantSearch = allSphereItems.Any(u => u.Item1 == "Swamp Skulltula Spirit");
                     if (!swampTokenImportantSearch)
                     {
                         AddTokens("Swamp");
+                        swampSkullJunk = true;
                     }
-
                 }
 
                 var oceanSkullReward1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.UpgradeGiantWallet).Item;
                 var oceanSkullReward2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MundaneItemOceanSpiderHouseDay2PurpleRupee).Item;
                 var oceanSkullReward3 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MundaneItemOceanSpiderHouseDay3RedRupee).Item;
                 // check if the reward is important, if not add them 
-                if (junkCategories.Contains(oceanSkullReward1.ItemCategory() ?? GameObjects.ItemCategory.None)
-                    && junkCategories.Contains(oceanSkullReward2.ItemCategory() ?? GameObjects.ItemCategory.None)
-                    && junkCategories.Contains(oceanSkullReward3.ItemCategory() ?? GameObjects.ItemCategory.None))
+                if (extendedJunkCategories.Contains(oceanSkullReward1.ItemCategory() ?? GameObjects.ItemCategory.None)
+                    && extendedJunkCategories.Contains(oceanSkullReward2.ItemCategory() ?? GameObjects.ItemCategory.None)
+                    && extendedJunkCategories.Contains(oceanSkullReward3.ItemCategory() ?? GameObjects.ItemCategory.None))
                 {
 
                     var oceanTokenImportantSearch = allSphereItems.Any(u => u.Item1 == "Ocean Skulltula Spirit");
                     if (!oceanTokenImportantSearch)
                     {
                         AddTokens("Ocean");
+                        if (swampSkullJunk) // both were junk, we can consider all of the tokens to be junk
+                        {
+                            ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.SkulltulaTokens);
+                        }
                     }
                 }
             }
@@ -216,11 +234,15 @@ namespace MMR.Randomizer
 
             if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic)
             {
+                var extendedJunkCategories = ActorizerKnownJunkCategories.ToList();
+                extendedJunkCategories.Add(GameObjects.ItemCategory.Milk);
+                extendedJunkCategories.Add(GameObjects.ItemCategory.SilverRupees);
+
                 void AddBasedOnResult(GameObjects.Item item, string str)
                 {
                     var reward = _randomized.ItemList.Find(i => i.NewLocation == item).Item;
                     // check if reward is junk, if so add all fairies 
-                    if (junkCategories.Contains(reward.ItemCategory() ?? GameObjects.ItemCategory.None))
+                    if (extendedJunkCategories.Contains(reward.ItemCategory() ?? GameObjects.ItemCategory.None))
                     {
                         AddFairies(str);
                     }
@@ -230,7 +252,6 @@ namespace MMR.Randomizer
                 AddBasedOnResult(GameObjects.Item.FairyDoubleMagic, "Snowhead");
                 AddBasedOnResult(GameObjects.Item.FairyDoubleDefense, "Great Bay");
                 AddBasedOnResult(GameObjects.Item.ItemFairySword, "Stone Tower");
-
             }
             else
             {
@@ -253,6 +274,18 @@ namespace MMR.Randomizer
                 AddBasedOnSphere("Great Bay Stray Fairy", "Great Bay");
                 AddBasedOnSphere("Stone Tower Stray Fairy", "Stone Tower");
             }
+
+            // test if all fairies are junk if so add to categories
+            // TODO remove this and just use the item list, we have the item list after all
+            var junkFairies = ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.StrayFairies];
+            bool allFairiesJunk = junkFairies.Contains(GameObjects.Item.CollectibleStrayFairyWoodfall1)
+                                         && junkFairies.Contains(GameObjects.Item.CollectibleStrayFairySnowhead1)
+                                         && junkFairies.Contains(GameObjects.Item.CollectibleStrayFairyGreatBay1)
+                                         && junkFairies.Contains(GameObjects.Item.CollectibleStrayFairyStoneTower1);
+            if (allFairiesJunk)
+            {
+                ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.StrayFairies);
+            }
         }
 
         private static void PrepareJunkNotebookEntries(List<(string, string)> allSphereItems)
@@ -268,7 +301,6 @@ namespace MMR.Randomizer
                 ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.NotebookEntries].AddRange(notebookEntries);
             }
 
-
             if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic)
             {
                 var entryRewards = _randomized.ItemList.FindAll(i =>  i.NewLocation.ToString().Contains("Notebook"));
@@ -277,7 +309,7 @@ namespace MMR.Randomizer
                 {
                     var reward = entryRewards[i].Item;
                     var category = reward.ItemCategory() ?? GameObjects.ItemCategory.None;
-                    if ( ! junkCategories.Contains(category))
+                    if ( ! ActorizerKnownJunkCategories.Contains(category))
                     {
                         // we dont need to add the entries themselves they are already added to the junk list per-category, this is just for notebook itself
                         nonJunkCount++;
@@ -286,6 +318,7 @@ namespace MMR.Randomizer
                 if (nonJunkCount > 0) // notebook leads to something and is not junk
                 {
                     ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.MainInventory].Add(GameObjects.Item.ItemNotebook);
+                    ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.NotebookEntries);
                 }
             }
             else
@@ -300,6 +333,7 @@ namespace MMR.Randomizer
                     if (!notebookLocationSearch)
                     {
                         ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.MainInventory].Add(GameObjects.Item.ItemNotebook);
+                        ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.NotebookEntries);
                     }
                 }
             }
@@ -340,18 +374,20 @@ namespace MMR.Randomizer
             List<GameObjects.Item> scoopList = unImportantScoops.Select(itemObj => itemObj.Item).ToList();
             //addedJunkItems.AddRange(itemList);
             ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.ScoopedItems].AddRange(scoopList);
+            ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.ScoopedItems);
         }
 
         private static void PrepareJunkHeartPieces()
         {
-            // if no logic, we want to add these since those crazy people think hearts are junk
-            if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic)
+            // if not casual logic, we want to add these since those crazy people think hearts are junk
+            if (_randomized.Settings.LogicMode != Models.LogicMode.Casual)
             {
                 var heartPieces = _randomized.ItemList.FindAll(itemObj => itemObj.Item.ItemCategory() == GameObjects.ItemCategory.PiecesOfHeart).Select(itemObj => itemObj.Item).ToList();
                 ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.PiecesOfHeart].AddRange(heartPieces);
 
                 var recoveryHearts = _randomized.ItemList.FindAll(itemObj => itemObj.Item.ItemCategory() == GameObjects.ItemCategory.RecoveryHearts).Select(itemObj => itemObj.Item).ToList();
                 ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.RecoveryHearts].AddRange(recoveryHearts);
+                ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.PiecesOfHeart);
             }
         }
 
@@ -360,12 +396,13 @@ namespace MMR.Randomizer
             var redRupees = _randomized.ItemList.FindAll(itemObj => itemObj.Item.ItemCategory() == GameObjects.ItemCategory.RedRupees).Select(itemObj => itemObj.Item).ToList();
             redRupees.Remove(GameObjects.Item.CollectableIkanaGraveyardDay2Bats1);
             ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.RedRupees].AddRange(redRupees);
+            ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.RedRupees);
         }
 
         private static void PrepareJunkMapAndCompass()
         {
-            // this does not work, without me knowing when they are junk or not
-            /// if the player does not get hints from these, they should count as junk
+            // this does not work, without me knowing when they are junk or not TODO
+            /// if the player does not get hints from these, they should count as junk, but dont know if thats a setting I can look up
 
             if (_randomized.Settings.LogicMode == Models.LogicMode.Vanilla
                 || _randomized.Settings.LogicMode == Models.LogicMode.Casual)
@@ -398,6 +435,7 @@ namespace MMR.Randomizer
             var addedJunkItems = new List<GameObjects.Item>();
 
             // probably a better way to init a list of list to size, but not known
+            ActorizerKnownJunkCategories = _actorizerDefaultJunkCategories.ToList(); // copy
             ActorizerKnownJunkItems = new List<List<GameObjects.Item>>(); // init
             foreach (var category in Enum.GetValues(typeof(GameObjects.ItemCategory)))
             {
@@ -410,12 +448,15 @@ namespace MMR.Randomizer
                 allSphereItems = _randomized.Spheres.SelectMany(u => u).ToList();
             }
 
-            PrepareJunkSpiderTokens(allSphereItems);
-            PrepareJunkStrayFairies(allSphereItems);
-            PrepareJunkNotebookEntries(allSphereItems);
-            PrepareJunkScoopList(allSphereItems);
             PrepareJunkHeartPieces(); // no logic only
             PrepareJunkRedRupee(); // crimson counts, and thats stupid and not fair, removing
+            PrepareJunkScoopList(allSphereItems);
+            PrepareJunkNotebookEntries(allSphereItems);
+            // bug: because these lists are generated in linear, fairies dont know if spiders are junk
+            //   currently spiders are put later just because junked fairy leads only to great fairies being randomized,
+            //   which is often ignored, spiders are not
+            PrepareJunkStrayFairies(allSphereItems);
+            PrepareJunkSpiderTokens(allSphereItems);
             // all transformation and non-transofrmation mask <- already not considered junk
             // all boss remains <- already not considered junk
 
@@ -497,7 +538,7 @@ namespace MMR.Randomizer
         }
 
         // if one of these already exists somewhere in the logic I did not find it
-        public static readonly List<GameObjects.ItemCategory> junkCategories = new List<GameObjects.ItemCategory>{
+        public static readonly List<GameObjects.ItemCategory> _actorizerDefaultJunkCategories = new List<GameObjects.ItemCategory>{
             GameObjects.ItemCategory.GreenRupees,
             GameObjects.ItemCategory.BlueRupees,
             //GameObjects.ItemCategory.RedRupees, // crimson rup in this list, removed by building into our own list
@@ -528,7 +569,7 @@ namespace MMR.Randomizer
             }
 
             //return ItemUtils.IsJunk(itemInCheck);
-            return junkCategories.Contains(category);
+            return ActorizerKnownJunkCategories.Contains(category);
         }
 
         // todo move to actorutils
@@ -554,7 +595,7 @@ namespace MMR.Randomizer
                         // TODO: make it random rather than yes/no
                         var check = _randomized.ItemList.Find(item => item.NewLocation != null && item.NewLocation == restrictedChecks[checkIndex]);
                         var itemInCheck = check.Item;
-                        //var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory)itemInCheck.ItemCategory()) == false);
+                        //var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (_actorizerDefaultJunkCategories.Contains((GameObjects.ItemCategory)itemInCheck.ItemCategory()) == false);
                         //var itemIsNotJunk = !ItemUtils.IsJunk(itemInCheck);
                         var itemIsNotJunk = !IsActorizerJunk(itemInCheck);
                         if (itemIsNotJunk)
@@ -715,7 +756,7 @@ namespace MMR.Randomizer
 
                         // TODO: make it random rather than yes/no
                         var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]).Item;
-                        //var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory)itemInCheck.ItemCategory()) == false);
+                        //var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (_actorizerDefaultJunkCategories.Contains((GameObjects.ItemCategory)itemInCheck.ItemCategory()) == false);
                         var itemIsNotJunk = !ItemUtils.IsJunk(itemInCheck);
                         if (itemIsNotJunk)
                         {
