@@ -201,7 +201,7 @@ namespace MMR.Randomizer
             }
         }
 
-        private static void PrepareJunkStrayFairies(List<(string, string)> allSphereItems)
+        private static void PrepareJunkStrayFairies(List<(string, string)> allSphereItems) // tag: strayfairy
         {
             var allFaires = _randomized.ItemList.FindAll(item => item.Item.ClassicCategory() == GameObjects.ClassicCategory.StrayFairies).Select(u => u.Item).ToList();
 
@@ -532,7 +532,7 @@ namespace MMR.Randomizer
         }
 
         // todo move to actorutils
-        private static bool ObjectIsCheckBlocked(Scene scene, GameObjects.Actor testActor)
+        private static GameObjects.Item? ObjectIsCheckBlocked(Scene scene, GameObjects.Actor testActor)
         {
             /// checks if randomizing the actor would interfere with getting access to a check
             /// and then checks if the item is junk, before allowing randimization
@@ -549,7 +549,7 @@ namespace MMR.Randomizer
                     var restrictedChecks = restriction.Checks;
                     for (int checkIndex = 0; checkIndex < restrictedChecks.Count; checkIndex++)
                     {
-                        if (_randomized.ItemList == null) return true; // vanilla logic
+                        if (_randomized.ItemList == null) return GameObjects.Item.ChestPreClocktownDekuNut; // vanilla logic, Preclocktown nut is just for debug text output
 
                         // TODO: make it random rather than yes/no
                         var check = _randomized.ItemList.Find(item => item.NewLocation != null && item.NewLocation == restrictedChecks[checkIndex]);
@@ -559,7 +559,7 @@ namespace MMR.Randomizer
                         var itemIsNotJunk = !IsActorizerJunk(itemInCheck);
                         if (itemIsNotJunk)
                         {
-                            return true; // blocked
+                            return itemInCheck; // blocked
                         }
                     }
 
@@ -608,14 +608,18 @@ namespace MMR.Randomizer
                         break;
 
                 }
-                if (!IsActorizerJunk(map1) || !IsActorizerJunk(map2))
+                if (!IsActorizerJunk(map1))
                 {
-                    return true; // we need to keep this tingle because their items are actual not-junk
+                    return map1; // we need to keep this tingle because their items are actual not-junk
+                }
+                if (!IsActorizerJunk(map2))
+                {
+                    return map2; // we need to keep this tingle because their items are actual not-junk
                 }
                 // if heartpiece on picture is required, one of them has to remain regardless of their items
                 if (strawPulled && !IsActorizerJunk(GameObjects.Item.HeartPiecePictobox))
                 {
-                    return true;
+                    return GameObjects.Item.HeartPiecePictobox;
                 }
             }
             /* if ((scene.SceneEnum == GameObjects.Scene.GoronVillage || scene.SceneEnum == GameObjects.Scene.GoronVillageSpring)
@@ -653,7 +657,7 @@ namespace MMR.Randomizer
                     GameObjects.Scene[] postboxScenes = { GameObjects.Scene.NorthClockTown, GameObjects.Scene.SouthClockTown, GameObjects.Scene.EastClockTown };
                     if (postboxScenes[shortStrawPostbox] == scene.SceneEnum)
                     {
-                        return true;
+                        return GameObjects.Item.MaskPostmanHat; // to symbolize what is happening only in the debug output
                     }
 
                 }// else: randomize all
@@ -674,7 +678,7 @@ namespace MMR.Randomizer
                     return true; // bean is needed somewhere, cannot remove in case this is the requirement
                 }
             } // */
-            return false;
+            return null;
         }
 
         private static bool ObjectIsItemBlocked(/* Scene scene, GameObjects.Actor testActor */)
@@ -748,10 +752,11 @@ namespace MMR.Randomizer
                     if (matchingEnum > 0                                                         // exists in the list of enemies we want to change
                        && !matchingEnum.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
-
-                        if (ObjectIsCheckBlocked(scene, matchingEnum))
+                        var importantItem = ObjectIsCheckBlocked(scene, matchingEnum);
+                        if (importantItem != null)
                         {
                             thisSceneData.Actors.RemoveAll(act => act.ObjectId == obj);
+                            thisSceneData.Log.AppendLine($" object [{matchingEnum}] replacement blocked by item [{importantItem}]");
                         }
                         else
                         {
