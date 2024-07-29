@@ -796,8 +796,14 @@ namespace MMR.Randomizer
                         var importantItem = ObjectIsCheckBlocked(scene, matchingEnum);
                         if (importantItem != null)
                         {
+                            #if DEBUG
+                            var itemText = $"blocked by item [{ importantItem }]";
+                            #else
+                            var itemText = $"blocked by item [{ (int) importantItem}]";
+                            #endif
+
                             thisSceneData.Actors.RemoveAll(act => act.ObjectId == obj);
-                            thisSceneData.Log.AppendLine($" object [{matchingEnum}] replacement blocked by item [{importantItem}]");
+                            thisSceneData.Log.AppendLine($" object [{matchingEnum}] replacement " + itemText);
                         }
                         else
                         {
@@ -825,7 +831,7 @@ namespace MMR.Randomizer
             }
         }
 
-        #endregion
+#endregion
 
         private static void EnemizerEarlyFixes(Random rng)
         {
@@ -898,7 +904,7 @@ namespace MMR.Randomizer
             MoveActorsIfRandomized();
         }
 
-        #region Static Enemizer Changes and Fixes
+#region Static Enemizer Changes and Fixes
 
         public static void FixSpawnLocations()
         {
@@ -3036,7 +3042,7 @@ namespace MMR.Randomizer
         }
 
 
-        #endregion
+#endregion
 
         public static List<GameObjects.Actor> GetSceneFairyDroppingEnemyTypes(SceneEnemizerData thisSceneData)
         {
@@ -3672,11 +3678,11 @@ namespace MMR.Randomizer
 
             for (int objectIndex = 0; objectIndex < thisSceneData.Objects.Count; objectIndex++)
             {
-                #region Object Forcing Debug
+#region Object Forcing Debug
                 //////////////////////////////////////////////////////
                 ///////// debugging: force an object (enemy) /////////
                 //////////////////////////////////////////////////////
-                #if DEBUG
+#if DEBUG
 
                 bool TestHardSetObject(GameObjects.Scene targetScene, GameObjects.Actor target, GameObjects.Actor replacement)
                 {
@@ -3719,8 +3725,8 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Monkey)) continue;
-                #endif
-                #endregion
+#endif
+#endregion
 
                 var reducedCandidateList = thisSceneData.CandidatesPerObject[objectIndex].ToList();
                 foreach (var objectSwap in thisSceneData.ChosenReplacementObjects)
@@ -3764,8 +3770,8 @@ namespace MMR.Randomizer
 
         public static void ShuffleActors(SceneEnemizerData thisSceneData, int objectIndex, List<Actor> subMatches, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList)
         {
-            #region Special exception if building debug and this build requires actor that doesnt exist
-            #if DEBUG
+#region Special exception if building debug and this build requires actor that doesnt exist
+#if DEBUG
 
             if (subMatches.Count == 0)
             {
@@ -3773,8 +3779,8 @@ namespace MMR.Randomizer
                                     " If you built the debug version, go back to VisualStudio and build \"Release\" instead\n " +
                                     " Otherwise you probably forgot the actor isn't possible here.");
             }
-            #endif
-            #endregion
+#endif
+#endregion
 
             for (int actorIndex = 0; actorIndex < thisSceneData.ActorsPerObject[objectIndex].Count(); actorIndex++)
             {
@@ -3948,7 +3954,7 @@ namespace MMR.Randomizer
             return enemyMatchesPool;
         }
 
-        #region Trim and Free actors
+#region Trim and Free actors
 
         public static void TrimAllActors(SceneEnemizerData thisSceneData, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList, bool allowLimits = true)
         {
@@ -4396,7 +4402,7 @@ namespace MMR.Randomizer
             }
         }
 
-        #endregion
+#endregion
 
         private static void HandleUniqueSceneSpecialObjectBehaviors(SceneEnemizerData thisSceneData)
         {
@@ -4608,7 +4614,7 @@ namespace MMR.Randomizer
             // instead of passing the Random instance, we pass seed and add it to the unique scene number to get a replicatable, but random, seed
             thisSceneData.RNG = new Random(seed + scene.File);
 
-            #region Log Handling functions
+#region Log Handling functions
             // spoiler log already written by this point, for now making a brand new one instead of appending
             void WriteOutput(string str, StringBuilder altLog = null)
             {
@@ -4636,7 +4642,7 @@ namespace MMR.Randomizer
             if (scene.SceneEnum == GameObjects.Scene.TerminaField || scene.SceneEnum == GameObjects.Scene.IkanaCanyon)
                 Thread.CurrentThread.Priority = ThreadPriority.AboveNormal; // more time than the other small scenes
             WriteOutput($" starting timestamp : [{DateTime.Now.ToString("hh:mm:ss.fff tt")}]");
-            #endregion
+#endregion
 
             thisSceneData.Actors = GetSceneEnemyActors(scene, thisSceneData.Log);
             if (thisSceneData.Actors.Count == 0)
@@ -4705,7 +4711,7 @@ namespace MMR.Randomizer
             DateTime bogoStartTime = DateTime.Now;
             while (true) /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
             {
-                #region loopCounting
+#region loopCounting
                 /// preventing inf looping, and re-adjustments due to poor looping results not finding a solution
                 //bogoLog.Clear();
                 bogoStartTime = DateTime.Now;
@@ -4759,7 +4765,7 @@ namespace MMR.Randomizer
                 {
                     thisSceneData.FreeActorRate--;
                 }
-                #endregion
+#endregion
 
                 ShuffleObjects(thisSceneData);
                 WriteOutput($" objects pick time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
@@ -4860,8 +4866,8 @@ namespace MMR.Randomizer
             WriteOutput(" time to find matching candidates: " + GET_TIME(thisSceneData.StartTime) + "ms");
             WriteOutput(" Loops used for match candidate: " + loopsCount);
 
-            #region Debugging: Actor Forcing
-            #if DEBUG
+#region Debugging: Actor Forcing
+#if DEBUG
             ////////////////////////////////////////////
             ///////   DEBUGGING: force an actor  ///////
             ////////////////////////////////////////////
@@ -4871,9 +4877,9 @@ namespace MMR.Randomizer
                 thisSceneData.Scene.Maps[11].Actors[4].ChangeActor(GameObjects.Actor.Fish, vars: 0);
             }
             /////////////////////////////
-            #endif
+#endif
             /////////////////////////////
-            #endregion
+#endregion
 
             var flagLog = new StringBuilder();
 
@@ -4894,11 +4900,11 @@ namespace MMR.Randomizer
             {
                 var actor = thisSceneData.Actors[a];
                 string dsize = actor.DynaLoad.poly > 0 ? $" dyn: [{actor.DynaLoad.poly}]" : "";
-                #if DEBUG
+#if DEBUG
                 var actorNameData = $"  Old actor:[{thisSceneData.Scene.SceneEnum}][{actor.Room.ToString("D2")}][{actor.OldName}]";
-                #else
+#else
                 var actorNameData = $"  Old actor:[{actor.Room.ToString("D2")}][{actor.OldName}] ";
-                #endif
+#endif
                 WriteOutput(actorNameData +
                     $" replaced by new actor: [{actor.Variants[0].ToString("X4")}]" +
                     $"[{actor.Name}]"
