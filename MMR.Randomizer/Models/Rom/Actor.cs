@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 
 namespace MMR.Randomizer.Models.Rom
 {
-    [System.Diagnostics.DebuggerDisplay("[{Name}][{ActorId}]")]
+    [System.Diagnostics.DebuggerDisplay("[{Name}][{ActorId.ToString(\"X4\")}] from [{OldName}]")]
     public class Actor
     {
         // this is instance data, per actor, per scene.
@@ -126,7 +126,6 @@ namespace MMR.Randomizer.Models.Rom
             };
 
             // wasnt there a list of lists to static list we had?
-            //this.Variants = injected.groundVariants.Concat(injected.flyingVariants).ToList();
             this.Variants = AllVariants.SelectMany(x => x).ToList();
             this.VariantsWithRoomMax = injected.limitedVariants;
             this.UnplaceableVariants = this.ActorEnum.GetUnPlacableVariants();
@@ -587,7 +586,8 @@ namespace MMR.Randomizer.Models.Rom
             {
                 return true;
             }
-            var variantCount = AllVariants[0].Count + AllVariants[1].Count + AllVariants[2].Count + AllVariants[3].Count + AllVariants[4].Count;
+            //var variantCount = AllVariants[0].Count + AllVariants[1].Count + AllVariants[2].Count + AllVariants[3].Count + AllVariants[4].Count;
+            var variantCount = AllVariants.Sum(childList => childList.Count);
             if (variantCount == 0)
             {
                 return true;
@@ -597,7 +597,8 @@ namespace MMR.Randomizer.Models.Rom
             {
                 for (int i = 0; i < variantList.Count(); i++)
                 {
-                    var max = this.VariantMaxCountPerRoom(i);
+                    var variant = variantList[i];
+                    var max = this.VariantMaxCountPerRoom(variant);
                     // if -1, no max. if 1 or greater, does not quality as zero
                     if (max != 0)
                     {
