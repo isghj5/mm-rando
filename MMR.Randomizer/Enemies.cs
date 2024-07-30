@@ -702,6 +702,7 @@ namespace MMR.Randomizer
             /// checks if randomizing the actor would interfere with getting access to a check
             /// and then checks if the item is junk, before allowing randimization
             /// tags: itemblocked, item restricted, check restricted
+            /// ISSUE: if this is called from object culling, variant can break for us instead of help us
             const GameObjects.Scene ANYSCENE = (GameObjects.Scene)GameObjects.ActorConst.ANY_SCENE;
 
             var checkRestrictedAttr = testActor.GetAttributes<CheckRestrictedAttribute>();
