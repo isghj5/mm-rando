@@ -273,6 +273,9 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled] // this is just one fish, if you want a school summon a differemnt mure actor
         [FileID(120)]
+        [CheckRestricted(Scene.Grottos, ActorConst.ANY_VARIANT,
+            Item.BottleCatchFish
+        )]
         [ObjectListIndex(1)]
         // zero is swimming, one is dropped from a bottle (but also the trading post one, -1 is just a differnt color I think
         // 2 is unk
@@ -804,14 +807,19 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
         [CheckRestricted(Scene.TerminaField, ActorConst.ANY_VARIANT, Item.CollectableTerminaFieldButterflyFairy1)] // TODO which is it?
         // TODO finish separating them
-        [CheckRestricted(Scene.Grottos, 0x5323, Item.BottleCatchBug)] // north grotto
+        [CheckRestricted(Scene.Grottos, 0x5323, Item.BottleCatchBug)] // north gossip grotto
+        [CheckRestricted(Scene.Grottos, 0x2323, Item.BottleCatchBug)] // west gossip grotto
         [CheckRestricted(Scene.Grottos, 0x6322, Item.BottleCatchFish)] // regular grotto, TODO do we want to force a fish in a unique place instead?
-        [CheckRestricted(Scene.Grottos, ActorConst.ANY_VARIANT, Item.CollectableGrottosOceanGossipStonesButterflyFairy1, Item.CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1,
-            Item.CollectableGrottosCowGrottoButterflyFairy1, Item.CollectableGrottosCowGrottoButterflyFairy2,
-            Item.BottleCatchFish
+        [CheckRestricted(Scene.Grottos, 0x2324, Item.CollectableGrottosOceanGossipStonesButterflyFairy1)]
+        [CheckRestricted(Scene.Grottos, 0x4324, Item.CollectableGrottosMagicBeanSellerSGrottoButterflyFairy1)]
+        [CheckRestricted(Scene.Grottos, variant: 0x3324,
+            Item.CollectableGrottosCowGrottoButterflyFairy1, Item.CollectableGrottosCowGrottoButterflyFairy2
             )]
-        [CheckRestricted(Scene.MountainVillageSpring, ActorConst.ANY_VARIANT, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1, Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2)]
-        [CheckRestricted(Scene.GreatBayCoast, ActorConst.ANY_VARIANT, Item.CollectableGreatBayCoastButterflyFairy1)]
+        [CheckRestricted(Scene.MountainVillageSpring, 0x4324,
+            Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy1)]
+        [CheckRestricted(Scene.MountainVillageSpring, 0x5324,
+            Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2)]
+        [CheckRestricted(Scene.GreatBayCoast, variant: 0x2324, Item.CollectableGreatBayCoastButterflyFairy1)]
         [GroundVariants(0x3323, 0x4324, 0x5323)] // beatles on the floor
         // they dont stick to the wall, they climb in the air
         //[WallVariants(0x3323, 0x2324, 0x4324, 0x5323)] // beatles on the... wall?
@@ -953,6 +961,8 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(Obj_Dowsing, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x110)] // rumble
         [AlignedCompanionActor(Butterfly, CompanionAlignment.Above, ourVariant: -1,
             variant: 0, 1, 2)]
+        [AlignedCompanionActor(IshiRock, CompanionAlignment.Above, ourVariant: -1,
+            variant: 0xA1, 0xFE01)] // everyone loves a good hidden grotto under a rock
         [BlockingVariantsAll] // might turn this off again, but at can cause issues, esp in deku palace and races
         //[ForbidFromScene(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead,
         //    Scene.TerminaField)]
@@ -1298,7 +1308,7 @@ namespace MMR.Randomizer.GameObjects
             0x4D10, 0xFF04, 0x4D10,// mountain village spring
             0xC719, 0xC90E, 0xCB0E, 0xCD19, 0xCF0F, 0xD10F, 0xD30F, 0xD519, 0xC119, 0xC319, 0xC50F, 0xC709, // goron shrine
             0x410E, 0x450A, 0x470A, 0x490A, 0x4B0A, 0x4D0E, 0x530A, 0x550A, 0x570E, 0x590A, 0x5B0E, // pinnacle rock
-            0x471E, 0x590E, 0x531E, 0x4114, 0x4314, 0x4B1E, 0x4D0A, 0x5D0A, 0x5F0A, // beneath the graveyard
+            0x471E, 0x590E, 0x531E, 0x4114, 0x4314, 0x4B1E, 0x4D0A, 0x5D0A, 0x5F0A, 0x5F03, 0x5714, // beneath the graveyard
             0x0B01, 0x0D01, 0x0F1E, 0x110A, 0x1301, 0x151E, 0x1705, 0x191E, 0x1B1E, 0x1D0A, // damps house
             0x7C10, 0x7E0B, 0x800B, 0x820E, 0x840B, 0x9C10, 0x9E0E, 0xA010, 0xB40E, 0x860B, 0x8813, 0x8A0B, 0x8C0B,// ikana castle
             0x430A, 0x450E, 0x4710, 0x4B10, 0x4D14, 0x4F0A, 0x5114, 0x5314, 0x570A, 0x5910, 0x5B14, 0x5D0E, 0x5F1E, 0x610A, 0x630E, // stone tower
@@ -2666,6 +2676,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [AlignedCompanionActor(Shot_Sun, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x41)] // fairies love grass
         [AlignedCompanionActor(Fairy, CompanionAlignment.OnTop, ourVariant: -1, variant: 2, 7, 9)] // fairies love grass
+        [AlignedCompanionActor(Butterfly, CompanionAlignment.OnTop, ourVariant: -1, variant: 0, 1, 2)] // butterflies love grass
         NaturalPatchOfGrass = 0x10D, // Obj_Grass_Unit
 
         Empty10E = 0x10E, // Empty10E
@@ -5518,7 +5529,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x20D)]
         [DynaAttributes(31,18)] // this is just the top of the tree, the bottom is a soft collider
         // both 0 and 0xFF on oposite sides
-        [CheckRestricted(Scene.NorthClockTown, variant: 0, Item.HeartPieceNorthClockTown)]
+        [CheckRestricted(Scene.NorthClockTown, variant: ActorConst.ANY_VARIANT, // 0x0
+            Item.HeartPieceNorthClockTown)]
         [GroundVariants(0x0, 0xFF, 0x80FF)]
         [VariantsWithRoomMax(max: 1, variant: 0x0, 0xFF, 0x80FF)]
         //[EnemizerScenesPlacementBlock(//Scene.SouthernSwampClear,// known dyna issues
