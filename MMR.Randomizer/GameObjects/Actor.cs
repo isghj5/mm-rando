@@ -1530,6 +1530,8 @@ namespace MMR.Randomizer.GameObjects
             0x0401, 0x0504, // inverted stone tower
             0x0506, 0x070C, 0x060F // termina field
         )]
+        [AlignedCompanionActor(GoldSkulltula, CompanionAlignment.OnTop, ourVariant: -1,
+            variant: 0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F)]
         //[ForbidFromScene(Scene.SwampSpiderHouse )] // dont want to mess with this by accident until I know it has proper logic
         SoftSoilAndBeans = 0x91, // Obj_Bean
 
@@ -2853,7 +2855,7 @@ namespace MMR.Randomizer.GameObjects
 
         // wont spawn if you place him outside of his observatory, needs modification
         // the astral observatory viewer
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // TODO randomize this only if casual logic too lazy to do that tonight tho
         [FileID(264)]
         [ObjectListIndex(0xDE)]
         [CheckRestricted(Item.TradeItemMoonTear, Item.HeartPieceTerminaBusinessScrub, Item.CollectableTerminaFieldTelescopeGuay1)]
