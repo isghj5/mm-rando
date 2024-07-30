@@ -174,7 +174,7 @@ namespace MMR.Randomizer
                 ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.SkulltulaTokens].AddRange(tokensSearched);
             }
 
-            if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic)
+            if (_randomized.Settings.LogicMode != Models.LogicMode.Casual)
             {
                 var swampSkullReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MaskTruth).Item;
                 // check if the reward is important, if not add them 
@@ -201,7 +201,7 @@ namespace MMR.Randomizer
                 }
 
             }
-            else
+            else // casual
             {
                 // we have logic, just use the logic spheres
 
@@ -251,7 +251,7 @@ namespace MMR.Randomizer
                 ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.StrayFairies].AddRange(fairySearched);
             }
 
-            if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic)
+            if (_randomized.Settings.LogicMode != Models.LogicMode.Casual)
             {
                 var extendedJunkCategories = ActorizerKnownJunkCategories.ToList();
                 extendedJunkCategories.Add(GameObjects.ItemCategory.Milk);
@@ -272,7 +272,7 @@ namespace MMR.Randomizer
                 AddBasedOnResult(GameObjects.Item.FairyDoubleDefense, "Great Bay");
                 AddBasedOnResult(GameObjects.Item.ItemFairySword, "Stone Tower");
             }
-            else
+            else // casual logic
             {
                 // I used to do this but now that we have sphere its faster because the sphere list is smaller datasize
                 //var woodfallFairyReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.FairySpinAttack).Item;
@@ -320,7 +320,7 @@ namespace MMR.Randomizer
                 ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.NotebookEntries].AddRange(notebookEntries);
             }
 
-            if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic)
+            if (_randomized.Settings.LogicMode != Models.LogicMode.Casual)
             {
                 var entryRewards = _randomized.ItemList.FindAll(i =>  i.NewLocation.ToString().Contains("Notebook"));
                 var nonJunkCount = 0;
@@ -340,7 +340,7 @@ namespace MMR.Randomizer
                     ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.NotebookEntries);
                 }
             }
-            else
+            else // casual logic
             {
                 // check if any notebook entries are in the list of important items
                 var notebookEntryImportantSearch = allSphereItems.Any(u => u.Item1.Contains("Notebook:"));
@@ -462,7 +462,7 @@ namespace MMR.Randomizer
             }
 
             var allSphereItems = new List<(string item, string location)>();
-            if (_randomized.Settings.LogicMode != Models.LogicMode.NoLogic)
+            if (_randomized.Settings.LogicMode == Models.LogicMode.Casual)
             {
                 allSphereItems = _randomized.Spheres.SelectMany(u => u).ToList();
             }
@@ -685,7 +685,8 @@ namespace MMR.Randomizer
             var category = itemInCheck.ItemCategory() ?? GameObjects.ItemCategory.None;
             var intCategory = (int)category;
             if (intCategory <= 0) return true; // zero is None, recovery heart is something below zero
-            if (ActorizerKnownJunkItems[intCategory].Contains(itemInCheck))
+            var specificCategory = ActorizerKnownJunkItems[intCategory];
+            if (specificCategory.Contains(itemInCheck))
             {
                 return true;
             }
@@ -5968,7 +5969,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Objectless Test Alpha7\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 73.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
