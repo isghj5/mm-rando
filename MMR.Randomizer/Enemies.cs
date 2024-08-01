@@ -4079,9 +4079,9 @@ namespace MMR.Randomizer
                         //var specificCandidateList = GetMatchPool(thisSceneData, thisSceneData.ActorsPerObject[objectIndex], containsFairyDroppingEnemy:false, objectHasBlockingSensitivity);
                         // except we already did this above? should we limit to one?
 
-                        candidatesPerActor.AddRange(actorsForThisObject);
+                        candidatesPerActor.AddRange(actorsForThisObject.ToList());
                     }
-                    candidatesPerActor.AddRange(thisSceneData.SceneFreeActors);
+                    candidatesPerActor.AddRange(thisSceneData.SceneFreeActors.ToList());
 
                     // now we need to go through candidates and reduce to variants we can use
                     var trimmedCandidates = new List<Actor>();
@@ -4267,7 +4267,7 @@ namespace MMR.Randomizer
             return enemyMatchesPool;
         }
 
-#region Trim and Free actors
+        #region Trim and Free actors
 
         public static void TrimAllActors(SceneEnemizerData thisSceneData, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList, bool allowLimits = true)
         {
@@ -4454,15 +4454,16 @@ namespace MMR.Randomizer
             return objectsPerMap;
         }
 
-        public static List<Actor> GetSceneFreeActors(Scene scene)
+        public static void GetSceneFreeActors(SceneEnemizerData thisSceneData)
         {
             /// some actors don't require unique objects, they can use objects that are generally loaded, we can use these almost anywhere
             ///  any actor that is object type 1 (gameplay_keep) is free to use anywhere
             ///  scenes can have a special object loaded by themselves, this is either dangeon_keep or field_keep, or none
 
+            var scene = thisSceneData.Scene;
             var sceneIsDungeon = scene.HasDungeonObject();
             var sceneIsField = scene.HasFieldObject();
-            var SceneFreeActors = FreeCandidateList.Where(act => (act.ObjectId == 1
+            var sceneFreeActors = FreeCandidateList.Where(act => (act.ObjectId == 1
                                                                 || (sceneIsField && act.ObjectId == (int)Scene.SceneSpecialObject.FieldKeep)
                                                                 || (sceneIsDungeon && act.ObjectId == (int)Scene.SceneSpecialObject.DungeonKeep))
                                                            && !(act.BlockedScenes != null && act.BlockedScenes.Contains(scene.SceneEnum))
@@ -4477,7 +4478,7 @@ namespace MMR.Randomizer
                 newDungeonOnlyPot.Variants = clayPotDungeonVariants.ToList();
                 newDungeonOnlyPot.AllVariants[(int)GameObjects.ActorType.Ground] = newDungeonOnlyPot.Variants;
 
-                SceneFreeActors.Add(newDungeonOnlyPot);
+                sceneFreeActors.Add(newDungeonOnlyPot);
             }
             // todo do this for tall grass too
             if (VanillaEnemyList.Contains(GameObjects.Actor.TallGrass) && sceneIsField)
@@ -4486,10 +4487,22 @@ namespace MMR.Randomizer
                 newFieldTallGrass.Variants = tallGrassFieldObjectVariants.ToList();
                 newFieldTallGrass.AllVariants[(int)GameObjects.ActorType.Ground] = newFieldTallGrass.Variants;
                 // todo trim variants
-                SceneFreeActors.Add(newFieldTallGrass);
+                sceneFreeActors.Add(newFieldTallGrass);
+            }
+            // giant ice block is now a huge problem in regular grottos, remove them here instead of removing all blocking actors
+            if (scene.SceneEnum == GameObjects.Scene.Grottos)
+            {
+                var iceblock = sceneFreeActors.Find(act => act.ActorEnum == GameObjects.Actor.RegularIceBlock);
+                var blockingVariantsAttr = GameObjects.Actor.RegularIceBlock.GetAttribute<BlockingVariantsAttribute>();
+
+                var newVariants = iceblock.Variants.ToList();
+                newVariants.RemoveAll(var => blockingVariantsAttr.Variants.Contains(var));
+                iceblock.Variants = newVariants;
+                iceblock.AllVariants[(int)GameObjects.ActorType.Ground - 1] = newVariants;
             }
 
-            return SceneFreeActors;
+            thisSceneData.SceneFreeActors = sceneFreeActors;
+            return;
         }
 
         public static List<Actor> GetRoomFreeActors(SceneEnemizerData thisScene, int thisRoomIndex)
@@ -4785,15 +4798,6 @@ namespace MMR.Randomizer
                 var targetActorEnum = (thisSceneData.RNG.Next() % 2 == 1) ? (GameObjects.Actor.GaboraBlacksmith) : (GameObjects.Actor.Zubora);
                 thisSceneData.AcceptableCandidates.RemoveAll(a => a.ActorEnum == targetActorEnum);
             }
-
-            // giant ice block is now a huge problem in regular grottos, remove them here instead of removing all blocking actors
-            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.Grottos)
-            {
-                var iceblock = thisSceneData.AcceptableCandidates.Find(act => act.ActorEnum == GameObjects.Actor.RegularIceBlock);
-                var blockingVariantsAttr = iceblock.ActorEnum.GetAttribute<BlockingVariantsAttribute>();
-                
-                iceblock.Variants.RemoveAll(var => blockingVariantsAttr.Variants.Contains(var));
-            }
         }
 
         private static void SplitSceneLikeLikesIntoTwoActorObjects(SceneEnemizerData thisSceneData)
@@ -5045,18 +5049,18 @@ namespace MMR.Randomizer
             GenerateActorCandidates(thisSceneData, fairyDroppingActors);
             WriteOutput(" time to generate candidate list: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
+            // keeping track of RAM space usage is getting ugly, try some OO to clean it up
+            thisSceneData.ActorCollection = new ActorsCollection(scene);
+            WriteOutput(" time to separate map/time actors: " + GET_TIME(thisSceneData.StartTime) + "ms");
+
+            GetSceneFreeActors(thisSceneData);
+
             int loopsCount = 0;
             int objectTooLargeCount = 0;
             var previousyAssignedCandidate = new List<Actor>();
-            thisSceneData.SceneFreeActors = GetSceneFreeActors(scene);
-
-            // keeping track of RAM space usage is getting ugly, try some OO to clean it up
-            thisSceneData.ActorCollection = new ActorsCollection(scene);
-
-            WriteOutput(" time to separate map/time actors: " + GET_TIME(thisSceneData.StartTime) + "ms");
-
             var bogoLog = new StringBuilder();
-            DateTime bogoStartTime = DateTime.Now;
+            var bogoStartTime = DateTime.Now;
+
             while (true) /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
             {
                 #region loopCounting

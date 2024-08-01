@@ -404,6 +404,9 @@ namespace MMR.Randomizer.Models.Rom
             foreach (var randomVariantType in listOfVariantTypes)
             {
                 // pull the variants for our random type
+                #if DEBUG
+                var DEBUG_type = randomVariantType - 1;
+                #endif
                 List<int> ourVariants   = this.AllVariants[ (int) randomVariantType - 1].ToList();
                 List<int> theirVariants = otherActor.AllVariants[ (int) randomVariantType - 1].ToList();
 
@@ -429,7 +432,7 @@ namespace MMR.Randomizer.Models.Rom
                 if (randomVariantType == ActorType.Ground
                     && ourVariantMatches && rng.Next(100) < 45)
                 {
-                    var theirFlyingVariants = otherActor.AllVariants[(int)ActorType.Flying - 1];
+                    var theirFlyingVariants = otherActor.AllVariants[ (int) ActorType.Flying - 1];
                     if (theirFlyingVariants.Count != 0)
                     {
                         theirVariants.AddRange(theirFlyingVariants);
