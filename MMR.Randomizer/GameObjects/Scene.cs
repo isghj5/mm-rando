@@ -700,6 +700,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1417)]
         [SceneInternalId(0x50)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SmallSnowball,
+            Actor.RealBombchu, Actor.Snapper, Actor.Beamos)] // can hit you as you are climbing up blocking assension
+
         MountainVillage = 0x4D,
 
         [FileID(1419)]
