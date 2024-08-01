@@ -2550,6 +2550,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(233)]
         [ObjectListIndex(0x2)]
+        [CheckRestricted(Scene.RoadToIkana, variant:ActorConst.ANY_VARIANT, Item.ChestToIkanaGrotto)]
         // parameters unknown
         [WaterBottomVariants(0)]
         [GroundVariants(0xFF)]
