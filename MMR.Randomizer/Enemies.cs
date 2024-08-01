@@ -89,6 +89,7 @@ namespace MMR.Randomizer
         // these have to be separate from Actor Enum for now beacuse they are for special objects, not regular types
         static int[] clayPotDungeonVariants = {
             0xB, // multiple
+            0x1E, 0x5, // swamp spiderhouse spider pots
             0x4C02, 0x4E02, 0x5002, 0x5202, // wft
             0x5C0E, 0x601E, 0x621E, 0x4C0E, 0x660E, 0x741E, 0x5A0A, // ospiderhouse
             0x761E, 0x001A, 0x400A, 0x0186, 0x018A, 0x680A, 0x6E0A, 0x700A, 0x720E, // ospiderhouse
@@ -5985,7 +5986,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 73.0\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 73.1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

@@ -1224,6 +1224,10 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot1, Item.CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot2)]
         [CheckRestricted(Scene.SouthernSwampClear, variant: ActorConst.ANY_VARIANT,
             Item.CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot1, Item.CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot2)]
+        [CheckRestricted(Scene.SwampSpiderHouse, variant: 0x0005, // swamp spiderhouse
+            Item.CollectibleSwampSpiderToken5)]
+        [CheckRestricted(Scene.SwampSpiderHouse, variant: 0x001E,
+            Item.CollectibleSwampSpiderToken30)]
         [CheckRestricted(Scene.DekuPalace, variant: ActorConst.ANY_VARIANT,
             Item.CollectableDekuPalaceEastInnerGardenPot1, Item.CollectableDekuPalaceEastInnerGardenPot2)]
         [CheckRestricted(Scene.DekuShrine, variant: ActorConst.ANY_VARIANT, Item.CollectableDekuShrineGreyBoulderRoomPot1)]
@@ -1324,6 +1328,7 @@ namespace MMR.Randomizer.GameObjects
             0x4110)] // terminafield pot
         [VariantsWithRoomMax(max:0, variant: 0x460B, 0x4610, 0x018D, // stone tower temple (dungeon keep)
             0xFE01, // deku shrine (dungeon keep)
+            0x1E, 0x5, // spiderhouse clay pots with spiders
             0x202, 0x602, 0x802, 0xA02, 0xC02)] // swords school, these are dungeon_keep pots cannot place without the object
         [ForbidFromScene( Scene.GoronRacetrack, // these are green pots they use a different object 
             Scene.SecretShrine, Scene.IkanaCastle, Scene.IgosDuIkanasLair, // dungeon pots, but treasure flags updater still messes with it
