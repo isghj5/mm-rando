@@ -80,7 +80,7 @@ namespace MMR.Randomizer
         private static List<GameObjects.ItemCategory> ActorizerKnownJunkCategories { get; set; }
         private static List<List<GameObjects.Item>> ActorizerKnownJunkItems { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = false;
+        private static bool ACTORSENABLED = true;
         private static Random seedrng;
         private static Models.RandomizedResult _randomized;
         private static OutputSettings _outputSettings;
@@ -4784,7 +4784,16 @@ namespace MMR.Randomizer
                 // random coin toss, remove one
                 var targetActorEnum = (thisSceneData.RNG.Next() % 2 == 1) ? (GameObjects.Actor.GaboraBlacksmith) : (GameObjects.Actor.Zubora);
                 thisSceneData.AcceptableCandidates.RemoveAll(a => a.ActorEnum == targetActorEnum);
-             }
+            }
+
+            // giant ice block is now a huge problem in regular grottos, remove them here instead of removing all blocking actors
+            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.Grottos)
+            {
+                var iceblock = thisSceneData.AcceptableCandidates.Find(act => act.ActorEnum == GameObjects.Actor.RegularIceBlock);
+                var blockingVariantsAttr = iceblock.ActorEnum.GetAttribute<BlockingVariantsAttribute>();
+                
+                iceblock.Variants.RemoveAll(var => blockingVariantsAttr.Variants.Contains(var));
+            }
         }
 
         private static void SplitSceneLikeLikesIntoTwoActorObjects(SceneEnemizerData thisSceneData)
@@ -4951,7 +4960,7 @@ namespace MMR.Randomizer
             // instead of passing the Random instance, we pass seed and add it to the unique scene number to get a replicatable, but random, seed
             thisSceneData.RNG = new Random(seed + scene.File);
 
-#region Log Handling functions
+            #region Log Handling functions
             // spoiler log already written by this point, for now making a brand new one instead of appending
             void WriteOutput(string str, StringBuilder altLog = null)
             {
@@ -4981,7 +4990,7 @@ namespace MMR.Randomizer
                 Thread.CurrentThread.Priority = ThreadPriority.AboveNormal; // need more time than the other small scenes
             }
             WriteOutput($" starting timestamp : [{DateTime.Now.ToString("hh:mm:ss.fff tt")}]");
-#endregion
+            #endregion
 
             GetSceneEnemyActors(thisSceneData);
             if (thisSceneData.Actors.Count == 0)
