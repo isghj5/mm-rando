@@ -2792,8 +2792,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(258)]
         [ObjectListIndex(0x1AC)]
-        [CheckRestricted(Scene.SwampShootingGallery, 0x000F, Item.UpgradeBiggestQuiver, Item.HeartPieceSwampArchery)]
-        [CheckRestricted(Scene.TownShootingGallery, 0xFF01, Item.UpgradeBigQuiver, Item.HeartPieceTownArchery)] // town
+        [CheckRestricted(Scene.SwampShootingGallery, ActorConst.ANY_VARIANT, //0x000F,
+            Item.UpgradeBiggestQuiver, Item.HeartPieceSwampArchery)]
+        [CheckRestricted(Scene.TownShootingGallery, ActorConst.ANY_VARIANT, //0xFF01,
+            Item.UpgradeBigQuiver, Item.HeartPieceTownArchery)] // town
         [GroundVariants(0x000F, 0xFF01,
             0xFF0F // secret unused version in the milkbar
             )]
@@ -3180,7 +3182,9 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0xFFF0, 0xFFF1, 0xFFF2, 0xFFF3, 0xFFF4, 0xFFF5, 0xFFF6, 0xFFF7, 0xFFF8)]
         [GroundVariants(0xFFF0, 0xFFF1, 0xFFF2, 0xFFF3, 0xFFF4, 0xFFF5, 0xFFF6, 0xFFF7, 0xFFF8)]
         // likely dont work without the shooting man anyway
-        [VariantsWithRoomMax(max: 0, variant: 0xFFF0, 0xFFF1, 0xFFF2, 0xFFF3, 0xFFF4, 0xFFF5, 0xFFF6, 0xFFF7, 0xFFF8)]
+        [VariantsWithRoomMax(max: 0, variant: 0xFFF0, 0xFFF1, 0xFFF2, 0xFFF3, 0xFFF4, 0xFFF5, 0xFFF6, 0xFFF7, 0xFFF8, // vanilla params
+            0x00FF // non-vanilla params I've seeen used before, not sure how, but we cannot place
+        )]
         [UnkillableAllVariants]
         ShootingGalleryOctorok = 0x14F, // En_Syateki_Okuta
 
