@@ -80,7 +80,7 @@ namespace MMR.Randomizer
         private static List<GameObjects.ItemCategory> ActorizerKnownJunkCategories { get; set; }
         private static List<List<GameObjects.Item>> ActorizerKnownJunkItems { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = true;
+        private static bool ACTORSENABLED = false;
         private static Random seedrng;
         private static Models.RandomizedResult _randomized;
         private static OutputSettings _outputSettings;
@@ -3902,7 +3902,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.MountainVillage, GameObjects.Actor.PottedPlant, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Dog, GameObjects.Actor.Evan)) continue; 
-                if (TestHardSetObject(GameObjects.Scene.PiratesFortress, GameObjects.Actor.PatrollingPirate, GameObjects.Actor.PatrollingPirate)) continue; 
+                //if (TestHardSetObject(GameObjects.Scene.PiratesFortress, GameObjects.Actor.PatrollingPirate, GameObjects.Actor.PatrollingPirate)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.LabFish)) continue;
                 // StockpotBell, UnusedStoneTowerPlatform , WarpDoor 35,30, MilkbarChairs 20,14, DekuFlower
@@ -3914,7 +3914,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.UglyTree, GameObjects.Actor.MilkbarChairs)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.LargeSnowball, GameObjects.Actor.MilkbarChairs)) continue;
-                if (TestHardSetObject(GameObjects.Scene.RoadToIkana, GameObjects.Actor.RealBombchu, GameObjects.Actor.BeanSeller)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.RoadToIkana, GameObjects.Actor.RealBombchu, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.Leever, GameObjects.Actor.MilkbarChairs)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.SkullKidPainting)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ClayPot, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
@@ -5049,7 +5049,7 @@ namespace MMR.Randomizer
             DateTime bogoStartTime = DateTime.Now;
             while (true) /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
             {
-#region loopCounting
+                #region loopCounting
                 /// preventing inf looping, and re-adjustments due to poor looping results not finding a solution
                 //bogoLog.Clear();
                 bogoStartTime = DateTime.Now;
@@ -5058,7 +5058,7 @@ namespace MMR.Randomizer
                 loopsCount++;
                 if (loopsCount % 4 == 0)
                 {
-                    if (objectTooLargeCount > 0 )
+                    if (objectTooLargeCount > 0)
                     {
                         /// if we have run out of object space before, from now limit big object actor changes of getting picked to reduce likehood of next cycle
                         List<Actor> bigObjectActors = thisSceneData.AcceptableCandidates.FindAll(o => o.ObjectSize >= 0x6000); // 0x6000 is roughly the median
@@ -5081,7 +5081,11 @@ namespace MMR.Randomizer
                     GenerateActorCandidates(thisSceneData, fairyDroppingActors);
                     WriteOutput($" re-generate candidates time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
                 }
+                if (loopsCount >= 500) // inf loop catch
+                {
+                    // this shouldn't happen, un-ravel our weights
 
+                }
                 if (loopsCount >= 900) // inf loop catch
                 {
                     var error = " No enemy combo could be found to fill this scene: " + scene.SceneEnum.ToString() + " w sid:" + scene.Number.ToString("X2");
@@ -5103,7 +5107,7 @@ namespace MMR.Randomizer
                 {
                     thisSceneData.FreeActorRate--;
                 }
-#endregion
+                #endregion
 
                 ShuffleObjects(thisSceneData);
                 WriteOutput($" objects pick time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
@@ -5152,6 +5156,7 @@ namespace MMR.Randomizer
                 } // end for actors per object
 
                 // finally, randomize actors that have no objects (standalone)
+                if (ACTORSENABLED)
                 {
                     var temporaryMatchEnemyList = new List<Actor>();
                     //List<Actor> subMatches = thisSceneData.CandidatesPerObject[objectIndex].FindAll(act => act.ObjectId == chosenObject);
@@ -5286,7 +5291,7 @@ namespace MMR.Randomizer
             FlushLog();
         }
 
-#region Actor Injection
+        #region Actor Injection
 
         public static InjectedActor ParseMMRAMeta(string metaFile)
         {
@@ -5911,7 +5916,7 @@ namespace MMR.Randomizer
             } // end for each injected actor
         }
 
-#endregion
+        #endregion
 
         public static void ShuffleEnemies(OutputSettings outputSettings, CosmeticSettings cosmeticSettings, Models.RandomizedResult randomized)
         {

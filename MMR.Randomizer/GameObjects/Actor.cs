@@ -67,8 +67,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(44)]
         [ObjectListIndex(0xC)]
         [DynaAttributes(12, 8)]
-        [CheckRestricted(Scene.RoadToIkana, variant: 0x5080, Item.ChestToIkanaRedRupee)]
-        [CheckRestricted(Scene.EastClockTown, variant: 0x50CA, Item.ChestEastClockTownSilverRupee)]
+        [CheckRestricted(Scene.RoadToIkana, variant: ActorConst.ANY_VARIANT, // 0x5080,
+            Item.ChestToIkanaRedRupee)]
+        [CheckRestricted(Scene.EastClockTown, variant: ActorConst.ANY_VARIANT, // 0x50CA,
+            Item.ChestEastClockTownSilverRupee)]
         [CheckRestricted(Scene.SouthClockTown, variant: ActorConst.ANY_VARIANT, Item.ChestSouthClockTownPurpleRupee, Item.ChestSouthClockTownRedRupee)]
         // these three are from inverted stone tower, however when placed in TF, 2/3 were invisible chests
         // type: 0x7 seems to be enemy clear, also type 1, 0x5 is woodentype, 0xC is switch activated
@@ -377,9 +379,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(66)]
         [ObjectListIndex(0xBC)]
-        [CheckRestricted(Scene.SouthernSwamp, variant: 0x3, Item.HeartPieceChoir, Item.FrogSwamp)]
-        [CheckRestricted(Scene.SouthernSwampClear, variant: 0x3, Item.HeartPieceChoir, Item.FrogSwamp)]
-        [CheckRestricted(Scene.LaundryPool, variant: 0x4, Item.HeartPieceChoir, Item.FrogLaundryPool)]
+        [CheckRestricted(Scene.SouthernSwamp, variant: ActorConst.ANY_VARIANT, // 0x3,
+            Item.HeartPieceChoir, Item.FrogSwamp)]
+        [CheckRestricted(Scene.SouthernSwampClear, variant: ActorConst.ANY_VARIANT, // 0x3,
+            Item.HeartPieceChoir, Item.FrogSwamp)]
+        [CheckRestricted(Scene.LaundryPool, variant: ActorConst.ANY_VARIANT, // 0x4,
+            Item.HeartPieceChoir, Item.FrogLaundryPool)]
         [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT, Item.HeartPieceChoir)]
         [GroundVariants(1, 2, 3, 4,
             0xF,
@@ -563,7 +568,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x80)]
         [FileID(79)]
-        [CheckRestricted(Scene.SouthClockTown, variant: 0x287F,
+        [CheckRestricted(Scene.SouthClockTown, variant: ActorConst.ANY_VARIANT, // 0x287F,
             check: Item.CollectableSouthClockTownHitTag1, Item.CollectableSouthClockTownHitTag2, Item.CollectableSouthClockTownHitTag3)]
         [CheckRestricted(Scene.GoronShrine, variant: ActorConst.ANY_VARIANT,
             check: Item.MaskDonGero)]
@@ -2334,8 +2339,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x133)]
         [DynaAttributes(10, 8)]
         [CheckRestricted(Scene.SwampSpiderHouse, variant: ActorConst.ANY_VARIANT, Item.CollectibleSwampSpiderToken10, Item.CollectibleSwampSpiderToken27)]
-        [CheckRestricted(Scene.RomaniRanch, variant: 0x7F1F, Item.CollectableRomaniRanchWoodenCrateLarge1)]
-        [CheckRestricted(Scene.CuccoShack, variant: 0x7F1F, Item.CollectableCuccoShackWoodenCrateLarge1)]
+        [CheckRestricted(Scene.RomaniRanch, variant: ActorConst.ANY_VARIANT, // 0x7F1F,
+            Item.CollectableRomaniRanchWoodenCrateLarge1)]
+        [CheckRestricted(Scene.CuccoShack, variant: ActorConst.ANY_VARIANT, // 0x7F1F,
+            Item.CollectableCuccoShackWoodenCrateLarge1)]
         // not always active, only sometimes:q
         [TreasureFlagsPlacement(mask: 0x1F, shift: 2)]
         [GroundVariants(0x7F3F, // buisness scrub and pirates fortress
@@ -3244,7 +3251,8 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.IkanaCanyon, variant: ActorConst.ANY_VARIANT, check: Item.MaskCouple, Item.NotebookMeetKafei,
             Item.NotebookEscapeFromSakonSHideout, Item.NotebookUniteAnjuAndKafei)]
         [CheckRestricted(Scene.EastClockTown, variant: ActorConst.ANY_VARIANT, check: Item.MaskCouple)]
-        [CheckRestricted(Scene.SouthClockTown, variant: 0x1E3, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
+        [CheckRestricted(Scene.SouthClockTown, variant: ActorConst.ANY_VARIANT, // 0x1E3,
+            check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
         [CheckRestricted(Scene.LaundryPool, variant: ActorConst.ANY_VARIANT, check: Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter)]
         [CheckRestricted(Scene.CuriosityShop, variant: ActorConst.ANY_VARIANT, Item.MaskCouple, Item.TradeItemPendant, Item.MaskKeaton, Item.TradeItemMamaLetter,
             Item.NotebookMeetKafei, Item.NotebookUniteAnjuAndKafei, Item.NotebookPromiseKafei,
@@ -4624,7 +4632,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(439)]
         [ObjectListIndex(0x144)]
-        [CheckRestricted(Scene.PoeHut, variant: 0x0, Item.HeartPiecePoeHut)]
+        [CheckRestricted(Scene.PoeHut, variant: ActorConst.ANY_VARIANT, // 0x0,
+            Item.HeartPiecePoeHut)]
         [GroundVariants(0x0)]
         [VariantsWithRoomMax(max: 0, variant: 0x0)]
         [SwitchFlagsPlacement(mask: 0xFF, shift: 3)] // 0x7F8
@@ -5049,7 +5058,6 @@ namespace MMR.Randomizer.GameObjects
             Item.SongLullabyIntro)] // have to talk to kid to get intro from leader
         [CheckRestricted(Scene.GoronRacetrack, variant: ActorConst.ANY_VARIANT, // 0x3FF1,
             Item.ItemBottleGoronRace)]
-        //[CheckRestricted(Scene.TwinIslandsSpring, variant: 0x3FF1, Item.ItemBottleGoronRace)] // not sure this is required
         [GroundVariants(
             0x1400, // regular one in the shrine throne room
             // 0x1402, // loud one you can hear making sfx from the main room of shrine
@@ -5074,7 +5082,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x3C8)]
         [ObjectListIndex(0xE2)]
         // to nuke ONLY in stockpot, hardcoded
-        [CheckRestricted(Scene.StockPotInn, variant: 2,
+        [CheckRestricted(Scene.StockPotInn, variant: ActorConst.ANY_VARIANT,
             Item.TradeItemRoomKey, Item.TradeItemKafeiLetter, Item.MaskCouple,
             Item.NotebookMeetAnju, Item.NotebookInnReservation, Item.NotebookPromiseAnjuDelivery,
             Item.NotebookPromiseAnjuMeeting, Item.NotebookDeliverPendant, Item.NotebookUniteAnjuAndKafei)]
@@ -5194,8 +5202,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x26A)] // ocean spiderhouse version
         //[ObjectListIndex(0xD9)] // swamp spiderhouse version
         //[CheckRestricted(Scene.SwampSpiderHouse, variant: 0xFF02, Item.MaskTruth)]
-        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0xFE04, Item.UpgradeGiantWallet, Item.MundaneItemOceanSpiderHouseDay2PurpleRupee, Item.MundaneItemOceanSpiderHouseDay3RedRupee)]
-        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0xFE05, Item.UpgradeGiantWallet, Item.MundaneItemOceanSpiderHouseDay2PurpleRupee, Item.MundaneItemOceanSpiderHouseDay3RedRupee)]
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: ActorConst.ANY_VARIANT, // 0xFE04,
+            Item.UpgradeGiantWallet, Item.MundaneItemOceanSpiderHouseDay2PurpleRupee, Item.MundaneItemOceanSpiderHouseDay3RedRupee)]
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: ActorConst.ANY_VARIANT, // 0xFE05,
+            Item.UpgradeGiantWallet, Item.MundaneItemOceanSpiderHouseDay2PurpleRupee, Item.MundaneItemOceanSpiderHouseDay3RedRupee)]
         //[CheckRestricted(Item.MaskTruth)] // but we want to only change the one that is spiderhouse... hardcoded
         // 0xFF02 is cured swamp spiderhouse (Object: 0xD9)
         // FE04/5 is oceanspiderhouse before and after wallet
@@ -5428,7 +5438,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(503)]
         [ObjectListIndex(0xA7)]
-        [CheckRestricted(Scene.TerminaField, variant: 0x40FF, Item.MaskRomani,
+        [CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT, //  0x40FF,
+            Item.MaskRomani,
             Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
         [CheckRestricted(Scene.RomaniRanch, variant: ActorConst.ANY_VARIANT, Item.MaskRomani,
             Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
@@ -5694,10 +5705,13 @@ namespace MMR.Randomizer.GameObjects
         // both of his vars are paths, sooo I'm guessing his behavior is hard coded
         [ObjectListIndex(0xE3)]
         [FileID(526)]
-        [CheckRestricted(Scene.NorthClockTown, variant: 0x83FF, Item.MaskBlast, Item.MaskAllNight, Item.NotebookMeetOldLady, Item.NotebookSaveOldLady,
+        [CheckRestricted(Scene.NorthClockTown, variant: ActorConst.ANY_VARIANT, // 0x83FF,
+            Item.MaskBlast, Item.MaskAllNight, Item.NotebookMeetOldLady, Item.NotebookSaveOldLady,
             Item.MaskCouple, Item.NotebookEscapeFromSakonSHideout)]
-        [CheckRestricted(Scene.IkanaCanyon, variant: 0x85FF, Item.MaskCouple, Item.NotebookEscapeFromSakonSHideout, Item.NotebookUniteAnjuAndKafei)]
-        [CheckRestricted(Scene.CuriosityShop, variant: 0x83FF, Item.MaskBlast, Item.UpgradeBigBombBag,
+        [CheckRestricted(Scene.IkanaCanyon, variant: ActorConst.ANY_VARIANT, // 0x85FF,
+            Item.MaskCouple, Item.NotebookEscapeFromSakonSHideout, Item.NotebookUniteAnjuAndKafei)]
+        [CheckRestricted(Scene.CuriosityShop, variant: ActorConst.ANY_VARIANT, // 0x83FF,
+            Item.MaskBlast, Item.UpgradeBigBombBag,
             Item.MundaneItemCuriosityShopBlueRupee, Item.MundaneItemCuriosityShopRedRupee, Item.MundaneItemCuriosityShopPurpleRupee, Item.MundaneItemCuriosityShopGoldRupee)]
         // cannot remove because he shares objects with the bank
         //[CheckRestricted(Scene.WestClockTown, variant: 0x83FF, Item.MaskBlast, Item.MaskAllNight)]
@@ -5847,9 +5861,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] 
         [FileID(538)]
         [ObjectListIndex(0x4)]
-        [CheckRestricted(Scene.StockPotInn, variant: 0, Item.HeartPieceNotebookGran1, Item.HeartPieceNotebookGran2,
+        [CheckRestricted(Scene.StockPotInn, variant: ActorConst.ANY_VARIANT, Item.HeartPieceNotebookGran1, Item.HeartPieceNotebookGran2,
             Item.NotebookMeetAnjusGrandmother, Item.NotebookGrandmaLongStory, Item.NotebookGrandmaShortStory)]
-        [CheckRestricted(Scene.RanchBuildings, variant: 0, Item.NotebookMeetAnjusGrandmother)]
+        [CheckRestricted(Scene.RanchBuildings, variant: ActorConst.ANY_VARIANT, Item.NotebookMeetAnjusGrandmother)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(max: 0, variant: 0)] // does not spawn, time varibles? second required object?
         [UnkillableAllVariants]
@@ -5902,7 +5916,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(543)]
         [ObjectListIndex(0xFF)]
-        [CheckRestricted(Scene.LaundryPool, variant:0x01, Item.MaskBremen,
+        [CheckRestricted(Scene.LaundryPool, variant: ActorConst.ANY_VARIANT, // 0x01,
+            Item.MaskBremen,
             Item.NotebookMeetGuruGuru, Item.NotebookGuruGuru)]
         // 00 is the version from the inn, "dont talk to her shes thinking" meaning the rosa sister
         // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
@@ -6338,7 +6353,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(587)]
         [ObjectListIndex(0x1E5)]
-        [CheckRestricted(Scene.SouthClockTown, variant: 0xFC05,
+        [CheckRestricted(Scene.SouthClockTown, variant: ActorConst.ANY_VARIANT, // 0xFC05,
             Item.ShopItemBusinessScrubMagicBean, Item.TradeItemLandDeed, Item.ChestSouthClockTownPurpleRupee)]
         [CheckRestricted(Scene.SouthernSwamp, variant: ActorConst.ANY_VARIANT,
             Item.ShopItemBusinessScrubMagicBean, Item.TradeItemSwampDeed, Item.HeartPieceSwampScrub, Item.UpgradeBiggestBombBag)]
@@ -6428,7 +6443,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x24B)]
         [FileID(594)]
-        [CheckRestricted(Scene.WestClockTown, variant:0x7E02, Item.HeartPieceNotebookRosa, Item.NotebookMeetRosaSisters, Item.NotebookRosaSistersThanks)]
+        [CheckRestricted(Scene.WestClockTown, variant: ActorConst.ANY_VARIANT, // 0x7E02,
+            Item.HeartPieceNotebookRosa, Item.NotebookMeetRosaSisters, Item.NotebookRosaSistersThanks)]
         [CheckRestricted(Scene.StockPotInn, variant: ActorConst.ANY_VARIANT, Item.NotebookMeetRosaSisters)]
         // 0xA00 is lobby pacing
         // params: 8000 is a talking flag, 0x7E00 >> 9 is pathing, 0x7E00 is non-pathing though, the one value
