@@ -3428,6 +3428,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Evan.ObjectIndex(),
                 GameObjects.Actor.GaboraBlacksmith.ObjectIndex(),
                 GameObjects.Actor.IronKnuckle.ObjectIndex(),
+                GameObjects.Actor.En_Owl.ObjectIndex(),
                 GameObjects.Actor.GoronWithGeroMask.ObjectIndex()
             };
 
@@ -3455,6 +3456,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Evan,
                 GameObjects.Actor.GaboraBlacksmith,
                 GameObjects.Actor.IronKnuckle,
+                GameObjects.Actor.En_Owl,
                 GameObjects.Actor.GoronWithGeroMask
             };
 
@@ -3496,7 +3498,7 @@ namespace MMR.Randomizer
             GameObjects.Scene[] scenesToForce = new GameObjects.Scene[]{
                 GameObjects.Scene.TerminaField,
                 GameObjects.Scene.GreatBayCoast,
-                GameObjects.Scene.IkanaCanyon, // none, TODO
+                GameObjects.Scene.IkanaCanyon,
                 GameObjects.Scene.IkanaGraveyard 
             };
 
