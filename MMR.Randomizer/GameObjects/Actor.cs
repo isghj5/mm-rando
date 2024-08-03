@@ -3743,17 +3743,18 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled] // free enemy, placed in places where enemies are normally
         [FileID(349)]
         [ObjectListIndex(0x1)] // obj 1: gameplay keep, but can't set that
-        //[CheckRestricted]
+        [CheckRestricted(Scene.SouthClockTown, variant: ActorConst.ANY_VARIANT, Item.ChestSouthClockTownPurpleRupee)]
+        [CheckRestricted(Scene.ZoraHallRooms, variant: ActorConst.ANY_VARIANT, Item.HeartPieceZoraHallScrub, Item.TradeItemOceanDeed, Item.ShopItemBusinessScrubGreenPotion)]
         //[ObjectListIndex(0xF3)] // TESTING
         [DynaAttributes(12,12)] // both gold and pink flowers have the same count
         [GroundVariants(0x7F, 0x17F)] // 7F is regular, 17F is big yellow
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.SouthernSwamp, Scene.Woodfall, Scene.DekuPalace, Scene.WoodfallTemple, Scene.OdolwasLair,
-            Scene.ZoraHallRooms, Scene.GoronVillage, Scene.IkanaCanyon, 
+            Scene.GoronVillage, Scene.IkanaCanyon, 
             Scene.DekuPlayground, Scene.SwampSpiderHouse, Scene.DekuTrial,
             Scene.InvertedStoneTowerTemple, Scene.DekuPalace,
             Scene.StoneTowerTemple, Scene.GoronVillageSpring, Scene.GoronVillage,
-            Scene.EastClockTown, Scene.NorthClockTown, Scene.IkanaCastle, Scene.SnowheadTemple)]
+            Scene.EastClockTown,  Scene.IkanaCastle, Scene.SnowheadTemple)] // Scene.NorthClockTown, ???
         DekuFlower = 0x183, // Obj_Etcetera
 
         [EnemizerEnabled] // AI gets confused, backwalks forever, pathing?
