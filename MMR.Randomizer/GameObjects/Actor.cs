@@ -6709,6 +6709,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(622)]
         [ObjectListIndex(0x27F)]
+        [DynaAttributes(18,16)]
         [GroundVariants(0x0)] // all the same
         [ForbidFromScene(Scene.PiratesFortress, Scene.StoneTower)]
         // we could remove from a few places like greatbaycoast
