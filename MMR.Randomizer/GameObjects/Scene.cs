@@ -194,6 +194,8 @@ namespace MMR.Randomizer.GameObjects
            Actor.Bo)] // they just fall down to the "floor" and its awkward
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DeathArmos,
             Actor.PatrollingPirate)] // casual, causes a need for stone mask to procede through the temple
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
+           Actor.Shabom)] // can clip through the ceiling becoming impossible to attack
         InvertedStoneTowerTemple = 0x15,
 
         [FileID(1203)]
