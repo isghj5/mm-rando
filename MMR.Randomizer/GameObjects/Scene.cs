@@ -812,6 +812,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Anju,
         //    Actor.AnjusGrandma, Actor.AnjusGrandmaCredits)] // this this was just cutscenes, not the same bug
         [EnemizerSceneBlockSensitive(Actor.Gorman, -1)]
+        [EnemizerSceneBlockSensitive(Actor.MushroomCloud, -1)] // specifically the one in the lavatory
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RosaSisters,
         //    Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.LightBlock,
         //   Actor.Eyegore)]
