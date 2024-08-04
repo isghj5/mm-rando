@@ -2354,7 +2354,7 @@ namespace MMR.Randomizer
                             "TownFairy",
                             pos1: new vec16(2289, -30, -750), new vec16(2523, -30, -750), new vec16(2412, -30, -929));
             }
-            var spinattack = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.MaskGreatFairy).Item;
+            var spinattack = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.FairySpinAttack).Item;
             if (IsActorizerJunk(spinattack))
             {
                 ChangeGreatFairyActors(mapIndex: 1, objectIndex: 0,
