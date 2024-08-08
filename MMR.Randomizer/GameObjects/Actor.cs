@@ -6711,7 +6711,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x27F)]
         [DynaAttributes(18,16)]
         [GroundVariants(0x0)] // all the same
-        [ForbidFromScene(Scene.PiratesFortress, Scene.StoneTower)]
+        [ForbidFromScene(Scene.PiratesFortress, Scene.StoneTower, Scene.GreatBayCoast)]
         // we could remove from a few places like greatbaycoast
         [UnkillableAllVariants]
         [PlacementWeight(40)] // boring
