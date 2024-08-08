@@ -707,7 +707,6 @@ namespace MMR.Randomizer.GameObjects
             Actor.RealBombchu, Actor.Snapper, Actor.Beamos)] // can hit you as you are climbing up blocking assension
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GoGoron,
             Actor.RealBombchu)] // can hit you as you are climbing up blocking assension
-
         MountainVillage = 0x4D,
 
         [FileID(1419)]
@@ -821,6 +820,7 @@ namespace MMR.Randomizer.GameObjects
         //    Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.LightBlock,
         //   Actor.Eyegore)]
         [EnemizerSceneBlockSensitive(Actor.RosaSisters, -1)]
+        [EnemizerSceneBlockSensitive(Actor.MysteryHand, -1)]
         StockPotInn = 0x5E,
 
         [FileID(1472)]
