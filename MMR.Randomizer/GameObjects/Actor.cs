@@ -279,9 +279,10 @@ namespace MMR.Randomizer.GameObjects
             Item.BottleCatchFish
         )]
         [ObjectListIndex(1)]
-        // zero is swimming, one is dropped from a bottle (but also the trading post one, -1 is just a differnt color I think
+        // type 0 and 1 are slightly different? I think 0 is dropped from a bottle, a lot of other entries are 1
         // 2 is unk
         [WaterVariants(0, 1)]
+        [VariantsWithRoomMax(max:0, variant:0)]
         [UnkillableAllVariants]
         Fish = 0x17, // En_Fish
 

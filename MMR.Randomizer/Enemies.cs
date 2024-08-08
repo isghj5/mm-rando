@@ -3906,7 +3906,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.MountainVillage, GameObjects.Actor.PottedPlant, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Dog, GameObjects.Actor.Evan)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortress, GameObjects.Actor.PatrollingPirate, GameObjects.Actor.PatrollingPirate)) continue; 
-                //if (TestHardSetObject(GameObjects.Scene.PinnacleRock, GameObjects.Actor.Bombiwa, GameObjects.Actor.Japas)) continue;
+                if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.Shellblade, GameObjects.Actor.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.LabFish)) continue;
                 // StockpotBell, UnusedStoneTowerPlatform , WarpDoor 35,30, MilkbarChairs 20,14, DekuFlower
                 // StockpotBell 33,20, UglyTree 31,something, MajoraBalloonSewer 186 something
@@ -5244,12 +5244,13 @@ namespace MMR.Randomizer
             ////////////////////////////////////////////
             ///////   DEBUGGING: force an actor  ///////
             ////////////////////////////////////////////
-            if (scene.SceneEnum == GameObjects.Scene.RoadToIkana) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.PiratesFortressRooms) // force specific actor/variant for debugging
             {
                 //thisSceneData.Actors[12].ChangeActor(GameObjects.Actor.Empty, vars: 0x000); // first torc
-                thisSceneData.Scene.Maps[0].Actors[5].ChangeActor(GameObjects.Actor.BeanSeller, vars: 0);
                 //thisSceneData.Scene.Maps[0].Actors[9].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
                 //thisSceneData.Scene.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
+                var fishSearch = thisSceneData.StandaloneActors.Find(act => act.Room == 3 && act.OldActorEnum == GameObjects.Actor.Fish);
+                fishSearch.ChangeActor(GameObjects.Actor.Fish, vars: 1);
             }
             /////////////////////////////
             #endif
