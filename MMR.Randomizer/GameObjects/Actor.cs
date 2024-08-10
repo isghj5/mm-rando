@@ -109,6 +109,7 @@ namespace MMR.Randomizer.GameObjects
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
         //[EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
         //    Scene.StoneTower)]
+        [PlacementWeight(50)]
         TreasureChest = 0x6, // En_Box
 
         [FileID(45)]
@@ -1657,7 +1658,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
         //    Scene.StoneTower)]
         [UnkillableAllVariants]
-        HookshotWallSpot = 0x96, // Obj_Hsblock
+        HookshotWallAndPillar = 0x96, // Obj_Hsblock
 
         // ??
         [FileID(141)]
@@ -3616,7 +3617,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [BlockingVariantsAll]
         [UnkillableAllVariants]
-        [PlacementWeight(85)]
+        [PlacementWeight(55)]
         PirateTelescope = 0x178, // En_Warp_Uzu
 
         [ActorizerEnabled]
@@ -4289,6 +4290,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(413)]
         [ObjectListIndex(0x1A9)]
         [CheckRestricted(Item.MundaneItemSeahorse)]
+        // type: 100 and else
         [GroundVariants(0x001, // regular
             0x100, 0x101)] // talking spots I think
         [VariantsWithRoomMax(max:0, variant:0x101, 0x100)] // doesn't spawn correctly
@@ -6229,11 +6231,13 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableIkanaGraveyardHitTag4, Item.CollectableIkanaGraveyardHitTag5, Item.CollectableIkanaGraveyardHitTag6,
             Item.CollectableIkanaGraveyardHitTag7, Item.CollectableIkanaGraveyardHitTag8, Item.CollectableIkanaGraveyardHitTag9,
             Item.CollectableIkanaGraveyardHitTag10, Item.CollectableIkanaGraveyardHitTag11, Item.CollectableIkanaGraveyardHitTag12)]
-        [WallVariants(0xFE00)]
+        [WallVariants(
+            0xFE00 // the one I know of
+        )]
         [CeilingVariants(0xFC00)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         [OnlyOneActorPerRoom]
-        [PlacementWeight(40)]
+        [PlacementWeight(30)]
         //[ForbidFromScene()] // todo
         HitSpot = 0x265, // En_Hit_Tag // hittag
 
