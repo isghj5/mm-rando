@@ -1267,6 +1267,16 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableOceansideSpiderHouseEntrancePot1, Item.CollectableOceansideSpiderHouseEntrancePot2, Item.CollectableOceansideSpiderHouseEntrancePot3,
             Item.CollectableOceansideSpiderHouseMainRoomPot1, Item.CollectableOceansideSpiderHouseMainRoomPot2,
             Item.CollectableOceansideSpiderHouseMaskRoomPot1, Item.CollectableOceansideSpiderHouseMaskRoomPot2)] */
+        // these are dungeon object, we can specify per variant
+        [CheckRestricted(Scene.PiratesFortressRooms, variant: ActorConst.ANY_VARIANT,
+            Item.CollectablePiratesFortressInterior100RupeeEggRoomPot1,
+            Item.CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartPot1,
+            Item.CollectablePiratesFortressInteriorTwinBarrelEggRoomPot1,
+            Item.CollectablePiratesFortressInteriorTelescopeRoomPot1, Item.CollectablePiratesFortressInteriorTelescopeRoomPot2,
+            Item.CollectablePiratesFortressInteriorWaterCurrentRoomPot1,
+            Item.CollectablePiratesFortressInteriorBarrelRoomEggPot1, Item.CollectablePiratesFortressInteriorBarrelRoomEggPot2,
+            Item.CollectablePiratesFortressInteriorHookshotRoomPot1, Item.CollectablePiratesFortressInteriorHookshotRoomPot2
+        )]
         [CheckRestricted(Scene.PinnacleRock, variant: ActorConst.ANY_VARIANT,
             Item.CollectablePinnacleRockPot1, Item.CollectablePinnacleRockPot2, Item.CollectablePinnacleRockPot3, Item.CollectablePinnacleRockPot4)]
         [CheckRestricted(Scene.ZoraCape, variant: ActorConst.ANY_VARIANT, Item.CollectableZoraCapeJarGame1,
@@ -1607,9 +1617,11 @@ namespace MMR.Randomizer.GameObjects
         // params are filled
         // type is 0x7 range,0/1 are floor switches, 2 is eye switch, 3 and 4 are crystal, 5 is draw again
         // subtype describes if its set once or toggle or if it resets once you step off
+        // z rot & 1 used for color, but only for the floor switches in sakons hideout (lol)
         [GroundVariants(0x0, 0x20, 0x1, 0x43, 0x14, 0x5)]
         // TODO get wall rotations working so I can just set some on the wall, wall crystal switches make sense
         [WallVariants(0x2,
+            0x902, // stone tower temple
             0x1D82 // stone tower temple
         )]
         [WaterBottomVariants(0x0, 0x1, 0x3, 0x4)]
@@ -2215,7 +2227,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        CursedSwampSpiderhouseMan = 0xD4, // En_Ssh
+        CursedSpiderMan = 0xD4, // En_Ssh
 
         EmptyD5 = 0xD5, // EmptyD5
 
@@ -6221,6 +6233,7 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         [OnlyOneActorPerRoom]
         [PlacementWeight(40)]
+        //[ForbidFromScene()] // todo
         HitSpot = 0x265, // En_Hit_Tag // hittag
 
         [ActorizerEnabled]
