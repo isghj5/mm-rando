@@ -5244,13 +5244,11 @@ namespace MMR.Randomizer
             ////////////////////////////////////////////
             ///////   DEBUGGING: force an actor  ///////
             ////////////////////////////////////////////
-            if (scene.SceneEnum == GameObjects.Scene.PiratesFortressRooms) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.SwampSpiderHouse) // force specific actor/variant for debugging
             {
                 //thisSceneData.Actors[12].ChangeActor(GameObjects.Actor.Empty, vars: 0x000); // first torc
                 //thisSceneData.Scene.Maps[0].Actors[9].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
                 //thisSceneData.Scene.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
-                var fishSearch = thisSceneData.StandaloneActors.Find(act => act.Room == 3 && act.OldActorEnum == GameObjects.Actor.Fish);
-                fishSearch.ChangeActor(GameObjects.Actor.Fish, vars: 1);
             }
             /////////////////////////////
             #endif
