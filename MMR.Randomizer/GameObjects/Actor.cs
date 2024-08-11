@@ -6231,8 +6231,12 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableIkanaGraveyardHitTag4, Item.CollectableIkanaGraveyardHitTag5, Item.CollectableIkanaGraveyardHitTag6,
             Item.CollectableIkanaGraveyardHitTag7, Item.CollectableIkanaGraveyardHitTag8, Item.CollectableIkanaGraveyardHitTag9,
             Item.CollectableIkanaGraveyardHitTag10, Item.CollectableIkanaGraveyardHitTag11, Item.CollectableIkanaGraveyardHitTag12)]
+        // zoey made new ones for the hitspot rando, these are values read from ram of a working seed
         [WallVariants(
-            0xFE00 // the one I know of
+            0xFE00, // vanilla value
+            0x00F0, 0x00F2, 0x00EE, 0x00EC, // east clock town
+            0x00FE, //sct, stockpot inn, swamp spiderhouse, and cucco shack, all o them???
+            0
         )]
         [CeilingVariants(0xFC00)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
