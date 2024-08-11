@@ -5475,6 +5475,8 @@ namespace MMR.Randomizer
             // function pointers to interconnect the code
 
             if ( ! Directory.Exists(directory)) return;
+            // if actorizer is off, we need to not read any of these
+            if (!_randomized.Settings.RandomizeEnemies) return; // right now actorizer/enemizer is the only system that uses this
 
             uint END_VANILLA_OBJ_SEGMENT = 0x01E5E600;
 
