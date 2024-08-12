@@ -6234,15 +6234,15 @@ namespace MMR.Randomizer.GameObjects
         // zoey made new ones for the hitspot rando, these are values read from ram of a working seed
         [WallVariants(
             0xFE00, // vanilla value
-            0x00F0, 0x00F2, 0x00EE, 0x00EC, // east clock town
-            0x00FE, //sct, stockpot inn, swamp spiderhouse, and cucco shack, all o them???
-            0
+            0xFF01, 0xFE02, 0xFE03, 0xFE04, 0xFE05, 0xFE06, 0xFE07, 0xFE08, 0xFE09, 0xFE0A, 0xFE0B, 0xFE0C, 0xFE0D, 0xFE0E, 0xFE0F, // new zoey values
+            0xFE10, 0xFE11, 0xFE12, 0xFE13, 0xFE14, 0xFE15, 0xFE16, 0xFE17
+            // dont know which one is which tho, so can't use per-variant yet
+            // esp if my debugging is wrong
         )]
         [CeilingVariants(0xFC00)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         [OnlyOneActorPerRoom]
-        [PlacementWeight(30)]
-        //[ForbidFromScene()] // todo
+        [PlacementWeight(30)] // TODO
         HitSpot = 0x265, // En_Hit_Tag // hittag
 
         [ActorizerEnabled]
