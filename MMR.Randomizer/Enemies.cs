@@ -3390,12 +3390,24 @@ namespace MMR.Randomizer
                 var dayActorList = thisSceneData.Actors.Intersect(map.day.oldActorList).ToList();
                 var dayUniqueList = dayActorList.GroupBy(elem => elem.ActorEnum).Select(group => group.First()).ToList();
                 dayUniqueList.RemoveAll(u => u.ActorEnum == GameObjects.Actor.Empty);
-                TrimAllActors(thisSceneData, dayUniqueList, dayActorList, allowLimits:false);
+                var debugSpots = dayActorList.FindAll(act => act.OldActorEnum == GameObjects.Actor.HitSpot || act.OldActorEnum == GameObjects.Actor.WallTalkSpot);
+                for (int a = 0; a < dayUniqueList.Count; a++)
+                {
+                    var uniqueActor = new List<Actor> { dayUniqueList[a] };
+                    var specificActorList = dayActorList.FindAll(act => act.ActorEnum == uniqueActor[0].ActorEnum);
+                    TrimAllActors(thisSceneData, uniqueActor, specificActorList, allowLimits: false);
+                }
 
                 var nightActorList = thisSceneData.Actors.Intersect(map.night.oldActorList).ToList();
                 var nightUniqueList = nightActorList.GroupBy(elem => elem.ActorEnum).Select(group => group.First()).ToList();
                 nightUniqueList.RemoveAll(u => u.ActorEnum == GameObjects.Actor.Empty);
-                TrimAllActors(thisSceneData, nightUniqueList, nightActorList, allowLimits: false);
+                //TrimAllActors(thisSceneData, nightUniqueList, nightActorList, allowLimits: false);
+                for (int a = 0; a < nightUniqueList.Count; a++)
+                {
+                    var uniqueActor = new List<Actor> { nightUniqueList[a] };
+                    var specificActorList = nightActorList.FindAll(act => act.ActorEnum == uniqueActor[0].ActorEnum);
+                    TrimAllActors(thisSceneData, uniqueActor, specificActorList, allowLimits: false);
+                }
             }
         }
 
@@ -3968,7 +3980,7 @@ namespace MMR.Randomizer
             } // end for for each object
         }
 
-        public static void ShuffleActors(SceneEnemizerData thisSceneData, int objectIndex, List<Actor> subMatches, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList)
+        public static void ShuffleActors(SceneEnemizerData thisSceneData, int objectIndex, List<Actor> subMatches, List<Actor> candidateAndCompanionGroup, List<Actor> knownChangedActorList)
         {
 #region Special exception if building debug and this build requires actor that doesnt exist
 #if DEBUG
@@ -4009,11 +4021,11 @@ namespace MMR.Randomizer
                 var newVariant = testActor.Variants[thisSceneData.RNG.Next(testActor.Variants.Count)]; // readability
                 oldActor.ChangeActor(testActor, vars: newVariant);
 
-                temporaryMatchEnemyList.Add(oldActor);
-                var testSearch = previouslyAssignedCandidates.Find(act => act.ActorId == oldActor.ActorId);
+                knownChangedActorList.Add(oldActor);
+                var testSearch = candidateAndCompanionGroup.Find(act => act.ActorId == oldActor.ActorId);
                 if (testSearch == null)
                 {
-                    previouslyAssignedCandidates.Add(testActor);
+                    candidateAndCompanionGroup.Add(testActor);
                 }
             } // end foreach
         } // end function
@@ -4271,11 +4283,15 @@ namespace MMR.Randomizer
 
         #region Trim and Free actors
 
-        public static void TrimAllActors(SceneEnemizerData thisSceneData, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList, bool allowLimits = true)
+        public static void TrimAllActors(SceneEnemizerData thisSceneData, List<Actor> candidateAndCompanionGroup, List<Actor> knownChangedActorList, bool allowLimits = true)
         {
             /// Actors can have maximum per-room variants, if these show up we should cull the extra over the max
             /// e.g some Dynapoly actors cannot be placed too many times because they overload the dynapoly system
-            var restrictedActors = previouslyAssignedCandidates.FindAll(act => act.HasVariantsWithRoomLimits() || act.OnlyOnePerRoom != null);
+            /// candidateAndCompanionGroup is the list of the object compatible actors, and candidates added to the actor
+            //    should this include candidates? is that what we wanted?
+            /// knownChangedActorList is all actors that were changed for this object that should have been changed to the candidates
+            //    this seems pointless, we now have to contend with the possibility of all actors having every object, this has been depreicated
+            var restrictedActors = candidateAndCompanionGroup.FindAll(act => act.HasVariantsWithRoomLimits() || act.OnlyOnePerRoom != null);
             for (int actorIndex = 0; actorIndex < restrictedActors.Count; ++actorIndex)
             {
                 var problemActor = restrictedActors[actorIndex];
@@ -4283,7 +4299,9 @@ namespace MMR.Randomizer
                 // we need to split enemies per room
                 for (int roomIndex = 0; roomIndex < thisSceneData.Scene.Maps.Count; ++roomIndex)
                 {
-                    var roomActors = temporaryMatchEnemyList.FindAll(act => act.Room == roomIndex && act.ActorId == problemActor.ActorId);
+                    //var roomActors = knownChangedActorList.FindAll(act => act.Room == roomIndex && act.ActorId == problemActor.ActorId); // old: now that we can swap outside of given object, this might no longer work right
+                    var roomActors = knownChangedActorList.FindAll(act => act.Room == roomIndex && act.ActorId == problemActor.ActorId);
+                    //var roomActors = thisSceneData.Actors.FindAll(act => act.Room == roomIndex && act.ActorId == problemActor.ActorId);
                     if (roomActors.Count == 0) continue; // nothing to trim: no actors in this room
                     var roomIsClearPuzzleRoom = thisSceneData.Scene.SceneEnum.IsClearEnemyPuzzleRoom(roomIndex);
                     var roomFreeActors = GetRoomFreeActors(thisSceneData, roomIndex);
@@ -5153,7 +5171,7 @@ namespace MMR.Randomizer
                     // todo consider attempting to make this multithreaded at this upper level
                     //   issues: we would need to do a final actor trim pass after (edit: we do this now anyway, we still need an accurate type read)
 
-                    var temporaryMatchEnemyList = new List<Actor>();
+                    var knownChangedActorList = new List<Actor>();
                     var chosenObject = thisSceneData.ChosenReplacementObjects[objectIndex].ChosenV;
                     List<Actor> subMatches = thisSceneData.CandidatesPerObject[objectIndex].FindAll(act => act.ObjectId == chosenObject);
 
@@ -5162,10 +5180,10 @@ namespace MMR.Randomizer
                     AddCompanionsToCandidates(thisSceneData, objectIndex, subMatches);
                     //WriteOutput($"  companions adding time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
-                    ShuffleActors(thisSceneData, objectIndex, subMatches, previousyAssignedCandidate, temporaryMatchEnemyList);
+                    ShuffleActors(thisSceneData, objectIndex, subMatches, previousyAssignedCandidate, knownChangedActorList);
                     //WriteOutput($"  match time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
-                    TrimAllActors(thisSceneData, previousyAssignedCandidate, temporaryMatchEnemyList);
+                    TrimAllActors(thisSceneData, previousyAssignedCandidate, knownChangedActorList);
                     // WriteOutput($"  trim/free time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                     previousyAssignedCandidate.Clear(); // TODO this might not be needed at all anymore
@@ -5174,7 +5192,7 @@ namespace MMR.Randomizer
                 // finally, randomize actors that have no objects (standalone)
                 if (ACTORSENABLED)
                 {
-                    var temporaryMatchEnemyList = new List<Actor>();
+                    var knownChangedActorList = new List<Actor>();
                     //List<Actor> subMatches = thisSceneData.CandidatesPerObject[objectIndex].FindAll(act => act.ObjectId == chosenObject);
 
                     // assuming we dont have free actors with companions
@@ -5182,7 +5200,7 @@ namespace MMR.Randomizer
                     ShuffleStandaloneActors(thisSceneData/*, previousyAssignedCandidate*/);
                     //WriteOutput($"  match time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
-                    //TrimAllActors(thisSceneData, previousyAssignedCandidate, temporaryMatchEnemyList); // lets let that last check below do this
+                    //TrimAllActors(thisSceneData, previousyAssignedCandidate, knownChangedActorList); // lets let that last check below do this
                     // WriteOutput($"  trim/free time: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog)
                 }
 

@@ -285,6 +285,8 @@ namespace MMR.Randomizer.Models.Rom
                 Variants[0] = vars;
             }
 
+            this.OnlyOnePerRoom = newActorType.GetAttribute<OnlyOneActorPerRoom>();
+
             // if the new is injected, pull from injected
             // TODO? right now we dont have any actors we are injecting that change vanilla behavior, in fact we want to avoid
             // if not injected, pull from enum
@@ -318,6 +320,8 @@ namespace MMR.Randomizer.Models.Rom
             }
 
             this.DynaLoad = otherActor.DynaLoad;
+
+            this.OnlyOnePerRoom = otherActor.OnlyOnePerRoom;
 
             if (otherActor.InjectedActor != null)
                 this.UpdateActor(otherActor.InjectedActor);
