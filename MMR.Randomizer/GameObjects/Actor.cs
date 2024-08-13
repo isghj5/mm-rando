@@ -3986,6 +3986,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max: 0, 0xFC7F, 0xFCFF,
             0x82, 0x1882, 0x2210, 0x6182)] // situationally appear, otherwise invisible, also assume path
+        [EnemizerScenesPlacementBlock(Scene.WoodsOfMystery)] // freaks out vanilla monkeys, inf loop in "EnMnk_AlreadyExists"
         [PlacementWeight(60)]
         Monkey = 0x19E, // En_Mnk
 
