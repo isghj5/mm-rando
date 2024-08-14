@@ -41,6 +41,7 @@ namespace MMR.Randomizer.GameObjects
         [ClearEnemyPuzzleRooms(1, 2, 4)]
         [SceneInternalId(0x0C)]
         [EnemizerSceneEnemyReplacementBlock(Actor.CeilingSpawner,
+            Actor.GBTFreezableWaterfall, // blocking platforming
             Actor.UnusedFallingBridge, // can void the player because it forces crushing with the ceiling
             Actor.UnusedStoneTowerPlatform, // same thing, should be disabled earlier but maybe it isnt
             Actor.UnusedStoneTowerStoneElevator, // can void the player because it forces crushing with the ceiling
