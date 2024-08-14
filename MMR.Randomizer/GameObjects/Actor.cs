@@ -1098,6 +1098,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2330)]
         [FileID(112)]
         [ObjectListIndex(0xAB)]
+        [CheckRestricted(Scene.ZoraCape, variant:ActorConst.ANY_VARIANT, Item.HeartPieceGreatBayCapeLikeLike)]
         // 2 is ocean bottom, 0 is one in shallow shore water, 3 is land and one in shallow water
         [WaterBottomVariants(0, 2)]
         [GroundVariants(3)]
