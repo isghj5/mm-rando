@@ -893,16 +893,16 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Gorman,
         //    Actor.ClocktowerGearsAndOrgan, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // organ is huge, covers the mayor's door
         [EnemizerSceneBlockSensitive(Actor.Gorman, -1)] // was moved next to mayors door, large bodies can actually block this
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Gorman,
+            Actor.LikeLike // can instant grab the player from the door, softlocking on low health builds
+        )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
             Actor.Peahat, // small peahat can instant kill 1 heart hero
             Actor.LikeLike,
             Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BomberHideoutGuard,
                 Actor.Peahat, Actor.Tijo
-                //Actor.ArmosStatue, // blocking
-                //Actor.ClocktowerGearsAndOrgan, 
-                //Actor.CircleOfFire, Actor.GibdoWell, Actor.RegularIceBlock, // worried about big blocking actors
-                /*Actor.Wolfos*/)]
+        )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Jugglers,
                                                            Actor.UnusedStoneTowerPlatform)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Anju,
