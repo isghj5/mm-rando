@@ -3605,6 +3605,9 @@ namespace MMR.Randomizer
 
                 // dont need to modify old as this happens dead last
                 actorChoice.ChangeActor(GameObjects.Actor.NaturalPatchOfGrass, vars:0x0001, modifyOld: false);
+                actorChoice.Position.y += 50; // just in case the previous actor is more under the floor than exactly on the floor, bushes could fall through
+                actorChoice.Rotation.x = ActorUtils.MergeRotationAndFlags(rotation: 0, flags: 0x7F); // set to spawn all day all night every day
+                actorChoice.Rotation.z = ActorUtils.MergeRotationAndFlags(rotation: 0, flags: 0x7F); // set to spawn all day all night every day
             }
         }
 
