@@ -624,6 +624,8 @@ namespace MMR.Randomizer.GameObjects
         //    Actor.Peahat, Actor.LikeLike, Actor.Freezard)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.DragonFly, // blocks deku flying 
         //    Actor.UnusedStoneTowerPlatform, Actor.UnusedPirateElevator)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.TallGrass,
+            Actor.ClocktowerGearsAndOrgan, Actor.RegularIceBlock)] // suspected too large and can block the owl
         [EnemizerSceneEnemyReplacementBlock(Actor.Octarok,
             Actor.Obj_Boat, Actor.SwampBoat)] // dyna crashing from just one boat and nothing else
         [EnemizerSceneBlockSensitive(Actor.DragonFly, -1)]
