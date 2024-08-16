@@ -1719,6 +1719,17 @@ namespace MMR.Randomizer
             }
             SceneUtils.UpdateScene(roadToIkanaCanyonScene);
 
+            var capeScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.ZoraCape.FileID());
+            var capeHpLikelike = capeScene.Maps[0].Actors[18];
+            if (capeHpLikelike.ActorEnum != GameObjects.Actor.LikeLike)
+            {
+                var newUnkillableVariants = capeHpLikelike.ActorEnum.UnkillableVariants();
+                if (newUnkillableVariants.Contains(capeHpLikelike.Variants[0]))
+                {
+                    capeHpLikelike.Position.z = 4405; // move back from sitting on hp
+                }
+            }
+            SceneUtils.UpdateScene(capeScene);
 
             MoveShopScrubsIfRandomized();
             MovePostmanIfRandomized(terminaField);
@@ -3920,7 +3931,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.MountainVillage, GameObjects.Actor.PottedPlant, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Dog, GameObjects.Actor.Evan)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortress, GameObjects.Actor.PatrollingPirate, GameObjects.Actor.PatrollingPirate)) continue; 
-                if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.Shellblade, GameObjects.Actor.LabFish)) continue;
+                if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.LikeLike, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.LabFish)) continue;
                 // StockpotBell, UnusedStoneTowerPlatform , WarpDoor 35,30, MilkbarChairs 20,14, DekuFlower
                 // StockpotBell 33,20, UglyTree 31,something, MajoraBalloonSewer 186 something
@@ -6022,7 +6033,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 73.3\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 73.4\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

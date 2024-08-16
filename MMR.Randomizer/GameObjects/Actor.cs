@@ -1797,6 +1797,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectibleSwampSpiderToken13, Item.CollectibleSwampSpiderToken25
             )] // */
         [GroundVariants(0)]
+        [WaterBottomVariants(0)] // testing
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.Grottos)]
         BeanSeller = 0xA5, // En_Ms

@@ -520,12 +520,7 @@ namespace MMR.Randomizer.GameObjects
         // 132,88 was working fine
         [DynaHeadroom(132, 100)] // limit not found
         [EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa,
-                    Actor.LikeLike)] // can hard lock if the player leaves and gets instant-grabbed
-        [EnemizerSceneEnemyReplacementBlock(Actor.LikeLike,
-                    Actor.Japas, Actor.Bombiwa, Actor.BronzeBoulder, Actor.Mimi, Actor.TreasureChest)] // small blocking
-                                                                                                       //    Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo,
-                                                                                                       //    Actor.Bombiwa, Actor.BronzeBoulder, Actor.CircleOfFire,
-                                                                                                       //    Actor.RegularZora, Actor.SwimmingZora, Actor.WarpDoor)]
+                    Actor.LikeLike)] // can hard lock if the player leaves and gets instant-grabbed, TODO consider making a likelike that has a switch flag
         [EnemizerSceneBlockSensitive(Actor.LikeLike, -1)]
         ZoraCape = 0x35,
 
