@@ -3934,7 +3934,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.MountainVillage, GameObjects.Actor.PottedPlant, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Dog, GameObjects.Actor.Evan)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortress, GameObjects.Actor.PatrollingPirate, GameObjects.Actor.PatrollingPirate)) continue; 
-                //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.LikeLike, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.ClayPot, GameObjects.Actor.DekuKing)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.LabFish)) continue;
                 // StockpotBell, UnusedStoneTowerPlatform , WarpDoor 35,30, MilkbarChairs 20,14, DekuFlower
                 // StockpotBell 33,20, UglyTree 31,something, MajoraBalloonSewer 186 something

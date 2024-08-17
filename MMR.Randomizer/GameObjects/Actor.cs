@@ -3481,7 +3481,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        [PlacementWeight(60)]
+        //[PlacementWeight(60)] // testing
         DekuKing = 0x16A, // En_Dnq
 
         Empty16B = 0x16B,
@@ -6909,9 +6909,9 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.TerminaField, 0x68, Item.CollectableTerminaFieldInvisibleItem6)]
         [CheckRestricted(Scene.TerminaField, 0x6D, Item.CollectableTerminaFieldInvisibleItem7)] // water fountains
         [CheckRestricted(Scene.TerminaField, 0x71, Item.CollectableTerminaFieldInvisibleItem8)]
-        [CheckRestricted(Scene.TerminaField, 0x79, Item.CollectableTerminaFieldInvisibleItem9)]  // goron jump ocean ramp
-        [CheckRestricted(Scene.TerminaField, 0x7D, Item.CollectableTerminaFieldInvisibleItem10)] // goron jump ocean chest
-        [CheckRestricted(Scene.TerminaField, 0x75, Item.CollectableTerminaFieldInvisibleItem11)] // goron jump snowfield
+        [CheckRestricted(Scene.TerminaField, 0x75, Item.CollectableTerminaFieldInvisibleItem9)]  // goron jump ocean ramp
+        [CheckRestricted(Scene.TerminaField, 0x79, Item.CollectableTerminaFieldInvisibleItem10)] // goron jump ocean chest
+        [CheckRestricted(Scene.TerminaField, 0x7D, Item.CollectableTerminaFieldInvisibleItem11)] // goron jump snowfield
         [CheckRestricted(Scene.RomaniRanch, 0x29, Item.CollectableRomaniRanchInvisibleItem1)] // ranch fence items
         [CheckRestricted(Scene.RomaniRanch, 0x2D, Item.CollectableRomaniRanchInvisibleItem2)]
         [CheckRestricted(Scene.RomaniRanch, 0x30, Item.CollectableRomaniRanchInvisibleItem3)]
