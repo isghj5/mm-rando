@@ -481,7 +481,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1324)]
         [SceneInternalId(0x34)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee,
+                        Actor.DekuKing, // if close to scarecrow can hardlock clock skip
                         Actor.Hiploop)] // water explosion
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
+                        Actor.DekuKing)] // if close to scarecrow can hardlock clock skip
         TradingPost = 0x31,
 
         // the only "small" dyna poly scene... but why
