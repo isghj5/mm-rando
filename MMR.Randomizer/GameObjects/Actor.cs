@@ -2181,6 +2181,7 @@ namespace MMR.Randomizer.GameObjects
         // versions: 1200, 1B00, 2800 shows up a lot, 2D00 stonetower, 3200 zora cape, 0x11D is zora cape
         // trading post version is 1
         // wish I could spawn the ones that dance so they are always dancing when the player gets there
+        // TODO  snowhead is missing from this list and above
         [GroundVariants( 0x3200, 0x2D00, 0x0F00, 0x1E00,
             1, 0x2800, 0x11D)]
         [WaterBottomVariants(1)]
@@ -3823,6 +3824,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // actorcat PROP, not detected as enemy
         [FlyingToGroundHeightAdjustment(300)]
         [VariantsWithRoomMax(max:0, 0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // until I can get cieling detection modification, this is weird
+        [PlacementWeight(95)]
         //[ForbidFromScene(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         SpikedMine = 0x185, // Obj_Mine
 

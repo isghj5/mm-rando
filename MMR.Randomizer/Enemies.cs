@@ -608,7 +608,8 @@ namespace MMR.Randomizer
                         #if DEBUG
                         else
                         {
-                            log.Append($" in scene [{scene.SceneEnum}][{mapIndex}] actor was skipped over: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}]\n");
+                            log.Append($" in scene [{scene.SceneEnum}][{mapIndex}][{mapActor.OldVariant.ToString("X4")}]" +
+                                $" actor was skipped over: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}]\n");
                         }
                         #endif
                     }
@@ -631,7 +632,8 @@ namespace MMR.Randomizer
                                 var itemText = $"blocked by item [{ (int) importantItem}]";
                                 #endif
 
-                                log.AppendLine($" in scene [{scene.SceneEnum}][{mapIndex}][{mapActor.RoomActorIndex}] actor: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}] was " + itemText);
+                                log.AppendLine($" in scene [{scene.SceneEnum}]m[{mapIndex}]r[{mapActor.RoomActorIndex}]v[{mapActor.OldVariant.ToString("X4")}]" +
+                                    $" actor: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}] was " + itemText);
                                 return;
                             }
 
@@ -1732,12 +1734,19 @@ namespace MMR.Randomizer
 
             var ikanaGraveyardScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaGraveyard.FileID());
             var graveyardGrottoRockCircle = ikanaGraveyardScene.Maps[1].Actors[44];
-            if (graveyardGrottoRockCircle.ActorEnum != GameObjects.Actor.GrassRockCluster) // assumption: currently both have to be randomized at the same time
+            if (graveyardGrottoRockCircle.ActorEnum != GameObjects.Actor.GrassRockCluster)
             {
                 graveyardGrottoRockCircle.Position.z = -1877; // move back from sitting right on top of the grotto
             }
             SceneUtils.UpdateScene(ikanaGraveyardScene);
 
+            var snowheadTempleScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SnowheadTemple.FileID());
+            var snowheadTempleFireArrowWiz = ikanaGraveyardScene.Maps[6].Actors[0];
+            if (snowheadTempleFireArrowWiz.ActorEnum != GameObjects.Actor.Wizrobe)
+            {
+                snowheadTempleFireArrowWiz.Position.x = -1140; // move back to center of the room, not sure why this guy is so close to the door normally
+            }
+            SceneUtils.UpdateScene(snowheadTempleScene);
 
             MoveShopScrubsIfRandomized();
             MovePostmanIfRandomized(terminaField);
