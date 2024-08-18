@@ -2375,10 +2375,10 @@ namespace MMR.Randomizer.GameObjects
             )]
         //[VariantsWithRoomMax(max:0, variant:)]
         [ForbidFromScene(
-            //Scene.WoodfallTemple,
-            //Scene.Grottos,
-            //Scene.SwampSpiderHouse,
-            //Scene.SouthernSwamp,
+            Scene.WoodfallTemple, 
+            Scene.Grottos,
+            Scene.SwampSpiderHouse,
+            Scene.SouthernSwamp, // re-enabled because I need to get around itemizer
             Scene.PiratesFortressRooms // required for cutscene to get actor to leave, for now
             )]
         [UnkillableAllVariants]
