@@ -2378,6 +2378,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.WoodfallTemple, 
             Scene.Grottos,
             Scene.SwampSpiderHouse,
+            Scene.MountainVillageSpring,
             Scene.SouthernSwamp, // re-enabled because I need to get around itemizer
             Scene.PiratesFortressRooms // required for cutscene to get actor to leave, for now
             )]
@@ -5732,6 +5733,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:0, variant:0x050B, 0x3FFF)] // we dont want a sitting npc to be placed places, just replace, also talking to is softlock, and we cannot modify because rando needs this actor for things
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask:0x7F, shift:0)]
+        [PlacementWeight(90)]
         Toto = 0x234, // En_Toto // manager zora band member
 
         [EnemizerEnabled] // does not spawn outside of ikana
@@ -5814,6 +5816,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [EnemizerScenesPlacementBlock(Scene.MilkRoad)] // he can detect keg and try to talk to you about it, also small bombs I bet
         [UnkillableAllVariants]
+        [PlacementWeight(80)]
         GoronWithGeroMask = 0x23A, // En_Geg : HungryGoron, sirloin goron, "Hugo"
 
         [ActorizerEnabled]
@@ -5855,6 +5858,7 @@ namespace MMR.Randomizer.GameObjects
         [RespawningAllVariants] // they do NOT respawn, but they do block clear all rooms
         [UnkillableAllVariants]
         [EnemizerScenesPlacementBlock(Scene.Snowhead)] // can mess with hover
+        [PlacementWeight(75)]
         MothSwarm = 0x23D,  // En_Tanron1
 
         [FileID(533)]
@@ -5892,9 +5896,9 @@ namespace MMR.Randomizer.GameObjects
         )]
         [WaterBottomVariants(0xFE02, // dark cutscene version, perfect for dark water bottom shinanigans
             0xF)] // also, do not put regular variant as water our typing system is dumb, doesnt know which is which
-        [VariantsWithRoomMax(max:1, variant: 0xFE0F/*, 0xFE0F*/)]
+        [VariantsWithRoomMax(max:0, variant: 0xFE0F/*, 0xFE0F*/)] // reduced to zero until I can fix his shit
         [UnkillableAllVariants]
-        [PlacementWeight(30)]
+        [PlacementWeight(50)]
         Evan = 0x241, // En_Zos
 
         [ActorizerEnabled]

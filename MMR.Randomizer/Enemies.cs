@@ -4843,7 +4843,9 @@ namespace MMR.Randomizer
                      && thisSceneData.RNG.Next(100) > actorPlacementWeight ) // under is pass, over is failure
                 {
                     thisSceneData.AcceptableCandidates.Remove(actor);
+                    #if DEBUG
                     thisSceneData.Log.AppendLine($" (-) actor rng weight trimmed from scene placement: [{actor.Name}]");
+                    #endif
                 }
             }
 
@@ -5332,7 +5334,7 @@ namespace MMR.Randomizer
                 var actor = thisSceneData.Actors[a];
                 string dsize = actor.DynaLoad.poly > 0 ? $" dyn: [{actor.DynaLoad.poly}]" : "";
                 #if DEBUG
-                var actorNameData = $"  Old actor:[{thisSceneData.Scene.SceneEnum}][{actor.Room.ToString("D2")}][{actor.OldName}]";
+                var actorNameData = $"  Old actor:[{thisSceneData.Scene.SceneEnum}]r[{actor.Room.ToString("D2")}]o[{actor.OldName}]";
                 #else
                 var actorNameData = $"  Old actor:[{actor.Room.ToString("D2")}][{actor.OldName}] ";
                 #endif
@@ -6057,7 +6059,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 73.5\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 73.6\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
