@@ -3534,7 +3534,7 @@ namespace MMR.Randomizer
             };
 
             if (ACTORSENABLED == true
-             && _randomized.Settings.LogicMode != Models.LogicMode.NoLogic // crazy bitches need their juice
+             //&& _randomized.Settings.LogicMode != Models.LogicMode.NoLogic // requested off to test
              && scenesToForce.Contains(thisSceneData.Scene.SceneEnum))
             {
                 #if DEBUG
