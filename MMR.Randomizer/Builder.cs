@@ -1772,251 +1772,671 @@ namespace MMR.Randomizer
             }
         }
 
-        private void WriteItems(MessageTable messageTable)
+        private void WriteShopText(MessageTable messageTable, List<MessageEntry> newMessages)
         {
-            var freeItems = new List<Item>();
-            if (_randomized.Settings.LogicMode == LogicMode.Vanilla)
+            // update tingle shops
+            foreach (var messageShopText in Enum.GetValues<MessageShopText>())
             {
-                freeItems.Add(Item.FairyMagic);
-                freeItems.Add(Item.MaskDeku);
-                freeItems.Add(Item.ItemOcarina);
-                freeItems.Add(Item.SongTime);
-                freeItems.Add(Item.SongHealing);
-                freeItems.Add(Item.StartingSword);
-                freeItems.Add(Item.StartingShield);
-                freeItems.Add(Item.StartingHeartContainer1);
-                freeItems.Add(Item.StartingHeartContainer2);
+                var messageShop = messageShopText.GetAttribute<MessageShopAttribute>();
+                var item1 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[0]);
+                var item2 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[1]);
+                var messageId = (ushort)messageShopText;
+                var messageHeader = messageTable.GetMessage(messageId).Header;
+                var cost1 = ReadWriteUtils.Arr_ReadU16(messageHeader, 5);
+                var cost2 = ReadWriteUtils.Arr_ReadU16(messageHeader, 7);
 
-                if (_randomized.Settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.EverythingElse))
-                {
-                    //giants cs were removed
-                    freeItems.Add(Item.SongOath);
-                }
-
-                WriteFreeItems(freeItems.ToArray());
-
-                return;
-            }
-
-            //write free item (start item default = Deku Mask)
-            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.MaskDeku).Item);
-            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.SongHealing).Item);
-            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.StartingSword).Item);
-            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.StartingShield).Item);
-            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.StartingHeartContainer1).Item);
-            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.StartingHeartContainer2).Item);
-            WriteFreeItems(freeItems.ToArray());
-
-            //write everything else
-            ItemSwapUtils.ReplaceGetItemTable();
-            ItemSwapUtils.InitItems();
-
-            // Write extended object indexes to Get-Item list entries.
-            WriteExtendedObjects();
-
-            if (_randomized.Settings.FixEponaSword)
-            {
-                ResourceUtils.ApplyHack(Resources.mods.fix_epona);
-            }
-            if (_randomized.Settings.PreventDowngrades)
-            {
-                ResourceUtils.ApplyHack(Resources.mods.fix_downgrades);
-            }
-            if (_randomized.Settings.CustomItemList.Any(item => item.ItemCategory() == ItemCategory.Milk))
-            {
-                ResourceUtils.ApplyHack(Resources.mods.fix_cow_bottle_check);
-            }
-
-            ResourceUtils.ApplyHack(Resources.mods.update_trade_scrubs);
-
-            var newMessages = new List<MessageEntry>();
-            _randomized.Settings.AsmOptions.MMRConfig.RupeeRepeatableLocations.Clear();
-            _randomized.Settings.AsmOptions.MMRConfig.ItemsToReturnIds.Clear();
-            var killBosses = new List<Item>
-            {
-                Item.OtherKillOdolwa,
-                Item.OtherKillGoht,
-                Item.OtherKillGyorg,
-                Item.OtherKillTwinmold,
-            };
-            foreach (var item in _randomized.ItemList)
-            {
-                // Unused item
-                if (item.NewLocation == null)
-                {
-                    continue;
-                }
-
-                if (item.Item.DungeonEntrances() != null)
-                {
-                    continue;
-                }
-
-                if (killBosses.Contains(item.Item))
-                {
-                    continue;
-                }
-
-                if (ItemUtils.IsBottleCatchContent(item.Item))
-                {
-                    ItemSwapUtils.WriteNewBottle(item.NewLocation.Value, item.Item);
-                }
-                else
-                {
-                    ChestTypeAttribute.ChestType? overrideChestType = null;
-                    bool itemIsUsed(int itemId, Stack<int> path)
-                    {
-                        if (path.Contains(itemId))
-                        {
-                            return false;
-                        }
-                        try
-                        {
-                            path.Push(itemId);
-                            var usedBy = _randomized.Logic
-                                .Where(il => !ItemUtils.IsLocationJunk((Item)il.ItemId, _randomized.Settings))
-                                .Where(il => il.RequiredItemIds?.Contains(itemId) == true || il.ConditionalItemIds?.Any(c => c.Contains(itemId)) == true);
-                            if (usedBy.Any(il => !il.IsFakeItem))
-                            {
-                                return true;
-                            }
-
-                            return usedBy.Any(il => itemIsUsed(il.ItemId, path));
-                        }
-                        finally
-                        {
-                            path.Pop();
-                        }
-                    }
-                    if ((item.Item.Name().Contains("Bombchu") || item.Item.Name().Contains("Shield")) && itemIsUsed((int)item.Item, new Stack<int>()))
-                    {
-                        overrideChestType = item.Item.IsTemporary() ? ChestTypeAttribute.ChestType.SmallGold : ChestTypeAttribute.ChestType.LargeGold;
-                    }
-                    if (item.Item.Name().Contains("Compass") && _randomized.Settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.CompassRevealsBoss))
-                    {
-                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
-                    }
-                    if (item.Item.Name().Contains("Map") && item.Item.ClassicCategory() == ClassicCategory.DungeonItems && _randomized.Settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.MapRevealsLocation))
-                    {
-                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
-                    }
-                    if (_randomized.Settings.VictoryMode.HasFlag(VictoryMode.Hearts) && (item.Item.ItemCategory() == ItemCategory.PiecesOfHeart || item.Item.ItemCategory() == ItemCategory.HeartContainers))
-                    {
-                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
-                    }
-                    if (_randomized.Settings.VictoryMode.HasFlag(VictoryMode.Fairies) && ItemUtils.DungeonStrayFairies().Contains(item.Item))
-                    {
-                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
-                    }
-                    if (_randomized.Settings.VictoryMode.HasFlag(VictoryMode.SkullTokens) && item.Item.ItemCategory() == ItemCategory.SkulltulaTokens)
-                    {
-                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
-                    }
-                    ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType, messageTable, _extendedObjects);
-                }
-            }
-
-            _randomized.Settings.AsmOptions.MMRConfig.LocationBottleRedPotion = GetLocationIdOfItem(Item.ItemBottleWitch);
-            _randomized.Settings.AsmOptions.MMRConfig.LocationBottleGoldDust = GetLocationIdOfItem(Item.ItemBottleGoronRace);
-            _randomized.Settings.AsmOptions.MMRConfig.LocationBottleMilk = GetLocationIdOfItem(Item.ItemBottleAliens);
-            _randomized.Settings.AsmOptions.MMRConfig.LocationBottleChateau = GetLocationIdOfItem(Item.ItemBottleMadameAroma);
-
-            _randomized.Settings.AsmOptions.MMRConfig.LocationSwordKokiri = GetLocationIdOfItem(Item.StartingSword);
-            _randomized.Settings.AsmOptions.MMRConfig.LocationSwordRazor = GetLocationIdOfItem(Item.UpgradeRazorSword);
-            _randomized.Settings.AsmOptions.MMRConfig.LocationSwordGilded = GetLocationIdOfItem(Item.UpgradeGildedSword);
-
-            _randomized.Settings.AsmOptions.MMRConfig.LocationMagicSmall = GetLocationIdOfItem(Item.FairyMagic);
-            _randomized.Settings.AsmOptions.MMRConfig.LocationMagicLarge = GetLocationIdOfItem(Item.FairyDoubleMagic);
-
-            _randomized.Settings.AsmOptions.MMRConfig.LocationWalletAdult = GetLocationIdOfItem(Item.UpgradeAdultWallet);
-            _randomized.Settings.AsmOptions.MMRConfig.LocationWalletGiant = GetLocationIdOfItem(Item.UpgradeGiantWallet);
-            _randomized.Settings.AsmOptions.MMRConfig.LocationWalletRoyal = GetLocationIdOfItem(Item.UpgradeRoyalWallet);
-
-            _randomized.Settings.AsmOptions.MMRConfig.LocationBombBagSmall = GetLocationIdOfItem(Item.ItemBombBag);
-            _randomized.Settings.AsmOptions.MMRConfig.LocationBombBagBig = GetLocationIdOfItem(Item.UpgradeBigBombBag);
-            _randomized.Settings.AsmOptions.MMRConfig.LocationBombBagBiggest = GetLocationIdOfItem(Item.UpgradeBiggestBombBag);
-
-            _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverSmall = GetLocationIdOfItem(Item.ItemBow);
-            _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLarge = GetLocationIdOfItem(Item.UpgradeBigQuiver);
-            _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLargest = GetLocationIdOfItem(Item.UpgradeBiggestQuiver);
-
-            _randomized.Settings.AsmOptions.MMRConfig.LocationLullaby = GetLocationIdOfItem(Item.SongLullaby);
-            _randomized.Settings.AsmOptions.MMRConfig.LocationLullabyIntro = GetLocationIdOfItem(Item.SongLullabyIntro);
-
-            if (_randomized.Settings.UpdateShopAppearance)
-            {
-                // update tingle shops
-                foreach (var messageShopText in Enum.GetValues<MessageShopText>())
-                {
-                    var messageShop = messageShopText.GetAttribute<MessageShopAttribute>();
-                    var item1 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[0]);
-                    var item2 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[1]);
-                    var messageId = (ushort)messageShopText;
-                    var messageHeader = messageTable.GetMessage(messageId).Header;
-                    var cost1 = ReadWriteUtils.Arr_ReadU16(messageHeader, 5);
-                    var cost2 = ReadWriteUtils.Arr_ReadU16(messageHeader, 7);
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(messageId)
-                        .Message(it =>
-                        {
-                            var item1Cost = $"{cost1} Rupee{(cost1 != 1 ? "s" : "")}";
-                            var item2Cost = $"{cost2} Rupee{(cost2 != 1 ? "s" : "")}";
-                            var maxLineLength = 35;
-                            var maxItem1NameLength = maxLineLength - $": {item1Cost}".Length;
-                            var maxItem2NameLength = maxLineLength - $": {item2Cost}".Length;
-                            var item1Name = item1.DisplayName();
-                            var item2Name = item2.DisplayName();
-                            if (item1Name.Length > maxItem1NameLength)
-                            {
-                                item1Name = item1Name.Substring(0, maxItem1NameLength - 3) + "...";
-                            }
-                            if (item2Name.Length > maxItem2NameLength)
-                            {
-                                item2Name = item2Name.Substring(0, maxItem2NameLength - 3) + "...";
-                            }
-                            switch (messageShop.MessageShopStyle)
-                            {
-                                case MessageShopStyle.Tingle:
-                                    it.StartGreenText()
-                                    .ThreeChoices()
-                                    .RuntimeItemName(item1Name, item1.NewLocation.Value).Text(": ").Red(item1Cost).NewLine()
-                                    .RuntimeItemName(item2Name, item2.NewLocation.Value).Text(": ").Red(item2Cost).NewLine()
-                                    .Text("No Thanks")
-                                    .EndFinalTextBox();
-                                    break;
-                                case MessageShopStyle.MilkBar:
-                                    it.Text("What'll it be?")
-                                    .EndTextBox()
-                                    .StartGreenText()
-                                    .ThreeChoices()
-                                    .RuntimeItemName(item1Name, item1.NewLocation.Value).Text(": ").Pink(item1Cost).NewLine()
-                                    .RuntimeItemName(item2Name, item2.NewLocation.Value).Text(": ").Pink(item2Cost).NewLine()
-                                    .Text("Nothing")
-                                    .EndFinalTextBox();
-                                    break;
-                            }
-                        })
-                        .Build()
-                    );
-                }
-
-                // update business scrub
-                var businessScrubItem = _randomized.ItemList.First(io => io.NewLocation == Item.HeartPieceTerminaBusinessScrub);
                 newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x1631)
+                    .Id(messageId)
                     .Message(it =>
                     {
-                        it.PlaySoundEffect(0x3AD2)
+                        var item1Cost = $"{cost1} Rupee{(cost1 != 1 ? "s" : "")}";
+                        var item2Cost = $"{cost2} Rupee{(cost2 != 1 ? "s" : "")}";
+                        var maxLineLength = 35;
+                        var maxItem1NameLength = maxLineLength - $": {item1Cost}".Length;
+                        var maxItem2NameLength = maxLineLength - $": {item2Cost}".Length;
+                        var item1Name = item1.DisplayName();
+                        var item2Name = item2.DisplayName();
+                        if (item1Name.Length > maxItem1NameLength)
+                        {
+                            item1Name = item1Name.Substring(0, maxItem1NameLength - 3) + "...";
+                        }
+                        if (item2Name.Length > maxItem2NameLength)
+                        {
+                            item2Name = item2Name.Substring(0, maxItem2NameLength - 3) + "...";
+                        }
+                        switch (messageShop.MessageShopStyle)
+                        {
+                            case MessageShopStyle.Tingle:
+                                it.StartGreenText()
+                                .ThreeChoices()
+                                .RuntimeItemName(item1Name, item1.NewLocation.Value).Text(": ").Red(item1Cost).NewLine()
+                                .RuntimeItemName(item2Name, item2.NewLocation.Value).Text(": ").Red(item2Cost).NewLine()
+                                .Text("No Thanks")
+                                .EndFinalTextBox();
+                                break;
+                            case MessageShopStyle.MilkBar:
+                                it.Text("What'll it be?")
+                                .EndTextBox()
+                                .StartGreenText()
+                                .ThreeChoices()
+                                .RuntimeItemName(item1Name, item1.NewLocation.Value).Text(": ").Pink(item1Cost).NewLine()
+                                .RuntimeItemName(item2Name, item2.NewLocation.Value).Text(": ").Pink(item2Cost).NewLine()
+                                .Text("Nothing")
+                                .EndFinalTextBox();
+                                break;
+                        }
+                    })
+                    .Build()
+                );
+            }
+
+            // update business scrub
+            var businessScrubItem = _randomized.ItemList.First(io => io.NewLocation == Item.HeartPieceTerminaBusinessScrub);
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x1631)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x3AD2)
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("Please! I'll sell you ")
+                        .RuntimeArticle(businessScrubItem.DisplayItem, businessScrubItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(businessScrubItem.DisplayName(), businessScrubItem.NewLocation.Value);
+                        })
+                        .Text(" if you just keep this place a secret...")
+                        ;
+                    })
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x1632)
+                .Message(it =>
+                {
+                    it.Pink("150 Rupees").Text(" for").RuntimePronounOrAmount(businessScrubItem.DisplayItem, businessScrubItem.NewLocation.Value).Text("!").NewLine()
+                    .Text(" ").NewLine()
+                    .StartGreenText()
+                    .TwoChoices()
+                    .Text("I'll buy ").RuntimePronoun(businessScrubItem.DisplayItem, businessScrubItem.NewLocation.Value).NewLine()
+                    .Text("No thanks")
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x1634)
+                .Message(it =>
+                {
+                    it.Text("What about for ").Pink("100 Rupees").Text("?").NewLine()
+                    .Text(" ").NewLine()
+                    .StartGreenText()
+                    .TwoChoices()
+                    .Text("I'll buy ").RuntimePronoun(businessScrubItem.DisplayItem, businessScrubItem.NewLocation.Value).NewLine()
+                    .Text("No thanks")
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            // update biggest bomb bag purchase
+            var biggestBombBagItem = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeBiggestBombBag);
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x15F5)
+                .Message(it =>
+                {
+                    it.RuntimeWrap(() =>
+                    {
+                        it.Text("I sell ")
+                        .RuntimeArticle(biggestBombBagItem.DisplayItem, biggestBombBagItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(biggestBombBagItem.AlternateName(), biggestBombBagItem.NewLocation.Value);
+                        })
+                        .Text(", but I'm focusing my marketing efforts on ").Red("Gorons").Text(".")
+                        ;
+                    })
+                    .EndTextBox()
+                    .CompileTimeWrap("What I'd really like to do is go back home and do business where I'm surrounded by trees and grass.")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x15FF)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x398C)
+                    .Text("Right now, I've got a ").Red("special").NewLine()
+                    .Text("offer just for you.")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x1600)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x3881)
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("I'll give you ")
+                        .RuntimeArticle(biggestBombBagItem.DisplayItem, biggestBombBagItem.NewLocation.Value, "my ")
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(biggestBombBagItem.DisplayName(), biggestBombBagItem.NewLocation.Value);
+                        })
+                        .Text(", regularly priced at ")
+                        .Pink("1000 Rupees")
+                        .Text("...")
+                        ;
+                    })
+                    .EndTextBox()
+                    .Text("In return, you'll give me just").NewLine()
+                    .Pink("200 Rupees").Text("!")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x1606)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x3881)
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("I'll give you ")
+                        .RuntimeArticle(biggestBombBagItem.DisplayItem, biggestBombBagItem.NewLocation.Value, "my ")
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(biggestBombBagItem.DisplayName(), biggestBombBagItem.NewLocation.Value);
+                        })
+                        .Text(", regularly priced at ")
+                        .Pink("1000 Rupees")
+                        .Text(", for just ")
+                        .Pink("200 Rupees")
+                        .Text("!")
+                        ;
+                    })
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            // update swamp scrub purchase
+            var magicBeanItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemBusinessScrubMagicBean);
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x15E1)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x39A7)
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("I'm selling ")
+                        .RuntimeArticle(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(magicBeanItem.DisplayName(), magicBeanItem.NewLocation.Value);
+                        })
+                        .Text(" to Deku Scrubs, but I'll really like to leave my hometown.")
+                        ;
+                    })
+                    .EndTextBox()
+                    .CompileTimeWrap("I'm hoping to find some success in a livelier place!")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x15E9)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x3AD2)
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("Do you know what ")
+                        .RuntimeArticle(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(magicBeanItem.AlternateName(), magicBeanItem.NewLocation.Value);
+                        })
+                        .Text(" ")
+                        .RuntimeVerb(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
+                        .Text(", sir?")
+                        ;
+                    })
+                    .NewLine()
+                    .Text("I'll sell you").RuntimePronounOrAmount(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value).Text(" for ").Pink("10 Rupees").Text(".")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x15F3)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x3AD2)
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("Do you know what ")
+                        .RuntimeArticle(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(magicBeanItem.AlternateName(), magicBeanItem.NewLocation.Value);
+                        })
+                        .Text(" ")
+                        .RuntimeVerb(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
+                        .Text("?")
+                        ;
+                    })
+                    .NewLine()
+                    .Text("I'll sell you").RuntimePronounOrAmount(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value).Text(" for ").Pink("10 Rupees").Text(".")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            // update ocean scrub purchase
+            var greenPotionItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemBusinessScrubGreenPotion);
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x1608)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x39A7)
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("I'm selling ")
+                        .RuntimeArticle(greenPotionItem.DisplayItem, greenPotionItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(greenPotionItem.AlternateName(), greenPotionItem.NewLocation.Value);
+                        })
+                        .Text(", but I'm focusing my marketing efforts on Zoras.")
+                        ;
+                    })
+                    .EndTextBox()
+                    .CompileTimeWrap("Actually, I'd like to do business someplace where it's cooler and the air is clean.")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x1612)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x398C)
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("I'll sell you ")
+                        .RuntimeArticle(greenPotionItem.DisplayItem, greenPotionItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(greenPotionItem.DisplayName(), greenPotionItem.NewLocation.Value);
+                        })
+                        .Text(" for ")
+                        .Pink("40 Rupees")
+                        .Text("!")
+                        ;
+                    })
+                    .EndConversation()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            var coldifyRegex = new Regex("([A-Z])");
+            var coldItemName = coldifyRegex.Replace(greenPotionItem.DisplayItem.Name(), "$1-$1");
+            // TODO coldify replacement item name
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x1617)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x398C)
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("I'll s-sell you ")
+                        .RuntimeArticle(greenPotionItem.DisplayItem, greenPotionItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(coldItemName, greenPotionItem.NewLocation.Value);
+                        })
+                        .Text(" for ")
+                        .Pink("40 Rupees")
+                        .Text(".")
+                        ;
+                    })
+                    .EndConversation()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x1618)
+                .Message(it =>
+                {
+                    it.Text("D-Do we have a deal?").NewLine()
+                    .Text(" ").NewLine()
+                    .StartGreenText()
+                    .TwoChoices()
+                    .Text("Yes").NewLine()
+                    .Text("No")
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            // update canyon scrub purchase
+            var bluePotionItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemBusinessScrubBluePotion);
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x161C)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x39A7)
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("I'm here to sell ")
+                        .RuntimeArticle(bluePotionItem.DisplayItem, bluePotionItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(bluePotionItem.AlternateName(), bluePotionItem.NewLocation.Value);
+                        })
+                        .Text(".")
+                        ;
+                    })
+                    .EndTextBox()
+                    .CompileTimeWrap("Actually, I want to do business in the sea breeze while listening to the sound of the waves.")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x1626)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x3AD2)
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("Don't you need ")
+                        .RuntimeArticle(bluePotionItem.DisplayItem, bluePotionItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(bluePotionItem.AlternateName(), bluePotionItem.NewLocation.Value);
+                        })
+                        .Text("? I'll sell you")
+                        .RuntimePronounOrAmount(bluePotionItem.DisplayItem, bluePotionItem.NewLocation.Value)
+                        .Text(" for ")
+                        .Pink("100 Rupees")
+                        .Text(".")
+                        ;
+                    })
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x162D)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x398C)
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("I'll sell you ")
+                        .RuntimeArticle(bluePotionItem.DisplayItem, bluePotionItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.Text(bluePotionItem.DisplayName());
+                        })
+                        .Text(" for ")
+                        .Pink("100 Rupees")
+                        .Text(".")
+                        ;
+                    })
+                    .EndConversation()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x15EA)
+                .Message(it =>
+                {
+                    it.Text("Do we have a deal?").NewLine()
+                    .Text(" ").NewLine()
+                    .StartGreenText()
+                    .TwoChoices()
+                    .Text("Yes").NewLine()
+                    .Text("No")
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            // update gorman bros milk purchase
+            var gormanBrosMilkItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemGormanBrosMilk);
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x3463)
+                .Message(it =>
+                {
+                    it.RuntimeWrap(() =>
+                    {
+                        it.Text("Won'tcha buy ")
+                        .RuntimeArticle(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(gormanBrosMilkItem.AlternateName(), gormanBrosMilkItem.NewLocation.Value);
+                        })
+                        .Text("?")
+                        ;
+                    })
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x3466)
+                .Message(it =>
+                {
+                    it.Pink("50 Rupees").Text(" will do ya for").RuntimePronounOrAmount(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value).Text(".").NewLine()
+                    .Text(" ").NewLine()
+                    .StartGreenText()
+                    .TwoChoices()
+                    .Text("I'll buy ").RuntimePronoun(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value).NewLine()
+                    .Text("No thanks")
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x346B)
+                .Message(it =>
+                {
+                    it.RuntimeWrap(() =>
+                    {
+                        it.Text("Buyin' ")
+                        .RuntimeArticle(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(gormanBrosMilkItem.AlternateName(), gormanBrosMilkItem.NewLocation.Value);
+                        })
+                        .Text("?")
+                        ;
+                    })
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x348F)
+                .Message(it =>
+                {
+                    it.RuntimeWrap(() =>
+                    {
+                        it.Text("Seems like we're the only ones who have ")
+                        .RuntimeArticle(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(gormanBrosMilkItem.AlternateName(), gormanBrosMilkItem.NewLocation.Value);
+                        })
+                        .Text(". Hyuh, hyuh. If you like, I'll sell you")
+                        .RuntimePronounOrAmount(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value)
+                        .Text(".")
+                        ;
+                    })
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x3490)
+                .Message(it =>
+                {
+                    it.Pink("50 Rupees").Text(" will do you for").RuntimePronounOrAmount(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value).Text("!").NewLine()
+                    .Text(" ").NewLine()
+                    .StartGreenText()
+                    .TwoChoices()
+                    .Text("I'll buy ").RuntimePronoun(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value).NewLine()
+                    .Text("No thanks")
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            // update lottery message
+            var lotteryItem = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemLotteryPurpleRupee);
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x2B5C)
+                .Message(it =>
+                {
+                    it.CompileTimeWrap((wrapped) =>
+                    {
+                        wrapped.Text("Would you like the chance to buy your dreams for ").Pink("10 Rupees").Text("?");
+                    })
+                    .EndTextBox()
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("Pick any three numbers, and if those are picked, you'll win ")
+                        .RuntimeArticle(lotteryItem.DisplayItem, lotteryItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(lotteryItem.DisplayName(), lotteryItem.NewLocation.Value);
+                        })
+                        .Text(". It's only for the ")
+                        .Red("first")
+                        .Text(" person!")
+                        ;
+                    })
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x2B66)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x4853)
+                    .Text("Congratulations!")
+                    .EndTextBox()
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("You win a prize of ")
+                        .RuntimeArticle(lotteryItem.DisplayItem, lotteryItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(lotteryItem.DisplayName(), lotteryItem.NewLocation.Value);
+                        })
+                        .Text("!")
+                        ;
+                    })
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            // Update Witch Blue Potion message
+            var witchBluePotionItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemWitchBluePotion);
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x880)
+                .Message(it =>
+                {
+                    it.Red(() =>
+                    {
+                        it.RuntimeItemName(witchBluePotionItem.DisplayName(), witchBluePotionItem.NewLocation.Value).Text(": 60 Rupees").NewLine();
+                    })
+                    .Text("Actually, I can't get the").NewLine()
+                    .Text("ingredients for this, so I'm sold").NewLine()
+                    .Text("out. Sorry.")
+                    .DisableTextBoxClose()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x881)
+                .Message(it =>
+                {
+                    it.RuntimeWrap(() =>
+                    {
+                        it.Text("What's that? You want ")
+                        .RuntimeArticle(witchBluePotionItem.DisplayItem, witchBluePotionItem.NewLocation.Value)
+                        .Red(() =>
+                        {
+                            it.RuntimeItemName(witchBluePotionItem.DisplayName(), witchBluePotionItem.NewLocation.Value);
+                        })
+                        .Text(", do you?")
+                        ;
+                    })
+                    .EndTextBox()
+                    .Text("Well, you gave me a mushroom, so").NewLine()
+                    .Text("I'll give you").RuntimePronounOrAmount(witchBluePotionItem.DisplayItem, witchBluePotionItem.NewLocation.Value).Text(" for free.")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            // Update Keg Challenge
+            var kegChallengeItem = _randomized.ItemList.First(io => io.NewLocation == Item.ItemPowderKeg);
+            if (kegChallengeItem.Item != Item.ItemPowderKeg)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0xC80)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x38BB)
                         .RuntimeWrap(() =>
                         {
-                            it.Text("Please! I'll sell you ")
-                            .RuntimeArticle(businessScrubItem.DisplayItem, businessScrubItem.NewLocation.Value)
+                            it.Text("I'm the Goron who sells ")
+                            .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
                             .Red(() =>
                             {
-                                it.RuntimeItemName(businessScrubItem.DisplayName(), businessScrubItem.NewLocation.Value);
+                                it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
                             })
-                            .Text(" if you just keep this place a secret...")
+                            .Text(", the most famous product of the Gorons.")
                             ;
                         })
                         .DisableTextSkip2()
@@ -2025,788 +2445,270 @@ namespace MMR.Randomizer
                     .Build()
                 );
                 newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x1632)
+                    .Id(0xC81)
                     .Message(it =>
                     {
-                        it.Pink("150 Rupees").Text(" for").RuntimePronounOrAmount(businessScrubItem.DisplayItem, businessScrubItem.NewLocation.Value).Text("!").NewLine()
-                        .Text(" ").NewLine()
-                        .StartGreenText()
-                        .TwoChoices()
-                        .Text("I'll buy ").RuntimePronoun(businessScrubItem.DisplayItem, businessScrubItem.NewLocation.Value).NewLine()
-                        .Text("No thanks")
+                        it.PlaySoundEffect(0x38FC)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Want ")
+                            .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                            })
+                            .Text("? Be careful, ")
+                            .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
+                            })
+                            .Text(" ")
+                            .RuntimeVerb(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                            .Text(" very dangerous...")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("Until I have tested you to see if you are responsible, I can't sell to you.")
+                        .DisableTextSkip2()
                         .EndFinalTextBox();
                     })
                     .Build()
                 );
                 newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x1634)
+                    .Id(0xC83)
                     .Message(it =>
                     {
-                        it.Text("What about for ").Pink("100 Rupees").Text("?").NewLine()
-                        .Text(" ").NewLine()
-                        .StartGreenText()
-                        .TwoChoices()
-                        .Text("I'll buy ").RuntimePronoun(businessScrubItem.DisplayItem, businessScrubItem.NewLocation.Value).NewLine()
-                        .Text("No thanks")
+                        it.PlaySoundEffect(0x38FC)
+                        .Text("If you can ").Red("destroy").Text(" the boulder").NewLine()
+                        .Text("that blocks the entrance to the").NewLine()
+                        .Red("Goron Racetrack").Text(" near here...")
+                        .EndTextBox()
+                        .Text("using the ").Red("Powder Keg ").Text("I'm about").NewLine()
+                        .Text("to give you, then I'll sell to you.")
+                        .DisableTextSkip2()
                         .EndFinalTextBox();
                     })
                     .Build()
                 );
-
-                // update biggest bomb bag purchase
-                var biggestBombBagItem = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeBiggestBombBag);
                 newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x15F5)
+                    .Id(0xC86)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x3A04)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("It looks like you managed to succeed! Knowing your skills, I feel fine letting you handle ")
+                            .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                            .RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value)
+                            .Text(" on your own.")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("It was bad of me to put you").NewLine()
+                        .Text("through such a dangerous test. I").NewLine()
+                        .Text("want you to take this as my").NewLine()
+                        .Text("apology.")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0xC88)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x38FC)
+                        .Text("You failed?").NewLine()
+                        .Text("In that case, I can't sell").NewLine()
+                        .Text("to you.")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0xC8C)
                     .Message(it =>
                     {
                         it.RuntimeWrap(() =>
                         {
-                            it.Text("I sell ")
-                            .RuntimeArticle(biggestBombBagItem.DisplayItem, biggestBombBagItem.NewLocation.Value)
+                            it.Text("Will you a buy ")
+                            .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
                             .Red(() =>
                             {
-                                it.RuntimeItemName(biggestBombBagItem.AlternateName(), biggestBombBagItem.NewLocation.Value);
+                                it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
                             })
-                            .Text(", but I'm focusing my marketing efforts on ").Red("Gorons").Text(".")
-                            ;
-                        })
-                        .EndTextBox()
-                        .CompileTimeWrap("What I'd really like to do is go back home and do business where I'm surrounded by trees and grass.")
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x15FF)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x398C)
-                        .Text("Right now, I've got a ").Red("special").NewLine()
-                        .Text("offer just for you.")
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x1600)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x3881)
-                        .RuntimeWrap(() =>
-                        {
-                            it.Text("I'll give you ")
-                            .RuntimeArticle(biggestBombBagItem.DisplayItem, biggestBombBagItem.NewLocation.Value, "my ")
-                            .Red(() =>
-                            {
-                                it.RuntimeItemName(biggestBombBagItem.DisplayName(), biggestBombBagItem.NewLocation.Value);
-                            })
-                            .Text(", regularly priced at ")
-                            .Pink("1000 Rupees")
-                            .Text("...")
-                            ;
-                        })
-                        .EndTextBox()
-                        .Text("In return, you'll give me just").NewLine()
-                        .Pink("200 Rupees").Text("!")
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x1606)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x3881)
-                        .RuntimeWrap(() =>
-                        {
-                            it.Text("I'll give you ")
-                            .RuntimeArticle(biggestBombBagItem.DisplayItem, biggestBombBagItem.NewLocation.Value, "my ")
-                            .Red(() =>
-                            {
-                                it.RuntimeItemName(biggestBombBagItem.DisplayName(), biggestBombBagItem.NewLocation.Value);
-                            })
-                            .Text(", regularly priced at ")
-                            .Pink("1000 Rupees")
-                            .Text(", for just ")
-                            .Pink("200 Rupees")
-                            .Text("!")
-                            ;
-                        })
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                // update swamp scrub purchase
-                var magicBeanItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemBusinessScrubMagicBean);
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x15E1)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x39A7)
-                        .RuntimeWrap(() =>
-                        {
-                            it.Text("I'm selling ")
-                            .RuntimeArticle(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
-                            .Red(() =>
-                            {
-                                it.RuntimeItemName(magicBeanItem.DisplayName(), magicBeanItem.NewLocation.Value);
-                            })
-                            .Text(" to Deku Scrubs, but I'll really like to leave my hometown.")
-                            ;
-                        })
-                        .EndTextBox()
-                        .CompileTimeWrap("I'm hoping to find some success in a livelier place!")
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x15E9)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x3AD2)
-                        .RuntimeWrap(() =>
-                        {
-                            it.Text("Do you know what ")
-                            .RuntimeArticle(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
-                            .Red(() =>
-                            {
-                                it.RuntimeItemName(magicBeanItem.AlternateName(), magicBeanItem.NewLocation.Value);
-                            })
-                            .Text(" ")
-                            .RuntimeVerb(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
-                            .Text(", sir?")
+                            .Text(" for ").Pink("100 Rupees").Text("?")
                             ;
                         })
                         .NewLine()
-                        .Text("I'll sell you").RuntimePronounOrAmount(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value).Text(" for ").Pink("10 Rupees").Text(".")
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x15F3)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x3AD2)
-                        .RuntimeWrap(() =>
-                        {
-                            it.Text("Do you know what ")
-                            .RuntimeArticle(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
-                            .Red(() =>
-                            {
-                                it.RuntimeItemName(magicBeanItem.AlternateName(), magicBeanItem.NewLocation.Value);
-                            })
-                            .Text(" ")
-                            .RuntimeVerb(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
-                            .Text("?")
-                            ;
-                        })
-                        .NewLine()
-                        .Text("I'll sell you").RuntimePronounOrAmount(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value).Text(" for ").Pink("10 Rupees").Text(".")
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                // update ocean scrub purchase
-                var greenPotionItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemBusinessScrubGreenPotion);
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x1608)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x39A7)
-                        .RuntimeWrap(() =>
-                        {
-                            it.Text("I'm selling ")
-                            .RuntimeArticle(greenPotionItem.DisplayItem, greenPotionItem.NewLocation.Value)
-                            .Red(() =>
-                            {
-                                it.RuntimeItemName(greenPotionItem.AlternateName(), greenPotionItem.NewLocation.Value);
-                            })
-                            .Text(", but I'm focusing my marketing efforts on Zoras.")
-                            ;
-                        })
-                        .EndTextBox()
-                        .CompileTimeWrap("Actually, I'd like to do business someplace where it's cooler and the air is clean.")
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x1612)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x398C)
-                        .RuntimeWrap(() =>
-                        {
-                            it.Text("I'll sell you ")
-                            .RuntimeArticle(greenPotionItem.DisplayItem, greenPotionItem.NewLocation.Value)
-                            .Red(() =>
-                            {
-                                it.RuntimeItemName(greenPotionItem.DisplayName(), greenPotionItem.NewLocation.Value);
-                            })
-                            .Text(" for ")
-                            .Pink("40 Rupees")
-                            .Text("!")
-                            ;
-                        })
-                        .EndConversation()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                var coldifyRegex = new Regex("([A-Z])");
-                var coldItemName = coldifyRegex.Replace(greenPotionItem.DisplayItem.Name(), "$1-$1");
-                // TODO coldify replacement item name
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x1617)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x398C)
-                        .RuntimeWrap(() =>
-                        {
-                            it.Text("I'll s-sell you ")
-                            .RuntimeArticle(greenPotionItem.DisplayItem, greenPotionItem.NewLocation.Value)
-                            .Red(() =>
-                            {
-                                it.RuntimeItemName(coldItemName, greenPotionItem.NewLocation.Value);
-                            })
-                            .Text(" for ")
-                            .Pink("40 Rupees")
-                            .Text(".")
-                            ;
-                        })
-                        .EndConversation()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x1618)
-                    .Message(it =>
-                    {
-                        it.Text("D-Do we have a deal?").NewLine()
-                        .Text(" ").NewLine()
                         .StartGreenText()
                         .TwoChoices()
-                        .Text("Yes").NewLine()
-                        .Text("No")
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                // update canyon scrub purchase
-                var bluePotionItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemBusinessScrubBluePotion);
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x161C)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x39A7)
-                        .RuntimeWrap(() =>
-                        {
-                            it.Text("I'm here to sell ")
-                            .RuntimeArticle(bluePotionItem.DisplayItem, bluePotionItem.NewLocation.Value)
-                            .Red(() =>
-                            {
-                                it.RuntimeItemName(bluePotionItem.AlternateName(), bluePotionItem.NewLocation.Value);
-                            })
-                            .Text(".")
-                            ;
-                        })
-                        .EndTextBox()
-                        .CompileTimeWrap("Actually, I want to do business in the sea breeze while listening to the sound of the waves.")
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x1626)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x3AD2)
-                        .RuntimeWrap(() =>
-                        {
-                            it.Text("Don't you need ")
-                            .RuntimeArticle(bluePotionItem.DisplayItem, bluePotionItem.NewLocation.Value)
-                            .Red(() =>
-                            {
-                                it.RuntimeItemName(bluePotionItem.AlternateName(), bluePotionItem.NewLocation.Value);
-                            })
-                            .Text("? I'll sell you")
-                            .RuntimePronounOrAmount(bluePotionItem.DisplayItem, bluePotionItem.NewLocation.Value)
-                            .Text(" for ")
-                            .Pink("100 Rupees")
-                            .Text(".")
-                            ;
-                        })
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x162D)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x398C)
-                        .RuntimeWrap(() =>
-                        {
-                            it.Text("I'll sell you ")
-                            .RuntimeArticle(bluePotionItem.DisplayItem, bluePotionItem.NewLocation.Value)
-                            .Red(() =>
-                            {
-                                it.Text(bluePotionItem.DisplayName());
-                            })
-                            .Text(" for ")
-                            .Pink("100 Rupees")
-                            .Text(".")
-                            ;
-                        })
-                        .EndConversation()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x15EA)
-                    .Message(it =>
-                    {
-                        it.Text("Do we have a deal?").NewLine()
-                        .Text(" ").NewLine()
-                        .StartGreenText()
-                        .TwoChoices()
-                        .Text("Yes").NewLine()
-                        .Text("No")
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                // update gorman bros milk purchase
-                var gormanBrosMilkItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemGormanBrosMilk);
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x3463)
-                    .Message(it =>
-                    {
-                        it.RuntimeWrap(() =>
-                        {
-                            it.Text("Won'tcha buy ")
-                            .RuntimeArticle(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value)
-                            .Red(() =>
-                            {
-                                it.RuntimeItemName(gormanBrosMilkItem.AlternateName(), gormanBrosMilkItem.NewLocation.Value);
-                            })
-                            .Text("?")
-                            ;
-                        })
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x3466)
-                    .Message(it =>
-                    {
-                        it.Pink("50 Rupees").Text(" will do ya for").RuntimePronounOrAmount(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value).Text(".").NewLine()
-                        .Text(" ").NewLine()
-                        .StartGreenText()
-                        .TwoChoices()
-                        .Text("I'll buy ").RuntimePronoun(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value).NewLine()
+                        .Text("I'll buy ").RuntimePronoun(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value).NewLine()
                         .Text("No thanks")
                         .EndFinalTextBox();
                     })
                     .Build()
                 );
                 newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x346B)
+                    .Id(0xC8E)
                     .Message(it =>
                     {
                         it.RuntimeWrap(() =>
                         {
-                            it.Text("Buyin' ")
-                            .RuntimeArticle(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value)
+                            it.Text("I'm the Goron who sells ")
+                            .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
                             .Red(() =>
                             {
-                                it.RuntimeItemName(gormanBrosMilkItem.AlternateName(), gormanBrosMilkItem.NewLocation.Value);
+                                it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
                             })
-                            .Text("?")
+                            .Text(", the most famous product of the Gorons.")
                             ;
-                        })
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x348F)
-                    .Message(it =>
-                    {
-                        it.RuntimeWrap(() =>
-                        {
-                            it.Text("Seems like we're the only ones who have ")
-                            .RuntimeArticle(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value)
-                            .Red(() =>
-                            {
-                                it.RuntimeItemName(gormanBrosMilkItem.AlternateName(), gormanBrosMilkItem.NewLocation.Value);
-                            })
-                            .Text(". Hyuh, hyuh. If you like, I'll sell you")
-                            .RuntimePronounOrAmount(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value)
-                            .Text(".")
-                            ;
-                        })
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x3490)
-                    .Message(it =>
-                    {
-                        it.Pink("50 Rupees").Text(" will do you for").RuntimePronounOrAmount(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value).Text("!").NewLine()
-                        .Text(" ").NewLine()
-                        .StartGreenText()
-                        .TwoChoices()
-                        .Text("I'll buy ").RuntimePronoun(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value).NewLine()
-                        .Text("No thanks")
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                // update lottery message
-                var lotteryItem = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemLotteryPurpleRupee);
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x2B5C)
-                    .Message(it =>
-                    {
-                        it.CompileTimeWrap((wrapped) =>
-                        {
-                            wrapped.Text("Would you like the chance to buy your dreams for ").Pink("10 Rupees").Text("?");
                         })
                         .EndTextBox()
                         .RuntimeWrap(() =>
                         {
-                            it.Text("Pick any three numbers, and if those are picked, you'll win ")
-                            .RuntimeArticle(lotteryItem.DisplayItem, lotteryItem.NewLocation.Value)
+                            it.Text("But the rules say I can't sell ")
+                            .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
                             .Red(() =>
                             {
-                                it.RuntimeItemName(lotteryItem.DisplayName(), lotteryItem.NewLocation.Value);
+                                it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
                             })
-                            .Text(". It's only for the ")
-                            .Red("first")
-                            .Text(" person!")
+                            .Text(" to anyone who isn't a").Red(" Goron").Text(". ").PlaySoundEffect(0x391C).Text("Sorry.")
                             ;
                         })
-                        .DisableTextSkip2()
                         .EndFinalTextBox();
                     })
                     .Build()
                 );
                 newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x2B66)
-                    .Message(it =>
-                    {
-                        it.PlaySoundEffect(0x4853)
-                        .Text("Congratulations!")
-                        .EndTextBox()
-                        .RuntimeWrap(() =>
-                        {
-                            it.Text("You win a prize of ")
-                            .RuntimeArticle(lotteryItem.DisplayItem, lotteryItem.NewLocation.Value)
-                            .Red(() =>
-                            {
-                                it.RuntimeItemName(lotteryItem.DisplayName(), lotteryItem.NewLocation.Value);
-                            })
-                            .Text("!")
-                            ;
-                        })
-                        .DisableTextSkip2()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-
-                // Update Witch Blue Potion message
-                var witchBluePotionItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemWitchBluePotion);
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x880)
-                    .Message(it =>
-                    {
-                        it.Red(() =>
-                        {
-                            it.RuntimeItemName(witchBluePotionItem.DisplayName(), witchBluePotionItem.NewLocation.Value).Text(": 60 Rupees").NewLine();
-                        })
-                        .Text("Actually, I can't get the").NewLine()
-                        .Text("ingredients for this, so I'm sold").NewLine()
-                        .Text("out. Sorry.")
-                        .DisableTextBoxClose()
-                        .EndFinalTextBox();
-                    })
-                    .Build()
-                );
-                newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x881)
+                    .Id(0xC8F)
                     .Message(it =>
                     {
                         it.RuntimeWrap(() =>
                         {
-                            it.Text("What's that? You want ")
-                            .RuntimeArticle(witchBluePotionItem.DisplayItem, witchBluePotionItem.NewLocation.Value)
+                            it.Text("The rules say I can't sell ")
+                            .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
                             .Red(() =>
                             {
-                                it.RuntimeItemName(witchBluePotionItem.DisplayName(), witchBluePotionItem.NewLocation.Value);
+                                it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
                             })
-                            .Text(", do you?")
+                            .Text(" to anyone who isn't a").Red(" Goron").Text(". ").PlaySoundEffect(0x391C).Text("Sorry.")
                             ;
                         })
-                        .EndTextBox()
-                        .Text("Well, you gave me a mushroom, so").NewLine()
-                        .Text("I'll give you").RuntimePronounOrAmount(witchBluePotionItem.DisplayItem, witchBluePotionItem.NewLocation.Value).Text(" for free.")
-                        .DisableTextSkip2()
                         .EndFinalTextBox();
                     })
                     .Build()
                 );
+            }
 
-                // Update Keg Challenge
-                var kegChallengeItem = _randomized.ItemList.First(io => io.NewLocation == Item.ItemPowderKeg);
-                if (kegChallengeItem.Item != Item.ItemPowderKeg)
+            var bigBombBagItem = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeBigBombBag);
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x29D3)
+                .Message(it =>
                 {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0xC80)
-                        .Message(it =>
+                    it.PlaySoundEffect(0x6952)
+                    .Text("Tonight's special bargain was just").NewLine()
+                    .Text("stolen. It just came in seconds").NewLine()
+                    .Text("ago. This is really hot!").NewLine()
+                    .PauseText(20)
+                    .QuickText(() => it.Text("I kid you not!"))
+                    .EndTextBox()
+                    .Text("Actually, it's somethin' sold over").NewLine()
+                    .Text("at the ").Red("Bomb Shop").Text(", but a thief").NewLine()
+                    .Text("sold it to me...")
+                    .EndTextBox()
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("It's ")
+                        .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
+                        .QuickText(() =>
                         {
-                            it.PlaySoundEffect(0x38BB)
-                            .RuntimeWrap(() =>
+                            it.Red(() =>
                             {
-                                it.Text("I'm the Goron who sells ")
-                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
-                                })
-                                .Text(", the most famous product of the Gorons.")
-                                ;
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
                             })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
+                            .Text(".");
                         })
-                        .Build()
-                    );
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0xC81)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x38FC)
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("Want ")
-                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
-                                })
-                                .Text("? Be careful, ")
-                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
-                                })
-                                .Text(" ")
-                                .RuntimeVerb(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
-                                .Text(" very dangerous...")
-                                ;
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap("Until I have tested you to see if you are responsible, I can't sell to you.")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0xC83)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x38FC)
-                            .Text("If you can ").Red("destroy").Text(" the boulder").NewLine()
-                            .Text("that blocks the entrance to the").NewLine()
-                            .Red("Goron Racetrack").Text(" near here...")
-                            .EndTextBox()
-                            .Text("using the ").Red("Powder Keg ").Text("I'm about").NewLine()
-                            .Text("to give you, then I'll sell to you.")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0xC86)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x3A04)
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("It looks like you managed to succeed! Knowing your skills, I feel fine letting you handle ")
-                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
-                                .RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value)
-                                .Text(" on your own.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("It was bad of me to put you").NewLine()
-                            .Text("through such a dangerous test. I").NewLine()
-                            .Text("want you to take this as my").NewLine()
-                            .Text("apology.")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0xC88)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x38FC)
-                            .Text("You failed?").NewLine()
-                            .Text("In that case, I can't sell").NewLine()
-                            .Text("to you.")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0xC8C)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("Will you a buy ")
-                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
-                                })
-                                .Text(" for ").Pink("100 Rupees").Text("?")
-                                ;
-                            })
-                            .NewLine()
-                            .StartGreenText()
-                            .TwoChoices()
-                            .Text("I'll buy ").RuntimePronoun(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value).NewLine()
-                            .Text("No thanks")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0xC8E)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("I'm the Goron who sells ")
-                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
-                                })
-                                .Text(", the most famous product of the Gorons.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("But the rules say I can't sell ")
-                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
-                                })
-                                .Text(" to anyone who isn't a").Red(" Goron").Text(". ").PlaySoundEffect(0x391C).Text("Sorry.")
-                                ;
-                            })
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0xC8F)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("The rules say I can't sell ")
-                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
-                                })
-                                .Text(" to anyone who isn't a").Red(" Goron").Text(". ").PlaySoundEffect(0x391C).Text("Sorry.")
-                                ;
-                            })
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
+                        ;
+                    })
+                    .NewLine()
+                    .PauseText(10)
+                    .Text("Check it out! Buy it!")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
 
-                var bigBombBagItem = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeBigBombBag);
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0x29D7)
+                .Message(it =>
+                {
+                    it.PlaySoundEffect(0x6952)
+                    .Text("Tonight's special bargain was just").NewLine()
+                    .Text("stolen. It just came in seconds").NewLine()
+                    .Text("ago. It's really hot!").NewLine()
+                    .PauseText(20)
+                    .QuickText(() => it.Text("I kid you not."))
+                    .EndTextBox()
+                    .Text("Actually, it's somethin' sold over").NewLine()
+                    .Text("at the ").Red("Bomb Shop").Text(", but a thief").NewLine()
+                    .Text("sold it to me.")
+                    .EndTextBox()
+                    .RuntimeWrap(() =>
+                    {
+                        it.Text("It's ")
+                        .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
+                        .QuickText(() =>
+                        {
+                            it.Red(() =>
+                            {
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
+                            })
+                            .Text(".");
+                        })
+                        ;
+                    })
+                    .NewLine()
+                    .PauseText(10)
+                    .Text("Check it out! Buy it!")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+
+            var allNightMaskPurchaseItem = _randomized.ItemList.First(io => io.NewLocation == Item.MaskAllNight);
+            if (allNightMaskPurchaseItem.Item != Item.MaskAllNight)
+            {
                 newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x29D3)
+                    .Id(0x29D4)
                     .Message(it =>
                     {
                         it.PlaySoundEffect(0x6952)
-                        .Text("Tonight's special bargain was just").NewLine()
-                        .Text("stolen. It just came in seconds").NewLine()
-                        .Text("ago. This is really hot!").NewLine()
-                        .PauseText(20)
-                        .QuickText(() => it.Text("I kid you not!"))
-                        .EndTextBox()
-                        .Text("Actually, it's somethin' sold over").NewLine()
-                        .Text("at the ").Red("Bomb Shop").Text(", but a thief").NewLine()
-                        .Text("sold it to me...")
-                        .EndTextBox()
+                        .Text("Tonight's bargain is").NewLine()
                         .RuntimeWrap(() =>
                         {
-                            it.Text("It's ")
-                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
-                            .QuickText(() =>
+                            it.QuickText(() =>
                             {
-                                it.Red(() =>
+                                it.RuntimeArticle(allNightMaskPurchaseItem.DisplayItem, allNightMaskPurchaseItem.NewLocation.Value)
+                                .Red(() =>
                                 {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text(".");
+                                    it.RuntimeItemName(allNightMaskPurchaseItem.DisplayName(), allNightMaskPurchaseItem.NewLocation.Value);
+                                });
                             })
+                            .Text(" ")
+                            .PauseText(10)
+                            .Text("for use at bedtime.")
                             ;
                         })
-                        .NewLine()
-                        .PauseText(10)
-                        .Text("Check it out! Buy it!")
+                        .EndTextBox()
+                        .Text("I forgot when this was made, but").NewLine()
+                        .Text("it sure is freaky...See?")
+                        .EndTextBox()
+                        .Text("Pretty creepy, huh?")
                         .DisableTextSkip2()
                         .EndFinalTextBox();
                     })
@@ -2814,239 +2716,167 @@ namespace MMR.Randomizer
                 );
 
                 newMessages.Add(new MessageEntryBuilder()
-                    .Id(0x29D7)
+                    .Id(0x29D8)
                     .Message(it =>
                     {
                         it.PlaySoundEffect(0x6952)
-                        .Text("Tonight's special bargain was just").NewLine()
-                        .Text("stolen. It just came in seconds").NewLine()
-                        .Text("ago. It's really hot!").NewLine()
-                        .PauseText(20)
-                        .QuickText(() => it.Text("I kid you not."))
-                        .EndTextBox()
-                        .Text("Actually, it's somethin' sold over").NewLine()
-                        .Text("at the ").Red("Bomb Shop").Text(", but a thief").NewLine()
-                        .Text("sold it to me.")
-                        .EndTextBox()
+                        .Text("Tonight's bargain is").NewLine()
                         .RuntimeWrap(() =>
                         {
-                            it.Text("It's ")
-                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
-                            .QuickText(() =>
+                            it.QuickText(() =>
                             {
-                                it.Red(() =>
+                                it.RuntimeArticle(allNightMaskPurchaseItem.DisplayItem, allNightMaskPurchaseItem.NewLocation.Value)
+                                .Red(() =>
                                 {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text(".");
+                                    it.RuntimeItemName(allNightMaskPurchaseItem.DisplayName(), allNightMaskPurchaseItem.NewLocation.Value);
+                                });
                             })
+                            .Text(" ")
+                            .PauseText(10)
+                            .Text("for use at bedtime.")
                             ;
                         })
-                        .NewLine()
-                        .PauseText(10)
-                        .Text("Check it out! Buy it!")
+                        .EndTextBox()
+                        .Text("I forgot when this was made, but").NewLine()
+                        .Text("it sure is freaky...See?")
+                        .EndTextBox()
+                        .Text("Pretty creepy, huh?")
                         .DisableTextSkip2()
                         .EndFinalTextBox();
                     })
                     .Build()
                 );
-
-                var allNightMaskPurchaseItem = _randomized.ItemList.First(io => io.NewLocation == Item.MaskAllNight);
-                if (allNightMaskPurchaseItem.Item != Item.MaskAllNight)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x29D4)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6952)
-                            .Text("Tonight's bargain is").NewLine()
-                            .RuntimeWrap(() =>
-                            {
-                                it.QuickText(() =>
-                                {
-                                    it.RuntimeArticle(allNightMaskPurchaseItem.DisplayItem, allNightMaskPurchaseItem.NewLocation.Value)
-                                    .Red(() =>
-                                    {
-                                        it.RuntimeItemName(allNightMaskPurchaseItem.DisplayName(), allNightMaskPurchaseItem.NewLocation.Value);
-                                    });
-                                })
-                                .Text(" ")
-                                .PauseText(10)
-                                .Text("for use at bedtime.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("I forgot when this was made, but").NewLine()
-                            .Text("it sure is freaky...See?")
-                            .EndTextBox()
-                            .Text("Pretty creepy, huh?")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x29D8)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6952)
-                            .Text("Tonight's bargain is").NewLine()
-                            .RuntimeWrap(() =>
-                            {
-                                it.QuickText(() =>
-                                {
-                                    it.RuntimeArticle(allNightMaskPurchaseItem.DisplayItem, allNightMaskPurchaseItem.NewLocation.Value)
-                                    .Red(() =>
-                                    {
-                                        it.RuntimeItemName(allNightMaskPurchaseItem.DisplayName(), allNightMaskPurchaseItem.NewLocation.Value);
-                                    });
-                                })
-                                .Text(" ")
-                                .PauseText(10)
-                                .Text("for use at bedtime.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("I forgot when this was made, but").NewLine()
-                            .Text("it sure is freaky...See?")
-                            .EndTextBox()
-                            .Text("Pretty creepy, huh?")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
             }
+        }
 
-            // Update messages to match updated world models.
-            if (_randomized.Settings.UpdateWorldModels)
+        private void WriteWorldModelText(List<MessageEntry> newMessages)
+        {
+            // Update Moon's Tear messages.
+            var moonsTearItem = _randomized.ItemList.First(io => io.NewLocation == Item.TradeItemMoonTear);
+            if (moonsTearItem.Item != Item.TradeItemMoonTear)
             {
-                // Update Moon's Tear messages.
-                var moonsTearItem = _randomized.ItemList.First(io => io.NewLocation == Item.TradeItemMoonTear);
-                if (moonsTearItem.Item != Item.TradeItemMoonTear)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x5E3)
-                        .Message(it =>
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x5E3)
+                    .Message(it =>
+                    {
+                        it.Text("That is one of the lunar objects").NewLine()
+                        .Text("that has been blazing from the").NewLine()
+                        .Text("surface of the moon lately.")
+                        .EndTextBox()
+                        .CompileTimeWrap((wrapped) =>
                         {
-                            it.Text("That is one of the lunar objects").NewLine()
-                            .Text("that has been blazing from the").NewLine()
-                            .Text("surface of the moon lately.")
-                            .EndTextBox()
-                            .CompileTimeWrap((wrapped) =>
-                            {
-                                wrapped.Text("They fall from what looks to be the moon's eye, I call ")
-                                .Text(MessageUtils.GetPronoun(moonsTearItem.DisplayItem))
-                                .Text(" ")
-                                .Text(MessageUtils.GetArticle(moonsTearItem.DisplayItem))
-                                .Red(moonsTearItem.DisplayName())
-                                .Text(".")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("They are rare, valued by many").NewLine()
-                            .Text("in town.")
-                            .EndFinalTextBox();
+                            wrapped.Text("They fall from what looks to be the moon's eye, I call ")
+                            .Text(MessageUtils.GetPronoun(moonsTearItem.DisplayItem))
+                            .Text(" ")
+                            .Text(MessageUtils.GetArticle(moonsTearItem.DisplayItem))
+                            .Red(moonsTearItem.DisplayName())
+                            .Text(".")
+                            ;
                         })
-                        .Build()
-                    );
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x5ED)
-                        .Message(it =>
+                        .EndTextBox()
+                        .Text("They are rare, valued by many").NewLine()
+                        .Text("in town.")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x5ED)
+                    .Message(it =>
+                    {
+                        it.Text($"That ill-mannered troublemaker").NewLine()
+                        .Text("from the other day said he'd").NewLine()
+                        .Text("break my instruments...")
+                        .EndTextBox()
+                        .CompileTimeWrap((wrapped) =>
                         {
-                            it.Text($"That ill-mannered troublemaker").NewLine()
-                            .Text("from the other day said he'd").NewLine()
-                            .Text("break my instruments...")
-                            .EndTextBox()
-                            .CompileTimeWrap((wrapped) =>
-                            {
-                                wrapped.Text("He said he'd steal my ")
-                                .Red(moonsTearItem.DisplayName())
-                                .Text("... There was no stopping him.")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
+                            wrapped.Text("He said he'd steal my ")
+                            .Red(moonsTearItem.DisplayName())
+                            .Text("... There was no stopping him.")
+                            ;
                         })
-                        .Build()
-                    );
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x5F2)
-                        .Message(it =>
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x5F2)
+                    .Message(it =>
+                    {
+                        it.Text($"Well, did you find that").NewLine()
+                        .Red("troublemaker").Text("? And that loud").NewLine()
+                        .Text("noise...What was that?")
+                        .EndTextBox()
+                        .CompileTimeWrap((wrapped) =>
                         {
-                            it.Text($"Well, did you find that").NewLine()
-                            .Red("troublemaker").Text("? And that loud").NewLine()
-                            .Text("noise...What was that?")
-                            .EndTextBox()
-                            .CompileTimeWrap((wrapped) =>
-                            {
-                                wrapped.Text("Perhaps another ")
-                                .Red(moonsTearItem.DisplayName())
-                                .Text(" has falled nearby...Go through that door and take a look outside.")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
+                            wrapped.Text("Perhaps another ")
+                            .Red(moonsTearItem.DisplayName())
+                            .Text(" has falled nearby...Go through that door and take a look outside.")
+                            ;
                         })
-                        .Build()
-                    );
-                }
-
-                // Update Seahorse messages.
-                var seahorseItem = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemSeahorse);
-                if (seahorseItem.Item != Item.MundaneItemSeahorse)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x106F)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x694C)
-                            .Text("Are you interested in that?")
-                            .EndTextBox()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("It's rare, isn't it? It's called ")
-                                .RuntimeArticle(seahorseItem.DisplayItem, seahorseItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(seahorseItem.DisplayName(), seahorseItem.NewLocation.Value);
-                                })
-                                .Text(".")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x1074)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("If you want that ")
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(seahorseItem.DisplayName(), seahorseItem.NewLocation.Value);
-                                })
-                                .Text(", bring me a ")
-                                .Red("pictograph")
-                                .Text(" of a ")
-                                .Red("female pirate")
-                                .Text(".")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
             }
 
+            // Update Seahorse messages.
+            var seahorseItem = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemSeahorse);
+            if (seahorseItem.Item != Item.MundaneItemSeahorse)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x106F)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x694C)
+                        .Text("Are you interested in that?")
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("It's rare, isn't it? It's called ")
+                            .RuntimeArticle(seahorseItem.DisplayItem, seahorseItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(seahorseItem.DisplayName(), seahorseItem.NewLocation.Value);
+                            })
+                            .Text(".")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1074)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("If you want that ")
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(seahorseItem.DisplayName(), seahorseItem.NewLocation.Value);
+                            })
+                            .Text(", bring me a ")
+                            .Red("pictograph")
+                            .Text(" of a ")
+                            .Red("female pirate")
+                            .Text(".")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+        }
+
+        private void WriteMiscItemText(List<MessageEntry> newMessages)
+        {
             // Remove "...Suddenly, memories of Princess Zelda come rushing back to you..."
             if (_randomized.ItemList[Item.ItemOcarina].NewLocation != Item.ItemOcarina || _randomized.ItemList[Item.SongTime].NewLocation != Item.SongTime)
             {
@@ -3314,23 +3144,6 @@ namespace MMR.Randomizer
                 );
             }
 
-            var itemsWithCustomMessage = new List<Item>
-            {
-                Item.CollectableIkanaGraveyardDay2Bats1,
-                Item.FrogWoodfallTemple,
-                Item.FrogGreatBayTemple,
-                Item.FrogSwamp,
-                Item.FrogLaundryPool,
-            };
-            foreach (var item in itemsWithCustomMessage)
-            {
-                var messageAttribute = item.GetAttribute<ExclusiveItemMessageAttribute>();
-                var entry = new MessageEntry(
-                    messageAttribute.Id,
-                    messageAttribute.Message);
-                _extraMessages.Add(entry);
-            }
-
             // replace "Razor Sword is now blunt" message with get-item message for Kokiri Sword.
             newMessages.Add(new MessageEntryBuilder()
                 .Id(0xF9)
@@ -3444,2238 +3257,2241 @@ namespace MMR.Randomizer
                     break;
                 }
             }
+        }
 
-            if (_randomized.Settings.OathHint)
+        private void WriteOathHintText(List<MessageEntry> newMessages)
+        {
+            var oathItem = _randomized.ItemList[Item.SongOath];
+
+            if (!_randomized.Settings.AddSongs)
             {
-                var oathItem = _randomized.ItemList[Item.SongOath];
-
-                if (!_randomized.Settings.AddSongs)
+                switch (oathItem.NewLocation.Value)
                 {
-                    switch (oathItem.NewLocation.Value)
-                    {
-                        case Item.SongTime:
-                            break;
-                        case Item.SongHealing:
-                            oathItem = null;
-                            break;
-                        case Item.SongEpona:
-                            oathItem = _randomized.ItemList[Item.ItemPowderKeg];
-                            break;
-                        case Item.SongSoaring:
-                            oathItem = _randomized.ItemList[Item.MaskDeku];
-                            break;
-                        case Item.SongStorms:
-                            oathItem = _randomized.ItemList[Item.MaskCaptainHat];
-                            break;
-                        case Item.SongSonata:
-                            oathItem = _randomized.ItemList[Item.MaskDeku];
-                            break;
-                        case Item.SongLullaby:
-                            oathItem = _randomized.ItemList[Item.MaskGoron];
-                            break;
-                        case Item.SongLullabyIntro:
-                            oathItem = _randomized.ItemList[Item.MaskGoron];
-                            break;
-                        case Item.SongNewWaveBossaNova:
-                            oathItem = _randomized.ItemList[Item.MaskZora];
-                            break;
-                        case Item.SongElegy:
-                            oathItem = _randomized.ItemList[Item.UpgradeMirrorShield];
-                            break;
-                        case Item.SongOath:
-                            oathItem = null;
-                            break;
-                    }
-                }
-
-                if (oathItem != null && oathItem.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x208B)
-                        .Message(it =>
-                        {
-                            it.StartLightBlueText()
-                            .PauseText(10)
-                            .Text("\"");
-                            var oathRegion = oathItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList).Name();
-                            for (var i = 0; i < oathRegion.Length; i++)
-                            {
-                                var c = oathRegion[i];
-                                it.Text(c.ToString());
-                                if (i == oathRegion.Length - 1)
-                                {
-                                    it.Text(".");
-                                }
-                                else if (c != ' ')
-                                {
-                                    it.PauseText(20);
-                                }
-                            }
-                            it.Text("\"").NewLine()
-                            .Text(" ").NewLine()
-                            .PauseText(10)
-                            .Text("That's what they're saying.")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
+                    case Item.SongTime:
+                        break;
+                    case Item.SongHealing:
+                        oathItem = null;
+                        break;
+                    case Item.SongEpona:
+                        oathItem = _randomized.ItemList[Item.ItemPowderKeg];
+                        break;
+                    case Item.SongSoaring:
+                        oathItem = _randomized.ItemList[Item.MaskDeku];
+                        break;
+                    case Item.SongStorms:
+                        oathItem = _randomized.ItemList[Item.MaskCaptainHat];
+                        break;
+                    case Item.SongSonata:
+                        oathItem = _randomized.ItemList[Item.MaskDeku];
+                        break;
+                    case Item.SongLullaby:
+                        oathItem = _randomized.ItemList[Item.MaskGoron];
+                        break;
+                    case Item.SongLullabyIntro:
+                        oathItem = _randomized.ItemList[Item.MaskGoron];
+                        break;
+                    case Item.SongNewWaveBossaNova:
+                        oathItem = _randomized.ItemList[Item.MaskZora];
+                        break;
+                    case Item.SongElegy:
+                        oathItem = _randomized.ItemList[Item.UpgradeMirrorShield];
+                        break;
+                    case Item.SongOath:
+                        oathItem = null;
+                        break;
                 }
             }
 
-            if (_randomized.Settings.RemainsHint)
+            if (oathItem != null && oathItem.IsRandomized)
             {
-                var remains = ItemUtils.BossRemains().Where(r => _randomized.ItemList[r].Item == r);
-                var remainsAreRandomized = remains.Any(r => _randomized.ItemList[r].IsRandomized)
-                    && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards)
-                    && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.ShuffleOnly)
-                    && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinTemples);
-                if (remainsAreRandomized || (remains.Count() > 0 && remains.Count() < 4))
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x208B)
+                    .Message(it =>
+                    {
+                        it.StartLightBlueText()
+                        .PauseText(10)
+                        .Text("\"");
+                        var oathRegion = oathItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList).Name();
+                        for (var i = 0; i < oathRegion.Length; i++)
+                        {
+                            var c = oathRegion[i];
+                            it.Text(c.ToString());
+                            if (i == oathRegion.Length - 1)
+                            {
+                                it.Text(".");
+                            }
+                            else if (c != ' ')
+                            {
+                                it.PauseText(20);
+                            }
+                        }
+                        it.Text("\"").NewLine()
+                        .Text(" ").NewLine()
+                        .PauseText(10)
+                        .Text("That's what they're saying.")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+        }
+
+        private void WriteRemainsHintText(List<MessageEntry> newMessages)
+        {
+            var remains = ItemUtils.BossRemains().Where(r => _randomized.ItemList[r].Item == r);
+            var remainsAreRandomized = remains.Any(r => _randomized.ItemList[r].IsRandomized)
+                && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards)
+                && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.ShuffleOnly)
+                && !_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinTemples);
+            if (remainsAreRandomized || (remains.Count() > 0 && remains.Count() < 4))
+            {
+                var random = new Random(_randomized.Seed);
+                var remainRegions = remains
+                    .OrderBy(_ => random.Next())
+                    .Select(remain =>
+                    {
+                        var remainLocation = _randomized.ItemList[remain].NewLocation.Value;
+                        if (remainsAreRandomized)
+                        {
+                            return remainLocation.RegionForDirectHint(_randomized.ItemList).Name();
+                        }
+                        else
+                        {
+                            return remainLocation.RegionArea(_randomized.ItemList).Value.ToString();
+                        }
+                    })
+                    .Distinct()
+                    .ToList();
+                var remainsCount = MessageUtils.NumberToWords(remains.Count());
+                var isAre = remains.Count() == 1 ? "is" : "are";
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x200B)
+                    .Message(it =>
+                    {
+                        it.StartPinkText().PlaySoundEffect(0x6851).CompileTimeWrap((wrapped) =>
+                        {
+                            foreach (var remainRegion in remainRegions)
+                            {
+                                wrapped.Text(remainRegion).Text(". ").PauseText(10);
+                            }
+                            wrapped.Text("Hurry...").Red($"The {remainsCount}").Text($" who {isAre} there... Bring them ").Red("here").Text("...");
+                        })
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x216)
+                    .Message(it =>
+                    {
+                        it.StartLightBlueText()
+                        .Text("That mask...").NewLine()
+                        .PauseText(40)
+                        .Text("The Skull Kid uses the power of").NewLine()
+                        .Text("that mask to do those terrible").NewLine()
+                        .Text("things.")
+                        .EndTextBox()
+                        .Text("Well...whatever it takes, we've").NewLine()
+                        .Text("gotta do something about it.")
+                        .EndTextBox()
+                        .CompileTimeWrap((wrapped) =>
+                        {
+                            wrapped.Text("...The ");
+                            for (var i = 0; i < remainRegions.Count; i++)
+                            {
+                                var remainRegion = remainRegions[i];
+                                if (!remainsAreRandomized)
+                                {
+                                    remainRegion = remainRegion.ToLower();
+                                }
+                                wrapped.Red(remainRegion);
+                                if (i < remainRegions.Count - 2)
+                                {
+                                    wrapped.Text(", ");
+                                }
+                                else if (i < remainRegions.Count - 1)
+                                {
+                                    wrapped.Text(" and ");
+                                }
+                            }
+                            wrapped.Text(" that Tael was trying to tell us about...");
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("I have no idea what he was talking about...")
+                        .EndTextBox()
+                        .Text("And what do you suppose he").NewLine()
+                        .Text("meant by \"").Red(() =>
+                        {
+                            it.Text($"the {remainsCount} who {isAre}").NewLine()
+                            .Text("there");
+                        })
+                        .Text("?\"")
+                        .EndTextBox()
+                        .Text("I have no idea. He always").NewLine()
+                        .Text("skips important stuff. I guess we").NewLine()
+                        .Text("should just go and find out...")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                ResourceUtils.ApplyHack(Resources.mods.tatl_remains_hint);
+            }
+        }
+
+        private void WriteFairyAndSkullHintText(List<MessageEntry> newMessages)
+        {
+            var clockTownFairyItem = _randomized.ItemList[Item.CollectibleStrayFairyClockTown];
+            if (clockTownFairyItem.NewLocation != Item.CollectibleStrayFairyClockTown)
+            {
+                var region = clockTownFairyItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
+                var regionPreposition = region.Preposition();
+                var regionName = regionPreposition == null ? null : region.Name();
+                if (!string.IsNullOrWhiteSpace(regionPreposition))
                 {
-                    var random = new Random(_randomized.Seed);
-                    var remainRegions = remains
-                        .OrderBy(_ => random.Next())
-                        .Select(remain =>
-                        {
-                            var remainLocation = _randomized.ItemList[remain].NewLocation.Value;
-                            if (remainsAreRandomized)
-                            {
-                                return remainLocation.RegionForDirectHint(_randomized.ItemList).Name();
-                            }
-                            else
-                            {
-                                return remainLocation.RegionArea(_randomized.ItemList).Value.ToString();
-                            }
-                        })
-                        .Distinct()
-                        .ToList();
-                    var remainsCount = MessageUtils.NumberToWords(remains.Count());
-                    var isAre = remains.Count() == 1 ? "is" : "are";
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x200B)
-                        .Message(it =>
-                        {
-                            it.StartPinkText().PlaySoundEffect(0x6851).CompileTimeWrap((wrapped) =>
-                            {
-                                foreach (var remainRegion in remainRegions)
-                                {
-                                    wrapped.Text(remainRegion).Text(". ").PauseText(10);
-                                }
-                                wrapped.Text("Hurry...").Red($"The {remainsCount}").Text($" who {isAre} there... Bring them ").Red("here").Text("...");
-                            })
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x216)
-                        .Message(it =>
-                        {
-                            it.StartLightBlueText()
-                            .Text("That mask...").NewLine()
-                            .PauseText(40)
-                            .Text("The Skull Kid uses the power of").NewLine()
-                            .Text("that mask to do those terrible").NewLine()
-                            .Text("things.")
-                            .EndTextBox()
-                            .Text("Well...whatever it takes, we've").NewLine()
-                            .Text("gotta do something about it.")
-                            .EndTextBox()
-                            .CompileTimeWrap((wrapped) =>
-                            {
-                                wrapped.Text("...The ");
-                                for (var i = 0; i < remainRegions.Count; i++)
-                                {
-                                    var remainRegion = remainRegions[i];
-                                    if (!remainsAreRandomized)
-                                    {
-                                        remainRegion = remainRegion.ToLower();
-                                    }
-                                    wrapped.Red(remainRegion);
-                                    if (i < remainRegions.Count - 2)
-                                    {
-                                        wrapped.Text(", ");
-                                    }
-                                    else if (i < remainRegions.Count - 1)
-                                    {
-                                        wrapped.Text(" and ");
-                                    }
-                                }
-                                wrapped.Text(" that Tael was trying to tell us about...");
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap("I have no idea what he was talking about...")
-                            .EndTextBox()
-                            .Text("And what do you suppose he").NewLine()
-                            .Text("meant by \"").Red(() =>
-                            {
-                                it.Text($"the {remainsCount} who {isAre}").NewLine()
-                                .Text("there");
-                            })
-                            .Text("?\"")
-                            .EndTextBox()
-                            .Text("I have no idea. He always").NewLine()
-                            .Text("skips important stuff. I guess we").NewLine()
-                            .Text("should just go and find out...")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    ResourceUtils.ApplyHack(Resources.mods.tatl_remains_hint);
+                    regionPreposition += " ";
                 }
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x578)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938)
+                        .StartLightBlueText().Text("Young one! Please hear my plea!").NewLine()
+                        .Text("I have been broken and shattered").NewLine()
+                        .Text("to pieces by the masked Skull Kid.")
+                        .EndTextBox()
+                        .CompileTimeWrap((wrapped) =>
+                        {
+                            wrapped.Text("Please, find the").Red(" one ").Text("Stray Fairy lost ")
+                            .Text(regionPreposition ?? "").Red(regionName).Text(", and bring her ")
+                            .Text("to this ").Red("Fairy Fountain").Text(".")
+                            ;
+                        })
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x580)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938)
+                        .StartLightBlueText().Text("You...kind young one.")
+                        .EndTextBox()
+                        .CompileTimeWrap((wrapped) =>
+                        {
+                            wrapped.Text("Please, find the").Red(" one ").Text("Stray Fairy who's lost ")
+                            .Text(regionPreposition ?? "").Red(regionName ?? "somewhere").Text(" and bring her ")
+                            .Text("back to this ").Red("Fairy's Fountain").Text(".")
+                            ;
+                        })
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
             }
 
-            if (_randomized.Settings.FairyAndSkullHint)
-            {
-                var clockTownFairyItem = _randomized.ItemList[Item.CollectibleStrayFairyClockTown];
-                if (clockTownFairyItem.NewLocation != Item.CollectibleStrayFairyClockTown)
-                {
-                    var region = clockTownFairyItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
-                    var regionPreposition = region.Preposition();
-                    var regionName = regionPreposition == null ? null : region.Name();
-                    if (!string.IsNullOrWhiteSpace(regionPreposition))
+            var strayFairyRegionLocations = ItemUtils.DungeonStrayFairies()
+                .Union(ItemUtils.SwampSkulltulaTokens())
+                .Union(ItemUtils.OceanSkulltulaTokens())
+                .Where(item => _randomized.ItemList[item].Item == item)
+                .GroupBy(fairy => fairy.Region(_randomized.ItemList).Value)
+                .ToDictionary(g => g.Key, g =>
+                    g.SelectMany(fairy =>
                     {
-                        regionPreposition += " ";
-                    }
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x578)
-                        .Message(it =>
+                        var location = _randomized.ItemList[fairy].NewLocation.Value;
+                        var locations = location.GetAttribute<MultiLocationAttribute>()?.Locations;
+                        if (locations != null)
                         {
-                            it.PlaySoundEffect(0x6938)
-                            .StartLightBlueText().Text("Young one! Please hear my plea!").NewLine()
-                            .Text("I have been broken and shattered").NewLine()
-                            .Text("to pieces by the masked Skull Kid.")
-                            .EndTextBox()
-                            .CompileTimeWrap((wrapped) =>
+                            return locations.Select(loc => new
                             {
-                                wrapped.Text("Please, find the").Red(" one ").Text("Stray Fairy lost ")
-                                .Text(regionPreposition ?? "").Red(regionName).Text(", and bring her ")
-                                .Text("to this ").Red("Fairy Fountain").Text(".")
-                                ;
-                            })
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x580)
-                        .Message(it =>
+                                Location = location,
+                                Region = loc.Region(_randomized.ItemList).Value,
+                            });
+                        }
+                        else
                         {
-                            it.PlaySoundEffect(0x6938)
-                            .StartLightBlueText().Text("You...kind young one.")
-                            .EndTextBox()
-                            .CompileTimeWrap((wrapped) =>
+                            return new[]
                             {
-                                wrapped.Text("Please, find the").Red(" one ").Text("Stray Fairy who's lost ")
-                                .Text(regionPreposition ?? "").Red(regionName ?? "somewhere").Text(" and bring her ")
-                                .Text("back to this ").Red("Fairy's Fountain").Text(".")
-                                ;
-                            })
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                var strayFairyRegionLocations = ItemUtils.DungeonStrayFairies()
-                    .Union(ItemUtils.SwampSkulltulaTokens())
-                    .Union(ItemUtils.OceanSkulltulaTokens())
-                    .Where(item => _randomized.ItemList[item].Item == item)
-                    .GroupBy(fairy => fairy.Region(_randomized.ItemList).Value)
-                    .ToDictionary(g => g.Key, g =>
-                        g.SelectMany(fairy =>
-                        {
-                            var location = _randomized.ItemList[fairy].NewLocation.Value;
-                            var locations = location.GetAttribute<MultiLocationAttribute>()?.Locations;
-                            if (locations != null)
-                            {
-                                return locations.Select(loc => new
-                                {
-                                    Location = location,
-                                    Region = loc.Region(_randomized.ItemList).Value,
-                                });
-                            }
-                            else
-                            {
-                                return new[]
-                                {
                                     new
                                     {
                                         Location = location,
                                         Region = location.Region(_randomized.ItemList).Value
                                     }
-                                };
-                            }
-                        })
-                        .GroupBy(x => x.Region)
-                        .ToDictionary(g2 => g2.Key, g2 => g2.Select(x => x.Location).ToArray())
-                    );
+                            };
+                        }
+                    })
+                    .GroupBy(x => x.Region)
+                    .ToDictionary(g2 => g2.Key, g2 => g2.Select(x => x.Location).ToArray())
+                );
 
-                if (strayFairyRegionLocations.Any())
-                {
-                    ResourceUtils.ApplyHack(Resources.mods.dungeon_fairy_npc_hint);
-                }
-
-                if (strayFairyRegionLocations.ContainsKey(Region.WoodfallTemple))
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x582)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6938).StartLightBlueText()
-                            .Text("Kind young one! Please hear my").NewLine()
-                            .Text("plea! Please find the fairies").NewLine()
-                            .Text("who match our ").Red("color").Text(".")
-                            .EndTextBox()
-                            .Text("Please bring them back to us!")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x583)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6938).StartLightBlueText()
-                            .Text("Please fine a way to save the").NewLine()
-                            .Text("fairies, and bring them back").NewLine()
-                            .Text("here!")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x584)
-                        .Header(h => h.Icon(0x11))
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6938).StartLightBlueText()
-                            .Text("There should still be...")
-                            .EndTextBox();
-
-                            foreach (var kvp in strayFairyRegionLocations[Region.WoodfallTemple])
-                            {
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
-                            }
-
-                            it.Text("Please save the fairies so I can").NewLine()
-                            .Text("be returned to my former shape!")
-                            .EndFinalTextBox();
-                        })
-                        .ExcludeFromQuickText()
-                        .ShouldTransfer()
-                        .Build()
-                    );
-                }
-
-                if (strayFairyRegionLocations.ContainsKey(Region.SnowheadTemple))
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x585)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6938).StartLightBlueText()
-                            .Text("Oh, kind, young one!").NewLine()
-                            .Text("Please hear our plea! Please save").NewLine()
-                            .Text("the ").Green("fairies ").Text("who match our ").Green("color").Text(" and").NewLine()
-                            .Text("bring them back to us!")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x586)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6938).StartLightBlueText()
-                            .Text("Please find a way to save the").NewLine()
-                            .Text("fairies and bring them back").NewLine()
-                            .Text("here!")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x587)
-                        .Header(h => h.Icon(0x11))
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6938).StartLightBlueText()
-                            .Text("There should still be...")
-                            .EndTextBox();
-
-                            foreach (var kvp in strayFairyRegionLocations[Region.SnowheadTemple])
-                            {
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
-                            }
-
-                            it.Text("Please bring them back here so").NewLine()
-                            .Text("I can be returned to my former").NewLine()
-                            .Text("shape!")
-                            .EndFinalTextBox();
-                        })
-                        .ExcludeFromQuickText()
-                        .ShouldTransfer()
-                        .Build()
-                    );
-                }
-
-                if (strayFairyRegionLocations.ContainsKey(Region.GreatBayTemple))
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x588)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6938).StartLightBlueText()
-                            .Text("Oh, kind young one!").NewLine()
-                            .Text("Please find the fairies who are").NewLine()
-                            .Text("the same ").DarkBlue("color").Text(" as we are and")
-                            .Text("bring them back to us!")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x589)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6938).StartLightBlueText()
-                            .Text("Please find a way to save the").NewLine()
-                            .Text("fairies, and bring them back").NewLine()
-                            .Text("here!")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x58A)
-                        .Header(h => h.Icon(0x11))
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6938).StartLightBlueText()
-                            .Text("There should still be...")
-                            .EndTextBox();
-
-                            foreach (var kvp in strayFairyRegionLocations[Region.GreatBayTemple])
-                            {
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
-                            }
-
-                            it.Text("Please save them and bring them").NewLine()
-                            .Text("back here!")
-                            .EndFinalTextBox();
-                        })
-                        .ExcludeFromQuickText()
-                        .ShouldTransfer()
-                        .Build()
-                    );
-                }
-
-                if (strayFairyRegionLocations.ContainsKey(Region.StoneTowerTemple))
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x58B)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6938).StartLightBlueText()
-                            .Text("Oh, kind young one!").NewLine()
-                            .Text("Please hear our plea! Please find").NewLine()
-                            .Text("the fairies who are the same").NewLine()
-                            .Yellow("color").Text(" as we are and bring them").NewLine()
-                            .Text("back to us!")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x58C)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6938).StartLightBlueText()
-                            .Text("Please save the the fairies and").NewLine()
-                            .Text("bring them back here!")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x58D)
-                        .Header(h => h.Icon(0x11))
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6938).StartLightBlueText()
-                            .Text("There should still be...")
-                            .EndTextBox();
-
-                            foreach (var kvp in strayFairyRegionLocations[Region.StoneTowerTemple])
-                            {
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
-                            }
-
-                            it.Text("Please save them and bring them").NewLine()
-                            .Text("back here so I can be returned").NewLine()
-                            .Text("to my former shape!")
-                            .EndFinalTextBox();
-                        })
-                        .ExcludeFromQuickText()
-                        .ShouldTransfer()
-                        .Build()
-                    );
-                }
-
-                if (strayFairyRegionLocations.ContainsKey(Region.SwampSpiderHouseItems) && ItemUtils.SwampSkulltulaTokens().Any(token => _randomized.ItemList[token].IsRandomized))
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x911)
-                        .Message(it =>
-                        {
-                            it.CompileTimeWrap((wrapped) =>
-                            {
-                                wrapped.Text("I beg of you...To lift the curse...Find them all...The ").Red("golden spider tokens").Text("...");
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    var dict = strayFairyRegionLocations[Region.SwampSpiderHouseItems];
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x912)
-                        .Header(h => h.Y(0).Icon(0x52).NextMessage(0x9912))
-                        .Message(it =>
-                        {
-                            it.Text("There should still be...")
-                            .EndTextBox();
-
-                            var firstHalf = dict.Take(dict.Count / 2).ToList();
-
-                            for (var i = 0; i < firstHalf.Count; i++)
-                            {
-                                var kvp = firstHalf[i];
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", i == firstHalf.Count - 1, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
-                            }
-
-                            it
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .ExcludeFromQuickText()
-                        .ShouldTransfer()
-                        .Build()
-                    );
-
-                    _extraMessages.Add(new MessageEntryBuilder()
-                        .Id(0x9912)
-                        .Header(h => h.Y(0).Icon(0x52))
-                        .Message(it =>
-                        {
-                            var lastHalf = dict.Skip(dict.Count / 2).ToList();
-
-                            for (var i = 0; i < lastHalf.Count; i++)
-                            {
-                                var kvp = lastHalf[i];
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
-                            }
-
-                            it
-                            .Text("Please hurry...")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .ExcludeFromQuickText()
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x914)
-                        .Header(h => h.Y(0).Icon(0x52).NextMessage(0x9912))
-                        .Message(it =>
-                        {
-                            it.Text("Please... There should still be...")
-                            .EndTextBox();
-
-                            var firstHalf = dict.Take(dict.Count / 2).ToList();
-
-                            for (var i = 0; i < firstHalf.Count; i++)
-                            {
-                                var kvp = firstHalf[i];
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", i == firstHalf.Count - 1, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
-                            }
-
-                            it
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .ExcludeFromQuickText()
-                        .ShouldTransfer()
-                        .Build()
-                    );
-                }
-
-                if (strayFairyRegionLocations.ContainsKey(Region.OceanSpiderHouseItems) && ItemUtils.OceanSkulltulaTokens().Any(token => _randomized.ItemList[token].IsRandomized))
-                {
-                    var dict = strayFairyRegionLocations[Region.OceanSpiderHouseItems];
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x1135)
-                        .Header(h => h.Y(0).Icon(0x52).NextMessage(0xA135))
-                        .Message(it =>
-                        {
-                            it.Text("I beg you! Lift the curse on this").NewLine()
-                            .Text("place! There should still be...")
-                            .EndTextBox();
-
-                            var firstHalf = dict.Take(dict.Count / 2).ToList();
-
-                            for (var i = 0; i < firstHalf.Count; i++)
-                            {
-                                var kvp = firstHalf[i];
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", i == firstHalf.Count - 1, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
-                            }
-
-                            it
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .ExcludeFromQuickText()
-                        .ShouldTransfer()
-                        .Build()
-                    );
-
-                    _extraMessages.Add(new MessageEntryBuilder()
-                        .Id(0xA135)
-                        .Header(h => h.Y(0).Icon(0x52))
-                        .Message(it =>
-                        {
-                            var lastHalf = dict.Skip(dict.Count / 2).ToList();
-
-                            for (var i = 0; i < lastHalf.Count; i++)
-                            {
-                                var kvp = lastHalf[i];
-                                it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
-                            }
-
-                            it.Text("If you lift the curse, I'll buy").NewLine()
-                            .Text("this place off you! Please hurry...")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .ExcludeFromQuickText()
-                        .ShouldTransfer()
-                        .Build()
-                    );
-                }
-            }
-
-            if (_randomized.Settings.UpdateNPCText)
+            if (strayFairyRegionLocations.Any())
             {
-                /*
-                
-                The mask salesman said that if
-                you got back the precious thing
-                that was stolen from you, he
-                could return you to normal!
-                Did you completely forget or
-                what?
-
-                ---
-
-                Go to the shrine near the
-                North Gate. You'll find the
-                Great Fairy in there!
-
-                ---
-
-                Hey, aren't you going to the
-                Great Fairy's shrine near the
-                North Gate?
-
-                ---
-
-                Quick! We have to find the
-                Stray Fairy in town and return
-                the Great Fairy to normal!
-
-                ---
-
-                What are you doing?
-                Aren't you gonna take this fairy
-                to the shrine near the North
-                Gate?
-
-                ---
-
-                He said the secret route is in
-                East Clock Town...
-                So why aren't you going there?
-
-                */
-
-                var bank1Item = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeAdultWallet);
-                if (bank1Item.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x44D)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("For example, if you deposit ").Pink("200 Rupees").Text(", you'll get ")
-                                .RuntimeArticle(bank1Item.DisplayItem, bank1Item.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(bank1Item.DisplayName(), bank1Item.NewLocation.Value);
-                                })
-                                .Text(".")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x47A)
-                        .Message(it =>
-                        {
-                            it.CompileTimeWrap("See! Wasn't that a great incentive for saving money? Keep at it and you'll get another special gift in no time!")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                var bank2Item = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemBankBlueRupee);
-                if (bank2Item.Item != Item.MundaneItemBankBlueRupee)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x47B)
-                        .Message(it =>
-                        {
-                            it.CompileTimeWrap("That's what they call a rewards program!")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                var romaniGameItem = _randomized.ItemList.First(io => io.NewLocation == Item.SongEpona);
-                if (romaniGameItem.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x4C1)
-                        .Message(it =>
-                        {
-                            it.ThreeChoices()
-                            .StartGreenText()
-                            .Text(romaniGameItem.DisplayName()).NewLine()
-                            .Text("Song of Feelings").NewLine() // purposely changed from "Song of Healing" to avoid conflicting answers
-                            .Text("Song of the Field")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                var milkBarChateauItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemMilkBarChateau);
-                if (milkBarChateauItem.Item != Item.ShopItemMilkBarChateau)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x4D7)
-                        .Message(it =>
-                        {
-                            it.ThreeChoices()
-                            .StartGreenText()
-                            .Text("Romani Run").NewLine()
-                            .Text(milkBarChateauItem.DisplayName()).NewLine()
-                            .Text("Chateau Moroni")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x2AFA)
-                        .Message(it =>
-                        {
-                            it.Text("We're called a ").Red("Milk Bar").Text(", and we").NewLine()
-                            .Text("serve the ").DarkBlue("item of the night").Text(".")
-                            .EndTextBox()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("Our most popular, of course, ")
-                                .RuntimeVerb(milkBarChateauItem.DisplayItem, milkBarChateauItem.NewLocation.Value)
-                                .Text(" ")
-                                .RuntimeArticle(milkBarChateauItem.DisplayItem, milkBarChateauItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(milkBarChateauItem.DisplayName(), milkBarChateauItem.NewLocation.Value);
-                                })
-                                .Text(". Vintage.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap((it) =>
-                            {
-                                it.Text("We source ")
-                                .RuntimePronoun(milkBarChateauItem.DisplayItem, milkBarChateauItem.NewLocation.Value)
-                                .Text(" from Romani Ranch, and the current price is ")
-                                .Pink("200 Rupees")
-                                .Text("!")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("...You're not surprised?")
-                            .EndConversation()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                /*
-
-                Please find a way to return me to
-                the Fairy Fountain in North Clock
-                Town.
-
-                */
-
-                var bigBombBagItem = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeBigBombBag);
-                if (bigBombBagItem.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x648)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("We're expecting to get ")
-                                .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value, "our ")
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text(" back in stock pretty soon...")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("But now that I think about it, it's").NewLine()
-                            .Text("already late...")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x649)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("We just got ")
-                                .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text(" in stock.")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x64A)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("Actually, we should've had ")
-                                .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text(" in stock, but it seems there was an accident getting it here to the store.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("I don't know when we'll be getting").NewLine()
-                            .Text("it now...")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x65A)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("A nice fella helped me out, so we can finally sell ")
-                                .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text("!")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("Once again, the Giants are looking").NewLine()
-                            .Text("out for me!")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x65B)
-                        .Message(it =>
-                        {
-                            it.Text("Umm, Mommy...").NewLine()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("Don't go picking up ")
-                                .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text(" in the middle of the night anymore.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("It's like asking to be mugged.").NewLine()
-                            .EndTextBox()
-                            .Text("And I've actually heard that a").NewLine()
-                            .Text("thief has been lurking on the").NewLine()
-                            .Text("outskirts of town...")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x65C)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("But it's been our lifelong dream to sell ")
-                                .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text(" since back in your Daddy's day.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("Since we can't get the Goron-made").NewLine()
-                            .Text("goods, this was our big chance,").NewLine()
-                            .Text("sonny!")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x65E)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("Please try ")
-                                .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value, "our ")
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text(".")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x660)
-                        .Message(it =>
-                        {
-                            it.Text("It's such a shame... ").NewLine()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("I thought we could finally sell ")
-                                .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text("...")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x661)
-                        .Message(it =>
-                        {
-                            it.Text("Umm, Mommy...").NewLine()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("Don't go picking up ")
-                                .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text(" in the middle of the night anymore.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("It's like asking to be mugged.").NewLine()
-                            .EndTextBox()
-                            .Text("And doesn't the North Gate have").NewLine()
-                            .Text("a reputation for being a dangerous").NewLine()
-                            .Text("place?")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x2A32)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6909)
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("Oh my. And I thought we would finally be able to stock ")
-                                .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text(" in our store. What a shame...")
-                                ;
-                            })
-                            .EndConversation()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x2A33)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x6909)
-                            .Text("Oh my. You think it'll never").NewLine()
-                            .Text("happen to you. Well, now I've").NewLine()
-                            .Text("learned my lesson.")
-                            .EndTextBox()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("And I thought we would finally be able to stock ")
-                                .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text(" in our shop. It's too bad...")
-                                ;
-                            })
-                            .EndConversation()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x2A34)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x690A)
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("Thank you. Since he didn't make off with them, I can finally stock ")
-                                .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
-                                })
-                                .Text(" at our shop. Maybe I'll put 'em out tomorrow.")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                var kegItem = _randomized.ItemList[Item.ItemPowderKeg];
-                if (kegItem.IsRandomized && kegItem.Item == Item.ItemPowderKeg)
-                {
-                    var region = kegItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
-                    var regionPreposition = region.Preposition();
-                    var regionName = regionPreposition == null ? null : region.Name();
-                    if (!string.IsNullOrWhiteSpace(regionPreposition))
-                    {
-                        regionPreposition += " ";
-                    }
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x67D)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x3ABB)
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("OK, listen here. You didn't hear it from me, but there's a ")
-                                .Red("Powder Keg")
-                                .Text(" somewhere ").Text(regionPreposition ?? "").Red(regionName).Text(".")
-                                ;
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap("Come back here after you learn to use that, then I can sell you one.")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x680)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x3ABB)
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("OK, listen here. You didn't hear it from me, but there's a ")
-                                .Red("Powder Keg")
-                                .Text(" somewhere ").Text(regionPreposition ?? "").Red(regionName).Text(".")
-                                ;
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap("Come back here after you learn to use that, then I can sell you one.")
-                            .EndTextBox()
-                            .CompileTimeWrap("But the next time you come, I might not be here.")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x681)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x3ABB)
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("Quick! Find the ")
-                                .Red("Powder Keg")
-                                .Text(" somewhere ").Text(regionPreposition ?? "").Red(regionName)
-                                .Text(".")
-                                ;
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap("Learn how to use it.")
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x683)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x3ABB)
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("Quick! Find the ")
-                                .Red("Powder Keg")
-                                .Text(" somewhere ").Text(regionPreposition ?? "").Red(regionName)
-                                .Text(".")
-                                ;
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap("Learn how to use it.")
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                /*
-
-                This is the Bombers' Notebook.
-                It contains the words we live by!
-                Read it over!
-
-                1. Find troubled people and add
-                    their names and pictures.
-                    Only 20 people will fit in
-                    your book.
-                2. Promise to help them.
-                    Mark promises with Promise
-                    Stickers. Never be late with
-                    fulfilling your promises.
-                3. Whenever you solve someone's
-                    problem, it makes you happy,
-                    so a Happy Sticker will be
-                    added to your book.
-                4. No removing stickers!
-                    Use Promise Stickers to keep
-                    track of people until everyone
-                    is happy.
-                Don't forget the rules!
-
-                */
-
-                var goodPictoContestItem = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemPictographContestRedRupee);
-                if (goodPictoContestItem.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x9CD)
-                        .Message(it =>
-                        {
-                            it.Text("Now then, please choose your").NewLine()
-                            .Text("prize:").NewLine()
-                            .TwoChoices()
-                            .StartGreenText()
-                            .RuntimeItemName(goodPictoContestItem.DisplayName(), goodPictoContestItem.NewLocation.Value).NewLine()
-                            .Text("Another boat cruise")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                var standardPictoContestItem = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemPictographContestBlueRupee);
-                if (standardPictoContestItem.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x9D5)
-                        .Message(it =>
-                        {
-                            it.Text("All right...Choose your prize").NewLine()
-                            .Text(" ").NewLine()
-                            .TwoChoices()
-                            .StartGreenText()
-                            .RuntimeItemName(standardPictoContestItem.DisplayName(), standardPictoContestItem.NewLocation.Value).NewLine()
-                            .Text("Another boat cruise")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                /*
-
-                Huh? Haven't you gotten a
-                pictograph box yet?
-
-                If you take the boat cruise, they'll
-                give you one for sure. Go ask at
-                that window.
-
-                */
-
-                var goldDustItem = _randomized.ItemList[Item.ItemBottleGoronRace];
-                if (goldDustItem.IsRandomized && goldDustItem.Item == Item.ItemBottleGoronRace)
-                {
-                    var region = goldDustItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
-                    var regionPreposition = region.Preposition();
-                    var regionName = regionPreposition == null ? null : region.Name();
-                    if (!string.IsNullOrWhiteSpace(regionPreposition))
-                    {
-                        regionPreposition += " ";
-                    }
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0xC49)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("What? What?!? You say that ").Red("gold dust").Text(" can be found ")
-                                .Text(regionPreposition ?? "").Red(regionName)
-                                .Text("? How do you even know that?")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0xC4A)
-                        .Message(it =>
-                        {
-                            it.Text("What if you tried searching there?")
-                            .EndConversation()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                /*
-
-                But...
-                If you have gold dust, I'll buy it
-                off you for 40 Rupees.
-                How about it?
-
-                ---
-
-                So, come on...Will you sell it for
-                40 Rupees?
-
-                ---
-
-                See, it was long ago when I used
-                to use this thing called a
-                hookshot to catch fish off the
-                coast...
-
-                But I was attacked by these
-                pirates, and they took it away
-                with them.
-
-                They say...
-                it's a legendary treasure..
-
-                ---
-
-                If you're set on meeting those
-                beautiful pirates, try going to the
-                valley on the other side of town!
-
-                I've heard there's a mask there
-                that lets the wearer escape
-                detection.
-
-                */
-
-                var beaverRace1Item = _randomized.ItemList.First(io => io.NewLocation == Item.ItemBottleBeavers);
-                if (beaverRace1Item.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x10CF)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x291A)
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("You want ")
-                                .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
-                                })
-                                .Text(", don't you? You never learn your lesson!");
-                            })
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x10D0)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x291A)
-                            .Text("Koo, koo, koo.").NewLine()
-                            .Text("OK, I'll give you")
-                            .RuntimePronounOrAmount(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                            .Text(".")
-                            .EndTextBox()
-                            .Text("But...")
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x10D4)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x291A)
-                            .Text("Koo, koo, koo.").NewLine()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("If you want ")
-                                .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
-                                })
-                                .Text(", I can give you one...");
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap((it) =>
-                            {
-                                it.Text("But only if you can swim through all the ")
-                                .Red("rings")
-                                .Text(" in the river in under ")
-                                .Red("two minutes")
-                                .Text(".")
-                                ;
-                            })
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x10E0)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x2919)
-                            .Text("What?").NewLine()
-                            .PauseText(20)
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("He wants ")
-                                .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
-                                })
-                                .Text("?");
-                            })
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x10E1)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x291A)
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("Yeah... ")
-                                .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
-                                })
-                                .Text(".")
-                                ;
-                            })
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x10E3)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x2919)
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("To us, ")
-                                .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
-                                })
-                                .Text(" ")
-                                .RuntimeVerb(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                                .Text(" a treasure.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("I can't give you")
-                            .RuntimePronounOrAmount(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                            .Text(" just because").NewLine()
-                            .Text("you beat my little brother.")
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x10E4)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x291A)
-                            .Text("We can't just give you")
-                            .RuntimePronounOrAmount(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                            .Text(".")
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x10E5)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x2919)
-                            .Text("I'll give you")
-                            .RuntimePronounOrAmount(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                            .Text(" after you race").NewLine()
-                            .Text("once more against me.")
-                            .EndTextBox()
-                            .Text("So, will you try?").NewLine()
-                            .Text(" ").NewLine()
-                            .StartGreenText()
-                            .TwoChoices()
-                            .Text("Sure").NewLine()
-                            .Text("No thanks")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x125F)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("Hey, aren't you Mikau? Were you able to get ")
-                                .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
-                                })
-                                .Text(" from the beavers on top of the ").Red("waterfall").Text("?");
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x1261)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("But what do you need ")
-                                .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
-                                })
-                                .Text(" for, Mikau?");
-                            })
-                            .EndConversation()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                var beaverRace2Item = _randomized.ItemList.First(io => io.NewLocation == Item.HeartPieceBeaverRace);
-                if (beaverRace2Item.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x10F5)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x2919)
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("But all we have left ")
-                                .RuntimeVerb(beaverRace2Item.DisplayItem, beaverRace2Item.NewLocation.Value)
-                                .Text(" ")
-                                .RuntimeArticle(beaverRace2Item.DisplayItem, beaverRace2Item.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(beaverRace2Item.DisplayName(), beaverRace2Item.NewLocation.Value);
-                                })
-                                .Text("...right, little brother?")
-                                ;
-                            })
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x10F6)
-                        .Message(it =>
-                        {
-                            it.PlaySoundEffect(0x291A)
-                            .CompileTimeWrap("Yes, that's all we have, big brother.")
-                            .DisableTextSkip()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                var oceanSpiderHouseDay1Item = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeGiantWallet);
-                var oceanSpiderHouseDay2Item = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemOceanSpiderHouseDay2PurpleRupee);
-                var oceanSpiderHouseDay3Item = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemOceanSpiderHouseDay3RedRupee);
-                if (oceanSpiderHouseDay1Item.IsRandomized || oceanSpiderHouseDay2Item.IsRandomized || oceanSpiderHouseDay3Item.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x1131)
-                        .Message(it =>
-                        {
-                            it.Text("It's gotten bigger again.").NewLine()
-                            .Text("Th-this is bad...")
-                            .EndTextBox()
-                            .CompileTimeWrap("I'll have to sell my life savings to find somewhere to hide!")
-                            .EndTextBox()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("But all I have left is ")
-                                .RuntimeArticle(oceanSpiderHouseDay1Item.DisplayItem, oceanSpiderHouseDay1Item.NewLocation.Value, "my ")
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(oceanSpiderHouseDay1Item.DisplayName(), oceanSpiderHouseDay1Item.NewLocation.Value);
-                                })
-                                .Text("...")
-                                ;
-                            })
-                            .EndTextBox()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("Though maybe someone will be happy with ")
-                                .RuntimeArticle(oceanSpiderHouseDay2Item.DisplayItem, oceanSpiderHouseDay2Item.NewLocation.Value, "my ")
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(oceanSpiderHouseDay2Item.DisplayName(), oceanSpiderHouseDay2Item.NewLocation.Value);
-                                })
-                                .Text("...")
-                                ;
-                            })
-                            .EndTextBox()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("Or I can try ")
-                                .RuntimeArticle(oceanSpiderHouseDay3Item.DisplayItem, oceanSpiderHouseDay3Item.NewLocation.Value, "my ")
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(oceanSpiderHouseDay3Item.DisplayName(), oceanSpiderHouseDay3Item.NewLocation.Value);
-                                })
-                                .Text(" as a last resort...")
-                                ;
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap("Well... I'd better start searching.")
-                            .EndConversation()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-                if (oceanSpiderHouseDay1Item.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x113B)
-                        .Message(it =>
-                        {
-                            it.Text("If only you could have done").NewLine()
-                            .Text("something about this place").NewLine()
-                            .Text("yesterday...")
-                            .EndTextBox()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("I could have given you ")
-                                .RuntimeArticle(oceanSpiderHouseDay1Item.DisplayItem, oceanSpiderHouseDay1Item.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(oceanSpiderHouseDay1Item.DisplayName(), oceanSpiderHouseDay1Item.NewLocation.Value);
-                                })
-                                .Text("...")
-                                ;
-                            })
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x1140)
-                        .Message(it =>
-                        {
-                            it.Text("But dang, if only you could have").NewLine()
-                            .Text("done something ").Red("two days ago").Text("...")
-                            .EndTextBox()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("I could have given you ")
-                                .RuntimeArticle(oceanSpiderHouseDay1Item.DisplayItem, oceanSpiderHouseDay1Item.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(oceanSpiderHouseDay1Item.DisplayName(), oceanSpiderHouseDay1Item.NewLocation.Value);
-                                })
-                                .Text("...")
-                                ;
-                            })
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                var beaverBottleItem = _randomized.ItemList[Item.ItemBottleBeavers];
-                if (beaverBottleItem.IsRandomized)
-                {
-                    var region = beaverBottleItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
-                    var regionPreposition = region.Preposition();
-                    var regionName = regionPreposition == null ? null : region.Name();
-                    if (!string.IsNullOrWhiteSpace(regionPreposition))
-                    {
-                        regionPreposition += " ";
-                    }
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x1240)
-                        .Message(it =>
-                        {
-                            it.CompileTimeWrap((it) =>
-                            {
-                                it.Text("I told you that there's an ").Red("Empty Bottle").Text(" somewhere ")
-                                .Text(regionPreposition ?? "").Red(regionName)
-                                .Text(", right?")
-                                ;
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap("If you don't have any yet, Mikau, you should go there before heaging off to the Pirates' Fortress.")
-                            .EndConversation()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x1242)
-                        .Message(it =>
-                        {
-                            it.CompileTimeWrap((it) =>
-                            {
-                                it.Text("I already told you that there's an ").Red("Empty Bottle").Text(" somewhere ")
-                                .Text(regionPreposition ?? "").Red(regionName)
-                                .Text(", right?")
-                                ;
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap("If you don't have any yet, you should go there before heaging off to the Pirates' Fortress.")
-                            .EndConversation()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                var stormsTabletItem = _randomized.ItemList.First(io => io.NewLocation == Item.SongStorms);
-                if (stormsTabletItem.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x13F9)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("Here lies ")
-                                .RuntimeArticle(stormsTabletItem.DisplayItem, stormsTabletItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(stormsTabletItem.DisplayName(), stormsTabletItem.NewLocation.Value);
-                                })
-                                .Text(".")
-                                ;
-                            })
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                var dampeDiggingItem = _randomized.ItemList.First(io => io.NewLocation == Item.ItemBottleDampe);
-                if (dampeDiggingItem.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x13FA)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("Here lies ")
-                                .RuntimeArticle(dampeDiggingItem.DisplayItem, dampeDiggingItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(dampeDiggingItem.DisplayName(), dampeDiggingItem.NewLocation.Value);
-                                })
-                                .Text(".")
-                                ;
-                            })
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                var graveyardNight2Item = _randomized.ItemList.First(io => io.NewLocation == Item.HeartPieceKnuckle);
-                if (graveyardNight2Item.IsRandomized)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x13FB)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("Here lies ")
-                                .RuntimeArticle(graveyardNight2Item.DisplayItem, graveyardNight2Item.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(graveyardNight2Item.DisplayName(), graveyardNight2Item.NewLocation.Value);
-                                })
-                                .Text(".")
-                                ;
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap("When one who possesses eyes that can see the truth arrives, the treasure far below shall awaken.")
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                /*
-
-                Look!
-                There's a mask there!!!
-
-                It's the Sun's Mask!
-
-                ---
-
-                I got the Sun's Mask back!
-
-                ---
-
-                It's 'cause I'm about as impressive
-                as a stone, right?...I'm used to it,
-                though.
-
-                ---
-
-                I am no longer part of the
-                living...My sadness to the moon...
-                I haven't left my dance to the
-                world...I am filled with regret.
-                (Translation)             
-                I am disappointed, oh moon.
-                I have died!
-
-                Oh, I planned to bring the world
-                together and stir it into a giant
-                melting pot with my dance!
-
-                If only I had taught my new dance
-                to someone...
-
-                */
-
-                var garoMaskItem = _randomized.ItemList[Item.MaskGaro];
-                if (garoMaskItem.IsRandomized)
-                {
-                    var region = garoMaskItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
-                    var regionPreposition = region.Preposition();
-                    var regionName = regionPreposition == null ? null : region.Name();
-                    if (!string.IsNullOrWhiteSpace(regionPreposition))
-                    {
-                        regionPreposition += " ";
-                    }
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x14EE)
-                        .Message(it =>
-                        {
-                            it.Text("Yee-hee-hee.").NewLine()
-                            .Text("Do you have your own ").Red("horse").Text("?")
-                            .EndTextBox()
-                            .CompileTimeWrap(it =>
-                            {
-                                it.Text("And if you are not wearing the ")
-                                .Red("mask")
-                                .Text(" that houses the ")
-                                .Red("wandering spirits...")
-                                ;
-                            })
-                            .EndTextBox()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("Which can be found ")
-                                .Text(regionPreposition ?? "").Red(regionName)
-                                .Text("...")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("I will not let you pass.").NewLine()
-                            .Text("Yee-hee-hee.")
-                            .EndConversation()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x14F2)
-                        .Message(it =>
-                        {
-                            it.CompileTimeWrap(it =>
-                            {
-                                it.Text("But if you must enter, then you must obtain the ")
-                                .Red("mask")
-                                .Text(" containing ")
-                                .Red("wandering spirits...")
-                                ;
-                            })
-                            .EndTextBox()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("That can be found ")
-                                .Text(regionPreposition ?? "").Red(regionName)
-                                .Text("...")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x14F4)
-                        .Message(it =>
-                        {
-                            it.Text("Yee-hee-hee.").NewLine()
-                            .Text("Do you have your own ").Red("horse").Text("?")
-                            .EndTextBox()
-                            .CompileTimeWrap(it =>
-                            {
-                                it.Text("And if you are not wearing the ")
-                                .Red("mask")
-                                .Text(" containing ")
-                                .Red("wandering spirits...")
-                                ;
-                            })
-                            .EndTextBox()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("Which can be found ")
-                                .Text(regionPreposition ?? "").Red(regionName)
-                                .Text("...")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("I will not let you pass.").NewLine()
-                            .Text("Yee-hee-hee.")
-                            .EndConversation()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                var songOfSoaringItem = _randomized.ItemList[Item.SongSoaring];
-                if (songOfSoaringItem.IsRandomized && songOfSoaringItem.Item == Item.SongSoaring)
-                {
-                    var region = songOfSoaringItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
-                    var regionPreposition = region.Preposition();
-                    var regionName = regionPreposition == null ? null : region.Name();
-                    if (!string.IsNullOrWhiteSpace(regionPreposition))
-                    {
-                        regionPreposition += " ";
-                    }
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0xBFC)
-                        .Message(it =>
-                        {
-                            it.CompileTimeWrap((it) =>
-                            {
-                                it.Text("If you have left ").Red("proof ").Text("of our encounter on any of those ").Red("stone statues...");
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap((it) =>
-                            {
-                                it.Text("Then the ").Red("song").Text(" ")
-                                .Text(regionPreposition ?? "").Red(regionName)
-                                .Text(" will certainly be of some assistance...");
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    ResourceUtils.ApplyHack(Resources.mods.misc_changes_restore_swamp_owl);
-                }
-
-                var songOfTimeItem = _randomized.ItemList[Item.SongTime];
-                if (songOfTimeItem.IsRandomized && songOfTimeItem.Item == Item.SongTime)
-                {
-                    var region = songOfTimeItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
-                    var regionPreposition = region.Preposition();
-                    var regionName = regionPreposition == null ? null : region.Name();
-                    if (!string.IsNullOrWhiteSpace(regionPreposition))
-                    {
-                        regionPreposition += " ";
-                    }
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x164A)
-                        .Message(it =>
-                        {
-                            it.QuickText(() => it.Text("Oh, yeah!")).NewLine()
-                            .Text("Now listen up!")
-                            .EndTextBox()
-                            .CompileTimeWrap((it) =>
-                            {
-                                it.Text("There's a mysterious song ")
-                                .Text(regionPreposition ?? "").Red(regionName)
-                                .Text(", and if you ").Red("play").Text(" that song ").Red("backwards")
-                                .Text(", you can ").Red("slow").Text(" the flow of time.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap((it) =>
-                            {
-                                it.Text("And if you play each note ").Red("twice").Text(" in a row, you can move a ")
-                                .Red("half day").Text(" forward in time!")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x1658)
-                        .Message(it =>
-                        {
-                            it.QuickText(() => it.Text("Oh, yeah!")).NewLine()
-                            .Text("Now listen up!")
-                            .EndTextBox()
-                            .CompileTimeWrap((it) =>
-                            {
-                                it.Text("There's a strange song ")
-                                .Text(regionPreposition ?? "").Red(regionName)
-                                .Text(", and if you ").Red("play").Text(" that song ").Red("backwards")
-                                .Text(", you can ").Red("slow").Text(" the flow of time.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap((it) =>
-                            {
-                                it.Text("And if you play each note ").Red("twice").Text(" in a row, you can move a ")
-                                .Red("half day").Text(" forward through time!")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x165E)
-                        .Message(it =>
-                        {
-                            it.QuickText(() => it.Text("Oh, yeah!")).NewLine()
-                            .Text("Now listen up!")
-                            .EndTextBox()
-                            .CompileTimeWrap((it) =>
-                            {
-                                it.Text("There's a mysterious song ")
-                                .Text(regionPreposition ?? "").Red(regionName)
-                                .Text(", and it seems if you ").Red("play").Text(" that song ").Red("backwards")
-                                .Text(", you can ").Red("slow").Text(" the passage of time.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .CompileTimeWrap((it) =>
-                            {
-                                it.Text("And if you play each note ").Red("twice").Text(" in a row, you can move a ")
-                                .Red("half day").Text(" forward through time!")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                /*
-
-                Patron Guidelines for the 
-                Milk Bar, Latte:
-
-                We offer our customers limited-
-                run milk. Thus, we are a members-
-                only establishment.
-
-                Those who do not have proof of
-                membership will be refused
-                service.
-                             The Owner
-
-                ---
-
-                If you can get back the precious
-                item that was stolen from you,
-                I will return you to normal.
-
-                ---
-
-                Oh! Oh! Ohhh!!!
-                You got it! You got it!
-                You got it! You got it!!!
-
-                Then listen to me. Please play this
-                song that I am about to perform,
-                and remember it well...
-
-                This is a melody that heals evil
-                magic and troubled spirits, turning
-                them into masks.
-
-                I am sure it will be of assistance
-                to you in the future.
-
-                Ah, yes. I give you this mask in
-                commemoration of this day.
-
-                Fear not, for the magic has been
-                sealed inside the mask.
-
-                When you wear it, you will
-                transform into the shape you just
-                were. When you remove it, you
-                will return to normal.
-
-                ---
-
-                Green hat...
-                Green clothes...
-
-                */
-
-                var curiosityShopMan1Item = _randomized.ItemList.First(io => io.NewLocation == Item.MaskKeaton);
-                if (curiosityShopMan1Item.Item != Item.MaskKeaton)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0x29E2)
-                        .Message(it =>
-                        {
-                            it.Text("Now Kafei...").NewLine()
-                            .Text("I've known him since he was real").NewLine()
-                            .Text("little...")
-                            .EndTextBox()
-                            .Text("But when he showed up looking all").NewLine()
-                            .Text("young in that little ").Red("brat body").Text(",").NewLine()
-                            .Text("I didn't know what I was seeing!").NewLine()
-                            .Text(" ")
-                            .EndTextBox()
-                            .RuntimeWrap(() =>
-                            {
-                                it.Text("All it took was one glance at the ")
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(curiosityShopMan1Item.DisplayName(), curiosityShopMan1Item.NewLocation.Value);
-                                })
-                                .Text(" he was carrying for me to realize that I was looking at my old friend.")
-                                ;
-                            })
-                            .EndTextBox()
-                            .Text("I gave ").RuntimePronoun(curiosityShopMan1Item.DisplayItem, curiosityShopMan1Item.NewLocation.Value).Text(" to him a long time").NewLine()
-                            .Text("ago when he was just li'l Kafei").NewLine()
-                            .Text("Didn't know he kept ").RuntimePronoun(curiosityShopMan1Item.DisplayItem, curiosityShopMan1Item.NewLocation.Value).Text(" that well").NewLine()
-                            .Text("for so long...")
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
-
-                // Update Keg Challenge
-                var kegChallengeItem = _randomized.ItemList.First(io => io.NewLocation == Item.ItemPowderKeg);
-                if (kegChallengeItem.Item != Item.ItemPowderKeg)
-                {
-                    newMessages.Add(new MessageEntryBuilder()
-                        .Id(0xDEE)
-                        .Message(it =>
-                        {
-                            it.RuntimeWrap(() =>
-                            {
-                                it.Text("There's a Goron in this village who sells ")
-                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
-                                .Red(() =>
-                                {
-                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
-                                })
-                                .Text(".")
-                                ;
-                            })
-                            .DisableTextSkip2()
-                            .EndFinalTextBox();
-                        })
-                        .Build()
-                    );
-                }
+                ResourceUtils.ApplyHack(Resources.mods.dungeon_fairy_npc_hint);
             }
 
+            if (strayFairyRegionLocations.ContainsKey(Region.WoodfallTemple))
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x582)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Kind young one! Please hear my").NewLine()
+                        .Text("plea! Please find the fairies").NewLine()
+                        .Text("who match our ").Red("color").Text(".")
+                        .EndTextBox()
+                        .Text("Please bring them back to us!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x583)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Please fine a way to save the").NewLine()
+                        .Text("fairies, and bring them back").NewLine()
+                        .Text("here!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x584)
+                    .Header(h => h.Icon(0x11))
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("There should still be...")
+                        .EndTextBox();
+
+                        foreach (var kvp in strayFairyRegionLocations[Region.WoodfallTemple])
+                        {
+                            it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                        it.Text("Please save the fairies so I can").NewLine()
+                        .Text("be returned to my former shape!")
+                        .EndFinalTextBox();
+                    })
+                    .ExcludeFromQuickText()
+                    .ShouldTransfer()
+                    .Build()
+                );
+            }
+
+            if (strayFairyRegionLocations.ContainsKey(Region.SnowheadTemple))
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x585)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Oh, kind, young one!").NewLine()
+                        .Text("Please hear our plea! Please save").NewLine()
+                        .Text("the ").Green("fairies ").Text("who match our ").Green("color").Text(" and").NewLine()
+                        .Text("bring them back to us!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x586)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Please find a way to save the").NewLine()
+                        .Text("fairies and bring them back").NewLine()
+                        .Text("here!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x587)
+                    .Header(h => h.Icon(0x11))
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("There should still be...")
+                        .EndTextBox();
+
+                        foreach (var kvp in strayFairyRegionLocations[Region.SnowheadTemple])
+                        {
+                            it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                        it.Text("Please bring them back here so").NewLine()
+                        .Text("I can be returned to my former").NewLine()
+                        .Text("shape!")
+                        .EndFinalTextBox();
+                    })
+                    .ExcludeFromQuickText()
+                    .ShouldTransfer()
+                    .Build()
+                );
+            }
+
+            if (strayFairyRegionLocations.ContainsKey(Region.GreatBayTemple))
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x588)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Oh, kind young one!").NewLine()
+                        .Text("Please find the fairies who are").NewLine()
+                        .Text("the same ").DarkBlue("color").Text(" as we are and")
+                        .Text("bring them back to us!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x589)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Please find a way to save the").NewLine()
+                        .Text("fairies, and bring them back").NewLine()
+                        .Text("here!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x58A)
+                    .Header(h => h.Icon(0x11))
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("There should still be...")
+                        .EndTextBox();
+
+                        foreach (var kvp in strayFairyRegionLocations[Region.GreatBayTemple])
+                        {
+                            it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                        it.Text("Please save them and bring them").NewLine()
+                        .Text("back here!")
+                        .EndFinalTextBox();
+                    })
+                    .ExcludeFromQuickText()
+                    .ShouldTransfer()
+                    .Build()
+                );
+            }
+
+            if (strayFairyRegionLocations.ContainsKey(Region.StoneTowerTemple))
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x58B)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Oh, kind young one!").NewLine()
+                        .Text("Please hear our plea! Please find").NewLine()
+                        .Text("the fairies who are the same").NewLine()
+                        .Yellow("color").Text(" as we are and bring them").NewLine()
+                        .Text("back to us!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x58C)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Please save the the fairies and").NewLine()
+                        .Text("bring them back here!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x58D)
+                    .Header(h => h.Icon(0x11))
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("There should still be...")
+                        .EndTextBox();
+
+                        foreach (var kvp in strayFairyRegionLocations[Region.StoneTowerTemple])
+                        {
+                            it.RuntimeStrayFairyLocations(TextCommands.ColorLightBlue, "trapped", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                        it.Text("Please save them and bring them").NewLine()
+                        .Text("back here so I can be returned").NewLine()
+                        .Text("to my former shape!")
+                        .EndFinalTextBox();
+                    })
+                    .ExcludeFromQuickText()
+                    .ShouldTransfer()
+                    .Build()
+                );
+            }
+
+            if (strayFairyRegionLocations.ContainsKey(Region.SwampSpiderHouseItems) && ItemUtils.SwampSkulltulaTokens().Any(token => _randomized.ItemList[token].IsRandomized))
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x911)
+                    .Message(it =>
+                    {
+                        it.CompileTimeWrap((wrapped) =>
+                        {
+                            wrapped.Text("I beg of you...To lift the curse...Find them all...The ").Red("golden spider tokens").Text("...");
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                var dict = strayFairyRegionLocations[Region.SwampSpiderHouseItems];
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x912)
+                    .Header(h => h.Y(0).Icon(0x52).NextMessage(0x9912))
+                    .Message(it =>
+                    {
+                        it.Text("There should still be...")
+                        .EndTextBox();
+
+                        var firstHalf = dict.Take(dict.Count / 2).ToList();
+
+                        for (var i = 0; i < firstHalf.Count; i++)
+                        {
+                            var kvp = firstHalf[i];
+                            it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", i == firstHalf.Count - 1, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                        it
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .ExcludeFromQuickText()
+                    .ShouldTransfer()
+                    .Build()
+                );
+
+                _extraMessages.Add(new MessageEntryBuilder()
+                    .Id(0x9912)
+                    .Header(h => h.Y(0).Icon(0x52))
+                    .Message(it =>
+                    {
+                        var lastHalf = dict.Skip(dict.Count / 2).ToList();
+
+                        for (var i = 0; i < lastHalf.Count; i++)
+                        {
+                            var kvp = lastHalf[i];
+                            it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                        it
+                        .Text("Please hurry...")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .ExcludeFromQuickText()
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x914)
+                    .Header(h => h.Y(0).Icon(0x52).NextMessage(0x9912))
+                    .Message(it =>
+                    {
+                        it.Text("Please... There should still be...")
+                        .EndTextBox();
+
+                        var firstHalf = dict.Take(dict.Count / 2).ToList();
+
+                        for (var i = 0; i < firstHalf.Count; i++)
+                        {
+                            var kvp = firstHalf[i];
+                            it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", i == firstHalf.Count - 1, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                        it
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .ExcludeFromQuickText()
+                    .ShouldTransfer()
+                    .Build()
+                );
+            }
+
+            if (strayFairyRegionLocations.ContainsKey(Region.OceanSpiderHouseItems) && ItemUtils.OceanSkulltulaTokens().Any(token => _randomized.ItemList[token].IsRandomized))
+            {
+                var dict = strayFairyRegionLocations[Region.OceanSpiderHouseItems];
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1135)
+                    .Header(h => h.Y(0).Icon(0x52).NextMessage(0xA135))
+                    .Message(it =>
+                    {
+                        it.Text("I beg you! Lift the curse on this").NewLine()
+                        .Text("place! There should still be...")
+                        .EndTextBox();
+
+                        var firstHalf = dict.Take(dict.Count / 2).ToList();
+
+                        for (var i = 0; i < firstHalf.Count; i++)
+                        {
+                            var kvp = firstHalf[i];
+                            it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", i == firstHalf.Count - 1, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                        it
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .ExcludeFromQuickText()
+                    .ShouldTransfer()
+                    .Build()
+                );
+
+                _extraMessages.Add(new MessageEntryBuilder()
+                    .Id(0xA135)
+                    .Header(h => h.Y(0).Icon(0x52))
+                    .Message(it =>
+                    {
+                        var lastHalf = dict.Skip(dict.Count / 2).ToList();
+
+                        for (var i = 0; i < lastHalf.Count; i++)
+                        {
+                            var kvp = lastHalf[i];
+                            it.RuntimeStrayFairyLocations(TextCommands.ColorWhite, "hiding", false, kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                            }
+
+                        it.Text("If you lift the curse, I'll buy").NewLine()
+                        .Text("this place off you! Please hurry...")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .ExcludeFromQuickText()
+                    .ShouldTransfer()
+                    .Build()
+                );
+            }
+        }
+
+        private void WriteNPCHintText(List<MessageEntry> newMessages)
+        {
+            /*
+
+            The mask salesman said that if
+            you got back the precious thing
+            that was stolen from you, he
+            could return you to normal!
+            Did you completely forget or
+            what?
+
+            ---
+
+            Go to the shrine near the
+            North Gate. You'll find the
+            Great Fairy in there!
+
+            ---
+
+            Hey, aren't you going to the
+            Great Fairy's shrine near the
+            North Gate?
+
+            ---
+
+            Quick! We have to find the
+            Stray Fairy in town and return
+            the Great Fairy to normal!
+
+            ---
+
+            What are you doing?
+            Aren't you gonna take this fairy
+            to the shrine near the North
+            Gate?
+
+            ---
+
+            He said the secret route is in
+            East Clock Town...
+            So why aren't you going there?
+
+            */
+
+            var bank1Item = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeAdultWallet);
+            if (bank1Item.IsRandomized)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x44D)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("For example, if you deposit ").Pink("200 Rupees").Text(", you'll get ")
+                            .RuntimeArticle(bank1Item.DisplayItem, bank1Item.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bank1Item.DisplayName(), bank1Item.NewLocation.Value);
+                            })
+                            .Text(".")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x47A)
+                    .Message(it =>
+                    {
+                        it.CompileTimeWrap("See! Wasn't that a great incentive for saving money? Keep at it and you'll get another special gift in no time!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            var bank2Item = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemBankBlueRupee);
+            if (bank2Item.Item != Item.MundaneItemBankBlueRupee)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x47B)
+                    .Message(it =>
+                    {
+                        it.CompileTimeWrap("That's what they call a rewards program!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            var romaniGameItem = _randomized.ItemList.First(io => io.NewLocation == Item.SongEpona);
+            if (romaniGameItem.IsRandomized)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x4C1)
+                    .Message(it =>
+                    {
+                        it.ThreeChoices()
+                        .StartGreenText()
+                        .Text(romaniGameItem.DisplayName()).NewLine()
+                        .Text("Song of Feelings").NewLine() // purposely changed from "Song of Healing" to avoid conflicting answers
+                        .Text("Song of the Field")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            var milkBarChateauItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemMilkBarChateau);
+            if (milkBarChateauItem.Item != Item.ShopItemMilkBarChateau)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x4D7)
+                    .Message(it =>
+                    {
+                        it.ThreeChoices()
+                        .StartGreenText()
+                        .Text("Romani Run").NewLine()
+                        .Text(milkBarChateauItem.DisplayName()).NewLine()
+                        .Text("Chateau Moroni")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x2AFA)
+                    .Message(it =>
+                    {
+                        it.Text("We're called a ").Red("Milk Bar").Text(", and we").NewLine()
+                        .Text("serve the ").DarkBlue("item of the night").Text(".")
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Our most popular, of course, ")
+                            .RuntimeVerb(milkBarChateauItem.DisplayItem, milkBarChateauItem.NewLocation.Value)
+                            .Text(" ")
+                            .RuntimeArticle(milkBarChateauItem.DisplayItem, milkBarChateauItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(milkBarChateauItem.DisplayName(), milkBarChateauItem.NewLocation.Value);
+                            })
+                            .Text(". Vintage.")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap((it) =>
+                        {
+                            it.Text("We source ")
+                            .RuntimePronoun(milkBarChateauItem.DisplayItem, milkBarChateauItem.NewLocation.Value)
+                            .Text(" from Romani Ranch, and the current price is ")
+                            .Pink("200 Rupees")
+                            .Text("!")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("...You're not surprised?")
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            /*
+
+            Please find a way to return me to
+            the Fairy Fountain in North Clock
+            Town.
+
+            */
+
+            var bigBombBagItem = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeBigBombBag);
+            if (bigBombBagItem.IsRandomized)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x648)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("We're expecting to get ")
+                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value, "our ")
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
+                            })
+                            .Text(" back in stock pretty soon...")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("But now that I think about it, it's").NewLine()
+                        .Text("already late...")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x649)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("We just got ")
+                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
+                            })
+                            .Text(" in stock.")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x64A)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("Actually, we should've had ")
+                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
+                            })
+                            .Text(" in stock, but it seems there was an accident getting it here to the store.")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("I don't know when we'll be getting").NewLine()
+                        .Text("it now...")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x65A)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("A nice fella helped me out, so we can finally sell ")
+                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
+                            })
+                            .Text("!")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("Once again, the Giants are looking").NewLine()
+                        .Text("out for me!")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x65B)
+                    .Message(it =>
+                    {
+                        it.Text("Umm, Mommy...").NewLine()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Don't go picking up ")
+                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
+                            })
+                            .Text(" in the middle of the night anymore.")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("It's like asking to be mugged.").NewLine()
+                        .EndTextBox()
+                        .Text("And I've actually heard that a").NewLine()
+                        .Text("thief has been lurking on the").NewLine()
+                        .Text("outskirts of town...")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x65C)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("But it's been our lifelong dream to sell ")
+                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
+                            })
+                            .Text(" since back in your Daddy's day.")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("Since we can't get the Goron-made").NewLine()
+                        .Text("goods, this was our big chance,").NewLine()
+                        .Text("sonny!")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x65E)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("Please try ")
+                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value, "our ")
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
+                            })
+                            .Text(".")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x660)
+                    .Message(it =>
+                    {
+                        it.Text("It's such a shame... ").NewLine()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("I thought we could finally sell ")
+                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
+                            })
+                            .Text("...")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x661)
+                    .Message(it =>
+                    {
+                        it.Text("Umm, Mommy...").NewLine()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Don't go picking up ")
+                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
+                            })
+                            .Text(" in the middle of the night anymore.")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("It's like asking to be mugged.").NewLine()
+                        .EndTextBox()
+                        .Text("And doesn't the North Gate have").NewLine()
+                        .Text("a reputation for being a dangerous").NewLine()
+                        .Text("place?")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x2A32)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6909)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Oh my. And I thought we would finally be able to stock ")
+                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
+                            })
+                            .Text(" in our store. What a shame...")
+                            ;
+                        })
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x2A33)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6909)
+                        .Text("Oh my. You think it'll never").NewLine()
+                        .Text("happen to you. Well, now I've").NewLine()
+                        .Text("learned my lesson.")
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("And I thought we would finally be able to stock ")
+                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
+                            })
+                            .Text(" in our shop. It's too bad...")
+                            ;
+                        })
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x2A34)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x690A)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Thank you. Since he didn't make off with them, I can finally stock ")
+                            .RuntimeArticle(bigBombBagItem.DisplayItem, bigBombBagItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bigBombBagItem.DisplayName(), bigBombBagItem.NewLocation.Value);
+                            })
+                            .Text(" at our shop. Maybe I'll put 'em out tomorrow.")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            var kegItem = _randomized.ItemList[Item.ItemPowderKeg];
+            if (kegItem.IsRandomized && kegItem.Item == Item.ItemPowderKeg)
+            {
+                var region = kegItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
+                var regionPreposition = region.Preposition();
+                var regionName = regionPreposition == null ? null : region.Name();
+                if (!string.IsNullOrWhiteSpace(regionPreposition))
+                {
+                    regionPreposition += " ";
+                }
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x67D)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x3ABB)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("OK, listen here. You didn't hear it from me, but there's a ")
+                            .Red("Powder Keg")
+                            .Text(" somewhere ").Text(regionPreposition ?? "").Red(regionName).Text(".")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("Come back here after you learn to use that, then I can sell you one.")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x680)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x3ABB)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("OK, listen here. You didn't hear it from me, but there's a ")
+                            .Red("Powder Keg")
+                            .Text(" somewhere ").Text(regionPreposition ?? "").Red(regionName).Text(".")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("Come back here after you learn to use that, then I can sell you one.")
+                        .EndTextBox()
+                        .CompileTimeWrap("But the next time you come, I might not be here.")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x681)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x3ABB)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Quick! Find the ")
+                            .Red("Powder Keg")
+                            .Text(" somewhere ").Text(regionPreposition ?? "").Red(regionName)
+                            .Text(".")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("Learn how to use it.")
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x683)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x3ABB)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Quick! Find the ")
+                            .Red("Powder Keg")
+                            .Text(" somewhere ").Text(regionPreposition ?? "").Red(regionName)
+                            .Text(".")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("Learn how to use it.")
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            /*
+
+            This is the Bombers' Notebook.
+            It contains the words we live by!
+            Read it over!
+
+            1. Find troubled people and add
+                their names and pictures.
+                Only 20 people will fit in
+                your book.
+            2. Promise to help them.
+                Mark promises with Promise
+                Stickers. Never be late with
+                fulfilling your promises.
+            3. Whenever you solve someone's
+                problem, it makes you happy,
+                so a Happy Sticker will be
+                added to your book.
+            4. No removing stickers!
+                Use Promise Stickers to keep
+                track of people until everyone
+                is happy.
+            Don't forget the rules!
+
+            */
+
+            var goodPictoContestItem = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemPictographContestRedRupee);
+            if (goodPictoContestItem.IsRandomized)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x9CD)
+                    .Message(it =>
+                    {
+                        it.Text("Now then, please choose your").NewLine()
+                        .Text("prize:").NewLine()
+                        .TwoChoices()
+                        .StartGreenText()
+                        .RuntimeItemName(goodPictoContestItem.DisplayName(), goodPictoContestItem.NewLocation.Value).NewLine()
+                        .Text("Another boat cruise")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            var standardPictoContestItem = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemPictographContestBlueRupee);
+            if (standardPictoContestItem.IsRandomized)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x9D5)
+                    .Message(it =>
+                    {
+                        it.Text("All right...Choose your prize").NewLine()
+                        .Text(" ").NewLine()
+                        .TwoChoices()
+                        .StartGreenText()
+                        .RuntimeItemName(standardPictoContestItem.DisplayName(), standardPictoContestItem.NewLocation.Value).NewLine()
+                        .Text("Another boat cruise")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            /*
+
+            Huh? Haven't you gotten a
+            pictograph box yet?
+
+            If you take the boat cruise, they'll
+            give you one for sure. Go ask at
+            that window.
+
+            */
+
+            var goldDustItem = _randomized.ItemList[Item.ItemBottleGoronRace];
+            if (goldDustItem.IsRandomized && goldDustItem.Item == Item.ItemBottleGoronRace)
+            {
+                var region = goldDustItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
+                var regionPreposition = region.Preposition();
+                var regionName = regionPreposition == null ? null : region.Name();
+                if (!string.IsNullOrWhiteSpace(regionPreposition))
+                {
+                    regionPreposition += " ";
+                }
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0xC49)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("What? What?!? You say that ").Red("gold dust").Text(" can be found ")
+                            .Text(regionPreposition ?? "").Red(regionName)
+                            .Text("? How do you even know that?")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0xC4A)
+                    .Message(it =>
+                    {
+                        it.Text("What if you tried searching there?")
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            /*
+
+            But...
+            If you have gold dust, I'll buy it
+            off you for 40 Rupees.
+            How about it?
+
+            ---
+
+            So, come on...Will you sell it for
+            40 Rupees?
+
+            ---
+
+            See, it was long ago when I used
+            to use this thing called a
+            hookshot to catch fish off the
+            coast...
+
+            But I was attacked by these
+            pirates, and they took it away
+            with them.
+
+            They say...
+            it's a legendary treasure..
+
+            ---
+
+            If you're set on meeting those
+            beautiful pirates, try going to the
+            valley on the other side of town!
+
+            I've heard there's a mask there
+            that lets the wearer escape
+            detection.
+
+            */
+
+            var beaverRace1Item = _randomized.ItemList.First(io => io.NewLocation == Item.ItemBottleBeavers);
+            if (beaverRace1Item.IsRandomized)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x10CF)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x291A)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("You want ")
+                            .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                            })
+                            .Text(", don't you? You never learn your lesson!");
+                        })
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x10D0)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x291A)
+                        .Text("Koo, koo, koo.").NewLine()
+                        .Text("OK, I'll give you")
+                        .RuntimePronounOrAmount(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                        .Text(".")
+                        .EndTextBox()
+                        .Text("But...")
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x10D4)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x291A)
+                        .Text("Koo, koo, koo.").NewLine()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("If you want ")
+                            .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                            })
+                            .Text(", I can give you one...");
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap((it) =>
+                        {
+                            it.Text("But only if you can swim through all the ")
+                            .Red("rings")
+                            .Text(" in the river in under ")
+                            .Red("two minutes")
+                            .Text(".")
+                            ;
+                        })
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x10E0)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x2919)
+                        .Text("What?").NewLine()
+                        .PauseText(20)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("He wants ")
+                            .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                            })
+                            .Text("?");
+                        })
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x10E1)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x291A)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Yeah... ")
+                            .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                            })
+                            .Text(".")
+                            ;
+                        })
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x10E3)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x2919)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("To us, ")
+                            .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                            })
+                            .Text(" ")
+                            .RuntimeVerb(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                            .Text(" a treasure.")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("I can't give you")
+                        .RuntimePronounOrAmount(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                        .Text(" just because").NewLine()
+                        .Text("you beat my little brother.")
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x10E4)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x291A)
+                        .Text("We can't just give you")
+                        .RuntimePronounOrAmount(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                        .Text(".")
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x10E5)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x2919)
+                        .Text("I'll give you")
+                        .RuntimePronounOrAmount(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                        .Text(" after you race").NewLine()
+                        .Text("once more against me.")
+                        .EndTextBox()
+                        .Text("So, will you try?").NewLine()
+                        .Text(" ").NewLine()
+                        .StartGreenText()
+                        .TwoChoices()
+                        .Text("Sure").NewLine()
+                        .Text("No thanks")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x125F)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("Hey, aren't you Mikau? Were you able to get ")
+                            .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                            })
+                            .Text(" from the beavers on top of the ").Red("waterfall").Text("?");
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1261)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("But what do you need ")
+                            .RuntimeArticle(beaverRace1Item.DisplayItem, beaverRace1Item.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(beaverRace1Item.DisplayName(), beaverRace1Item.NewLocation.Value);
+                            })
+                            .Text(" for, Mikau?");
+                        })
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            var beaverRace2Item = _randomized.ItemList.First(io => io.NewLocation == Item.HeartPieceBeaverRace);
+            if (beaverRace2Item.IsRandomized)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x10F5)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x2919)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("But all we have left ")
+                            .RuntimeVerb(beaverRace2Item.DisplayItem, beaverRace2Item.NewLocation.Value)
+                            .Text(" ")
+                            .RuntimeArticle(beaverRace2Item.DisplayItem, beaverRace2Item.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(beaverRace2Item.DisplayName(), beaverRace2Item.NewLocation.Value);
+                            })
+                            .Text("...right, little brother?")
+                            ;
+                        })
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x10F6)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x291A)
+                        .CompileTimeWrap("Yes, that's all we have, big brother.")
+                        .DisableTextSkip()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            var oceanSpiderHouseDay1Item = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeGiantWallet);
+            var oceanSpiderHouseDay2Item = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemOceanSpiderHouseDay2PurpleRupee);
+            var oceanSpiderHouseDay3Item = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemOceanSpiderHouseDay3RedRupee);
+            if (oceanSpiderHouseDay1Item.IsRandomized || oceanSpiderHouseDay2Item.IsRandomized || oceanSpiderHouseDay3Item.IsRandomized)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1131)
+                    .Message(it =>
+                    {
+                        it.Text("It's gotten bigger again.").NewLine()
+                        .Text("Th-this is bad...")
+                        .EndTextBox()
+                        .CompileTimeWrap("I'll have to sell my life savings to find somewhere to hide!")
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("But all I have left is ")
+                            .RuntimeArticle(oceanSpiderHouseDay1Item.DisplayItem, oceanSpiderHouseDay1Item.NewLocation.Value, "my ")
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(oceanSpiderHouseDay1Item.DisplayName(), oceanSpiderHouseDay1Item.NewLocation.Value);
+                            })
+                            .Text("...")
+                            ;
+                        })
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Though maybe someone will be happy with ")
+                            .RuntimeArticle(oceanSpiderHouseDay2Item.DisplayItem, oceanSpiderHouseDay2Item.NewLocation.Value, "my ")
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(oceanSpiderHouseDay2Item.DisplayName(), oceanSpiderHouseDay2Item.NewLocation.Value);
+                            })
+                            .Text("...")
+                            ;
+                        })
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Or I can try ")
+                            .RuntimeArticle(oceanSpiderHouseDay3Item.DisplayItem, oceanSpiderHouseDay3Item.NewLocation.Value, "my ")
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(oceanSpiderHouseDay3Item.DisplayName(), oceanSpiderHouseDay3Item.NewLocation.Value);
+                            })
+                            .Text(" as a last resort...")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("Well... I'd better start searching.")
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+            if (oceanSpiderHouseDay1Item.IsRandomized)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x113B)
+                    .Message(it =>
+                    {
+                        it.Text("If only you could have done").NewLine()
+                        .Text("something about this place").NewLine()
+                        .Text("yesterday...")
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("I could have given you ")
+                            .RuntimeArticle(oceanSpiderHouseDay1Item.DisplayItem, oceanSpiderHouseDay1Item.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(oceanSpiderHouseDay1Item.DisplayName(), oceanSpiderHouseDay1Item.NewLocation.Value);
+                            })
+                            .Text("...")
+                            ;
+                        })
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1140)
+                    .Message(it =>
+                    {
+                        it.Text("But dang, if only you could have").NewLine()
+                        .Text("done something ").Red("two days ago").Text("...")
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("I could have given you ")
+                            .RuntimeArticle(oceanSpiderHouseDay1Item.DisplayItem, oceanSpiderHouseDay1Item.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(oceanSpiderHouseDay1Item.DisplayName(), oceanSpiderHouseDay1Item.NewLocation.Value);
+                            })
+                            .Text("...")
+                            ;
+                        })
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            var beaverBottleItem = _randomized.ItemList[Item.ItemBottleBeavers];
+            if (beaverBottleItem.IsRandomized)
+            {
+                var region = beaverBottleItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
+                var regionPreposition = region.Preposition();
+                var regionName = regionPreposition == null ? null : region.Name();
+                if (!string.IsNullOrWhiteSpace(regionPreposition))
+                {
+                    regionPreposition += " ";
+                }
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1240)
+                    .Message(it =>
+                    {
+                        it.CompileTimeWrap((it) =>
+                        {
+                            it.Text("I told you that there's an ").Red("Empty Bottle").Text(" somewhere ")
+                            .Text(regionPreposition ?? "").Red(regionName)
+                            .Text(", right?")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("If you don't have any yet, Mikau, you should go there before heaging off to the Pirates' Fortress.")
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1242)
+                    .Message(it =>
+                    {
+                        it.CompileTimeWrap((it) =>
+                        {
+                            it.Text("I already told you that there's an ").Red("Empty Bottle").Text(" somewhere ")
+                            .Text(regionPreposition ?? "").Red(regionName)
+                            .Text(", right?")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("If you don't have any yet, you should go there before heaging off to the Pirates' Fortress.")
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            var stormsTabletItem = _randomized.ItemList.First(io => io.NewLocation == Item.SongStorms);
+            if (stormsTabletItem.IsRandomized)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x13F9)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("Here lies ")
+                            .RuntimeArticle(stormsTabletItem.DisplayItem, stormsTabletItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(stormsTabletItem.DisplayName(), stormsTabletItem.NewLocation.Value);
+                            })
+                            .Text(".")
+                            ;
+                        })
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            var dampeDiggingItem = _randomized.ItemList.First(io => io.NewLocation == Item.ItemBottleDampe);
+            if (dampeDiggingItem.IsRandomized)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x13FA)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("Here lies ")
+                            .RuntimeArticle(dampeDiggingItem.DisplayItem, dampeDiggingItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(dampeDiggingItem.DisplayName(), dampeDiggingItem.NewLocation.Value);
+                            })
+                            .Text(".")
+                            ;
+                        })
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            var graveyardNight2Item = _randomized.ItemList.First(io => io.NewLocation == Item.HeartPieceKnuckle);
+            if (graveyardNight2Item.IsRandomized)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x13FB)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("Here lies ")
+                            .RuntimeArticle(graveyardNight2Item.DisplayItem, graveyardNight2Item.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(graveyardNight2Item.DisplayName(), graveyardNight2Item.NewLocation.Value);
+                            })
+                            .Text(".")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("When one who possesses eyes that can see the truth arrives, the treasure far below shall awaken.")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            /*
+
+            Look!
+            There's a mask there!!!
+
+            It's the Sun's Mask!
+
+            ---
+
+            I got the Sun's Mask back!
+
+            ---
+
+            It's 'cause I'm about as impressive
+            as a stone, right?...I'm used to it,
+            though.
+
+            ---
+
+            I am no longer part of the
+            living...My sadness to the moon...
+            I haven't left my dance to the
+            world...I am filled with regret.
+            (Translation)             
+            I am disappointed, oh moon.
+            I have died!
+
+            Oh, I planned to bring the world
+            together and stir it into a giant
+            melting pot with my dance!
+
+            If only I had taught my new dance
+            to someone...
+
+            */
+
+            var garoMaskItem = _randomized.ItemList[Item.MaskGaro];
+            if (garoMaskItem.IsRandomized)
+            {
+                var region = garoMaskItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
+                var regionPreposition = region.Preposition();
+                var regionName = regionPreposition == null ? null : region.Name();
+                if (!string.IsNullOrWhiteSpace(regionPreposition))
+                {
+                    regionPreposition += " ";
+                }
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x14EE)
+                    .Message(it =>
+                    {
+                        it.Text("Yee-hee-hee.").NewLine()
+                        .Text("Do you have your own ").Red("horse").Text("?")
+                        .EndTextBox()
+                        .CompileTimeWrap(it =>
+                        {
+                            it.Text("And if you are not wearing the ")
+                            .Red("mask")
+                            .Text(" that houses the ")
+                            .Red("wandering spirits...")
+                            ;
+                        })
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Which can be found ")
+                            .Text(regionPreposition ?? "").Red(regionName)
+                            .Text("...")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("I will not let you pass.").NewLine()
+                        .Text("Yee-hee-hee.")
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x14F2)
+                    .Message(it =>
+                    {
+                        it.CompileTimeWrap(it =>
+                        {
+                            it.Text("But if you must enter, then you must obtain the ")
+                            .Red("mask")
+                            .Text(" containing ")
+                            .Red("wandering spirits...")
+                            ;
+                        })
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("That can be found ")
+                            .Text(regionPreposition ?? "").Red(regionName)
+                            .Text("...")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x14F4)
+                    .Message(it =>
+                    {
+                        it.Text("Yee-hee-hee.").NewLine()
+                        .Text("Do you have your own ").Red("horse").Text("?")
+                        .EndTextBox()
+                        .CompileTimeWrap(it =>
+                        {
+                            it.Text("And if you are not wearing the ")
+                            .Red("mask")
+                            .Text(" containing ")
+                            .Red("wandering spirits...")
+                            ;
+                        })
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Which can be found ")
+                            .Text(regionPreposition ?? "").Red(regionName)
+                            .Text("...")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("I will not let you pass.").NewLine()
+                        .Text("Yee-hee-hee.")
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            var songOfSoaringItem = _randomized.ItemList[Item.SongSoaring];
+            if (songOfSoaringItem.IsRandomized && songOfSoaringItem.Item == Item.SongSoaring)
+            {
+                var region = songOfSoaringItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
+                var regionPreposition = region.Preposition();
+                var regionName = regionPreposition == null ? null : region.Name();
+                if (!string.IsNullOrWhiteSpace(regionPreposition))
+                {
+                    regionPreposition += " ";
+                }
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0xBFC)
+                    .Message(it =>
+                    {
+                        it.CompileTimeWrap((it) =>
+                        {
+                            it.Text("If you have left ").Red("proof ").Text("of our encounter on any of those ").Red("stone statues...");
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap((it) =>
+                        {
+                            it.Text("Then the ").Red("song").Text(" ")
+                            .Text(regionPreposition ?? "").Red(regionName)
+                            .Text(" will certainly be of some assistance...");
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                ResourceUtils.ApplyHack(Resources.mods.misc_changes_restore_swamp_owl);
+            }
+
+            var songOfTimeItem = _randomized.ItemList[Item.SongTime];
+            if (songOfTimeItem.IsRandomized && songOfTimeItem.Item == Item.SongTime)
+            {
+                var region = songOfTimeItem.NewLocation.Value.RegionForDirectHint(_randomized.ItemList);
+                var regionPreposition = region.Preposition();
+                var regionName = regionPreposition == null ? null : region.Name();
+                if (!string.IsNullOrWhiteSpace(regionPreposition))
+                {
+                    regionPreposition += " ";
+                }
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x164A)
+                    .Message(it =>
+                    {
+                        it.QuickText(() => it.Text("Oh, yeah!")).NewLine()
+                        .Text("Now listen up!")
+                        .EndTextBox()
+                        .CompileTimeWrap((it) =>
+                        {
+                            it.Text("There's a mysterious song ")
+                            .Text(regionPreposition ?? "").Red(regionName)
+                            .Text(", and if you ").Red("play").Text(" that song ").Red("backwards")
+                            .Text(", you can ").Red("slow").Text(" the flow of time.")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap((it) =>
+                        {
+                            it.Text("And if you play each note ").Red("twice").Text(" in a row, you can move a ")
+                            .Red("half day").Text(" forward in time!")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1658)
+                    .Message(it =>
+                    {
+                        it.QuickText(() => it.Text("Oh, yeah!")).NewLine()
+                        .Text("Now listen up!")
+                        .EndTextBox()
+                        .CompileTimeWrap((it) =>
+                        {
+                            it.Text("There's a strange song ")
+                            .Text(regionPreposition ?? "").Red(regionName)
+                            .Text(", and if you ").Red("play").Text(" that song ").Red("backwards")
+                            .Text(", you can ").Red("slow").Text(" the flow of time.")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap((it) =>
+                        {
+                            it.Text("And if you play each note ").Red("twice").Text(" in a row, you can move a ")
+                            .Red("half day").Text(" forward through time!")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x165E)
+                    .Message(it =>
+                    {
+                        it.QuickText(() => it.Text("Oh, yeah!")).NewLine()
+                        .Text("Now listen up!")
+                        .EndTextBox()
+                        .CompileTimeWrap((it) =>
+                        {
+                            it.Text("There's a mysterious song ")
+                            .Text(regionPreposition ?? "").Red(regionName)
+                            .Text(", and it seems if you ").Red("play").Text(" that song ").Red("backwards")
+                            .Text(", you can ").Red("slow").Text(" the passage of time.")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap((it) =>
+                        {
+                            it.Text("And if you play each note ").Red("twice").Text(" in a row, you can move a ")
+                            .Red("half day").Text(" forward through time!")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            /*
+
+            Patron Guidelines for the 
+            Milk Bar, Latte:
+
+            We offer our customers limited-
+            run milk. Thus, we are a members-
+            only establishment.
+
+            Those who do not have proof of
+            membership will be refused
+            service.
+                         The Owner
+
+            ---
+
+            If you can get back the precious
+            item that was stolen from you,
+            I will return you to normal.
+
+            ---
+
+            Oh! Oh! Ohhh!!!
+            You got it! You got it!
+            You got it! You got it!!!
+
+            Then listen to me. Please play this
+            song that I am about to perform,
+            and remember it well...
+
+            This is a melody that heals evil
+            magic and troubled spirits, turning
+            them into masks.
+
+            I am sure it will be of assistance
+            to you in the future.
+
+            Ah, yes. I give you this mask in
+            commemoration of this day.
+
+            Fear not, for the magic has been
+            sealed inside the mask.
+
+            When you wear it, you will
+            transform into the shape you just
+            were. When you remove it, you
+            will return to normal.
+
+            ---
+
+            Green hat...
+            Green clothes...
+
+            */
+
+            var curiosityShopMan1Item = _randomized.ItemList.First(io => io.NewLocation == Item.MaskKeaton);
+            if (curiosityShopMan1Item.Item != Item.MaskKeaton)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x29E2)
+                    .Message(it =>
+                    {
+                        it.Text("Now Kafei...").NewLine()
+                        .Text("I've known him since he was real").NewLine()
+                        .Text("little...")
+                        .EndTextBox()
+                        .Text("But when he showed up looking all").NewLine()
+                        .Text("young in that little ").Red("brat body").Text(",").NewLine()
+                        .Text("I didn't know what I was seeing!").NewLine()
+                        .Text(" ")
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("All it took was one glance at the ")
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(curiosityShopMan1Item.DisplayName(), curiosityShopMan1Item.NewLocation.Value);
+                            })
+                            .Text(" he was carrying for me to realize that I was looking at my old friend.")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("I gave ").RuntimePronoun(curiosityShopMan1Item.DisplayItem, curiosityShopMan1Item.NewLocation.Value).Text(" to him a long time").NewLine()
+                        .Text("ago when he was just li'l Kafei").NewLine()
+                        .Text("Didn't know he kept ").RuntimePronoun(curiosityShopMan1Item.DisplayItem, curiosityShopMan1Item.NewLocation.Value).Text(" that well").NewLine()
+                        .Text("for so long...")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
+            // Update Keg Challenge
+            var kegChallengeItem = _randomized.ItemList.First(io => io.NewLocation == Item.ItemPowderKeg);
+            if (kegChallengeItem.Item != Item.ItemPowderKeg)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0xDEE)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("There's a Goron in this village who sells ")
+                            .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
+                            })
+                            .Text(".")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+        }
+
+        private void WriteDungeonItemText(List<MessageEntry> newMessages)
+        {
             var dungeonItemMessageIds = new byte[] {
                 0x3C, 0x3D, 0x3E, 0x3F, 0x74,
                 0x40, 0x4D, 0x4E, 0x53, 0x75,
@@ -5775,7 +5591,10 @@ namespace MMR.Randomizer
                     .Build()
                 );
             }
+        }
 
+        private void WritePrices(MessageTable messageTable, List<MessageEntry> newMessages)
+        {
             // TODO if costs randomized
             var messageCostRegex = new Regex("\\b[0-9]{1,3}( |\u0011|\u0010)Rupees?");
             for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
@@ -5829,6 +5648,232 @@ namespace MMR.Randomizer
                     ReadWriteUtils.WriteToROM(address, subtractCost);
                 }
             }
+        }
+
+        private void WriteItems(MessageTable messageTable)
+        {
+            var freeItems = new List<Item>();
+            if (_randomized.Settings.LogicMode == LogicMode.Vanilla)
+            {
+                freeItems.Add(Item.FairyMagic);
+                freeItems.Add(Item.MaskDeku);
+                freeItems.Add(Item.ItemOcarina);
+                freeItems.Add(Item.SongTime);
+                freeItems.Add(Item.SongHealing);
+                freeItems.Add(Item.StartingSword);
+                freeItems.Add(Item.StartingShield);
+                freeItems.Add(Item.StartingHeartContainer1);
+                freeItems.Add(Item.StartingHeartContainer2);
+
+                if (_randomized.Settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.EverythingElse))
+                {
+                    //giants cs were removed
+                    freeItems.Add(Item.SongOath);
+                }
+
+                WriteFreeItems(freeItems.ToArray());
+
+                return;
+            }
+
+            //write free item (start item default = Deku Mask)
+            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.MaskDeku).Item);
+            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.SongHealing).Item);
+            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.StartingSword).Item);
+            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.StartingShield).Item);
+            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.StartingHeartContainer1).Item);
+            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.StartingHeartContainer2).Item);
+            WriteFreeItems(freeItems.ToArray());
+
+            //write everything else
+            ItemSwapUtils.ReplaceGetItemTable();
+            ItemSwapUtils.InitItems();
+
+            // Write extended object indexes to Get-Item list entries.
+            WriteExtendedObjects();
+
+            if (_randomized.Settings.FixEponaSword)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.fix_epona);
+            }
+            if (_randomized.Settings.PreventDowngrades)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.fix_downgrades);
+            }
+            if (_randomized.Settings.CustomItemList.Any(item => item.ItemCategory() == ItemCategory.Milk))
+            {
+                ResourceUtils.ApplyHack(Resources.mods.fix_cow_bottle_check);
+            }
+
+            ResourceUtils.ApplyHack(Resources.mods.update_trade_scrubs);
+
+            var newMessages = new List<MessageEntry>();
+            _randomized.Settings.AsmOptions.MMRConfig.RupeeRepeatableLocations.Clear();
+            _randomized.Settings.AsmOptions.MMRConfig.ItemsToReturnIds.Clear();
+            var killBosses = new List<Item>
+            {
+                Item.OtherKillOdolwa,
+                Item.OtherKillGoht,
+                Item.OtherKillGyorg,
+                Item.OtherKillTwinmold,
+            };
+            foreach (var item in _randomized.ItemList)
+            {
+                // Unused item
+                if (item.NewLocation == null)
+                {
+                    continue;
+                }
+
+                if (item.Item.DungeonEntrances() != null)
+                {
+                    continue;
+                }
+
+                if (killBosses.Contains(item.Item))
+                {
+                    continue;
+                }
+
+                if (ItemUtils.IsBottleCatchContent(item.Item))
+                {
+                    ItemSwapUtils.WriteNewBottle(item.NewLocation.Value, item.Item);
+                }
+                else
+                {
+                    ChestTypeAttribute.ChestType? overrideChestType = null;
+                    bool itemIsUsed(int itemId, Stack<int> path)
+                    {
+                        if (path.Contains(itemId))
+                        {
+                            return false;
+                        }
+                        try
+                        {
+                            path.Push(itemId);
+                            var usedBy = _randomized.Logic
+                                .Where(il => !ItemUtils.IsLocationJunk((Item)il.ItemId, _randomized.Settings))
+                                .Where(il => il.RequiredItemIds?.Contains(itemId) == true || il.ConditionalItemIds?.Any(c => c.Contains(itemId)) == true);
+                            if (usedBy.Any(il => !il.IsFakeItem))
+                            {
+                                return true;
+                            }
+
+                            return usedBy.Any(il => itemIsUsed(il.ItemId, path));
+                        }
+                        finally
+                        {
+                            path.Pop();
+                        }
+                    }
+                    if ((item.Item.Name().Contains("Bombchu") || item.Item.Name().Contains("Shield")) && itemIsUsed((int)item.Item, new Stack<int>()))
+                    {
+                        overrideChestType = item.Item.IsTemporary() ? ChestTypeAttribute.ChestType.SmallGold : ChestTypeAttribute.ChestType.LargeGold;
+                    }
+                    if (item.Item.Name().Contains("Compass") && _randomized.Settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.CompassRevealsBoss))
+                    {
+                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
+                    }
+                    if (item.Item.Name().Contains("Map") && item.Item.ClassicCategory() == ClassicCategory.DungeonItems && _randomized.Settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.MapRevealsLocation))
+                    {
+                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
+                    }
+                    if (_randomized.Settings.VictoryMode.HasFlag(VictoryMode.Hearts) && (item.Item.ItemCategory() == ItemCategory.PiecesOfHeart || item.Item.ItemCategory() == ItemCategory.HeartContainers))
+                    {
+                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
+                    }
+                    if (_randomized.Settings.VictoryMode.HasFlag(VictoryMode.Fairies) && ItemUtils.DungeonStrayFairies().Contains(item.Item))
+                    {
+                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
+                    }
+                    if (_randomized.Settings.VictoryMode.HasFlag(VictoryMode.SkullTokens) && item.Item.ItemCategory() == ItemCategory.SkulltulaTokens)
+                    {
+                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
+                    }
+                    ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType, messageTable, _extendedObjects);
+                }
+            }
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBottleRedPotion = GetLocationIdOfItem(Item.ItemBottleWitch);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBottleGoldDust = GetLocationIdOfItem(Item.ItemBottleGoronRace);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBottleMilk = GetLocationIdOfItem(Item.ItemBottleAliens);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBottleChateau = GetLocationIdOfItem(Item.ItemBottleMadameAroma);
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationSwordKokiri = GetLocationIdOfItem(Item.StartingSword);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationSwordRazor = GetLocationIdOfItem(Item.UpgradeRazorSword);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationSwordGilded = GetLocationIdOfItem(Item.UpgradeGildedSword);
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationMagicSmall = GetLocationIdOfItem(Item.FairyMagic);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationMagicLarge = GetLocationIdOfItem(Item.FairyDoubleMagic);
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationWalletAdult = GetLocationIdOfItem(Item.UpgradeAdultWallet);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationWalletGiant = GetLocationIdOfItem(Item.UpgradeGiantWallet);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationWalletRoyal = GetLocationIdOfItem(Item.UpgradeRoyalWallet);
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBombBagSmall = GetLocationIdOfItem(Item.ItemBombBag);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBombBagBig = GetLocationIdOfItem(Item.UpgradeBigBombBag);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBombBagBiggest = GetLocationIdOfItem(Item.UpgradeBiggestBombBag);
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverSmall = GetLocationIdOfItem(Item.ItemBow);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLarge = GetLocationIdOfItem(Item.UpgradeBigQuiver);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLargest = GetLocationIdOfItem(Item.UpgradeBiggestQuiver);
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationLullaby = GetLocationIdOfItem(Item.SongLullaby);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationLullabyIntro = GetLocationIdOfItem(Item.SongLullabyIntro);
+
+            if (_randomized.Settings.UpdateShopAppearance)
+            {
+                WriteShopText(messageTable, newMessages);
+            }
+
+            // Update messages to match updated world models.
+            if (_randomized.Settings.UpdateWorldModels)
+            {
+                WriteWorldModelText(newMessages);
+            }
+
+            WriteMiscItemText(newMessages);
+
+            var itemsWithCustomMessage = new List<Item>
+            {
+                Item.CollectableIkanaGraveyardDay2Bats1,
+                Item.FrogWoodfallTemple,
+                Item.FrogGreatBayTemple,
+                Item.FrogSwamp,
+                Item.FrogLaundryPool,
+            };
+            foreach (var item in itemsWithCustomMessage)
+            {
+                var messageAttribute = item.GetAttribute<ExclusiveItemMessageAttribute>();
+                var entry = new MessageEntry(
+                    messageAttribute.Id,
+                    messageAttribute.Message);
+                _extraMessages.Add(entry);
+            }
+
+            if (_randomized.Settings.OathHint)
+            {
+                WriteOathHintText(newMessages);
+            }
+
+            if (_randomized.Settings.RemainsHint)
+            {
+                WriteRemainsHintText(newMessages);
+            }
+
+            if (_randomized.Settings.FairyAndSkullHint)
+            {
+                WriteFairyAndSkullHintText(newMessages);
+            }
+
+            if (_randomized.Settings.UpdateNPCText)
+            {
+                WriteNPCHintText(newMessages);
+            }
+
+            WriteDungeonItemText(newMessages);
+
+            WritePrices(messageTable, newMessages);
 
             messageTable.UpdateMessages(newMessages);
 
