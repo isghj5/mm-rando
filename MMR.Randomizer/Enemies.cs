@@ -1741,7 +1741,7 @@ namespace MMR.Randomizer
             SceneUtils.UpdateScene(ikanaGraveyardScene);
 
             var snowheadTempleScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SnowheadTemple.FileID());
-            var snowheadTempleFireArrowWiz = ikanaGraveyardScene.Maps[6].Actors[0];
+            var snowheadTempleFireArrowWiz = snowheadTempleScene.Maps[6].Actors[0];
             if (snowheadTempleFireArrowWiz.ActorEnum != GameObjects.Actor.Wizrobe)
             {
                 snowheadTempleFireArrowWiz.Position.x = -1140; // move back to center of the room, not sure why this guy is so close to the door normally
