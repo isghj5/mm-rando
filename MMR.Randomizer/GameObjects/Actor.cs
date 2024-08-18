@@ -827,11 +827,28 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.MountainVillageSpring, 0x5324,
             Item.CollectableMountainVillageWinterMountainVillageSpringButterflyFairy2)]
         [CheckRestricted(Scene.GreatBayCoast, variant: 0x2324, Item.CollectableGreatBayCoastButterflyFairy1)]
-        [GroundVariants(0x3323, 0x4324, 0x5323)] // beatles on the floor
+        // beatles on the floor
+        [GroundVariants(
+            0x3323, // spiderhouse, ever living
+            0x3323, // doggy race
+            0x2323, // romani ranch, generic grotto
+            0xA323, 0x5323, // well
+            0x5323 // wet grotto
+        )]
         // they dont stick to the wall, they climb in the air
         //[WallVariants(0x3323, 0x2324, 0x4324, 0x5323)] // beatles on the... wall?
-        [FlyingVariants(0x2323, 0x2324, 0x4324)] // butterlies in the air
-        [WaterVariants(0x6322)] // fish swimming in the water
+        // butterlies in the air
+        [FlyingVariants(
+            0x2324, // coast
+            0x4324, 0x5324 // mountain village spring
+        )] 
+        // school of fish
+        [WaterVariants( 0xF322, // pirates fortress
+            0x3322, 0x4322, 0x2322, // pinnacle
+            0x5322, // cape, rots
+            0x8322, // zora hall
+            0x6322
+        )] 
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max: 2, 0x3323, 0x2324, 0x4324)]
         BugsFishButterfly = 0x4F, // Obj_Mure // includes bugs and fish and butterflies
