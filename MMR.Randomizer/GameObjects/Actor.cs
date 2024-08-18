@@ -1925,6 +1925,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 0, variant: 0x2102, 0x1102, 0x0102)] // these are pathing, do not place
         [VariantsWithRoomMax(max: 10, variant: 0xF000)]
         [UnkillableAllVariants]
+        [PlacementWeight(70)]
         En_Owl = 0xAF, // En_Owl
 
         // MULTIPLE OBJECT ACTOR
@@ -1934,7 +1935,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x2)] // pick up rock version
         [ForbidFromScene(Scene.InvertedStoneTower, Scene.SwampSpiderHouse)] // we want the bugs, I think its too much to ask players to leave to get bugs
         [CheckRestricted(Scene.TerminaField, 0x2844, Item.CollectableTerminaFieldRock1)]
-        [CheckRestricted(Scene.TerminaField, 0x2A44, Item.CollectableTerminaFieldRock2)]
+        [CheckRestricted(Scene.TerminaField, 0x2A44, Item.CollectableTerminaFieldRock2)] // wrong?
         [CheckRestricted(Scene.TerminaField, 0x2014, Item.CollectableTerminaFieldRock3)]
         [CheckRestricted(Scene.TerminaField, 0x2214, Item.CollectableTerminaFieldRock4)]
         [CheckRestricted(Scene.TerminaField, 0x2414, Item.CollectableTerminaFieldRock5)]
@@ -3770,7 +3771,7 @@ namespace MMR.Randomizer.GameObjects
         [DifficultAllVariants]
         [OnlyOneActorPerRoom]
         [VariantsWithRoomMax(max:0, variant:0)] // cutscene variant is hardcoded
-        [PlacementWeight(75)]
+        [PlacementWeight(65)]
         //[ForbidFromScene(Scene.StoneTowerTemple)]
         GaroMaster = 0x182, // En_Jso2
 
@@ -5526,7 +5527,7 @@ namespace MMR.Randomizer.GameObjects
         [ForbidFromScene(Scene.SouthClockTown, Scene.MilkRoad, Scene.WestClockTown,
              Scene.Woodfall, Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.MountainVillage, Scene.MountainVillageSpring, Scene.Snowhead,
              Scene.GreatBayCoast, Scene.ZoraCape, Scene.IkanaCanyon, Scene.StoneTower, Scene.InvertedStoneTower)]
-        [PlacementWeight(90)]
+        [PlacementWeight(65)]
         //[EnemizerScenesPlacementBlock(Scene.IkanaGraveyard)] // assumed dyna overflow
         OwlStatue = 0x223, // Obj_Warpstone
 
