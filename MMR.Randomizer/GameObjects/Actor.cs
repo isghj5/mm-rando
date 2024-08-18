@@ -1990,7 +1990,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)] // gamplaykeep obj 1
         // 801, opening scene grass, 0x1FXX are ranch and TF
         // 0402 is ikana graveyard rock circle
-        //[CheckRestricted()]
+        [CheckRestricted(Scene.IkanaGraveyard, variant:0x402, Item.ChestGraveyardGrotto)]
         [GroundVariants(0x801, 0x1F02, 0x1F00, 0x0402)]
         [WaterBottomVariants(0x0402)]
         [AlignedCompanionActor(Shiro, CompanionAlignment.OnTop, ourVariant: -1,

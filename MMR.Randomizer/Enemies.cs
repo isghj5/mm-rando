@@ -1710,7 +1710,6 @@ namespace MMR.Randomizer
             SceneUtils.UpdateScene(terminaField);
 
             var roadToIkanaCanyonScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.RoadToIkana.FileID());
-
             var roadToIkanaRedHamishi = roadToIkanaCanyonScene.Maps[0].Actors[5];
             if (roadToIkanaRedHamishi.ActorEnum != GameObjects.Actor.BronzeBoulder) // assumption: currently both have to be randomized at the same time
             {
@@ -1730,6 +1729,15 @@ namespace MMR.Randomizer
                 }
             }
             SceneUtils.UpdateScene(capeScene);
+
+            var ikanaGraveyardScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaGraveyard.FileID());
+            var graveyardGrottoRockCircle = ikanaGraveyardScene.Maps[1].Actors[44];
+            if (graveyardGrottoRockCircle.ActorEnum != GameObjects.Actor.GrassRockCluster) // assumption: currently both have to be randomized at the same time
+            {
+                graveyardGrottoRockCircle.Position.z = -1877; // move back from sitting right on top of the grotto
+            }
+            SceneUtils.UpdateScene(ikanaGraveyardScene);
+
 
             MoveShopScrubsIfRandomized();
             MovePostmanIfRandomized(terminaField);
