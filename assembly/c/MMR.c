@@ -260,6 +260,14 @@ static u8 cycleRepeatableItems[cycleRepeatableItemsLength] = {
     0xFF, // ? Stray Fairy ?
 };
 bool MMR_IsCycleRepeatable(u16 giIndex) {
+    switch (giIndex) {
+        case 0x9B: // GI_SWORD_GREAT_FAIRY_STOLEN
+        case 0x9C: // GI_SWORD_KOKIRI_STOLEN
+        case 0x9D: // GI_SWORD_RAZOR_STOLEN
+        case 0x9E: // GI_SWORD_GILDED_STOLEN
+        case 0xA9: // GI_BOTTLE_STOLEN
+            return true;
+    }
     GetItemEntry* entry = MMR_GetGiEntry(giIndex);
     if (entry->item >= 0x28 && entry->item <= 0x30) {
         // Trade/Quest items

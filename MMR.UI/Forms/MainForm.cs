@@ -114,6 +114,7 @@ namespace MMR.UI.Forms
                 { cShuffleBosses, cfg => cfg.GameplaySettings.RandomizeBossRooms },
                 { cEnemy, cfg => cfg.GameplaySettings.RandomizeEnemies },
                 { cMode, cfg => cfg.GameplaySettings.LogicMode },
+                { cItemPlacement, cfg => cfg.GameplaySettings.ItemPlacement },
 
                 // Gimmicks
                 { cHideClock, cfg => cfg.GameplaySettings.HideClock },

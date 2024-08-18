@@ -54,11 +54,9 @@ static u16 GetNextArrowVariable(u16 variable) {
 static s8 GetMagicCostByInfo(const struct ArrowInfo *info) {
     switch (info->item) {
         case ITEM_FIRE_ARROW:
-            return ArrowCycle_GetMagicCost(0);
         case ITEM_ICE_ARROW:
-            return ArrowCycle_GetMagicCost(1);
         case ITEM_LIGHT_ARROW:
-            return ArrowCycle_GetMagicCost(2);
+            return ArrowCycle_GetMagicCost(info->item - 2);
         default:
             return 0;
     }

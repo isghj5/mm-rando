@@ -333,6 +333,7 @@ namespace MMR.Randomizer.Utils
 
         public static void PrepareHintedJunkLocations(GameplaySettings settings, Random random)
         {
+            HintedJunkLocations = new List<Item>();
             if (settings.OverrideHintPriorities != null && settings.OverrideHintItemCaps != null)
             {
                 HintedJunkLocations = settings.OverrideHintPriorities.SelectMany((tier, i) =>
@@ -352,10 +353,6 @@ namespace MMR.Randomizer.Utils
                     }
                     return new List<Item>();
                 }).ToList();
-            }
-            else
-            {
-                HintedJunkLocations = new List<Item>();
             }
         }
 
