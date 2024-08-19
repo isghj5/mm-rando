@@ -1393,9 +1393,10 @@ namespace MMR.Randomizer.GameObjects
         Empty88 = 0x88,
 
         // empty, does nothing
+        // uses same object as gorman?
         [FileID(128)]
         [ObjectListIndex(0153)]
-        Demo_Shd = 0x89, // Demo_Shd
+        Unused_Demo_Shd = 0x89, // Demo_Shd
 
         [ActorizerEnabled]
         [FileID(129)]
