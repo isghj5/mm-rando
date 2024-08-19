@@ -17,11 +17,11 @@ namespace MMR.Randomizer.Attributes.Actor
     /// </summary>
     class SwitchFlagsPlacementAttribute : Attribute
     {
-        public int Mask;
+        public int Size; // the width in bits of the data in the actor params/vars
         public int Shift;
 
-        public SwitchFlagsPlacementAttribute(int mask, int shift) {
-            Mask = mask;
+        public SwitchFlagsPlacementAttribute(int size, int shift) {
+            Size = size;
             Shift = shift;
         }
     }

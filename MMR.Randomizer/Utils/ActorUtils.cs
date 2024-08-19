@@ -210,7 +210,7 @@ namespace MMR.Randomizer.Utils
             var flagsAttr = actor.ActorEnum.GetAttribute<SwitchFlagsPlacementAttribute>();
             if (flagsAttr != null)
             {
-                return (short)((variant >> flagsAttr.Shift) & flagsAttr.Mask);
+                return (short)((variant >> flagsAttr.Shift) & flagsAttr.Size);
             }
 
             return -1; // no switch flags
@@ -238,7 +238,7 @@ namespace MMR.Randomizer.Utils
             if (flagsAttr != null)
             {
                 // clear the old switchflags from our newly chosen Variant
-                var deleteMask = flagsAttr.Mask << flagsAttr.Shift;
+                var deleteMask = flagsAttr.Size << flagsAttr.Shift;
                 var newVarsWithoutSwitchflags = actor.Variants[0] & ~deleteMask;
 
                 // shift the switchflags into the new location
