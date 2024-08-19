@@ -176,6 +176,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.IkanaGravestone, Actor.Bumper, Actor.En_Ani)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
             Actor.Shabom)] // get's stuck in the ceiling where you cannot kill them
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DragonFly,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the breakable floor under them
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Hiploop,
         //    Actor.En_Ani, Actor.Bumper, Actor.Tijo)]
         [EnemizerSceneBlockSensitive(Actor.Hiploop, -1)]
