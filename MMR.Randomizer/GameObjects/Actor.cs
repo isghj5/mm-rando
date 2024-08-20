@@ -5371,9 +5371,20 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         BoatArcheryKoume = 0x214, // En_Tru_Mt
 
-        // multi-object actor with annoying crashing characteristics, leave alone
+        // NOT MULTI-OBJECT, what the hell, why would you merge three objects into one you crazy bastard
+        [ActorizerEnabled]
         [FileID(492)]
         [ObjectListIndex(0x1FC)]
+        [CheckRestricted(Scene.RomaniRanch, variant: ActorConst.ANY_VARIANT, Item.MaskRomani,
+            Item.NotebookMeetCremia, Item.NotebookDefeatGormanBrothers, Item.NotebookProtectMilkDelivery)]
+        [PathingVariants(
+            0x102 // romani ranch next to barn
+        )]
+        // 401, 200 are milkroad variants, TODO do this in a testing update not a bugfix
+        [GroundVariants(0x0)] // termina field after arival
+        [PathingTypeVarsPlacement(mask:0xFF, shift:0)]
+        [VariantsWithRoomMax(max:0, variant: 0x0, // wont spawn without defeating aliens, boring at first weird at later, untested
+            0x102)] 
         CreamiaCariage = 0x215, // Obj_Um
 
         [EnemizerEnabled]
