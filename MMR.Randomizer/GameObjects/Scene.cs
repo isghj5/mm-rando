@@ -365,6 +365,7 @@ namespace MMR.Randomizer.GameObjects
         [DynaHeadroom(64, 64)]  // low default to start
         [EnemizerSceneEnemyReplacementBlock(Actor.SkulltulaDummy,
             Actor.UnusedFallingBridge, // dyna crash loop on player entering
+            Actor.GBTFreezableWaterfall,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // Can block the ability to reach rafters to get a skulltoken
         OceanSpiderHouse = 0x25,
 
