@@ -80,7 +80,7 @@ namespace MMR.Randomizer
         private static List<GameObjects.ItemCategory> ActorizerKnownJunkCategories { get; set; }
         private static List<List<GameObjects.Item>> ActorizerKnownJunkItems { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = true;
+        private static bool ACTORSENABLED = false;
         private static Random seedrng;
         private static Models.RandomizedResult _randomized;
         private static OutputSettings _outputSettings;
@@ -933,6 +933,7 @@ namespace MMR.Randomizer
             FixSilverIshi();
             FixBabaAndDragonflyShadows();
             AddGrottoVariety();
+            ChangeHotwaterGrottoDekuBabaIntoSomethingElse(rng);
             FixCuccoChicks();
             FixWoodfallTempleGekkoMiniboss();
             FixStreamSfxVolume();
@@ -948,7 +949,6 @@ namespace MMR.Randomizer
             FixInjuredKoume();
             RandomizePinnacleRockSigns();
             RandomizeDekuPalaceBombiwaSigns();
-            ChangeHotwaterGrottoDekuBabaIntoSomethingElse(rng);
             RandomizeGrottoGossipStonesPerGrotto();
             SwapGreatFairies(rng);
             ModifyFireflyKeeseForPerching();
@@ -2217,17 +2217,17 @@ namespace MMR.Randomizer
             dekuPalaceActors[20].Position.y = -40;
         }
 
-        private static List<(GameObjects.Actor actor, short vars)> shallowWaterReplacements = new List<(GameObjects.Actor actor, short vars)>
+        private static List<(GameObjects.Actor actor, ushort vars)> shallowWaterReplacements = new List<(GameObjects.Actor actor, ushort vars)>
         {
-            (GameObjects.Actor.LikeLike, 0x2),  // water bottom type
-            (GameObjects.Actor.Mikau, 0xC0F),   // water surface type
-            (GameObjects.Actor.GoGoron, 0x7FC1) // ground type (race track goron, stretching)
+            (GameObjects.Actor.LikeLike, 0x2),   // water bottom type
+            (GameObjects.Actor.Octarok, 0xFF00), // water surface type
+            (GameObjects.Actor.GoGoron, 0x7FC1)  // ground type (race track goron, stretching)
         };
 
         public static void ChangeHotwaterGrottoDekuBabaIntoSomethingElse(Random rng)
         {
             /// I want more variety, so I want the hot spring water grotto to have a different actor in it than regular grottos
-            // using likelike as a replacement, sometimes rando will put water and sometimes land
+            // using likelike as a replacement, sometimes rando will put water and sometimes land, and mikau can give us water surface actors
 
             // we want both ground or water types, so we are going to use multiple actors
             int randomValue = rng.Next(shallowWaterReplacements.Count);
@@ -3946,10 +3946,10 @@ namespace MMR.Randomizer
                 }
 
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.CreamiaCariage)) continue;
-                if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.CreamiaCariage)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.En_Boj_04)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.CreamiaCariage)) continue;
+                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.ReDead)) continue; ///ZZZZ
+                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; ///ZZZZ
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, GameObjects.Actor.Clock, GameObjects.Actor.RealBombchu)) continue;
-                if (TestHardSetObject(GameObjects.Scene.MountainVillage, GameObjects.Actor.PottedPlant, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Dog, GameObjects.Actor.Evan)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortress, GameObjects.Actor.PatrollingPirate, GameObjects.Actor.PatrollingPirate)) continue; 
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.ClayPot, GameObjects.Actor.DekuKing)) continue;
@@ -3970,7 +3970,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Monkey)) continue;
-                #endif
+#endif
                 #endregion
 
                 var reducedCandidateList = thisSceneData.CandidatesPerObject[objectIndex].ToList();
@@ -4015,8 +4015,8 @@ namespace MMR.Randomizer
 
         public static void ShuffleActors(SceneEnemizerData thisSceneData, int objectIndex, List<Actor> subMatches, List<Actor> candidateAndCompanionGroup, List<Actor> knownChangedActorList)
         {
-#region Special exception if building debug and this build requires actor that doesnt exist
-#if DEBUG
+            #region Special exception if building debug and this build requires actor that doesnt exist
+            #if DEBUG
 
             if (subMatches.Count == 0)
             {
@@ -4024,8 +4024,8 @@ namespace MMR.Randomizer
                                     " If you built the debug version, go back to VisualStudio and build \"Release\" instead\n " +
                                     " Otherwise you probably forgot the actor isn't possible here.");
             }
-#endif
-#endregion
+            #endif
+            #endregion
 
             for (int actorIndex = 0; actorIndex < thisSceneData.ActorsPerObject[objectIndex].Count(); actorIndex++)
             {
