@@ -850,6 +850,7 @@ namespace MMR.Randomizer.GameObjects
             0x6322
         )] 
         [UnkillableAllVariants]
+        [FlyingToGroundHeightAdjustment(100)]
         [VariantsWithRoomMax(max: 2, 0x3323, 0x2324, 0x4324)]
         BugsFishButterfly = 0x4F, // Obj_Mure // includes bugs and fish and butterflies
 

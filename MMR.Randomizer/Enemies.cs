@@ -374,6 +374,9 @@ namespace MMR.Randomizer
         private static void PrepareJunkScoopList(List<(string, string)> allSphereItems)
         {
             // if the scoops are vanilla they can never be considered junk
+            if (_randomized.Settings.LogicMode == Models.LogicMode.Vanilla) return;
+            // currently, we cannot discern if scoops are important or not in no logic
+            if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic) return;
 
             var importantBottleItems = allSphereItems.FindAll(item => item.Item1.Contains("Bottle:"));
 
@@ -388,14 +391,17 @@ namespace MMR.Randomizer
 
             // scoops are a special case, they dont count as junk items above since they are all in one category handle separatly
             // for all items in list of items that are scoop types
-            // check if each and every one is an important item?
+            //   check if each and every one is an important item
             var scoopItems = _randomized.ItemList.FindAll(item => item.Item.ItemCategory() == GameObjects.ItemCategory.ScoopedItems);
-            var unImportantScoops = scoopItems.FindAll(scoop => importantBottleItems.Count(important => important.Item2 == scoop.Item.Name()) == 0);
+            var unImportantScoopIOs = scoopItems.FindAll(scoop => importantBottleItems.Count(important => important.Item2 == scoop.Item.Name()) == 0);
+            List<GameObjects.Item> unimportantScoops = unImportantScoopIOs.Select(itemObj => itemObj.Item).ToList();
 
-            List<GameObjects.Item> scoopList = unImportantScoops.Select(itemObj => itemObj.Item).ToList();
-            //addedJunkItems.AddRange(itemList);
-            ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.ScoopedItems].AddRange(scoopList);
-            ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.ScoopedItems);
+            ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.ScoopedItems].AddRange(unimportantScoops);
+            
+            if (unimportantScoops.Count() == bottleCatches.Count()) // if ALL scoops are unimportant
+            {
+                ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.ScoopedItems);
+            }
         }
 
         private static void PrepareJunkHeartPieces()
@@ -6062,7 +6068,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 73.7\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 73.8\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
