@@ -3983,13 +3983,13 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; ///ZZZZ
                 //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.Bombiwa, GameObjects.Actor.BeanSeller)) continue;
 
-                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.GuruGuru, GameObjects.Actor.PoeSisters)) continue;
-                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Windows, GameObjects.Actor.SoftSoilAndBeans)) continue;
-                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Keese)) continue;
-                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Anju, GameObjects.Actor.StockpotBell)) continue;
-                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.PostMan, GameObjects.Actor.HoneyAndDarlingCredits)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.GuruGuru, GameObjects.Actor.PoeSisters)) continue;
+                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Windows, GameObjects.Actor.WoodenBarrel)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Keese)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Anju, GameObjects.Actor.StockpotBell)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.PostMan, GameObjects.Actor.HoneyAndDarlingCredits)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.RosaSisters, GameObjects.Actor.)) continue;
-                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Gorman, GameObjects.Actor.HookshotWallAndPillar)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Gorman, GameObjects.Actor.HookshotWallAndPillar)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.SkullKidPainting)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ClayPot, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.SwimmingZora, GameObjects.Actor.LabFish)) continue;

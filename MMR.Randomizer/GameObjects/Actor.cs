@@ -5682,12 +5682,20 @@ namespace MMR.Randomizer.GameObjects
         // 0x1FF is a PF door
         [GroundVariants(0x8710, 0x8711,
             0x7F3F)] // pirates fort
-        [WaterBottomVariants(0x8710, 0x8711)] // 16 is flexible, 17 is big fairy
+        [WaterBottomVariants( 0x7F00, // pirates fort rooms? are these new or vanilla?
+            0x8710, 0x8711)] // 16 is flexible, 17 is big fairy
+        [WallVariants(0xFF)] // 0x80 + 0x7F (max switch flag)
+        // issue here being these are walls, water is the most accurate replacement
+        [WaterVariants(0x80, 0x81, 0x91 // 0x80 is a flag for the breakable wooden walls
+        )]
+        [VariantsWithRoomMax(max:0, variant: 0x80, 0x81, 0x91)] // do not place these
+        //[SwitchFlagsPlacement] // only has switch flags for wall breaking variants, what a pain
         [UnkillableAllVariants]
         // switch flags
         //[SwitchFlagsPlacement(size: 0x7F, shift: 0)] // this is only for half of the barrels, lets hand pick these and hope for the best
         [TreasureFlagsPlacement(0x7F, shift:8)]
-        [ForbidFromScene(Scene.PiratesFortressExterior)] // needed for a glitch I think
+        [ForbidFromScene(Scene.PiratesFortressExterior, // needed for a glitch I think
+            Scene.GreatBayTemple)] // TODO find out if I can remove without ruining everything
         [PlacementWeight(40)]
         WoodenBarrel = 0x22D, // Obj_Taru
         
