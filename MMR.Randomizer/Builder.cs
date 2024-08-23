@@ -6398,8 +6398,8 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(64, "Writing speedups...");
                 WriteSpeedUps(messageTable);
 
-                progressReporter.ReportProgress(65, "Writing enemies...");
-                WriteEnemies(outputSettings);
+                //progressReporter.ReportProgress(65, "Writing enemies...");
+                //WriteEnemies(outputSettings);
 
                 progressReporter.ReportProgress(66, "Writing items...");
                 WriteItems(messageTable);
@@ -6427,6 +6427,9 @@ namespace MMR.Randomizer
                     progressReporter.ReportProgress(70, "Writing traps...");
                     WriteTraps();
                 }
+
+                progressReporter.ReportProgress(70, "Writing enemies..."); // moved to attempt to bypass older variant override over actors
+                WriteEnemies(outputSettings);
 
                 // Load Asm data from internal resource files and apply
                 asm = AsmContext.LoadInternal();

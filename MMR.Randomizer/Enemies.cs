@@ -615,7 +615,7 @@ namespace MMR.Randomizer
                         #if DEBUG
                         else
                         {
-                            log.Append($" in scene [{scene.SceneEnum}][{mapIndex}][{mapActor.OldVariant.ToString("X4")}]" +
+                            log.Append($" in scene [{scene.SceneEnum}][{mapIndex}]" +
                                 $" actor was skipped over: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}]\n");
                         }
                         #endif
@@ -5325,9 +5325,9 @@ namespace MMR.Randomizer
             ////////////////////////////////////////////
             ///////   DEBUGGING: force an actor  ///////
             ////////////////////////////////////////////
-            if (scene.SceneEnum == GameObjects.Scene.SwampSpiderHouse) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.StockPotInn) // force specific actor/variant for debugging
             {
-                //thisSceneData.Actors[12].ChangeActor(GameObjects.Actor.Empty, vars: 0x000); // first torc
+                //thisSceneData.Actors[49].ChangeActor(GameObjects.Actor.HookshotWallAndPillar, vars: 0xC2); // hitspot
                 //thisSceneData.Scene.Maps[0].Actors[9].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
                 //thisSceneData.Scene.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
             }
@@ -5358,9 +5358,9 @@ namespace MMR.Randomizer
                 var actor = thisSceneData.Actors[a];
                 string dsize = actor.DynaLoad.poly > 0 ? $" dyn: [{actor.DynaLoad.poly}]" : "";
                 #if DEBUG
-                var actorNameData = $"  Old actor:[{thisSceneData.Scene.SceneEnum}]r[{actor.Room.ToString("D2")}]o[{actor.OldName}]";
+                var actorNameData = $"  Old actor:[{thisSceneData.Scene.SceneEnum}]r[{actor.Room.ToString("D2")}]n[{actor.OldName}]v[{actor.OldVariant}]";
                 #else
-                var actorNameData = $"  Old actor:[{actor.Room.ToString("D2")}][{actor.OldName}] ";
+                var actorNameData = $"  Old actor:r[{actor.Room.ToString("D2")}]n[{actor.OldName}]v[{actor.OldVariant}] ";
                 #endif
                 WriteOutput(actorNameData +
                     $" replaced by new actor: [{actor.Variants[0].ToString("X4")}]" +
