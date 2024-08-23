@@ -70,7 +70,7 @@ namespace MMR.Randomizer
     public class Enemies
     {
         public static List<InjectedActor> InjectedActors = new List<InjectedActor>();
-        const int SMALLEST_OBJ = 0xF3;
+        const int SMALLEST_OBJ = 0xF3; // 0x10 size, smallest vanilla object I could find
 
         private static List<GameObjects.Actor> VanillaEnemyList { get; set; }
         private static List<Actor> ReplacementCandidateList { get; set; }
@@ -3956,6 +3956,13 @@ namespace MMR.Randomizer
                             NewV = replacement.ObjectIndex(),
                             ChosenV = replacement.ObjectIndex()
                         });
+                        var cullCheck = thisSceneData.AcceptableCandidates.Find(act => act.ActorEnum == replacement);
+                        if (cullCheck == null) // was weight excluded, need to re-add to test
+                        {
+                            var newActor = new Actor(replacement);
+                            thisSceneData.AcceptableCandidates.Add(newActor);
+                            thisSceneData.CandidatesPerObject[objectIndex].Add(newActor);
+                        }
                         return true;
                     }
                     return false;
@@ -3965,25 +3972,20 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.CreamiaCariage)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; ///ZZZZ
                 //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.Bombiwa, GameObjects.Actor.BeanSeller)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Dog, GameObjects.Actor.Evan)) continue; 
-                //if (TestHardSetObject(GameObjects.Scene.PiratesFortress, GameObjects.Actor.PatrollingPirate, GameObjects.Actor.PatrollingPirate)) continue; 
-                //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.ClayPot, GameObjects.Actor.DekuKing)) continue;
-                // StockpotBell, UnusedStoneTowerPlatform , WarpDoor 35,30, MilkbarChairs 20,14, DekuFlower
-                // StockpotBell 33,20, UglyTree 31,something, MajoraBalloonSewer 186 something
-                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.GoGoron, GameObjects.Actor.BeanSeller)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.Snapper, GameObjects.Actor.Mimi)) continue;
 
-                //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.UglyTree, GameObjects.Actor.MilkbarChairs)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.LargeSnowball, GameObjects.Actor.MilkbarChairs)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.RoadToIkana, GameObjects.Actor.RealBombchu, GameObjects.Actor.BeanSeller)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.Leever, GameObjects.Actor.MilkbarChairs)) continue;
+                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.GuruGuru, GameObjects.Actor.PoeSisters)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Windows, GameObjects.Actor.SoftSoilAndBeans)) continue;
+                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Keese)) continue;
+                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Anju, GameObjects.Actor.StockpotBell)) continue;
+                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.PostMan, GameObjects.Actor.HoneyAndDarlingCredits)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.RosaSisters, GameObjects.Actor.)) continue;
+                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Gorman, GameObjects.Actor.HookshotWallAndPillar)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.SkullKidPainting)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StoneTower, GameObjects.Actor.ClayPot, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.SwimmingZora, GameObjects.Actor.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
 
-                //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Monkey)) continue;
+                if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.IronKnuckle)) continue;
                 #endif
                 #endregion
 
@@ -5228,6 +5230,9 @@ namespace MMR.Randomizer
                     var chosenObject = thisSceneData.ChosenReplacementObjects[objectIndex].ChosenV;
                     List<Actor> subMatches = thisSceneData.CandidatesPerObject[objectIndex].FindAll(act => act.ObjectId == chosenObject);
 
+                    #if DEBUG
+                    var object_actor = VanillaEnemyList.Find(act => act.ObjectIndex() == chosenObject);
+                    #endif
                     Debug.Assert(subMatches.Count > 0);
 
                     AddCompanionsToCandidates(thisSceneData, objectIndex, subMatches);
