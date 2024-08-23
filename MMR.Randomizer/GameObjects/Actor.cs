@@ -3795,12 +3795,18 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled] // free enemy, placed in places where enemies are normally
         [FileID(349)]
         [ObjectListIndex(0x1)] // obj 1: gameplay keep, but can't set that
+        // use of ActorConst.ANY_VARIANT here is because I'm too lazy to update their params to mark them item dependant, and there is only one in those spots anyway
         [CheckRestricted(Scene.SouthClockTown, variant: ActorConst.ANY_VARIANT, Item.ChestSouthClockTownPurpleRupee)]
+        [CheckRestricted(Scene.TerminaField, variant: 0x77, Item.CollectableTerminaFieldInvisibleItem1)]
         [CheckRestricted(Scene.ZoraHallRooms, variant: ActorConst.ANY_VARIANT, Item.HeartPieceZoraHallScrub, Item.TradeItemOceanDeed, Item.ShopItemBusinessScrubGreenPotion)]
-        //[ObjectListIndex(0xF3)] // TESTING
         [DynaAttributes(12,12)] // both gold and pink flowers have the same count
-        [GroundVariants(0x7F, 0x17F)] // 7F is regular, 17F is big yellow
+        // 0xFF param space is completely unused?? lets make 0x0177 and 0x0077 non-vanilla un-safe to remove values for actorizer
+        [GroundVariants(
+            0x77, 0x177, // non-vanilla, marked do not remove without check dependency
+            0x7F, 0x17F // vanilla: 7F is regular, 17F is big yellow
+        )] 
         [UnkillableAllVariants]
+        // TODO need to start removing these and start labeling them
         [ForbidFromScene(Scene.SouthernSwamp, Scene.Woodfall, Scene.DekuPalace, Scene.WoodfallTemple, Scene.OdolwasLair,
             Scene.GoronVillage, Scene.IkanaCanyon, 
             Scene.DekuPlayground, Scene.SwampSpiderHouse, Scene.DekuTrial,

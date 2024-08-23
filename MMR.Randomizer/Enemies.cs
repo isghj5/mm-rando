@@ -929,6 +929,7 @@ namespace MMR.Randomizer
             EnablePoFusenAnywhere();
 
             FixSpawnLocations();
+            DistinguishLogicRequiredDekuFlowers();
             //DisableActorSpawnCutsceneData();
 
             ExtendGrottoDirectIndexByte();
@@ -3154,6 +3155,15 @@ namespace MMR.Randomizer
             ranchScene.Maps[2].Objects[5] = GameObjects.Actor.DekuBaba.ObjectIndex();
         }
 
+        private static void DistinguishLogicRequiredDekuFlowers()
+        {
+            // for objectless actorizer, some deku flowers must be held back because they require logic, but all deku flowers use the same params
+            // but the 0xFF param space is unused, so we dont have to worry about changing it to mark our requirements
+
+            var tfScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TerminaField.FileID());
+            var aboveCowGrottoFlower = tfScene.Maps[0].Actors[48];
+            aboveCowGrottoFlower.OldVariant = aboveCowGrottoFlower.Variants[0] = 0x0077;
+        }
 
         private static void EnableAllCreditsCutScenes()
         {
@@ -3974,7 +3984,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.Bombiwa, GameObjects.Actor.BeanSeller)) continue;
 
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.GuruGuru, GameObjects.Actor.PoeSisters)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Windows, GameObjects.Actor.SoftSoilAndBeans)) continue;
+                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Windows, GameObjects.Actor.SoftSoilAndBeans)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Keese)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Anju, GameObjects.Actor.StockpotBell)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.PostMan, GameObjects.Actor.HoneyAndDarlingCredits)) continue;
