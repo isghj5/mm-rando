@@ -1289,7 +1289,7 @@ namespace MMR.Randomizer
         {
             // the peahat grass drops NOTHING, this has bothered me for ages, here I change it
             var grottosScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Grottos.FileID());
-            grottosScene.Maps[13].Actors[1].Variants[0] = 0x0001; // change the grass in peahat grotto to drop items like TF grass
+            grottosScene.Maps[13].Actors[1].ChangeActor(GameObjects.Actor.NaturalPatchOfGrass, vars: 0x1, modifyOld: true);
 
             if (ACTORSENABLED)
             {
@@ -5358,9 +5358,9 @@ namespace MMR.Randomizer
                 var actor = thisSceneData.Actors[a];
                 string dsize = actor.DynaLoad.poly > 0 ? $" dyn: [{actor.DynaLoad.poly}]" : "";
                 #if DEBUG
-                var actorNameData = $"  Old actor:[{thisSceneData.Scene.SceneEnum}]r[{actor.Room.ToString("D2")}]n[{actor.OldName}]v[{actor.OldVariant}]";
+                var actorNameData = $"  Old actor:[{thisSceneData.Scene.SceneEnum}]r[{actor.Room.ToString("D2")}]n[{actor.OldName}]v[0x{actor.OldVariant.ToString("X4")}]";
                 #else
-                var actorNameData = $"  Old actor:r[{actor.Room.ToString("D2")}]n[{actor.OldName}]v[{actor.OldVariant}] ";
+                var actorNameData = $"  Old actor:r[{actor.Room.ToString("D2")}]n[{actor.OldName}]v[0x{actor.OldVariant.ToString("X4")}] ";
                 #endif
                 WriteOutput(actorNameData +
                     $" replaced by new actor: [{actor.Variants[0].ToString("X4")}]" +
