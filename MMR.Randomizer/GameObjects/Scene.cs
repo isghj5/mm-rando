@@ -426,6 +426,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bombiwa,
             Actor.LikeLike)] // can grab you as you LEAVE and hardlock the game
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BugsFishButterfly, // peahat grotto butterfly
+            Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform)] // can cover the peahat grotto
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DekuBaba,
             Actor.RegularIceBlock, // I dont want to block on all of them, but the big one is a problem for peahat grotto
             Actor.LikeLike)] // can grab you on grotto exit and softlock with only one heart, TODO make special code instead moving them?
