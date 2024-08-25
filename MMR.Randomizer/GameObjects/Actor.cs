@@ -2379,11 +2379,11 @@ namespace MMR.Randomizer.GameObjects
             )]
         //[VariantsWithRoomMax(max:0, variant:)]
         [ForbidFromScene(
-            Scene.WoodfallTemple, 
-            Scene.Grottos,
-            Scene.SwampSpiderHouse,
-            Scene.MountainVillageSpring,
-            Scene.SouthernSwamp, // re-enabled because I need to get around itemizer
+            //Scene.WoodfallTemple, 
+            //Scene.Grottos,
+            //Scene.SwampSpiderHouse,
+            //Scene.MountainVillageSpring,
+            //Scene.SouthernSwamp, // re-enabled because I need to get around itemizer
             Scene.PiratesFortressRooms // required for cutscene to get actor to leave, for now
             )]
         [UnkillableAllVariants]
@@ -5042,6 +5042,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom] // dyna crash hazard
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         //[EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.SouthernSwampClear)] // dyna crash
+        [PlacementWeight(60)] // bit boring
         DarmaniGrave = 0x1FB, // Obj_Ghaka
 
         [ActorizerEnabled]
