@@ -356,6 +356,7 @@ namespace MMR.Randomizer.GameObjects
             /*Actor.Bumper, Actor.ClocktowerGearsAndOrgan*/)]
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
         [EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)]
+        [EnemizerSceneBlockSensitive(Actor.ClayPot, -1)] // the upper floor main room can block the softsoil
         [EnemizerSceneBlockSensitive(Actor.SwampSpiderHouseCutableIvy, -1)]
         // old, should no longer be needed: Actor.En_Ani, Actor.GoronElder, Actor.Cow, Actor.Tijo , Actor.Postbox,
         SwampSpiderHouse = 0x24,
