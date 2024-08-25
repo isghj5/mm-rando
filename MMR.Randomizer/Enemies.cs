@@ -963,7 +963,6 @@ namespace MMR.Randomizer
             SplitSnowheadTempleBo();
             BlockBabyGoronIfNoSFXRando();
             FixArmosSpawnPos();
-            FixEvanRotation();
             RandomizeTheSongMonkey();
             MoveTheISTTTunnelTransitionBack();
             FixSwordSchoolPotRandomization();
@@ -1672,6 +1671,7 @@ namespace MMR.Randomizer
 
         public static void MoveActorsIfRandomized()
         {
+
             /// if ossan in trading post was randomized we want to move one of them, as there are two of the, assumed for late night
             var tradingpostScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TradingPost.FileID());
             var secondOssan = tradingpostScene.Maps[0].Actors[1];
@@ -1766,6 +1766,7 @@ namespace MMR.Randomizer
             }
             SceneUtils.UpdateScene(snowheadTempleScene);
 
+            FixEvanRotation();
             MoveShopScrubsIfRandomized();
             MovePostmanIfRandomized(terminaField);
         }
@@ -2195,7 +2196,6 @@ namespace MMR.Randomizer
         {
             /// these signs use gameplay_keep, so there is no sign to associate with them
             /// HOWEVER, there is a bombiwa object in the object list that doesnt seem to do anything, we can randomize it
-            /// we do have to live with the log saying there are a lot of bombiwa there that are really not there, but so be it
 
             var listOfSignIds = new List<int> { 14, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43 };
 
@@ -2204,7 +2204,7 @@ namespace MMR.Randomizer
             foreach (var aId in listOfSignIds)
             {
                 pinnacleSceneActors[aId].ChangeActor(GameObjects.Actor.Bombiwa, vars: 0x8077, true);
-                pinnacleSceneActors[aId].OldName = "WaypointSign";
+                pinnacleSceneActors[aId].OldName = "WaypointSign"; // so the log doesnt say they are bombiwa, rename here
             }
         }
 
@@ -2992,7 +2992,14 @@ namespace MMR.Randomizer
             // if evan is randomized, then his replacement is staring at the wall
             var zorahallRoomsScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.ZoraHallRooms.FileID());
             var evan = zorahallRoomsScene.Maps[3].Actors[0];
-            evan.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: evan.Rotation.y);
+
+            /// if ossan in trading post was randomized we want to move one of them, as there are two of the, assumed for late night
+            if (evan.ActorEnum != GameObjects.Actor.Evan)
+            {
+                evan.Rotation.y = ActorUtils.MergeRotationAndFlags(180 + 90 + 15, flags: evan.Rotation.y);
+                SceneUtils.UpdateScene(zorahallRoomsScene);
+            }
+
         }
 
         private static void RandomizeTheSongMonkey()
@@ -3983,7 +3990,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; ///ZZZZ
                 //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.Bombiwa, GameObjects.Actor.BeanSeller)) continue;
 
-                if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.Bo, GameObjects.Actor.Nejiron)) continue;
+                if (TestHardSetObject(GameObjects.Scene.ZoraHallRooms, GameObjects.Actor.Evan, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.Nejiron, GameObjects.Actor.Peahat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Keese)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Anju, GameObjects.Actor.StockpotBell)) continue;

@@ -2556,19 +2556,28 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(227)]
         [ObjectListIndex(0x146)]
-        // bugged: milksanity breaks these actors params and sometimes their types
-        //[CheckRestricted(Scene.BeneathTheWell, variant: 0x0, Item.ItemWellCowMilk)]
-        //[CheckRestricted(Scene.RanchBuildings, variant: 0x2, Item.ItemRanchBarnMainCowMilk, Item.ItemRanchBarnOtherCowMilk1, Item.ItemRanchBarnOtherCowMilk2)]
-        //[CheckRestricted(Scene.RomaniRanch, variant: 0x2, Item.ItemRanchBarnMainCowMilk, Item.ItemRanchBarnOtherCowMilk1, Item.ItemRanchBarnOtherCowMilk2)]
-        //[CheckRestricted(Scene.Grottos, variant: 0x0, Item.ItemCoastGrottoCowMilk1, Item.ItemCoastGrottoCowMilk2, Item.ItemTerminaGrottoCowMilk1, Item.ItemTerminaGrottoCowMilk2)]
+        [CheckRestricted(Scene.BeneathTheWell, variant: ActorConst.ANY_VARIANT, Item.ItemWellCowMilk)]
+        [CheckRestricted(Scene.RanchBuildings, variant: ActorConst.ANY_VARIANT,
+            Item.ItemRanchBarnMainCowMilk, Item.ItemRanchBarnOtherCowMilk1, Item.ItemRanchBarnOtherCowMilk2)]
+        [CheckRestricted(Scene.RomaniRanch, variant: ActorConst.ANY_VARIANT,
+            Item.ItemRanchBarnMainCowMilk, Item.ItemRanchBarnOtherCowMilk1, Item.ItemRanchBarnOtherCowMilk2)]
+        [CheckRestricted(Scene.Grottos, variant: ActorConst.ANY_VARIANT,
+            Item.ItemCoastGrottoCowMilk1, Item.ItemCoastGrottoCowMilk2, Item.ItemTerminaGrottoCowMilk1, Item.ItemTerminaGrottoCowMilk2)]
         [GroundVariants(0, 2)]  // 2 is from romani ranch, 0 is cow grotto, well is also 0
         [WallVariants(0, 2)]  // 2 is from romani ranch, 0 is cow grotto, well is also 0
         [WaterBottomVariants(0)] // silly
         [UnkillableAllVariants]
         [BlockingVariantsAll]
-        [ForbidFromScene(Scene.RanchBuildings, Scene.RomaniRanch, Scene.Grottos, Scene.BeneathTheWell)]
+        // used to be bugged: milk sanity would corrupt their parameters
+        [ForbidFromScene(
+            Scene.RanchBuildings,
+            Scene.RomaniRanch//,
+        //    Scene.Grottos,
+        //    Scene.BeneathTheWell
+        )]
         //[ForbidFromScene(Scene.Grottos)]
         //[EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking the way
+        //[PlacementWeight(95)]
         Cow = 0xF3, // En_Cow
 
         EmptyF4 = 0xF4,
