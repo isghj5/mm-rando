@@ -234,7 +234,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DragonFly,
             Actor.GiantBeee)] // issue being that the one that spins around and doesnt agro hard requires a ranged weapon because the spawn is so high
         [EnemizerSceneBlockSensitive(Actor.Bo, -1)]
-        [EnemizerSceneBlockSensitive(Actor.SwampSpiderHouseCutableIvy, -1)]
+        [EnemizerSceneBlockSensitive(Actor.CuttableIvyWall, -1)]
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper,
         //    Actor.WarpDoor, Actor.ClocktowerGearsAndOrgan)] // Snapper spawns just on top of its chest, its possible a non-killable actor is placed int he wya
         [EnemizerSceneBlockSensitive(Actor.Snapper, -1)]
@@ -357,7 +357,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
         [EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)]
         [EnemizerSceneBlockSensitive(Actor.ClayPot, -1)] // the upper floor main room can block the softsoil
-        [EnemizerSceneBlockSensitive(Actor.SwampSpiderHouseCutableIvy, -1)]
+        [EnemizerSceneBlockSensitive(Actor.CuttableIvyWall, -1)]
         // old, should no longer be needed: Actor.En_Ani, Actor.GoronElder, Actor.Cow, Actor.Tijo , Actor.Postbox,
         SwampSpiderHouse = 0x24,
 
@@ -684,6 +684,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.Dexihand, -1)]
         GreatBayTemple = 0x46,
 
+        // tag: beavers
         [FileID(1386)]
         [SceneInternalId(0x4A)]
         WaterfallRapids = 0x47,

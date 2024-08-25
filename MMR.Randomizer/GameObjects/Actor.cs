@@ -4295,7 +4295,7 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(size: 0x7F, shift: 0)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
-        SwampSpiderHouseCutableIvy = 0x1BE, // Bg_Dkjail_Ivy
+        CuttableIvyWall = 0x1BE, // Bg_Dkjail_Ivy
 
         Empty1BF = 0x1BF,
 
@@ -6981,6 +6981,11 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.TerminaField, 0x75, Item.CollectableTerminaFieldInvisibleItem9)]  // goron jump ocean ramp
         [CheckRestricted(Scene.TerminaField, 0x79, Item.CollectableTerminaFieldInvisibleItem10)] // goron jump ocean chest
         [CheckRestricted(Scene.TerminaField, 0x7D, Item.CollectableTerminaFieldInvisibleItem11)] // goron jump snowfield
+        [CheckRestricted(Scene.SwampSpiderHouse, 0x94, Item.CollectableSwampSpiderHouseInvisibleItem1)] // touch spots on top of the pots in cuttable ivy room
+        [CheckRestricted(Scene.SwampSpiderHouse, 0x98, Item.CollectableSwampSpiderHouseInvisibleItem2)] // in order from closest to second 
+        [CheckRestricted(Scene.SwampSpiderHouse, 0x9C, Item.CollectableSwampSpiderHouseInvisibleItem3)] //   assending down toward small pots and beehives
+        [CheckRestricted(Scene.SwampSpiderHouse, 0xA1, Item.CollectableSwampSpiderHouseInvisibleItem4)]
+        [CheckRestricted(Scene.SwampSpiderHouse, 0xA6, Item.CollectableSwampSpiderHouseInvisibleItem5)]
         [CheckRestricted(Scene.RomaniRanch, 0x29, Item.CollectableRomaniRanchInvisibleItem1)] // ranch fence items
         [CheckRestricted(Scene.RomaniRanch, 0x2D, Item.CollectableRomaniRanchInvisibleItem2)]
         [CheckRestricted(Scene.RomaniRanch, 0x30, Item.CollectableRomaniRanchInvisibleItem3)]
