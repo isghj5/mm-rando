@@ -1962,11 +1962,11 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableMountainVillageWinterMountainVillageSpringItem1)]
         [CheckRestricted(Scene.GreatBayCoast, variant: 0x32,
             Item.CollectableGreatBayCoastSoftSoil1)]
-        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4014, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock1)]
-        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4234, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock2)]
-        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4624, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock3)]
-        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4214, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock4)]
-        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4814, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock5)]
+        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4014, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock1)] // highest
+        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4214, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock2)] // lowest
+        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4814, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock3)] // 2nd lowest
+        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4424, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock4)] // 2nd highest
+        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4624, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock5)] // middle rock
         //[ObjectListIndex(0x1F6)] // NEVER USED IN MM, damn thing lied to me, even the boulders are object 2
         // it actually uses one of two objects: gameplay_field or object_ishi, which is only in SSHouse
         //6a does not load
