@@ -3530,7 +3530,7 @@ namespace MMR.Randomizer
             for (int i = 0; i < thisSceneData.Actors.Count(); i++) // thisSceneData.Actors is only the actors we change
             {
                 var testActor = thisSceneData.Actors[i];
-                if (listTroubleActors.Contains(testActor.ActorEnum))
+                //if (listTroubleActors.Contains(testActor.ActorEnum)) // testing: what if we just remove cutscene for all of our placed actors
                 {
                     // remove the spawn data by setting spawn to 0x7F (-1)
                     testActor.Rotation.y |= 0x7F;
