@@ -5122,7 +5122,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [EnemizerScenesPlacementBlock(Scene.MilkBar)] // can interupt balad of the windfish performance
         [UnkillableAllVariants]
-        [PlacementWeight(80)]
+        [PlacementWeight(20)] // really annoying
         GaboraBlacksmith = 0x1FF, // En_Kgy
 
         // the wackest actor that controls the whole alien invasion event, and a lot of stuff at ranch
