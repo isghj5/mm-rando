@@ -4079,6 +4079,7 @@ namespace MMR.Randomizer.GameObjects
         [ForbidFromScene(Scene.RomaniRanch)] // if removed, and another romani teleports player, game is stuck
         RomaniWithBow = 0x1A4, // En_Ma4
 
+        // tag beaver ring
         //[ActorizerEnabled] // none of the types will spawn out of minigame
         // cannot turn into mmra, need to modify the actor to speed up, but even with shifting the actor will not draw, reason unknown
         [FileID(380)]
@@ -4088,6 +4089,7 @@ namespace MMR.Randomizer.GameObjects
         //[WaterVariants(0x2)]
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.WaterfallRapids)] // do not remove the original, yet
+        [EnemizerScenesPlacementBlock(Scene.WaterfallRapids)] // suspected crash if extra rings are added and player uses them, but the code is busted
         ZoraRaceRing = 0x1A5, // En_Twig
 
         [ActorizerEnabled]
