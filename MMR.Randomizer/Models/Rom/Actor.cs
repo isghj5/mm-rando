@@ -683,5 +683,20 @@ namespace MMR.Randomizer.Models.Rom
             return 100; // default percent: 100%
         }
 
+        public void ChangeXRotation(int newRotation)
+        {
+            this.Rotation.x = ActorUtils.MergeRotationAndFlags(newRotation, flags: this.Rotation.x);
+        }
+
+        public void ChangeYRotation(int newRotation)
+        {
+            this.Rotation.y = ActorUtils.MergeRotationAndFlags(newRotation, flags: this.Rotation.y);
+        }
+        public void ChangeZRotation(int newRotation)
+        {
+            this.Rotation.z = ActorUtils.MergeRotationAndFlags(newRotation, flags: this.Rotation.z);
+        }
+
+
     }
 }

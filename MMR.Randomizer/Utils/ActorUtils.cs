@@ -181,6 +181,7 @@ namespace MMR.Randomizer.Utils
             return (short) (((rotation & 0x1FF) << 7) | (flags & 0x7F));
         }
 
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void FlattenPitchRoll(Actor actor)
         {
@@ -284,6 +285,25 @@ namespace MMR.Randomizer.Utils
             {
                 throw new System.Exception("There be no treasure here");
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ClearActorRotationRestrictions(Actor actor/*, bool clearPitch = true, bool clearYaw = true, bool clearRoll = true*/)
+        {
+            // there is a flag in the actor scene spawn data that blocks the actor from converting the xyz rotations
+            // not sure if this is to preserve data as a parameter or what, but it means we cannot rotate some actors,
+            //   including all wall hitspots
+            // here, we just remove them, assume our replacement actor uses all of them
+
+            // TODO finish making this specifyable per rotation
+
+            //var flags = 0;
+            // where the flags are:
+            // 1000  no x rotation
+            //flags |= (0x4000 * clearPitch); // oh right c# doesnt allow bool to int, fuck this do later
+            // 0100  no y rotation
+            // 0010  no z rotation
+            actor.ActorIdFlags &= ~0xE000;
         }
 
 

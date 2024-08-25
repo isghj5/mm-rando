@@ -1208,16 +1208,7 @@ namespace MMR.Randomizer
                 var rightMountainPot = mountainVillageScene.Maps[0].Actors[36];
                 rightMountainPot.Rotation.y = ActorUtils.MergeRotationAndFlags(270, rightMountainPot.Rotation.y);
 
-                // if the clocktown talk points are randomized, we want to rotate them as they dont have set rotation
-                // this shit does nothing because something funky is going on, the rotation is not what it is in vanilla and its being ignored????
-                /* var westClocktownScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.WestClockTown.FileID());
-                var curiosityshopSign = westClocktownScene.Maps[0].Actors[22];
-                curiosityshopSign.Rotation.y = ActorUtils.MergeRotationAndFlags(180 , flags: curiosityshopSign.Rotation.y);
-                var tradingpostSign = westClocktownScene.Maps[0].Actors[9];
-                tradingpostSign.Rotation.y = ActorUtils.MergeRotationAndFlags(0, flags: tradingpostSign.Rotation.y);
-                var bombshopSign = westClocktownScene.Maps[0].Actors[2];
-                bombshopSign.Rotation.y = ActorUtils.MergeRotationAndFlags(0, flags: bombshopSign.Rotation.y);
-                // */
+                RotateTalkSpotsAndHitSpots();
 
                 // trying to fix clock, nothing
                 //var curiosityShopClock = curiosityShop.Maps[0].Actors[5];
@@ -1228,7 +1219,79 @@ namespace MMR.Randomizer
                 //var secondTorch = mountainVillageSpring.Maps[0].Actors[13];
                 //secondTorch.Rotation.y = ActorUtils.MergeRotationAndFlags(180, secondTorch.Rotation.y);
                 //secondTorch.Position.z -= 50;
+
             }
+        }
+
+        private static void RotateTalkSpotsAndHitSpots()
+        {
+            // lots of talk spots and hit spots have no rotation and need to be adjusted or they are half stuck in the wall weirdly
+
+            var stockpotInnScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.StockPotInn.FileID());
+            var stockpotinnmaskHitSpot = stockpotInnScene.Maps[0].Actors[14];
+            ActorUtils.ClearActorRotationRestrictions(stockpotinnmaskHitSpot);
+            stockpotinnmaskHitSpot.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: stockpotinnmaskHitSpot.Rotation.y);
+
+            // if the clocktown talk points are randomized, we want to rotate them as they dont have set rotation
+            // this shit does nothing because something funky is going on, the rotation is not what it is in vanilla and its being ignored????
+            var westClocktownScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.WestClockTown.FileID());
+            var curiosityshopSign = westClocktownScene.Maps[0].Actors[22];
+            curiosityshopSign.ChangeYRotation(180 - 27);
+            ActorUtils.ClearActorRotationRestrictions(curiosityshopSign);
+            var tradingpostSign = westClocktownScene.Maps[0].Actors[9];
+            tradingpostSign.Rotation.y = ActorUtils.MergeRotationAndFlags(180 - 45 , flags: tradingpostSign.Rotation.y);
+            ActorUtils.ClearActorRotationRestrictions(tradingpostSign);
+            var bombshopSign = westClocktownScene.Maps[0].Actors[2];
+            bombshopSign.Rotation.y = ActorUtils.MergeRotationAndFlags(180 - 71, flags: bombshopSign.Rotation.y);
+            ActorUtils.ClearActorRotationRestrictions(bombshopSign);
+            bombshopSign.ChangeActor(GameObjects.Actor.Clock, vars: 0x907F); // DEBUGGING
+            var lotterySign = westClocktownScene.Maps[0].Actors[25];
+            lotterySign.Rotation.y = ActorUtils.MergeRotationAndFlags(270, flags: lotterySign.Rotation.y);
+            ActorUtils.ClearActorRotationRestrictions(lotterySign);
+
+            var eastClockTownScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.EastClockTown.FileID());
+
+            var treasurePoster = eastClockTownScene.Maps[0].Actors[20];
+            treasurePoster.Rotation.y = ActorUtils.MergeRotationAndFlags(90, flags: treasurePoster.Rotation.y);
+            treasurePoster.Rotation.x = ActorUtils.MergeRotationAndFlags(0, flags: treasurePoster.Rotation.x);
+            ActorUtils.ClearActorRotationRestrictions(treasurePoster);
+            var constructionPoster = eastClockTownScene.Maps[0].Actors[17];
+            constructionPoster.Rotation.y = ActorUtils.MergeRotationAndFlags(90, flags: constructionPoster.Rotation.y);
+            constructionPoster.Rotation.x = ActorUtils.MergeRotationAndFlags(0, flags: constructionPoster.Rotation.x);
+            ActorUtils.ClearActorRotationRestrictions(constructionPoster);
+            var zoraPoster1 = eastClockTownScene.Maps[0].Actors[14];
+            zoraPoster1.Rotation.x = ActorUtils.MergeRotationAndFlags(0, flags: zoraPoster1.Rotation.x);
+            zoraPoster1.Rotation.y = ActorUtils.MergeRotationAndFlags(270, flags: zoraPoster1.Rotation.y);
+            ActorUtils.ClearActorRotationRestrictions(zoraPoster1);
+            var zoraPoster2 = eastClockTownScene.Maps[0].Actors[15];
+            zoraPoster2.Rotation.x = ActorUtils.MergeRotationAndFlags(0, flags: zoraPoster1.Rotation.x);
+            zoraPoster2.Rotation.y = ActorUtils.MergeRotationAndFlags(270, flags: zoraPoster2.Rotation.y);
+            ActorUtils.ClearActorRotationRestrictions(zoraPoster2);
+            var zoraPoster3 = eastClockTownScene.Maps[0].Actors[16];
+            zoraPoster3.Rotation.y = ActorUtils.MergeRotationAndFlags(90, flags: zoraPoster3.Rotation.y);
+            ActorUtils.ClearActorRotationRestrictions(zoraPoster3);
+
+            var hitspotLeft = eastClockTownScene.Maps[0].Actors[42];
+            hitspotLeft.Rotation.y = ActorUtils.MergeRotationAndFlags(270, flags: hitspotLeft.Rotation.y);
+            ActorUtils.ClearActorRotationRestrictions(hitspotLeft);
+            hitspotLeft.ChangeActor(GameObjects.Actor.Clock, vars: 0x907F); // DEBUGGING
+
+            var hitspotRight = eastClockTownScene.Maps[0].Actors[43];
+            hitspotRight.Rotation.y = ActorUtils.MergeRotationAndFlags(270, flags: hitspotRight.Rotation.y);
+            ActorUtils.ClearActorRotationRestrictions(hitspotRight);
+            hitspotRight.ChangeActor(GameObjects.Actor.Clock, vars: 0x907F); // DEBUGGING
+
+            var basketSpot = eastClockTownScene.Maps[0].Actors[22];
+            basketSpot.Rotation.y = ActorUtils.MergeRotationAndFlags(270, flags: basketSpot.Rotation.y);
+            ActorUtils.ClearActorRotationRestrictions(basketSpot);
+            basketSpot.ChangeActor(GameObjects.Actor.Clock, vars: 0x907F); // DEBUGGING
+
+            var archerySign = eastClockTownScene.Maps[0].Actors[24];
+            archerySign.ChangeYRotation(270 - 45);
+            archerySign.ChangeXRotation(0);
+            ActorUtils.ClearActorRotationRestrictions(archerySign);
+            archerySign.ChangeActor(GameObjects.Actor.Clock, vars: 0x907F); // DEBUGGING
+
         }
 
 
@@ -3990,7 +4053,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; ///ZZZZ
                 //if (TestHardSetObject(GameObjects.Scene.ZoraCape, GameObjects.Actor.Bombiwa, GameObjects.Actor.BeanSeller)) continue;
 
-                if (TestHardSetObject(GameObjects.Scene.ZoraHallRooms, GameObjects.Actor.Evan, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Clock)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.Nejiron, GameObjects.Actor.Peahat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Keese)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Anju, GameObjects.Actor.StockpotBell)) continue;
