@@ -95,6 +95,12 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 0,
             0x5080 // road to ikana
             )]
+        [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: -1, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
+        [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: -1,
+            variant: 0x0, 0x2000, 0x3000, 0x4000, // stone grottos
+            0x7000, 0xC000, 0xE000, 0xF000, 0xD000, // regular grottos
+            0x8200, 0xA200, // secret japanese grottos, hidden
+            0x6233, 0x623B, 0x6218, 0x625C)] // what if there was a hole in front of the treasure chest, remember that part in dark souls?
         //[VariantsWithRoomMax(max: 1, variant: )] // vanilla we do not want to re-place in the world
         [UnkillableAllVariants]
         //[AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
@@ -411,7 +417,17 @@ namespace MMR.Randomizer.GameObjects
             0x4)] // 4 is in the astral observatory, and has a spawn kill flag, so don't use
         [RespawningVariants(0x4)] // doesn't respawn after death, so dont put where respawning enemies are bad either
         [VariantsWithRoomMax(max: 0, variant: 4)] // if this actor hides an item, could be annoying going back in time to reset, so do not place
-        //[FlyingToGroundHeightAdjustment(100)] // no longer flying type, that was weird
+        // we can use allignment companion to make skulltula more of a hazard
+        [AlignedCompanionActor(TreasureChest, CompanionAlignment.InFront, ourVariant: -1, variant:
+            0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579, 0x561E, 0x5C79, 0x5991, 0x5B58, 
+            0x5080, 0x50CA, 0x50A1, 0x0AFB, 0x099C)]
+        [AlignedCompanionActor(En_Invisible_Ruppe, CompanionAlignment.Above, ourVariant: -1, variant:
+            0x4C, 0x5C, 0x60, 0x64, 0x68,
+            0x6D, 0x71, 0x29, 0x2D, 0x30, 0x34, 0x38, 0x3C
+        )]
+        [AlignedCompanionActor(Item_Etcetera, CompanionAlignment.Above, ourVariant: -1, variant: // secret free inivisble rup, only shows when nearby
+            0x0, 0x1, 0x2, 0x3
+        )]
         [ForbidFromScene(Scene.OceanSpiderHouse)] // shared object with goldskulltula, cannot change without modification
         //[EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, // in the air, bit weird
         //    Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
@@ -631,6 +647,9 @@ namespace MMR.Randomizer.GameObjects
         [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)]
         [AlignedCompanionActor(Flame, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x7F4)] // I'll just put this over with the rest of the fire
+        [AlignedCompanionActor(TreasureChest, CompanionAlignment.InFront, ourVariant: -1, variant:
+            0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579, 0x561E, 0x5C79, 0x5991, 0x5B58,
+            0x5080, 0x50CA, 0x50A1, 0x0AFB, 0x099C)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // visible waiting below the bridges
         RedBubble = 0x3C, // En_Bbfall
 
@@ -987,8 +1006,10 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(Obj_Dowsing, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x110)] // rumble
         [AlignedCompanionActor(Butterfly, CompanionAlignment.Above, ourVariant: -1,
             variant: 0, 1, 2)]
-        [AlignedCompanionActor(IshiRock, CompanionAlignment.Above, ourVariant: -1,
+        [AlignedCompanionActor(IshiRock, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0xA1, 0xFE01)] // everyone loves a good hidden grotto under a rock
+        [AlignedCompanionActor(WoodenBarrel, CompanionAlignment.OnTop, ourVariant: -1,
+            variant: 0x8710, 0x8711, 0x7F3F)] // everyone loves a good hidden grotto under a... a cardboard box?
         [BlockingVariantsAll] // might turn this off again, but at can cause issues, esp in deku palace and races
         //[ForbidFromScene(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead,
         //    Scene.TerminaField)]
@@ -1624,6 +1645,9 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 3, variant: 0x807F, 0x8004)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
         [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x7000, 0xC000, 0xE000, 0xF000, 0xD000)] // regular unhidden grottos
+        [AlignedCompanionActor(TreasureChest, CompanionAlignment.InFront, ourVariant: -1, variant:
+            0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579, 0x561E, 0x5C79, 0x5991, 0x5B58,
+            0x5080, 0x50CA, 0x50A1, 0x0AFB, 0x099C)]
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
         //[ForbidFromScene(Scene.Grottos)] //Scene.ZoraCape, Scene.GreatBayCoast
         //[EnemizerScenesPlacementBlock(// Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear 
@@ -3296,6 +3320,9 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x171)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(max: 10, variant: 0)]
+        [AlignedCompanionActor(TreasureChest, CompanionAlignment.InFront, ourVariant: -1, variant:
+            0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579, 0x561E, 0x5C79, 0x5991, 0x5B58,
+            0x5080, 0x50CA, 0x50A1, 0x0AFB, 0x099C)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slowing enemies
         Nejiron = 0x155, // Rolling exploding rock in Ikana
 
@@ -4335,6 +4362,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)]
+        [AlignedCompanionActor(GrottoHole, CompanionAlignment.InFront, ourVariant: 1, variant: 0)]
         //[AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0146)] // treasure chest shop music
         [EnemizerScenesPlacementBlock(Scene.SouthClockTown)] // can bug out the scene transit into skullkid
         //[ForbidFromScene(Scene.TreasureChestShop)]
@@ -5413,6 +5441,9 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x201)]
         [GroundVariants(0xFF, 0x80FF)] // does this include the really big one?
         [PlacementWeight(90)]
+        [AlignedCompanionActor(TreasureChest, CompanionAlignment.InFront, ourVariant: -1, variant:
+            0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579, 0x561E, 0x5C79, 0x5991, 0x5B58,
+            0x5080, 0x50CA, 0x50A1, 0x0AFB, 0x099C)]
         Leever = 0x216, // En_Neo_Reeba
 
         // unused actor, the object is loaded into milkbar but the actor is never spawned
@@ -5703,6 +5734,8 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0x80, 0x81, 0x91 // 0x80 is a flag for the breakable wooden walls
         )]
         [VariantsWithRoomMax(max:0, variant: 0x80, 0x81, 0x91)] // do not place these
+        [AlignedCompanionActor(GoldSkulltula, CompanionAlignment.OnTop, ourVariant:-1, variant:
+            0xFF53, 0xFF53, 0xFF5D, 0xFF61, 0xFF6D, 0xFF0B)]
         //[SwitchFlagsPlacement] // only has switch flags for wall breaking variants, what a pain
         [UnkillableAllVariants]
         // switch flags
