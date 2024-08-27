@@ -499,7 +499,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
         [DifficultAllVariants]
         [VariantsWithRoomMax(max: 10, variant: 0xFF)]
-        [FlyingToGroundHeightAdjustment(100)]
+        [FlyingToGroundHeightAdjustment(150)]
         [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.SouthernSwampClear)] // unknown crash reason
         DeathArmos = 0x2D, // En_Famos
 
@@ -1298,12 +1298,15 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableGreatBayCoastPot7, Item.CollectableGreatBayCoastPot8, Item.CollectableGreatBayCoastPot9,
             Item.CollectableGreatBayCoastPot10, Item.CollectableGreatBayCoastPot11
         )]
-        ///* 
+        ///*
+        // "Ocean Skulltula 2nd Room Upper Pot" is the giant clay jars you bonk to get a spider, not pots
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x601E, Item.CollectableOceansideSpiderHouseEntrancePot1)] 
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x621E, Item.CollectableOceansideSpiderHouseEntrancePot2)]
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x5C0E, Item.CollectableOceansideSpiderHouseEntrancePot3)]
-        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x018A, Item.CollectableOceansideSpiderHouseMainRoomPot1)]
-        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0xB, Item.CollectableOceansideSpiderHouseMainRoomPot2)]
+        // variant: 0x018A is free arrows, not a thing
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x4C0E, Item.CollectableOceansideSpiderHouseMainRoomPot1)] // on floor 11oclock from bottom of stairs
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0xB,    Item.CollectibleOceanSpiderToken11)] // top of boxes on back wall next to spider webs
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x660E, Item.CollectableOceansideSpiderHouseMainRoomPot2)] 
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x741E, Item.CollectableOceansideSpiderHouseMaskRoomPot1)]
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x761E, Item.CollectableOceansideSpiderHouseMaskRoomPot2)]
         // */
