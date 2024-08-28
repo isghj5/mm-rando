@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MMR.Randomizer.Attributes.Actor
 {
@@ -16,4 +17,5 @@ namespace MMR.Randomizer.Attributes.Actor
         }
 
     }
+
 }

@@ -120,6 +120,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(45)]
         [ObjectListIndex(0x128)]
+        [RemovalChance(50)] // medium boss
         PametFrog = 0x7, // En_Pammetfrog the frogminiboss
 
         [EnemizerEnabled]
@@ -1403,6 +1404,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x26EC)]
         [FileID(127)]
         [ObjectListIndex(0xD8)]
+        [RemovalChance(90)] // miniboss
         // 0xFF(decrement) is armor type, the upper byte is completely unused and is even cleared
         [GroundVariants(0xFF03, 0xFF02, 0xFF01)]
         [WaterBottomVariants(0x0103, 0x0102, 0x0101)] // non vanilla
@@ -3020,6 +3022,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(270)]
         [ObjectListIndex(0x15D)]
+        [RemovalChance(80)]
         [GroundVariants(0)] // his placement is on the ground, cutscene?
         [VariantsWithRoomMax(max:0, variant:0)] // spawning behavior is weird and can spawn out of bounds
         //[OnlyOneActorPerRoom]
@@ -3412,6 +3415,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x37D0)]
         [FileID(315)]
         [ObjectListIndex(0x178)]
+        [RemovalChance(75)] // miniboss
         [GroundVariants(0x007F, // ikana castle
                         0x017F, // sht miniboss
                         0x027F  // istt
@@ -3424,6 +3428,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(316)]
         [ObjectListIndex(0x178)]
+        [RemovalChance(75)] // miniboss
         [DynaAttributes(10,8)]
         [GroundVariants(0x0)]
         [VariantsWithRoomMax(max:0, variant:0)]
@@ -3823,6 +3828,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(348)]
         [ObjectListIndex(0x155)]
+        [RemovalChance(90)]
         [GroundVariants(0, // stt light arrow fight
             1)]  // the other fights
         [DifficultAllVariants]

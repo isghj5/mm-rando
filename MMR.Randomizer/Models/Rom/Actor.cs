@@ -687,7 +687,6 @@ namespace MMR.Randomizer.Models.Rom
         {
             this.Rotation.x = ActorUtils.MergeRotationAndFlags(newRotation, flags: this.Rotation.x);
         }
-
         public void ChangeYRotation(int newRotation)
         {
             this.Rotation.y = ActorUtils.MergeRotationAndFlags(newRotation, flags: this.Rotation.y);
@@ -695,6 +694,19 @@ namespace MMR.Randomizer.Models.Rom
         public void ChangeZRotation(int newRotation)
         {
             this.Rotation.z = ActorUtils.MergeRotationAndFlags(newRotation, flags: this.Rotation.z);
+        }
+
+        public int GetRemovalChance()
+        {
+            /// actors/enemies shouldnt always be removed, there is now a chance to be intentionally left vanilla
+
+            var removalChanceAttr = this.OldActorEnum.GetAttribute<RemovalChance>();
+            if (removalChanceAttr != null)
+            {
+                return removalChanceAttr.Weight;
+            }
+
+            return 100; // default
         }
 
 

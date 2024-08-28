@@ -600,7 +600,7 @@ namespace MMR.Randomizer
                         if (matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum))
                             continue;
 
-                        if(SpecialMultiObjectCases(mapActor, mapIndex, actorIndex))
+                        if (SpecialMultiObjectCases(mapActor, mapIndex, actorIndex))
                         {
                             sceneObjectlessActors.Add(mapActor);
                             continue;
@@ -874,6 +874,8 @@ namespace MMR.Randomizer
                     if (matchingEnum > 0                                                         // exists in the list of enemies we want to change
                        && !matchingEnum.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
+                        var replacementChance = matchingEnemy.GetRemovalChance();
+
                         var importantItem = ObjectIsCheckBlocked(scene, matchingEnum);
                         if (importantItem != null)
                         {
@@ -885,6 +887,11 @@ namespace MMR.Randomizer
 
                             thisSceneData.Actors.RemoveAll(act => act.ObjectId == obj);
                             thisSceneData.Log.AppendLine($" object [{matchingEnum}] replacement blocked by" + itemText);
+                        }else if (replacementChance != 100
+                               && thisSceneData.RNG.Next(100) > replacementChance)
+                        {
+                            thisSceneData.Actors.RemoveAll(act => act.ObjectId == obj);
+                            thisSceneData.Log.AppendLine($" object [{matchingEnum}] replacement blocked by removal chance roll");
                         }
                         else
                         {
