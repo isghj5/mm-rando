@@ -192,6 +192,7 @@ namespace MMR.Randomizer.GameObjects
         [FairyDroppingEnemies(roomNumber: 1, actorNumber: 3)] // eygore 
         [FairyDroppingEnemies(roomNumber: 1, actorNumber: 1)] // wizrobe
         [EnemizerSceneBlockSensitive(Actor.BlueBubble, -1)]
+        [EnemizerSceneBlockSensitive(Actor.Dexihand, -1)] // replacement needs to not block the floating rupee items
         [ClearEnemyPuzzleRooms(4)] // wizrobe room is a clear all room
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Poe,
            Actor.Bo)] // they just fall down to the "floor" and its awkward
