@@ -4327,11 +4327,13 @@ namespace MMR.Randomizer.GameObjects
         [ForbidFromScene(Scene.SouthClockTown, Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.GoronVillage, Scene.GoronVillageSpring, Scene.ZoraHallRooms, Scene.IkanaCanyon)]
         FlyingBuisinessScrub = 0x1BD, // En_Sellnuts
 
-        [ActorizerEnabled] // use as test for dyna with its tiny 2/4
+        [ActorizerEnabled]
         [FileID(410)]
         [ObjectListIndex(0x1A7)]
-        [DynaAttributes(2,4)]
-        [GroundVariants(0x7F)]
+        [DynaAttributes(2,4)] // use as test for dyna with its tiny 2/4
+        // params 0x7F is switch flags, nothing else is used
+        [GroundVariants(0x7F)] // is closer to the ground, ground replacements work best
+        [WallVariants(0x100)] // non vanilla, want to see if I can have more wall variety
         [VariantsWithRoomMax(max:0, variant:0x7F)]
         [SwitchFlagsPlacement(size: 0x7F, shift: 0)]
         [UnkillableAllVariants]
@@ -4371,7 +4373,7 @@ namespace MMR.Randomizer.GameObjects
         //[ForbidFromScene(Scene.TreasureChestShop)]
         // switch flags
         // manually sunsets switch 5, sets 5 separate switches based on player form, but I think these are all as a result of willing the game
-        [PlacementWeight(75)]
+        [PlacementWeight(50)]
         Takaraya = 0x1C1, // En_Takaraya, "Bombchu girl"
 
         [ActorizerEnabled]
@@ -5782,7 +5784,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         [ForbidFromScene(Scene.ZoraHallRooms)]
         [OnlyOneActorPerRoom]
-        [PlacementWeight(75)]
+        [PlacementWeight(50)]
         Japas = 0x231, // En_Zob
 
         [FileID(521)]
@@ -6806,7 +6808,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x129)]
         [GroundVariants(5)]
         [UnkillableAllVariants]
-        [PlacementWeight(60)]
+        [PlacementWeight(50)]
         Secretary = 0x290, // En_Recepgirl, Receptionist
 
         [EnemizerEnabled]
