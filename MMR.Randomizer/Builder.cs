@@ -6024,7 +6024,7 @@ namespace MMR.Randomizer
             //  replacement:
             // 003998 800839F8 240F0000 /  addiu       $t7 $zero $zero  # load 0 into t7
             // 00399C 800839FC 1000000A /  b           0xA              # we want to skip the rest of the code
-            // 0039A0 80083A00 A1CF07CF /  sb          $t7, 0x7CF($t6)  # sFaultContext->autoscroll = 0 (false)
+            // 0039A0 80083A00 A1CF07CF /   sb         $t7, 0x7CF($t6)  # sFaultContext->autoscroll = 0 (false)
             ReadWriteUtils.Arr_WriteU32(bootFile, 0x3998, 0x240F0000);
             ReadWriteUtils.Arr_WriteU32(bootFile, 0x399C, 0x1000000A);
             ReadWriteUtils.Arr_WriteU32(bootFile, 0x39A0, 0xA1CF07CF);
@@ -6071,17 +6071,23 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_Insert(newTableLabelString, 0, newTableLabelString.Length, codeFileData, 0x137104);
             ReadWriteUtils.Arr_Insert(newTableSubString,   0, newTableSubString.Length,   codeFileData, 0x137124);
 
+            // for some reason, the second table is even worse:
+            //   it shows both actor category and actor group, the two should only be different
+            //   if the actor has chosen to change its category after init... useless information 99% of the time
+            // we can change the second one to params with only two lines of code changed
+            //  lbu  t6,2(s0)   ->  lhu  t6,0x1C(s0)
+            codeFileData[0xE088] = 0x96; // change from load signed byte to load unsigned short
+            codeFileData[0xE08B] = 0x1C; // change offset from actor category to params
+            codeFileData[0xE0B0] = 0x96; // repeated for delay slot duplicate found later
+            codeFileData[0xE0B3] = 0x1C;
+
             // again, convert lower case hex to upper case, this time for the actor struct table printers
             newTableLabelString = Encoding.ASCII.GetBytes("A.Grp  RAM       A.Id Params "); // replaces "No. Actor   Name Part SegName"
+            //newTableSubString = Encoding.ASCII.GetBytes("%5d  %08X  %4X %04X "); // replaces "%3d %08x %04x %3d %s\n"
             newTableSubString = Encoding.ASCII.GetBytes("%5d  %08X  %4X %04X "); // replaces "%3d %08x %04x %3d %s\n"
             ReadWriteUtils.Arr_Insert(newTableLabelString, 0, newTableLabelString.Length, codeFileData, 0x136F18);
-            ReadWriteUtils.Arr_Insert(newTableSubString,   0, newTableSubString.Length,   codeFileData, 0x136F38);
+            ReadWriteUtils.Arr_Insert(newTableSubString, 0, newTableSubString.Length, codeFileData, 0x136F38);
 
-            // for some reason this table is even worse, it shows both actor category and actor group,
-            //  the two should only be different if the actor has chosen to change its category after init... useless
-            // we can change the second one to params with only two lines of code changed
-            codeFileData[0xE08B] = 0x1C; //  lhu  t6,2(s0)   ->  lhu  t6,0x1C(s0)
-            codeFileData[0xE0B3] = 0x1C; //  lhu  t6,2(s0)   ->  lhu  t6,0x1C(s0)
 
             // they set the text padding of this text to -2 so they could show filenames, but retail rom doesnt show those anyway
             // changing it back to zero requires changing one instruction
