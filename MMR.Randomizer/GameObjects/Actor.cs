@@ -3746,12 +3746,27 @@ namespace MMR.Randomizer.GameObjects
 
         //[ActorizerEnabled] // no point, if it spawns on the ground its too big and you can't tell you are inside of it
         // and enemies are so far away they are culled so you cant see them
+        //[ActorizerEnabled]
         [FileID(342)]
         [ObjectListIndex(0x188)] // or 223? two different objects can work, makes it hard to cath
-        [FlyingVariants(0x37F)]
-        [OnlyOneActorPerRoom]
+        // most places its 223 not 188
+        [RemovalChance(25)]
+        // 0x300 is the type, generic type we want
+        // 0x7F is the scale, we might actually be able to make a small version? hmm
+        [FlyingVariants(
+            0x007F, // 1st highest tf
+            0x017F, // 2nd highest tf
+            0x01FF, // 3rd hightest tf
+            0x027F, // slightly above ground level tf
+            0x037F, // vanilla
+            0x05FF, // on the ground level??
+            0x0310 // new small version?
+        )]
+        //[VariantsWithRoomMax]
+        //[OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        Moon1 = 0x17C, // En_Fall
+        [ForbidFromScene(Scene.ClockTowerRoof)] // assummed needed for cutscenes
+        MOON = 0x17C, // En_Fall
 
         [ActorizerEnabled]
         [FileID(343)]
