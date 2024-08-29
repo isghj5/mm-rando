@@ -7048,10 +7048,11 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.SwampSpiderHouse, 0xA1, Item.CollectableSwampSpiderHouseInvisibleItem4)]
         [CheckRestricted(Scene.SwampSpiderHouse, 0xA6, Item.CollectableSwampSpiderHouseInvisibleItem5)]
         [CheckRestricted(Scene.RomaniRanch, 0x29, Item.CollectableRomaniRanchInvisibleItem1)] // ranch fence items
-        [CheckRestricted(Scene.RomaniRanch, 0x2D, Item.CollectableRomaniRanchInvisibleItem2)]
+        [CheckRestricted(Scene.RomaniRanch, 0x2D, Item.CollectableRomaniRanchInvisibleItem2, Item.CollectableRomaniRanchInvisibleItem1)] // can block 1
         [CheckRestricted(Scene.RomaniRanch, 0x30, Item.CollectableRomaniRanchInvisibleItem3)]
         [CheckRestricted(Scene.RomaniRanch, 0x34, Item.CollectableRomaniRanchInvisibleItem4)]
-        [CheckRestricted(Scene.RomaniRanch, 0x38, Item.CollectableRomaniRanchInvisibleItem5)]
+        [CheckRestricted(Scene.RomaniRanch, 0x38, Item.CollectableRomaniRanchInvisibleItem5,
+            Item.CollectableRomaniRanchInvisibleItem1, Item.CollectableRomaniRanchInvisibleItem2)] // as this one can block the two on the top, this one has to care about those two as well
         [CheckRestricted(Scene.RomaniRanch, 0x3C, Item.CollectableRomaniRanchInvisibleItem6)]
         // TODO find at least one that gives rup without items
         [FlyingVariants(0x45, 0x79, 0x7D, 0x75)] // tf goron jumps
