@@ -6329,9 +6329,13 @@ namespace MMR.Randomizer.GameObjects
         // TODO decouple the specific actors per object based on variant
         [CheckRestricted(Scene.SouthClockTown, ActorConst.ANY_VARIANT,
             Item.CollectableSouthClockTownHitTag1, Item.CollectableSouthClockTownHitTag2, Item.CollectableSouthClockTownHitTag3)]
-        [CheckRestricted(Scene.EastClockTown, 0xFE00, // both are 0xFE00, uhhhh
+        [CheckRestricted(Scene.EastClockTown, variant: 0xFE14, // left target
             Item.CollectableEastClockTownHitTag1, Item.CollectableEastClockTownHitTag2, Item.CollectableEastClockTownHitTag3,
+            Item.ChestEastClockTownSilverRupee)]
+        [CheckRestricted(Scene.EastClockTown, variant: 0xFE15, // right target
             Item.CollectableEastClockTownHitTag4, Item.CollectableEastClockTownHitTag5, Item.CollectableEastClockTownHitTag6,
+            Item.ChestEastClockTownSilverRupee)]
+        [CheckRestricted(Scene.EastClockTown, variant: 0xFE16, // basket
             Item.CollectableEastClockTownHitTag7, Item.CollectableEastClockTownHitTag8, Item.CollectableEastClockTownHitTag9,
             Item.ChestEastClockTownSilverRupee)]
         [CheckRestricted(Scene.StockPotInn, ActorConst.ANY_VARIANT,

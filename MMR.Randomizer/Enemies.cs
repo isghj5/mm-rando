@@ -589,7 +589,7 @@ namespace MMR.Randomizer
                 for (int actorIndex = 0; actorIndex < scene.Maps[mapIndex].Actors.Count; ++actorIndex) // (var mapActor in scene.Maps[mapIndex].Actors)
                 {
                     var mapActor = scene.Maps[mapIndex].Actors[actorIndex];
-                    var matchingEnemy = VanillaEnemyList.Find(act => (int)act == mapActor.ActorId);
+                    var matchingEnemy = VanillaEnemyList.Find(act => act == mapActor.OldActorEnum);
                     if (matchingEnemy > 0)
                     {
                         var listOfAcceptableVariants = matchingEnemy.AllVariants(); 
@@ -1251,7 +1251,7 @@ namespace MMR.Randomizer
             var bombshopSign = westClocktownScene.Maps[0].Actors[2];
             bombshopSign.Rotation.y = ActorUtils.MergeRotationAndFlags(180 - 71, flags: bombshopSign.Rotation.y);
             ActorUtils.ClearActorRotationRestrictions(bombshopSign);
-            bombshopSign.ChangeActor(GameObjects.Actor.Clock, vars: 0x907F); // DEBUGGING
+            //bombshopSign.ChangeActor(GameObjects.Actor.Clock, vars: 0x907F); // DEBUGGING
             var lotterySign = westClocktownScene.Maps[0].Actors[25];
             lotterySign.Rotation.y = ActorUtils.MergeRotationAndFlags(270, flags: lotterySign.Rotation.y);
             ActorUtils.ClearActorRotationRestrictions(lotterySign);
@@ -1281,24 +1281,25 @@ namespace MMR.Randomizer
             var hitspotLeft = eastClockTownScene.Maps[0].Actors[42];
             hitspotLeft.Rotation.y = ActorUtils.MergeRotationAndFlags(270, flags: hitspotLeft.Rotation.y);
             ActorUtils.ClearActorRotationRestrictions(hitspotLeft);
-            hitspotLeft.ChangeActor(GameObjects.Actor.Clock, vars: 0x907F); // DEBUGGING
 
             var hitspotRight = eastClockTownScene.Maps[0].Actors[43];
             hitspotRight.Rotation.y = ActorUtils.MergeRotationAndFlags(270, flags: hitspotRight.Rotation.y);
             ActorUtils.ClearActorRotationRestrictions(hitspotRight);
-            hitspotRight.ChangeActor(GameObjects.Actor.Clock, vars: 0x907F); // DEBUGGING
 
             var basketSpot = eastClockTownScene.Maps[0].Actors[22];
             basketSpot.Rotation.y = ActorUtils.MergeRotationAndFlags(270, flags: basketSpot.Rotation.y);
             ActorUtils.ClearActorRotationRestrictions(basketSpot);
-            basketSpot.ChangeActor(GameObjects.Actor.Clock, vars: 0x907F); // DEBUGGING
 
             var archerySign = eastClockTownScene.Maps[0].Actors[24];
             archerySign.ChangeYRotation(270 - 45);
             archerySign.ChangeXRotation(0);
             ActorUtils.ClearActorRotationRestrictions(archerySign);
-            archerySign.ChangeActor(GameObjects.Actor.Clock, vars: 0x907F); // DEBUGGING
 
+            var soldierSign = eastClockTownScene.Maps[0].Actors[21];
+            soldierSign.ChangeYRotation(270);
+            soldierSign.ChangeXRotation(0);
+            soldierSign.ChangeZRotation(0);
+            ActorUtils.ClearActorRotationRestrictions(soldierSign);
         }
 
 
@@ -3715,7 +3716,11 @@ namespace MMR.Randomizer
                 }
 
                 if (replacementCandidates.Count == 0)//Debug.Assert(replacementCandidates.Count > 0);
-                    throw new Exception("Could not place supply bush, please try another seed.");
+                {
+                    thisSceneData.Log.AppendLine($"Could not place supply bush in scene [{thisSceneData.Scene.SceneEnum}]");
+                    //throw new Exception("Could not place supply bush, please try another seed.");
+                    return;
+                }
 
                 // change them to a bush containing things
                 var actorChoice = replacementCandidates[thisSceneData.RNG.Next(replacementCandidates.Count)];
