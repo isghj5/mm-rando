@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 
 // dotnet 4.5 req
 using System.Runtime.CompilerServices;
+//using MMR.Randomizer.Attributes;
 
 // todo rename this actorutils.cs and move to MMR.Randomizer/Utils/
 
@@ -620,45 +621,60 @@ namespace MMR.Randomizer
                         }
                         #endif
                     }
-                    else // non-object based actors, standalone
+                    else // non-object based actors, test if standalone actor
                     {
+                        // regular butterfly is only on moon
+                        GameObjects.Actor[] commonScoopableActors = new GameObjects.Actor[] {
+                                    GameObjects.Actor.MushroomCloud, GameObjects.Actor.BugsFishButterfly, GameObjects.Actor.Fish
+                        };
 
-                        void AddIfNoRestrictions(Actor testActor)
+                        var matchingStandaloneActor = FreeCandidateList.Find(act => act.ActorEnum == mapActor.ActorEnum);
+                        if (matchingStandaloneActor != null)
                         {
-                            /// twas separated because I thought it would be reused
-                            var sceneRestrictions = testActor.ActorEnum.GetAttribute<ForbidFromSceneAttribute>();
+                            var sceneRestrictions = matchingStandaloneActor.ActorEnum.GetAttribute<ForbidFromSceneAttribute>();
                             if (sceneRestrictions != null && sceneRestrictions.ScenesExcluded.Contains(thisSceneData.Scene.SceneEnum))
-                                return; // continue // not valid to consider this actor
+                                continue; // not valid to consider this actor
 
-                            var importantItem = ObjectIsCheckBlocked(scene, testActor.ActorEnum, testActor.OldVariant);
-                            if (importantItem != null)
+                            var itemRestriction = ObjectIsCheckBlocked(scene, matchingStandaloneActor.ActorEnum, matchingStandaloneActor.OldVariant);
+                            var chanceOfRandomization = (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic) ? (80) : (40);
+                            // if common scoopable actor, some are allowed but not all, for now lets make it random
+                            if (itemRestriction != null && (commonScoopableActors.Contains(mapActor.OldActorEnum)
+                                && itemRestriction.ToString().Contains("BottleCatch")
+                                && thisSceneData.RNG.Next(100) < chanceOfRandomization))
                             {
                                 #if DEBUG
-                                var itemText = $"blocked by item [{ importantItem }]";
+                                var itemText = $"[{ itemRestriction.ToString() }]";
+                                #else
+                                var itemText = $"[{ (int) itemRestriction.ToString()}]";
+                                #endif
+                                log.AppendLine($" in scene [{scene.SceneEnum}]m[{mapIndex}]r[{mapActor.RoomActorIndex}]" +
+                                    $" common scoopable actor: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}] skipped the restriction: " +
+                                    itemText);
+                            }// */
+                            else
+                            if (itemRestriction != null)
+                            {
+
+                                #if DEBUG
+                                var itemText = $"blocked by item [{ itemRestriction }]";
                                 #else
                                 var itemText = $"blocked by item [{ (int) importantItem}]";
                                 #endif
 
                                 log.AppendLine($" in scene [{scene.SceneEnum}]m[{mapIndex}]r[{mapActor.RoomActorIndex}]v[{mapActor.OldVariant.ToString("X4")}]" +
                                     $" actor: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}] was " + itemText);
-                                return;
+                                continue;
                             }
 
-                            if ( ! testActor.Variants.Contains(mapActor.OldVariant))
+                            if (matchingStandaloneActor.Variants.Contains(mapActor.OldVariant) == false)
                             {
                                 log.AppendLine($" in scene [{scene.SceneEnum}][{mapIndex}] standalone was skipped over: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}]");
-                                return; // non valid
+                                continue; // non valid
                             }
 
-                            FixActorLastSecond(testActor, testActor.ActorEnum, mapIndex, actorIndex);
+                            FixActorLastSecond(mapActor, matchingStandaloneActor.ActorEnum, mapIndex, actorIndex);
 
                             sceneObjectlessActors.Add(mapActor);
-                        }
-
-                        var matchingFreeActor = FreeCandidateList.Find(act => act.ActorEnum == mapActor.ActorEnum);
-                        if (matchingFreeActor != null)
-                        {
-                            AddIfNoRestrictions(mapActor);
                         }
                     }
                 }

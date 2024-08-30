@@ -8,6 +8,7 @@ using MMR.Randomizer.Models.Vectors;
 using System.Collections.Generic;
 using System;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace MMR.Randomizer.Models.Rom
 {
@@ -217,6 +218,8 @@ namespace MMR.Randomizer.Models.Rom
             }
             newActor.AllVariants = newVariantsList;
 
+            Debug.Assert(newActor.AllVariants != null);
+
             newActor.Variants = newActor.AllVariants.SelectMany(u => u).ToList(); // might as well start with all
             newActor.OnlyOnePerRoom = this.OnlyOnePerRoom;
             newActor.VariantsWithRoomMax = this.VariantsWithRoomMax.ToList();
@@ -274,6 +277,8 @@ namespace MMR.Randomizer.Models.Rom
                 this.AllVariants = BuildVariantList(newActorType);
                 this.Variants = AllVariants.SelectMany(u => u).ToList();
             }
+
+            Debug.Assert(this.AllVariants != null);
 
             if (Variants.Count == 0)
             {
@@ -393,6 +398,7 @@ namespace MMR.Randomizer.Models.Rom
             if (this.AllVariants == null || otherActor.AllVariants == null)
             {
                 throw new Exception("Compare Variants: broken actor variants listoflist");
+                //this.AllVariants = 
             }
 
             // randomly select a type, check if they have matching types
