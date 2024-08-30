@@ -645,7 +645,7 @@ namespace MMR.Randomizer
                                 #if DEBUG
                                 var itemText = $"[{ itemRestriction.ToString() }]";
                                 #else
-                                var itemText = $"[{ (int) itemRestriction.ToString()}]";
+                                var itemText = $"[{ (int) itemRestriction}]";
                                 #endif
                                 log.AppendLine($" in scene [{scene.SceneEnum}]m[{mapIndex}]r[{mapActor.RoomActorIndex}]" +
                                     $" common scoopable actor: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}] skipped the restriction: " +
@@ -658,7 +658,7 @@ namespace MMR.Randomizer
                                 #if DEBUG
                                 var itemText = $"blocked by item [{ itemRestriction }]";
                                 #else
-                                var itemText = $"blocked by item [{ (int) importantItem}]";
+                                var itemText = $"blocked by item [{ (int) itemRestriction}]";
                                 #endif
 
                                 log.AppendLine($" in scene [{scene.SceneEnum}]m[{mapIndex}]r[{mapActor.RoomActorIndex}]v[{mapActor.OldVariant.ToString("X4")}]" +
@@ -6195,7 +6195,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 73.9\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 74.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
