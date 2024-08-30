@@ -1703,6 +1703,7 @@ namespace MMR.Randomizer.GameObjects
         // looking at the code, this object and this actor have a post version, &3 = 0 or = 1
         // except 1 by itself does not spawn, 
         [GroundVariants(0x0)] // blue
+        [WaterBottomVariants(0x0)] // blue, under the blue
         [WallVariants(0x42, // stone tower basement
             0xC2, // pirates fortress exterior
             0x82, // great bay temple
@@ -4399,6 +4400,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)] // just stands around
         [UnkillableAllVariants]
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
+        [PlacementWeight(80)]
         OOTPotionShopMan = 0x1C3, // En_Ds2n
 
         [ActorizerEnabled]
@@ -6867,6 +6869,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x27F)]
         [DynaAttributes(18,16)]
         [GroundVariants(0x0)] // all the same
+        [WaterBottomVariants(0x33)] // extra water variety, and this happened in oot so it makes sense
         [ForbidFromScene(Scene.PiratesFortress, Scene.StoneTower, Scene.GreatBayCoast)]
         // we could remove from a few places like greatbaycoast
         [UnkillableAllVariants]
