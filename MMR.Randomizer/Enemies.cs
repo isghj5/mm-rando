@@ -3809,13 +3809,26 @@ namespace MMR.Randomizer
                     }
                 }
 
+                // lower swimming off the surface
                 var waterVariants = testActor.ActorEnum.GetAttribute<WaterVariantsAttribute>();
                 if ((waterVariants != null && waterVariants.Variants.Contains(testActor.Variants[0])) && // chosen variant is water (swimming)
                     (oldWaterSurfaceVariants != null && oldWaterSurfaceVariants.Variants.Contains(testActor.OldVariant))) // previous water surface 
                 {
-                    short randomHeight = (short)(10 + (seedrng.Next() % 20));
+                    short randomHeight = (short)(10 + seedrng.Next(20));
                     testActor.Position.y -= randomHeight; // always lower flying enemies on ceiling placement, its usually way too high
                     log.AppendLine($" - lowered height of actor [{testActor.Name}] by [{randomHeight}] to lower below water surface");
+                    UpdateStrayFairyHeight(testActor);
+                }
+
+                // raise swimming off the floor
+                //var waterVariants = testActor.ActorEnum.GetAttribute<WaterVariantsAttribute>();
+                var oldWaterBottomVariants = testActor.OldActorEnum.GetAttribute<WaterBottomVariantsAttribute>();
+                if ((waterVariants != null && waterVariants.Variants.Contains(testActor.Variants[0])) && // chosen variant is water (swimming)
+                    (oldWaterBottomVariants != null && oldWaterBottomVariants.Variants.Contains(testActor.OldVariant))) // previous water bottom 
+                {
+                    short randomHeight = (short)(10 + seedrng.Next(70));
+                    testActor.Position.y += randomHeight; // always lower flying enemies on ceiling placement, its usually way too high
+                    log.AppendLine($" - raised height of actor [{testActor.Name}] by [{randomHeight}] to above water bottom");
                     UpdateStrayFairyHeight(testActor);
                 }
 

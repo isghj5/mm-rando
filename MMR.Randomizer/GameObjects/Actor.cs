@@ -286,10 +286,17 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.Grottos, ActorConst.ANY_VARIANT,
             Item.BottleCatchFish
         )]
+        [CheckRestricted(Scene.StockPotInn, ActorConst.ANY_VARIANT,
+            Item.BottleCatchFish
+        )]
+        [CheckRestricted(Scene.BeneathTheWell, ActorConst.ANY_VARIANT,
+            Item.BottleCatchFish
+        )]
         [ObjectListIndex(1)]
         // type 0 and 1 are slightly different? I think 0 is dropped from a bottle, a lot of other entries are 1
         // 2 is unk
-        [WaterVariants(0, 1)]
+        [WaterVariants(0, 1,
+            2)] // lab
         [VariantsWithRoomMax(max:0, variant:0)]
         [UnkillableAllVariants]
         Fish = 0x17, // En_Fish
@@ -849,6 +856,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.GreatBayCoast, variant: 0x2324, Item.CollectableGreatBayCoastButterflyFairy1)]
         // beatles on the floor
         [GroundVariants(
+            0x8323, // bugs in buisness grotto
             0x3323, // spiderhouse, ever living
             0x3323, // doggy race
             0x2323, // romani ranch, generic grotto
@@ -860,13 +868,16 @@ namespace MMR.Randomizer.GameObjects
         // butterlies in the air
         [FlyingVariants(
             0x2324, // coast
-            0x4324, 0x5324 // mountain village spring
+            0x3324, // cow grotto
+            0x4324,
+            0x5324 // mountain village spring
         )] 
         // school of fish
         [WaterVariants( 0xF322, // pirates fortress
             0x3322, 0x4322, 0x2322, // pinnacle
             0x5322, // cape, rots
             0x8322, // zora hall
+            0x7322, // biobaba grotto
             0x6322
         )] 
         [UnkillableAllVariants]
@@ -2008,9 +2019,15 @@ namespace MMR.Randomizer.GameObjects
         // 0xFE00 is switch flags
         // 0x1F2 you get bugs if you pick it up, best version
         // A1 is boulder type (1) and A drop table
+        // TODO 0x32 is both above and below water in coast
         [GroundVariants(0xFF00, 0xFF70, 0xFFA0, 0xFFB0, // non vanilla good drop tables
+            0x00A0, 0x0040, 0x1F0, // mountain spring
+            0x60, 0x80, // twin islands spring
+            0x32, // cape
             0x1F2, 0xA1)]
         [WaterBottomVariants(0xFE01, // silver boulder
+            0x30, // silver coast
+            0x32, // cape
             0xFEF0)] // regular small rock (like in pinaccle)
         [WallVariants( 0xFF00, 0xFF70, 0xFFA0, 0xFFB0, // non vanilla good drop tables
             0x2A44, 0x2014, 0x2214, 0x2414, 0x2C14, 0x1E14, 0x1A24, 0x1C24, // tf wall
@@ -2049,11 +2066,14 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         [FileID(161)]
-        [ObjectListIndex(0x1)] // gamplaykeep obj 1
+        [ObjectListIndex(0x1)] // while the actor uses gamplaykeep, its just a spawner, and it spawns field stuff
         // 801, opening scene grass, 0x1FXX are ranch and TF
         // 0402 is ikana graveyard rock circle
         [CheckRestricted(Scene.IkanaGraveyard, variant:0x402, Item.ChestGraveyardGrotto)]
-        [GroundVariants(0x801, 0x1F02, 0x1F00, 0x0402)]
+        [GroundVariants(0x801, 0x1F02, 0x1F00, 0x0402,
+            0x600, // ikana graveyard
+            0x200 // mountain spring
+            )]
         [WaterBottomVariants(0x0402)]
         [AlignedCompanionActor(Shiro, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0)] // shiro likes his rock friends
@@ -3104,6 +3124,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(277)]
         [ObjectListIndex(0xA1)]
         [ActorInstanceSize(0xB78)]
+        //[CheckRestricted(Scene.GoronVillageSpring, variant:0x7F94, check:Item.MaskDonGero)] // share object with the sirloin goron
         //[CheckRestricted(Scene.MountainVillage, variant:0x7F94, check:Item.MaskDonGero)] // share object with the sirloin goron
         // 8 is smithy goron; blocked because he is too big
         // 7F85: standing outside of shop (complaining about noise)
@@ -3113,14 +3134,16 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x8, 0x7FE2)]
         [GroundVariants(//0x8, // smithy goron
             0x7FE2, 0x7F85, 0x7F86, 0x7F87,
-            0x7FA1, 0x7FC1, 0x7F81, 0x7FF2, // racetrack
+            0x7FA1, 0x7FC1, 0x7F81, 0x7FF2, 0x7FD1, 0x7FB1, // racetrack
             0x7F82, 0x7F92, // praising darmani in cutscene
+            0x8, // goron village spring
             0x7F84, 0x7F94)] // outside of darmani's grave
         [VariantsWithRoomMax(max: 1,
             0x7FE2, 0x7F85, 0x7F86, 0x7F87,
             0x7F82, 0x7F92)]
         [VariantsWithRoomMax(max: 0, variant: 0x8, // too big
             0x7F84, 0x7F94, // the two outside of darmani race need to be on the same thing
+            0x8, // opens door in spring?
             0x7F82, 0x7F92)] // crash? reason unknown
         [UnkillableAllVariants]
         //[ForbidFromScene(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy
@@ -5212,7 +5235,8 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.RanchBuildings, variant: ActorConst.ANY_VARIANT, // 0x8001,
             Item.NotebookMeetAnju)]
         // 8001 is pathing to laundrypool, also sitting on bed in ranch day 3
-        [GroundVariants(2 // inn
+        [GroundVariants(2, // inn
+            0x80FF, 0x0FF // other inn examples
             )]
         [PathingVariants(0x8001)] // really a pathing variant (walking through east/south to go see the laundry pool
         [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
@@ -5533,6 +5557,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x02 always looks forward for boats or something, FC00 will hear you and turn to look at you
         [PathingVariants(0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,
                 0x14EA, 0x18EA,
+            0x2CEB, // room 4 ? not sure which one I missed but was in log
             0x284B, 0x144B, // hookshotroom
             0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
@@ -5627,8 +5652,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(507)]
         [ObjectListIndex(0x206)]
         [CheckRestricted(Scene.GreatBayCoast, variant: ActorConst.ANY_VARIANT, Item.MaskZora)]
-        [WaterTopVariants(0x80F, 0xC0F, 0x100F)]
-        [VariantsWithRoomMax(max:0, variant: 0x80F, 0xC0F, 0x100F)] // do not place, they are pathing types
+        [WaterTopVariants(0x80F, 0xC0F, 0x100F,
+            0x40F)] // huh? was in the log
+        [VariantsWithRoomMax(max:0, variant: 0x80F, 0xC0F, 0x100F, 0x40F)] // do not place, they are pathing types
         [UnkillableAllVariants]
         Mikau = 0x224, // En_Zog
 
@@ -6272,11 +6298,14 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(
             0xFE00, // zora band poster
             0xFE01, // construction recruitment poster
-            // TODO why are there gaps?
+            0xFE02, // unk ect
             0xFE03, // treasure chest game poster
+            0xFE05, // stockpot inn 1
             0xFE06, // soldier recruitment poster
             0xFE07, // laundry pool bell
+            0xFE08, // bombshop interior
             0xFE0A, // sword school sign
+            0xFE0B, // post office 1
             0xFE0C, // honey and darling sign
             0xFE0D, // postoffice sign
             0xFE0E, // bombshop sign
@@ -6286,6 +6315,8 @@ namespace MMR.Randomizer.GameObjects
             0xFE12, // mayors residence sign
             0xFE13, // lottery sign
             0xFE14, // bank sign
+            0xFE16, // stockpot inn 2
+            0xFE17, // romani ranch sign
             0xFE15, // town archery sign
             0xFE18  // bank poster
         )]
@@ -6367,7 +6398,7 @@ namespace MMR.Randomizer.GameObjects
         // zoey made new ones for the hitspot rando, these are values read from ram of a working seed
         [WallVariants(
             0xFE00, // vanilla value
-            0xFF01, 0xFE02, 0xFE03, 0xFE04, 0xFE05, 0xFE06, 0xFE07, 0xFE08, 0xFE09, 0xFE0A, 0xFE0B, 0xFE0C, 0xFE0D, 0xFE0E, 0xFE0F, // new zoey values
+            0xFE01, 0xFE02, 0xFE03, 0xFE04, 0xFE05, 0xFE06, 0xFE07, 0xFE08, 0xFE09, 0xFE0A, 0xFE0B, 0xFE0C, 0xFE0D, 0xFE0E, 0xFE0F, // new zoey values
             0xFE10, 0xFE11, 0xFE12, 0xFE13, 0xFE14, 0xFE15, 0xFE16, 0xFE17
             // dont know which one is which tho, so can't use per-variant yet
             // esp if my debugging is wrong
