@@ -1344,6 +1344,11 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.BeneathGraveyard, variant: ActorConst.ANY_VARIANT,
             Item.CollectableBeneathTheGraveyardBadBatRoomPot1, Item.CollectableBeneathTheGraveyardInvisibleRoomPot1,
             Item.CollectableBeneathTheGraveyardMainAreaPot1, Item.CollectableBeneathTheGraveyardMainAreaPot2)]
+        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4415, Item.CollectableBeneathTheWellBugAndBombRoomPot1)] // all five in the same room
+        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4015, Item.CollectableBeneathTheWellBugAndBombRoomPot2)]
+        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4815, Item.CollectableBeneathTheWellBugAndBombRoomPot3)]
+        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4215, Item.CollectableBeneathTheWellBugAndBombRoomPot4)]
+        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4615, Item.CollectableBeneathTheWellBugAndBombRoomPot5)]
         [CheckRestricted(Scene.DampesHouse, variant: ActorConst.ANY_VARIANT,
             Item.CollectableDampesHouseBasementPot1, Item.CollectableDampesHouseBasementPot2,
             Item.CollectableDampesHouseBasementPot3, Item.CollectableDampesHouseBasementPot4,
