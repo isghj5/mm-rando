@@ -3132,6 +3132,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x7FA1: jumping goron, 0x7FC1 stretching goron pair
         // 0x7F81: single leg stretch goron, 0x7F81 single amr stretch goron
         //[GroundVariants(0x8, 0x7FE2)]
+        // TODO test if pathing door goron works at all as a pathing type without snowball object
         [GroundVariants(//0x8, // smithy goron
             0x7FE2, 0x7F85, 0x7F86, 0x7F87,
             0x7FA1, 0x7FC1, 0x7F81, 0x7FF2, 0x7FD1, 0x7FB1, // racetrack
@@ -3144,7 +3145,8 @@ namespace MMR.Randomizer.GameObjects
             0x7F82, 0x7F92)]
         [VariantsWithRoomMax(max: 0, variant: 0x8, // too big
             0x7F84, 0x7F94, // the two outside of darmani race need to be on the same thing
-            0x8, // opens door in spring?
+            0x8, // keg smith, too big
+            0x283, // opens door winter, crashes day 2/3 because pathing type
             0x7F82, 0x7F92)] // crash? reason unknown
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy
