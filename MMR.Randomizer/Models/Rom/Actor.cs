@@ -278,8 +278,6 @@ namespace MMR.Randomizer.Models.Rom
                 this.Variants = AllVariants.SelectMany(u => u).ToList();
             }
 
-            Debug.Assert(this.AllVariants != null);
-
             if (Variants.Count == 0)
             {
                 Variants = new List<int>(1){ 0 };

@@ -5436,10 +5436,11 @@ namespace MMR.Randomizer
             ////////////////////////////////////////////
             ///////   DEBUGGING: force an actor  ///////
             ////////////////////////////////////////////
-            if (scene.SceneEnum == GameObjects.Scene.AstralObservatory) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.SwampSpiderHouse) // force specific actor/variant for debugging
             {
                 //thisSceneData.Actors[35].ChangeActor(GameObjects.Actor.En_Invisible_Ruppe, vars: 0x01D0); // hitspot
-                //thisSceneData.Actors[12].ChangeActor(GameObjects.Actor.ObjSwitch, vars: 0x7504); // hitspot
+                var hitspot = thisSceneData.Scene.Maps[1].Actors[12];
+                hitspot.ChangeActor(GameObjects.Actor.ObjSwitch, vars: 0x902); // hitspot
                 //thisSceneData.Scene.Maps[0].Actors[9].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
                 //thisSceneData.Scene.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
             }
