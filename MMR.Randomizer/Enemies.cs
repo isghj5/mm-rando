@@ -628,14 +628,14 @@ namespace MMR.Randomizer
                                     GameObjects.Actor.MushroomCloud, GameObjects.Actor.BugsFishButterfly, GameObjects.Actor.Fish
                         };
 
-                        var matchingStandaloneActor = FreeCandidateList.Find(act => act.ActorEnum == mapActor.ActorEnum);
+                        var matchingStandaloneActor = FreeCandidateList.Find(act => act.ActorEnum == mapActor.OldActorEnum);
                         if (matchingStandaloneActor != null)
                         {
-                            var sceneRestrictions = matchingStandaloneActor.ActorEnum.GetAttribute<ForbidFromSceneAttribute>();
+                            var sceneRestrictions = mapActor.OldActorEnum.GetAttribute<ForbidFromSceneAttribute>();
                             if (sceneRestrictions != null && sceneRestrictions.ScenesExcluded.Contains(thisSceneData.Scene.SceneEnum))
                                 continue; // not valid to consider this actor
 
-                            var itemRestriction = ObjectIsCheckBlocked(scene, matchingStandaloneActor.ActorEnum, matchingStandaloneActor.OldVariant);
+                            var itemRestriction = ObjectIsCheckBlocked(scene, mapActor.ActorEnum, mapActor.OldVariant);
                             var chanceOfRandomization = (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic) ? (80) : (40);
                             // if common scoopable actor, some are allowed but not all, for now lets make it random
                             if (itemRestriction != null && (commonScoopableActors.Contains(mapActor.OldActorEnum)
@@ -3285,7 +3285,7 @@ namespace MMR.Randomizer
         }
 
 
-#endregion
+        #endregion
 
         public static List<GameObjects.Actor> GetSceneFairyDroppingEnemyTypes(SceneEnemizerData thisSceneData)
         {
@@ -6194,7 +6194,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 74.0\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 74.1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
