@@ -1321,6 +1321,8 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x660E, Item.CollectableOceansideSpiderHouseMainRoomPot2)] 
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x741E, Item.CollectableOceansideSpiderHouseMaskRoomPot1)]
         [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x761E, Item.CollectableOceansideSpiderHouseMaskRoomPot2)]
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x1A, Item.CollectibleOceanSpiderToken26)] // storage room "jar", in the rafters
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0x720E, Item.CollectableOceansideSpiderHouseStorageRoomPot1)] // jar sitting on a box, back next to kayaks
         // */
         /*[CheckRestricted(Scene.OceanSpiderHouse, variant: ActorConst.ANY_VARIANT,
             Item.CollectableOceansideSpiderHouseEntrancePot1, Item.CollectableOceansideSpiderHouseEntrancePot2, Item.CollectableOceansideSpiderHouseEntrancePot3,
