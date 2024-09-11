@@ -586,8 +586,12 @@ namespace MMR.Randomizer.GameObjects
             Actor.HookshotWallAndPillar, // can block climbing TODO fix in the code since this is silly
             Actor.BronzeBoulder, // doesn't stay in spot, falls to floor, blocks climbing start
             Actor.SpiderWeb)] // TODO would be cool if we could allow this if the item was junk, or logic require fire arrows
+        [EnemizerSceneEnemyReplacementBlock(Actor.MushroomCloud, // moved to the side of the tree
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator // could block the tree (through the tree
+        )]
         [EnemizerSceneBlockSensitive(Actor.BadBat, -1)] // giant ice block, unused stone stuff at least
         [EnemizerSceneBlockSensitive(Actor.PottedPlant, -1)] // right next to swamp shooting gallery door
+        //[EnemizerSceneBlockSensitive(Actor.MushroomCloud, -1)] // there is one at the base of the tree funny enough : except I moved it
         RoadToSouthernSwamp = 0x3D,
 
         [FileID(1349)]

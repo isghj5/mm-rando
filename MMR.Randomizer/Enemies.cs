@@ -936,7 +936,7 @@ namespace MMR.Randomizer
             }
         }
 
-#endregion
+        #endregion
 
         private static void EnemizerEarlyFixes(Random rng)
         {
@@ -1009,7 +1009,7 @@ namespace MMR.Randomizer
             MoveActorsIfRandomized();
         }
 
-#region Static Enemizer Changes and Fixes
+        #region Static Enemizer Changes and Fixes
 
         public static void FixSpawnLocations()
         {
@@ -1234,9 +1234,11 @@ namespace MMR.Randomizer
 
                 RotateTalkSpotsAndHitSpots();
 
-                // trying to fix clock, nothing
-                //var curiosityShopClock = curiosityShop.Maps[0].Actors[5];
-                //curiosityShopClock.Position.x = -130;
+                // there is a mushroom spawn at the base of the tree in road to swamp, move it to the south side of the tree
+                var roadToSwampScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.RoadToSouthernSwamp.FileID());
+                var roadToSwampMushroom = roadToSwampScene.Maps[0].Actors[43];
+                roadToSwampMushroom.Position = new vec16(366,-182,2200);
+
 
                 // in spring there are two torches on top of each other, which is weird, move the other one to face the first one
                 //var mountainVillageSpring = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MountainVillageSpring.FileID());
@@ -4093,7 +4095,7 @@ namespace MMR.Randomizer
                 if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GoGoron)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.CreamiaCariage)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; ///ZZZZ
-                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.CuttableIvyWall)) continue;
+                if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.Wolfos, GameObjects.Actor.BeanSeller)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.Nejiron, GameObjects.Actor.Peahat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Keese)) continue;
@@ -5436,11 +5438,11 @@ namespace MMR.Randomizer
             ////////////////////////////////////////////
             ///////   DEBUGGING: force an actor  ///////
             ////////////////////////////////////////////
-            if (scene.SceneEnum == GameObjects.Scene.SwampSpiderHouse) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.RoadToSouthernSwamp) // force specific actor/variant for debugging
             {
                 //thisSceneData.Actors[35].ChangeActor(GameObjects.Actor.En_Invisible_Ruppe, vars: 0x01D0); // hitspot
-                var hitspot = thisSceneData.Scene.Maps[1].Actors[12];
-                hitspot.ChangeActor(GameObjects.Actor.ObjSwitch, vars: 0x902); // hitspot
+                var mushroom = thisSceneData.Scene.Maps[0].Actors[43];
+                mushroom.ChangeActor(GameObjects.Actor.BeanSeller, vars: 0); // hitspot
                 //thisSceneData.Scene.Maps[0].Actors[9].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
                 //thisSceneData.Scene.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
             }
