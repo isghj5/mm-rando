@@ -3483,7 +3483,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x26C)]
         GiantsChamberColumn = 0x161, // Dm_Statue
 
-        //[ActorizerEnabled] // this actor was turned into a companion instead, would show up too often because its gameplaykeep
+        [ActorizerEnabled]
         [FileID(320)]
         [ActorInstanceSize(0x2AC)] // 1AC, raised to reduce chance of getting
         [ObjectListIndex(0x1)]
@@ -3499,6 +3499,7 @@ namespace MMR.Randomizer.GameObjects
         // possible second switch at 0x3F8
         [SwitchFlagsPlacement(size: 0x7F, shift: 0)]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 8)] // 0x3FC
+        [PlacementWeight(35)]
         CircleOfFire = 0x162, // Obj_Fireshield // tag: FireRing
 
         // wont spawn without the switch flag, goes counter to our switch flag code currently
