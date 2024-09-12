@@ -780,6 +780,7 @@ namespace MMR.Randomizer.GameObjects
         //[VariantsWithRoomMax(max:1, variant:0x8000)]
         [VariantsWithRoomMax(max: 3, variant: 0)]
         [DifficultAllVariants]
+        [PlacementWeight(85)]
         FloorMaster = 0x4A, // En_Floormas
 
         Empty4B = 0x4B,
@@ -2583,6 +2584,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.IkanaCanyon, Scene.RoadToIkana, Scene.LinkTrial, Scene.DekuTrial, Scene.GoronTrial, Scene.ZoraTrial)] // don't replace the originals as we might need for hints
         //[ForbidFromScene(Scene.LinkTrial)] // supposidly, you can play storms on the gossip stone to open the door instead of bombchu
         //[EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)] // crash (reason unk)
+        [PlacementWeight(85)]
         GossipStone = 0xEF, // En_Gs
 
         //[ActorizerEnabled] // best used as a companion instead of being its own actor
@@ -2634,7 +2636,7 @@ namespace MMR.Randomizer.GameObjects
         )]
         //[ForbidFromScene(Scene.Grottos)]
         //[EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking the way
-        //[PlacementWeight(95)]
+        [PlacementWeight(95)]
         Cow = 0xF3, // En_Cow
 
         EmptyF4 = 0xF4,
@@ -2653,8 +2655,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xD0)]
         // hmm, params are 0x7E00 >> 9 and thats it. path?
         // looks like -1 (7E) works as a path disable for this actor too
-        [GroundVariants(0x7E00)]
-        [WaterBottomVariants(0x7E00)]
+        //[GroundVariants(0x7E00)]
+        //[WaterBottomVariants(0x7E00)]
         [PathingVariants(0x0)]
         [PathingTypeVarsPlacement(mask: 0x7F00, shift: 9)]
         [OnlyOneActorPerRoom]
@@ -3141,7 +3143,8 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x8, 0x7FE2)]
         // TODO test if pathing door goron works at all as a pathing type without snowball object
         [GroundVariants(//0x8, // smithy goron
-            0x7FE2, 0x7F85, 0x7F86, 0x7F87,
+            0x7FE2, // shrine, covering ears
+            0x7F85, 0x7F86, 0x7F87,
             0x7FA1, 0x7FC1, 0x7F81, 0x7FF2, 0x7FD1, 0x7FB1, // racetrack
             0x7F82, 0x7F92, // praising darmani in cutscene
             0x283, // goron village door goron
@@ -3153,7 +3156,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 0, variant: 0x8, // too big
             0x7F84, 0x7F94, // the two outside of darmani race need to be on the same thing
             0x8, // keg smith, too big
-            0x283, // opens door winter, crashes day 2/3 because pathing type
+            0x283, // opens door winter, crashes day 2/3 because pathing type for snowball
             0x7F82, 0x7F92)] // crash? reason unknown
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy
@@ -3595,7 +3598,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        //[PlacementWeight(60)] // testing
+        [PlacementWeight(60)]
         DekuKing = 0x16A, // En_Dnq
 
         Empty16B = 0x16B,
@@ -4006,6 +4009,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [ForbidFromScene(Scene.LostWoods)]
+        [PlacementWeight(85)]
         LostWoodsCutsceneTrees = 0x190, // Dm_Opstage
 
         // requires like 3 objects wtf
@@ -4602,6 +4606,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 0, variant: 0x3FA8)] // do not place water variant because dont hav a water wall type yet, which is what this really is, putting in water floats in the water column
         [ForbidFromScene(Scene.StoneTowerTemple)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GoronRacetrack)]
+        [PlacementWeight(95)]
         Dexihand = 0x1D1, // En_WdHand : ???'s water logged brother
 
         [FileID(427)]
@@ -5457,6 +5462,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: 0, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
+        [AlignedCompanionActor(GoronSGoro, CompanionAlignment.InFront, ourVariant:-1, variant: 0x1E0, 1, 2,  9)]
         GoronElder = 0x213, // En_Jg
         
         //[ActorizerEnabled]
@@ -5930,7 +5936,7 @@ namespace MMR.Randomizer.GameObjects
         //[AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0144)] // lottery music
         LotteryKiosk = 0x239, // En_Kujiya
 
-        [ActorizerEnabled] 
+        [ActorizerEnabled]
         [FileID(529)]
         [ObjectListIndex(0xA1)]
         [CheckRestricted(check: Item.MaskDonGero)]
@@ -6025,18 +6031,23 @@ namespace MMR.Randomizer.GameObjects
         [PlacementWeight(50)]
         Evan = 0x241, // En_Zos
 
-        [ActorizerEnabled] // TESTING
+        [ActorizerEnabled]
         [FileID(537)]        
         [ObjectListIndex(0xA1)]
         [CheckRestricted(Scene.BombShop, variant:ActorConst.ANY_VARIANT, Item.SongEpona, Item.ItemBottleAliens, Item.MaskCircusLeader)]
         // 9 is the one that sells you kegs
         // 1 and 1E0 just stand around talking
         // assumption 0xF is talking ID
-        [GroundVariants(0x1E0, 1, 2, 3, 4, 5, 6, 7, 8, 9)]
+        [GroundVariants(0x1E0,
+            1, // holding hands to ears: you seem to be doing well, I feel it in my stomach
+            2, // holding hands to ears: back of head
+            3, 4, 5, 6, 7, 8, // stands up and tposes, because you are supposed to talk to elder goron
+            9 // sells keg
+            )]
         [VariantsWithRoomMax( max: 1,
-            0x1E0, 1, 2, 3, 4, 6, 8, 9)]
-        [VariantsWithRoomMax(max: 0, 
-            5, 7)] // these are tposing types
+            0x1E0, 1, 2,  9)]
+        [VariantsWithRoomMax(max: 0,
+             3, 4, 5, 6, 7, 8)] // these are tposing types
         [UnkillableAllVariants]
         // we dont have logic to check if this is important enough I guess
         [ForbidFromScene(Scene.BombShop)]//, Scene.GoronShrine)]
@@ -7111,7 +7122,7 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(size: 0x3F, shift:2)] // 0x1FC
         [OnlyOneActorPerRoom] // as they give items or money, limit to one
         [UnkillableAllVariants]
-        [PlacementWeight(40)] // free stuff, make it more rare
+        [PlacementWeight(23)] // free stuff, make it more rare
         En_Invisible_Ruppe = 0x2AF, // En_Invisible_Ruppe
         
         [FileID(647)]
