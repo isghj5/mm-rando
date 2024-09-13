@@ -1348,11 +1348,12 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.BeneathGraveyard, variant: ActorConst.ANY_VARIANT,
             Item.CollectableBeneathTheGraveyardBadBatRoomPot1, Item.CollectableBeneathTheGraveyardInvisibleRoomPot1,
             Item.CollectableBeneathTheGraveyardMainAreaPot1, Item.CollectableBeneathTheGraveyardMainAreaPot2)]
-        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4415, Item.CollectableBeneathTheWellBugAndBombRoomPot1)] // all five in the same room
-        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4015, Item.CollectableBeneathTheWellBugAndBombRoomPot2)]
-        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4815, Item.CollectableBeneathTheWellBugAndBombRoomPot3)]
-        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4215, Item.CollectableBeneathTheWellBugAndBombRoomPot4)]
-        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4615, Item.CollectableBeneathTheWellBugAndBombRoomPot5)]
+        // all five botw pots in the same room, in order of top to bottom (door to the left)
+        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4415, Item.CollectableBeneathTheWellBugAndBombRoomPot1, Item.CollectableBeneathTheWellBugAndBombRoomPot2, Item.CollectableBeneathTheWellBugAndBombRoomPot3, Item.CollectableBeneathTheWellBugAndBombRoomPot4, Item.CollectableBeneathTheWellBugAndBombRoomPot5)]
+        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4015, Item.CollectableBeneathTheWellBugAndBombRoomPot1, Item.CollectableBeneathTheWellBugAndBombRoomPot2, Item.CollectableBeneathTheWellBugAndBombRoomPot3, Item.CollectableBeneathTheWellBugAndBombRoomPot4, Item.CollectableBeneathTheWellBugAndBombRoomPot5)]
+        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4815, Item.CollectableBeneathTheWellBugAndBombRoomPot1, Item.CollectableBeneathTheWellBugAndBombRoomPot2, Item.CollectableBeneathTheWellBugAndBombRoomPot3, Item.CollectableBeneathTheWellBugAndBombRoomPot4, Item.CollectableBeneathTheWellBugAndBombRoomPot5)]
+        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4215, Item.CollectableBeneathTheWellBugAndBombRoomPot1, Item.CollectableBeneathTheWellBugAndBombRoomPot2, Item.CollectableBeneathTheWellBugAndBombRoomPot3, Item.CollectableBeneathTheWellBugAndBombRoomPot4, Item.CollectableBeneathTheWellBugAndBombRoomPot5)]
+        [CheckRestricted(Scene.BeneathTheWell, variant: 0x4615, Item.CollectableBeneathTheWellBugAndBombRoomPot1, Item.CollectableBeneathTheWellBugAndBombRoomPot2, Item.CollectableBeneathTheWellBugAndBombRoomPot3, Item.CollectableBeneathTheWellBugAndBombRoomPot4, Item.CollectableBeneathTheWellBugAndBombRoomPot5)]
         [CheckRestricted(Scene.DampesHouse, variant: ActorConst.ANY_VARIANT,
             Item.CollectableDampesHouseBasementPot1, Item.CollectableDampesHouseBasementPot2,
             Item.CollectableDampesHouseBasementPot3, Item.CollectableDampesHouseBasementPot4,
@@ -2987,7 +2988,7 @@ namespace MMR.Randomizer.GameObjects
         BetaVampireGirl = 0x122, // En_Cne_01
 
         // beta bomb shop grandma
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // we want to use the modified mmra, if its missing ignore actor its just tposing
         [FileID(263)]
         // enhy nonsense, it has to load its inner-actor thing first, so its set to gameplay keep
         [ObjectListIndex(0xDF)] // 1
