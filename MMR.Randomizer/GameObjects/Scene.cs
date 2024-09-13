@@ -637,8 +637,6 @@ namespace MMR.Randomizer.GameObjects
         //    Actor.UnusedStoneTowerPlatform, Actor.UnusedPirateElevator)]
         [EnemizerSceneEnemyReplacementBlock(Actor.TallGrass,
             Actor.ClocktowerGearsAndOrgan, Actor.RegularIceBlock)] // suspected too large and can block the owl
-        [EnemizerSceneEnemyReplacementBlock(Actor.Octarok,
-            Actor.Obj_Boat, Actor.SwampBoat)] // dyna crashing from just one boat and nothing else
         [EnemizerSceneBlockSensitive(Actor.DragonFly, -1)]
         [EnemizerSceneBlockSensitive(Actor.En_Owl, -1)]
         SouthernSwamp = 0x42,

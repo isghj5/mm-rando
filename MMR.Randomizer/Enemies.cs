@@ -81,7 +81,7 @@ namespace MMR.Randomizer
         private static List<GameObjects.ItemCategory> ActorizerKnownJunkCategories { get; set; }
         private static List<List<GameObjects.Item>> ActorizerKnownJunkItems { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = true;
+        private static bool ACTORSENABLED = false;
         private static Random seedrng;
         private static Models.RandomizedResult _randomized;
         private static OutputSettings _outputSettings;
@@ -1660,13 +1660,13 @@ namespace MMR.Randomizer
         {
             /// if we randomize the shop scrubs, then we have two of them sitting on top of each other, which is weird
             var southernSwamp = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthernSwamp.FileID());
-            var swampScrub = southernSwamp.Maps[0].Actors[1]; // first is zero
-            if (swampScrub.Name != GameObjects.Actor.BuisnessScrub.ToString())
+            var swampScrub = southernSwamp.Maps[0].Actors[0]; // first is zero
+            if (swampScrub.ActorEnum != GameObjects.Actor.BuisnessScrub)
             {
-                var stationaryScrub = southernSwamp.Maps[0].Actors[0]; // needs to be rotated, naturally faces left down the swamp
+                var stationaryScrub = southernSwamp.Maps[0].Actors[1]; // needs to be rotated, naturally faces left down the swamp
                 stationaryScrub.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: stationaryScrub.Rotation.y);
 
-                swampScrub.Position = new vec16(115, 170, 26);
+                stationaryScrub.Position = new vec16(115, 170, 26);
                 SceneUtils.UpdateScene(southernSwamp);
             }
             // TODO cleared swamp
@@ -4100,10 +4100,10 @@ namespace MMR.Randomizer
                     return false;
                 }
                 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GoronSGoro)) continue;
-                if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.GoronSGoro)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GoronSGoro)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.GoronSGoro)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; ///ZZZZ
-                if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.Tektite)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.Tektite)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.Nejiron, GameObjects.Actor.Peahat)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Keese)) continue;
