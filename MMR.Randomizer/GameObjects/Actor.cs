@@ -118,6 +118,7 @@ namespace MMR.Randomizer.GameObjects
         [PlacementWeight(50)]
         TreasureChest = 0x6, // En_Box
 
+        // TODO dumb ass you forgot to finish this actor
         [FileID(45)]
         [ObjectListIndex(0x128)]
         [RemovalChance(50)] // medium boss
@@ -3768,6 +3769,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(340)]
         [ObjectListIndex(0x135)]
+        [RemovalChance(90)] // should still have a decent chance of vanilla
         // variants 0x7F is the switch range (unused) where 7F tells the actor to ignore switches
         // 0x0F80 is the pathing range, and 0xF000 is the kickout entrance to use
         [PathingVariants(0x127F, 0x12FF, 0x137F, 0x13FF, 0x147F, 0x14FF, 0x157F, 0x15FF, 0x177F, 0x17FF, 0x187F)]
@@ -4622,6 +4624,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(429)]
         [ObjectListIndex(0x1B7)]
+        [RemovalChance(90)] // opinion
         // 0xF80 is the drop table
         [GroundVariants(
             0x0100, // only vanilla param weirdly
@@ -5275,7 +5278,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 4, variant: 0, 1, 2, 3, 4, 5)]
         [RespawningVariants(0)] // marked respawned to avoid: being placed on flying fairy enemy, because it doesnt come down, and boss rooms (boring)
         [ForbidFromScene(Scene.PiratesFortressRooms)] // pirate beehive cutscene
-        [PlacementWeight(85)]
+        [PlacementWeight(75)]
         GiantBeee = 0x204, // En_Bee
 
         [ActorizerEnabled]
@@ -5561,6 +5564,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(501)]
         [ObjectListIndex(0x12E)]
+        [RemovalChance(90)] // should still have a decent chance of vanilla
         [CheckRestricted(Scene.PiratesFortressRooms, variant: ActorConst.ANY_VARIANT, Item.HeartPiecePiratesFortress)]
         // vanilla variants:
         // Aviels room: 0xCB1
