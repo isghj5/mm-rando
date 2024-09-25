@@ -396,7 +396,11 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.Monkey,
             Actor.PalaceGuardDeku)] // if placed behind regular guards, they will pop up to look at you and the other guards will also rise
         [EnemizerSceneEnemyReplacementBlock(Actor.SquareSign,
-            Actor.PalaceGuardDeku)] // if it grabs you as you fall into a grotto hole it can hardlock
+            Actor.En_Ani, Actor.GaboraBlacksmith, Actor.BomberHideoutGuard, // their talk box is so big they can dialogue block the flower to go back to top of flowers
+            Actor.Takaraya, Actor.Secretary, Actor.DekuKing, Actor.InjuredKoume, Actor.GoronElder, Actor.GoronKid, Actor.MadamAroma,
+            Actor.ArcheryMiniGameMan, Actor.SwampTouristGuide,
+            Actor.PalaceGuardDeku
+        )]
         //[EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa,
         //    Actor.ClocktowerGearsAndOrgan)] // likely dynacrash if other actors have them too
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
