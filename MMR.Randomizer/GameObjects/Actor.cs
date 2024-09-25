@@ -265,7 +265,8 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 7, variant: 1)] // lag, not difficulty
         [BlockingVariants(0)]
         //[EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall)] // too big, can block the butler race
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
+        [EnemizerScenesPlacementBlock( Scene.BeneathGraveyard, // if placed in the kill-all-enemy-rooms, can be dormant during the day which is a buzzkill
+            Scene.DekuShrine)] // too big, can block the butler race
         Peahat = 0x14, // En_Peehat
 
         // this is single butterfly spawned directly only on the moon
