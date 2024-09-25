@@ -977,6 +977,9 @@ namespace MMR.Randomizer.GameObjects
             Actor.Peahat, // small peahat can instant kill 1 heart hero
             Actor.PatrollingPirate, // could be annoying, hard to leave
             Actor.LikeLike )] // If you start with one heart this can be a softlock
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SquareSign,
+            Actor.ClocktowerGearsAndOrgan, Actor.Bumper, Actor.RegularIceBlock,
+            Actor.Bombiwa, Actor.LargeSnowball)] // can block climbing the ramp to the tower
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
         [EnemizerSceneBlockSensitive(Actor.Kafei, -1)]
         SouthClockTown = 0x6C,
