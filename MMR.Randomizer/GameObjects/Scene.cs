@@ -651,6 +651,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.ClayPot,
             Actor.En_Ani, Actor.GaboraBlacksmith, Actor.BomberHideoutGuard, // their talk box is so big they can dialogue block the flower
             Actor.Takaraya, Actor.Secretary, Actor.DekuKing, Actor.InjuredKoume, Actor.GoronElder, Actor.GoronKid, Actor.MadamAroma,
+            Actor.ArcheryMiniGameMan, Actor.SwampTouristGuide,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, // assume they will block deku flower pop-up
             Actor.RegularIceBlock,
             Actor.ClocktowerGearsAndOrgan // blocking the flower
