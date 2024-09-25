@@ -1867,6 +1867,16 @@ namespace MMR.Randomizer
             }
             SceneUtils.UpdateScene(snowheadTempleScene);
 
+            var milkroadScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MilkRoad.FileID());;
+            var milkroadPointedSign = milkroadScene.Maps[0].Actors[21];
+            if (milkroadPointedSign.ActorEnum != GameObjects.Actor.PointedSign)
+            {
+                // vanilla angle faces the wall, which is especially bad if its a grotto it locks the player by facing them into wall they fall back in
+                milkroadPointedSign.ChangeYRotation(180 - 15); 
+            }
+            SceneUtils.UpdateScene(milkroadScene);
+
+
             FixEvanRotation();
             MoveShopScrubsIfRandomized();
             MovePostmanIfRandomized(terminaField);
@@ -4116,7 +4126,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; ///ZZZZ
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.Tektite)) continue;
 
-                //if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.Nejiron, GameObjects.Actor.Peahat)) continue;
+                if (TestHardSetObject(GameObjects.Scene.MilkRoad, GameObjects.Actor.MilkroadCarpenter, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Keese)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Anju, GameObjects.Actor.StockpotBell)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.PostMan, GameObjects.Actor.HoneyAndDarlingCredits)) continue;
@@ -5457,11 +5467,11 @@ namespace MMR.Randomizer
             ////////////////////////////////////////////
             ///////   DEBUGGING: force an actor  ///////
             ////////////////////////////////////////////
-            if (scene.SceneEnum == GameObjects.Scene.ClockTowerInterior) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.MilkRoad) // force specific actor/variant for debugging
             {
                 //thisSceneData.Actors[35].ChangeActor(GameObjects.Actor.En_Invisible_Ruppe, vars: 0x01D0); // hitspot
-                var target = thisSceneData.Scene.Maps[0].Actors[1];
-                target.ChangeActor(GameObjects.Actor.GoronSGoro, vars: 6);
+                var target = thisSceneData.Scene.Maps[0].Actors[21];
+                target.ChangeActor(GameObjects.Actor.BeanSeller, vars: 0);
                 //thisSceneData.Scene.Maps[0].Actors[9].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
                 //thisSceneData.Scene.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
             }
