@@ -825,7 +825,9 @@ namespace MMR.Randomizer
                     return map2; // we need to keep this tingle because their items are actual not-junk
                 }
                 // if heartpiece on picture is required, one of them has to remain regardless of their items
-                if (strawPulled && !IsActorizerJunk(GameObjects.Item.HeartPiecePictobox))
+                var check = _randomized.ItemList.Find(item => item.NewLocation != null && item.NewLocation == GameObjects.Item.HeartPiecePictobox);
+                var itemInCheck = check.Item;
+                if (strawPulled && !IsActorizerJunk(itemInCheck))
                 {
                     return GameObjects.Item.HeartPiecePictobox;
                 }
