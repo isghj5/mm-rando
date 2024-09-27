@@ -146,7 +146,10 @@ namespace MMR.Randomizer.GameObjects
             Actor.RegularIceBlock, // temporary, can block the bridge and the bottom code isnt working perfectly
             Actor.Bombiwa, Actor.Torch,  // boring
             Actor.CuccoChick, Actor.En_Ani, Actor.IkanaGravestone // boring
-            )]
+        )]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bg_Breakwall,
+            Actor.UnusedStoneTowerPlatform // so long, and at the right angle, can block the center ladder
+        )]
         [EnemizerSceneBlockSensitive(Actor.PatrollingPirate,
             0x14EA, // bottom of ladder
             0x18EA, // bridge to chest room
