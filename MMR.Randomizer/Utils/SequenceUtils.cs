@@ -471,6 +471,10 @@ namespace MMR.Randomizer.Utils
                 if (song.Instrument > 0x28 || customBankIncluded == 1)
                 {
                     song.Instrument = MARK_REQUIRES_NEW_BANK;
+                    foreach (var seq in song.SequenceBinaryList)
+                    {
+                        seq.InstrumentSet.BankSlot = song.Instrument;
+                    }
                 }
                 if (song.Instrument == MARK_REQUIRES_NEW_BANK && customBankIncluded == 0)
                 {
@@ -1177,28 +1181,48 @@ namespace MMR.Randomizer.Utils
             }
         }
 
+        private static (int sequenceBankIndex, int bankListIndex) FindMatchingInstrumentSetDuplicate(SequenceInfo replacementSequence)
+        {
+            for(int b = 0; b < replacementSequence.SequenceBinaryList.Count(); b++)
+            {
+                var bank = replacementSequence.SequenceBinaryList[b].SequenceBinary;
+                if (bank != null)
+                {
+                    var searchResult = RomData.InstrumentSetList.FindIndex(match => match.BankBinary == bank);
+                    if (searchResult != -1)
+                    {
+                        return (b, searchResult);
+                    }
+                }
+            }
+
+            return (-1,-1);
+        }
+
         public static void AssignSequenceSlot(SequenceInfo slotSequence, SequenceInfo replacementSequence, List<SequenceInfo> remainingSequences, string debugString, StringBuilder log)
         {
             // if the song has a custom instrument set: lock the sequence, update inst set value, debug output
             if (replacementSequence.SequenceBinaryList != null && replacementSequence.SequenceBinaryList[0] != null && replacementSequence.SequenceBinaryList[0].InstrumentSet != null)
             {
-                if (replacementSequence.SequenceBinaryList[0].InstrumentSet.BankSlot == CurrentFreeBank)
+                (int sequenceBankIndex, int bankListIndex) duplicateBankSearch = FindMatchingInstrumentSetDuplicate(replacementSequence);
+                if (duplicateBankSearch.sequenceBankIndex != -1)
                 {
-                    CurrentFreeBank++;
-                }
-                replacementSequence.Instrument = replacementSequence.SequenceBinaryList[0].InstrumentSet.BankSlot; // update to the one we want to use
-                if (RomData.InstrumentSetList[replacementSequence.Instrument].Modified > 0)
-                {
-                    RomData.InstrumentSetList[replacementSequence.Instrument].Modified += 1;
+                    RomData.InstrumentSetList[duplicateBankSearch.bankListIndex].Modified += 1;
+                    replacementSequence.Instrument = duplicateBankSearch.bankListIndex;
                     log.AppendLine(" -- v -- Instrument set number " + replacementSequence.Instrument.ToString("X2") + " is being reused -- v --");
+                    replacementSequence.SequenceBinaryList = new List<SequenceBinaryData> {
+                        replacementSequence.SequenceBinaryList[duplicateBankSearch.sequenceBankIndex]
+                    };
                 }
-                else
+                else // no duplicate bank found, add new one
                 {
+                    replacementSequence.Instrument = CurrentFreeBank++; // update to the one we want to use
+                    replacementSequence.SequenceBinaryList[0].InstrumentSet.BankSlot = replacementSequence.Instrument;
                     RomData.InstrumentSetList[replacementSequence.Instrument] = replacementSequence.SequenceBinaryList[0].InstrumentSet;
                     RomData.InstrumentSetList[replacementSequence.Instrument].InstrumentSamples = replacementSequence.InstrumentSamples;
                     log.AppendLine(" -- v -- Instrument set number " + replacementSequence.Instrument.ToString("X2") + " has been claimed -- v --");
+                    replacementSequence.SequenceBinaryList = new List<SequenceBinaryData> { replacementSequence.SequenceBinaryList[0] }; // reduce to one for later
                 }
-                replacementSequence.SequenceBinaryList = new List<SequenceBinaryData> { replacementSequence.SequenceBinaryList[0] }; // lock the one we want
             }
 
             replacementSequence.Replaces = slotSequence.Replaces; // tells the rando later what song to put into slot_seq
