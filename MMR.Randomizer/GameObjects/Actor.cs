@@ -6323,6 +6323,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(568)]
         [ObjectListIndex(0x1)]
+        [CheckRestricted(Scene.EastClockTown, variant: 0xFE0C, // honey and darling, the replacement can block 7 checks if not careful
+            Item.CollectableEastClockTownHitTag4, Item.CollectableEastClockTownHitTag5, Item.CollectableEastClockTownHitTag6,
+            Item.CollectableEastClockTownHitTag7, Item.CollectableEastClockTownHitTag8, Item.CollectableEastClockTownHitTag9,
+            Item.ChestEastClockTownSilverRupee
+        )]
         [WallVariants(
             0xFE00, // zora band poster
             0xFE01, // construction recruitment poster
