@@ -471,7 +471,7 @@ namespace MMR.Randomizer.Utils
                 if (song.Instrument > 0x28 || customBankIncluded == 1)
                 {
                     song.Instrument = MARK_REQUIRES_NEW_BANK;
-                    foreach (var seq in song.SequenceBinaryList)
+                    foreach (var seq in song.SequenceBinaryList.FindAll(set => set.InstrumentSet != null))
                     {
                         seq.InstrumentSet.BankSlot = song.Instrument;
                     }
