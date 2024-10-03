@@ -1288,6 +1288,7 @@ namespace MMR.Randomizer
 
             var eastClockTownScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.EastClockTown.FileID());
 
+            // TODO now that I have simple rotation functions, go through these and replace them
             var treasurePoster = eastClockTownScene.Maps[0].Actors[20];
             treasurePoster.Rotation.y = ActorUtils.MergeRotationAndFlags(90, flags: treasurePoster.Rotation.y);
             treasurePoster.Rotation.x = ActorUtils.MergeRotationAndFlags(0, flags: treasurePoster.Rotation.x);
@@ -1330,6 +1331,19 @@ namespace MMR.Randomizer
             soldierSign.ChangeXRotation(0);
             soldierSign.ChangeZRotation(0);
             ActorUtils.ClearActorRotationRestrictions(soldierSign);
+
+            var southclocktownScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthClockTown.FileID());
+            var recruitmentPoster = southclocktownScene.Maps[0].Actors[9];
+            recruitmentPoster.ChangeYRotation(270);
+            recruitmentPoster.ChangeZRotation(0);
+            recruitmentPoster.ChangeXRotation(0);
+            ActorUtils.ClearActorRotationRestrictions(recruitmentPoster);
+
+            var bankPoster = southclocktownScene.Maps[0].Actors[10];
+            bankPoster.ChangeYRotation(90);
+            bankPoster.ChangeXRotation(0);
+            bankPoster.ChangeZRotation(0);
+            ActorUtils.ClearActorRotationRestrictions(bankPoster);
         }
 
 
@@ -5467,11 +5481,11 @@ namespace MMR.Randomizer
             ////////////////////////////////////////////
             ///////   DEBUGGING: force an actor  ///////
             ////////////////////////////////////////////
-            if (scene.SceneEnum == GameObjects.Scene.MilkRoad) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.SouthClockTown) // force specific actor/variant for debugging
             {
                 //thisSceneData.Actors[35].ChangeActor(GameObjects.Actor.En_Invisible_Ruppe, vars: 0x01D0); // hitspot
-                var target = thisSceneData.Scene.Maps[0].Actors[21];
-                target.ChangeActor(GameObjects.Actor.BeanSeller, vars: 0);
+                var target = thisSceneData.Scene.Maps[0].Actors[10];
+                target.ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
                 //thisSceneData.Scene.Maps[0].Actors[9].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
                 //thisSceneData.Scene.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
             }
