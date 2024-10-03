@@ -4883,7 +4883,7 @@ namespace MMR.Randomizer.GameObjects
         [CompanionActor(Flame, ourVariant: 0x300, variant: 0x3)]      // amy gets green flames
         // no scene exclusion necessary, get spawned by the poe sisters minigame but they aren't actors in the scene to be randomized
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
-        [PlacementWeight(85)]
+        [PlacementWeight(75)]
         PoeSisters = 0x1E8, // En_Po_Sisters
 
         [EnemizerEnabled]
