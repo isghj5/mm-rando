@@ -1717,6 +1717,14 @@ namespace MMR.Randomizer
                 SceneUtils.UpdateScene(zoraHallrooms);
             }
 
+            // 42, 41, 4 (flower)
+            var southclocktownScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthClockTown.FileID());
+            var dekuFlowerUnderTheScrub = southclocktownScene.Maps[0].Actors[4];
+            if (dekuFlowerUnderTheScrub.ActorEnum != GameObjects.Actor.DekuFlower)
+            {
+                // two and a thing? 
+            }
+
         }
 
         private static void MovePostmanIfRandomized(Scene terminaField)
@@ -4135,7 +4143,7 @@ namespace MMR.Randomizer
                     return false;
                 }
                 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GoronSGoro)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.MagicSlab)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.GoronSGoro)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; ///ZZZZ
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.Tektite)) continue;
@@ -4955,7 +4963,7 @@ namespace MMR.Randomizer
                     // scan for companions that can be moved
                     // for now, assume all previously used companions must be left untouched, no shuffling
                     var eligibleCompanions = thisSceneData.Actors.FindAll(act =>
-                                                               act.ActorId == (int)companionEnum               // correct actor
+                                                               act.ActorId == (int) companionEnum               // correct actor
                                                             && mainActor.Room == act.Room                       // both in the same room
                                                             && act.previouslyMovedCompanion == false            // not already used
                                                             && companion.Variants.Contains(act.Variants[0]));   // correct variant
@@ -4973,7 +4981,14 @@ namespace MMR.Randomizer
                         randomCompanion.Position.y = (short)(actorsWithCompanions[i].Position.y + companion.RelativePosition.y);
                         randomCompanion.Position.z = mainActor.Position.z;
 
-                        // todo: use x and z, with actor rotation, to figure out where to move the actors to
+                        // todo: use x and z, with actor rotation, to figure out where to move the actors to in the event of "tupe: in front"
+
+                        // error: some rooms change actors layouts, we need to match the spawn flags for moved actors to match
+                        randomCompanion.Rotation.x &= ~0x7F; // clear old spawn flags
+                        randomCompanion.Rotation.x |= (short)(mainActor.Rotation.x & 0x7F); // pull flags from main and write to companion rotation
+                        randomCompanion.Rotation.z &= ~0x7F; // clear old spawn flags
+                        randomCompanion.Rotation.z |= (short)(mainActor.Rotation.z & 0x7F); // pull flags from main and write to companion rotation
+
                         thisSceneData.Log.AppendLine(
                             "Moved companion: [" + randomCompanion.Variants[0].ToString("X4")
                             + "][" + randomCompanion.ActorEnum.ToString()
