@@ -82,10 +82,16 @@ namespace MMR.Randomizer.GameObjects
         [ClearEnemyPuzzleRooms(7, 13)] // 7:dodongo, 13:peahat
         [EnemizerSceneBlockSensitive(Actor.DekuBabaWithered, -1)] // can block the chest
         [EnemizerSceneBlockSensitive(Actor.DekuBaba, -1)] // this this is required to keep it off of withered as well
+        /* ****** GOSSIP GROTTO ACTORS ***** */
         [EnemizerSceneBlockSensitive(Actor.Wolfos, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
         [EnemizerSceneBlockSensitive(Actor.Snapper, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
         [EnemizerSceneBlockSensitive(Actor.Leever, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
         [EnemizerSceneBlockSensitive(Actor.Armos, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wolfos,  Actor.RealBombchu)] // can instantly hit the stones and cause them to be un-readable
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper, Actor.RealBombchu)] // can instantly hit the stones and cause them to be un-readable
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Leever,  Actor.RealBombchu)] // can instantly hit the stones and cause them to be un-readable
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Armos,   Actor.RealBombchu)] // can instantly hit the stones and cause them to be un-readable
+        /* ********************************* */
         [EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)] // chests under it in bomb grotto and hot spring grotto
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Peahat, // hidden or very weak enemies suck here, but they are very common in this slot
             Actor.Beamos, // beamos is just because bomb locking this check early is prime seed killer
