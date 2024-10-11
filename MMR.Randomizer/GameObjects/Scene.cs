@@ -40,12 +40,15 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1145)]
         [ClearEnemyPuzzleRooms(1, 2, 4)]
         [SceneInternalId(0x0C)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.CeilingSpawner,
+        [EnemizerSceneEnemyReplacementBlock(Actor.CeilingSpawner, // dripping water
             Actor.GBTFreezableWaterfall, // blocking platforming
             Actor.UnusedFallingBridge, // can void the player because it forces crushing with the ceiling
             Actor.UnusedStoneTowerPlatform, // same thing, should be disabled earlier but maybe it isnt
             Actor.UnusedStoneTowerStoneElevator, // can void the player because it forces crushing with the ceiling
             Actor.UnusedPirateElevator // can void the player because it forces crushing with the ceiling
+        )]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Skulltula, // hanging near the ceiling
+            Actor.GBTFreezableWaterfall // blocking platforming
         )]
         [EnemizerSceneEnemyReplacementBlock(Actor.IronKnuckle,
             Actor.Hiploop, // hiploop dies if he touches water? happens in day 2 iron knuckle
