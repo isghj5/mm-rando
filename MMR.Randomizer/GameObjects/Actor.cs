@@ -3810,7 +3810,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(344)]
         [ObjectListIndex(0x18A)]
         [DynaAttributes(6,8)]
-        [SwitchFlagsPlacement(size: 0x7F, shift: 7)]
+        [SwitchFlagsPlacement(size: 0x7F, shift: 4)] // there are actually two, flag +1
         DekuRaceDoor = 0x17E, // Bg_Crace_Movebg
 
         // todo come back and figure out how to spawn regular 
