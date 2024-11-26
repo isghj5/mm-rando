@@ -5923,6 +5923,24 @@ namespace MMR.Randomizer
             }
         }
 
+        private void WriteBrokenGaroFreeHints()
+        {
+            if (_randomized.Settings.FreeGaroHints) // actor should be decompressed if this is true
+            {
+                // not sure why my actorizer build has this issue but not release MMR
+                // the branch at the top of the asm, that checks the results of the switch flag, causes the function to end if switch is OFF
+                // this is opposite of vanilla, where the switch flag being zero keeps the code going
+                // all I did was change the jump location back to vanilla(ish, as it has been moved)
+
+                var encount3data = RomData.MMFileList[247].Data;
+                var jumpOffsetAddressByte = 0x173;
+                if (encount3data[jumpOffsetAddressByte] == 0x34) // the end of the function, which is wrong
+                {
+                    encount3data[jumpOffsetAddressByte] = 0x8; // the correctly offset
+                }
+            }
+        }
+
         private void WriteTitleScreen()
         {
             var titleScreen = Resources.mods.title_screen;
@@ -6425,6 +6443,8 @@ namespace MMR.Randomizer
             progressReporter.ReportProgress(74, "Writing sound effects...");
             WriteSoundEffects(new Random(BitConverter.ToInt32(hash, 0)));
             WriteLowHealthSound(new Random(BitConverter.ToInt32(hash, 0)));
+
+            WriteBrokenGaroFreeHints();
 
             if (outputSettings.GenerateROM || outputSettings.OutputVC)
             {
