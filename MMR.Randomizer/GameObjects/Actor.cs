@@ -3561,19 +3561,23 @@ namespace MMR.Randomizer.GameObjects
         // might be used for mikau grave, but also beta actors that teach songs...??
         MagicSlab = 0x15C, // En_Sekihi
 
-        // we can't place without a way to ensure the enemy is only placed in places that have multiple spots, but fuck this guy get rid of em
+        // we can't place anywhere because his actor requires cutscenes
+        // requires NEW ACTOR IS WORKING BABY
         [EnemizerEnabled]
         [ActorInitVarOffset(0x37D0)]
         [FileID(315)]
         [ObjectListIndex(0x178)]
         [RemovalChance(75)] // miniboss
-        [GroundVariants(0x007F, // ikana castle
-                        0x017F, // sht miniboss
-                        0x027F  // istt
-            )]
+        // 0xFF00 is the type aparently, types are fire/ice/both (not sure if in correct order below)
+        [GroundVariants(
+            0x007F, // ikana castle
+            0x017F, // sht miniboss
+            0x027F  // istt
+        )]
         [SwitchFlagsPlacement(size: 0x7F, shift: 0)]
         [DifficultAllVariants]
         [VariantsWithRoomMax(max:0, variant: 0x007F, 0x017F, 0x027F)] // wont work without their blocks
+        //[PlacementWeight(0)] // we never place him, instead place blocks only and replace one of them at random with the wizrobe
         Wizrobe = 0x15D, // En_Wiz
 
         [EnemizerEnabled]
@@ -3582,7 +3586,10 @@ namespace MMR.Randomizer.GameObjects
         [RemovalChance(75)] // miniboss
         [DynaAttributes(10,8)]
         [GroundVariants(0x0)]
-        [VariantsWithRoomMax(max:0, variant:0)]
+        [DifficultAllVariants]
+        [VariantsWithRoomMax(max:5, variant:0)]
+        [PlacementWeight(10)]
+        [UnkillableAllVariants]
         WizrobeSpawnBlock = 0x15E, // En_Wiz_Brock
 
         [FileID(317)]

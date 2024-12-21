@@ -2879,6 +2879,71 @@ namespace MMR.Randomizer
             }
         }
 
+        public static void FixWizrobeFinalActor(SceneEnemizerData thisSceneData)
+        {
+            // instead of having mixed wizrobes and platform blocks, only place bloocks and one wizrobe here at the end
+            /// moth balled, can't get wizrobe to not crash
+
+
+            var wizrobe = ReplacementCandidateList.Find(act => act.Name.Contains("FixedWizrobe"));
+            var wizrobesFound = thisSceneData.Actors.FindAll(act => act.Name == wizrobe.Name || act.Name.Contains("ovl_En_Wiz"));
+
+            if(wizrobesFound.Count > 1)
+            {
+                var randomIndex = thisSceneData.RNG.Next(wizrobesFound.Count());
+                var wizerobeToKeep = wizrobesFound[randomIndex]; // randomly spare one
+                wizrobesFound.RemoveAt(randomIndex); 
+                foreach (var wiz in wizrobesFound)
+                {
+                    wiz.ChangeActor(GameObjects.Actor.WizrobeSpawnBlock, vars: 0x0);
+                }
+                var wizrobeMarkers = thisSceneData.Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.WizrobeSpawnBlock);
+
+                // move wizrobe to his platforms
+                var wizrobeBlockToMoveTo = wizrobeMarkers[thisSceneData.RNG.Next(wizrobeMarkers.Count)];
+                wizerobeToKeep.Position = wizrobeBlockToMoveTo.Position;
+                thisSceneData.Log.AppendLine($" $$$ Wizrobe moved to platform at old actor:" +
+                    $"[{wizrobeBlockToMoveTo.OldName}]m[{wizrobeBlockToMoveTo.Room}]r[{wizrobeBlockToMoveTo.RoomActorIndex}]v[{wizrobeBlockToMoveTo.OldVariant}]");
+
+            }
+            /*
+            var wizrobeMarkers = thisSceneData.Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.WizrobeSpawnBlock);
+            if (wizrobeMarkers != null && wizrobeMarkers.Count > 2)
+            {
+                var wizrobeVariants = GameObjects.Actor.Wizrobe.GetAttribute<GroundVariantsAttribute>().Variants;
+                //var wizrobe = ReplacementCandidateList.Find(act => act.Name.Contains("FixedWizrobe"));
+                //var wizrobeVariants = wizrobe.Variants;
+                var randomVariant = wizrobeVariants[thisSceneData.RNG.Next(wizrobeVariants.Count)];
+                Actor wizrobeActor = null;
+
+                var emptyActors = thisSceneData.Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.Empty && act.Room == wizrobeMarkers[0].Room);
+                if (emptyActors.Count > 0) // use empty actors if there is one, instead of what could be a very small number of platforms
+                {
+                    wizrobeActor = emptyActors[thisSceneData.RNG.Next(emptyActors.Count)];
+                }
+                else
+                {
+                    var randomWizrobeMarker = thisSceneData.RNG.Next(wizrobeMarkers.Count);
+                    wizrobeActor = wizrobeMarkers[randomWizrobeMarker];
+                    wizrobeMarkers.RemoveAt(randomWizrobeMarker);
+                }
+                wizrobeActor.ChangeActor(GameObjects.Actor.Wizrobe, vars: randomVariant);
+
+                // we dont want wizrobe to hide on a distance corner of the map, move to his blocks
+                var wizrobeBlockToMoveTo = wizrobeMarkers[thisSceneData.RNG.Next(wizrobeMarkers.Count)];
+                wizrobeActor.Position = wizrobeBlockToMoveTo.Position;
+                thisSceneData.Log.AppendLine($" $$$ Wizrobe moved to platform at old actor:" +
+                    $"[{wizrobeBlockToMoveTo.OldName}]m[{wizrobeBlockToMoveTo.Room}]r[{wizrobeBlockToMoveTo.RoomActorIndex}]v[{wizrobeBlockToMoveTo.OldVariant}]");
+
+#if DEBUG
+                if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.TerminaField) // debug testing
+                {
+                    wizrobeActor.Position = new vec16(-5157, -281, -80);
+                }
+#endif
+            } // */
+        }
+
         public static void FixSnowballActorSpawns(SceneEnemizerData thisSceneData)
         {
             /// The large snowballs can sometimes spawn an actor when you break them,
@@ -4610,7 +4675,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Carpenter)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.WizrobeSpawnBlock)) continue;
                 if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.Shabom)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; ///ZZZZ
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BuisnessScrub)) continue;
@@ -6011,6 +6076,7 @@ namespace MMR.Randomizer
             FixRedeadSpawnScew(thisSceneData); // redeads don't like x/z rotation
             FixBrokenActorSpawnCutscenes(thisSceneData); // some actors dont like having bad cutscenes
             FixWaterPostboxes(thisSceneData);
+            FixWizrobeFinalActor(thisSceneData);
             FixSnowballActorSpawns(thisSceneData);
             FixNewGrottoZRotation(thisSceneData);
             EnsureOnlyOneKankyo(thisSceneData);
