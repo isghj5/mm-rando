@@ -97,10 +97,10 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.Leever, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
         [EnemizerSceneBlockSensitive(Actor.Armos, -1)] // if actorizer, one gossip stone is left alone the rest are randomized (this actor is used as placeholder)
         [EnemizerSceneBlockSensitive(Actor.LargeWoodenCrate, -1)] // standing next to the buisness scrub
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wolfos,  Actor.RealBombchu)] // can instantly hit the stones and cause them to be un-readable
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wolfos, Actor.RealBombchu)] // can instantly hit the stones and cause them to be un-readable
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper, Actor.RealBombchu)] // can instantly hit the stones and cause them to be un-readable
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Leever,  Actor.RealBombchu)] // can instantly hit the stones and cause them to be un-readable
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Armos,   Actor.RealBombchu)] // can instantly hit the stones and cause them to be un-readable
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Leever, Actor.RealBombchu)] // can instantly hit the stones and cause them to be un-readable
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Armos, Actor.RealBombchu)] // can instantly hit the stones and cause them to be un-readable
         /* ********************************* */
         [EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)] // chests under it in bomb grotto and hot spring grotto
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Peahat, // hidden or very weak enemies suck here, but they are very common in this slot
@@ -155,6 +155,14 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1165)]
         [SceneInternalId(0x13)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bombiwa,  // credits stump
+            Actor.Milkjar, Actor.TallGrass, Actor.LetterToPostman, Actor.SmallSnowball, Actor.BombFlower, Actor.MushroomCloud, 
+            Actor.En_Invisible_Ruppe, Actor.HitSpot, Actor.Bo, // too small to see
+            Actor.Zubora, Actor.BedroomPostman, Actor.SoftSoilAndBeans, Actor.DekuFlower, Actor.GrottoHole // low to the ground, same issue
+        )]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BlueBubble,  // credits stump
+            Actor.En_Invisible_Ruppe, Actor.MothSwarm, Actor.Bo // too small to see in credits
+        )]
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SquareSign,
         //    Actor.IronKnuckle // getting a weird rsp/rdp crash when moving from maps 0->4 or 0->2, not convinced this is the culprit can't debug further
         //   // think this is a result of object list mangling, I changed kafei which affects iron knuckle object offset
@@ -501,7 +509,7 @@ namespace MMR.Randomizer.GameObjects
                         Actor.HappyMaskSalesman, Actor.ClayPot, Actor.GoronElder)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PostMan,
                         Actor.ClayPot, Actor.GoronElder, // not visible in credits because too far away and doesnt draw
-                        Actor.MadShrub
+                        Actor.MadShrub, Actor.Stalchild
         )]
         TerminaField = 0x2A, // keikoku, c800 dyna size
 

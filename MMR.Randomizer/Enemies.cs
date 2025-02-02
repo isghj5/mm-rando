@@ -1151,6 +1151,8 @@ namespace MMR.Randomizer
             SwapCreditsCremia();
             MoveCreditsPostmanPath();
             EnableAllCreditsCutScenes();
+            ChangeIkanaCanyonCreditsActors();
+
 
             Shinanigans();
 
@@ -3817,6 +3819,51 @@ namespace MMR.Randomizer
             // weirdly, its only the first room, the other rooms have regular lens behavior
         }
 
+        private static void ChangeIkanaCanyonCreditsActors()
+        {
+            /// there are extra dead trees in the credits when pamela and her father are playing
+            /// i want to change these
+
+            if (! VanillaEnemyList.Contains(GameObjects.Actor.IkanaCanyonHookshotStump)) return;
+
+            var ikanaCanyonScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaCanyon.FileID());
+
+            var creditsMainRoomLayer = ikanaCanyonScene.Maps[8];
+
+            foreach(var act in creditsMainRoomLayer.Actors.FindAll(a => a.ActorEnum == GameObjects.Actor.IkanaCanyonHookshotStump))
+            {
+                if (_seedRNG.Next(100) < 40) // chance to instead become a flying second actor
+                {
+                    act.ChangeActor(GameObjects.Actor.BlueBubble, vars: 0xFFFF, modifyOld: true);
+                    act.Position.y += 50;
+                    act.OldName = "CreditsBlueBubble(Changling)";
+
+                }
+                else  // stay ground
+                {
+                    act.ChangeActor(GameObjects.Actor.Bombiwa, vars: 0xE, modifyOld: true);
+                    act.OldName = "CreditsHookshotTree";
+                }
+            }
+
+            creditsMainRoomLayer.Actors[2].ChangeActor(GameObjects.Actor.IkanaGravestone, vars: 0xFF00, modifyOld: true);
+            creditsMainRoomLayer.Actors[2].OldName = "CreditsOwlStatue";
+
+            // change objects to match
+            creditsMainRoomLayer.Objects[3] = GameObjects.Actor.Bombiwa.ObjectIndex(); // from stump
+            creditsMainRoomLayer.Objects[1] = GameObjects.Actor.BlueBubble.ObjectIndex(); // from ice block object ( we cant shoot ice arrows here)
+            creditsMainRoomLayer.Objects[2] = GameObjects.Actor.IkanaGravestone.ObjectIndex(); // from owl object
+
+            // most of these stumps are out of camera shot, they literally are never seen
+            // move 9 to the north away from the castle
+            creditsMainRoomLayer.Actors[9].Position = new vec16(-242, 203, 3783);
+
+            // the three stumps on the upper terrace are not visible at all in any of the three camera shots
+            // move this one from the furthest upper terace to the tree on the right side of the third camera shot
+            creditsMainRoomLayer.Actors[10].Position = new vec16(-864, 600, 1933);
+        }
+
+
         public static void FixArmosSpawnPos()
         {
             /// for some reason armos changes its home and world position based on y rotation in init
@@ -5396,8 +5443,8 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Scarecrow)) continue;
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.BeanSeller)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Scarecrow)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.SkulltulaDummy, GameObjects.Actor.GBTFreezableWaterfall)) continue; // still broken
                 //if(TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.CreditsBombShopMan, GameObjects.Actor.RedBubble)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; /// what was this again? hotspring?
@@ -7685,36 +7732,14 @@ namespace MMR.Randomizer
         //public void SetNewActors(Scene scene, List<ValueSwap> newObjChanges)
         public void SetNewActors(Scene scene, List<List<int>> newObjects)
         {
-            // this is the slowest part of our bogo sort, we need to try speeding it up
-
             this.newMapList = new List<MapEnemiesCollection>();
             // I like foreach better but its waaaay slower
             for (int m = 0; m < scene.Maps.Count; ++m)
             {
                 var map = scene.Maps[m];
 
-                //if (newObjChanges == null)
-                //{
-                //    throw new Exception("SetNewActors: empty object list");
-                //}
-                {
-                    /*
-                    var newObjList = map.Objects.ToList(); // copy
-                    // probably a way to search for this with a lambda, can't think of it right now
-                    for (int valueSwap = 0; valueSwap < newObjChanges.Count; ++valueSwap)
-                    {
-                        for (int o = 0; o < newObjList.Count; ++o)
-                        {
-                            // if old object matches out value swap, swap
-                            if (map.Objects[o] == newObjChanges[valueSwap].OldV)
-                            {
-                                newObjList[o] = newObjChanges[valueSwap].NewV;
-                            }
-                        }
-                    } // */
-                    var newObjList = newObjects[m];
-                    this.newMapList.Add(new MapEnemiesCollection(map.Actors, newObjList, scene));
-                }
+                var newObjList = newObjects[m];
+                this.newMapList.Add(new MapEnemiesCollection(map.Actors, newObjList, scene));
             }
         }
 
