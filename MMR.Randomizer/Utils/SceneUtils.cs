@@ -74,36 +74,53 @@ namespace MMR.Randomizer.Utils
         }
 
 
+        public class InjectedRoom
+        {
+            public string name;
+            public int sceneFid = -1;
+            public int roomFid = -1;
+            //public string roomName;
+
+        }
+
+        private static InjectedRoom ParseMetaFile(string metaFile)
+        {
+            // for now, the only metadata we have is fileid, just return instead of parsing more data
+
+            var InjectedRoom = new InjectedRoom();
+
+            foreach (var line in metaFile.Split('\n'))
+            {
+                var asignment = line.Split('#')[0].Trim(); // remove comments
+
+                if (asignment.Length == 0) // comment or empty line: ignore
+                {
+                    continue;
+                }
+
+                var asignmentSplit = asignment.Split('=');
+                var command = asignmentSplit[0].Trim();
+                string valueStr = asignmentSplit[1].Trim();
+
+                if (command == "scene_fid" || command == "file_id")
+                {
+                    InjectedRoom.sceneFid = Convert.ToInt32(valueStr, fromBase: 10);
+                }
+                if (command == "room_fid")
+                {
+                    InjectedRoom.roomFid = Convert.ToInt32(valueStr, fromBase: 10);
+                }
+
+            }
+            return InjectedRoom;
+        }
+
+
+
         public static void ReadExternalSceneFiles()
         {
             /// read new binary scenes from files in MMR/scenes
-            // scene injection
-
-            // for now, the only metadata we have is fileid, just return instead of parsing more data
-            int ParseMetaFile(string metaFile)
-            {
-                foreach (var line in metaFile.Split('\n'))
-                {
-                    var asignment = line.Split('#')[0].Trim(); // remove comments
-
-                    if (asignment.Length == 0) // comment or empty line: ignore
-                    {
-                        continue;
-                    }
-
-                    var asignmentSplit = asignment.Split('=');
-                    var command = asignmentSplit[0].Trim();
-                    //if (command == "unkillable")
-                    string valueStr = asignmentSplit[1].Trim();
-                    if (command == "scene_fid" || command == "file_id")
-                    {
-                        return Convert.ToInt32(valueStr, fromBase: 10);
-                    }
-
-                }
-                return -1;
-            }
-
+            // scene/room injection
 
             if (!Directory.Exists("scenes")) return;
             // if actorizer is off, we need to not read any of these
@@ -111,46 +128,78 @@ namespace MMR.Randomizer.Utils
 
             foreach (string filePath in GenerateExternalSceneFileList("scenes"))
             {
-
                 try
                 {
                     using (ZipArchive zip = ZipFile.OpenRead(filePath))
                     {
-
                         if (zip.Entries.Where(e => e.Name.Contains(".bin")).Count() == 0)
-                        {
                             throw new Exception($"ERROR: cannot find a single binary actor in file {filePath}");
-                        }
 
-                        // per binary, since MMRA should support multiple binaries
-                        foreach (ZipArchiveEntry binFile in zip.Entries.Where(e => e.Name.Contains(".bin")))
+                        // per room binary
+                        foreach (ZipArchiveEntry binFile in zip.Entries.Where(e => e.Name.Contains("Room.bin")))
                         {
                             var filename = binFile.Name.Substring(0, binFile.Name.LastIndexOf(".bin"));
+
+                            // read the associated meta file for the room
+                            var metaFileEntry = zip.GetEntry(filename + ".meta");
+                            if (metaFileEntry == null) // meta not found
+                                throw new Exception($"Could not find a meta for actor bin [{binFile.Name}]\n   in [{filePath}]");
+
+                            //var injectedActor = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
+                            var injectedRoom = ParseMetaFile(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
+                            injectedRoom.name = filename;
+                            if (injectedRoom.roomFid == -1)
+                            {
+                                throw new Exception($"BROKEN SCENE FILE [{filePath}] has no room");
+                            }
+                            if (injectedRoom.sceneFid == -1)
+                            {
+                                throw new Exception($"BROKEN SCENE FILE [{filePath}] has no scene file id for the room in the meta");
+                            }
 
                             // read overlay binary data
                             int newBinLen = ((int)binFile.Length) + ((int)binFile.Length % 0x10); // dma padding
                             var overlayData = new byte[newBinLen];
                             binFile.Open().Read(overlayData, 0, overlayData.Length);
 
-                            // read the associated meta file
-                            var metaFileEntry = zip.GetEntry(filename + ".meta");
-                            if (metaFileEntry == null) // meta not found
-                                throw new Exception($"Could not find a meta for actor bin [{binFile.Name}]\n   in [{filePath}]");
-
-                            //var injectedActor = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
-                            var fileId = ParseMetaFile(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
-                            if (fileId == -1)
-                            {
-                                throw new Exception($"BROKEN SCENE FILE [{filename}] had file id [{fileId}]");
-                            }
-                            var file = RomData.MMFileList[fileId];
-                            file.Data = overlayData;
-                            file.WasEdited = true;
-                            file.IsCompressed = true;
+                            // for now, we dont need to do anything else with the binary, so just inject into the file system directly
+                            var fileId = injectedRoom.roomFid;
+                            var roomFile = RomData.MMFileList[fileId];
+                            roomFile.Data = overlayData;
+                            roomFile.WasEdited = true;
+                            roomFile.IsCompressed = true;
                             // this could cause issues later with vrom overlapping, right now its not an issue?
-                            file.End = file.Addr + file.Data.Length;
+                            roomFile.End = roomFile.Addr + roomFile.Data.Length;
 
-                        } // foreach bin entry
+                            // we need to update the scene room table for every room file, as there is DMA data inside of the scene file
+                            // TODO (if not specified) write auto search for scene fileid based on room fid, it should never be more than 16 files above it
+                            RomUtils.CheckCompressed(injectedRoom.sceneFid); // this happens before we normally decompress the scenes
+                            var sceneFileData = RomData.MMFileList[injectedRoom.sceneFid].Data;
+                            var offset = -1;
+                            for (int i = 0; i < 500; i += 8)
+                            {
+                                if (sceneFileData[i] == 0x14) // end of headers
+                                {
+                                    throw new Exception("Reached the end of scene headers and missed our spot");
+                                }
+
+                                if (sceneFileData[i] == 0x4) // room list header
+                                {
+                                    offset = ReadWriteUtils.Arr_ReadU16(sceneFileData, i + 6); // 040000XX where XX is offset
+                                    break;
+                                }
+                            }
+                            if(offset == -1)
+                            {
+                                throw new Exception("Scene extract: scene search, we didnt find the header");
+                            }
+
+                            int roomId = injectedRoom.roomFid - injectedRoom.sceneFid - 1; // naturally indexed starting at 1, which we dont want for below
+                            var roomDMAListOffset = offset + (roomId * 8); // where, every room entry is 8 bytes, 4 bytes per dma start/end
+                            ReadWriteUtils.Arr_WriteU32(sceneFileData, roomDMAListOffset + 0, (uint) roomFile.Addr);
+                            ReadWriteUtils.Arr_WriteU32(sceneFileData, roomDMAListOffset + 4, (uint) roomFile.End);
+
+                        } // foreach room bin entry
 
                     }// zip as file end
                 } // try end
@@ -159,7 +208,7 @@ namespace MMR.Randomizer.Utils
                     throw new Exception($"Error attempting to read archive: {filePath} -- \n" + e);
                 }
 
-            } // for each mmra end
+            } // for each mmr_scene end
         }
 
         public static void ReadSceneTable()
