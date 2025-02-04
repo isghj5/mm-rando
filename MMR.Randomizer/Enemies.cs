@@ -1124,6 +1124,7 @@ namespace MMR.Randomizer
             DistinguishLogicRequiredDekuFlowers();
             ExtendGrottoDirectIndexByte();
             FixJPGrottos();
+            SwapSwampSpiderhouseRock();
 
             // scene/object list modified for variety or compatiblity
             RemoveSTTUnusedPoe();
@@ -2606,6 +2607,29 @@ namespace MMR.Randomizer
             grottosScene.Maps[6].Actors[8].Position.y = 58; // dont want spawning in the ground, we want flying around
         }
 
+        private static void SwapSwampSpiderhouseRock()
+        {
+            // the swamp spiderhouse is the only place where we find the regular rock object with regular rocks to be randomized, these are used for bugs normally
+            if ( ! ACTORSENABLED) return;
+
+            var swampSpiderhouseScene = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.SwampSpiderHouse);
+
+            void ChangeRockToReplacement(int map, int actorId)
+            {
+                swampSpiderhouseScene.Maps[map].Actors[actorId].ChangeActor(GameObjects.Actor.Nejiron, 0, modifyOld: true);
+                swampSpiderhouseScene.Maps[map].Actors[actorId].OldName = "BugRock";
+
+            }
+            ChangeRockToReplacement(0, 3); // entrance two rocks
+            ChangeRockToReplacement(0, 4);
+            ChangeRockToReplacement(4, 5); // pot room upper terrace
+
+            foreach (var m in swampSpiderhouseScene.Maps)
+            {
+                var index = m.Objects.FindIndex(obj => obj == 0x1F6); // object_ishi
+                m.Objects[index] = GameObjects.Actor.Nejiron.ObjectIndex();
+            }
+        }
 
         private static void EnablePoFusenAnywhere()
         {
@@ -5443,7 +5467,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Scarecrow)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.IshiRock)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.SkulltulaDummy, GameObjects.Actor.GBTFreezableWaterfall)) continue; // still broken
                 //if(TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.CreditsBombShopMan, GameObjects.Actor.RedBubble)) continue;

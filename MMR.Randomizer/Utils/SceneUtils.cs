@@ -102,7 +102,7 @@ namespace MMR.Randomizer.Utils
                 var command = asignmentSplit[0].Trim();
                 string valueStr = asignmentSplit[1].Trim();
 
-                if (command == "scene_fid" || command == "file_id")
+                if (command == "scene_fid")
                 {
                     InjectedRoom.sceneFid = Convert.ToInt32(valueStr, fromBase: 10);
                 }
