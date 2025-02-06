@@ -2255,8 +2255,8 @@ namespace MMR.Randomizer.GameObjects
             0x32, // cape
             // 0xA6, // swamp spiderhouse, this one uses object_ishi, fixed separately
             0x1F2, 0xA1,
-            0xFE51, 0xFE61, 0xFE71, 0xFE81, 0xFEB1, 0xFE01, // non vanilla silver boulder, for more variety
-            0xFE50, 0xFE60, 0xFe70, 0xFE80, 0xFEB0, 0xFE00 // non vanilla small rock, for more variety
+            0xFE21, 0xFE61, 0xFE71, 0xFE81, 0xFEB1, 0xFE01, // non vanilla silver boulder, for more variety
+            0xFE20, 0xFE60, 0xFE70, 0xFE80, 0xFEB0, 0xFE00 // non vanilla small rock, for more variety
             )]
         [WaterBottomVariants(0xFE01, // silver boulder
             0x30, // silver coast

@@ -217,6 +217,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the breakable floor under them
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Hiploop,
         //    Actor.En_Ani, Actor.Bumper, Actor.Tijo)]
+        [EnemizerSceneBlockSensitive(Actor.Lightblock, -1)]
         [EnemizerSceneBlockSensitive(Actor.Hiploop, -1)]
         StoneTowerTemple = 0x13,
 
@@ -230,6 +231,7 @@ namespace MMR.Randomizer.GameObjects
         [FairyDroppingEnemies(roomNumber: 1, actorNumber: 1)] // wizrobe
         [EnemizerSceneBlockSensitive(Actor.BlueBubble, -1)]
         [EnemizerSceneBlockSensitive(Actor.Dexihand, -1)] // replacement needs to not block the floating rupee items
+        [EnemizerSceneBlockSensitive(Actor.Lightblock, -1)]
         [ClearEnemyPuzzleRooms(4)] // wizrobe room is a clear all room
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Poe,
            Actor.Bo)] // they just fall down to the "floor" and its awkward
@@ -294,6 +296,7 @@ namespace MMR.Randomizer.GameObjects
         [ClearEnemyPuzzleRooms(5)] // wizrobe room
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula,
         //    Actor.Bombiwa)] // can block jumping
+        [EnemizerSceneBlockSensitive(Actor.Lightblock, -1)]
         IkanaCastle = 0x1A,
 
         [FileID(1235)]
@@ -780,6 +783,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1388)]
         [SceneInternalId(0x4B)]
         [ClearEnemyPuzzleRooms(12)] // 12 is big poe
+        [EnemizerSceneBlockSensitive(Actor.Lightblock, -1)]
         BeneathTheWell = 0x48,
 
         [FileID(1403)]
