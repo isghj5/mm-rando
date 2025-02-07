@@ -900,7 +900,9 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x5D)]
         [EnemizerSceneBlockSensitive(originalEnemy: Actor.SmallSnowball, -1)] // can block the grotto, TODO see about just moving them instead
         // todo test after snowball merge
-        [DynaHeadroom(126, 126)]  // limit not seed, but this is fine in spring
+        [DynaHeadroom(126, 126)]  // limit not seen, but this is fine in spring
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Tektite,
+            Actor.UnusedStoneTowerStoneElevator)] // can block the way
         TwinIslands = 0x5A, // winter
 
         [FileID(1455)]
