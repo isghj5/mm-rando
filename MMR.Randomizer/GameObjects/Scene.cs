@@ -894,6 +894,10 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(originalEnemy: Actor.Flagpole, -1)] // ice block can stop access to the whole dungeon
         [EnemizerSceneEnemyReplacementBlock(Actor.Bo,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the twisted path into snowhead temple
+        [EnemizerSceneEnemyReplacementBlock(Actor.SmallSnowball,
+            Actor.UnusedStoneTowerStoneElevator)] // can block the whole thing
+        [EnemizerSceneEnemyReplacementBlock(Actor.LargeSnowball,
+            Actor.UnusedStoneTowerStoneElevator)] // can block the whole thing
         Snowhead = 0x59,
 
         [FileID(1453)]
