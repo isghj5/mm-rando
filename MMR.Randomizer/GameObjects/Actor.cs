@@ -1849,7 +1849,7 @@ namespace MMR.Randomizer.GameObjects
         //[CheckRestricted(Scene.Grottos, variant: 0x104,
         //    check: Item.ChestLensCavePurpleRupee)] // bomb grotto
         [CheckRestricted(Scene.SwampSpiderHouse, variant: ActorConst.ANY_VARIANT,
-            check: Item.CollectibleSwampSpiderToken13, Item.CollectableSwampSpiderHouseSoftSoil2)]
+            check: Item.CollectibleSwampSpiderToken13, Item.CollectableSwampSpiderHouseSoftSoil1)]
         [CheckRestricted(Scene.ZoraCape, variant: ActorConst.ANY_VARIANT,
             check: Item.ChestGreatBayCapeGrotto, Item.FairyDoubleDefense)]
         // 0x0114-8 are the bombable rocks in hotspring water
