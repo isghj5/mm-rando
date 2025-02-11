@@ -61,7 +61,6 @@ namespace MMR.Randomizer.Extensions
             }
         }
 
-
         public static List<int> GenerateVariantsFromEnum(this Actor actor)
         {
             var variants = new List<int>();
@@ -156,7 +155,6 @@ namespace MMR.Randomizer.Extensions
 
             return unplacable;
         }
-
 
         public static ActorType GetType(this Actor actor, int variant)
         {
@@ -336,7 +334,6 @@ namespace MMR.Randomizer.Extensions
             return true;
         }
 
-
         public static bool HasOptionalCompanions(this Actor actor)
         {
             return actor.GetAttributes<AlignedCompanionActorAttribute>() != null;
@@ -346,8 +343,6 @@ namespace MMR.Randomizer.Extensions
         {
             return actor.GetAttribute<ActorInitVarOffsetAttribute>()?.Offset ?? -1;
         }
-
-        
 
         public static bool IsBlockingActor(this Actor actor, int variant = 0xFFFFF)
         {

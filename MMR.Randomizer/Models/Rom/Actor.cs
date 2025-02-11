@@ -534,6 +534,7 @@ namespace MMR.Randomizer.Models.Rom
         }
 
         // these are here because there are two actortypes now, TODO merge
+        // we need to know the NEW ENUM TOO damn it
         public List<int> GetGroundVariants()
         {
             return this.SortedVariants[(int)ActorType.Ground - 1];
@@ -568,6 +569,21 @@ namespace MMR.Randomizer.Models.Rom
         public List<int> GetPathingVariants()
         {
             return this.SortedVariants[(int)ActorType.Pathing - 1];
+        }
+
+        public bool IsNewChoiceFlying()
+        {
+            // check the enum first, we should always have one 
+            var enumResult = this.ActorEnum.isFlyingVariant(this.Variants[0]);
+            if (enumResult) return true;
+
+            // else, check the injected actor data
+            if (this.InjectedActor != null)
+            {
+                return this.InjectedActor.flyingVariants.Contains(this.Variants[0]);
+            }
+
+            return false;
         }
 
 

@@ -5059,16 +5059,16 @@ namespace MMR.Randomizer
             {
                 var testActor = thisSceneData.Actors[actorIndex];
 
-                var flyingVariants = testActor.GetFlyingVariants();
+                //var flyingVariants = testActor.GetFlyingVariants(); // BROKEN, we want the new actor this checks the old Variants list
+                var newVariantIsFlying = testActor.IsNewChoiceFlying();
                 var oldGroundVariants = testActor.GetGroundVariants();
                 var oldWaterSurfaceVariants = testActor.GetWaterTopVariants();
                 var oldPathVariants = testActor.GetPathingVariants();
                 // if previous spawn was ground and the replacement actor has an attribute, adjust height
                 // bug: type for bee in mountain spring is FLYING, should be ground, todo fix
-                if ((flyingVariants != null && flyingVariants.Contains(testActor.Variants[0])) && // chosen variant is flying
+                if (newVariantIsFlying && 
                     ((oldGroundVariants != null && oldGroundVariants.Contains(testActor.OldVariant)) // previous ground
                      || (oldPathVariants != null && oldPathVariants.Contains(testActor.OldVariant)) // previous pathing(ground)
-                     || (oldWaterSurfaceVariants != null && oldWaterSurfaceVariants.Contains(testActor.OldVariant)) // water surface too
                      || (oldWaterSurfaceVariants != null && oldWaterSurfaceVariants.Contains(testActor.OldVariant)) // water surface too
                      || testActor.OldActorEnum == GameObjects.Actor.ClayPot // dungeon pots dont show up as ground types, need to be a special spot here
                      || testActor.OldActorEnum == GameObjects.Actor.TallGrass // field tall grass dont show up as ground types, need to be a special spot here
@@ -5110,7 +5110,7 @@ namespace MMR.Randomizer
                 }
 
                 var oldCeilingVariants = testActor.GetCeilingVariants();
-                if ((flyingVariants != null && flyingVariants.Contains(testActor.Variants[0])) && // chosen variant is flying
+                if (newVariantIsFlying && // chosen variant is flying
                     (oldCeilingVariants != null && oldCeilingVariants.Contains(testActor.OldVariant))) // previous ceiling 
                 {
                     short randomHeight = (short)(50 + (_seedRNG.Next() % 50));
@@ -5470,7 +5470,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.IshiRock)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.SkulltulaDummy, GameObjects.Actor.GBTFreezableWaterfall)) continue; // still broken
-                //if(TestHardSetObject(GameObjects.Scene.WestClockTown, GameObjects.Actor.CreditsBombShopMan, GameObjects.Actor.RedBubble)) continue;
+                if(TestHardSetObject(GameObjects.Scene.LaundryPool, GameObjects.Actor.Torch, GameObjects.Actor.Tingle)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; /// what was this again? hotspring?
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BuisnessScrub)) continue;
 
