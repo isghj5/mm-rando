@@ -1087,6 +1087,7 @@ namespace MMR.Randomizer
             FixInjuredKoume();
             BlockBabyGoronIfNoSFXRando();
             MoveTheISTTTunnelTransitionBack();
+            MoveThePFSTunnelTransitionBack();
 
             // reposition actors
             FixSouthernSwampDekuBaba();
@@ -3994,7 +3995,7 @@ namespace MMR.Randomizer
             // so other stuff doesnt shuffle around it
         }
 
-        public static void MoveTheISTTTunnelTransitionBack()
+        private static void MoveTheISTTTunnelTransitionBack()
         {
             /// the room tranition for the scene is very close to the edge of the dexihand
             /// this presents a problem for enemizer if playing no hit rules
@@ -4004,6 +4005,27 @@ namespace MMR.Randomizer
             var sceneClass = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.InvertedStoneTowerTemple.FileID());
             // move the switch a little up the hallway
             sceneClass.Maps[3].Actors[28].Position.x = 800;
+        }
+
+        private static void MoveThePFSTunnelTransitionBack()
+        {
+            /// the pirates fortress sewer transition, from the underwater maze to the mine tunnel, is too close to the mines and is dangerous for enemizer no-hit
+
+            // room 13, but the door is part of the scene
+            var piratesSewerData = RomData.MMFileList[GameObjects.Scene.PiratesFortressRooms.FileID()].Data;
+            // doors are E header, this is door #16
+            // we need to know where the door details are
+            piratesSewerData[0x253] = 0x5E; // from Z rot 300 (12C) to 350 (15E)
+
+            // we also want to move the mines a bit further back just a bit
+            var sewerScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PiratesFortressRooms.FileID());
+            var mazeMap = sewerScene.Maps[12];
+            var tunnelMap = sewerScene.Maps[10];
+
+            mazeMap.Actors[0].Position.z -= 50; // both mines
+            mazeMap.Actors[1].Position.z -= 50;
+            tunnelMap.Actors[1].Position.z -= 50; // both mines
+            tunnelMap.Actors[2].Position.z -= 50;
         }
 
         private static void FixSwordSchoolPotRandomization()
@@ -5470,7 +5492,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.IshiRock)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.SkulltulaDummy, GameObjects.Actor.GBTFreezableWaterfall)) continue; // still broken
-                if(TestHardSetObject(GameObjects.Scene.LaundryPool, GameObjects.Actor.Torch, GameObjects.Actor.Tingle)) continue;
+                if(TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.SpikedMine, GameObjects.Actor.LikeLike)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; /// what was this again? hotspring?
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BuisnessScrub)) continue;
 
