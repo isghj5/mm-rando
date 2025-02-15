@@ -80,10 +80,12 @@ namespace MMR.Randomizer
         public uint overlayBinLen;
         public string filename = ""; // debugging
     }
-
+        
     public class Enemies
     {
         public static List<InjectedActor> InjectedActors = new List<InjectedActor>();
+        public static InjectedActor GrottoSpawner = null;
+
         const int SMALLEST_OBJ = 0xF3; // 0x10 size, smallest vanilla object I could find
 
         private static List<GameObjects.Actor> VanillaEnemyList { get; set; }
@@ -5470,7 +5472,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.IshiRock)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.SkulltulaDummy, GameObjects.Actor.GBTFreezableWaterfall)) continue; // still broken
-                if(TestHardSetObject(GameObjects.Scene.LaundryPool, GameObjects.Actor.Torch, GameObjects.Actor.Tingle)) continue;
+                if(TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.Dinofos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; /// what was this again? hotspring?
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BuisnessScrub)) continue;
 
@@ -7155,9 +7157,25 @@ namespace MMR.Randomizer
                                 ReadWriteUtils.Arr_WriteU32(codeFile, (objectTableOffset + (2 * 4 * injectedActor.ObjectId)), newSegmentROMStart);
                                 ReadWriteUtils.Arr_WriteU32(codeFile, (objectTableOffset + (2 * 4 * injectedActor.ObjectId + 4)), newSegmentROMEnd);
                             } // */
+                            
+                            if (filename == "ovl_En_Boj_04")
+                            {
+                                // special case: this is not a regular actor but a major core of enemizer/actorizer
+                                GrottoSpawner = injectedActor;
+                                var grottoSpawnerFid = (int)injectedActor.fileID;
+                                injectedActor.overlayBinLen = (uint)overlayData.Length;
+                                /// overwrite the file now
+                                RomData.MMFileList[grottoSpawnerFid].Data = overlayData; // all of this is the same done below, just moved up here to special case
+                                RomData.MMFileList[grottoSpawnerFid].WasEdited = true;
+                                RomData.MMFileList[grottoSpawnerFid].IsReadOnly = true;
 
+                                RomData.MMFileList[grottoSpawnerFid].IsCompressed = false; // we do it for regular files, but yeah not sure we want to do this forever
+                                return;
 
-                            InjectedActors.Add(injectedActor);
+                            }
+                            else {
+                                InjectedActors.Add(injectedActor);
+                            }
 
                             // we have to add the changes to our list of actors we are going to use in enemizer/actorizer
                             // behavior now differs between replacement actors and brand new
