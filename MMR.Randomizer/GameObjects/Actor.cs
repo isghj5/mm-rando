@@ -1462,6 +1462,7 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableWoodfallPot1, Item.CollectableWoodfallPot2, Item.CollectableWoodfallPot3)]
         //[CheckRestricted(Scene.WoodfallTemple, variant: ActorConst.ANY_VARIANT,
         //    Item.CollectableWoodfallTempleGekkoRoomPot1, Item.CollectableWoodfallTempleGekkoRoomPot2, Item.CollectableWoodfallTempleGekkoRoomPot3, Item.CollectableWoodfallTempleGekkoRoomPot4)]
+        [CheckRestricted(Scene.WoodfallTemple, variant: 0x4210, Item.CollectableWoodfallTempleEntranceRoomPot1)]
         [CheckRestricted(Scene.WoodfallTemple, variant: 0x4C02, Item.CollectableWoodfallTempleGekkoRoomPot1)]
         [CheckRestricted(Scene.WoodfallTemple, variant: 0x4E02, Item.CollectableWoodfallTempleGekkoRoomPot2)]
         [CheckRestricted(Scene.WoodfallTemple, variant: 0x5002, Item.CollectableWoodfallTempleGekkoRoomPot3)]
@@ -3267,10 +3268,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x6)]
         En_Syateki_Crow = 0x120, // En_Syateki_Crow
 
-        // empty
+        // this actor is going to be our grotto spawner
+        // in vanilla its an empty actor that does nothing and has nothing
         [FileID(261)]
-        //[ObjectListIndex(0x1)]
-        [ObjectListIndex(0x184)] // fake object because this test actor is being a bitch
+        [ObjectListIndex(0x1)]
         En_Boj_04 = 0x121, // En_Boj_04
 
         // broken actor, needs two objects (animation is in another object) such a pain
