@@ -1086,6 +1086,7 @@ namespace MMR.Randomizer
 
             //DisableActorSpawnCutsceneData();
 
+
             FixInjuredKoume();
             BlockBabyGoronIfNoSFXRando();
             MoveTheISTTTunnelTransitionBack();
@@ -1164,6 +1165,9 @@ namespace MMR.Randomizer
         public static void EnemizerItemFixes()
         {
             // if itemizer changes something, we need to test first before actors are shuffled
+
+            // this needs to be after mmra
+            SetupGrottoSpawnerActor();
 
             // cows in the cow grotto are changed to entorch by zoey 
             var grottosScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Grottos.FileID());
@@ -2608,6 +2612,39 @@ namespace MMR.Randomizer
             grottosScene.Maps[6].Actors[8].ChangeActor(GameObjects.Actor.Butterfly, 0x5324, modifyOld: true);
             grottosScene.Maps[6].Actors[8].Position.y = 58; // dont want spawning in the ground, we want flying around
         }
+
+        private static void SetupGrottoSpawnerActor()
+        {
+            /// we made a custom actor to spawn different actors in generic grottos,
+            /// here we modify the actor with the list of actors we plan to use
+            var grottosScene = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.Grottos);
+            var genericGrotto = grottosScene.Maps[4];
+
+            // requirements not met, ignore
+            if (GrottoSpawner == null || genericGrotto.Objects.Count == 2) return;
+
+            int grassCounter = 0;
+
+            GameObjects.Actor[] GenericActor =
+            {
+                GameObjects.Actor.TallGrass,
+                GameObjects.Actor.MushroomCloud,
+            };
+
+            for(int a = 0; a < genericGrotto.Actors.Count; a++)
+            {
+                var actor = genericGrotto.Actors[a];
+                //var actor = genericGrotto.Actors[0];
+
+                if (GenericActor.Contains(actor.ActorEnum))
+                {
+                    // grass and generic actor, 
+                    actor.ChangeActor((GameObjects.Actor)GrottoSpawner.ActorId, vars: 0x8000 | grassCounter, modifyOld: true);
+                    grassCounter++;
+                }
+            }
+        }
+
 
         private static void SwapSwampSpiderhouseRock()
         {
@@ -7375,6 +7412,9 @@ namespace MMR.Randomizer
 
             uint previousLastVRAMEnd = theEndOfTakenVRAM;
             int previousLastVROMEnd = theEndOfTakenVROM;
+
+            // last second, we need to update our GossipSpanwer too, it needs these updates too
+            InjectedActors.Add(GrottoSpawner);
 
             foreach (var injectedActor in InjectedActors)
             {
