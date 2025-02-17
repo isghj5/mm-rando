@@ -18,6 +18,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.Dexihand, Actor.LikeLike)] // hand can stop you talking to mother
         [EnemizerSceneEnemyReplacementBlock(Actor.Secretary,
             Actor.LikeLike)] // big one can block you from reaching mother, cycle 0 check
+        [EnemizerSceneEnemyReplacementBlock(Actor.MayorsResitenceGuard,
+            Actor.ClocktowerGearsAndOrgan)] // blocks escape
         [EnemizerSceneEnemyReplacementBlock(Actor.Gorman,
             Actor.ClocktowerGearsAndOrgan, // can block access to madam
             Actor.LikeLike)] // likelike can grab and spit you before you can face it
