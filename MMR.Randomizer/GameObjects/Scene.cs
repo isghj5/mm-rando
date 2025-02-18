@@ -831,6 +831,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1431)]
         [SceneInternalId(0x53)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bombiwa,
+            Actor.LikeLike)] // can instant grab you on exit
         RoadToIkana = 0x50,
 
         [FileID(1433)]
