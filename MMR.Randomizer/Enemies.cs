@@ -1147,6 +1147,7 @@ namespace MMR.Randomizer
             AddExtraObjectToPiratesInterior();
             SwapShopActorsIfRandomized();
             FixSouthernSwampLensBehavior();
+            FixSouthernSwampGossipStoneObjectPlacement();
 
             // credits
             SwapIntroActors();
@@ -2258,6 +2259,7 @@ namespace MMR.Randomizer
             MoveShopScrubsIfRandomized();
             MovePostmanIfRandomized(terminaField);
             MoveLaundryPoolBellTalkSpotIfRandomized();
+
         }
 
         private static void MoveLaundryPoolBellTalkSpotIfRandomized()
@@ -3843,6 +3845,34 @@ namespace MMR.Randomizer
             poisonSwampRoom0Data[0xE] = 0x10; // was 11 in vanilla, the 1 changes lens behavior
             // weirdly, its only the first room, the other rooms have regular lens behavior
         }
+
+        public static void FixSouthernSwampGossipStoneObjectPlacement()
+        {
+            /// When an object changes position between rooms, some actor code gets confused because it asumes the object will always be loaded
+            ///   in the same spot of the object list and memory locations are static
+            /// Southern swamp switches the last object spot for the witch room from the regular room with the gossip stone object
+            ///   this causes a lot of actors to glitch out if they were replacing dekubaba
+            var poisonSwampScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthernSwamp.FileID());
+            var witchMap = poisonSwampScene.Maps[2];
+            witchMap.Objects[23] = GameObjects.Actor.TallGrass.ObjectIndex();
+            witchMap.Objects[24] = GameObjects.Actor.GossipStone.ObjectIndex();
+
+            // similar mis-ordered stuff happens in clear swamp
+            // kotake object, which might not even be used at all, is last slot, but the gossip stone and torch object swap places at slot -5
+            var clearSwampScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthernSwampClear.FileID());
+            var mainRoom = clearSwampScene.Maps[0];
+            var witchRoom = clearSwampScene.Maps[1];
+            var backRoom = clearSwampScene.Maps[2];
+            mainRoom.Objects[14] = witchRoom.Objects[14] = backRoom.Objects[14] = GameObjects.Actor.KotakeOnBroom.ObjectIndex();
+            mainRoom.Objects[18] = backRoom.Objects[18] = GameObjects.Actor.Torch.ObjectIndex();
+            witchRoom.Objects[18] = GameObjects.Actor.GossipStone.ObjectIndex();
+
+            // and main area has tall grass and squaresign swapped
+            mainRoom.Objects[15] = GameObjects.Actor.SquareSign.ObjectIndex();
+            mainRoom.Objects[16] = GameObjects.Actor.TallGrass.ObjectIndex();
+        }
+
+
 
         private static void ChangeIkanaCanyonCreditsActors()
         {
@@ -5492,7 +5522,8 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.IshiRock)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.SkulltulaDummy, GameObjects.Actor.GBTFreezableWaterfall)) continue; // still broken
-                if(TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.SpikedMine, GameObjects.Actor.LikeLike)) continue;
+                if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.ClayPot, GameObjects.Actor.GossipStone)) continue;
+                if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DekuBaba, GameObjects.Actor.ClayPot)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; /// what was this again? hotspring?
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BuisnessScrub)) continue;
 
@@ -6009,6 +6040,20 @@ namespace MMR.Randomizer
             } // end If Room has Actors with Variants we want to trim
         } // end TrimSpecificActor
 
+        private static GameObjects.Scene[] badRoomScenes =
+        {
+            /*
+            GameObjects.Scene.WoodfallTemple,
+            GameObjects.Scene.SnowheadTemple,
+            GameObjects.Scene.GreatBayTemple,
+            GameObjects.Scene.StoneTowerTemple,
+            GameObjects.Scene.InvertedStoneTowerTemple,
+            GameObjects.Scene.MountainVillageSpring,
+            GameObjects.Scene.DekuPalace
+            */
+        };
+
+
         public static List<List<int>> TrimObjectList(SceneEnemizerData thisSceneData, StringBuilder log)
         {
             /// this function generates our enemizer chosenReplacementObjectsPerMap from our chosenReplacementObjects
@@ -6037,25 +6082,31 @@ namespace MMR.Randomizer
                 // find all objects that have no duplicates
                 var uniqueObjects = objList.Distinct().ToList();
 
-                // if they are the same size, no duplicates, keep going to next map
-                if (objList.Count != uniqueObjects.Count)
+                // issue with dulpicate removal: it can throw off the order of other objects later in the list for this room
+
+                if ( ! badRoomScenes.Contains(thisSceneData.Scene.SceneEnum))
                 {
-                    // second pass: remove all duplicates
-                    for (int u = 0; u < uniqueObjects.Count; u++)
+                    // if they are the same size, no duplicates, keep going to next map
+                    if (objList.Count != uniqueObjects.Count)
                     {
-                        var uniqueObj = uniqueObjects[u];
-                        if (objList.Count(obj => obj == uniqueObj) > 1) // more than one exists, remove
+                        // second pass: remove all duplicates
+                        for (int u = 0; u < uniqueObjects.Count; u++)
                         {
-                            // just remove first one, not sure if there is an advantage of changing one over the other
-                            // consideration: if the object list order changes, the scene load hickups, but so long as wel always replace first...
-                            // we dont want the first we want to remove the last, as removing the first introduces more object list re-loads
-                            //var firstIndex = objList.FindIndex(obj => obj == uniqueObj);
-                            //objList[firstIndex] = SMALLEST_OBJ;
-                            var lastIndex = objList.FindLastIndex(obj => obj == uniqueObj);
-                            objList[lastIndex] = SMALLEST_OBJ;
+                            var uniqueObj = uniqueObjects[u];
+                            if (objList.Count(obj => obj == uniqueObj) > 1) // more than one exists, remove
+                            {
+                                // just remove first one, not sure if there is an advantage of changing one over the other
+                                // consideration: if the object list order changes, the scene load hickups, but so long as wel always replace first...
+                                // we dont want the first we want to remove the last, as removing the first introduces more object list re-loads
+                                //var firstIndex = objList.FindIndex(obj => obj == uniqueObj);
+                                //objList[firstIndex] = SMALLEST_OBJ;
+                                var lastIndex = objList.FindLastIndex(obj => obj == uniqueObj);
+                                objList[lastIndex] = SMALLEST_OBJ;
+                            }
                         }
                     }
                 }
+
 
                 objectsPerMap.Add(objList);
             }
