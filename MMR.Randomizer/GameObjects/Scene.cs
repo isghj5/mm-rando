@@ -136,6 +136,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.UnusedFallingBridge, // might block ability to enter the grotto
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator // can get the player locked behind them near the grotto stones
         )]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BottleWaterDrop,
+            Actor.UnusedFallingBridge)] // can reach all the way to the entrance and block the player from landing
         Grottos = 0x0A,
 
         // Unused = 0x0B,
