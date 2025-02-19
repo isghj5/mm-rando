@@ -4132,8 +4132,16 @@ namespace MMR.Randomizer
         {
             /// Secret shrine objects are WILD
             /// every single room has unnecessary objects, I want to change these to make replacement enemies more interesting
-
+            
             var secretShrineScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SecretShrine.FileID());
+
+            int PopObject(List<Actor> candidates)
+            {
+                var randomIndex = _seedRNG.Next(candidates.Count());
+                var newObject = candidates[randomIndex].ObjectId;
+                candidates.RemoveAt(randomIndex);
+                return newObject;
+            }
 
             var possibleGroundActors = ReplacementCandidateList.FindAll(act => act.GetGroundVariants().Count > 0);
             var possibleWaterActors = ReplacementCandidateList.FindAll(act => act.GetWaterVariants().Count > 0);
@@ -4141,119 +4149,92 @@ namespace MMR.Randomizer
             var possibleFlyingActors = ReplacementCandidateList.FindAll(act => act.GetFlyingVariants().Count > 0);
             var possibleCeilingActors = ReplacementCandidateList.FindAll(act => act.GetCeilingVariants().Count > 0);
 
+            // WARNING: lots of actors crash if they exist in two rooms, but their objects have moved in ram position, so we need to juggle the ram too
+            // because of this, we're fundamentally changing some positions:
+            //   wooden crate and gold torch objects are completely unused, we can use those as always-loaded slots for the objects we need to keep between three rooms
+            //   spirit house object likely is likely not required to be loaded for every room
+            //   treasure chest could probably be moved around, as I dont see any static data references in the code
+            // meanwhile
+            //   the water drip and tall grass objects are always shuffled around but they are always loaded
+            //   real bombchu, dinofos exist in three rooms
+            //   dekubaba exists in main room and a sub-room
+            // having moved up two objects from every room, we should count 5 and 6 as new allways-loaded slots
+
+            // 5 and 6 objects
+            var alwaysGroundObject = PopObject(possibleGroundActors); 
+            var alwaysFlyingObject = PopObject(possibleFlyingActors);
+            
+
+            foreach (var map in secretShrineScene.Maps)
+            {
+                map.Objects[3] = GameObjects.Actor.CeilingSpawner.ObjectIndex(); // previously golden torch
+                map.Objects[4] = 0xF8; // previously wooden crate becomes tall-grass
+                map.Objects[5] = alwaysGroundObject; // slots 5 and 6 are available for re-using every room, just move one actor out of the way and were good
+                map.Objects[6] = alwaysFlyingObject;
+
+                // needs testing, but also not required right now?
+                //map.Objects[2] = 0xF8; // previously spirit house man
+            }
+
             // lobby
             if (ACTORSENABLED){
-                var randomIndex = _seedRNG.Next(possibleGroundActors.Count());
-                secretShrineScene.Maps[0].Objects[4] = possibleGroundActors[randomIndex].ObjectId; // wooden crate 
-                possibleGroundActors.RemoveAt(randomIndex);
 
-                randomIndex = _seedRNG.Next(possibleGroundActors.Count());
-                secretShrineScene.Maps[0].Objects[5] = possibleGroundActors[randomIndex].ObjectId; // dinofos 
-                possibleGroundActors.RemoveAt(randomIndex);
+                // floating bean plant is only used in this room, move down to old lair grass object
+                var lobby = secretShrineScene.Maps[0];
+                lobby.Objects[10] = GameObjects.Actor.SoftSoilAndBeans.ObjectIndex();
 
-                randomIndex = _seedRNG.Next(possibleFlyingActors.Count());
-                secretShrineScene.Maps[0].Objects[6] = possibleFlyingActors[randomIndex].ObjectId; // water drip 
-                possibleFlyingActors.RemoveAt(randomIndex);
-
-                randomIndex = _seedRNG.Next(possibleFlyingActors.Count());
-                secretShrineScene.Maps[0].Objects[8] = possibleFlyingActors[randomIndex].ObjectId; // bombchu 
-                possibleFlyingActors.RemoveAt(randomIndex);
+                lobby.Objects[7] = PopObject(possibleGroundActors); // previously floating bean slot
+                lobby.Objects[8] = PopObject(possibleGroundActors); // real bombchu slot 
+                lobby.Objects[10] = PopObject(possibleFlyingActors); // previous tall grass slot
+                lobby.Objects[11] = PopObject(possibleFlyingActors); // previous deku nut slot
             }
 
             // center room
             if (ACTORSENABLED)
             {
-                var randomIndex = _seedRNG.Next(possibleWaterActors.Count());
-                secretShrineScene.Maps[1].Objects[5] = possibleWaterActors[randomIndex].ObjectId; // deku baba 
-                possibleWaterActors.RemoveAt(randomIndex);
+                var centerRoom = secretShrineScene.Maps[1];
 
-                randomIndex = _seedRNG.Next(possibleWaterBottomActors.Count());
-                secretShrineScene.Maps[1].Objects[6] = possibleWaterBottomActors[randomIndex].ObjectId; // dinofos 
-                possibleWaterBottomActors.RemoveAt(randomIndex);
-
-                randomIndex = _seedRNG.Next(possibleWaterBottomActors.Count());
-                secretShrineScene.Maps[1].Objects[8] = possibleWaterBottomActors[randomIndex].ObjectId; // real bombchu
-                possibleWaterBottomActors.RemoveAt(randomIndex);
-
-                randomIndex = _seedRNG.Next(possibleFlyingActors.Count());
-                secretShrineScene.Maps[1].Objects[9] = possibleFlyingActors[randomIndex].ObjectId; // heart piece
-                possibleFlyingActors.RemoveAt(randomIndex);
-
-                randomIndex = _seedRNG.Next(possibleCeilingActors.Count());
-                secretShrineScene.Maps[1].Objects[10] = possibleCeilingActors[randomIndex].ObjectId; // tall grass
-                possibleCeilingActors.RemoveAt(randomIndex);
-
+                centerRoom.Objects[7] = PopObject(possibleWaterActors); // previously water drip slot  
+                centerRoom.Objects[8] = PopObject(possibleWaterActors); // real bombchu slot 
+                centerRoom.Objects[9] = PopObject(possibleWaterBottomActors); // previous heart piece slot
+                centerRoom.Objects[10] = PopObject(possibleCeilingActors); // previous tall grass slot
             }
 
             // dinofos room
             {
-                var randomIndex = _seedRNG.Next(possibleFlyingActors.Count());
-                secretShrineScene.Maps[2].Objects[6] = possibleFlyingActors[randomIndex].ObjectId; // deku baba
-                possibleFlyingActors.RemoveAt(randomIndex);
+                var dinoRoom = secretShrineScene.Maps[2];
 
-                randomIndex = _seedRNG.Next(possibleCeilingActors.Count());
-                secretShrineScene.Maps[2].Objects[7] = possibleCeilingActors[randomIndex].ObjectId; // skulltula
-                possibleCeilingActors.RemoveAt(randomIndex);
-
-                randomIndex = _seedRNG.Next(possibleGroundActors.Count());
-                secretShrineScene.Maps[2].Objects[10] = possibleGroundActors[randomIndex].ObjectId; // real bombchu
-                possibleGroundActors.RemoveAt(randomIndex);
+                dinoRoom.Objects[7] = PopObject(possibleGroundActors); // skulltula slot  
+                dinoRoom.Objects[9] = PopObject(possibleGroundActors); // water drop slot 
+                dinoRoom.Objects[10] = PopObject(possibleFlyingActors); // real bombchu slot                
             }
 
             // wizrobe room
             {
-                var randomIndex = _seedRNG.Next(possibleGroundActors.Count());
-                secretShrineScene.Maps[3].Objects[6] = possibleGroundActors[randomIndex].ObjectId; // blue warp
-                possibleGroundActors.RemoveAt(randomIndex);
+                var wizrobeRoom = secretShrineScene.Maps[3];
 
-                randomIndex = _seedRNG.Next(possibleGroundActors.Count());
-                secretShrineScene.Maps[3].Objects[5] = possibleGroundActors[randomIndex].ObjectId; // garo master
-                possibleGroundActors.RemoveAt(randomIndex);
-
-                randomIndex = _seedRNG.Next(possibleFlyingActors.Count());
-                secretShrineScene.Maps[3].Objects[8] = possibleFlyingActors[randomIndex].ObjectId; // garo master
-                possibleFlyingActors.RemoveAt(randomIndex);
-
-                randomIndex = _seedRNG.Next(possibleFlyingActors.Count());
-                secretShrineScene.Maps[3].Objects[4] = possibleFlyingActors[randomIndex].ObjectId; // wooden crate
-                possibleFlyingActors.RemoveAt(randomIndex);
-
+                wizrobeRoom.Objects[8] = PopObject(possibleGroundActors); // water drip slot  
+                wizrobeRoom.Objects[9] = PopObject(possibleGroundActors); // lair grass slot 
             }
 
             // wart room
             if (ACTORSENABLED)
             {
-                var randomIndex = _seedRNG.Next(possibleGroundActors.Count());
-                secretShrineScene.Maps[4].Objects[5] = possibleGroundActors[randomIndex].ObjectId; // eygore ???
-                possibleGroundActors.RemoveAt(randomIndex);
+                var wartRoom = secretShrineScene.Maps[4];
 
-                randomIndex = _seedRNG.Next(possibleFlyingActors.Count());
-                secretShrineScene.Maps[4].Objects[6] = possibleFlyingActors[randomIndex].ObjectId; // blue warp ?
-                possibleFlyingActors.RemoveAt(randomIndex);
-
-                randomIndex = _seedRNG.Next(possibleCeilingActors.Count());
-                secretShrineScene.Maps[4].Objects[7] = possibleCeilingActors[randomIndex].ObjectId; // dinofos
-                possibleCeilingActors.RemoveAt(randomIndex);
-
-                randomIndex = _seedRNG.Next(possibleCeilingActors.Count());
-                secretShrineScene.Maps[4].Objects[10] = possibleCeilingActors[randomIndex].ObjectId; // tall grass
-                possibleCeilingActors.RemoveAt(randomIndex);
+                wartRoom.Objects[7] = PopObject(possibleGroundActors); // dinofos slot  
+                wartRoom.Objects[9] = PopObject(possibleGroundActors); // water drip slot 
+                wartRoom.Objects[10] = PopObject(possibleFlyingActors); // lair grass slot 
             }
 
             // garo master room
             if (ACTORSENABLED)
             {
-                /// not as much point, its only him and some grass, not much else to put here
-                var randomIndex = _seedRNG.Next(possibleGroundActors.Count());
-                secretShrineScene.Maps[5].Objects[5] = possibleGroundActors[randomIndex].ObjectId; // wizrobe
-                possibleGroundActors.RemoveAt(randomIndex);
-
-                randomIndex = _seedRNG.Next(possibleFlyingActors.Count());
-                secretShrineScene.Maps[5].Objects[8] = possibleFlyingActors[randomIndex].ObjectId; // blue warp ?
-                possibleFlyingActors.RemoveAt(randomIndex);
-
+                var garoRoom = secretShrineScene.Maps[5];
+                garoRoom.Objects[7] = PopObject(possibleGroundActors); // dinofos slot  
+                garoRoom.Objects[8] = PopObject(possibleGroundActors); // water drip slot 
+                garoRoom.Objects[10] = PopObject(possibleFlyingActors); // lair grass slot 
             }
-
         }
 
         private static void SwapIntroActors()
