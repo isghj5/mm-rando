@@ -150,6 +150,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x08)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.HappyMaskSalesman,
             Actor.ImposterFrog, Actor.ClayPot, Actor.SmallWoodenBox, Actor.BadBat, // falls off camera
+            Actor.RosaSisters,
+            Actor.MajoraBalloonSewer, Actor.UnusedStoneTowerPlatform, // raises above camera
             Actor.IkanaGravestone // crashes on n64 because there is no floor below it to matrix rotate to
         )]
         [ActorizerSceneCreditsActor(Actor.HappyMaskSalesman)] // issue: this removes zelda
@@ -516,7 +518,7 @@ namespace MMR.Randomizer.GameObjects
                         Actor.HappyMaskSalesman, Actor.ClayPot, Actor.GoronElder)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PostMan,
                         Actor.ClayPot, Actor.GoronElder, // not visible in credits because too far away and doesnt draw
-                        Actor.MadShrub, Actor.Stalchild
+                        Actor.MadShrub, Actor.Stalchild, Actor.MadShrub
         )]
         TerminaField = 0x2A, // keikoku, c800 dyna size
 
@@ -818,6 +820,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.RealBombchu, Actor.Snapper, Actor.Beamos)] // can hit you as you are climbing up blocking assension
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GoGoron,
             Actor.RealBombchu)] // can hit you as you are climbing up blocking assension
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PottedPlant,
+            Actor.ClocktowerGearsAndOrgan)] // can block the door (during the day only but thats still annoying)
         MountainVillage = 0x4D,
 
         [FileID(1419)]
