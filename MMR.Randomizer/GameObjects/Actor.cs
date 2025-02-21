@@ -3815,9 +3815,8 @@ namespace MMR.Randomizer.GameObjects
             0x027F  // istt
         )]
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 0)]
-        [SwitchFlagsPlacement(size: 0x7F, shift: 0)]
         [DifficultAllVariants]
-        [VariantsWithRoomMax(max:0, variant: 0x007F, 0x017F, 0x027F)] // wont work without their blocks
+        //[VariantsWithRoomMax(max:0, variant: 0x007F, 0x017F, 0x027F)] // wont work without their blocks
         //[PlacementWeight(0)] // we never place him, instead place blocks only and replace one of them at random with the wizrobe
         Wizrobe = 0x15D, // En_Wiz
 

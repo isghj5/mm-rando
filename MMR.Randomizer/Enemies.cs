@@ -3276,7 +3276,7 @@ namespace MMR.Randomizer
 
 
             var wizrobe = ReplacementCandidateList.Find(act => act.Name.Contains("FixedWizrobe"));
-            var wizrobesFound = thisSceneData.Actors.FindAll(act => act.Name == wizrobe.Name || act.Name.Contains("ovl_En_Wiz"));
+            var wizrobesFound = thisSceneData.Actors.FindAll(act => wizrobe != null && (act.Name == wizrobe.Name || act.Name.Contains("ovl_En_Wiz")));
 
             if(wizrobesFound.Count > 1)
             {
@@ -5565,7 +5565,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GuruGuru)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Wizrobe)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.AnjuWeddingDress)) continue; // still broken
                 if(TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.RealBombchu)) continue;
@@ -6838,8 +6838,8 @@ namespace MMR.Randomizer
                     List<Actor> subMatches = chosenCandidatesForThisObject.FindAll(act => act.ObjectId == chosenObject);
 
                     #if DEBUG
-                    var original_object = VanillaEnemyList.Find(act => act.ObjectIndex() == thisSceneData.ChosenReplacementObjects[objectIndex].OldV);
-                    var object_actor = VanillaEnemyList.Find(act => act.ObjectIndex() == chosenObject);
+                    var AAA_original_object = VanillaEnemyList.Find(act => act.ObjectIndex() == thisSceneData.ChosenReplacementObjects[objectIndex].OldV);
+                    var AAA_object_actor = VanillaEnemyList.Find(act => act.ObjectIndex() == chosenObject);
                     #endif
                     Debug.Assert(subMatches.Count > 0);
 
