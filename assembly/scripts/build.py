@@ -11,19 +11,22 @@ from rom_diff import create_diff
 from ntype import BigStream
 from crc import calculate_crc
 
-Offsets = collections.namedtuple('Offsets', ('table', 'file_start', 'ram_start', 'ram_end'))
+Offsets = collections.namedtuple('Offsets', ('table', 'file_start', 'ram_start', 'ram_end', 'kaleido_file_start', 'kaleidoram_start'))
 
 # Hardcoded fields per target for added data:
 # (Table Start, File Address, RAM Start, RAM End)
-OOT_OFFSETS=Offsets(0x00007400, 0x03480000, 0x80400000, 0x80420000)
-MM_OFFSETS=Offsets(0x0001A500, 0x03800000, 0x80720000, 0x80780000)
+# OOT offsets for kaleido are placeholder
+OOT_OFFSETS=Offsets(0x00007400, 0x03480000, 0x80400000, 0x80420000, 0x03480000, 0x80400000)
+MM_OFFSETS=Offsets(0x0001A500, 0x03800000, 0x80720000, 0x80780000, 0x03880000, 0x80720000 - 0x0179C0)
 
 def build_data_symbols(symbols, offsets):
     data_symbols = {}
     for (name, sym) in symbols.items():
         if sym['type'] == 'data':
             addr = int(sym['address'], 16)
-            if offsets.ram_start <= addr < offsets.ram_end:
+            if offsets.kaleidoram_start <= addr < offsets.ram_start:
+                addr = addr - offsets.kaleidoram_start + offsets.kaleido_file_start
+            elif offsets.ram_start <= addr < offsets.ram_end:
                 addr = addr - offsets.ram_start + offsets.file_start
             else:
                 continue

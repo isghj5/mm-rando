@@ -8,6 +8,11 @@
 .definelabel G_C_HEAP_SIZE,   0x40000
 .definelabel G_C_HEAP,        (G_PAYLOAD_END - G_C_HEAP_SIZE)
 
+; Constants for payload chunk for the free KaleidoScope space
+.definelabel G_KALEIDO_FREESIZE, 0x0179C0
+.definelabel G_KALEIDOPAYLOAD_VROM,  0x03880000
+.definelabel G_KALEIDOPAYLOAD_ADDR, (G_PAYLOAD_ADDR - G_KALEIDO_FREESIZE)
+
 ; Normal & extended objects constants
 .definelabel G_NORMAL_OBJ_COUNT, 0x283
 .definelabel G_NORMAL_OBJ_TABLE, 0x801C2740

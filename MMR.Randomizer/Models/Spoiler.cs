@@ -15,7 +15,7 @@ namespace MMR.Randomizer.Models
 
         public string SettingsString { get; set; }
 
-        public Dictionary<Item, Item> DungeonEntrances { get; set; }
+        public List<SpoilerDungeonEntrance> DungeonEntrances { get; set; }
 
         public int Seed { get; set; }
 
@@ -42,10 +42,10 @@ namespace MMR.Randomizer.Models
             }
         }
 
-        public List<(string name, ushort cost)> MessageCosts { get; set; }
+        public List<NameCostPair> MessageCosts { get; set; }
 
         public ReadOnlyCollection<Item> BlitzExtraItems { get; set; }
-        public List<List<(string item, string location)>> Spheres { get; set; }
+        public List<List<ItemLocationPair>> Spheres { get; set; }
     }
 }
 

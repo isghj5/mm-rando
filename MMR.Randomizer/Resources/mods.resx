@@ -142,6 +142,9 @@
   <data name="death_moon_crash" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\death-moon-crash;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="death_reduces_max_hearts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\death-reduces-max-hearts.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="de_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\de-1;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

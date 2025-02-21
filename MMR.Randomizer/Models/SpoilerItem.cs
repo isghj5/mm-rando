@@ -14,17 +14,21 @@ namespace MMR.Randomizer.Models
 
         public Region Region { get; }
 
-        public bool IsJunk { get; }
+        public bool IsJunk { get; set; }
 
-        public bool IsLocationJunked { get; }
+        public bool IsLocationJunked { get; set; }
 
-        public bool IsImportant { get; }
+        public bool IsImportant { get; set; }
 
-        public bool IsRequired { get; }
+        public bool IsRequired { get; set; }
 
-        public bool IsImportantSong { get; }
+        public bool IsImportantSong { get; set; }
 
-        public ItemCategory ItemCategory { get; set; }
+        public ItemCategory ItemCategory { get; set;  }
+
+        public string Item { get; set; }
+
+        public string Location { get; set; }
 
         public SpoilerItem(ItemObject itemObject, Region region, bool isRequired, bool isImportant, bool isLocationJunked, bool isImportantSong, bool progressiveUpgrades, ItemList itemList)
         {
@@ -39,6 +43,9 @@ namespace MMR.Randomizer.Models
             IsRequired = isRequired;
             IsImportantSong = isImportantSong;
             ItemCategory = itemObject.Item.ItemCategory() ?? ItemCategory.None;
+
+            Item = Name;
+            Location = NewLocationName;
         }
     }
 }

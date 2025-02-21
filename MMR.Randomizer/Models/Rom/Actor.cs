@@ -13,7 +13,7 @@ using MMR.Randomizer.Attributes;
 
 namespace MMR.Randomizer.Models.Rom
 {
-    [System.Diagnostics.DebuggerDisplay("[{Name}][{ActorId.ToString(\"X4\")}] from [{OldName}]")]
+    [System.Diagnostics.DebuggerDisplay("[{Name}][{ActorId.ToString(\"X4\")}] from [{OldName}][{OldVariant.ToString(\"X4\")}]")]
     public class Actor
     {
         // this is instance data, per actor, per scene.
@@ -29,10 +29,10 @@ namespace MMR.Randomizer.Models.Rom
         [System.Diagnostics.DebuggerDisplay("{ObjectId.ToString(\"X3\")}")]
         public int ObjectId; // in-game object list index
         public int OldObjectId; // in-game object list index
-        public int ActorIdFlags; // we just want to keep them when re-writing, but I'm not sure they even matter
+        public int ActorIdFlags; // contain rotation ignoring flags, that convert xyz rotation for parameter use instead
         public List<int> Variants { get; private set; }
         //public List<int> Variants = new List<int> { 0 };
-        public List<List<int>> AllVariants = null;
+        public List<List<int>> SortedVariants = null;
         public int OldVariant;
         public bool MustNotRespawn = false;
         public ActorType Type; 
@@ -81,8 +81,8 @@ namespace MMR.Randomizer.Models.Rom
 
             this.SceneExclude = actor.ScenesRandomizationExcluded();
             this.BlockedScenes = actor.BlockedScenes();
-            this.AllVariants = BuildVariantList(actor);
-            this.Variants = AllVariants.SelectMany(u => u).ToList();
+            this.SortedVariants = BuildVariantList(actor);
+            this.Variants = SortedVariants.SelectMany(u => u).ToList();
             this.VariantsWithRoomMax = actor.GetAttributes<VariantsWithRoomMax>().ToList();
             this.OnlyOnePerRoom = actor.GetAttribute<OnlyOneActorPerRoom>();
             this.RespawningVariants = actor.RespawningVariants();
@@ -112,22 +112,21 @@ namespace MMR.Randomizer.Models.Rom
             this.ActorEnum = this.OldActorEnum = (GameObjects.Actor) injected.ActorId;
             this.BlockedScenes = this.ActorEnum.BlockedScenes();
 
-            // for now injected actors can only be of type ground
-            this.AllVariants = new List<List<int>>()
+            this.SortedVariants = new List<List<int>>()
             {
                 injected.waterVariants,
                 injected.waterTopVariants,
                 injected.waterBottomVariants,
                 injected.groundVariants,
                 injected.flyingVariants,
-                new List<int>(),
-                new List<int>(),
+                injected.wallVariants,
+                injected.perchingVariants,
                 new List<int>(),
                 new List<int>(),
             };
 
             // wasnt there a list of lists to static list we had?
-            this.Variants = AllVariants.SelectMany(x => x).ToList();
+            this.Variants = SortedVariants.SelectMany(x => x).ToList();
             this.VariantsWithRoomMax = injected.limitedVariants;
             this.UnplaceableVariants = this.ActorEnum.GetUnPlacableVariants();
             this.OnlyOnePerRoom = injected.onlyOnePerRoom;
@@ -206,9 +205,9 @@ namespace MMR.Randomizer.Models.Rom
             newActor.BlockedScenes = this.BlockedScenes;
 
             var newVariantsList = new List<List<int>>();
-            for(int i = 0; i < this.AllVariants.Count; i++) // per variant type (water, ground, pathing, ect)
+            for(int i = 0; i < this.SortedVariants.Count; i++) // per variant type (water, ground, pathing, ect)
             {
-                var specificVariantList = this.AllVariants[i];
+                var specificVariantList = this.SortedVariants[i];
                 var newVariantList = new List<int>();
                 for (int j = 0; j < specificVariantList.Count; j++) // per variant in type
                 {
@@ -216,11 +215,11 @@ namespace MMR.Randomizer.Models.Rom
                 }
                 newVariantsList.Add(newVariantList);
             }
-            newActor.AllVariants = newVariantsList;
+            newActor.SortedVariants = newVariantsList;
 
-            Debug.Assert(newActor.AllVariants != null);
+            Debug.Assert(newActor.SortedVariants != null);
 
-            //newActor.Variants = newActor.AllVariants.SelectMany(u => u).ToList(); // might as well start with all
+            //newActor.Variants = newActor.SortedVariants.SelectMany(u => u).ToList(); // might as well start with all
             newActor.Variants = this.Variants; // worried that this was previously separate for a reason, dont rebuild
             newActor.OnlyOnePerRoom = this.OnlyOnePerRoom;
             newActor.VariantsWithRoomMax = this.VariantsWithRoomMax.ToList();
@@ -275,8 +274,8 @@ namespace MMR.Randomizer.Models.Rom
                 this.OldName        = newActorType.ToString();
                 this.OldObjectId    = this.ObjectId;
 
-                this.AllVariants = BuildVariantList(newActorType);
-                this.Variants = AllVariants.SelectMany(u => u).ToList();
+                this.SortedVariants = BuildVariantList(newActorType);
+                this.Variants = SortedVariants.SelectMany(u => u).ToList();
                 this.ActorIdFlags &= ~0xE000; // the flags that specify that the actor should ignore rotations, thats going to be actor specific not spawn specific
             }
 
@@ -317,7 +316,7 @@ namespace MMR.Randomizer.Models.Rom
             this.Name           = otherActor.Name;
             this.ActorId        = otherActor.ActorId;
             this.ObjectId       = otherActor.ObjectId;
-            //this.AllVariants    = otherActor.AllVariants; // other parts of the rando assume this is static
+            //this.SortedVariants    = otherActor.SortedVariants; // other parts of the rando assume this is static
 
             if (vars != -1)
             {
@@ -343,11 +342,13 @@ namespace MMR.Randomizer.Models.Rom
             this.OnlyOnePerRoom = injectedActor.onlyOnePerRoom;
 
             // should we add or replace variants? for now we add
-            this.Variants.AddRange(injectedActor.groundVariants);
-            this.Variants.AddRange(injectedActor.flyingVariants);
             this.Variants.AddRange(injectedActor.waterVariants);
             this.Variants.AddRange(injectedActor.waterBottomVariants);
             this.Variants.AddRange(injectedActor.waterTopVariants);
+            this.Variants.AddRange(injectedActor.groundVariants);
+            this.Variants.AddRange(injectedActor.flyingVariants);
+            this.Variants.AddRange(injectedActor.wallVariants);
+            this.Variants.AddRange(injectedActor.perchingVariants);
             this.Variants = this.Variants.Distinct().ToList(); // if variant copies with limits we can double dip, also bloats loops
 
             if (this.RespawningVariants == null)
@@ -367,18 +368,18 @@ namespace MMR.Randomizer.Models.Rom
 
             void AddToSpecificSubtype(ActorType type, List<int> newList)
             {
-                var variantSubList = this.AllVariants[(int)type - 1];
+                var variantSubList = this.SortedVariants[(int)type - 1];
                 variantSubList.AddRange(newList.Except(variantSubList));
             }
 
             this.VariantsWithRoomMax.AddRange(injectedActor.limitedVariants);
-            AddToSpecificSubtype(ActorType.Ground, injectedActor.groundVariants);
-            //var groundVariantEntry = this.AllVariants[(int)ActorType.Ground - 1];
-            //groundVariantEntry.AddRange(injectedActor.groundVariants.Except(groundVariantEntry));
-            AddToSpecificSubtype(ActorType.Flying, injectedActor.flyingVariants);
             AddToSpecificSubtype(ActorType.Water, injectedActor.waterVariants);
             AddToSpecificSubtype(ActorType.WaterTop, injectedActor.waterTopVariants);
             AddToSpecificSubtype(ActorType.WaterBottom, injectedActor.waterBottomVariants);
+            AddToSpecificSubtype(ActorType.Ground, injectedActor.groundVariants);
+            AddToSpecificSubtype(ActorType.Flying, injectedActor.flyingVariants);
+            AddToSpecificSubtype(ActorType.Wall, injectedActor.wallVariants);
+            AddToSpecificSubtype(ActorType.Perching, injectedActor.perchingVariants);
         }
 
         // TODO: I forgot this exists, should be renamed and other code agressively use this
@@ -397,6 +398,17 @@ namespace MMR.Randomizer.Models.Rom
             this.Variants = variants;
         }
 
+        public void TrimVariantsList()
+        {
+            if (this.SortedVariants != null)
+            {
+                for (int c = 0; c < this.SortedVariants.Count; c++)
+                {
+                    this.SortedVariants[c] = this.SortedVariants[c].Except(this.Variants).ToList();
+                }
+            }
+        }
+
         // should this function also be checking for other compatibility issues like respawning? currently elsewhere
         public List<int> CompatibleVariants(Actor otherActor, Random rng, bool roomIsClearPuzzleRoom = false)
         {
@@ -404,7 +416,7 @@ namespace MMR.Randomizer.Models.Rom
             /// EG. like like can spawn on the sand (land), but also on the bottom of GBC (water floor)
             /// so we need to know what type the actor we are replacing is, and check if any otherActor variants can replace it
 
-            if (this.AllVariants == null || otherActor.AllVariants == null)
+            if (this.SortedVariants == null || otherActor.SortedVariants == null)
             {
                 throw new Exception("Compare Variants: broken actor variants listoflist");
             }
@@ -425,8 +437,8 @@ namespace MMR.Randomizer.Models.Rom
                 #if DEBUG
                 var DEBUG_type = randomVariantType - 1;
                 #endif
-                List<int> ourVariants   = this.AllVariants[ (int) randomVariantType - 1].ToList();
-                List<int> theirVariants = otherActor.AllVariants[ (int) randomVariantType - 1].ToList();
+                List<int> ourVariants   = this.SortedVariants[ (int) randomVariantType - 1].ToList();
+                List<int> theirVariants = otherActor.SortedVariants[ (int) randomVariantType - 1].ToList();
 
                 if (ourVariants.Count == 0 && theirVariants.Count == 0) continue;
 
@@ -440,7 +452,7 @@ namespace MMR.Randomizer.Models.Rom
 
                     foreach( var type in possibleReplacementTypeList)
                     {
-                        theirVariants = otherActor.AllVariants[(int)type - 1];
+                        theirVariants = otherActor.SortedVariants[(int)type - 1];
 
                         if (theirVariants.Count != 0) break;
                     }
@@ -450,7 +462,7 @@ namespace MMR.Randomizer.Models.Rom
                 if (randomVariantType == ActorType.Ground
                     && ourVariantMatches && rng.Next(100) < 45)
                 {
-                    var theirFlyingVariants = otherActor.AllVariants[ (int) ActorType.Flying - 1];
+                    var theirFlyingVariants = otherActor.SortedVariants[ (int) ActorType.Flying - 1];
                     if (theirFlyingVariants.Count != 0)
                     {
                         theirVariants.AddRange(theirFlyingVariants);
@@ -462,7 +474,7 @@ namespace MMR.Randomizer.Models.Rom
                 if ((randomVariantType == ActorType.WaterBottom || randomVariantType == ActorType.WaterTop)
                     && ourVariantMatches)
                 {
-                    var theirWaterVariants = otherActor.AllVariants[(int)ActorType.Water - 1];
+                    var theirWaterVariants = otherActor.SortedVariants[(int)ActorType.Water - 1];
                     if (theirWaterVariants.Count != 0)
                     {
                         theirVariants.AddRange(theirWaterVariants);
@@ -473,7 +485,7 @@ namespace MMR.Randomizer.Models.Rom
                 if ((randomVariantType == ActorType.Perching || (randomVariantType == ActorType.Ceiling && rng.Next(100) < 65))
                     && ourVariantMatches)
                 {
-                    var theirFlyingVariants = otherActor.AllVariants[(int)ActorType.Flying - 1];
+                    var theirFlyingVariants = otherActor.SortedVariants[(int)ActorType.Flying - 1];
                     if (theirFlyingVariants.Count != 0)
                     {
                         theirVariants.AddRange(theirFlyingVariants);
@@ -520,6 +532,60 @@ namespace MMR.Randomizer.Models.Rom
 
             return null; // none found
         }
+
+        // these are here because there are two actortypes now, TODO merge
+        // we need to know the NEW ENUM TOO damn it
+        public List<int> GetGroundVariants()
+        {
+            return this.SortedVariants[(int)ActorType.Ground - 1];
+        }
+        public List<int> GetWaterVariants()
+        {
+            return this.SortedVariants[(int)ActorType.Water - 1];
+        }
+        public List<int> GetWaterBottomVariants()
+        {
+            return this.SortedVariants[(int)ActorType.WaterBottom - 1];
+        }
+        public List<int> GetWaterTopVariants()
+        {
+            return this.SortedVariants[(int)ActorType.WaterTop - 1];
+        }
+
+        public List<int> GetFlyingVariants()
+        {
+            return this.SortedVariants[(int)ActorType.Flying - 1];
+        }
+        public List<int> GetCeilingVariants()
+        {
+            return this.SortedVariants[(int)ActorType.Ceiling - 1];
+        }
+
+        public List<int> GetWallVariants()
+        {
+            return this.SortedVariants[(int)ActorType.Wall - 1];
+        }
+
+        public List<int> GetPathingVariants()
+        {
+            return this.SortedVariants[(int)ActorType.Pathing - 1];
+        }
+
+        public bool IsNewChoiceFlying()
+        {
+            // check the enum first, we should always have one 
+            var enumResult = this.ActorEnum.isFlyingVariant(this.Variants[0]);
+            if (enumResult) return true;
+
+            // else, check the injected actor data
+            if (this.InjectedActor != null)
+            {
+                return this.InjectedActor.flyingVariants.Contains(this.Variants[0]);
+            }
+
+            return false;
+        }
+
 
         // todo remove this as it should be built at enum->actor time
         public List<int> UnkillableVariants()
@@ -603,18 +669,18 @@ namespace MMR.Randomizer.Models.Rom
             // sometimes you want to check for actors that have variants that are allowed to be placed 0 times
             // some are bugged, some you want pulled into the rando but not placed anywhere
 
-            if (AllVariants == null || AllVariants.Count == 0)
+            if (SortedVariants == null || SortedVariants.Count == 0)
             {
                 return true;
             }
-            //var variantCount = AllVariants[0].Count + AllVariants[1].Count + AllVariants[2].Count + AllVariants[3].Count + AllVariants[4].Count;
-            var variantCount = AllVariants.Sum(childList => childList.Count);
+            //var variantCount = SortedVariants[0].Count + SortedVariants[1].Count + SortedVariants[2].Count + SortedVariants[3].Count + SortedVariants[4].Count;
+            var variantCount = SortedVariants.Sum(childList => childList.Count);
             if (variantCount == 0)
             {
                 return true;
             }
 
-            foreach (var variantList in AllVariants)
+            foreach (var variantList in SortedVariants)
             {
                 for (int i = 0; i < variantList.Count(); i++)
                 {
@@ -628,6 +694,24 @@ namespace MMR.Randomizer.Models.Rom
                 }
             }
             return true;
+        }
+
+        public List<int> CreditsBlockedVariants()
+        {
+            var allCreditsVariantsBlockedAttr = this.ActorEnum.GetAttribute<CreditsBlockedAllVariantsAttribute>();
+            if (allCreditsVariantsBlockedAttr != null)
+            {
+                return this.Variants;
+            }
+
+            var creditsBlockedVariants = this.ActorEnum.GetAttribute<CreditsBlockedVariantsAttribute>();
+            if (creditsBlockedVariants != null)
+            {
+                return creditsBlockedVariants.Variants;
+            }
+
+
+            return null;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

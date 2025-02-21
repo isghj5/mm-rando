@@ -15,6 +15,6 @@ namespace MMR.Randomizer.Models
         [SettingName("One-Hit KO")]
         OHKO,
 
-        Doom
+        Doom,
     }
 }

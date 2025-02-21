@@ -23,10 +23,10 @@ namespace MMR.Randomizer.Utils
             ResourceUtils.ApplyHack(Resources.mods.replace_gi_table);
             int last_file = RomData.MMFileList.Count - 1;
             GET_ITEM_TABLE = RomUtils.AddNewFile(Resources.mods.gi_table);
-            ReadWriteUtils.WriteToROM(0xBDAEAC, (uint)last_file + 1);
+            ReadWriteUtils.WriteToROM(0xB3C000 + 0x13B6C4, (uint)last_file + 1);
             ResourceUtils.ApplyHack(Resources.mods.update_chests);
             RomUtils.AddNewFile(Resources.mods.chest_table);
-            ReadWriteUtils.WriteToROM(0xBDAEA8, (uint)last_file + 2);
+            ReadWriteUtils.WriteToROM(0xB3C000 + 0x13B6C0, (uint)last_file + 2);
             RomUtils.AddNewFile(Resources.mods.collectable_table);
             COLLECTABLE_TABLE_FILE_INDEX = (ushort)(last_file + 3);
             ResourceUtils.ApplyHack(Resources.mods.standing_hearts);

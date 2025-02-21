@@ -33,6 +33,16 @@ namespace MMR.Randomizer.Asm
         public uint PayloadStart => this["PAYLOAD_START"];
 
         /// <summary>
+        /// Address of payload start.
+        /// </summary>
+        public uint KaleidoPayloadStart => this["KALEIDOPAYLOAD_START"];
+
+        /// <summary>
+        /// Address of payload start.
+        /// </summary>
+        public uint KaleidoPayloadEnd => this["KALEIDOPAYLOAD_END"];
+
+        /// <summary>
         /// Get the value of a symbol by name.
         /// </summary>
         /// <param name="name">Symbol name</param>

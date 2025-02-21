@@ -48,7 +48,8 @@ namespace MMR.Randomizer.Utils
             // if we want to know the file ID of an actor, we need to look up the VROM addr from the overlay table
             // and match against a file in DMA, because nintendo removed the FID from the overlay table
             // all actors should have their FID coded in the enum now, this is depreciated but left as backup
-            return RomUtils.GetFIDFromVROM(GetOvlActorVROMStart(actorID));
+            //return RomUtils.GetFIDFromVROM(GetOvlActorVROMStart(actorID));
+            throw new System.Exception("lol where is my code");
         }
 
         public static int GetOvlActorVROMStart(int actorOvlTblIndex)
@@ -183,8 +184,8 @@ namespace MMR.Randomizer.Utils
 
         public static void SetActorSpawnTimeFlags(Actor actor, ushort flags = 0x3FF)
         {
-            // the spawn flags, determining when an actor spawns day/night for days 0-4 (zeroth day and fourth day are mostly unused except for glitches)
-            // each gets two bits, so 0x12 0x3456 0x789A in order of flags parameter, where 0x123 are saved to x rotation and the rest to z
+            /// the spawn flags, determining when an actor spawns day/night for days 0-4 (zeroth day and fourth day are mostly unused except for glitches)
+            /// each gets two bits, so 0x12 0x3456 0x789A in order of flags parameter, where 0x123 are saved to x rotation, 0x456, 0x789A to z rotation
 
             int upperBits = flags >> 7;
             int lowerBits = flags & 0x7F;
@@ -200,6 +201,31 @@ namespace MMR.Randomizer.Utils
             actor.Rotation.z = (short)zrot;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetActorSpawnTimeFor04Day(Actor actor)
+        {
+            /// some actors dont spawn on zeroth or fourth day because the devs didn't think about it
+            ///  but beacuse our players often reach these areas this place can be boring, lets bring the actors back
+
+            var day1Flags = (actor.Rotation.x & 0x1) >> 2; // day 1 day
+            day1Flags |= (actor.Rotation.x & 0x40) >> 6;   // day 1 night
+
+            actor.Rotation.x |= (short)(day1Flags << 1);    // set the day 1 bits over day 0
+
+            var day3Flags = (actor.Rotation.z & 0xC) >> 2;  // day 3 day and night
+            actor.Rotation.z |= (short)(day3Flags);         // set the day 3 bits over day 4
+        }
+
+        public static void SetActorDaySpawnFlags(Actor actor)
+        {
+            /// some actors dont spawn at night, this forces day spawns
+            var nightFlags = (actor.Rotation.x & 0x2) << 7; // get night flags
+            nightFlags |= (actor.Rotation.z & 0x55);
+
+            var dayFlags = nightFlags << 1;
+            actor.Rotation.x |= (short)(dayFlags >> 7);
+            actor.Rotation.z |= (short)(dayFlags & 0x7F);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void FlattenPitchRoll(Actor actor)
@@ -239,39 +265,43 @@ namespace MMR.Randomizer.Utils
         
         public static void SetActorSwitchFlags(Actor actor, short switchFlags)
         {
+
+            var flagsAttr = actor.ActorEnum.GetAttribute<SwitchFlagsPlacementAttribute>();
+            if (flagsAttr == null)
+            {
+                throw new System.Exception("There be no switches here");
+            }
+
+            // reminder: the actor init rotation cancel flags are NOT IN ORDER
+            // Y X Z
+
             // the flags are stored as actual rotation
             if (actor.ActorEnum.GetAttribute<SwitchFlagsPlacementXRotAttribute>() != null)
             {
                 // wait what the fuck, have these been wrong this whole time??
                 //actor.Rotation.x = (short)MergeRotationAndFlags(switchFlags, flags: actor.Rotation.x);
-                actor.Rotation.x = switchFlags;
+                actor.ChangeXRotation(switchFlags);
+                actor.ActorIdFlags |= 0x4000; // dont convert x rotation, it's a parameter
                 return;
             }
             if (actor.ActorEnum.GetAttribute<SwitchFlagsPlacementZRotAttribute>() != null)
             {
                 //actor.Rotation.z = (short)MergeRotationAndFlags(switchFlags, flags: actor.Rotation.z);
-                actor.Rotation.z = switchFlags;
+                actor.ChangeZRotation(switchFlags);
+                actor.ActorIdFlags |= 0x2000; // dont convert z rotation, it's a parameter
                 return;
             }
+            // else: regular switch flags in vars
 
-            var flagsAttr = actor.ActorEnum.GetAttribute<SwitchFlagsPlacementAttribute>();
-            if (flagsAttr != null)
-            {
-                // clear the old switchflags from our newly chosen Variant
-                var deleteMask = flagsAttr.Size << flagsAttr.Shift;
-                var newVarsWithoutSwitchflags = actor.Variants[0] & ~deleteMask;
+            // clear the old switchflags from our newly chosen Variant
+            var deleteMask = flagsAttr.Size << flagsAttr.Shift;
+            var newVarsWithoutSwitchflags = actor.Variants[0] & ~deleteMask;
 
-                // shift the switchflags into the new location
-                var newSwitchflags = switchFlags << flagsAttr.Shift;
+            // shift the switchflags into the new location
+            var newSwitchflags = switchFlags << flagsAttr.Shift;
 
-                // set variant from cleaned old variant ORed against the new switchflags
-                actor.Variants[0] = newVarsWithoutSwitchflags | newSwitchflags;
-            }
-            else
-            {
-                throw new System.Exception("There be no switches here");
-            }
-
+            // set variant from cleaned old variant ORed against the new switchflags
+            actor.Variants[0] = newVarsWithoutSwitchflags | newSwitchflags;
         }
 
         public static short GetActorTreasureFlags(Actor actor, short variant)

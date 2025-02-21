@@ -80,18 +80,16 @@ namespace MMR.Randomizer.Templates
             this.Write("<h2>Dungeon Entrance Replacements</h2>\r\n<table border=\"1\" class=\"item-replacement" +
                     "s\">\r\n    <tr>\r\n        <th>Entrance</th>\r\n        <th></th>\r\n        <th>New Des" +
                     "tination</th>\r\n    </tr>\r\n");
-         foreach (var kvp in spoiler.DungeonEntrances) {
-            var entrance = kvp.Key;
-            var destination = kvp.Value;
+         foreach (var dungeonEntrance in spoiler.DungeonEntrances) {
             this.Write("    <tr data-id=\"");
-            this.Write(this.ToStringHelper.ToStringWithCulture((int)destination));
+            this.Write(this.ToStringHelper.ToStringWithCulture(dungeonEntrance.DestinationId));
             this.Write("\" data-newlocationid=\"");
-            this.Write(this.ToStringHelper.ToStringWithCulture((int)entrance));
+            this.Write(this.ToStringHelper.ToStringWithCulture(dungeonEntrance.EntranceId));
             this.Write("\" class=\"unavailable\">\r\n        <td class=\"newlocation\">");
-            this.Write(this.ToStringHelper.ToStringWithCulture(entrance.Entrance()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(dungeonEntrance.Entrance));
             this.Write("</td>\r\n        <td><input type=\"checkbox\"/></td>\r\n        <td class=\"spoiler item" +
                     "name\"><span data-content=\"");
-            this.Write(this.ToStringHelper.ToStringWithCulture(destination.Entrance()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(dungeonEntrance.Destination));
             this.Write("\"></span></td>\r\n    </tr>\r\n");
  } 
             this.Write("</table>\r\n");
@@ -172,12 +170,12 @@ namespace MMR.Randomizer.Templates
 
             this.Write("<h2>Randomized Prices</h2>\r\n<table border=\"1\">\r\n    <tr>\r\n        <th>Name</th>\r\n" +
                     "        <th>Cost</th>\r\n    </tr>\r\n");
-    foreach (var (name, cost) in spoiler.MessageCosts) { 
+    foreach (var price in spoiler.MessageCosts) { 
 
             this.Write("    <tr>\r\n        <td>");
-            this.Write(this.ToStringHelper.ToStringWithCulture(name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(price.Name));
             this.Write("</td>\r\n        <td class=\"spoiler\"><span data-content=\"");
-            this.Write(this.ToStringHelper.ToStringWithCulture(cost));
+            this.Write(this.ToStringHelper.ToStringWithCulture(price.Cost));
             this.Write("\"></span></td>\r\n    </tr>\r\n");
  } 
             this.Write("</table>\r\n");

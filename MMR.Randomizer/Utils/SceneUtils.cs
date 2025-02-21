@@ -7,6 +7,9 @@ using System;
 using MMR.Randomizer.Attributes.Actor;
 using MMR.Randomizer.Attributes.Entrance;
 using MMR.Common.Extensions;
+using System.IO;
+using System.IO.Compression;
+using System.Text;
 
 namespace MMR.Randomizer.Utils
 {
@@ -46,6 +49,166 @@ namespace MMR.Randomizer.Utils
             int f = RomUtils.GetFileIndexForWriting(SCENE_FLAG_MASKS);
             int addr = SCENE_FLAG_MASKS - RomData.MMFileList[f].Addr + offset;
             RomData.MMFileList[f].Data[addr] |= (byte)bit;
+        }
+
+        public static List<string> GenerateExternalSceneFileList(string directory)
+        {
+            var directories = new List<string> { };
+
+            directories.AddRange(Directory.GetDirectories(directory).ToList()); // depth 1
+            foreach (string d in directories.ToList()) // another layer deep to be safe
+            {
+                List<String> deeperDirectories = Directory.GetDirectories(d).ToList();
+                directories.AddRange(deeperDirectories); // depth 2
+            }
+            directories.Add(directory); // added after to avoid contamination
+
+            var files = new List<string> { };
+
+            foreach (var dir in directories)
+            {
+                files.AddRange(Directory.GetFiles(dir, "*.mmr_scene"));
+            }
+
+            return files;
+        }
+
+
+        public class InjectedRoom
+        {
+            public string name;
+            public int sceneFid = -1;
+            public int roomFid = -1;
+            //public string roomName;
+
+        }
+
+        private static InjectedRoom ParseMetaFile(string metaFile)
+        {
+            // for now, the only metadata we have is fileid, just return instead of parsing more data
+
+            var InjectedRoom = new InjectedRoom();
+
+            foreach (var line in metaFile.Split('\n'))
+            {
+                var asignment = line.Split('#')[0].Trim(); // remove comments
+
+                if (asignment.Length == 0) // comment or empty line: ignore
+                {
+                    continue;
+                }
+
+                var asignmentSplit = asignment.Split('=');
+                var command = asignmentSplit[0].Trim();
+                string valueStr = asignmentSplit[1].Trim();
+
+                if (command == "scene_fid")
+                {
+                    InjectedRoom.sceneFid = Convert.ToInt32(valueStr, fromBase: 10);
+                }
+                if (command == "room_fid")
+                {
+                    InjectedRoom.roomFid = Convert.ToInt32(valueStr, fromBase: 10);
+                }
+
+            }
+            return InjectedRoom;
+        }
+
+
+
+        public static void ReadExternalSceneFiles()
+        {
+            /// read new binary scenes from files in MMR/scenes
+            // scene/room injection
+
+            if (!Directory.Exists("scenes")) return;
+            // if actorizer is off, we need to not read any of these
+            //if (!_randomized.Settings.RandomizeEnemies) return; // right now actorizer/enemizer is the only system that uses this
+
+            foreach (string filePath in GenerateExternalSceneFileList("scenes"))
+            {
+                try
+                {
+                    using (ZipArchive zip = ZipFile.OpenRead(filePath))
+                    {
+                        if (zip.Entries.Where(e => e.Name.Contains(".bin")).Count() == 0)
+                            throw new Exception($"ERROR: cannot find a single binary actor in file {filePath}");
+
+                        // per room binary
+                        foreach (ZipArchiveEntry binFile in zip.Entries.Where(e => e.Name.Contains("Room.bin")))
+                        {
+                            var filename = binFile.Name.Substring(0, binFile.Name.LastIndexOf(".bin"));
+
+                            // read the associated meta file for the room
+                            var metaFileEntry = zip.GetEntry(filename + ".meta");
+                            if (metaFileEntry == null) // meta not found
+                                throw new Exception($"Could not find a meta for actor bin [{binFile.Name}]\n   in [{filePath}]");
+
+                            //var injectedActor = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
+                            var injectedRoom = ParseMetaFile(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
+                            injectedRoom.name = filename;
+                            if (injectedRoom.roomFid == -1)
+                            {
+                                throw new Exception($"BROKEN SCENE FILE [{filePath}] has no room");
+                            }
+                            if (injectedRoom.sceneFid == -1)
+                            {
+                                throw new Exception($"BROKEN SCENE FILE [{filePath}] has no scene file id for the room in the meta");
+                            }
+
+                            // read overlay binary data
+                            int newBinLen = ((int)binFile.Length) + ((int)binFile.Length % 0x10); // dma padding
+                            var overlayData = new byte[newBinLen];
+                            binFile.Open().Read(overlayData, 0, overlayData.Length);
+
+                            // for now, we dont need to do anything else with the binary, so just inject into the file system directly
+                            var fileId = injectedRoom.roomFid;
+                            var roomFile = RomData.MMFileList[fileId];
+                            roomFile.Data = overlayData;
+                            roomFile.WasEdited = true;
+                            roomFile.IsCompressed = true;
+                            // this could cause issues later with vrom overlapping, right now its not an issue?
+                            roomFile.End = roomFile.Addr + roomFile.Data.Length;
+
+                            // we need to update the scene room table for every room file, as there is DMA data inside of the scene file
+                            // TODO (if not specified) write auto search for scene fileid based on room fid, it should never be more than 16 files above it
+                            RomUtils.CheckCompressed(injectedRoom.sceneFid); // this happens before we normally decompress the scenes
+                            var sceneFileData = RomData.MMFileList[injectedRoom.sceneFid].Data;
+                            var offset = -1;
+                            for (int i = 0; i < 500; i += 8)
+                            {
+                                if (sceneFileData[i] == 0x14) // end of headers
+                                {
+                                    throw new Exception("Reached the end of scene headers and missed our spot");
+                                }
+
+                                if (sceneFileData[i] == 0x4) // room list header
+                                {
+                                    offset = ReadWriteUtils.Arr_ReadU16(sceneFileData, i + 6); // 040000XX where XX is offset
+                                    break;
+                                }
+                            }
+                            if(offset == -1)
+                            {
+                                throw new Exception("Scene extract: scene search, we didnt find the header");
+                            }
+
+                            int roomId = injectedRoom.roomFid - injectedRoom.sceneFid - 1; // naturally indexed starting at 1, which we dont want for below
+                            var roomDMAListOffset = offset + (roomId * 8); // where, every room entry is 8 bytes, 4 bytes per dma start/end
+                            ReadWriteUtils.Arr_WriteU32(sceneFileData, roomDMAListOffset + 0, (uint) roomFile.Addr);
+                            ReadWriteUtils.Arr_WriteU32(sceneFileData, roomDMAListOffset + 4, (uint) roomFile.End);
+
+                        } // foreach room bin entry
+
+                    }// zip as file end
+                } // try end
+                catch (Exception e)
+                {
+                    throw new Exception($"Error attempting to read archive: {filePath} -- \n" + e);
+                }
+
+            } // for each mmr_scene end
         }
 
         public static void ReadSceneTable()
@@ -127,7 +290,7 @@ namespace MMR.Randomizer.Utils
                     {
                         byte DoorCount = sceneFile[ptr + 1];
                         int DoorAddr = (int)ReadWriteUtils.Arr_ReadU32(sceneFile, ptr + 4) & 0xFFFFFF;
-                        //RomData.SceneList[i].Maps[j].ActorAddr = ActorAddr;
+                        //RomData.SceneList[i].Maps[j].AddressOfActorList = AddressOfActorList;
                         RomData.SceneList[i].Doors = ReadSceneDoors(sceneFile, DoorAddr, DoorCount, i);
                     }
                     else if (cmd == 0x14) // final header command, no more headers
@@ -206,7 +369,7 @@ namespace MMR.Randomizer.Utils
 
                 Actor a = new Actor();
                 ushort an = ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16));
-                a.ActorIdFlags = an & 0xF000; // unused
+                a.ActorIdFlags = an & 0xF000;
                 a.ActorId = an & 0x0FFF;
                 a.ActorEnum = (GameObjects.Actor)a.ActorId;
                 a.OldActorEnum = a.ActorEnum;
@@ -345,8 +508,8 @@ namespace MMR.Randomizer.Utils
 
         private static void UpdateMap(Map map)
         {
-            WriteMapActors(RomData.MMFileList[map.File].Data, map.ActorAddr, map.Actors);
-            WriteMapObjects(RomData.MMFileList[map.File].Data, map.ObjAddr, map.Objects);
+            WriteMapActors(RomData.MMFileList[map.File].Data, map.AddressOfActorList, map.Actors);
+            WriteMapObjects(RomData.MMFileList[map.File].Data, map.AddressOfObjList, map.Objects);
         }
 
         public static void UpdateScene(Scene scene)
@@ -375,15 +538,15 @@ namespace MMR.Randomizer.Utils
                         if (cmd == 0x01)
                         {
                             byte ActorCount = RomData.MMFileList[f].Data[k + 1];
-                            int ActorAddr = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, k + 4) & 0xFFFFFF;
-                            RomData.SceneList[i].Maps[j].ActorAddr = ActorAddr;
-                            RomData.SceneList[i].Maps[j].Actors = ReadMapActors(RomData.MMFileList[f].Data, ActorAddr, ActorCount, i, j);
+                            int AddressOfActorList = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, k + 4) & 0xFFFFFF;
+                            RomData.SceneList[i].Maps[j].AddressOfActorList = AddressOfActorList;
+                            RomData.SceneList[i].Maps[j].Actors = ReadMapActors(RomData.MMFileList[f].Data, AddressOfActorList, ActorCount, i, j);
                         }
                         if (cmd == 0x0B)
                         {
                             byte ObjectCount = RomData.MMFileList[f].Data[k + 1];
                             int ObjectAddr = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, k + 4) & 0xFFFFFF;
-                            RomData.SceneList[i].Maps[j].ObjAddr = ObjectAddr;
+                            RomData.SceneList[i].Maps[j].AddressOfObjList = ObjectAddr;
                             RomData.SceneList[i].Maps[j].Objects = ReadMapObjects(RomData.MMFileList[f].Data, ObjectAddr, ObjectCount);
                         }
                         if (cmd == 0x14)

@@ -76,7 +76,7 @@ namespace MMR.Randomizer.Attributes.Actor
             }
             else if (relativePosition == CompanionAlignment.InFront)
             {
-                RelativePosition = new vec16(0, 0, 0); //  todo is forward x or z?
+                RelativePosition = new vec16(50, 0, 50); //  todo is forward x or z?
             }
         }
 

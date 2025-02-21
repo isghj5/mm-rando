@@ -46,7 +46,7 @@
 
 // Data (unknown).
 #define s801BD8B0                        (*(struct_801BD8B0*)        0x801BD8B0)
-#define s801D0B70                        (*(struct_801D0B70*)        0x801D0B70)
+#define s801D0B70                        (*(KaleidoMgrOverlayTable*)        0x801D0B70)
 
 // Function Prototypes.
 extern int z2_CanInteract(GlobalContext* ctxt);
@@ -115,6 +115,7 @@ extern void z2_PlayerBlastMaskAnim(GlobalContext* ctxt, ActorPlayer* player);
 extern void z2_PlayerGreatFairyLimbs(GlobalContext* ctxt, ActorPlayer* player);
 extern void z2_CopyFromMatrixStackTop(z_Matrix* mtx);
 extern void z2_CopyToMatrixStackTop(z_Matrix* mtx);
+extern void z2_KaleidoManager_LoadOvl(PlayerOverlay* ovl);
 
 
 // Function Prototypes (Scene Flags).
@@ -276,6 +277,8 @@ extern void z2_bzero(void* dest, u32 size);
 extern void z2_memcpy(void* dest, const void* src, u32 size);
 extern size_t z2_strlen(const unsigned char* s);
 extern f32 z2_sqrtf(f32 f);
+extern void z2_osInvalICache(void* addr, u32 size);
+extern void z2_osInvalDCache(void* addr, u32 size);
 
 // Function Prototypes (RNG).
 extern u32 z2_RngInt(void);

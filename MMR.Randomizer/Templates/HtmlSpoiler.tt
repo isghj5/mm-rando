@@ -117,13 +117,11 @@
         <th></th>
         <th>New Destination</th>
     </tr>
-<#         foreach (var kvp in spoiler.DungeonEntrances) {
-            var entrance = kvp.Key;
-            var destination = kvp.Value;#>
-    <tr data-id="<#= (int)destination #>" data-newlocationid="<#= (int)entrance #>" class="unavailable">
-        <td class="newlocation"><#= entrance.Entrance() #></td>
+<#         foreach (var dungeonEntrance in spoiler.DungeonEntrances) {#>
+    <tr data-id="<#= dungeonEntrance.DestinationId #>" data-newlocationid="<#= dungeonEntrance.EntranceId #>" class="unavailable">
+        <td class="newlocation"><#= dungeonEntrance.Entrance #></td>
         <td><input type="checkbox"/></td>
-        <td class="spoiler itemname"><span data-content="<#= destination.Entrance() #>"></span></td>
+        <td class="spoiler itemname"><span data-content="<#= dungeonEntrance.Destination #>"></span></td>
     </tr>
 <# } #>
 </table>
@@ -198,11 +196,11 @@
         <th>Name</th>
         <th>Cost</th>
     </tr>
-<#    foreach (var (name, cost) in spoiler.MessageCosts) { 
+<#    foreach (var price in spoiler.MessageCosts) { 
 #>
     <tr>
-        <td><#= name #></td>
-        <td class="spoiler"><span data-content="<#= cost #>"></span></td>
+        <td><#= price.Name #></td>
+        <td class="spoiler"><span data-content="<#= price.Cost #>"></span></td>
     </tr>
 <# } #>
 </table>

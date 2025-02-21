@@ -4,7 +4,10 @@
 #include "Text.h"
 
 // Whether or not the overlay menu is enabled.
-static bool gEnable = true;
+//static bool gEnable = true;
+
+// Clock Town stray fairy icon image buffer, written to by randomizer.
+u8 _Alignas (8) TOWN_FAIRY_BYTES[0xC00] = { 0 };
 
 // Gold Skulltula HUD icon.
 static Sprite gSkulltulaIcon = {
@@ -18,7 +21,7 @@ static Sprite gSpriteFairy = {
     G_IM_FMT_RGBA, G_IM_SIZ_32b, 4
 };
 
-static void LoadAndDrawStrayFairyIconFlipped(DispBuf* db, Sprite* sprite, int tileIndex, int left, int top, int width, int height) {
+static void Kaleido_LoadAndDrawStrayFairyIconFlipped(DispBuf* db, Sprite* sprite, int tileIndex, int left, int top, int width, int height) {
     const int widthFactor = (1<<10) * sprite->tileW / width;
     const int heightFactor = (1<<10) * sprite->tileH / height;
     gDPLoadTextureBlock(db->p++,
@@ -35,9 +38,6 @@ static void LoadAndDrawStrayFairyIconFlipped(DispBuf* db, Sprite* sprite, int ti
             0, 0,
             widthFactor, heightFactor);
 }
-
-// Clock Town stray fairy icon image buffer, written to by randomizer.
-u8 TOWN_FAIRY_BYTES[0xC00] = { 0 };
 
 // Clock Town stray fairy icon.
 static Sprite gTownFairyIcon = {
@@ -69,7 +69,7 @@ static struct DungeonEntry gDungeons[7] = {
 /**
  * Get text for a specific amount, with a limited digit count (1 or 2).
  **/
-static void GetCountText(int amount, char* c, int digits) {
+static void Kaleido_GetCountText(int amount, char* c, int digits) {
     if (digits == 1) {
         // Get text for 1 digit, max of 9.
         if (amount > 9) {
@@ -93,27 +93,14 @@ static void GetCountText(int amount, char* c, int digits) {
 /**
  * Whether or not the player has boss remains for a specific dungeon index.
  **/
-static bool HasRemains(u8 index) {
+static bool Kaleido_HasRemains(u8 index) {
     return (gSaveContext.perm.inv.questStatus.value & (1 << index)) != 0;
-}
-
-/**
- * Whether or not the overlay menu should display.
- **/
-static bool ShouldDraw(GlobalContext* ctxt) {
-    return ctxt->pauseCtx.state == 6 &&
-        ctxt->pauseCtx.switchingScreen == 0 &&
-        (ctxt->pauseCtx.screenIndex == 0 || ctxt->pauseCtx.screenIndex == 3) &&
-        (ctxt->state.input[0].current.buttons.l || ctxt->state.input[0].current.buttons.du);
 }
 
 /**
  * Try to draw overlay menu.
  **/
-void OverlayMenu_Draw(GlobalContext* ctxt) {
-    if (!gEnable || !ShouldDraw(ctxt)) {
-        return;
-    }
+void Kaleido_OverlayMenu_Draw(GlobalContext* ctxt) {
 
     DispBuf* db = &ctxt->state.gfxCtx->overlay;
     db->p = db->buf;
@@ -186,7 +173,7 @@ void OverlayMenu_Draw(GlobalContext* ctxt) {
     // Draw remains.
     for (int i = 0; i < gDungeonCount; i++) {
         struct DungeonEntry* d = &gDungeons[i];
-        if (d->isDungeon && HasRemains(d->index)) {
+        if (d->isDungeon && Kaleido_HasRemains(d->index)) {
             int top = startTop + ((iconSize + padding) * i);
             Sprite_Load(db, &gSpriteIcon, d->remains, 1);
             Sprite_Draw(db, &gSpriteIcon, 0, left, top, iconSize, iconSize);
@@ -210,7 +197,7 @@ void OverlayMenu_Draw(GlobalContext* ctxt) {
             u8 keys = gSaveContext.perm.inv.dungeonKeys[d->index];
             // Get key count as text.
             char count[2] = "0";
-            GetCountText(keys, count, 1);
+            Kaleido_GetCountText(keys, count, 1);
             // Draw key count as text.
             int top = startTop + ((iconSize + padding) * i) + 1;
             Text_Print(count, left + 4, top);
@@ -264,7 +251,7 @@ void OverlayMenu_Draw(GlobalContext* ctxt) {
         if (d->hasFairies) {
             // Draw dungeon fairy icons (32-bit RGBA). Otherwise, draw Clock Town fairy icon.
             if (d->isDungeon) {
-                LoadAndDrawStrayFairyIconFlipped(db, &gSpriteFairy, d->index, left, top, 20, 15);
+                Kaleido_LoadAndDrawStrayFairyIconFlipped(db, &gSpriteFairy, d->index, left, top, 20, 15);
             } else {
                 // Draw Clock Town fairy icon.
                 Sprite_Load(db, &gTownFairyIcon, 0, 1);
@@ -307,7 +294,7 @@ void OverlayMenu_Draw(GlobalContext* ctxt) {
         if (d->hasFairies || d->hasTokens) {
             // Get count as text.
             char count[3] = " 0";
-            GetCountText(total, count, 2);
+            Kaleido_GetCountText(total, count, 2);
             // Draw fairy/token count as text.
             if (total >= maximum) {
                 // Use green text if at maximum.

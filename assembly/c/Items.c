@@ -55,7 +55,7 @@ static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
             break;
         case CUSTOM_ITEM_DOUBLE_DEFENSE:
             gSaveContext.perm.unk24.hasDoubleDefense = true;
-            gSaveContext.perm.inv.defenseHearts = 20;
+            gSaveContext.perm.inv.defenseHearts = gSaveContext.perm.unk24.maxLife / 0x10;
             break;
         case CUSTOM_ITEM_STRAY_FAIRY:;
             u8 type = MMR_GetItemEntryContext->type >> 4;
@@ -95,6 +95,22 @@ static void SetRupeeCount(u16 rupees) {
     gSaveContext.owl.rupeeCounter += rupees;
 }
 
+static void HandleHearts(u8 item) {
+    switch (item) {
+        case ITEM_HEART_PIECE:
+        case ITEM_HEART_PIECE_2:
+            if (gSaveContext.perm.inv.questStatus.heartPiece != 0) {
+                break;
+            }
+            // Fallthrough
+        case ITEM_HEART_CONTAINER:
+            if (gSaveContext.perm.unk24.hasDoubleDefense) {
+                gSaveContext.perm.inv.defenseHearts++;
+            }
+            break;
+    }
+}
+
 /**
  * Helper function used to fill rupees based on wallet if enabled.
  **/
@@ -127,6 +143,7 @@ void Items_AfterReceive(GlobalContext* ctxt, u8 item) {
     HandleCustomItem(ctxt, item);
     // Fill rupees if wallet upgrade.
     HandleFillWallet(item);
+    HandleHearts(item);
 }
 
 /**

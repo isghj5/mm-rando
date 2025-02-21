@@ -40,6 +40,10 @@ namespace MMR.Randomizer.Asm
             var file = CreateMMFile(symbols);
             RomUtils.AppendFile(file);
 
+            // Create the pause menu payload MMFile
+            var kaleidoFile = CreateMMKaleidoFile(symbols);
+            RomUtils.AppendFile(kaleidoFile);
+
             // Encode Symbols into a special MMFile and insert that too
             var symbolsFile = symbols.CreateMMFile();
             RomUtils.AppendFile(symbolsFile);
@@ -59,7 +63,7 @@ namespace MMR.Randomizer.Asm
             var memory = new Memory<byte>(bytes);
             foreach (var data in _data)
             {
-                if (start <= data.Address)
+                if (start <= data.Address && data.Address < start + length)
                 {
                     // Get offset relative to MMFile start.
                     var offset = data.Address - start;
@@ -78,6 +82,25 @@ namespace MMR.Randomizer.Asm
         {
             var start = symbols.PayloadStart;
             var end = symbols.PayloadEnd;
+
+            var data = GetFileData(start, end - start);
+
+            var file = new MMFile
+            {
+                Addr = (int)start,
+                End = (int)start + data.Length,
+                IsCompressed = false,
+                IsStatic = true,
+                Data = data,
+            };
+
+            return file;
+        }
+
+        public MMFile CreateMMKaleidoFile(Symbols symbols)
+        {
+            var start = symbols.KaleidoPayloadStart;
+            var end = symbols.KaleidoPayloadEnd;
 
             var data = GetFileData(start, end - start);
 

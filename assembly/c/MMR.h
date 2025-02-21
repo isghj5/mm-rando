@@ -4,8 +4,8 @@
 #include <stdbool.h>
 #include <z64.h>
 
-#define MMR_ChestTableFileIndex (*(u32*)(0x80144968))
-#define MMR_GiTableFileIndex (*(u32*)(0x8014496C))
+#define MMR_ChestTableFileIndex (*(u32*)(0x801E1180))
+#define MMR_GiTableFileIndex (*(u32*)(0x801E1184))
 #define MMR_GetItemEntryContext ((GetItemEntry*)0x800B35F0)
 
 // MMR get-item table entry.

@@ -2505,7 +2505,7 @@ typedef struct {
     /* 0x1C */ PlayerOverlay playerActor; // VRAM: [0x8082DA90, 0x80862B70)
     /* 0x38 */ void* start; // RAM start address to use.
     /* 0x3C */ PlayerOverlay* selected; // Points to selected overlay.
-} struct_801D0B70; // size = 0x40
+} KaleidoMgrOverlayTable; // size = 0x40
 
 /// =============================================================
 /// Defines & Prototypes

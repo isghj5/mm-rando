@@ -394,7 +394,17 @@ namespace MMR.CLI
                     return -1;
                 }
                 configuration.GameplaySettings = loadedConfiguration.GameplaySettings;
-                Console.WriteLine($"Loaded GameplaySettings from \"{settingsPath}\".");
+                Console.WriteLine($"Loaded ${nameof(Configuration.GameplaySettings)} from \"{settingsPath}\".");
+                if (loadedConfiguration.CosmeticSettings != null && argsDictionary.ContainsKey("-cosmeticSettings"))
+                {
+                    configuration.CosmeticSettings = loadedConfiguration.CosmeticSettings;
+                    Console.WriteLine($"Loaded ${nameof(Configuration.CosmeticSettings)} from \"{settingsPath}\".");
+                }
+                if (loadedConfiguration.OutputSettings != null && argsDictionary.ContainsKey("-outputSettings"))
+                {
+                    configuration.OutputSettings = loadedConfiguration.OutputSettings;
+                    Console.WriteLine($"Loaded ${nameof(Configuration.OutputSettings)} from \"{settingsPath}\".");
+                }
             }
 
             if (configuration.GameplaySettings.ItemCategoriesRandomized != null || configuration.GameplaySettings.LocationCategoriesRandomized != null || configuration.GameplaySettings.ClassicCategoriesRandomized != null)
@@ -434,9 +444,13 @@ namespace MMR.CLI
 
             configuration.OutputSettings.InputPatchFilename = argsDictionary.GetValueOrDefault("-inputpatch")?.SingleOrDefault();
             configuration.OutputSettings.GeneratePatch |= argsDictionary.ContainsKey("-outputpatch");
+            configuration.OutputSettings.GenerateCosmeticsPatch |= argsDictionary.ContainsKey("-cosmeticspatch");
             configuration.OutputSettings.GenerateSpoilerLog |= argsDictionary.ContainsKey("-spoiler");
             configuration.OutputSettings.GenerateHTMLLog |= argsDictionary.ContainsKey("-html");
             configuration.OutputSettings.GenerateROM |= argsDictionary.ContainsKey("-rom");
+            configuration.OutputSettings.GenerateSpoilerLogJson |= argsDictionary.ContainsKey("-spoilerJson");
+            configuration.OutputSettings.GenerateSettingsJson |= argsDictionary.ContainsKey("-infoJson");
+            configuration.OutputSettings.GenerateHashJson |= argsDictionary.ContainsKey("-hashJson");
 
             int seed;
             if (argsDictionary.ContainsKey("-seed"))

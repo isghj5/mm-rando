@@ -6,8 +6,8 @@ namespace MMR.Randomizer.Models.Rom
     {
         public int File;
         public int Header;
-        public int ActorAddr;
-        public int ObjAddr;
+        public int AddressOfActorList;
+        public int AddressOfObjList;
         public List<int> Objects = new List<int>();
         public List<Actor> Actors = new List<Actor>();
     }

@@ -79,7 +79,7 @@ namespace MMR.UI.Forms
             #if DEBUG
             Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + DEBUG ON";
             #else
-            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + Isghj's Actorizer Test 79.3";
+            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + Isghj's Actorizer Test 88.0";
             #endif
 
             var args = Environment.GetCommandLineArgs();
@@ -122,7 +122,7 @@ namespace MMR.UI.Forms
                 { cUnderwaterOcarina, cfg => cfg.GameplaySettings.OcarinaUnderwater },
                 { cFDAnywhere, cfg => cfg.GameplaySettings.AllowFierceDeityAnywhere },
                 { cByoAmmo, cfg => cfg.GameplaySettings.ByoAmmo },
-                { cDeathMoonCrash, cfg => cfg.GameplaySettings.DeathMoonCrash },
+                { cDeathMode, cfg => cfg.GameplaySettings.DeathMode },
                 { cMoonCrashFileErase, cfg => cfg.GameplaySettings.MoonCrashErasesFile },
                 { cFewerHealthDrops, cfg => cfg.GameplaySettings.FewerHealthDrops },
                 { cTakeDamageOnEpona, cfg => cfg.GameplaySettings.TakeDamageOnEpona },
@@ -329,7 +329,7 @@ namespace MMR.UI.Forms
                 { lTrapWeightings, (typeof(GameplaySettings), nameof(GameplaySettings.TrapWeights)) },
                 { lDMult, (typeof(GameplaySettings), nameof(GameplaySettings.DamageMode)) },
                 { lDType, (typeof(GameplaySettings), nameof(GameplaySettings.DamageEffect)) },
-                { cDeathMoonCrash, (typeof(GameplaySettings), nameof(GameplaySettings.DeathMoonCrash)) },
+                { lDeathMode, (typeof(GameplaySettings), nameof(GameplaySettings.DeathMode)) },
                 { cMoonCrashFileErase, (typeof(GameplaySettings), nameof(GameplaySettings.MoonCrashErasesFile)) },
                 { cByoAmmo, (typeof(GameplaySettings), nameof(GameplaySettings.ByoAmmo)) },
                 { cFewerHealthDrops, (typeof(GameplaySettings), nameof(GameplaySettings.FewerHealthDrops)) },
@@ -1446,7 +1446,6 @@ namespace MMR.UI.Forms
             cSunsSong.Checked = _configuration.GameplaySettings.EnableSunsSong;
             cFDAnywhere.Checked = _configuration.GameplaySettings.AllowFierceDeityAnywhere;
             cByoAmmo.Checked = _configuration.GameplaySettings.ByoAmmo;
-            cDeathMoonCrash.Checked = _configuration.GameplaySettings.DeathMoonCrash;
             cMoonCrashFileErase.Checked = _configuration.GameplaySettings.MoonCrashErasesFile;
             cFewerHealthDrops.Checked = _configuration.GameplaySettings.FewerHealthDrops;
             cTakeDamageOnEpona.Checked = _configuration.GameplaySettings.TakeDamageOnEpona;
@@ -1480,6 +1479,7 @@ namespace MMR.UI.Forms
             cGiantMaskAnywhere.Checked = _configuration.GameplaySettings.GiantMaskAnywhere;
 
             cDMult.SelectedIndex = (int)_configuration.GameplaySettings.DamageMode;
+            cDeathMode.SelectedIndex = (int)_configuration.GameplaySettings.DeathMode;
             cDType.SelectedIndex = (int)_configuration.GameplaySettings.DamageEffect;
             cMode.SelectedIndex = (int)_configuration.GameplaySettings.LogicMode;
             cLink.SelectedIndex = (int)_configuration.GameplaySettings.Character;
@@ -2060,6 +2060,7 @@ namespace MMR.UI.Forms
             cSpeedupBabyCucco.Enabled = v;
 
             cDMult.Enabled = v;
+            cDeathMode.Enabled = v;
             cDType.Enabled = v;
             cGravity.Enabled = v;
             cFloors.Enabled = v;
@@ -2073,7 +2074,6 @@ namespace MMR.UI.Forms
             cSunsSong.Enabled = v;
             cFDAnywhere.Enabled = v;
             cByoAmmo.Enabled = v;
-            cDeathMoonCrash.Enabled = v;
             cMoonCrashFileErase.Enabled = v;
             cFewerHealthDrops.Enabled = v;
             cTakeDamageOnEpona.Enabled = v;

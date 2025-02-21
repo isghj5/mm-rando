@@ -12,6 +12,8 @@
 0x80089630,z2_bzero
 0x8008D700,z2_sqrtf
 0x8008F1E0,z2_strlen
+0x8008F270,z2_osInvalICache
+0x8008F2F0,z2_osinvalDCache
 0x800A7128,z2_BaseDrawCollectable
 0x800A72AC,z2_DrawRupee
 0x800A75B8,z2_DrawHeartPiece
@@ -19,6 +21,7 @@
 0x800A7730,z2_fixed_drop_spawn
 0x800A7AD4,z2_rupee_drop_spawn
 0x800A7D28,z2_random_drop_spawn
+0x800af710,z2_Effect_GetPlayState
 0x800B16B8,z2_EffectSsKiraKira_SpawnSmall
 0x800B26A8,z2_EffectSsHitmark_SpawnCustomScale
 0x800B320C,z2_EffectSsIceSmoke_Spawn
@@ -112,6 +115,7 @@
 0x80100504,z2_Lib_SegmentedToVirtual
 0x8010069C,z2_WriteHeartColors
 0x80101930,z2_LifeMeter_IsCritical
+0x80102684,z2_LightContext_RemoveLight
 0x8010CD98,z2_Gfx_DrawTexRectIA8
 0x8010CFBC,z2_8010CFBC
 0x8010D480,z2_8010D480
@@ -220,3 +224,4 @@
 0x801801E8,z2_CopyFromMatrixStackTop
 0x8018020C,z2_CopyToMatrixStackTop
 0x80128640,z2_80128640
+0x80163758,z2_kaleidomanager_loadovl

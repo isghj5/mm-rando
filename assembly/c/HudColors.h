@@ -75,6 +75,6 @@ extern struct HudColorConfig HUD_COLOR_CONFIG;
 
 void HudColors_Init(void);
 void HudColors_FileChooseInit(void);
-void HudColors_UpdatePauseMenuColors(GlobalContext* ctxt);
+void Kaleido_HudColors_UpdatePauseMenuColors(GlobalContext* ctxt);
 
 #endif // HUD_COLORS_H

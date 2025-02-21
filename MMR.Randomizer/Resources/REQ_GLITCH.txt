@@ -185,7 +185,7 @@
           "Lensless Jumping"
         ],
         [
-          "SettingNotDeathMoonCrash",
+          "SettingDeathModeDefault",
           "OtherExplosive"
         ]
       ],
@@ -4195,7 +4195,7 @@
           "Lensless Chests"
         ],
         [
-          "SettingNotDeathMoonCrash",
+          "SettingDeathModeDefault",
           "OtherExplosive",
           "Lensless Chests"
         ]
@@ -4219,7 +4219,7 @@
           "Jump along invisible platforms"
         ],
         [
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -4417,7 +4417,7 @@
         ],
         [
           "Remote Hookshot",
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ],
         [
           "Remote Hookshot",
@@ -4591,7 +4591,7 @@
         ],
         [
           "Remote Hookshot",
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ],
         [
           "Remote Hookshot",
@@ -9221,7 +9221,7 @@
         ],
         [
           "Weirdshot Off a Powder Keg Explosion",
-          "SettingNotDeathMoonCrash",
+          "SettingDeathModeDefault",
           "MaskBlast"
         ],
         [
@@ -10447,7 +10447,7 @@
           "OtherArrow"
         ],
         [
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -10472,7 +10472,7 @@
           "OtherArrow"
         ],
         [
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -14519,7 +14519,7 @@
           "OtherArrow"
         ],
         [
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -28687,11 +28687,11 @@
           "Play Song of Soaring"
         ],
         [
-          "SettingNotDeathMoonCrash",
+          "SettingDeathModeDefault",
           "Any Bomb Bag"
         ],
         [
-          "SettingNotDeathMoonCrash",
+          "SettingDeathModeDefault",
           "MaskBlast"
         ],
         [
@@ -30026,7 +30026,7 @@
           "Play Song of Soaring"
         ],
         [
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -30600,7 +30600,7 @@
         [
           "Weirdshot",
           "Bomb Hovering",
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ],
         [
           "Weirdshot",
@@ -30610,7 +30610,7 @@
         [
           "Weirdshot",
           "FD Difficult Jumps",
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ],
         [
           "Weirdshot Off a Powder Keg Explosion",
@@ -31702,11 +31702,11 @@
           "Play Song of Soaring"
         ],
         [
-          "SettingNotDeathMoonCrash",
+          "SettingDeathModeDefault",
           "Any Bomb Bag"
         ],
         [
-          "SettingNotDeathMoonCrash",
+          "SettingDeathModeDefault",
           "MaskBlast"
         ],
         [
@@ -32540,14 +32540,14 @@
       "SettingExpression": "settings.AllowFierceDeityAnywhere"
     },
     {
-      "Id": "SettingNotDeathMoonCrash",
+      "Id": "SettingDeathModeDefault",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false,
-      "SettingExpression": "!settings.DeathMoonCrash"
+      "SettingExpression": "settings.DeathMode == DeathMode.Default"
     },
     {
       "Id": "SettingCharacterAdultLink",

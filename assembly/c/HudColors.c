@@ -73,22 +73,7 @@ struct HudColorConfig HUD_COLOR_CONFIG = {
     .royalRupee           = { 0xA0, 0x60, 0xFF },
 };
 
-struct PauseCursorColors {
-    /* 0x00 */ ColorRGB16 defaultInner1;
-    /* 0x06 */ ColorRGB16 defaultInner2;
-    /* 0x0C */ ColorRGB16 yellowInner1;
-    /* 0x12 */ ColorRGB16 yellowInner2;
-    /* 0x18 */ ColorRGB16 blueInner1;
-    /* 0x1E */ ColorRGB16 blueInner2;
-    /* 0x24 */ ColorRGB16 defaultOuter1;
-    /* 0x2A */ ColorRGB16 defaultOuter2;
-    /* 0x30 */ ColorRGB16 yellowOuter1;
-    /* 0x36 */ ColorRGB16 yellowOuter2;
-    /* 0x3C */ ColorRGB16 blueOuter1;
-    /* 0x42 */ ColorRGB16 blueOuter2;
-}; // size = 0x48
-
-static void ColorTo16(ColorRGB16* dest, Color src) {
+static void HudColors_ColorTo16(ColorRGB16* dest, Color src) {
     dest->r = src.r;
     dest->g = src.g;
     dest->b = src.b;
@@ -170,38 +155,6 @@ u32 HudColors_GetCButtonColor(u16 alpha) {
 
 u32 HudColors_GetStartButtonColor(u16 alpha) {
     return Color_ConvertToIntWithAlpha(HUD_COLOR_CONFIG.buttonStart, alpha & 0xFF);
-}
-
-/**
- * Hook function used to get the "A" or "C" button color when used as a song note icon.
- **/
-u32 HudColors_GetNoteButtonColor(u8 index, u8 alpha) {
-    if (index == 0) {
-        return Color_ConvertToIntWithAlpha(HUD_COLOR_CONFIG.noteA1, alpha);
-    } else {
-        return Color_ConvertToIntWithAlpha(HUD_COLOR_CONFIG.noteC1, alpha);
-    }
-}
-
-/**
- * Hook function used to get the pause menu primary border color.
- **/
-u32 HudColors_GetMenuBorder1Color(void) {
-    return Color_ConvertToIntWithAlpha(HUD_COLOR_CONFIG.menuBorder1, 0xFF);
-}
-
-/**
- * Hook function used to get the pause menu secondary border color.
- **/
-u32 HudColors_GetMenuBorder2Color(void) {
-    return Color_ConvertToIntWithAlpha(HUD_COLOR_CONFIG.menuBorder2, 0xFF);
-}
-
-/**
- * Hook function used to get the pause menu subtitle text color.
- **/
-u32 HudColors_GetMenuSubtitleTextColor(void) {
-    return Color_ConvertToIntWithAlpha(HUD_COLOR_CONFIG.menuSubtitleText, 0xFF);
 }
 
 void HudColors_UpdateHeartColors(GlobalContext* ctxt) {
@@ -317,9 +270,9 @@ static void UpdateMsgboxPromptColors(bool initial) {
 
     // Update number cursor colors.
     ColorRGB16* numberCursor = (ColorRGB16*)0x801CFD10;
-    ColorTo16(&numberCursor[0], HUD_COLOR_CONFIG.prompt1);
-    ColorTo16(&numberCursor[1], HUD_COLOR_CONFIG.prompt2);
-    ColorTo16(&numberCursor[3], HUD_COLOR_CONFIG.promptGlow);
+    HudColors_ColorTo16(&numberCursor[0], HUD_COLOR_CONFIG.prompt1);
+    HudColors_ColorTo16(&numberCursor[1], HUD_COLOR_CONFIG.prompt2);
+    HudColors_ColorTo16(&numberCursor[3], HUD_COLOR_CONFIG.promptGlow);
 
     // Update initial values of color cycler.
     if (initial) {
@@ -338,52 +291,15 @@ static void UpdateMsgboxPromptColors(bool initial) {
 }
 
 /**
- * Helper function for updating the pause menu colors.
- **/
-void HudColors_UpdatePauseMenuColors(GlobalContext* ctxt) {
-    // Only try to update colors if kaleido_scope is loaded.
-    if (s801D0B70.kaleidoScope.loadedRamAddr != NULL) {
-        // Resolve address of colors in kaleido_scope (pause) data.
-        u32 vram = 0x808160A0 + 0x158A8;
-        void* addr = Reloc_ResolvePlayerOverlay(&s801D0B70.kaleidoScope, vram);
-        if (addr != NULL) {
-            // Update pause menu cursor icon colors.
-            struct PauseCursorColors* colors = (struct PauseCursorColors*)addr;
-            ColorTo16(&colors->blueInner1, HUD_COLOR_CONFIG.menuAInner1);
-            ColorTo16(&colors->blueInner2, HUD_COLOR_CONFIG.menuAInner2);
-            ColorTo16(&colors->blueOuter1, HUD_COLOR_CONFIG.menuAOuter1);
-            ColorTo16(&colors->blueOuter2, HUD_COLOR_CONFIG.menuAOuter2);
-            ColorTo16(&colors->yellowInner1, HUD_COLOR_CONFIG.menuCInner1);
-            ColorTo16(&colors->yellowInner2, HUD_COLOR_CONFIG.menuCInner2);
-            ColorTo16(&colors->yellowOuter1, HUD_COLOR_CONFIG.menuCOuter1);
-            ColorTo16(&colors->yellowOuter2, HUD_COLOR_CONFIG.menuCOuter2);
-        }
-
-        u8* bgDList = (u8*)ctxt->pauseCtx.bgDList;
-        if (bgDList != NULL) {
-            // Update pause menu subtitle icon colors.
-            ColorRGBA8* subtitleC = (ColorRGBA8*)(bgDList + 0x13C);
-            ColorRGBA8* subtitleA = (ColorRGBA8*)(bgDList + 0x194);
-            subtitleA->r = HUD_COLOR_CONFIG.pauseTitleA.r;
-            subtitleA->g = HUD_COLOR_CONFIG.pauseTitleA.g;
-            subtitleA->b = HUD_COLOR_CONFIG.pauseTitleA.b;
-            subtitleC->r = HUD_COLOR_CONFIG.pauseTitleC.r;
-            subtitleC->g = HUD_COLOR_CONFIG.pauseTitleC.g;
-            subtitleC->b = HUD_COLOR_CONFIG.pauseTitleC.b;
-        }
-    }
-}
-
-/**
  * Helper function for updating the colors of button icons in text.
  **/
 static void UpdateTextButtonIconColors(void) {
     ColorRGB16* iconA = (ColorRGB16*)0x801D0848;
     ColorRGB16* iconB = (ColorRGB16*)0x801D0842;
     ColorRGB16* iconC = (ColorRGB16*)0x801D084E;
-    ColorTo16(iconA, HUD_COLOR_CONFIG.buttonIconA);
-    ColorTo16(iconB, HUD_COLOR_CONFIG.buttonIconB);
-    ColorTo16(iconC, HUD_COLOR_CONFIG.buttonIconC);
+    HudColors_ColorTo16(iconA, HUD_COLOR_CONFIG.buttonIconA);
+    HudColors_ColorTo16(iconB, HUD_COLOR_CONFIG.buttonIconB);
+    HudColors_ColorTo16(iconC, HUD_COLOR_CONFIG.buttonIconC);
 }
 
 static void UpdateRupeeColors(u16* rupeeColors) {

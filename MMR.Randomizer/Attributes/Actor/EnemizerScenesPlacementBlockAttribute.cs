@@ -62,5 +62,29 @@ namespace MMR.Randomizer.Attributes
         }
     }
 
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    class ActorizerSceneCreditsActor : Attribute
+    {
+        public List<GameObjects.Actor> CreditsActors;
+        public int Room = -1;
+
+        public ActorizerSceneCreditsActor(GameObjects.Actor creditsActor,  params GameObjects.Actor[] additionalCreditsActors)
+        {
+            var actors = new List<GameObjects.Actor> { creditsActor };
+            if (additionalCreditsActors.Length > 0)
+            {
+                actors.AddRange(additionalCreditsActors);
+            }
+            CreditsActors = actors;
+        }
+
+        public ActorizerSceneCreditsActor(int room, GameObjects.Actor creditsActor, params GameObjects.Actor[] additionalCreditsActors)
+            : this(creditsActor, additionalCreditsActors) 
+        {
+            this.Room = room;
+        }
+
+    }
+
 
 }

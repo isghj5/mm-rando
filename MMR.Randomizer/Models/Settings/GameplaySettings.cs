@@ -550,6 +550,13 @@ namespace MMR.Randomizer.Models.Settings
         public DamageMode DamageMode { get; set; }
 
         /// <summary>
+        /// Modifies the damage value when Link is damaged
+        /// </summary>
+        [Description("Select a death mode, affecting what happens when Link dies:\n\n - Default: Nothing out of the ordinary.\n - Moon Crash: The moon will crash.\n - Reduce Max Hearts: Reduces the maximum number of hearts by one (or by half if you have Double Defense) and current health is restored to full. If you run out of hearts, the moon crashes.")]
+        [SettingTab(SettingTabAttribute.Type.Gimmicks)]
+        public DeathMode DeathMode { get; set; }
+
+        /// <summary>
         /// Adds an additional effect when Link is damaged
         /// </summary>
         [Description("Select an effect to occur whenever Link is being damaged:\n\n - Default: Vanilla effects occur.\n - Fire: All damage burns Link.\n - Ice: All damage freezes Link.\n - Shock: All damage shocks link.\n - Knockdown: All damage knocks Link down.\n - Random: Any random effect of the above.")]
@@ -617,6 +624,8 @@ namespace MMR.Randomizer.Models.Settings
         [SettingTab(SettingTabAttribute.Type.Gimmicks)]
         public bool ByoAmmo { get; set; }
 
+        /// (jan2025)HOTFIX this was put back after zoey removed it switching to a different way to keep track of moon crash
+        /// 
         /// <summary>
         /// Dying causes the moon to crash, with all that that implies.
         /// </summary>
@@ -624,9 +633,6 @@ namespace MMR.Randomizer.Models.Settings
         [SettingTab(SettingTabAttribute.Type.Gimmicks)]
         public bool DeathMoonCrash { get; set; }
 
-        /// <summary>
-        /// Dying causes the moon to crash, with all that that implies.
-        /// </summary>
         [Description("If the moon crashes, your save files will be erased.")]
         [SettingTab(SettingTabAttribute.Type.Gimmicks)]
         public bool MoonCrashErasesFile

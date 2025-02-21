@@ -7,6 +7,8 @@
 .orga (G_DMA_TABLE + (0x10 * 1544))
 .area 0x70, 0
     .word G_PAYLOAD_VROM, G_PAYLOAD_VROM + G_PAYLOAD_SIZE, G_PAYLOAD_VROM, 0
+.align 16
+    .word G_KALEIDOPAYLOAD_VROM, G_KALEIDOPAYLOAD_VROM + G_KALEIDO_FREESIZE, G_KALEIDOPAYLOAD_VROM, 0
 .endarea
 
 ;==================================================================================================

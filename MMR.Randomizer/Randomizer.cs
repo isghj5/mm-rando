@@ -3530,7 +3530,7 @@ namespace MMR.Randomizer
                     _randomized.RequiredSongLocations = requiredSongLocations.Distinct().ToList().AsReadOnly();
                     _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.Keys.ToList().AsReadOnly();
 
-                    var spheres = new List<List<(string item, string location)>>();
+                    var spheres = new List<List<ItemLocationPair>>();
                     var acquired = new List<Item>();
                     acquired.AddRange(_settings.CustomStartingItemList);
                     acquired.AddRange(_randomized.BlitzExtraItems);
@@ -3587,7 +3587,7 @@ namespace MMR.Randomizer
                         } while (fakeItemsUpdated);
 
                         spheresUpdated = false;
-                        var currentSphere = new List<(string item, string location)>();
+                        var currentSphere = new List<ItemLocationPair>();
                         var currentSphereItems = new List<Item>();
                         foreach (var io in ItemList.Where(io => !ioAcquired.Contains(io)))
                         {
@@ -3618,11 +3618,19 @@ namespace MMR.Randomizer
                                 currentSphereItems.Add(item);
                                 if (location.DungeonEntrances() != null)
                                 {
-                                    currentSphere.Add((item.Entrance() ?? item.ToString(), location.Entrance() ?? location.ToString()));
+                                    currentSphere.Add(new ItemLocationPair
+                                    {
+                                        Item = item.Entrance() ?? item.ToString(),
+                                        Location = location.Entrance() ?? location.ToString(),
+                                    });
                                 }
                                 else if (_randomized.ImportantLocations.Contains(location))
                                 {
-                                    currentSphere.Add((item.ProgressiveUpgradeName(_settings.ProgressiveUpgrades), location.Location(ItemList) ?? location.ToString()));
+                                    currentSphere.Add(new ItemLocationPair
+                                    {
+                                        Item = item.ProgressiveUpgradeName(_settings.ProgressiveUpgrades),
+                                        Location = location.Location(ItemList) ?? location.ToString(),
+                                    });
                                 }
                             }
                         }

@@ -3,6 +3,6 @@
 
 #include <z64.h>
 
-void OverlayMenu_Draw(GlobalContext* ctxt);
+void Kaleido_OverlayMenu_Draw(GlobalContext* ctxt);
 
 #endif // OVERLAY_MENU_H

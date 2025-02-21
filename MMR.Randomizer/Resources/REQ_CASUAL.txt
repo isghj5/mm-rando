@@ -7283,7 +7283,7 @@
       ],
       "ConditionalItems": [
         [
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ],
         [
           "MaskDeku"
@@ -7370,7 +7370,7 @@
         [
           "OtherArrow",
           "SettingDamageModeDefault",
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ],
         [
           "Deku Bubbles"
@@ -7382,7 +7382,7 @@
         [
           "ItemHookshot",
           "SettingDamageModeDefault",
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ],
         [
           "MaskZora",
@@ -7392,7 +7392,7 @@
           "MaskZora",
           "WFT Carnivorous Flower Jump",
           "SettingDamageModeDefault",
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ],
         [
           "WFT Elevator Room as FD",
@@ -7422,7 +7422,7 @@
           "Any Bomb Bag",
           "WFT Carnivorous Flower Jump",
           "SettingDamageModeDefault",
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ],
         [
           "WFT Hives With Explosives",
@@ -9768,7 +9768,7 @@
           "Igos Fight"
         ],
         [
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -9787,7 +9787,7 @@
           "Igos Fight"
         ],
         [
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -13735,7 +13735,7 @@
           "Igos Fight"
         ],
         [
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -24825,7 +24825,7 @@
           "SettingAllowFierceDeityAnywhere"
         ],
         [
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ],
         [
           "SettingClimbMostSurfaces"
@@ -26545,11 +26545,11 @@
           "Play Song of Soaring"
         ],
         [
-          "SettingNotDeathMoonCrash",
+          "SettingDeathModeDefault",
           "Any Bomb Bag"
         ],
         [
-          "SettingNotDeathMoonCrash",
+          "SettingDeathModeDefault",
           "MaskBlast"
         ],
         [
@@ -27730,7 +27730,7 @@
           "Play Song of Soaring"
         ],
         [
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ]
       ],
       "TimeNeeded": "None",
@@ -31171,7 +31171,7 @@
         [
           "SettingHookshotAnySurface",
           "SettingDamageModeDefault",
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ],
         [
           "WFT as Giant Link"
@@ -31183,7 +31183,7 @@
         [
           "OtherArrow",
           "SettingDamageModeDefault",
-          "SettingNotDeathMoonCrash"
+          "SettingDeathModeDefault"
         ],
         [
           "Deku Bubbles"
@@ -32933,11 +32933,11 @@
           "Play Song of Soaring"
         ],
         [
-          "SettingNotDeathMoonCrash",
+          "SettingDeathModeDefault",
           "Any Bomb Bag"
         ],
         [
-          "SettingNotDeathMoonCrash",
+          "SettingDeathModeDefault",
           "MaskBlast"
         ]
       ],
@@ -34104,14 +34104,14 @@
       "SettingExpression": "settings.AllowFierceDeityAnywhere"
     },
     {
-      "Id": "SettingNotDeathMoonCrash",
+      "Id": "SettingDeathModeDefault",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false,
-      "SettingExpression": "!settings.DeathMoonCrash"
+      "SettingExpression": "settings.DeathMode == DeathMode.Default"
     },
     {
       "Id": "SettingHookshotAnySurface",

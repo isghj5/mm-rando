@@ -25,6 +25,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using SixLabors.ImageSharp.Formats.Png;
 using System.Security.Cryptography;
+using MMR.Common.Utils;
 
 namespace MMR.Randomizer
 {
@@ -1296,6 +1297,12 @@ namespace MMR.Randomizer
                 ResourceUtils.ApplyIndexedHack(damageMultiplier-1, Resources.mods.dm_1, Resources.mods.dm_2, Resources.mods.dm_3, Resources.mods.dm_4);
             }
 
+            int deathMode = (int)_randomized.Settings.DeathMode;
+            if (deathMode > 0)
+            {
+                ResourceUtils.ApplyIndexedHack(deathMode - 1, Resources.mods.death_moon_crash, Resources.mods.death_reduces_max_hearts);
+            }
+
             int damageEffect = (int)_randomized.Settings.DamageEffect;
             if (damageEffect > 0)
             {
@@ -1357,11 +1364,6 @@ namespace MMR.Randomizer
             if (_randomized.Settings.ByoAmmo)
             {
                 ResourceUtils.ApplyHack(Resources.mods.byo_ammo);
-            }
-
-            if (_randomized.Settings.DeathMoonCrash)
-            {
-                ResourceUtils.ApplyHack(Resources.mods.death_moon_crash);
             }
 
             if (_randomized.Settings.HookshotAnySurface)
@@ -1574,6 +1576,8 @@ namespace MMR.Randomizer
             if (_randomized.Settings.RandomizeEnemies)
             {
                 Enemies.ShuffleEnemies();
+
+                Enemies.UpdateActorOverlayTable(); // this used to be last second, but to try to get it to be .mmr patch compatible its being moved up
             }
         }
 
@@ -6001,22 +6005,12 @@ namespace MMR.Randomizer
             }
         }
 
-        private void WriteBrokenGaroFreeHints()
+        private void CheckEnemizerFreeGaroHints()
         {
-            if (_randomized.Settings.FreeGaroHints) // actor should be decompressed if this is true
+            if (_randomized.Settings.FreeGaroHints && _randomized.Settings.RandomizeEnemies) // bandaid
             {
-                // not sure why my actorizer build has this issue but not release MMR
-                // the branch at the top of the asm, that checks the results of the switch flag, causes the function to end if switch is OFF
-                // this is opposite of vanilla, where the switch flag being zero keeps the code going
-                // all I did was change the jump location back to vanilla(ish, as it has been moved)
-
-                var encount3data = RomData.MMFileList[247].Data;
-                var jumpOffsetAddressByte = 0x173;
-                if (encount3data[jumpOffsetAddressByte] == 0x34) // the end of the function, which is wrong
-                {
-                    encount3data[jumpOffsetAddressByte] = 0x8; // the correctly offset
-                }
-            }
+                throw new Exception("Free garo hints and this version of Enemizer/Actorizer is broken, disable one");
+            } // */
         }
 
         private void WriteTitleScreen()
@@ -6213,7 +6207,10 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_WriteU32(bootFile, 0x2EBC, 0x10000022); // branch all the way down to the function exit
 
             // todo: figure out if we can make the screenshots say they are screen shots at the top
-            // todo: can we add a symbol to the screen if autoscroll is turned on
+
+            // change the "THREAD" at the first page to CRASH for visual indicator to the players, the value behind it is still the thread number
+            var newCrashLabel = Encoding.ASCII.GetBytes("CRASH: "); // replaces "THREAD:"
+            ReadWriteUtils.Arr_Insert(newCrashLabel, 0, newCrashLabel.Length, bootFile, 0x0185D4);
         }
 
         private void WriteStartupStrings()
@@ -6244,6 +6241,82 @@ namespace MMR.Randomizer
                 }
                 image.Save(filename, new PngEncoder());
             }
+        }
+
+        public void OutputHashJson(IEnumerable<byte> iconIndices, string filename)
+        {
+            var iconNames = new Dictionary<byte, string>
+            {
+                { 0, "ITEM_OCARINA" },
+                { 1, "ITEM_BOW" },
+                { 2, "ITEM_FIRE_ARROW" },
+                { 3, "ITEM_ICE_ARROW" },
+                { 4, "ITEM_LIGHT_ARROW" },
+                { 6, "ITEM_BOMB" },
+                { 7, "ITEM_BOMBCHU" },
+                { 8, "ITEM_DEKU_STICK" },
+                { 9, "ITEM_DEKU_NUT" },
+                { 10, "ITEM_MAGIC_BEAN" },
+                { 12, "ITEM_POWDER_KEG" },
+                { 13, "ITEM_PICTOGRAPH" },
+                { 14, "ITEM_LENS" },
+                { 15, "ITEM_HOOKSHOT" },
+                { 16, "ITEM_FAIRY_SWORD" },
+                { 18, "ITEM_EMPTY_BOTTLE" },
+                { 23, "ITEM_DEKU_PRINCESS" },
+                { 27, "ITEM_BUGS" },
+                { 30, "ITEM_BIG_POE" },
+                { 32, "ITEM_HOT_WATER" },
+                { 33, "ITEM_ZORA_EGG" },
+                { 34, "ITEM_GOLD_DUST_BOTTLE" },
+                { 35, "ITEM_MUSHROOM" },
+                { 36, "ITEM_SEAHORSE" },
+                { 37, "ITEM_CHATEAU_ROMANI_BOTTLE" },
+                { 40, "ITEM_MOON_TEAR" },
+                { 41, "ITEM_TOWN_DEED" },
+                { 45, "ITEM_ROOM_KEY" },
+                { 46, "ITEM_MAMA_LETTER" },
+                { 47, "ITEM_KAFEI_LETTER" },
+                { 48, "ITEM_PENDANT" },
+                { 49, "ITEM_MAP" },
+                { 50, "ITEM_DEKU_MASK" },
+                { 51, "ITEM_GORON_MASK" },
+                { 52, "ITEM_ZORA_MASK" },
+                { 53, "ITEM_FIERCE_DEITY_MASK" },
+                { 54, "ITEM_MASK_OF_TRUTH" },
+                { 55, "ITEM_KAFEI_MASK" },
+                { 56, "ITEM_ALL_NIGHT_MASK" },
+                { 57, "ITEM_BUNNY_HOOD" },
+                { 58, "ITEM_KEATON_MASK" },
+                { 59, "ITEM_GARO_MASK" },
+                { 60, "ITEM_ROMANI_MASK" },
+                { 61, "ITEM_CIRCUS_LEADER_MASK" },
+                { 62, "ITEM_POSTMAN_HAT" },
+                { 63, "ITEM_COUPLE_MASK" },
+                { 64, "ITEM_GREAT_FAIRY_MASK" },
+                { 65, "ITEM_GIBDO_MASK" },
+                { 66, "ITEM_DON_GERO_MASK" },
+                { 67, "ITEM_KAMARO_MASK" },
+                { 68, "ITEM_CAPTAIN_HAT" },
+                { 69, "ITEM_STONE_MASK" },
+                { 70, "ITEM_BREMEN_MASK" },
+                { 71, "ITEM_BLAST_MASK" },
+                { 72, "ITEM_MASK_OF_SCENTS" },
+                { 73, "ITEM_GIANT_MASK" },
+                { 77, "ITEM_KOKIRI_SWORD" },
+                { 79, "ITEM_GILDED_SWORD" },
+                { 80, "ITEM_HELIX_SWORD" },
+                { 81, "ITEM_HERO_SHIELD" },
+                { 82, "ITEM_MIRROR_SHIELD" },
+                { 84, "ITEM_QUIVER_40" },
+                { 90, "ITEM_ADULT_WALLET" },
+                { 97, "ITEM_BOMBERS_NOTEBOOK" },
+            };
+            var hashOutput = new HashOutputJson
+            {
+                Hash = iconIndices.Select(iconIndex => iconNames.GetValueOrDefault(iconIndex)).ToList()
+            };
+            File.WriteAllText(filename, JsonSerializer.Serialize(hashOutput));
         }
 
         private void WriteAsmPatch(AsmContext asm)
@@ -6379,6 +6452,7 @@ namespace MMR.Randomizer
             RomData.SceneList = null;
 
             var originalMMFileList = RomData.MMFileList.Select(file => file.Clone()).ToList();
+            List<MMFile> cosmeticMMFileList;
 
             byte[] hash;
             AsmContext asm;
@@ -6389,6 +6463,8 @@ namespace MMR.Randomizer
 
                 // Parse Symbols data from the ROM (specific MMFile)
                 asm = AsmContext.LoadFromROM();
+
+                cosmeticMMFileList = RomData.MMFileList.Select(file => file.Clone()).ToList();
 
                 // Apply Asm configuration post-patch
                 WriteAsmConfigPostPatch(asm, hash);
@@ -6458,26 +6534,24 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(62, "Writing dungeons...");
                 WriteDungeons();
 
-                progressReporter.ReportProgress(63, "Writing gimmicks...");
-                WriteGimmicks(messageTable);
-
-                progressReporter.ReportProgress(64, "Writing speedups...");
+                progressReporter.ReportProgress(63, "Writing speedups...");
                 WriteSpeedUps(messageTable);
 
                 //Enemies used to be here
 
-                progressReporter.ReportProgress(65, "Writing items...");
+                progressReporter.ReportProgress(64, "Writing items...");
                 WriteItems(messageTable);
 
-                progressReporter.ReportProgress(66, "Reading Enemies ...");
+                progressReporter.ReportProgress(65, "Reading Enemies ...");
+                CheckEnemizerFreeGaroHints();
                 ReadEnemies(outputSettings);
 
-
-                progressReporter.ReportProgress(66, "Writing misc hacks...");
-                WriteMiscHacks();
-
-                progressReporter.ReportProgress(67, "Writing cutscenes...");
+                progressReporter.ReportProgress(66, "Writing cutscenes...");
                 WriteCutscenes(messageTable);
+
+                progressReporter.ReportProgress(67, "Writing gimmicks...");
+                WriteGimmicks(messageTable);
+                WriteMiscHacks();
 
                 progressReporter.ReportProgress(68, "Writing messages...");
                 WriteGossipQuotes(messageTable);
@@ -6516,46 +6590,62 @@ namespace MMR.Randomizer
                     false => Patch.Patcher.CreatePatch(originalMMFileList),
                 };
 
+                cosmeticMMFileList = RomData.MMFileList.Select(file => file.Clone()).ToList();
+
                 // Write subset of Asm config post-patch
                 WriteAsmConfig(asm, hash);
 
                 if (_randomized.Settings.DrawHash || outputSettings.GeneratePatch)
                 {
                     var iconStripIcons = asm.Symbols.ReadHashIconsTable();
-                    OutputHashIcons(ImageUtils.GetIconIndices(hash).Select(index => iconStripIcons[index]), Path.ChangeExtension(outputSettings.OutputROMFilename, "png"));
+                    var iconFileIndices = ImageUtils.GetIconIndices(hash).Select(index => iconStripIcons[index]);
+                    var directory = Path.GetDirectoryName(outputSettings.OutputROMFilename);
+                    var filename = Path.GetFileNameWithoutExtension(outputSettings.OutputROMFilename);
+                    OutputHashIcons(iconFileIndices, Path.Combine(directory, filename + ".png"));
+
+                    if (outputSettings.GenerateHashJson)
+                    {
+                        OutputHashJson(iconFileIndices, Path.Combine(directory, filename + "_Hash.json"));
+                    }
                 }
             }
+
             WriteMiscellaneousChanges();
 
             progressReporter.ReportProgress(72, "Writing cosmetics...");
             WriteTatlColour(new Random(BitConverter.ToInt32(hash, 0)));
-            //WriteTunicColor();
-            MakeItRain();
+            //MakeItRain();
             WriteInstruments(new Random(BitConverter.ToInt32(hash, 0)));
 
-            progressReporter.ReportProgress(73, "Writing music...");
+            progressReporter.ReportProgress(73, "Writing sound effects...");
+            WriteSoundEffects(new Random(BitConverter.ToInt32(hash, 0)));
+            WriteLowHealthSound(new Random(BitConverter.ToInt32(hash, 0)));
+
+            progressReporter.ReportProgress(74, "Writing music...");
             SequenceUtils.MoveAudioBankTable();
-            WriteAudioSeq(new Random(BitConverter.ToInt32(hash, 0)), outputSettings);
             WriteMuteMusic();
             WriteEnemyCombatMusicMute();
             WriteRemoveMinorMusic();
             WriteDisableFanfares();
 
-            progressReporter.ReportProgress(74, "Writing sound effects...");
-            WriteSoundEffects(new Random(BitConverter.ToInt32(hash, 0)));
-            WriteLowHealthSound(new Random(BitConverter.ToInt32(hash, 0)));
+            if (outputSettings.GenerateCosmeticsPatch)
+            {
+                var directory = Path.GetDirectoryName(outputSettings.OutputROMFilename);
+                var filename = Path.GetFileNameWithoutExtension(outputSettings.OutputROMFilename);
 
-            WriteBrokenGaroFreeHints();
+                Patch.Patcher.CreatePatch(Path.Combine(directory, filename + "_Cosmetics.mmr"), cosmeticMMFileList);
+            }
+
+            WriteAudioSeq(new Random(BitConverter.ToInt32(hash, 0)), outputSettings);
 
             if (outputSettings.GenerateROM || outputSettings.OutputVC)
             {
                 progressReporter.ReportProgress(75, "Building ROM...");
 
-                Enemies.UpdateActorOverlayTable(); // last second before rom generation
-
+                byte[] ROM = null;
                 if (outputSettings.GenerateROM)
                 {
-                    byte[] ROM = RomUtils.BuildROM(outputSettings);
+                    ROM = RomUtils.BuildROM(outputSettings);
                     if (ROM.Length > 0x4000000) // over 64mb
                     {
                         throw new ROMOverflowException("64 MB", "hardware (Everdrive)");
@@ -6584,7 +6674,10 @@ namespace MMR.Randomizer
                             );
                     }
 
-                    byte[] ROM = RomUtils.BuildROM(outputSettings);
+                    if (ROM == null) // wasnt previously run for n64 rom
+                    {
+                        ROM = RomUtils.BuildROM(outputSettings);
+                    }
                     if (ROM.Length > 0x2800000) // Over 40MB. The upper limit is likely 48MB, but let's stick with 40 for now.
                     {
                         throw new ROMOverflowException("40 MB", "WiiVC");

@@ -66,7 +66,14 @@ namespace MMR.Randomizer.Patch
                 {
                     original.Cmp_Addr = -1;
                     original.Cmp_End = -1;
+                }else
+                {
+                    original.Addr = address;
+                    original.End = address + original.Data.Length;
+                    original.WasEdited = true;
+                    //original.IsCompressed = false; // testing, balloons the rom by keeping all old files un-compressed
                 }
+                //if (original.) // back up, just leave decompressed
             }
         }
 

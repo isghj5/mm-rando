@@ -1,4 +1,5 @@
-﻿using MMR.Randomizer.Extensions;
+﻿using MMR.Common.Utils;
+using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
@@ -72,10 +73,10 @@ namespace MMR.Randomizer.Utils
             var plainTextRegex = new Regex("[^a-zA-Z0-9' .\\-]+");
             Spoiler spoiler = new Spoiler()
             {
-                Version = Randomizer.AssemblyVersion + " + Isghj's Actorizer Test 79.3",
+                Version = Randomizer.AssemblyVersion + " + Isghj's Actorizer Test 88.0",
                 SettingsString = settingsString,
                 Seed = randomized.Seed,
-                DungeonEntrances = dungeonEntrances,
+                DungeonEntrances = dungeonEntrances.Select(kvp => new SpoilerDungeonEntrance(kvp)).ToList(),
                 ItemList = itemList.ToList(),
                 Logic = randomized.Logic,
                 BlitzExtraItems = randomized.BlitzExtraItems.AsReadOnly(),
@@ -105,7 +106,7 @@ namespace MMR.Randomizer.Utils
                 {
                     if (!mc.HasValue)
                     {
-                        return ((string, ushort)?) null;
+                        return null;
                     }
                     var messageCost = MessageCost.MessageCosts[i];
 
@@ -130,8 +131,12 @@ namespace MMR.Randomizer.Utils
                             name = $"Message Cost [{i}]";
                         }
                     }
-                    return (name, mc.Value);
-                }).Where(mc => mc != null).Select(mc => mc.Value).ToList(),
+                    return new NameCostPair
+                    {
+                        Name = name,
+                        Cost = mc.Value,
+                    };
+                }).Where(mc => mc != null).ToList(),
             };
 
             if (outputSettings.GenerateHTMLLog)
@@ -146,6 +151,34 @@ namespace MMR.Randomizer.Utils
             if (outputSettings.GenerateSpoilerLog)
             {
                 CreateTextSpoilerLog(spoiler, Path.Combine(directory, filename + "_SpoilerLog.txt"));
+            }
+
+            if (outputSettings.GenerateSpoilerLogJson)
+            {
+                var spoilerJson = new SpoilerOutputJson
+                {
+                    Settings = settings,
+                    Seed = spoiler.Seed,
+                    Version = spoiler.Version,
+                    DungeonEntrances = spoiler.DungeonEntrances,
+                    Items = spoiler.ItemList.GroupBy(item => item.Region).OrderBy(g => g.Key).ToDictionary(g => g.Key.Name(), g => g.ToList()),
+                    BlitzExtraItems = spoiler.BlitzExtraItems.Select(item => item.Name()).ToList().AsReadOnly(),
+                    Playthrough = spoiler.Spheres,
+                    GossipHints = spoiler.GossipHints,
+                    Prices = spoiler.MessageCosts,
+                };
+                File.WriteAllText(Path.Combine(directory, filename + "_SpoilerLog.json"), JsonSerializer.Serialize(spoilerJson));
+            }
+
+            if (outputSettings.GenerateSettingsJson)
+            {
+                var settingsJson = new SettingsOutputJson
+                {
+                    Settings = settings,
+                    Seed = spoiler.Seed,
+                    Version = spoiler.Version,
+                };
+                File.WriteAllText(Path.Combine(directory, filename + "_Settings.json"), JsonSerializer.Serialize(settingsJson));
             }
         }
 
@@ -173,7 +206,7 @@ namespace MMR.Randomizer.Utils
                 log.AppendLine();
                 foreach (var kvp in spoiler.DungeonEntrances)
                 {
-                    log.AppendLine($"{kvp.Key.Entrance(),-21} -> {kvp.Value.Entrance()}");
+                    log.AppendLine($"{kvp.Entrance,-21} -> {kvp.Destination}");
                 }
                 log.AppendLine("");
             }
@@ -197,9 +230,9 @@ namespace MMR.Randomizer.Utils
             {
                 log.AppendLine();
                 log.AppendLine($" {"Name", -50}    Cost");
-                foreach (var (name, cost) in spoiler.MessageCosts)
+                foreach (var price in spoiler.MessageCosts)
                 {
-                    log.AppendLine($"{name,-50} -> {cost}");
+                    log.AppendLine($"{price.Name,-50} -> {price.Cost}");
                 }
             }
 
@@ -227,9 +260,9 @@ namespace MMR.Randomizer.Utils
                 var i = 0;
                 foreach (var sphere in spoiler.Spheres)
                 {
-                    foreach (var (item, location) in sphere)
+                    foreach (var pair in sphere)
                     {
-                        log.AppendLine($"{i,-10} {location,-50} -> {item}");
+                        log.AppendLine($"{i,-10} {pair.Location,-50} -> {pair.Item}");
                     }
                     log.AppendLine();
                     i++;

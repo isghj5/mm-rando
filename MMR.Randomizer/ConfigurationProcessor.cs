@@ -22,7 +22,7 @@ namespace MMR.Randomizer
                 {
                     randomized = randomizer.Randomize(progressReporter);
 
-                    if ((configuration.OutputSettings.GenerateSpoilerLog || configuration.OutputSettings.GenerateHTMLLog)
+                    if ((configuration.OutputSettings.GenerateSpoilerLog || configuration.OutputSettings.GenerateHTMLLog || configuration.OutputSettings.GenerateSpoilerLogJson || configuration.OutputSettings.GenerateSettingsJson)
                         && configuration.GameplaySettings.LogicMode != LogicMode.Vanilla)
                     {
                         SpoilerUtils.CreateSpoilerLog(randomized, configuration.GameplaySettings, configuration.OutputSettings);
@@ -39,7 +39,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (configuration.OutputSettings.GenerateROM || configuration.OutputSettings.OutputVC || configuration.OutputSettings.GeneratePatch)
+            if (configuration.OutputSettings.GenerateROM || configuration.OutputSettings.OutputVC || configuration.OutputSettings.GeneratePatch || configuration.OutputSettings.GenerateCosmeticsPatch)
             {
                 if (!RomUtils.ValidateROM(configuration.OutputSettings.InputROMFilename))
                 {

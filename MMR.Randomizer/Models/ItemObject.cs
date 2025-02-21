@@ -5,7 +5,7 @@ using MMR.Randomizer.Utils;
 
 namespace MMR.Randomizer.Models
 {
-    [System.Diagnostics.DebuggerDisplay("[{Name}][{ID}]")]
+    [System.Diagnostics.DebuggerDisplay("[{Item.ToString()}]->[{NewLocation.ToString()}]")]
     public class ItemObject
     {
         public int ID { get; set; }

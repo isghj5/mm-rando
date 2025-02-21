@@ -79,6 +79,8 @@ namespace MMR.UI.Forms
             this.pLocationCategories = new System.Windows.Forms.Panel();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.gGimmicksChallenges = new System.Windows.Forms.GroupBox();
+            this.cDeathMode = new System.Windows.Forms.ComboBox();
+            this.lDeathMode = new System.Windows.Forms.Label();
             this.cMoonCrashFileErase = new System.Windows.Forms.CheckBox();
             this.cTakeDamageFromDexihands = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -92,7 +94,6 @@ namespace MMR.UI.Forms
             this.cFewerHealthDrops = new System.Windows.Forms.CheckBox();
             this.cDType = new System.Windows.Forms.ComboBox();
             this.lDType = new System.Windows.Forms.Label();
-            this.cDeathMoonCrash = new System.Windows.Forms.CheckBox();
             this.cByoAmmo = new System.Windows.Forms.CheckBox();
             this.cDMult = new System.Windows.Forms.ComboBox();
             this.lDMult = new System.Windows.Forms.Label();
@@ -178,7 +179,6 @@ namespace MMR.UI.Forms
             this.lLink = new System.Windows.Forms.Label();
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.cEasyFrameByFrame = new System.Windows.Forms.CheckBox();
             this.cGossipsTolerant = new System.Windows.Forms.CheckBox();
             this.cQuestItemKeep = new System.Windows.Forms.CheckBox();
             this.cUpdateNpcText = new System.Windows.Forms.CheckBox();
@@ -205,6 +205,7 @@ namespace MMR.UI.Forms
             this.cDisableCritWiggle = new System.Windows.Forms.CheckBox();
             this.cQuestItemStorage = new System.Windows.Forms.CheckBox();
             this.cNoDowngrades = new System.Windows.Forms.CheckBox();
+            this.cEasyFrameByFrame = new System.Windows.Forms.CheckBox();
             this.tabShortenCutscenes = new System.Windows.Forms.TabPage();
             this.tShortenCutscenes = new System.Windows.Forms.TabControl();
             this.tabCosmetics = new System.Windows.Forms.TabPage();
@@ -834,6 +835,8 @@ namespace MMR.UI.Forms
             // 
             // gGimmicksChallenges
             // 
+            this.gGimmicksChallenges.Controls.Add(this.cDeathMode);
+            this.gGimmicksChallenges.Controls.Add(this.lDeathMode);
             this.gGimmicksChallenges.Controls.Add(this.cMoonCrashFileErase);
             this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromDexihands);
             this.gGimmicksChallenges.Controls.Add(this.label2);
@@ -847,7 +850,6 @@ namespace MMR.UI.Forms
             this.gGimmicksChallenges.Controls.Add(this.cFewerHealthDrops);
             this.gGimmicksChallenges.Controls.Add(this.cDType);
             this.gGimmicksChallenges.Controls.Add(this.lDType);
-            this.gGimmicksChallenges.Controls.Add(this.cDeathMoonCrash);
             this.gGimmicksChallenges.Controls.Add(this.cByoAmmo);
             this.gGimmicksChallenges.Controls.Add(this.cDMult);
             this.gGimmicksChallenges.Controls.Add(this.lDMult);
@@ -860,12 +862,36 @@ namespace MMR.UI.Forms
             this.gGimmicksChallenges.TabStop = false;
             this.gGimmicksChallenges.Text = "Challenges";
             // 
+            // cDeathMode
+            // 
+            this.cDeathMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cDeathMode.FormattingEnabled = true;
+            this.cDeathMode.Items.AddRange(new object[] {
+            "Default",
+            "Moon Crash",
+            "Reduce Max Hearts"});
+            this.cDeathMode.Location = new System.Drawing.Point(7, 78);
+            this.cDeathMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDeathMode.Name = "cDeathMode";
+            this.cDeathMode.Size = new System.Drawing.Size(129, 23);
+            this.cDeathMode.TabIndex = 37;
+            // 
+            // lDeathMode
+            // 
+            this.lDeathMode.AutoSize = true;
+            this.lDeathMode.Location = new System.Drawing.Point(7, 62);
+            this.lDeathMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lDeathMode.Name = "lDeathMode";
+            this.lDeathMode.Size = new System.Drawing.Size(72, 15);
+            this.lDeathMode.TabIndex = 38;
+            this.lDeathMode.Text = "Death mode";
+            // 
             // cMoonCrashFileErase
             // 
             this.cMoonCrashFileErase.AutoSize = true;
             this.cMoonCrashFileErase.BackColor = System.Drawing.Color.Transparent;
             this.cMoonCrashFileErase.ForeColor = System.Drawing.Color.Black;
-            this.cMoonCrashFileErase.Location = new System.Drawing.Point(7, 90);
+            this.cMoonCrashFileErase.Location = new System.Drawing.Point(7, 107);
             this.cMoonCrashFileErase.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cMoonCrashFileErase.Name = "cMoonCrashFileErase";
             this.cMoonCrashFileErase.Size = new System.Drawing.Size(147, 19);
@@ -878,7 +904,7 @@ namespace MMR.UI.Forms
             this.cTakeDamageFromDexihands.AutoSize = true;
             this.cTakeDamageFromDexihands.BackColor = System.Drawing.Color.Transparent;
             this.cTakeDamageFromDexihands.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromDexihands.Location = new System.Drawing.Point(153, 213);
+            this.cTakeDamageFromDexihands.Location = new System.Drawing.Point(153, 233);
             this.cTakeDamageFromDexihands.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cTakeDamageFromDexihands.Name = "cTakeDamageFromDexihands";
             this.cTakeDamageFromDexihands.Size = new System.Drawing.Size(112, 19);
@@ -889,7 +915,7 @@ namespace MMR.UI.Forms
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 120);
+            this.label2.Location = new System.Drawing.Point(7, 140);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(126, 15);
@@ -901,7 +927,7 @@ namespace MMR.UI.Forms
             this.cTakeDamageFromGibdosFaster.AutoSize = true;
             this.cTakeDamageFromGibdosFaster.BackColor = System.Drawing.Color.Transparent;
             this.cTakeDamageFromGibdosFaster.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromGibdosFaster.Location = new System.Drawing.Point(154, 138);
+            this.cTakeDamageFromGibdosFaster.Location = new System.Drawing.Point(154, 158);
             this.cTakeDamageFromGibdosFaster.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cTakeDamageFromGibdosFaster.Name = "cTakeDamageFromGibdosFaster";
             this.cTakeDamageFromGibdosFaster.Size = new System.Drawing.Size(128, 19);
@@ -914,7 +940,7 @@ namespace MMR.UI.Forms
             this.cTakeDamageGettingCaught.AutoSize = true;
             this.cTakeDamageGettingCaught.BackColor = System.Drawing.Color.Transparent;
             this.cTakeDamageGettingCaught.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageGettingCaught.Location = new System.Drawing.Point(153, 163);
+            this.cTakeDamageGettingCaught.Location = new System.Drawing.Point(153, 183);
             this.cTakeDamageGettingCaught.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cTakeDamageGettingCaught.Name = "cTakeDamageGettingCaught";
             this.cTakeDamageGettingCaught.Size = new System.Drawing.Size(107, 19);
@@ -927,7 +953,7 @@ namespace MMR.UI.Forms
             this.cTakeDamageFromGorons.AutoSize = true;
             this.cTakeDamageFromGorons.BackColor = System.Drawing.Color.Transparent;
             this.cTakeDamageFromGorons.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromGorons.Location = new System.Drawing.Point(7, 213);
+            this.cTakeDamageFromGorons.Location = new System.Drawing.Point(7, 233);
             this.cTakeDamageFromGorons.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cTakeDamageFromGorons.Name = "cTakeDamageFromGorons";
             this.cTakeDamageFromGorons.Size = new System.Drawing.Size(95, 19);
@@ -940,7 +966,7 @@ namespace MMR.UI.Forms
             this.cTakeDamageFromDog.AutoSize = true;
             this.cTakeDamageFromDog.BackColor = System.Drawing.Color.Transparent;
             this.cTakeDamageFromDog.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromDog.Location = new System.Drawing.Point(153, 188);
+            this.cTakeDamageFromDog.Location = new System.Drawing.Point(153, 208);
             this.cTakeDamageFromDog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cTakeDamageFromDog.Name = "cTakeDamageFromDog";
             this.cTakeDamageFromDog.Size = new System.Drawing.Size(79, 19);
@@ -953,7 +979,7 @@ namespace MMR.UI.Forms
             this.cTakeDamageFromVoid.AutoSize = true;
             this.cTakeDamageFromVoid.BackColor = System.Drawing.Color.Transparent;
             this.cTakeDamageFromVoid.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromVoid.Location = new System.Drawing.Point(8, 188);
+            this.cTakeDamageFromVoid.Location = new System.Drawing.Point(8, 208);
             this.cTakeDamageFromVoid.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cTakeDamageFromVoid.Name = "cTakeDamageFromVoid";
             this.cTakeDamageFromVoid.Size = new System.Drawing.Size(80, 19);
@@ -966,7 +992,7 @@ namespace MMR.UI.Forms
             this.cTakeDamageWhileShielding.AutoSize = true;
             this.cTakeDamageWhileShielding.BackColor = System.Drawing.Color.Transparent;
             this.cTakeDamageWhileShielding.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageWhileShielding.Location = new System.Drawing.Point(8, 163);
+            this.cTakeDamageWhileShielding.Location = new System.Drawing.Point(8, 183);
             this.cTakeDamageWhileShielding.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cTakeDamageWhileShielding.Name = "cTakeDamageWhileShielding";
             this.cTakeDamageWhileShielding.Size = new System.Drawing.Size(108, 19);
@@ -979,7 +1005,7 @@ namespace MMR.UI.Forms
             this.cTakeDamageOnEpona.AutoSize = true;
             this.cTakeDamageOnEpona.BackColor = System.Drawing.Color.Transparent;
             this.cTakeDamageOnEpona.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageOnEpona.Location = new System.Drawing.Point(8, 138);
+            this.cTakeDamageOnEpona.Location = new System.Drawing.Point(8, 158);
             this.cTakeDamageOnEpona.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cTakeDamageOnEpona.Name = "cTakeDamageOnEpona";
             this.cTakeDamageOnEpona.Size = new System.Drawing.Size(78, 19);
@@ -992,7 +1018,7 @@ namespace MMR.UI.Forms
             this.cFewerHealthDrops.AutoSize = true;
             this.cFewerHealthDrops.BackColor = System.Drawing.Color.Transparent;
             this.cFewerHealthDrops.ForeColor = System.Drawing.Color.Black;
-            this.cFewerHealthDrops.Location = new System.Drawing.Point(153, 67);
+            this.cFewerHealthDrops.Location = new System.Drawing.Point(153, 63);
             this.cFewerHealthDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFewerHealthDrops.Name = "cFewerHealthDrops";
             this.cFewerHealthDrops.Size = new System.Drawing.Size(129, 19);
@@ -1011,7 +1037,7 @@ namespace MMR.UI.Forms
             "Shock",
             "Knockdown",
             "Random"});
-            this.cDType.Location = new System.Drawing.Point(154, 38);
+            this.cDType.Location = new System.Drawing.Point(154, 34);
             this.cDType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDType.Name = "cDType";
             this.cDType.Size = new System.Drawing.Size(128, 23);
@@ -1020,32 +1046,19 @@ namespace MMR.UI.Forms
             // lDType
             // 
             this.lDType.AutoSize = true;
-            this.lDType.Location = new System.Drawing.Point(154, 22);
+            this.lDType.Location = new System.Drawing.Point(154, 18);
             this.lDType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lDType.Name = "lDType";
             this.lDType.Size = new System.Drawing.Size(89, 15);
             this.lDType.TabIndex = 1;
             this.lDType.Text = "Damage effects";
             // 
-            // cDeathMoonCrash
-            // 
-            this.cDeathMoonCrash.AutoSize = true;
-            this.cDeathMoonCrash.BackColor = System.Drawing.Color.Transparent;
-            this.cDeathMoonCrash.ForeColor = System.Drawing.Color.Black;
-            this.cDeathMoonCrash.Location = new System.Drawing.Point(7, 67);
-            this.cDeathMoonCrash.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cDeathMoonCrash.Name = "cDeathMoonCrash";
-            this.cDeathMoonCrash.Size = new System.Drawing.Size(136, 19);
-            this.cDeathMoonCrash.TabIndex = 25;
-            this.cDeathMoonCrash.Text = "Death is Moon Crash";
-            this.cDeathMoonCrash.UseVisualStyleBackColor = false;
-            // 
             // cByoAmmo
             // 
             this.cByoAmmo.AutoSize = true;
             this.cByoAmmo.BackColor = System.Drawing.Color.Transparent;
             this.cByoAmmo.ForeColor = System.Drawing.Color.Black;
-            this.cByoAmmo.Location = new System.Drawing.Point(162, 90);
+            this.cByoAmmo.Location = new System.Drawing.Point(153, 86);
             this.cByoAmmo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cByoAmmo.Name = "cByoAmmo";
             this.cByoAmmo.Size = new System.Drawing.Size(89, 19);
@@ -1063,7 +1076,7 @@ namespace MMR.UI.Forms
             "4x",
             "1-hit KO",
             "Doom"});
-            this.cDMult.Location = new System.Drawing.Point(7, 38);
+            this.cDMult.Location = new System.Drawing.Point(7, 34);
             this.cDMult.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDMult.Name = "cDMult";
             this.cDMult.Size = new System.Drawing.Size(129, 23);
@@ -1072,7 +1085,7 @@ namespace MMR.UI.Forms
             // lDMult
             // 
             this.lDMult.AutoSize = true;
-            this.lDMult.Location = new System.Drawing.Point(7, 22);
+            this.lDMult.Location = new System.Drawing.Point(7, 18);
             this.lDMult.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lDMult.Name = "lDMult";
             this.lDMult.Size = new System.Drawing.Size(85, 15);
@@ -2193,17 +2206,6 @@ namespace MMR.UI.Forms
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
             // 
-            // cEasyFrameByFrame
-            // 
-            this.cEasyFrameByFrame.AutoSize = true;
-            this.cEasyFrameByFrame.Location = new System.Drawing.Point(10, 245);
-            this.cEasyFrameByFrame.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cEasyFrameByFrame.Name = "cEasyFrameByFrame";
-            this.cEasyFrameByFrame.Size = new System.Drawing.Size(137, 19);
-            this.cEasyFrameByFrame.TabIndex = 51;
-            this.cEasyFrameByFrame.Text = "Easy Frame By Frame";
-            this.cEasyFrameByFrame.UseVisualStyleBackColor = true;
-            // 
             // cGossipsTolerant
             // 
             this.cGossipsTolerant.AutoSize = true;
@@ -2507,6 +2509,17 @@ namespace MMR.UI.Forms
             this.cNoDowngrades.TabIndex = 18;
             this.cNoDowngrades.Text = "No downgrades";
             this.cNoDowngrades.UseVisualStyleBackColor = false;
+            // 
+            // cEasyFrameByFrame
+            // 
+            this.cEasyFrameByFrame.AutoSize = true;
+            this.cEasyFrameByFrame.Location = new System.Drawing.Point(10, 245);
+            this.cEasyFrameByFrame.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cEasyFrameByFrame.Name = "cEasyFrameByFrame";
+            this.cEasyFrameByFrame.Size = new System.Drawing.Size(137, 19);
+            this.cEasyFrameByFrame.TabIndex = 51;
+            this.cEasyFrameByFrame.Text = "Easy Frame By Frame";
+            this.cEasyFrameByFrame.UseVisualStyleBackColor = true;
             // 
             // tabShortenCutscenes
             // 
@@ -3561,7 +3574,6 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label lLowHealthSFXComboBox;
         private System.Windows.Forms.Button bToggleTricks;
         private System.Windows.Forms.CheckBox cByoAmmo;
-        private System.Windows.Forms.CheckBox cDeathMoonCrash;
         private System.Windows.Forms.CheckBox cElegySpeedups;
         private System.Windows.Forms.CheckBox cContinuousDekuHopping;
         private System.Windows.Forms.CheckBox cProgressiveUpgrades;
@@ -3692,6 +3704,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cMoonCrashFileErase;
         private System.Windows.Forms.ComboBox cCameraStyle;
         private System.Windows.Forms.Label lCameraStyle;
+        private System.Windows.Forms.ComboBox cDeathMode;
+        private System.Windows.Forms.Label lDeathMode;
     }
 }
 

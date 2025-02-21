@@ -1,10 +1,13 @@
 #include <z64.h>
 #include "Models.h"
-#include "OverlayMenu.h"
+#include "Kaleido_OverlayMenu.h"
 #include "MMR.h"
 #include "Dpad.h"
 #include "Music.h"
 #include "WorldColors.h"
+
+// Whether or not the overlay menu is enabled.
+static bool gEnable = true;
 
 bool Game_IsPlayerActor(void) {
     return s801D0B70.selected == &s801D0B70.playerActor;
@@ -69,11 +72,29 @@ static void CheckRespawn(GlobalContext* ctxt) {
     }
 }
 
+
+static bool ShouldDraw(GlobalContext* ctxt) {
+    return ctxt->pauseCtx.state == 6 &&
+        ctxt->pauseCtx.switchingScreen == 0 &&
+        (ctxt->pauseCtx.screenIndex == 0 || ctxt->pauseCtx.screenIndex == 3) &&
+        (ctxt->state.input[0].current.buttons.l || ctxt->state.input[0].current.buttons.du);
+}
+
+/**
+ * Whether or not the overlay menu should display.
+ **/
+void Game_ShouldDrawOverlayMenu(GlobalContext* ctxt) {
+	if (gEnable && ShouldDraw(ctxt)) {
+        // The seperate payload that holds this should be loaded by the time this is reached
+        Kaleido_OverlayMenu_Draw(ctxt);
+    }
+}
+
 /**
  * Hook function called after game processes next frame.
  **/
 void Game_AfterUpdate(GlobalContext* ctxt) {
-    OverlayMenu_Draw(ctxt);
+    Game_ShouldDrawOverlayMenu(ctxt);
     Music_Update(ctxt);
     if (Game_IsPlayerActor()) {
         MMR_ProcessItemQueue(ctxt);

@@ -111,6 +111,11 @@
 .include "Thiefbird.Patch.asm"
 .include "WorldColors.Patch.asm"
 .include "ZoraLand.Patch.asm"
+.include "Effects.Patch.asm"
+
+// patching base game for kaleido payload
+.include "Kaleido_Pause.Patch.asm"
+.include "Kaleido_HudColors.Patch.asm"
 
 ;==================================================================================================
 ; New code region
@@ -181,6 +186,25 @@ FONT_TEXTURE:
 
 .align 0x10
 PAYLOAD_END:
+.endarea // Payload max memory
+
+;==================================================================================================
+; New code region
+;==================================================================================================
+
+.headersize (G_KALEIDOPAYLOAD_ADDR - G_KALEIDOPAYLOAD_VROM)
+
+.org G_KALEIDOPAYLOAD_ADDR
+.area (G_KALEIDO_FREESIZE) // Payload max memory
+KALEIDOPAYLOAD_START:
+
+.include "Kaleido_HudColors.asm"
+.include "Kaleido_Pause.asm"
+.importobj "../build/kaleido.o"
+
+.align 16
+
+KALEIDOPAYLOAD_END:
 .endarea // Payload max memory
 
 .close

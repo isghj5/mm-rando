@@ -594,6 +594,8 @@ namespace MMR.Randomizer.Utils
             //  but if the player does find this music in-game, it still plays sufficiently random music
             //ConvertSequenceSlotToPointer(0x29, 0x0B); // point zelda(SOTime get cs) at healed
 
+            // TODO add caves/shops if the player has that music feature that keeps bgm going in those areas zoey added
+
             // with shortened cutscenes, we pointerize more slots that the player would not hear
             // if using a patch, _randomized is not set, lookup a shortened cutscene byte instead
             // =========================================================
@@ -656,18 +658,10 @@ namespace MMR.Randomizer.Utils
 
             // to pointerize milk bar we have to change the obj_sound actor in themilkbar
             ConvertSequenceSlotToPointer(seqSlotIndex: 0x56, substituteSlotIndex:0x1F, "mm-milk-bar-pointer"); // house
-            if (_results.Settings.RandomizeEnemies)
-            {
-                var milkbarScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MilkBar.FileID());
-                milkbarScene.Maps[0].Actors[17].Variants[0] = 0x13C; // from 0x156, the pointer, to 3C the actual milkbar song
-            }
-            else
-            {
-                // except we can't do this in enemizer we can't know for certain anyone is playing with both
-                RomUtils.CheckCompressed(GameObjects.Scene.MilkBar.FileID() + 1);
-                var milkbarData = RomData.MMFileList[GameObjects.Scene.MilkBar.FileID() + 1].Data;
-                milkbarData[0x193] = 0x3C; // obj_sound (actor 17) parameter from 0x156 to 0x13C (where 56 is milkbar ptr, 3C is actual milkbar slot)
-            }
+            var milkBarRoomFid = GameObjects.Scene.MilkBar.FileID() + 1; // room 1 of the scene
+            RomUtils.CheckCompressed(milkBarRoomFid);
+            var milkbarRoomData = RomData.MMFileList[milkBarRoomFid].Data;
+            milkbarRoomData[0x193] = 0x3C; // obj_sound (actor 17) parameter from 0x156 to 0x13C (where 56 is milkbar ptr, 3C is actual milkbar slot)
 
             // if combat music is disabled, that slot should be usable
             if (cosmeticSettings.DisableCombatMusic == true) // I think this is what zoey has us using currently??
@@ -1003,8 +997,8 @@ namespace MMR.Randomizer.Utils
             NewInstrumentSetAddress = 0xB3C000 + 0xBE300 + 0x10;
 
             // clear old audiobank
-            var zero = new byte[0x2A0];
-            ReadWriteUtils.WriteToROM(0xB3C000 + 0x13B6C0, zero);
+            var zero = new byte[0x190];
+            ReadWriteUtils.WriteToROM(0xB3C000 + 0x13B7D0, zero);
 
             // instrumentset_patch: modifies audiobank metadata read and writes, instrument/drum/sfx pointer read and writes,
             // nops a metadata copy function, and sets a fixed size for the audiobank pointer index

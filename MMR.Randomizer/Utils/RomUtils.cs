@@ -35,7 +35,7 @@ namespace MMR.Randomizer.Utils
             #if DEBUG
             string settingstring = $"{setting} + DEBUG BUILD\x00";
             #else
-            string settingstring = $"{setting} + Isghj's Actorizer Test 79.3\x00";
+            string settingstring = $"{setting} + Isghj's Actorizer Test 88.0\x00";
             #endif
             int f = GetFileIndexForWriting(veraddr);
             var file = RomData.MMFileList[f];
@@ -149,6 +149,10 @@ namespace MMR.Randomizer.Utils
         {
             int index = AddrToFile(rAddr);
             CheckCompressed(index);
+            if (RomData.MMFileList[index].IsReadOnly)
+            {
+                throw new Exception($"Cannot write to read-only file {index}");
+            }
             return index;
         }
 
@@ -244,6 +248,10 @@ namespace MMR.Randomizer.Utils
             Parallel.ForEach(sortedCompressibleFiles.AsParallel().AsOrdered(), file =>
             {
                 //var yazTime = DateTime.Now;
+#if DEBUG
+                var decompressed_size = file.End - file.Addr;
+                var compressed_size = file.Cmp_End - file.Cmp_Addr;
+#endif
                 file.Data = Yaz.EncodeAndCopy(file.Data);
                 file.WasEdited = false;
                 //Debug.WriteLine($" size: [{file.Data.Length}] time to complete compression : [{(DateTime.Now).Subtract(yazTime).TotalMilliseconds} (ms)]");
@@ -324,6 +332,7 @@ namespace MMR.Randomizer.Utils
 
         public static byte[] BuildROM(OutputSettings settings)
         {
+
             SetFilesToRemainDecompressed(settings);
 
             CompressMMFiles();
@@ -360,12 +369,23 @@ namespace MMR.Randomizer.Utils
                     Debug.WriteLine("*** Expanding rom to size 0x" + ROM.Length.ToString("X2") + "***");
                 }
 
+                #if DEBUG
+                var decompressed_size = file.End - file.Addr;
+                var compressed_size = file.Cmp_End - file.Cmp_Addr;
+                #endif
+
+
                 ReadWriteUtils.Arr_Insert(RomData.MMFileList[i].Data, 0, fileLength, ROM, ROMAddr);
                 ROMAddr += fileLength;
+                if ((ROMAddr & 0xF) != 0)
+                {
+                    ROMAddr = (ROMAddr | 0xF) + 1;
+                }
             }
 
             // should this be moved up now that I split up the file updated values?
             SequenceUtils.UpdateBankInstrumentPointers(ROM);
+
 
             UpdateDMAFileTable(ROM);
             SignROM(ROM);
@@ -445,6 +465,7 @@ namespace MMR.Randomizer.Utils
 
         public static void ReadFileTable(BinaryReader ROM)
         {
+            int dmaId = 0;
             RomData.MMFileList = new List<MMFile>();
             ROM.BaseStream.Seek(FILE_TABLE, SeekOrigin.Begin);
             while (true)
@@ -461,7 +482,11 @@ namespace MMR.Randomizer.Utils
                 {
                     break;
                 }
-                RomData.MMFileList.Add(Current_File);
+                if (dmaId < 0x0603)
+                { 
+                    RomData.MMFileList.Add(Current_File);
+                }
+                dmaId += 1;
             }
             ExtractAll(ROM);
         }

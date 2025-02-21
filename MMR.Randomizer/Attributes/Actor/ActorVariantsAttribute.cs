@@ -135,6 +135,16 @@ namespace MMR.Randomizer.Attributes.Actor
         public RequiresCompanionAttribute(GameObjects.Actor companion, int number, int variant, params int[] additionalVariants) { }
     }
 
+    public class CreditsBlockedVariantsAttribute : ActorVariantsAttribute
+    {
+        public CreditsBlockedVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
+    }
+
+    public class CreditsBlockedAllVariantsAttribute : Attribute
+    {
+        public bool AllBlock = true;
+    }
+
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class VariantsWithRoomMax : Attribute
