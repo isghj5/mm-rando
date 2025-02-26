@@ -944,6 +944,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1466)]
         [SceneInternalId(0x61)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PostMan,
+            Actor.WoodfallTempleWoodenFlower // so big it goes through the door into the thing
+            )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.MysteryHand,
             Actor.StockpotBell // so big it goes through the back of the stairs and blocks the stairs
             )]
