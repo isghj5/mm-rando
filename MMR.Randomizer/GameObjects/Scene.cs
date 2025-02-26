@@ -818,6 +818,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1417)]
         [SceneInternalId(0x50)]
+        [DynaHeadroom(500, 400)] // 561 crashed with +3, but that was day 3
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SmallSnowball,
             Actor.RealBombchu, Actor.Snapper, Actor.Beamos)] // can hit you as you are climbing up blocking assension
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GoGoron,
