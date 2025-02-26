@@ -162,7 +162,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1165)]
         [SceneInternalId(0x13)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bombiwa,  // credits stump
-            Actor.Milkjar, Actor.TallGrass, Actor.LetterToPostman, Actor.SmallSnowball, Actor.BombFlower, Actor.MushroomCloud, 
+            Actor.Milkjar, Actor.TallGrass, Actor.LetterToPostman, Actor.SmallSnowball, Actor.BombFlower, Actor.MushroomCloud,
             Actor.En_Invisible_Ruppe, Actor.HitSpot, Actor.Bo, // too small to see
             Actor.Zubora, Actor.BedroomPostman, Actor.SoftSoilAndBeans, Actor.DekuFlower, Actor.GrottoHole // low to the ground, same issue
         )]
@@ -394,6 +394,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa, // blocking a few skulltulla
             Actor.RegularIceBlock, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator,
             Actor.Bumper, Actor.ClocktowerGearsAndOrgan)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.DragonSpawner, // blocking a few skulltulla
+            Actor.BigOcto)] // suck doesnt work right, softlock
         PinnacleRock = 0x22,
 
         [FileID(1278)]
