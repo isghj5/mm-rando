@@ -3437,7 +3437,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(276)]
         [ObjectListIndex(0x12C)] // D0 is zo, zora, A1 for goron, 12C for bomb shop owner
         [CheckRestricted(Scene.BombShop, variant: ActorConst.ANY_VARIANT, // 02,
-            Item.ShopItemBombsBomb10, Item.ShopItemBombsBombchu10, Item.ItemBombBag, Item.UpgradeBigBombBag)]
+            Item.ShopItemBombsBomb10, Item.ShopItemBombsBombchu10, Item.ItemBombBag, Item.UpgradeBigBombBag,
+            Item.NotebookMeetOldLady)] // her dialogue doesnt work without him
         [CheckRestricted(Scene.ZoraHallRooms, variant: ActorConst.ANY_VARIANT, // 0x3E0,
             Item.ShopItemZoraArrow10, Item.ShopItemZoraRedPotion, Item.ShopItemZoraShield)]
         [CheckRestricted(Scene.GoronShop, variant: ActorConst.ANY_VARIANT, // 0x3E1,
