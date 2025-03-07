@@ -1365,6 +1365,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(115)]
         [ObjectListIndex(3)]
+        [DynaAttributes(12,8)]
         // man there are too many checks to list, do this later to re-enable
         [CheckRestricted(Scene.SnowheadTemple, variant: ActorConst.ANY_VARIANT,
             Item.CollectibleStrayFairySnowhead10, Item.CollectibleStrayFairySnowhead11)]

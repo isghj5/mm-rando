@@ -5503,7 +5503,7 @@ namespace MMR.Randomizer
                 if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GuruGuru)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.AnjuWeddingDress)) continue; // still broken
-                if(TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.RealBombchu)) continue;
+                if(TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.ReDead)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; /// what was this again? hotspring?
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BuisnessScrub)) continue;
 
@@ -6858,7 +6858,7 @@ namespace MMR.Randomizer
             ////////////////////////////////////////////
             ///////   DEBUGGING: force an actor  ///////
             ////////////////////////////////////////////
-            if (scene.SceneEnum == GameObjects.Scene.ClockTowerInterior) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.Grottos) // force specific actor/variant for debugging
             {
                 // if you want to force object here, use ChosenReplacementObjectsPerMap
 
@@ -6867,8 +6867,8 @@ namespace MMR.Randomizer
                 // 23 to 25
                 //target.ChangeActor(GameObjects.Actor.ObjSwitch, vars: 0x7C14); // crashes
                 //target.ChangeActor(GameObjects.Actor.ObjSwitch, vars: 0x7C04); // 2 also crashes
-                //thisSceneData.Scene.Maps[0].Actors[9].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
-                //thisSceneData.Scene.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.Clock, vars: 0x907F);
+                thisSceneData.Scene.Maps[13].Actors[0].ChangeActor(GameObjects.Actor.ReDead, vars: 0x7804);
+                thisSceneData.Scene.Maps[13].Actors[3].ChangeActor(GameObjects.Actor.ReDead, vars: 0xF7FE);
             }
             /////////////////////////////
             #endif
