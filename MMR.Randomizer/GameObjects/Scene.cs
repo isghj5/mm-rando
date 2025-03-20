@@ -802,6 +802,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1409)]
         [SceneInternalId(0x4D)]
+        [DynaHeadroom(475, 400)] // poly:504 was crashing +2
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SquareSign,
             Actor.GibdoWell, Actor.GibdoWell)] // can stunlock at the door, doesnt stay down long enough
         [EnemizerSceneBlockSensitive(Actor.SquareSign, -1)] // long can block the small snowball, wide can block the door
