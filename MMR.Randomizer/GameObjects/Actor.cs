@@ -2424,6 +2424,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // warp addresses are offsets, dangerous until we can hard code
         [FileID(167)]
         [ObjectListIndex(0x271)]
+        /* // needs object expansion for the room
         [CheckRestricted(
             Item.CollectableTheMoonLinkTrialEntrancePot1, Item.CollectableTheMoonLinkTrialEntrancePot2,
             Item.CollectableTheMoonLinkTrialEntrancePot3, Item.CollectableTheMoonLinkTrialEntrancePot4,
@@ -2443,14 +2444,14 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableTheMoonLinkTrialEntrancePot1,Item.CollectableTheMoonLinkTrialEntrancePot2,
             Item.CollectableTheMoonLinkTrialEntrancePot3,Item.CollectableTheMoonLinkTrialEntrancePot4,
             Item.ChestLinkTrialBombchu10
-        )]
+        )] // */
         //[WaterBottomVariants(0x11, 0x422, 0x833, 0xC44)] // think this would be funny if they werent pathing..
         [PathingVariants(0x11, 0x422, 0x833, 0xC44)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [VariantsWithRoomMax(max: 1, variant: 0x11, 0x422, 0x833, 0xC44)]
         [PathingKickoutAddrVarsPlacement(mask: 0x3F0, shift: 4)]
         [UnkillableAllVariants]
-        //[ForbidFromScene(Scene.TheMoon)] // all items behind them finished
+        [ForbidFromScene(Scene.TheMoon)] // can't randomize them even if you wanted to randomize them, because majora child
         [PlacementWeight(70)]
         MoonChild = 0xBF, // En_Js
 
