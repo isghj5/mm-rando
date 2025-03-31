@@ -2452,7 +2452,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingKickoutAddrVarsPlacement(mask: 0x3F0, shift: 4)]
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.TheMoon)] // can't randomize them even if you wanted to randomize them, because majora child
-        [PlacementWeight(70)]
+        [PlacementWeight(1)] // until you fix the wrong warp that can crash the game, you idiot, now everyone is posting the bug
         MoonChild = 0xBF, // En_Js
 
         EmptyC0 = 0xC0,
@@ -3167,6 +3167,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [EnemizerScenesPlacementBlock(//Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.StoneTower, // dyna crash
+            Scene.HoneyAndDarling, // crush loop
             Scene.TradingPost)]  // might block door?
         [PlacementWeight(40)] // waaay too common
         UnusedFallingBridge = 0x114, // Obj_Chikuwa
