@@ -1097,6 +1097,8 @@ namespace MMR.Randomizer.GameObjects
             /*Actor.UnusedStoneTowerPlatform,*/ Actor.UnusedStoneTowerStoneElevator)] // can hide the grass weirdly
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SquareSign,
             Actor.Beamos)] // can one shot the player as they leave the grotto with 1 heart
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.UglyTree,
+            Actor.OwlStatue)] // can hide the grass weirdly
         NorthClockTown = 0x6B,
 
         [FileID(1516)]
