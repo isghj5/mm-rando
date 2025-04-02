@@ -2237,6 +2237,8 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.RomaniRanch, 0x3C, Item.CollectableRomaniRanchInvisibleItem6)]
         [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT,
             Item.CollectableMountainVillageWinterMountainVillageSpringItem1)]
+        //[CheckRestricted(Scene.SwampSpiderHouse, variant: ActorConst.ANY_VARIANT, // this is handled in enemies.cs, search "BugRock"
+        //    Item.AllSoilPositions, ...)]
         [CheckRestricted(Scene.GreatBayCoast, variant: 0x32,
             Item.CollectableGreatBayCoastSoftSoil1)]
         [CheckRestricted(Scene.IkanaGraveyard, variant: 0x4014, Item.CollectableIkanaGraveyardIkanaGraveyardUpperRock1)] // highest

@@ -1079,8 +1079,7 @@ namespace MMR.Randomizer
 
         private static void EnemizerEarlyFixes()
         {
-            /// Changes before randomization
-
+            /// Changes before actor/enemy randomization, Itemizer is already done
 
             //DisableActorSpawnCutsceneData();
 
@@ -2616,6 +2615,14 @@ namespace MMR.Randomizer
             if ( ! ACTORSENABLED) return;
 
             var swampSpiderhouseScene = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.SwampSpiderHouse);
+
+            // if bugs arent required for anything in here, lets randomize the rocks
+            if (! (IsActorizerJunk(GameObjects.Item.CollectibleSwampSpiderToken9) && IsActorizerJunk(GameObjects.Item.CollectibleSwampSpiderToken11)
+                   && IsActorizerJunk(GameObjects.Item.CollectibleSwampSpiderToken12) )
+               )
+            {
+                return; // bugs are not junk, dont randomize
+            }
 
             void ChangeRockToReplacement(int map, int actorId)
             {
