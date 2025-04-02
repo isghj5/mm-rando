@@ -4183,8 +4183,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(343)]
         [ObjectListIndex(0x107)]
-        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat,
-            Item.NotebookMeetPostman, Item.NotebookPostmansGame, Item.NotebookPostmansFreedom)]
+        // this version doesnt exist as a spawn in the postoffice, it gets spawned by Postman (EnPm)
+        //[CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat,
+        //    Item.NotebookMeetPostman, Item.NotebookPostmansGame, Item.NotebookPostmansFreedom)]
         [GroundVariants(0)] // no params
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
@@ -5077,9 +5078,10 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.SouthClockTown, variant: 0,
             Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat,
             Item.NotebookMeetPostman, Item.NotebookPostmansFreedom)]
-        [CheckRestricted(Scene.PostOffice, variant: -1,
+        [CheckRestricted(Scene.PostOffice, variant: -1, // ZZZ
             Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat,
-            Item.NotebookMeetPostman, Item.NotebookPostmansFreedom)]
+            Item.NotebookMeetPostman, Item.NotebookPostmansFreedom,
+            Item.NotebookPostmansGame)]
         [CheckRestricted(Scene.StockPotInn, variant: -1,
             Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat,
             Item.NotebookMeetPostman, Item.NotebookPostmansFreedom)]
