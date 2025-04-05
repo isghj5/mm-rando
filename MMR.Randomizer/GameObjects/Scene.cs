@@ -666,6 +666,9 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.MushroomCloud, // moved to the side of the tree
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator // could block the tree (through the tree
         )]
+        [EnemizerSceneEnemyReplacementBlock(Actor.BigOcto,
+            Actor.BigOcto // cannot put back it breaks the cutscene on boat kill, broken cutscene can even be a softlock
+        )]
         [EnemizerSceneBlockSensitive(Actor.BadBat, -1)] // giant ice block, unused stone stuff at least
         [EnemizerSceneBlockSensitive(Actor.PottedPlant, -1)] // right next to swamp shooting gallery door
         //[EnemizerSceneBlockSensitive(Actor.MushroomCloud, -1)] // there is one at the base of the tree funny enough : except I moved it
