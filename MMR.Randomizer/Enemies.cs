@@ -2151,7 +2151,7 @@ namespace MMR.Randomizer
             var snowheadTempleFireArrowWiz = snowheadTempleScene.Maps[6].Actors[0];
             if (snowheadTempleFireArrowWiz.ActorEnum != GameObjects.Actor.Wizrobe)
             {
-                snowheadTempleFireArrowWiz.Position.x = -1140; // move back to center of the room, not sure why this guy is so close to the door normally
+                snowheadTempleFireArrowWiz.Position.x = -1300; // move back to center of the room, not sure why this guy is so close to the door normally
             }
             // if snowhead temple wizrobe the second is randomized, his spawn is in a bad spot for enemizer
             var snowheadSecondWizrobe = snowheadTempleScene.Maps[12].Actors[0];
