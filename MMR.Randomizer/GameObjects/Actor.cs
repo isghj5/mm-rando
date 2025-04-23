@@ -3538,6 +3538,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(282)]
         [ObjectListIndex(0x165)]
         [CheckRestricted(Scene.CuccoShack, variant: ActorConst.ANY_VARIANT, Item.CollectableCuccoShackPottedPlant1)]
+        [CheckRestricted(Scene.RoadToSouthernSwamp, variant: ActorConst.ANY_VARIANT, Item.HeartPieceSwampArchery, Item.UpgradeBiggestQuiver)]
         // 0xXX is the item to drop, 0x7X00 is collecable flag
         // thankfully if collectable flag is 00 it gets ignored and you can re-collect over and over again
         // A is hearts or green rup if full health
