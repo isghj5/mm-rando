@@ -3119,11 +3119,15 @@ namespace MMR.Randomizer.GameObjects
             0x1F01, // I put this in peahat grotto
             0x300, 0x301)] // this drop table is unused according to mzxrules, but looks balanced
         [WaterBottomVariants( // they have special code for working under water anyway
-            0x01, 0x21, 0x31, 0x41, 0x11,  // same as above
-            0x400, 0x401, // ikana rocks, seems reasonable
-            0xF00, 0xF01, // tektite, weirdly this is the nost variable of all the drop tables
-            0x901, // chance of lots of money, as this is the drop table for money enemies
-            0x300, 0x301
+            0x8001, 0x8021, 0x8031, 0x8041, 0x8011,
+
+            0x8400, 0x8401,
+
+            0x8F00, 0x8F01,
+
+            0x8901,
+
+            0x8300, 0x8301
         )]
         [UnkillableAllVariants]
         [AlignedCompanionActor(Shot_Sun, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x41)] // fairies love grass
