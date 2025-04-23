@@ -4188,12 +4188,12 @@ namespace MMR.Randomizer
 
                 // floating bean plant is only used in this room, move down to old lair grass object
                 var lobby = secretShrineScene.Maps[0];
-                lobby.Objects[10] = GameObjects.Actor.SoftSoilAndBeans.ObjectIndex();
+                lobby.Objects[10] = GameObjects.Actor.SoftSoilAndBeans.ObjectIndex(); // previous tall grass slot
 
                 lobby.Objects[7] = PopObject(possibleGroundActors); // previously floating bean slot
                 lobby.Objects[8] = PopObject(possibleGroundActors); // real bombchu slot 
-                lobby.Objects[10] = PopObject(possibleFlyingActors); // previous tall grass slot
                 lobby.Objects[11] = PopObject(possibleFlyingActors); // previous deku nut slot
+                // was there another spot? I was accidentally blasting soils, need to find the map I made
             }
 
             // center room
