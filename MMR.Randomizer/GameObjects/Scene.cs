@@ -221,8 +221,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.Shabom)] // get's stuck in the ceiling where you cannot kill them, TODO is this still true after ceiling to flying was dropped?
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DragonFly,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the breakable floor under them
-        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Hiploop,
-        //    Actor.En_Ani, Actor.Bumper, Actor.Tijo)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Nejiron,
+            Actor.PunchableStoneTowerPillars)]
         [EnemizerSceneBlockSensitive(Actor.Lightblock, -1)]
         [EnemizerSceneBlockSensitive(Actor.Hiploop, -1)]
         StoneTowerTemple = 0x13,
@@ -778,6 +778,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.BigPoe)] // for some reason big poe in the first room can cause camera to lock, unknown reason
         [EnemizerSceneEnemyReplacementBlock(Actor.Dexihand,
             Actor.Keese, Actor.BadBat, // weird
+            Actor.SpiderWeb, // can block access to pots on bottom of river
             Actor.WoodenBarrel, // the wall version is the pirates fortress planks, can block the pots
             Actor.Bumper)] // can block the water channel
         [EnemizerSceneEnemyReplacementBlock(Actor.SkullFish,
@@ -1100,6 +1101,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Sakon,
             /*Actor.UnusedStoneTowerPlatform,*/ Actor.UnusedStoneTowerStoneElevator)] // can hide the grass weirdly
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SquareSign,
+            Actor.LikeLike, // exit loop
             Actor.Beamos)] // can one shot the player as they leave the grotto with 1 heart
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.UglyTree,
             Actor.OwlStatue)] // can hide the grass weirdly
