@@ -7536,14 +7536,14 @@ namespace MMR.Randomizer.GameObjects
         [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)] // red flames
         AnjuMotherWedding = 0x29F, // Dm_Ah
 
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // we have a modified version now, use that instead
         [FileID(631)]
         [ObjectListIndex(0x4)]
         [GroundVariants(0x0)]
         [PerchingVariants(0)] // grandma pls
         [UnkillableAllVariants]
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
-        [PlacementWeight(40)] // until she does something this is a kinda boring actor
+        [PlacementWeight(60)] // set to decent chance for now
         AnjusGrandmaCredits = 0x2A0, // Dm_Nb
 
         //[ActorizerEnabled] // double or more objects required

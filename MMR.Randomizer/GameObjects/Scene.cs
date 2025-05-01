@@ -727,6 +727,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.ClocktowerGearsAndOrgan, Actor.RegularIceBlock)] // suspected too large and can block the owl
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered,
             Actor.Hiploop)] // after moving the actors around, one of them just instantly explodes touching water, TODO move them to better spots to avoid instead
+        [EnemizerSceneBlockSensitive(Actor.DekuBabaWithered, -1)] // the one near the grass can block the grass
         [EnemizerSceneBlockSensitive(Actor.DragonFly, -1)]
         [EnemizerSceneBlockSensitive(Actor.En_Owl, -1)]
         [EnemizerSceneBlockSensitive(Actor.BigOcto, -1)]

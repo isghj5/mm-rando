@@ -5507,7 +5507,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GuruGuru)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.AnjusGrandmaCredits)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.AnjuWeddingDress)) continue; // still broken
                 if(TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.ReDead)) continue;
