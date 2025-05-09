@@ -5441,6 +5441,34 @@ namespace MMR.Randomizer
             }
         }
 
+        private static void FixKaizokuType(SceneEnemizerData thisSceneData)
+        {
+            /// Kaizoku actor colors are linked to their Z rotation instead of their params
+            var objSearch = thisSceneData.Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.PirateColonel);
+            if (objSearch.Count > 0)
+            {
+                for (int i = 0; i < objSearch.Count; ++i)
+                {
+                    var targetActor = objSearch[i];
+                    if (targetActor.Variants[0] == 0x24B)
+                    {
+                        targetActor.ChangeZRotation(0);
+                        targetActor.Variants[0] &= ~0x3F; // clear the exit index
+                    }
+                    else if (targetActor.Variants[0] == 0x20B) {
+                        targetActor.ChangeZRotation(1);
+                        targetActor.Variants[0] &= ~0x3F;
+                    }
+                    else if (targetActor.Variants[0] == 0x2CB)
+                    {
+                        targetActor.ChangeZRotation(2);
+                        targetActor.Variants[0] &= ~0x3F;
+                    }
+                }
+            }
+        }
+
+
         private static void SetZerothAndFourthDayFlagsForAllActors(SceneEnemizerData thisSceneData)
         {
             for (int i = 0; i < thisSceneData.Actors.Count; i++){
@@ -5507,7 +5535,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.AnjusGrandmaCredits)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.PirateColonel)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBabaWithered, GameObjects.Actor.AnjuWeddingDress)) continue; // still broken
                 if(TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.ReDead)) continue;
@@ -6893,6 +6921,7 @@ namespace MMR.Randomizer
             FixSnowballActorSpawns(thisSceneData);
             FixNewGrottoZRotation(thisSceneData);
             EnsureOnlyOneKankyo(thisSceneData);
+            FixKaizokuType(thisSceneData);
             SetZerothAndFourthDayFlagsForAllActors(thisSceneData);
             // the following modify Variant which can confuse typing system
             FixPathingVars(thisSceneData); // any patrolling types need their vars fixed

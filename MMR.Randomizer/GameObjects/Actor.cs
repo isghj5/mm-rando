@@ -5991,12 +5991,21 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         GBTFreezableWaterfall = 0x21C, // Bg_Dblue_Waterfall
 
-        //[EnemizerEnabled] // cutscene is broken without camera placement, player stuck in place
+        // HUH? THIS WORKS?
+        [EnemizerEnabled] // cutscene is broken without camera placement, player stuck in place
         [FileID(500)]
         [ObjectListIndex(0x204)]
         //[GroundVariants(0x24B)] // 3 different versions
-        [GroundVariants(0x24B)]
-        //[ForbidFromScene(0x23)] // do not remove original, for now
+        [GroundVariants(0x24B, 0x20B, 0x2CB)] // warning: these use Z rotation too
+        [VariantsWithRoomMax(max:12, variant: 0x24B, 0x20B, 0x2CB)]
+        [SwitchFlagsPlacement(SwitchTrigger.SendsAndRecieves, size: 0x7F, shift: 6)]
+        [DifficultAllVariants]
+        // TODO companions over chests?
+        [PlacementWeight(40)]
+        [RemovalChance(0)] // room doors are switch flag not kill enemy rooms
+        [AlignedCompanionActor(TreasureChest, CompanionAlignment.OnTop, ourVariant: -1, variant:
+            0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579, 0x561E, 0x5C79, 0x5991, 0x5B58,
+            0x5080, 0x50CA, 0x50A1, 0x0AFB, 0x099C)]
         PirateColonel = 0x21D, // En_Kaizoku
 
         // TODO make the one that just looks at you a non-enemy type in the replacement
