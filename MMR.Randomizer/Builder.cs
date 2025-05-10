@@ -1155,21 +1155,29 @@ namespace MMR.Randomizer
                     var palette = paletteDict.Keys.ToArray();
                     var ci8 = bossDoorTexturePixels.Select(pix => (byte)Array.IndexOf(palette, pix)).ToArray();
 
+                    var sceneFileAddr = 0x020CF000;
+
                     // STT Room 8
                     ReadWriteUtils.WriteToROM(0x0211D000 + 0x4428, ci8);
                     var f = RomUtils.GetFileIndexForWriting(0x0211D000);
-                    ReadWriteUtils.Arr_Insert(new byte[] { 0x03, 0x00, 0x4C, 0x40 }, 0, 4, RomData.MMFileList[f].Data, 0x3D4);
+                    ReadWriteUtils.Arr_Insert(new byte[] { 0x03, 0x00, 0x4C, 0x50 }, 0, 4, RomData.MMFileList[f].Data, 0x3D4);
                     var data = RomData.MMFileList[f].Data.ToList();
-                    data.InsertRange(0x4C40, palette.SelectMany(s => new byte[] { (byte)(s >> 8), (byte)(s & 0xFF) }));
+                    data.InsertRange(0x4C50, palette.SelectMany(s => new byte[] { (byte)(s >> 8), (byte)(s & 0xFF) }));
                     RomData.MMFileList[f].Data = data.ToArray();
+                    RomData.MMFileList[f].End = RomData.MMFileList[f].Addr + RomData.MMFileList[f].Data.Length;
+
+                    ReadWriteUtils.WriteU32ToROM(sceneFileAddr + 0x178 + 8 * 8 + 4, (uint)RomData.MMFileList[f].End);
 
                     // STT Room 10
                     ReadWriteUtils.WriteToROM(0x0212B000 + 0x4220, ci8);
                     f = RomUtils.GetFileIndexForWriting(0x0212B000);
-                    ReadWriteUtils.Arr_Insert(new byte[] { 0x03, 0x00, 0x4A, 0x20 }, 0, 4, RomData.MMFileList[f].Data, 0x2434);
+                    ReadWriteUtils.Arr_Insert(new byte[] { 0x03, 0x00, 0x4A, 0x30 }, 0, 4, RomData.MMFileList[f].Data, 0x2434);
                     data = RomData.MMFileList[f].Data.ToList();
-                    data.InsertRange(0x4A20, palette.SelectMany(s => new byte[] { (byte)(s >> 8), (byte)(s & 0xFF) }));
+                    data.InsertRange(0x4A30, palette.SelectMany(s => new byte[] { (byte)(s >> 8), (byte)(s & 0xFF) }));
                     RomData.MMFileList[f].Data = data.ToArray();
+                    RomData.MMFileList[f].End = RomData.MMFileList[f].Addr + RomData.MMFileList[f].Data.Length;
+
+                    ReadWriteUtils.WriteU32ToROM(sceneFileAddr + 0x178 + 8 * 10 + 4, (uint)RomData.MMFileList[f].End);
                 }
             }
         }
