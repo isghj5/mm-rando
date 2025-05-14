@@ -5543,7 +5543,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BuisnessScrub)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.RegularZora, GameObjects.Actor.DragonFly)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.LikeLike, GameObjects.Actor.MagicSlab)) continue;
+                if (TestHardSetObject(GameObjects.Scene.SecretShrine, GameObjects.Actor.Wart, GameObjects.Actor.PirateColonel)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.SunSwitch)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Gorman, GameObjects.Actor.TreasureChest)) continue;
@@ -7699,7 +7699,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 89.0\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 89.1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

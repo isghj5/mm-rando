@@ -272,7 +272,7 @@ namespace MMR.Randomizer.GameObjects
         [FairyDroppingEnemies(roomNumber: 5, actorNumber: 22)] // east wing, beehive:22
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Dinofos, // weak enemies are kinda lame here
             Actor.Leever, Actor.ChuChu, Actor.DekuBabaWithered,
-            Actor.Hiploop)] // dies instantly in the water
+            Actor.Hiploop)] // dies instantly in the waterer:
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper,
             Actor.Hiploop)] // dies instantly in the water
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula,
@@ -285,6 +285,7 @@ namespace MMR.Randomizer.GameObjects
             /*Actor.RegularIceBlock, Actor.Bombiwa, Actor.ClocktowerGearsAndOrgan */)] // blocking
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DragonFly,
             Actor.GiantBeee)] // issue being that the one that spins around and doesnt agro hard requires a ranged weapon because the spawn is so high
+        [EnemizerSceneBlockSensitive(Actor.MothSwarm, -1)] // blocks torch in hana room
         [EnemizerSceneBlockSensitive(Actor.Bo, -1)]
         [EnemizerSceneBlockSensitive(Actor.CuttableIvyWall, -1)]
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper,
