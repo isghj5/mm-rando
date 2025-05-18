@@ -3535,7 +3535,7 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(SwitchTrigger.Sends, size: 0x7F, shift: 8)] // this SETS but does not read, is it passing info to a door?
         [UnkillableAllVariants]
         [CreditsBlockedAllVariants] // too big
-        [EnemizerScenesPlacementBlock(Scene.WoodsOfMystery)]
+        [EnemizerScenesPlacementBlock(Scene.WoodsOfMystery, Scene.DekuPalace, Scene.StockPotInn)]
         WoodfallTempleWoodenFlower = 0x13D, // Bg_Numa_Hana
 
         [ActorizerEnabled] // big object, collector flag, boring actor
@@ -6004,6 +6004,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(TreasureChest, CompanionAlignment.OnTop, ourVariant: -1, variant:
             0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579, 0x561E, 0x5C79, 0x5991, 0x5B58,
             0x5080, 0x50CA, 0x50A1, 0x0AFB, 0x099C)]
+        [EnemizerScenesPlacementBlock(Scene.DekuPalace)]
         PirateColonel = 0x21D, // En_Kaizoku
 
         // TODO make the one that just looks at you a non-enemy type in the replacement
