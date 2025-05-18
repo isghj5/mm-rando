@@ -2812,6 +2812,12 @@ namespace MMR.Randomizer
                 pinnacleSceneActors[aId].ChangeActor(GameObjects.Actor.Bombiwa, vars: 0x77, true);
                 pinnacleSceneActors[aId].OldName = "WaypointSign"; // so the log doesnt say they are bombiwa, rename here
             }
+
+            // just because I dont want to make a separate function for one thing:
+            // there is a single clay pot in pinnacle rock that always drops one green rupee, this one is shared with ikana graveyard pots
+            // that is a problem: we need to be able to specify this one pot as either water bottom or ground
+            // so for now, I'm swapping this one to a different water bottom type
+            pinnacleSceneActors[10].OldVariant = pinnacleSceneActors[10].Variants[0] = 0xFF0B; // this is non vanilla type, we create it and use it for non-vanilla placement, reusing
         }
 
         private static void RandomizeDekuPalaceBombiwaSigns()

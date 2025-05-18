@@ -752,6 +752,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
                                                            //Actor.Peahat, // big ground type blocks the bridge at night, can't separate the big one and the small ones
             Actor.BabaIsUnused, // blocks the bridges
+            Actor.BomberHideoutGuard,
             Actor.BedroomPostman,
             Actor.Grog
             /* Actor.Wolfos */ )] // wolfos:iceblock
