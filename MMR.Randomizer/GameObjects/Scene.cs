@@ -182,9 +182,9 @@ namespace MMR.Randomizer.GameObjects
             //Actor.RegularIceBlock // should be covered by block sensitive now
             // Actor.LargeCrate, .SmalActorlWoodenBox, Actor.WoodenBarrel,  // these should only be free actors lets let them show up again
             //Actor.ClocktowerGearsAndOrgan, // blocking
-            Actor.RegularIceBlock, // temporary, can block the bridge and the bottom code isnt working perfectly
-            Actor.Bombiwa, Actor.Torch,  // boring
-            Actor.CuccoChick, Actor.En_Ani, Actor.IkanaGravestone // boring
+            //Actor.RegularIceBlock, // temporary, can block the bridge and the bottom code isnt working perfectly
+            Actor.Torch,  // boring
+            Actor.CuccoChick, Actor.En_Ani // boring
         )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bg_Breakwall,
             Actor.UnusedStoneTowerPlatform // so long, and at the right angle, can block the center ladder
@@ -193,6 +193,10 @@ namespace MMR.Randomizer.GameObjects
             22, // vars: 0x14EA bottom of ladder
             23, // vars: 0x18EA bridge to chest room
             17)] // vars: 0xEA top of ladder -> bridge
+        [EnemizerSceneBlockSensitive(Actor.LargeWoodenCrate,
+            28, // vars: 0x7F3F base of ladder
+            27 // vars: 0x7F3F at the door, blocking actors here can block the whole entrance
+        )]
         PiratesFortress = 0x11, // Pirates fortress interior, the center yard, not the rooms
 
         [FileID(1173)]
