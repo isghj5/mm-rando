@@ -422,6 +422,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa, // blocking a few skulltulla
             Actor.Lulu //Actor.StockpotBell, Actor.IkanaGravestone,  Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator,
             /*Actor.Bumper, Actor.ClocktowerGearsAndOrgan*/)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.CuttableIvyWall, // blocking a few skulltulla
+            Actor.PalaceGuardDeku)] // small enough to not be blocking in other contexts
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
         [EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)]
         [EnemizerSceneBlockSensitive(Actor.ClayPot, -1)] // the upper floor main room can block the softsoil
