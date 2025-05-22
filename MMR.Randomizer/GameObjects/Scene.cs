@@ -39,7 +39,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1158)]
         [SceneInternalId(0x11)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.LotteryKiosk,
+        [EnemizerSceneEnemyReplacementBlock(Actor.HoneyAndDarling,
            Actor.UnusedFallingBridge)] // can instant crash you at the door
         HoneyAndDarling = 0x04,
 
@@ -104,7 +104,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Leever, Actor.RealBombchu)] // can instantly hit the stones and cause them to be un-readable
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Armos, Actor.RealBombchu)] // can instantly hit the stones and cause them to be un-readable
         /* ********************************* */
-        [EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)] // chests under it in bomb grotto and hot spring grotto
+        [EnemizerSceneBlockSensitive(Actor.Bombiwa, Item.ChestHotSpringGrottoRedRupee)] // chests under it in bomb grotto and hot spring grotto
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Peahat, // hidden or very weak enemies suck here, but they are very common in this slot
             Actor.Beamos, // beamos is just because bomb locking this check early is prime seed killer
             Actor.Bo, Actor.Leever, // annoying boring enemies, need to spawn like 10
@@ -229,6 +229,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.PunchableStoneTowerPillars)]
         [EnemizerSceneBlockSensitive(Actor.Lightblock, -1)]
         [EnemizerSceneBlockSensitive(Actor.Hiploop, -1)]
+        [EnemizerSceneBlockSensitive(Actor.Nejiron, -1)] // chest in room 4
         StoneTowerTemple = 0x13,
 
         [FileID(1188)]
@@ -422,7 +423,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
         [EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)]
         [EnemizerSceneBlockSensitive(Actor.ClayPot, -1)] // the upper floor main room can block the softsoil
-        [EnemizerSceneBlockSensitive(Actor.CuttableIvyWall, -1)]
+        [EnemizerSceneBlockSensitive(Actor.CuttableIvyWall, Item.CollectibleSwampSpiderToken20)]
         // old, should no longer be needed: Actor.En_Ani, Actor.GoronElder, Actor.Cow, Actor.Tijo , Actor.Postbox,
         SwampSpiderHouse = 0x24,
 
