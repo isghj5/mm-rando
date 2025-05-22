@@ -570,8 +570,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1324)]
         [SceneInternalId(0x34)]
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee, // these are moved around the room, including the tackle display case
                         Actor.DekuKing, // if close to scarecrow can hardlock clock skip
+                        Actor.WoodfallTempleWoodenFlower, // can block the trading post its too big
                         Actor.Hiploop)] // water explosion
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
                         Actor.DekuKing)] // if close to scarecrow can hardlock clock skip
