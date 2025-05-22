@@ -4537,6 +4537,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
+        [BlockingVariantsAll]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
         [ForbidFromScene(Scene.DekuPalace)] // do not remove original for now
