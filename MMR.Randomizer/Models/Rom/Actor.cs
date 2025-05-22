@@ -818,6 +818,25 @@ namespace MMR.Randomizer.Models.Rom
             var validCondition = sceneBlockingConditions.Find(actor => actor.OriginalEnemy == this.ActorEnum);
             if (validCondition != null)
             {
+
+                if (validCondition.BlockedChecks != null)
+                {
+                    foreach (var item in validCondition.BlockedChecks.ToList())
+                    {
+                        if (Enemies.IsActorizerJunk(item))
+                        {
+                            validCondition.BlockedChecks.Remove(item);
+                        }
+                    }
+
+                    if (validCondition.BlockedChecks.Count == 0)
+                    {
+                        // to be in here, you have to have had a list, now that its empty, we consider all items junk, and this actor can be blockable
+                        this.Blockable = true;
+                        return;
+                    }
+                }
+
                 /// this scene has this actor as a block statement
                 if (validCondition.SpecificMapIndexes.Count == 1 && validCondition.SpecificMapIndexes[0] == -1) // -1 meaning we dont care
                 {

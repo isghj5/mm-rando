@@ -799,7 +799,7 @@ namespace MMR.Randomizer
             GameObjects.ItemCategory.MagicJars
         };
 
-        private static bool IsActorizerJunk(GameObjects.Item itemInCheck)
+        public static bool IsActorizerJunk(GameObjects.Item itemInCheck)
         {
             /// problem: ItemUtils.IsJunk only cares about never-important items like rups
             ///  and ItemUtils.IsLogicalJunk cares about logic too strongly and can junk cool things like swords

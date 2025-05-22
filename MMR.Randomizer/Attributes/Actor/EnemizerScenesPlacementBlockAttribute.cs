@@ -49,6 +49,13 @@ namespace MMR.Randomizer.Attributes
     {
         public GameObjects.Actor OriginalEnemy { get; private set; }
         public List<int> SpecificMapIndexes { get; private set; }
+        public List<GameObjects.Item> BlockedChecks { get; private set; }
+
+        public EnemizerSceneBlockSensitiveAttribute(GameObjects.Actor originalEnemy)
+        {
+            OriginalEnemy = originalEnemy;
+            SpecificMapIndexes = new List<int>() { -1 };
+        }
 
         public EnemizerSceneBlockSensitiveAttribute(GameObjects.Actor originalEnemy, int blockedIndex, params int[] blockedIndexes)
         {
@@ -60,6 +67,19 @@ namespace MMR.Randomizer.Attributes
             }
             SpecificMapIndexes = blockedEnemies;
         }
+
+        public EnemizerSceneBlockSensitiveAttribute(GameObjects.Actor originalEnemy, GameObjects.Item check, params GameObjects.Item[] blockedChecks)
+        {
+            OriginalEnemy = originalEnemy;
+            var checks = new List<GameObjects.Item>() { check };
+            if (blockedChecks.Length > 0)
+            {
+                checks.AddRange(blockedChecks);
+            }
+            BlockedChecks = checks;
+            SpecificMapIndexes = new List<int>() { -1 };
+        }
+
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]

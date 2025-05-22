@@ -292,10 +292,10 @@ namespace MMR.Randomizer.GameObjects
             Actor.GiantBeee)] // issue being that the one that spins around and doesnt agro hard requires a ranged weapon because the spawn is so high
         [EnemizerSceneBlockSensitive(Actor.MothSwarm, -1)] // blocks torch in hana room
         [EnemizerSceneBlockSensitive(Actor.Bo, -1)]
-        [EnemizerSceneBlockSensitive(Actor.CuttableIvyWall, -1)]
+        [EnemizerSceneBlockSensitive(Actor.CuttableIvyWall, -1)] // leads to butler and all of the items out there
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper,
         //    Actor.WarpDoor, Actor.ClocktowerGearsAndOrgan)] // Snapper spawns just on top of its chest, its possible a non-killable actor is placed int he wya
-        [EnemizerSceneBlockSensitive(Actor.Snapper, -1)]
+        [EnemizerSceneBlockSensitive(Actor.Snapper, Item.ItemWoodfallMap)]
         WoodfallTemple = 0x18,
 
         [FileID(1222)]
@@ -380,7 +380,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.Evan)] // can block the treasurechest
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ZoraEgg,
         //    Actor.Tijo, Actor.Bombiwa, Actor.Bumper)] // blocking a chest
-        [EnemizerSceneBlockSensitive(Actor.ZoraEgg, -1)]
+        [EnemizerSceneBlockSensitive(Actor.ZoraEgg, Item.ChestInsidePiratesFortressTankRedRupee)]
         [EnemizerSceneBlockSensitive(Actor.WoodenBarrel, -1)] // in the cage room, can block the ability to hit the switch to leave
         [EnemizerSceneBlockSensitive(Actor.PatrollingPirate, -1)] // large ice block could block the hookshot room
         [EnemizerSceneBlockSensitive(Actor.SpikedMine, -1)] // really large ice block can block the whole tunnel
@@ -421,8 +421,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.CuttableIvyWall, // blocking a few skulltulla
             Actor.PalaceGuardDeku)] // small enough to not be blocking in other contexts
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
-        [EnemizerSceneBlockSensitive(Actor.Bombiwa, -1)]
-        [EnemizerSceneBlockSensitive(Actor.ClayPot, -1)] // the upper floor main room can block the softsoil
+        [EnemizerSceneBlockSensitive(Actor.Bombiwa, Item.CollectableSwampSpiderHouseSoftSoil1, Item.CollectibleSwampSpiderToken14, Item.CollectibleSwampSpiderToken2, Item.CollectibleSwampSpiderToken13)]
+        [EnemizerSceneBlockSensitive(Actor.ClayPot, Item.CollectibleSwampSpiderToken11)] // the upper floor main room can block the softsoil
         [EnemizerSceneBlockSensitive(Actor.CuttableIvyWall, Item.CollectibleSwampSpiderToken20)]
         // old, should no longer be needed: Actor.En_Ani, Actor.GoronElder, Actor.Cow, Actor.Tijo , Actor.Postbox,
         SwampSpiderHouse = 0x24,
@@ -443,7 +443,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.ClocktowerGearsAndOrgan)] // can block the stairs
         [EnemizerSceneEnemyReplacementBlock(Actor.Torch,
             Actor.DeathArmos)] // might be too much
-        [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
+        [EnemizerSceneBlockSensitive(Actor.Torch, -1)] // replacements can block the whole tunnel
         AstralObservatory = 0x26, // and sewer leading to it
 
         [FileID(1301)]
@@ -465,7 +465,7 @@ namespace MMR.Randomizer.GameObjects
         )]
         //[EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa,
         //    Actor.ClocktowerGearsAndOrgan)] // likely dynacrash if other actors have them too
-        [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
+        [EnemizerSceneBlockSensitive(Actor.Torch, -1)] // ? bean grotto?
         [EnemizerSceneBlockSensitive(Actor.Monkey, -1)] // giant ice block, unused stone stuff at least
         DekuPalace = 0x28,
 
@@ -867,7 +867,7 @@ namespace MMR.Randomizer.GameObjects
         //[DynaHeadroom(64, 64)]  // small scene, assume we have lots of budget until proven otherwise
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Clock,
             Actor.BadBat, Actor.GoldSkulltula, Actor.RealBombchu)] // z-targetable can be annoying in the sword test
-        [EnemizerSceneBlockSensitive(Actor.KendoSensei, -1)]
+        [EnemizerSceneBlockSensitive(Actor.KendoSensei, Item.CollectableSwordsmanSSchoolPot1, Item.CollectableSwordsmanSSchoolPot2, Item.CollectableSwordsmanSSchoolPot3, Item.CollectableSwordsmanSSchoolPot4, Item.CollectableSwordsmanSSchoolPot5)]
         SwordsmansSchool = 0x51,
 
         [FileID(1434)]
