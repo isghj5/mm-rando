@@ -5222,6 +5222,11 @@ namespace MMR.Randomizer
             {
                 usableSwitches.AddRange(Enumerable.Range(1, 0x7E)); // 0x7F is popular non-valid value and should probably be avoided
                 usableSwitches.RemoveAll(sflag => claimedSwitchFlags.Contains(sflag));
+                var reservedSceneFlags = SceneUtils.GetSceneReservedFlags(thisSceneData.Scene.SceneEnum);
+                if (reservedSceneFlags != null)
+                {
+                    usableSwitches.RemoveAll(sflag => reservedSceneFlags.Contains(sflag));
+                }
                 usableSwitches.Reverse(); // we want to start at 0x7F and decend, under the assumption that they always used lower values
             }
 

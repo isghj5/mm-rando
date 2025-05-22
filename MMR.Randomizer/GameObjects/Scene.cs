@@ -356,7 +356,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.Freezard,
             2, // can block the chest
             5)] // can block access to the elevator
-        [FairyDroppingEnemies(roomNumber: 11, actorNumber: 2, 3)] // dinofos 
+        [FairyDroppingEnemies(roomNumber: 11, actorNumber: 2, 3)] // dinofos
+        [ReservedFlag(0, 0x7F, 0x16, 0x17, 0x35, 0x36, 0x37, 0x38, 0x33)] // center pillar has these for flags
         SnowheadTemple = 0x1E,
 
         [FileID(1256)]

@@ -646,13 +646,15 @@ namespace MMR.Randomizer.Utils
             return null;
         }
 
-        public static (int, int) GetSceneRoomDynaLimits(GameObjects.Scene scene, int roomNumber)
+        public static List<int> GetSceneReservedFlags(GameObjects.Scene scene)
         {
+            var reservedSceneFlagsAttr = scene.GetAttribute<ReservedFlag>();
+            if (reservedSceneFlagsAttr != null)
+                return reservedSceneFlagsAttr.Flags;
 
-
-
-            return (0, 0); // default
+            return null;
         }
+
 
         #region Night Music
 
