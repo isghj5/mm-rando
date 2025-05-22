@@ -2681,7 +2681,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingVariants(0x019F, 0x0D9F, 0x03FF, 0x22BF,
             0x20, 0x40, 0x60, 0x80, 0x120)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
-        [UnkillableAllVariants] // WARNING: category enemy, can break kill-all-enemy rooms
+        [RespawningAllVariants] // WARNING: category enemy, can break kill-all-enemy rooms, mark respawning should mean it gets gets used in a kill enemy room
         [VariantsWithRoomMax(max: 1, variant: 0x20, 0x40, 0x60, 0x80, 0x120,
             0x22BF, 0x03FF, 0x019F, 0x02BF, 0xD9F)] // this many dogs is enough honestly
         [ForbidFromScene(//Scene.RanchBuildings,
@@ -2692,8 +2692,8 @@ namespace MMR.Randomizer.GameObjects
         // these used to be banned, but we should be able to use them now:
         // DekuShrine RoadToIkana GoronVillage
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior, // cursed if put on hms
-            Scene.Woodfall, // they fall off into the water and quietly swim, lame?
-            Scene.SecretShrine, Scene.BeneathGraveyard, // these guys are actually enemies, you can get stuck in a room with them
+            //Scene.Woodfall, // they fall off into the water and quietly swim, lame?
+            //Scene.SecretShrine, Scene.BeneathGraveyard, // these guys are actually enemies, you can get stuck in a room with them
             Scene.MountainVillageSpring, Scene.RanchBuildings)] // crash because not enough paths
         Dog = 0xE2, // En_Dg
 

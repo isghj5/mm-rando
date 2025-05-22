@@ -276,10 +276,8 @@ namespace MMR.Randomizer.GameObjects
         [FairyDroppingEnemies(roomNumber: 5, actorNumber: 22)] // east wing, beehive:22
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Dinofos, // weak enemies are kinda lame here
             Actor.Leever, Actor.ChuChu, Actor.DekuBabaWithered,
-            Actor.Dog, // enemy type, can break room
             Actor.Hiploop)] // dies instantly in the waterer:
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper,
-            Actor.Dog, // enemy type, can break room
             Actor.Hiploop)] // dies instantly in the water
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula,
             Actor.BigPoe)] // I think this was an issue? other than being annoying I mean
@@ -348,11 +346,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.CircleOfFire, // if it gets placed on the one on top of a chest the player is screwed
             Actor.DragonFly, // if you kill it at long range or such that its dying body falls to first floor it wont count
             Actor.WarpDoor, // Cannot walk through them to get to the chest under
-            Actor.Dog, // enemy cat, can break room
             Actor.Wolfos)] // wolfos: ice wolfos can push the regular actual dog backwards through the wall
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wizrobe,
-            Actor.Dog // enemy cat, can break room
-        )]
         [EnemizerSceneBlockSensitive(Actor.Freezard,
             2, // can block the chest
             5)] // can block access to the elevator
@@ -892,9 +886,6 @@ namespace MMR.Randomizer.GameObjects
         // one swlift, 3 cuttable ivy, 0x22/0x1C, works
         // two swlift was fine?? how did I even get crashes previously??
         [DynaHeadroom(34, 32)]
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Armos,
-            Actor.Dog // enemy cat, can break room
-        )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Keese,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the whole assension
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
