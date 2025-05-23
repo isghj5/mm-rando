@@ -131,10 +131,13 @@ namespace MMR.Randomizer.GameObjects
         TreasureChest = 0x6, // En_Box
 
         // TODO dumb ass you forgot to finish this actor
+        [ActorizerEnabled]
         [FileID(45)]
         [ObjectListIndex(0x128)]
-        [RemovalChance(50)] // medium boss
-        PametFrog = 0x7, // En_Pammetfrog the frogminiboss
+        [GroundVariants(1)] // woodfall
+        [RemovalChance(25)] // medium boss
+        [PlacementWeight(0)] // wont spawn without snapper
+        Gekko = 0x7, // En_Pammetfrog the frog miniboss
 
         [EnemizerEnabled]
         [FileID(46)]

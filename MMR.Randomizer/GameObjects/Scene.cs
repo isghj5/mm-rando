@@ -114,6 +114,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, //, Actor.BomberHideoutGuard // annoying
             Actor.Seagulls, // with new height adjust its basically invisible
             Actor.Dexihand, // breaks no hit rando, hopefully this is temporary
+            Actor.PirateColonel, // too annoying every generic grotto
             Actor.Hiploop// water causes instant death
                          //Actor.Bumper, Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, Actor.RegularIceBlock,
             /*Actor.ClocktowerGearsAndOrgan /*, Actor.PatrollingPirate */ )]
@@ -121,6 +122,14 @@ namespace MMR.Randomizer.GameObjects
             Actor.RegularIceBlock, // big one can block the door or even block the whole hallway
             Actor.Beamos, Actor.LikeLike, Actor.Freezard, //, Actor.BomberHideoutGuard // annoying
             Actor.Seagulls, // with new height adjust its basically invisible
+            Actor.PirateColonel, // too annoying every generic grotto
+            Actor.Hiploop// water causes instant death
+        )]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.IshiRock, // generic grotto
+            Actor.RegularIceBlock, // big one can block the door or even block the whole hallway
+            Actor.Beamos, Actor.LikeLike, Actor.Freezard, //, Actor.BomberHideoutGuard // annoying
+            Actor.Seagulls, // with new height adjust its basically invisible
+            Actor.PirateColonel, // too annoying every generic grotto
             Actor.Hiploop// water causes instant death
         )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BioDekuBaba,
