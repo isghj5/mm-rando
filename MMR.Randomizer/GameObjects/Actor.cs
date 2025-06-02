@@ -1377,7 +1377,7 @@ namespace MMR.Randomizer.GameObjects
             0x1F1, 0x1F4, // snowhead, really big at entrance?
             0x3F0, 0x3F3 // snowhead pushblockroom
         )]
-        [WaterBottomVariants(0x85, 0x107)] // pirates fortress sewer underwater maze
+        [WaterBottomVariants(0x7FF1, 0x7FF4, 0x7FF0, 0x7FF3)] // non-vanilla
         [BlockingVariantsAll] // untested, assumed mid size
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.SnowheadTemple)]
@@ -2574,7 +2574,7 @@ namespace MMR.Randomizer.GameObjects
         )]//, Scene.AstralObservatory)] // re-disable this if playing Entrando
         Scarecrow = 0xCA, // En_Kakasi
 
-        // think these control the push blocks in the sewer zora push puzzle
+        // these are the push blocks in pirates fortress interior
         // 0x85, 0x107
         [FileID(173)]
         [ObjectListIndex(0x1)]
