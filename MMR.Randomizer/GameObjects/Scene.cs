@@ -137,6 +137,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.Hiploop// water causes instant death
         )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BioDekuBaba,
+            Actor.BigOcto, // can softlock if the player actually gets sucked
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // they can extend so far they can block the door leading out
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GoldSkulltula,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can get the player locked behind them near the grotto stones
@@ -810,6 +811,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.Desbreko)] // lag
         [EnemizerSceneEnemyReplacementBlock(Actor.Wart,
             Actor.Hiploop)] // instant kill on water
+        [EnemizerSceneEnemyReplacementBlock(Actor.SpikedMine,
+            Actor.BigOcto)] // instant kill on water
         [FairyDroppingEnemies(roomNumber: 8, actorNumber: 7)] // skulltula in first room
         [EnemizerSceneBlockSensitive(Actor.Dexihand, -1)]
         GreatBayTemple = 0x46,
