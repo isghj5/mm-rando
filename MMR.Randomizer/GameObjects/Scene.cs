@@ -765,6 +765,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.ArcheryMiniGameMan, Actor.SwampTouristGuide,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, // assume they will block deku flower pop-up
             Actor.RegularIceBlock,
+            Actor.Japas, Actor.Tijo, // can interupt ocarina pull out
             Actor.ClocktowerGearsAndOrgan // blocking the flower
         )]
         [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
