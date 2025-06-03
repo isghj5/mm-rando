@@ -51,10 +51,14 @@ namespace MMR.Randomizer.GameObjects
             Actor.UnusedFallingBridge, // can void the player because it forces crushing with the ceiling
             Actor.UnusedStoneTowerPlatform, // same thing, should be disabled earlier but maybe it isnt
             Actor.UnusedStoneTowerStoneElevator, // can void the player because it forces crushing with the ceiling
+            Actor.PirateColonel,
             Actor.UnusedPirateElevator // can void the player because it forces crushing with the ceiling
         )]
         [EnemizerSceneEnemyReplacementBlock(Actor.Skulltula, // hanging near the ceiling
             Actor.GBTFreezableWaterfall // blocking platforming
+        )]
+        [EnemizerSceneEnemyReplacementBlock(Actor.ClayPot, // hanging near the ceiling
+            Actor.PirateColonel // can grab you mid jump over the day 1 platforms, causing you to fall into the void and softlock
         )]
         [EnemizerSceneEnemyReplacementBlock(Actor.IronKnuckle,
             Actor.Hiploop, // hiploop dies if he touches water? happens in day 2 iron knuckle
