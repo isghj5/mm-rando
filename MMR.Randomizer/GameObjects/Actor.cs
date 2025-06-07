@@ -3273,10 +3273,13 @@ namespace MMR.Randomizer.GameObjects
         [FileID(259)]
         [ObjectListIndex(0x157)]
         [DynaAttributes(13, 10)]
-        // params are wack, 0x3, 0xFF00,
-        [GroundVariants(0x700, 0xD00, 0xA00, // greatbaytemple
+        // params:
+        // 0x3 is type,
+        //   0 and 3 are mite, 3 is fixed drop (0x7C) type 0 is random drop ( 0xFF00 param)
+        //   1/2 are tite, 2 is regrowing tite, 
+        [GroundVariants(0x700, 0xD00, 0xA00, // greatbay temple
                         0x003F, // goron trial
-                        0x1000, 0x0B00, 0x0C00, 0x600, 0x002B)] // snowheattemple
+                        0x1000, 0x0B00, 0x0C00, 0x600, 0x002B)] // snowhead temple
         [CeilingVariants(0xFF01, 0xFF00, 0xFF02)]
         //[EnemizerScenesPlacementBlock(Scene.GormanTrack, // dyna crash on trees
         //    Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.StoneTower)] // assumed same as above

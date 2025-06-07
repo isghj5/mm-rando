@@ -2294,6 +2294,7 @@ namespace MMR.UI.Forms
                         newConfiguration = Configuration.FromJson(Req.ReadToEnd());
                     }
 
+                    Debug.Assert(newConfiguration.GameplaySettings != null); // bad file
                     if (newConfiguration.GameplaySettings.Logic != null)
                     {
                         newConfiguration.GameplaySettings.UserLogicFileName = path;

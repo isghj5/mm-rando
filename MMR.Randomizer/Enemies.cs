@@ -406,6 +406,8 @@ namespace MMR.Randomizer
             if (_randomized.Settings.LogicMode == Models.LogicMode.Vanilla) return;
             // currently, we cannot discern if scoops are important or not in no logic
             if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic) return;
+            
+            //Debug.Assert(allSpehere )
 
             var importantBottleItems = allSphereItems.FindAll(item => item.Item.Contains("Bottle:"));
 
@@ -416,17 +418,19 @@ namespace MMR.Randomizer
             var unrandomizedBottles = bottleCatches.Where(item => !item.IsRandomized).ToList();
             // add that list to importantBottleItems
             foreach (var itemstring in unrandomizedBottles)
+            {
                 importantBottleItems.Add(new ItemLocationPair
                 {
                     Item = "",
                     Location = itemstring.DisplayName()
                 });
+            }
 
             // scoops are a special case, they dont count as junk items above since they are all in one category handle separatly
             // for all items in list of items that are scoop types
             //   check if each and every one is an important item
             var scoopItems = _randomized.ItemList.FindAll(item => item.Item.ItemCategory() == GameObjects.ItemCategory.ScoopedItems);
-            var unImportantScoopIOs = scoopItems.FindAll(scoop => importantBottleItems.Count(important => important.Location == scoop.Item.Name()) == 0);
+            List<ItemObject> unImportantScoopIOs = scoopItems.FindAll(scoop => importantBottleItems.Count(important => important.Location == scoop.Item.Name()) == 0);
             List<GameObjects.Item> unimportantScoops = unImportantScoopIOs.Select(itemObj => itemObj.Item).ToList();
 
             ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.ScoopedItems].AddRange(unimportantScoops);
@@ -504,7 +508,7 @@ namespace MMR.Randomizer
             }
 
             var allSphereItems = new List<ItemLocationPair>();
-            if (_randomized.Settings.LogicMode == Models.LogicMode.Casual)
+            if (_randomized.Settings.LogicMode == Models.LogicMode.Casual || _randomized.Settings.LogicMode == Models.LogicMode.Glitched)
             {
                 allSphereItems = _randomized.Spheres.SelectMany(u => u).ToList();
             }
