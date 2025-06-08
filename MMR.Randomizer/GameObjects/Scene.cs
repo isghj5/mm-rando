@@ -981,6 +981,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1466)]
         [SceneInternalId(0x61)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PostMan,
+            Actor.PirateColonel, // assumed: can grab the player while transitioning and break
             Actor.WoodfallTempleWoodenFlower // so big it goes through the door into the thing
             )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.MysteryHand,
@@ -1090,6 +1091,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Jugglers,
                                                            Actor.UnusedStoneTowerPlatform)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Anju,
+            Actor.PirateColonel, // assumed: can grab the player while transitioning and break
             Actor.GaroMaster)] // if spawning in sct partial, can fall through the floor and dissapear but leave their annoying music
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Postbox,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // Flying can block the roof leading to the chest
@@ -1151,6 +1153,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SquareSign,
             Actor.ClocktowerGearsAndOrgan, Actor.Bumper, Actor.RegularIceBlock,
             Actor.Bombiwa, Actor.LargeSnowball)] // can block climbing the ramp to the tower
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PostMan,
+            Actor.PirateColonel)] // can grab the player while transitioning and break
         [ActorizerSceneCreditsActor(room: 3, Actor.Carpenter, Actor.Dog, Actor.GateSoldier, Actor.Postbox, Actor.BuisnessScrub,
                                             Actor.DekuBaba)] // used for seth replacement in the intro, we dont want invisible actors there thats lame
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
