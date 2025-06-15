@@ -1135,6 +1135,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.Beamos)] // can one shot the player as they leave the grotto with 1 heart
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.UglyTree,
             Actor.OwlStatue)] // can hide the grass weirdly
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DekuFlower,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the fairy and deku playgrounds
         NorthClockTown = 0x6B,
 
         [FileID(1516)]

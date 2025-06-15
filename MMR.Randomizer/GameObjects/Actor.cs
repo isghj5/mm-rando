@@ -5794,6 +5794,7 @@ namespace MMR.Randomizer.GameObjects
         [ForbidFromScene(Scene.SwordsmansSchool)] // object is also used for gong, messes with rupee rando
         SwordsmanSign = 0x209, // Obj_Kendo_Kanban
 
+        // bobble head cow
         //[ActorizerEnabled] // only the head not the whole cow, lame
         [FileID(481)]
         [ObjectListIndex(0x1F2)]
