@@ -6013,7 +6013,10 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(TreasureChest, CompanionAlignment.OnTop, ourVariant: -1, variant:
             0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579, 0x561E, 0x5C79, 0x5991, 0x5B58,
             0x5080, 0x50CA, 0x50A1, 0x0AFB, 0x099C)]
-        [EnemizerScenesPlacementBlock(Scene.DekuPalace)]
+        [EnemizerScenesPlacementBlock(
+            Scene.DekuPalace,
+            Scene.OceanSpiderHouse, Scene.SwampSpiderHouse // if the player picks up and item at the same time they get grabbed its softlock, for now just block these areas
+        )]
         PirateColonel = 0x21D, // En_Kaizoku
 
         // TODO make the one that just looks at you a non-enemy type in the replacement

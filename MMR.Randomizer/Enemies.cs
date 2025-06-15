@@ -5454,6 +5454,16 @@ namespace MMR.Randomizer
             }
         }
 
+        private static void ForceWaterCeilingSpawnerInGBT(SceneEnemizerData thisSceneData)
+        {
+            if (thisSceneData.Scene.SceneEnum != GameObjects.Scene.GreatBayTemple) return;
+
+            foreach (var act in thisSceneData.Actors.FindAll(a => a.ActorEnum == GameObjects.Actor.CeilingSpawner))
+            {
+                act.Variants[0] = 0x00FF; // force to be water instead of fire, because fire can softlock swimming zora link
+            }
+
+        }
 
         private static void SetZerothAndFourthDayFlagsForAllActors(SceneEnemizerData thisSceneData)
         {
@@ -6908,6 +6918,7 @@ namespace MMR.Randomizer
             FixNewGrottoZRotation(thisSceneData);
             EnsureOnlyOneKankyo(thisSceneData);
             FixKaizokuType(thisSceneData);
+            ForceWaterCeilingSpawnerInGBT(thisSceneData);
             SetZerothAndFourthDayFlagsForAllActors(thisSceneData);
             // the following modify Variant which can confuse typing system
             FixPathingVars(thisSceneData); // any patrolling types need their vars fixed
@@ -7685,7 +7696,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 90.0\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 90.1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
