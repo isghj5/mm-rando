@@ -2697,6 +2697,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior, // cursed if put on hms
             //Scene.Woodfall, // they fall off into the water and quietly swim, lame?
             //Scene.SecretShrine, Scene.BeneathGraveyard, // these guys are actually enemies, you can get stuck in a room with them
+            Scene.FishermansHut, // crash
             Scene.MountainVillageSpring, Scene.RanchBuildings)] // crash because not enough paths
         Dog = 0xE2, // En_Dg
 
