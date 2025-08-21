@@ -135,7 +135,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(45)]
         [ObjectListIndex(0x128)]
         [GroundVariants(1)] // woodfall
-        [RemovalChance(25)] // medium boss
+        [RemovalChance(40)] // medium boss
         [PlacementWeight(0)] // wont spawn without snapper
         Gekko = 0x7, // En_Pammetfrog the frog miniboss
 
@@ -3655,7 +3655,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x16B)]
         [WaterVariants(0x0F00, 0x0300)]
         [OnlyOneActorPerRoom]
-        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.Woodfall, Scene.ZoraCape, Scene.GreatBayCoast, Scene.IkanaCanyon)] // massive lag
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.Woodfall, Scene.ZoraCape, Scene.GreatBayCoast, Scene.IkanaCanyon, Scene.PinnacleRock)] // massive lag
         Desbreko = 0x14B, // En_Pr (Pirana?)
 
         [FileID(298)]
@@ -4712,7 +4712,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0, // 0 is clocktower,
             0x2, //  2 is wiped out
             0x3)]  // in the cutscenes??
-        [FlyingVariants(0x3)]
+        [FlyingVariants(0x3)] // joke
         [VariantsWithRoomMax(max: 1, variant: 0x2)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
