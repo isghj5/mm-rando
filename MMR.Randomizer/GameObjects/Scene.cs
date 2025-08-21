@@ -884,8 +884,8 @@ namespace MMR.Randomizer.GameObjects
         //[DynaHeadroom(64, 64)]  // small scene, assume we have lots of budget until proven otherwise
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Clock,
             Actor.BadBat, Actor.GoldSkulltula, Actor.RealBombchu)] // z-targetable can be annoying in the sword test
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
-            Actor.UnusedFallingBridge)] // can reach the door and void lock
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper, // north gossip stone replacement in gossip stone grotto north
+            Actor.Hiploop)] // touching water
         [EnemizerSceneBlockSensitive(Actor.KendoSensei, Item.CollectableSwordsmanSSchoolPot1, Item.CollectableSwordsmanSSchoolPot2, Item.CollectableSwordsmanSSchoolPot3, Item.CollectableSwordsmanSSchoolPot4, Item.CollectableSwordsmanSSchoolPot5)]
         SwordsmansSchool = 0x51,
 

@@ -29,7 +29,9 @@ namespace MMR.Randomizer
     [System.Diagnostics.DebuggerDisplay("{OldV} -> {NewV}")]
     public class ValueSwap
     {
-        // these are indexes of objects
+        /// <summary>
+        ///  This class exists to keep track of objects we swap in the object list
+        /// </summary>
         public int OldV;
         public int NewV;
         public int ChosenV; // Copy of NewV, first pass result, but we might change NewV to something else if duplicate
@@ -54,7 +56,7 @@ namespace MMR.Randomizer
         public int ObjectId  = 0;
         public int fileID    = 0;
         public int ObjectFid = 0;
-        public (int poly, int vert) DynaLoad = (-1, -1);
+        public (int poly, int vert) DynaLoad = (-1, -1); // Does the actor use the dyna system, which is a limited buffer size we cannot overflow
 
         // if all new actor, we meed to know where the old vram start was when we shift VRAM for the actor
         public uint buildVramStart = 0;
@@ -90,8 +92,8 @@ namespace MMR.Randomizer
         private static List<Actor> ReplacementCandidateList { get; set; }
         private static List<Actor> FreeCandidateList { get; set; }
         private static List<Actor> FreeOnlyCandidateList { get; set; } // not worthy by themselves, only if object was already selected
-        // outer list is item.category, inner list is items
         private static List<GameObjects.ItemCategory> ActorizerKnownJunkCategories { get; set; }
+        // outer list is item.category indexed, inner list is items
         private static List<List<GameObjects.Item>> ActorizerKnownJunkItems { get; set; }
         private static Mutex _LogMutex = new Mutex();
         private static bool ACTORSENABLED = true; 
@@ -101,7 +103,7 @@ namespace MMR.Randomizer
         private static CosmeticSettings _cosmeticSettings;
         private static StringBuilder _syncedLog;
 
-        // these have to be separate from Actor Enum for now beacuse they are for special objects, not regular types
+        // these have to be separate from Actor Enum for now beacuse they are for special objects, not regular types, can't mix
         static int[] clayPotDungeonVariants = {
             0xB, // multiple
             0x1E, 0x5, // swamp spiderhouse spider pots
@@ -117,6 +119,7 @@ namespace MMR.Randomizer
             0xC00B, 0xC21E, 0xC40E, 0xFE0E, 0xFC0B, 0xFA1E, 0xF81E, 0xF81E, 0xF60E, 0xF410, // secret shrine,
             0xFE0F, 0xFE0B, 0xFE0E, 0xFE03 // non-vanilla
         };
+
         // params: 0x3 is type, 0,2,3 are field grass (1 is tall re-growing grass that requires object)
         //  type 0: 0x7F00 is item (random) collectable from table,
         //    0xC000 just disables item drop??
@@ -3000,7 +3003,7 @@ namespace MMR.Randomizer
 
         private static void RandomizeGrottoGossipStonesPerGrotto()
         {
-            /// each gossip stone grotto has enough object space to add or switch an object
+            /// each gossip grotto gossip stone has enough object space to add or switch an object
             /// and then randomize three of the gossip stones to something new and random
             /// should be doable without breaking the gossip stone quest
 
@@ -3551,8 +3554,6 @@ namespace MMR.Randomizer
             newPeahat.ChangeActor(GameObjects.Actor.Peahat, vars: 0, modifyOld: true);
             //newPeahat.Position = new vec16(5010, -20, 600); // move over near peahat one
             newPeahat.Position = new vec16(5010, -20, 600); // move over near peahat one
-
-            
 
             // biobaba grotto has a worthless dekubaba object, lets swap it for the ice block object so we can freeze the water
             grottosScene.Maps[11].Objects[3] = 0x1E7; // iceflowe
@@ -5402,6 +5403,8 @@ namespace MMR.Randomizer
                 if (usableTreasureFlags.Contains(treasureFlags))
                 {
                     usableTreasureFlags.Remove(treasureFlags);
+                    log.AppendLine($" +++ [{actorIndex}][{actor.ActorEnum}] had treasure flags that didn't collide, leaving alone with switch [{treasureFlags}] +++");
+
                 }
                 else // we have switch flag and we have a collision, we need to change it
                 {
@@ -5539,7 +5542,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BuisnessScrub)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.RegularZora, GameObjects.Actor.DragonFly)) continue;
-                if (TestHardSetObject(GameObjects.Scene.SecretShrine, GameObjects.Actor.Wart, GameObjects.Actor.PirateColonel)) continue;
+                if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.Keese, GameObjects.Actor.GoldSkulltula)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.SunSwitch)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Gorman, GameObjects.Actor.TreasureChest)) continue;

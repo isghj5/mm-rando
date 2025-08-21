@@ -940,6 +940,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x3080)]
         [FileID(96)]
         [ObjectListIndex(0x20)]
+        // params: 0x3 is type, 
         // swamphouse: 0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F
         // ocean spiderhouse: 0xFF3F, 0x1B, 0x317, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0x777, 0x57B, 0xFF0B, 0xFF0F, 0x223, 0x11F,
         // some spiders crash, probably because it follows a path, 223, 113, 1B, 909
@@ -950,9 +951,9 @@ namespace MMR.Randomizer.GameObjects
             0xFF3F, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0xFF0B, 0xFF0F, 0xFFFC,
             0xFF2B // ocean spiderhouse
             )]
-        [PathingVariants(0xEF, 0x7F, 4, 0x55B, 0x637, 0x113, 0x91F, 0x909, 0xB0C, 0xC0F)]
         [GroundVariants(0xFF53, 0xFF5D, 0xFF61, 0xFF6D, 0xFF0B)] // pathing type with path disabled, why is this so rare?
-        [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)]
+        [PathingVariants(0xEF, 0x7F, 0x4, 0x55B, 0x637, 0x113, 0x91F, 0x909, 0xB0C, 0xC0F, 0x777, 0x57B)]
+        [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)] // 0xFFXX triggers no pathing behavior
         [VariantsWithRoomMax(max: 1,
             0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F,
             0xFF3F, 0x317, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0x777, 0x57B, 0xFF0B, 0xFF0F, 0x11F)]
@@ -996,6 +997,8 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(En_Ani, CompanionAlignment.InFront, ourVariant: 0xFF0B, variant: 0)]
         [AlignedCompanionActor(En_Ani, CompanionAlignment.InFront, ourVariant: 0xFF5D, variant: 0)]
         [AlignedCompanionActor(En_Ani, CompanionAlignment.InFront, ourVariant: 0xFF61, variant: 0)]
+        // 3FC >> 2 sometimes?
+        // oh this is weird: 3FC breaks into the pathing, but then it only reads up to 0x3F
         [TreasureFlagsPlacement(mask: 0x3F, shift: 2)] // for some reason it collides with path sometimes, TODO figure this out
         GoldSkulltula = 0x50, // En_Sw "Skullwalltulla"
 
@@ -2698,6 +2701,7 @@ namespace MMR.Randomizer.GameObjects
             //Scene.Woodfall, // they fall off into the water and quietly swim, lame?
             //Scene.SecretShrine, Scene.BeneathGraveyard, // these guys are actually enemies, you can get stuck in a room with them
             Scene.FishermansHut, // crash
+            Scene.AstralObservatory,
             Scene.MountainVillageSpring, Scene.RanchBuildings)] // crash because not enough paths
         Dog = 0xE2, // En_Dg
 
@@ -3871,7 +3875,7 @@ namespace MMR.Randomizer.GameObjects
         [BlockingVariantsAll]
         // possible second switch at 0x3F8
         [SwitchFlagsPlacement(SwitchTrigger.Receives, size: 0x7F, shift: 0)]
-        [TreasureFlagsPlacement(mask: 0x1F, shift: 8)] // 0x3FC
+        [TreasureFlagsPlacement(mask: 0x1F, shift: 8)]
         [PlacementWeight(35)]
         CircleOfFire = 0x162, // Obj_Fireshield // tag: FireRing
 
