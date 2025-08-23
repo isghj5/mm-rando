@@ -2701,6 +2701,7 @@ namespace MMR.Randomizer.GameObjects
             //Scene.Woodfall, // they fall off into the water and quietly swim, lame?
             //Scene.SecretShrine, Scene.BeneathGraveyard, // these guys are actually enemies, you can get stuck in a room with them
             Scene.FishermansHut, // crash
+            Scene.Grottos, // crash in generic grotto, untested in others, few paths
             Scene.AstralObservatory,
             Scene.MountainVillageSpring, Scene.RanchBuildings)] // crash because not enough paths
         Dog = 0xE2, // En_Dg

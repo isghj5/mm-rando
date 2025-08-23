@@ -175,6 +175,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1165)]
         [SceneInternalId(0x13)]
+        [DynaHeadroom(30,30, room: 4)] // the sakon cave area crashed with 32/28 delta, crashscreen said only 1 over
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bombiwa,  // credits stump
             Actor.Milkjar, Actor.TallGrass, Actor.LetterToPostman, Actor.SmallSnowball, Actor.BombFlower, Actor.MushroomCloud,
             Actor.En_Invisible_Ruppe, Actor.HitSpot, Actor.Bo, // too small to see
