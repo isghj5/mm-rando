@@ -977,9 +977,9 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
             Actor.Shabom)] // report of them not spawning or falling out of bounds and softlock
         [EnemizerSceneEnemyReplacementBlock(Actor.Wart,
-            Actor.Hiploop)] // instant kill on water
+            Actor.Hiploop, Actor.RedBubble)] // instant kill on water
         [EnemizerSceneEnemyReplacementBlock(Actor.GaroMaster,
-            Actor.Hiploop)] // instant kill on water
+            Actor.Hiploop, Actor.RedBubble)] // instant kill on water
         SecretShrine = 0x5D,
 
         [FileID(1466)]
