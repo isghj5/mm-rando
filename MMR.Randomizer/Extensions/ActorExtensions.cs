@@ -131,6 +131,8 @@ namespace MMR.Randomizer.Extensions
 
         public static List<Scene> ScenesRandomizationExcluded(this Actor actor)
         {
+            // get list of scenes that we cannot extract an enemy/actor from, meaning they remain vanilla
+
             return actor.GetAttribute<ForbidFromSceneAttribute>()?.ScenesExcluded ?? new List<Scene>();
         }
 

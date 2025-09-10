@@ -692,13 +692,13 @@ namespace MMR.Randomizer
                         {
 
                             #if DEBUG
-                            var itemText = $"blocked by item [{ itemRestriction }]";
+                            var itemText = $"[{ itemRestriction }]";
                             #else
-                            var itemText = $"blocked by item [{ (int) itemRestriction}]";
+                            var itemText = $"[{ (int) itemRestriction}]"; // hiding the item in case players need to glance the log they don't get to see the item by name
                             #endif
 
                             log.AppendLine($" in scene (O!) [{scene.SceneEnum}]m[{mapIndex}]r[{mapActor.RoomActorIndex}]v[{mapActor.OldVariant.ToString("X4")}]" +
-                                $" actor:[0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}] removal " + itemText);
+                                $" actor:[0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}] removal blocked by item " + itemText);
                             continue;
                         }
 
@@ -6468,6 +6468,7 @@ namespace MMR.Randomizer
         {
             AddAniObjectIfTerminaFieldTree(thisSceneData);
             RemoveScarecrowFromTradingPostIfSOTRandomized(thisSceneData);
+            RemoveStalagmiteFromSnowheadIfTrick(thisSceneData);
         }
 
         private static void AddAniObjectIfTerminaFieldTree(SceneEnemizerData thisSceneData)
@@ -6523,6 +6524,22 @@ namespace MMR.Randomizer
             }
 
         }
+
+        private static void RemoveStalagmiteFromSnowheadIfTrick(SceneEnemizerData thisSceneData)
+        {
+            // the boss key skip trick needs the objects to be there
+
+            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.SnowheadTemple)
+            {
+                var SHTBossKeySkipTrickEnabled = _randomized.Settings.EnabledTricks.Contains("SHT BK Skip");
+                if (SHTBossKeySkipTrickEnabled)
+                {
+                    thisSceneData.Actors.RemoveAll(act => act.ActorEnum == GameObjects.Actor.IceCavernStelagtite);
+                    thisSceneData.Objects.RemoveAll(obj => obj == GameObjects.Actor.IceCavernStelagtite.ObjectIndex());
+                }
+            }
+        }
+
 
 
         private static void TrimSceneAcceptableCandidateList(SceneEnemizerData thisSceneData)
