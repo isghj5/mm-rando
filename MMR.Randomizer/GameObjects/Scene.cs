@@ -876,6 +876,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1431)]
         [SceneInternalId(0x53)]
+        [DynaHeadroom(220, 250)] // poly:246 was crashing +10
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bombiwa,
             Actor.LikeLike)] // can instant grab you on exit
         RoadToIkana = 0x50,
