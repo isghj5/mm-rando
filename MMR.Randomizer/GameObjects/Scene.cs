@@ -570,8 +570,9 @@ namespace MMR.Randomizer.GameObjects
         // inside of the goron village main building, with the goron shop and merrygoround
         [FileID(1319)]
         [SceneInternalId(0x32)]
-        // 128,100 was fine
-        [DynaHeadroom(128, 100)]  // limit not found
+        // 128,100 was fine, once
+        // 56+44, 44+32 was a crash
+        [DynaHeadroom(88, 100)]  // limit not found
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GoronSGoro,
                         Actor.GoronWithGeroMask)] // if the sirloin drops on top of him its broken
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Torch,
