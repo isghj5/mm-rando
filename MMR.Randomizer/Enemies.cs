@@ -7175,6 +7175,7 @@ namespace MMR.Randomizer
 
             foreach (string filePath in GenerateMMRAFileList(directory))
             {
+                // this is a list of broken actors that we cannot use, they have been removed but I don't trust users to remove the file and not just overwrite a previous directory
                 if (filePath.Contains("SafeBoat.mmra")
                  || filePath.Contains("FairySpot.mmra") // is missing a variant, and was not working, not even sure what it was doing, TODo
                  || filePath.Contains("BabaIsLoaded.mmra") // talk locking, lost the code, have to disable because no time to rewrite
@@ -7716,7 +7717,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 90.4\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 90.5\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

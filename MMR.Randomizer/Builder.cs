@@ -1577,7 +1577,7 @@ namespace MMR.Randomizer
             {
                 Enemies.ShuffleEnemies();
 
-                Enemies.UpdateActorOverlayTable(); // this used to be last second, but to try to get it to be .mmr patch compatible its being moved up
+                Enemies.UpdateActorOverlayTable();
             }
         }
 
