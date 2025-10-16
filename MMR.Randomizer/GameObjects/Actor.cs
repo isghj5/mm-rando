@@ -3498,6 +3498,7 @@ namespace MMR.Randomizer.GameObjects
             0x283, // goron village door goron
             0x8, // keg smith goron
             0x7F84, 0x7F94)] // outside of darmani's grave
+        //[PathingVariants()] // the one right outside of the door is rolling, path, snowball is part of the object, problem is its time based
         [VariantsWithRoomMax(max: 1,
             0x7FE2, 0x7F85, 0x7F86, 0x7F87,
             0x7F82, 0x7F92)]
@@ -4622,13 +4623,12 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.MundaneItemPictographContestRedRupee)]
         [WaterBottomVariants(0, 1, 6)] // vanilla their spawn is at the bottom of the swamp
         [WaterTopVariants(7)] // but if you put them in water they work for water surface, with a weak swimming animation
-        // testing
-        //[GroundVariants(0xFF)] // 0xFF is special flag-less condition
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0xFF, shift: 0)] // technically its all of params, but maybe in the future we want a byte for something else
-        [VariantsWithRoomMax(max: 2, variant: 0, 1, 6)]
-        [VariantsWithRoomMax(max: 5, variant: 7)]
+        [OnlyOneActorPerRoom]
+        //[VariantsWithRoomMax(max: 2, variant: 0, 1, 6)]
+        //[VariantsWithRoomMax(max: 5, variant: 7)]
         //[ForbidFromScene(Scene.SouthernSwamp, Scene.DekuPalace)]
-        [RemovalChance(20), PlacementWeight(60)]
+        [RemovalChance(20), PlacementWeight(30)]
         BigOcto = 0x1A8, // En_Bigokuta
 
         // requires ice surface type
