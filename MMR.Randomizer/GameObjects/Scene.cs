@@ -467,7 +467,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1304)]
         [SceneInternalId(0x2B)]
-        [DynaHeadroom(24, 20)]  // low default to start, untested
+        [DynaHeadroom(12, 12)]  // 10+22, 16+0 crashes in dual room swap
         [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // too close to grotto
             Actor.Dexihand)] // if it grabs you as you fall into a grotto hole it can hardlock
         [EnemizerSceneEnemyReplacementBlock(Actor.Monkey,
