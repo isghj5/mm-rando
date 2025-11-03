@@ -159,13 +159,14 @@ namespace MMR.Randomizer.GameObjects
         [FileID(48)]
         [ObjectListIndex(0x9)]
         // do not mark vanilla as ground type, it puts ground on vanilla which is always in the air
-        [FlyingVariants(0x0001)]
+        [FlyingVariants(0x0001)] // vanilla
         // 81 is trapped in ice, floats back up to the ceiling after melting
-        [GroundVariants(0x0081)]
+        [GroundVariants(0x0081)] // exists in vanilla code, unused
         [BlockingVariants(0x0081)] // ice block
         [VariantsWithRoomMax(max: 5, variant: 1)] // have to limit because it can block and I don't have variant blocking
+        [VariantsWithRoomMax(max: 5, variant: 0x0081)] // lag
         [DifficultAllVariants]
-        [RespawningVariants(variant: 0x0081)] // if they fly away after melt they might not come down (bug), so not killable
+        [RespawningVariants(variant: 0x0081)] // if they fly away after melt they might not come down (bug), so treat as not logically killable
         [CreditsBlockedVariants(variant: 0x0001)] // inivible until player gets close, so invible for credits
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0xFF, shift: 8)] // used for what?
         //[EnemizerScenesPlacementBlock(Scene.TerminaField)] // temporary, melting them can unmelt the north ice block, but why
