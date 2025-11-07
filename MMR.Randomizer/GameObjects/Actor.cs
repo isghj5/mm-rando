@@ -4388,6 +4388,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingToGroundHeightAdjustment(300)]
         [VariantsWithRoomMax(max: 0, 0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // until I can get cieling detection modification, this is weird
         [PlacementWeight(95)]
+        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard)] // bug: getting placed on bats
         //[ForbidFromScene(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         SpikedMine = 0x185, // Obj_Mine
 
