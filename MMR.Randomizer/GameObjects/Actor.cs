@@ -98,7 +98,7 @@ namespace MMR.Randomizer.GameObjects
             0x5080 // road to ikana
         )]
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: -1, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
-        [AlignedCompanionActor(Bombiwa, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x807F, 0x8004, 0x8002, 
+        [AlignedCompanionActor(Bombiwa, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x807F, 0x8004, 0x8002,
             0xE,
             0x0114, 0x0115, 0x0116, 0x0117, 0x0118,
             0x0102, 0x103, 0x104, 0x105, 0x106,
@@ -123,7 +123,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.TerminaField, Scene.PiratesFortressRooms, Scene.PiratesFortress, Scene.PiratesFortressExterior, Scene.TwinIslandsSpring,
             Scene.SouthClockTown, Scene.EastClockTown, Scene.RoadToIkana, // DO NOT RANDOMIZE: itemizer changes params, can fuck with replacement actor
             Scene.Woodfall)]
-        [SwitchFlagsPlacement(size:0x7F, shift:0), SwitchFlagsPlacementZRot]
+        [SwitchFlagsPlacement(size: 0x7F, shift: 0), SwitchFlagsPlacementZRot]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
         //[EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
         //    Scene.StoneTower)]
@@ -197,14 +197,14 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(
             0x0, 0x8000, // fire
             0x04, 0x8004 // ice
-        )] 
+        )]
         //[PerchingVariants(0x2, 0x8002)] // doesnt exist in vanilla, see the fixed mmra actor
         [WallVariants(0x8003, 0x3)] // will take off and attack within 120 units distance (xz)
         [DifficultVariants(0x8000, 0x4, 0x8004, 0x8002,
             0x300, 0x304, 0x602 // non vanilla, added in mmra
         )]
         [CreditsBlockedVariants(0x8000, 0x8002, 0x8003)] // invisble
-        [VariantsWithRoomMax(max:3, variant:0, 0x8000, 0x4, 0x8004, 0x2, 0x8002)]
+        [VariantsWithRoomMax(max: 3, variant: 0, 0x8000, 0x4, 0x8004, 0x2, 0x8002)]
         [FlyingToGroundHeightAdjustment(150)]
         Keese = 0xC, // En_Firefly
 
@@ -250,7 +250,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(2, 7, 9)]
         //[VariantsWithRoomMax(max: 1, variant: 4)] // don't create too many fairy fountains
         [VariantsWithRoomMax(max: 2, variant: 7)] // maybe limit the secret menu fairies
-        [VariantsWithRoomMax(max: 3, variant: 2,9)] // too many can mess with stuff
+        [VariantsWithRoomMax(max: 3, variant: 2, 9)] // too many can mess with stuff
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.BeneathTheWell)] // dont remove from well
         Fairy = 0x10, // En_Elf
@@ -259,7 +259,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(54)]
         [ObjectListIndex(0xF)]
         // credits, but we also need the object to stick around for cucco chicks
-        [CheckRestricted(Scene.CuccoShack, variant: 0xFFFF,  Item.MaskBunnyHood, Item.NotebookMeetGrog, Item.NotebookGrogsThanks)]
+        [CheckRestricted(Scene.CuccoShack, variant: 0xFFFF, Item.MaskBunnyHood, Item.NotebookMeetGrog, Item.NotebookGrogsThanks)]
         // all variants less than zero get turned into zero, so we can add ones 
         [GroundVariants(0x0, 0xFFFF)] // FFFF is in ranch barn
         [FlyingVariants(0xFEEE)] // non-vanilla, want to see how they do if they spawn on flying, do they fall from the sky like normal?
@@ -759,7 +759,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x938 + (0x2A0 * 25))] // 0x938 // oversized because he spawns little bats and can easily overblow ram
         [ObjectListIndex(0x52)]
         [GroundVariants(0)] // can fly, but weirdly is very bad at changing height if you fight in a multi-level area
-        [VariantsWithRoomMax(max:0, variant:0)] // for now block, we can remove but do not place
+        [VariantsWithRoomMax(max: 0, variant: 0)] // for now block, we can remove but do not place
         [OnlyOneActorPerRoom] // only fight her if you fight only one
         [RespawningAllVariants] // is NOT unkillable, but assume never have light arrows until the last second of a run, do not place where can block an item
         [ForbidFromScene(Scene.InvertedStoneTowerTemple)] // lets not randomize his normal spawn
@@ -972,17 +972,17 @@ namespace MMR.Randomizer.GameObjects
             0x0114, 0x0115, 0x0116, 0x0117, 0x0118,
             0x8003
         )]
-        [AlignedCompanionActor(IshiRock, CompanionAlignment.InFront, ourVariant: 0xFF61, variant: 0xFF00, 0xFF70, 0xFFA0, 0xFFB0, 
+        [AlignedCompanionActor(IshiRock, CompanionAlignment.InFront, ourVariant: 0xFF61, variant: 0xFF00, 0xFF70, 0xFFA0, 0xFFB0,
             0x00A0, 0x0040, 0x1F0, // mountain spring
             0x60, 0x80, // twin islands spring
             0x32, // cape
             0x1F2, 0xA1)]
-        [AlignedCompanionActor(IshiRock, CompanionAlignment.InFront, ourVariant: 0xFF6D, variant: 0xFF00, 0xFF70, 0xFFA0, 0xFFB0, 
+        [AlignedCompanionActor(IshiRock, CompanionAlignment.InFront, ourVariant: 0xFF6D, variant: 0xFF00, 0xFF70, 0xFFA0, 0xFFB0,
             0x00A0, 0x0040, 0x1F0, // mountain spring
             0x60, 0x80, // twin islands spring
             0x32, // cape
             0x1F2, 0xA1)]
-        [AlignedCompanionActor(IshiRock, CompanionAlignment.InFront, ourVariant: 0xFF0B, variant: 0xFF00, 0xFF70, 0xFFA0, 0xFFB0, 
+        [AlignedCompanionActor(IshiRock, CompanionAlignment.InFront, ourVariant: 0xFF0B, variant: 0xFF00, 0xFF70, 0xFFA0, 0xFFB0,
             0x00A0, 0x0040, 0x1F0, // mountain spring
             0x60, 0x80, // twin islands spring
             0x32, // cape
@@ -1030,7 +1030,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.RomaniRanch,
             Scene.GreatBayCoast,
             Scene.DoggyRacetrack
-        )] 
+        )]
         [UnkillableAllVariants]
         [PlacementWeight(15)]
         ObjectKankyo = 0x51, // Object_Kankyo
@@ -1131,9 +1131,9 @@ namespace MMR.Randomizer.GameObjects
             0x37, // coast regular grotto
             0x15, 0x95, // cape (15 isnt vanilla why does it show up in rando? zoey?)
             0x16, 0x216, // road to ikana
-            // 0x238: secret grotto only accessible during title screen
+                         // 0x238: secret grotto only accessible during title screen
             0x0218, 0x2B8, // graveyard
-            // 0x34: ikana canyon secret grotto that cannot be accessed its only available during a cutscene
+                           // 0x34: ikana canyon secret grotto that cannot be accessed its only available during a cutscene
             0x14, 0x54, 0xB4, // ikana canyon
             0xF200, // secret secret
             0x6233, 0x623B, 0x6218, 0x625C)] // grottos that might hold checks, also hidden
@@ -1332,7 +1332,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x3C4)] // same as likelike for enemizer
         [FileID(112)] // same as likelike for enemizer
         [GroundVariants(0)]
-        [VariantsWithRoomMax(max:0, variant:0)]
+        [VariantsWithRoomMax(max: 0, variant: 0)]
         LikeLikeShieldDummy = 0x2B2, // 2B2 is a dummy actor ID, its outside of the actor list, we only use it because it will never conflict with enemizer
 
         Empty6D = 0x6D,
@@ -1372,7 +1372,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(115)]
         [ObjectListIndex(3)]
-        [DynaAttributes(12,8)]
+        [DynaAttributes(12, 8)]
         // man there are too many checks to list, do this later to re-enable
         [CheckRestricted(Scene.SnowheadTemple, variant: ActorConst.ANY_VARIANT,
             Item.CollectibleStrayFairySnowhead10, Item.CollectibleStrayFairySnowhead11)]
@@ -1596,8 +1596,8 @@ namespace MMR.Randomizer.GameObjects
         )]
         [WaterBottomVariants(
             0xFE0E, 0xFC0B, 0xFA1E, 0xF81E, 0xF60E, 0xF410, // secret shrine
-            //0x550A, // pinnacle rock, but its shared with ground
-            0x410E, 0x450A, 0x470A, 0x490A, 0x4B0A, 0x4D0E, 0x530A,  0x570E, 0x590A, 0x5B0E, // pinnacle rock
+                                                            //0x550A, // pinnacle rock, but its shared with ground
+            0x410E, 0x450A, 0x470A, 0x490A, 0x4B0A, 0x4D0E, 0x530A, 0x570E, 0x590A, 0x5B0E, // pinnacle rock
             0xFF0F, 0xFF0B, 0xFF0E, 0xFF03 // non vanilla
         )]
         [VariantsWithRoomMax(max: 0, variant: 0x460B, 0x4610, 0x018D, // stone tower temple (dungeon keep)
@@ -1668,7 +1668,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(130)]
         [ObjectListIndex(0001)]
         // could be a funny send
-        [SwitchFlagsPlacement(SwitchTrigger.Death, size:0x7F, shift: 8)]
+        [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 8)]
         ProximityTatlTalkingSpot = 0x8B, // Elf_Msg
 
         [EnemizerEnabled]
@@ -1709,10 +1709,12 @@ namespace MMR.Randomizer.GameObjects
         // smithy uses size 0x78, 0x10 is smol
         [WallVariants(0xFF10, 0xFF20, 0xFF44, 0xFF64)]
         [PerchingVariants(0xFF10, 0xFF20, 0xFF44, 0xFF64)]
-        [GroundVariants(0xFF10, 0xFF20, 0xFF44, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
+        [GroundVariants(0xFF10, 0xFF20, 0xFF44, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF,
+            0xFF05, 0xFF03, 0xFF01)] // trying even smaller
         [BlockingVariants(0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         // all restricted because they add colliders which limits our BGcheck options for other things
-        [VariantsWithRoomMax(max: 1, variant: 0xFF10, 0xFF20, 0xFF44, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
+        [VariantsWithRoomMax(max: 1, variant: 0xFF10, 0xFF20, 0xFF44, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF,
+            0xFF05, 0xFF03, 0xFF01)]
         //[VariantsWithRoomMax(max: 1, variant: 0xFFC8, 0xFF96, 0xFF78)]
         [PlacementWeight(30)]
         RegularIceBlock = 0x8E, // Obj_Ice_Poly
@@ -1721,8 +1723,47 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2240)]
         [FileID(134)]
         [ObjectListIndex(0xE4)]
-        [GroundVariants(02, 0x2001, 0x300F, 0x100F)]
-        [VariantsWithRoomMax(max: 2, variant: 02, 0x2001, 0x300F, 0x100F)] // 8 is more than enough
+        // params:
+        // 0xF is power for 0-2, 3 is special do-nothing cousin,
+        // 0x3000 is a two bit that controls rotation range, 0x8000 and 0x4000 are special flags, their type relationship is complicated
+        // 2 is the snowhead bridge room, 2001 is snowhead pillar room, 3000F is map room
+        // 100F is well
+        [GroundVariants(
+            0x8000 | 0x0000 | 0x0, // appears when player approaches, no aiming restrictions, slides afte them, short range because it follows you
+            0x8000 | 0x0010 | 0x0, // slightly different copy of the above, doubles the chance of placement
+            0x8000 | 0x0020 | 0x1, // ...
+            0x8000 | 0x0030 | 0x2, // ...
+            0xC000 | 0x0000 | 0x1, // stationary, aim at you from any direction, no aiming restrictions, slides afte them, mid range
+            0x4000 | 0x1000 | 0x2, // appears instantly from the ground, some aiming restrictions, long range because weird
+            0x3, // passive type, does nothing because unifinished code
+            0x2000 | 0x1, // (vanilla) decent turning radius, mid range
+            0x0000 | 0x2, // (vanilla) mid range, bridge room length
+            0x3000 | 0xF, // (vanilla) cannot turn, short range (snowhead map room)
+            0x1000 | 0xF // (vanilla): some turning radius, short range (f becomes 0)
+        )]
+        [VariantsWithRoomMax(max: 1, variant:
+            0xC000 | 0x0000 | 0x1, // stationary, aim at you from any direction, no aiming restrictions, slides afte them, mid range
+            0x4000 | 0x1000 | 0x2, // appears instantly from the ground, some aiming restrictions, long range because weird
+            0x3, // passive type, does nothing because unifinished code
+            0x2000 | 0x1, // (vanilla) decent turning radius, mid range
+            0x0000 | 0x2, // (vanilla) mid range, bridge room length
+            0x1000 | 0xF  // (vanilla): some turning radius, short range (f becomes 0)
+        )]
+        [VariantsWithRoomMax(max: 3, variant:
+            0x8000 | 0x0000 | 0x0, // appears when player approaches, no aiming restrictions, slides afte them, short range because it follows you
+            0x8000 | 0x0010 | 0x0, // slightly different copy of the above, doubles the chance of placement
+            0x8000 | 0x0020 | 0x1, // ...
+            0x8000 | 0x0030 | 0x2  // ...
+
+        )]
+        [VariantsWithRoomMax(max: 0, variant: // we need to cull at least one, to increase chance of more interesting types
+            0x3000 | 0xF // (vanilla) cannot turn, short range (snowhead map room)
+        )]
+        // TODO I think alignment isnt working for our variant, I'm getting too many fires on regular freezards
+        //[AlignedCompanionActor(Flame, CompanionAlignment.OnTop, ourVariant: 0xC000 | 01,
+        //    variant: 0x7FE)] // this might be weird, but I feel like we need to thin this actor, at least until I modify it to reduce the lag a bit, blue fire
+        //[AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: -1,
+        //    variant: 0xFF05, 0xFF03, 0xFF01, 0xFF10, 0xFF20, 0xFF44, 0xFF64)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // Slowing enemies
         Freezard = 0x8F, // En_Fz
 
