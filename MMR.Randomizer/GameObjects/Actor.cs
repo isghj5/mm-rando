@@ -3236,10 +3236,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(250)]
         // params 0 vanilla
         // init checks if 64, C8, CA, 23
-        [GroundVariants(0x23)]
+        [GroundVariants(0x23)] // crashes in EnKnight_Update because it cannot find the instance of igos
+        //[GroundVariants(0x)]
         [UnkillableAllVariants] // assumption: need mirror shield
         SkeleKnight = 0x115, // En_Knight
-
 
         [ActorizerEnabled] // used in the moon
         [FileID(251)]
@@ -3435,9 +3435,11 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(270)]
         [ObjectListIndex(0x15D)]
-        [RemovalChance(45)]
+        [RemovalChance(45), PlacementWeight(2)]
         [GroundVariants(0)] // his placement is on the ground, cutscene?
-        [VariantsWithRoomMax(max: 0, variant: 0)] // spawning behavior is weird and can spawn out of bounds
+        //[VariantsWithRoomMax(max: 0, variant: 0)] // spawning behavior is weird and can spawn out of bounds
+        [VariantsWithRoomMax(max: 1, variant: 0)] // spawning behavior is weird and can spawn out of bounds
+        [UnkillableAllVariants] // assume unkillable because spawning is really weird
         //[OnlyOneActorPerRoom]
         [DifficultAllVariants]
         Wart = 0x12C, // Boss_04
@@ -4306,10 +4308,18 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1C6C)]
         [FileID(346)]
         [ObjectListIndex(0x16B)]
+        // params: 0xF and 0xFF0, either of them are the path, which they inherit from the spawning Encount1 funny enough
+        //  0xF is > 10 or else? huh?
+        //   can also be 0, 1, 2, else
+        // < 10 has a collider
         // A2 might be the ones that respawn over and over, the "Encounter"
         // 82 and 62 are found in the map room, both just kinda spin, never engages
         // zora cape has 000, same as the other two
-        [WaterVariants(0xA2, 0x82, 0x62, 0)]
+        [WaterVariants(
+            0xA0 | 0x2,
+            0x80 | 0x2,
+            0x60 | 0x2,
+            0x00 | 0x0)]
         SkullFish = 0x180, // En_Pr2
 
         [FileID(347)]
