@@ -14,8 +14,34 @@ namespace MMR.Randomizer.Models.SoundEffects
     {
         #region Player
 
+
+        //[Tags(Short)]
+        // HeavyBootsLand = 0x002D, // not the OOT sound, minor footsteps for us
+
+        [Tags(Short)]
+        LinkLandsOnHisBack = 0x0050,
+
+        [Tags(Looping)]
+        LinkWasShocked = 0x0068,
+
         [Tags(Long)]
         PlayerBreakOutOfIce = 0x0075,
+
+        [Tags(Long)]
+        OOTDinsFire = 0x0079,
+
+        [Tags(Long)]
+        OOTFaroresCast = 0x007A,
+
+        [Tags(Short, Long)]
+        OOTFaroresWarp = 0x007B,
+
+        [Tags(Looping)]
+        OOTNayrusLove = 0x007C,
+
+        [Tags(Looping)]
+        GreatFairyHeal = 0x00C4,
+
 
         // this is when you collect great fairy stray, not regular fairy
         //[Tags(Long)]
@@ -27,8 +53,20 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         DekuLinkFlowerPop = 0x00E3,
 
+        [Tags(Long)]
+        ElegyStatueCreation = 0x00E4,
+
+
         [Tags(Short, Long, LowHpBeep)]
         GoronLinkPound = 0x00E8,
+
+        [Tags(Short, Long)]
+        GoronSpikesRetracted = 0x01A2, // ran out of magic
+
+
+        [Tags(Short, Long, LowHpBeep)]
+        DekuNutBomberDrop = 0x01AC, // falling sfx
+
 
         #endregion
 
@@ -165,6 +203,26 @@ namespace MMR.Randomizer.Models.SoundEffects
         #endregion
 
         #region Environment SFX
+        [Tags(Short)]
+        DoorOpen = 0x2000,
+
+        [Tags(Short)]
+        DoorClose = 0x2001,
+
+        //[Tags(Short, LowHpBeep)]
+        //EponaNeigh = 0x2001, // duplicate
+
+        [Tags(Short, LowHpBeep)]
+        FishOutOfWater = 0x2008,
+
+        [Tags(Short, Long)]
+        OOTBridgeOpen = 0x200E,
+
+        [Tags(Short, Long)]
+        OOTBridgeClose = 0x200F,
+
+        [Tags(Long)]
+        WallBroken = 0x2010, // just another explosion
 
         [Tags(Long)]
         CuccoClucking = 0x2011,
@@ -179,6 +237,10 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Short)]
         TatlEmerges = 0x201B,
+
+        [Tags(Short, LowHpBeep)]
+        MagmaBubble = 0x2008, // TODO
+
 
         [Tags(Short)]
         PhantomGannonSpikedFence = 0x203C, // left over from oot
@@ -317,8 +379,38 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         ClockTowerBounce = 0x2140,
 
+        [Tags(Short, LowHpBeep)]
+        MajoraBalloonPop = 0x2149,
+
+        [Tags(Long)]
+        GiantVoiceSuccess = 0x214C,
+
+        [Tags(Short, Long)]
+        GiantVoiceFail = 0x214D,
+
+
+        [Tags(Long)]
+        GiantStep = 0x214E,
+
+
         [Tags(Short, Long)]
         ClockTowerStairsDrop = 0x2145,
+
+        [Tags(Short)]
+        UmbrellaOpen = 0x2152,
+
+        [Tags(Long)]
+        GongLarge = 0x2156,
+
+        [Tags(Short, LowHpBeep)]
+        LogBounce = 0x2157,
+
+        [Tags(Short)]
+        GongSmall = 0x215A,
+
+        [Tags(Long)]
+        SnowheadGoronCrashEarthquake = 0x2162,
+
 
         //[Tags(Short, Debug)]
         //UFOAppear = 0x217b, // loops
@@ -498,17 +590,26 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Replacable(0xCE57CE, 0xCE5A22)]
         [ReplacableByTags(Short)]
         [Tags(Short, LowHpBeep)]
-        FrogRibbit = 0x30D2,
+        FrogRibbit = 0x30D2, // gekko
 
         [Replacable(0xCE50F2, 0xCE603A, 0xCE6F7E)]
         [ReplacableByTags(Short)]
         [Tags(Short)]
-        FrogTakeDamage = 0x30D3,
+        FrogTakeDamage = 0x30D3, // gekko
+
+        //[Tags(Long)]
+        //SlimeLaugh = 0x30D5, // gekko shouting as it attacks, isn't this already replaced? duplicate or sequence funk?
+
 
         [Replacable(0xCE6026)]
         [ReplacableByTags(Long)]
         [Tags(Long)]
-        FrogDie = 0x30D6,
+        FrogDie = 0x30D6, // gekko
+
+        [ReplacableByTags(Long)]
+        [Tags(Long)]
+        FrogSlimeShatter = 0x30DB, // gekko
+
 
         [Replacable(0xD4E78E, 0xD4E996, 0xD4EB9E, 0xD4EBF6, 0xD4EE1A, 0xD4EEAE, 0xD4F0DA, 0xD4F57A, 0xD4F81A, 0xD4FA26)]
         [ReplacableByTags(Long)]
@@ -544,6 +645,12 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Short, Long)]
         SnapperShoutsGagrap = 0x30F3,
+
+        [Tags(Short, Long)]
+        SnapperStruggles = 0x30F6,
+
+        [Tags(Long)]
+        SnapperDies = 0x30FA,
 
         [Tags(Short)]
         GoronWake = 0x30FC,
@@ -628,6 +735,9 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         PirateDead = 0x319A,
 
+        [Tags(Short)]
+        PametFrogVoiceShort = 0x319F, // weird little sfx, like hes saying "else-that"
+
         [Replacable(0xCE5286)]
         [ReplacableByTags(Short)]
         [Tags(Short)]
@@ -651,8 +761,8 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         GoronSleepy = 0x31AD,
 
-        //[Tags(Long, Debug)]
-        //IronKnuckleUnknown = 0x31B0, // very short and quiet grunt
+        [Tags(Short)]
+        IronKnuckleGrunt = 0x31B0, // or is this darklink/ganondorf? weird
 
         [Tags(Short)]
         IronKnuckleDeathGroan = 0x31B1, // Iron Knuckle death 
@@ -1355,16 +1465,16 @@ namespace MMR.Randomizer.Models.SoundEffects
         SwordSchoolTrainerEhh = 0x615C,
 
         [Tags(Short)]
-        DarlingLaugh = 0x615F,
-
-        [Tags(Short)]
-        ShootingGalleryDisappointed2 = 0x6160,
-
-        [Tags(Short)]
         ZuboraShaddup = 0x615D,
 
         [Tags(Short)]
         ZuboraOh = 0x615E,
+
+        [Tags(Short)]
+        DarlingLaugh = 0x615F,
+
+        [Tags(Short)]
+        ShootingGalleryDisappointed2 = 0x6160,
 
         [Tags(Short, LowHpBeep)]
         PamelaFatherGasp = 0x6161,
@@ -1384,10 +1494,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         GaboraHurrgh = 0x6166,
 
-        [Tags(Short)]
+        [Tags(Short, Long)]
         BeanManAhh = 0x6167,
 
-        [Tags(Short)]
+        [Tags(Short, Long)]
         BeanManMmm = 0x6168,
 
         [Tags(Short)]
