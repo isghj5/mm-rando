@@ -32,6 +32,138 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         #endregion
 
+
+        #region Item
+        // was this seriously missing this whole time?
+
+        [Tags(Short)]
+        SwordSmack = 0x1000,
+
+        [Tags(Short, LowHpBeep)]
+        ObjectSwing = 0x1001, // without link saying "Hiyah" its the same for bottles and even zora link punches
+
+        [Tags(Short)]
+        SwordPutAway = 0x1002,
+
+        [Tags(Short, LowHpBeep)]
+        SwordPullOut = 0x1003,
+
+        //[Tags(Short)]
+        //ShieldHitMetal = 0x1006,
+
+        [Tags(Short)]
+        ShieldHitMetal = 0x1008,
+
+        [Tags(Short, LowHpBeep)]
+        ArrowStuckInSurface = 0x1009, // True thock enjoyers
+
+        [Tags(Short, LowHpBeep)]
+        OOTMegatonHammerHit = 0x100A,
+
+        [Tags(Short, LowHpBeep)]
+        BombExplosion = 0x100E,
+
+        [Tags(Short, LowHpBeep)]
+        BombFuseExtinguish = 0x100F,
+
+        [Tags(Short, LowHpBeep)]
+        SwordIdleSwing  = 0x1012, // when link twirls the Master Sword
+
+        [Tags(Short, LowHpBeep)]
+        HookshotBounce = 0x1013, // off of hard surface
+
+        [Tags(Short, LowHpBeep)]
+        HookshotStick = 0x1014, // might be boring
+
+        [Tags(Short, LowHpBeep)]
+        ArrowStuckInSurface2 = 0x1015, // might be duplicate
+
+        [Tags(Long)]
+        LongSwordSwing = 0x1018, // also OOT fishing rod swing? huh
+
+        [Tags(Short, LowHpBeep)]
+        SwordHitBombable = 0x101B,
+
+        [Tags(Short, LowHpBeep)]
+        SwordHitRock = 0x101C, // ting
+
+        [Tags(Short, LowHpBeep)]
+        WhipEpona = 0x101E, // snap
+
+        [Tags(Short, LowHpBeep)]
+        OOTSlingShotFire = 0x1020, // works, might confuse players
+
+        [Tags(Short, LowHpBeep)]
+        DekuNutImpact = 0x102B, // crack
+
+        [Tags(Short, Long)]
+        JabusBellyWallHit = 0x102C, // it's real, lol
+
+        [Tags(Short, LowHpBeep)]
+        BowFlick = 0x1030, // twang
+
+        //[Tags(Short, LowHpBeep)]
+        //OOTSlingShotFlick = 0x1031, // duplicate of bow I think
+
+        [Tags(Short, LowHpBeep)]
+        OOTMirrorShieldCharge1 = 0x1032, // these three still work
+
+        [Tags(Short, LowHpBeep)]
+        OOTMirrorShieldCharge2 = 0x1033,
+
+        [Tags(Short, LowHpBeep)]
+        OOTMirrorShieldCharge3 = 0x1034,
+
+        [Tags(Long)]
+        FireArrowHitSound = 0x103A,
+
+        [Tags(Long)]
+        IceArrowHitSound = 0x103B,
+
+        [Tags(Long)]
+        LightArrowHitSound = 0x103C,
+
+        [Tags(Short, LowHpBeep)]
+        OOTGodPass = 0x1040, // nyoom
+        [Tags(Long)]
+        OOTGodDash = 0x1041, // woosh
+        [Tags(Long)]
+        OOTGodGather = 0x1042, // long rumble
+        [Tags(Long)]
+        OOTGodExplosion = 0x1043, // could have been death mountain explode too
+
+        [Tags(Long)]
+        HorseNeigh = 0x1044, 
+
+        [Tags(Short, LowHpBeep)]
+        KakashiJump = 0x1047, // small hop he does when hes happy talking to you
+
+        [Tags(Looping)]
+        Flame = 0x1048, // flame circle sfx I think
+
+        [Tags(Looping)]
+        ShieldBeam = 0x1049, // the beam is shining on something, very glassy pad
+
+        [Tags(Short)]
+        OOTFishOn = 0x104A, // snappy, whipy
+
+        //[Tags(Short, LowHpBeep)]
+        //GoodsAppear = 0x104B, // used for explosion on chest in bombchu gallery I think, duplicate of regular explosion
+
+        [Tags(Short, LowHpBeep)]
+        GiantsKnifeBreak = 0x104C, // twang
+
+        [Tags(Short)]
+        OOTGerudoHandClap = 0x104D, // snap, used to open the gates
+
+        [Tags(Short)]
+        DekuFlowerParachuteOpen = 0x1050, // maybe boring
+
+        [Tags(Long)]
+        TransformMaskCrack = 0x1058, // part of the transformation cutscene
+
+        #endregion
+
         #region Environment SFX
 
         [Tags(Long)]
