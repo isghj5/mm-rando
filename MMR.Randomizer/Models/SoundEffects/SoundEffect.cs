@@ -632,7 +632,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Replacable(0x00FB719E, 0x00FB72D6)]
         [Effect(0x000)]
         [Tags(Looping)]
-        [ReplacableByTags(Long)]
+        [ReplacableByTags(Long, Looping)]
         GoronKidCry = 0x30EA,
 
         [Replacable(0xE3C096)]
@@ -1075,6 +1075,35 @@ namespace MMR.Randomizer.Models.SoundEffects
         LotteryWinner = 0x4053,
 
         #endregion
+
+        // Ocarina region, too small to put in region
+
+        [Tags(Long)]
+        VoidOut = 0x5001,
+
+        [Tags(Long)]
+        GrottoEnter = 0x5003, //
+
+        [Tags(Long, Short, LowHpBeep)]
+        OOTGrottoSortcutExit = 0x5004, // think this is still used somewhere?
+
+        [Tags(Looping)] // sad
+        GrottoExit = 0x5005,
+
+        [Tags(Long, Short, LowHpBeep)]
+        VoidReturn = 0x5006,
+
+        [Tags(Long, Short, LowHpBeep)]
+        OcarinaSplash = 0x5007, // just a big splash, not the turtle wave
+
+        [Tags(Long)]
+        DawnOfThe = 0x5008,
+
+        [Tags(Long)]
+        ClockTowerGateCreaking = 0x5009,
+
+        [Tags(Long, Short, LowHpBeep)]
+        Fireworks = 0x500A,
 
         #region Voice SFX
 
