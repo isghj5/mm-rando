@@ -1091,6 +1091,8 @@ namespace MMR.Randomizer
             FixSpecificLikeLikeTypes();
             SplitLikeLikesIntoTwoActorObjects();
             EnableTwinIslandsSpringSkullfish();
+            SwitchGBTEncounterForSkullfish();
+            SwitchZoraCapeEncounterForSkullfish();
             FixSpecificTektiteTypes();
             EnableDampeHouseWallMaster();
             FixWoodfallTempleGekkoMiniboss();
@@ -2475,7 +2477,69 @@ namespace MMR.Randomizer
             ActorUtils.FlattenPitchRoll(encounter3); // flatten encounter rotation (rotation parameters
             // move to near chest on the south side
             encounter3.Position = new vec16(300, 0, 700);
+
         }
+
+        private static void SwitchGBTEncounterForSkullfish()
+        {
+            /// Skullfish can be summoned by an actor EnEncount1
+            /// if this happens, the ones in GBT are pathed, they are supposed to swim into the room through the water passeges
+
+            // if skullfish are randomized; always currently
+
+            var greatbaytempleScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GreatBayTemple.FileID());
+
+            var gearRoom = greatbaytempleScene.Maps[9];
+
+            var fish1 = gearRoom.Actors[3];
+            fish1.ChangeActor(GameObjects.Actor.SkullFish, vars: 0, modifyOld: true);
+            fish1.Position = new vec16(3164, -832, -642);
+
+            var fish2 = gearRoom.Actors[4];
+            fish2.ChangeActor(GameObjects.Actor.SkullFish, vars: 0, modifyOld: true);
+            fish2.Position = new vec16(3175, -912, -919);
+
+            var fish3  = gearRoom.Actors[5];
+            fish3.ChangeActor(GameObjects.Actor.SkullFish, vars: 0, modifyOld: true);
+            fish3.Position = new vec16(2790, -884, -690);
+        }
+
+        private static void SwitchZoraCapeEncounterForSkullfish()
+        {
+            /// Skullfish can be summoned by an actor EnEncount1
+            /// this can make the cape seem even more empty if we completely remove the skullfish
+            /// should I change it to a regular skullfish for detection, or should I add a skullfish object
+
+            // while I wait for chat, going to change one object instead
+
+            var zoracapeScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.ZoraCape.FileID());
+
+            zoracapeScene.Maps[0].Objects.Add((int)GameObjects.Actor.SkullFish.ObjectIndex());
+
+            // expand the object list by 1 size, so the game loads the new object
+            var zoraCapeRoomFile = RomData.MMFileList[GameObjects.Scene.ZoraCape.FileID() + 1].Data;
+            zoraCapeRoomFile[0x31] = 0x18; // was 0x17
+        }
+
+        private static void SwitchSkullfishBackToEncount1(SceneEnemizerData thisSceneData)
+        {
+            /// in order for the ocean skullfish to spawn over and over and harrass the player
+            /// we have to use a different spawning actor, EnEncount1
+            /// here, we take a special case of parameters I made up, and switch it back
+
+            if ( ! thisSceneData.Objects.Contains((int)GameObjects.Actor.SkullFish.ObjectIndex())) return;
+
+            for(int a = 0; a < thisSceneData.Actors.Count; a++)
+            {
+                var actor = thisSceneData.Actors[a];
+
+                if (actor.ActorEnum == GameObjects.Actor.SkullFish && actor.Variants[0] == 0xFFFF)
+                {
+                    actor.ChangeActor(GameObjects.Actor.En_Encount1, vars: 0x105E);
+                }
+            }
+        }
+
 
         public static void NudgeFlyingEnemiesForTingle()
         {
@@ -6936,6 +7000,7 @@ namespace MMR.Randomizer
             FixRedeadSpawnScew(thisSceneData); // redeads don't like x/z rotation
             FixBrokenActorSpawnCutscenes(thisSceneData); // some actors dont like having bad cutscenes
             FixWaterPostboxes(thisSceneData);
+            SwitchSkullfishBackToEncount1(thisSceneData);
             FixSnowballActorSpawns(thisSceneData);
             FixNewGrottoZRotation(thisSceneData);
             EnsureOnlyOneKankyo(thisSceneData);

@@ -1928,7 +1928,7 @@ namespace MMR.Randomizer.GameObjects
             0x0102, 0x103, 0x104, 0x105, 0x106, // road to ikana
             0x101, 0x100, // cape covering the fairy hole
             0x0114, 0x0115, 0x0116, 0x0117, 0x0118 // hotspring water
-        )] 
+        )]
         [VariantsWithRoomMax(max: 0, variant: 0x807F, 0x8004, 0x8002, 0x8003)] // gives a "secret found" jingle
         //[AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: -1,
         //    variant: 0x7000, 0xC000, 0xE000, 0xF000, 0xD000)] // regular unhidden grottos
@@ -1962,7 +1962,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(SwitchTrigger.Sends, size: 0x7F, shift: 8)]
         //[VariantsWithRoomMax(max:0, variant: 0x2, 0x902, 0x1D82)] // wall types, currently they are the only actor that can be put on free wall spots that break (itemizer overwiting vars)
-        [EnemizerScenesPlacementBlock( Scene.SecretShrine, // crystal switches crash rsp if placed in clay pots (0x7CX4)
+        [EnemizerScenesPlacementBlock(Scene.SecretShrine, // crystal switches crash rsp if placed in clay pots (0x7CX4)
             Scene.StoneTowerTemple)] // still unknown illegal instruction crash in stone tower mirror room, same variant works fine in other places
         // for some reason, even without 
         [ForbidFromScene(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
@@ -2309,7 +2309,7 @@ namespace MMR.Randomizer.GameObjects
             0x00A0, 0x0040, 0x1F0, // mountain spring
             0x60, 0x80, // twin islands spring
             0x32, // cape
-            // 0xA6, // swamp spiderhouse, this one uses object_ishi, fixed separately
+                  // 0xA6, // swamp spiderhouse, this one uses object_ishi, fixed separately
             0x1F2, 0xA1,
             0xFE21, 0xFE61, 0xFE71, 0xFE81, 0xFEB1, 0xFE01, // non vanilla silver boulder, for more variety
             0xFE20, 0xFE60, 0xFE70, 0xFE80, 0xFEB0, 0xFE00 // non vanilla small rock, for more variety
@@ -2388,7 +2388,7 @@ namespace MMR.Randomizer.GameObjects
             // weirly, bushes are made to be put underwater with the sway mechanic being coded for it
             // but lots of bushes are lag, dont do that here
             0x702, 0xC02, 0x802, 0x902, 0x0402, 0x1F02 // some rocks on the bottom is silly and safe
-        )] 
+        )]
         [AlignedCompanionActor(BugsFishButterfly, CompanionAlignment.Above, ourVariant: -1,
             variant: 0x2324, 0x4324)] // butterflies over the bushes
         // because I'm too lazy to add multiple variants as a list of parameters, we have duplicate for each of our parameters
@@ -2526,7 +2526,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(170)]
         [ObjectListIndex(0x1)]
         //[WallVariants()]
-        [SwitchFlagsPlacement(SwitchTrigger.Sends,  size: 0x7F, shift: 8)] // really it just there to hear you say something
+        [SwitchFlagsPlacement(SwitchTrigger.Sends, size: 0x7F, shift: 8)] // really it just there to hear you say something
         [UnkillableAllVariants]
         Elf_Msg2 = 0xC6, // Elf_Msg2
 
@@ -2740,8 +2740,8 @@ namespace MMR.Randomizer.GameObjects
         // these used to be banned, but we should be able to use them now:
         // DekuShrine RoadToIkana GoronVillage
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior, // cursed if put on hms
-            //Scene.Woodfall, // they fall off into the water and quietly swim, lame?
-            //Scene.SecretShrine, Scene.BeneathGraveyard, // these guys are actually enemies, you can get stuck in a room with them
+                                                                //Scene.Woodfall, // they fall off into the water and quietly swim, lame?
+                                                                //Scene.SecretShrine, Scene.BeneathGraveyard, // these guys are actually enemies, you can get stuck in a room with them
             Scene.FishermansHut, // crash
             Scene.Grottos, // crash in generic grotto, untested in others, few paths
             Scene.AstralObservatory,
@@ -3457,7 +3457,7 @@ namespace MMR.Randomizer.GameObjects
             0x0000)] // regular
         // is there a water bottom version by default?
         [WaterBottomVariants(4)]
-        [VariantsWithRoomMax(max:4, variant: 0,2,4)]
+        [VariantsWithRoomMax(max: 4, variant: 0, 2, 4)]
         [CeilingVariants(0x0001)] // they're in the ceiling now
         [RespawningVariants(0x0001)] // doesn't respawn, but stray faries attach themselves to the lilypad
         //[ForbidFromScene(Scene.GreatBayTemple)] // need their lilipads to reach compass chest and fairy chest
@@ -3514,7 +3514,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x3E0, // zora shop
             0x3E1, // goron shop
             0x2)] // bomb shop
-        [VariantsWithRoomMax(max:0, variant: 0x3E0, 0x3E1, 0x2)] // wont spawn because the required item objects are likely missing
+        [VariantsWithRoomMax(max: 0, variant: 0x3E0, 0x3E1, 0x2)] // wont spawn because the required item objects are likely missing
         [UnkillableAllVariants]
         ShopSeller = 0x135, // En_Sob1
 
@@ -4076,7 +4076,7 @@ namespace MMR.Randomizer.GameObjects
         )]
         [WaterTopVariants( // we dont want respawning types here because they make dust when they run, dungeon/non-respawning leave a laser trail instead looks better
             0x31, 0x44 // non vanilla types
-        )] 
+        )]
         [WallVariants(0x1)] // peaceful, just wants cheese
         [PerchingVariants(0x2)] // non--vanilla, but nearly zero range wont chase player
         [RespawningVariants(0x8014, 0x8028, 0x8023, // tested respawning
@@ -4308,18 +4308,20 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1C6C)]
         [FileID(346)]
         [ObjectListIndex(0x16B)]
-        // params: 0xF and 0xFF0, either of them are the path, which they inherit from the spawning Encount1 funny enough
-        //  0xF is > 10 or else? huh?
-        //   can also be 0, 1, 2, else
-        // < 10 has a collider
-        // A2 might be the ones that respawn over and over, the "Encounter"
-        // 82 and 62 are found in the map room, both just kinda spin, never engages
-        // zora cape has 000, same as the other two
+        // params: you documented the decomp actor, go read it again if you forgot
         [WaterVariants(
-            0xA0 | 0x2,
-            0x80 | 0x2,
-            0x60 | 0x2,
-            0x00 | 0x0)]
+            // TODO is this all of vanilla? label everything
+            0x000 | 0x0, // cape, used as hazards when fighting the hp likelike
+            0x080 | 0x2, // gbt map room
+            0x060 | 0x2, // gbt map room
+            0x0A0 | 0x2, // stonetower underwater room, also gbt map room
+            0x0C0 | 0x2, // stonetower underwater room
+            0x100 | 0x2, // stonetower underwater room
+            // non-vanilla: we change this to a spawner in post
+            0xFFFF
+        )]
+        [VariantsWithRoomMax(max: 1, variant: 0xFFFF)]
+        [VariantsWithRoomMax(max: 2, variant: 0x000 | 0x0)]
         SkullFish = 0x180, // En_Pr2
 
         [FileID(347)]
