@@ -678,6 +678,8 @@ namespace MMR.Randomizer.GameObjects
         DekuKingChamber = 0x3B,
 
         [FileID(1344)]
+        // for the stalagmites
+        [DynaHeadroom(0, 0)] // 44,44 was too much, unknown limit
         [SceneInternalId(0x3F)]
         GoronTrial = 0x3C,
 
