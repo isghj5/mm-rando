@@ -3435,9 +3435,10 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(270)]
         [ObjectListIndex(0x15D)]
-        [RemovalChance(45), PlacementWeight(2)]
+        [RemovalChance(45)]//, PlacementWeight(2)]
         [GroundVariants(0)] // his placement is on the ground, cutscene?
         //[VariantsWithRoomMax(max: 0, variant: 0)] // spawning behavior is weird and can spawn out of bounds
+        // also two of them is crash risk, need to fix the bug where two of them can exist before this
         [VariantsWithRoomMax(max: 1, variant: 0)] // spawning behavior is weird and can spawn out of bounds
         [UnkillableAllVariants] // assume unkillable because spawning is really weird
         //[OnlyOneActorPerRoom]
