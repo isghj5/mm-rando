@@ -386,6 +386,7 @@ namespace MMR.Randomizer.GameObjects
         // room 12/13 is the first sewer underwater maze
         [ClearEnemyPuzzleRooms(0, 1, 2)] // three pirate minibosses
         // TODO need to re-test this
+        [EnemizerSceneBlockSensitive(Actor.ZoraEgg)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SpikedMine,
             Actor.LabFish)] // crash unknown reason, float math error
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PirateTelescope,
