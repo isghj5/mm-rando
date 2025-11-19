@@ -4311,7 +4311,6 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x16B)]
         // params: you documented the decomp actor, go read it again if you forgot
         [WaterVariants(
-            // TODO is this all of vanilla? label everything
             0x000 | 0x0, // cape, used as hazards when fighting the hp likelike
             0x080 | 0x2, // gbt map room
             0x060 | 0x2, // gbt map room
@@ -4319,8 +4318,11 @@ namespace MMR.Randomizer.GameObjects
             0x0C0 | 0x2, // stonetower underwater room
             0x100 | 0x2, // stonetower underwater room
             // non-vanilla: we change this to a spawner in post
-            0xFFFF
+            0xFFFF // new respawning variant 
         )]
+        // pathing: pathing types in-game were spawned with encount1, and changed to non-pathing types for enemizer,
+        // because we dont have enough pathing-water to use anyway
+        [RespawningVariants(0xFFFF)]
         [VariantsWithRoomMax(max: 1, variant: 0xFFFF)]
         [VariantsWithRoomMax(max: 2, variant: 0x000 | 0x0)]
         SkullFish = 0x180, // En_Pr2
