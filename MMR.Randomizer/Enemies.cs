@@ -1504,21 +1504,18 @@ namespace MMR.Randomizer
 
             var soldierSign = eastClockTownScene.Maps[0].Actors[21];
             soldierSign.ChangeYRotation(270);
-            soldierSign.ChangeXRotation(0);
-            soldierSign.ChangeZRotation(0);
+            ActorUtils.FlattenPitchRoll(soldierSign);
             ActorUtils.ClearActorRotationRestrictions(soldierSign);
 
             var southclocktownScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthClockTown.FileID());
             var recruitmentPoster = southclocktownScene.Maps[0].Actors[9];
             recruitmentPoster.ChangeYRotation(270);
-            recruitmentPoster.ChangeZRotation(0);
-            recruitmentPoster.ChangeXRotation(0);
+            ActorUtils.FlattenPitchRoll(recruitmentPoster);
             ActorUtils.ClearActorRotationRestrictions(recruitmentPoster);
 
             var bankPoster = southclocktownScene.Maps[0].Actors[10];
             bankPoster.ChangeYRotation(90);
-            bankPoster.ChangeXRotation(0);
-            bankPoster.ChangeZRotation(0);
+            ActorUtils.FlattenPitchRoll(bankPoster);
             ActorUtils.ClearActorRotationRestrictions(bankPoster);
         }
 
@@ -2526,6 +2523,7 @@ namespace MMR.Randomizer
             /// in order for the ocean skullfish to spawn over and over and harrass the player
             /// we have to use a different spawning actor, EnEncount1
             /// here, we take a special case of parameters I made up, and switch it back
+            /// also, skullfish parameters use rotation heavily, modify them here too
 
             if ( ! thisSceneData.Objects.Contains((int)GameObjects.Actor.SkullFish.ObjectIndex())) return;
 
@@ -2533,9 +2531,33 @@ namespace MMR.Randomizer
             {
                 var actor = thisSceneData.Actors[a];
 
-                if (actor.ActorEnum == GameObjects.Actor.SkullFish && actor.Variants[0] == 0xFFFF)
+                if (actor.ActorEnum == GameObjects.Actor.SkullFish )
                 {
-                    actor.ChangeActor(GameObjects.Actor.En_Encount1, vars: 0x105E);
+                    var validDropIds = new int[] {
+                        0x3, 0x11, 0x7, // stone tower temple
+                        0, 0xE, 0x7, 0xD, // gbt
+                        0x1, // encount in gbt
+                        // cape is always drop nothing, lame
+                    };
+                    var nextDropId = validDropIds[thisSceneData.RNG.Next(validDropIds.Length)];
+
+                    if (actor.Variants[0] == 0xFFFF) // encount swap
+                    {
+                        actor.ChangeActor(GameObjects.Actor.En_Encount1, vars: 0x105E);
+                        actor.ChangeXRotation(0x38); // x rotation is the rate at which they re-spawn, 0x28 is the fast one near the cape, 0x6Xsomething other places
+                        actor.ChangeYRotation((nextDropId - 1));    // y rotation is item drop pool index
+                        actor.ChangeZRotation(0x32); // z rotation is agro range, cape is 0x32
+
+                    }
+                    else
+                    {
+                        // z rotation for non encount types (PR2 type 2) is drop table
+                        // reminder, its (z-rot -1) to get index, as zero is ignore case
+                        actor.ChangeZRotation(nextDropId - 1); 
+                    }
+
+                    // in order for an actor to get the rotation raw, instead of converted, we need to set a flag for each parameter
+                    actor.ActorIdFlags |= 0x8000 | 0x4000 | 0x2000;
                 }
             }
         }
@@ -5519,6 +5541,7 @@ namespace MMR.Randomizer
                         targetActor.ChangeZRotation(2);
                         targetActor.Variants[0] &= ~0x3F;
                     }
+                    targetActor.ActorIdFlags |= 0x2000; // set flag to not-convert z rotation
                 }
             }
         }
@@ -7784,7 +7807,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 91.0\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 92.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
