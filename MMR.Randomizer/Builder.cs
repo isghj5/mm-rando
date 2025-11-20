@@ -1517,7 +1517,7 @@ namespace MMR.Randomizer
 
             #if DEBUG
             // testing SFX
-            var debugSFX = SoundEffect.DawnOfThe;
+            var debugSFX = SoundEffect.OOTMirrorShieldCharge1;
             Debug.WriteLine(debugSFX.ToString() + " is a debug sfx");
             // intro splash summon used to be used, not sure what I named it
             shuffledSoundEffects[SoundEffect.CuccoMorning] = debugSFX; // morning chicken crow

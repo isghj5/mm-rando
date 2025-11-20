@@ -143,13 +143,13 @@ namespace MMR.Randomizer.Models.SoundEffects
         //[Tags(Short, LowHpBeep)]
         //OOTSlingShotFlick = 0x1031, // duplicate of bow I think
 
-        [Tags(Short, LowHpBeep)]
+        [Tags(Looping)]
         OOTMirrorShieldCharge1 = 0x1032, // these three still work
 
-        [Tags(Short, LowHpBeep)]
+        [Tags(Looping)]
         OOTMirrorShieldCharge2 = 0x1033,
 
-        [Tags(Short, LowHpBeep)]
+        [Tags(Looping)]
         OOTMirrorShieldCharge3 = 0x1034,
 
         [Tags(Long)]
