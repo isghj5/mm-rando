@@ -231,6 +231,8 @@ namespace MMR.Randomizer.GameObjects
         [FairyDroppingEnemies(roomNumber: 1, actorNumber: 2)] // eygore
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RealBombchu,
         //    Actor.WarpDoor)]
+        // room 7 is mirror room, goron punch thing, light blocks, mirrors, wooden crates
+        [DynaHeadroom(0,0, room:7)] // 22 in room 0x7 was crash, actual limit unknown
         [EnemizerSceneBlockSensitive(Actor.RealBombchu, -1)] // chicken holder leads to a chest
         [EnemizerSceneBlockSensitive(Actor.SpikedMine, -1)] // the underwater spiked mines surrounded a switch in east room
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
