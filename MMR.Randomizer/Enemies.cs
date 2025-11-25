@@ -358,38 +358,31 @@ namespace MMR.Randomizer
             if ((_randomized.Settings.VictoryMode & Models.VictoryMode.Notebook) > 0)
                 return; // victory mode for notebook entries is enabled, none are junk: leave early
 
-            var entryRewards = _randomized.ItemList.FindAll(i =>  i.NewLocation.ToString().Contains("Notebook"));
+            // if not required for victory, the entries themselves are always junk
+            ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.NotebookEntries);
+
+            var entryChecks = _randomized.ItemList.FindAll(i =>  i.NewLocation.ToString().Contains("Notebook"));
             List<ItemObject> junkEntries = new List<ItemObject>();
             var nonJunkCount = 0;
-            for (int i = 0; i < entryRewards.Count(); i++)
+            for (int i = 0; i < entryChecks.Count(); i++)
             {
-                var reward = entryRewards[i].Item;
-                var category = reward.ItemCategory() ?? GameObjects.ItemCategory.None;
-                if ( category == GameObjects.ItemCategory.NotebookEntries || ! ActorizerKnownJunkCategories.Contains(category))
+                var item = entryChecks[i].Item; // the check being filled
+                // where, if the item NewLocation is null, it was removed for traps I think, consider it any other junk item
+                //GameObjects.Item check = entryChecks[i].NewLocation ?? GameObjects.Item.RecoveryHeart; // the item being placed
+                //var locationCategory = check.ItemCategory() ?? GameObjects.ItemCategory.None;
+                //var itemCategory = item.ItemCategory() ?? GameObjects.ItemCategory.None;
+                if ( ! IsActorizerJunk(item)) // not yet considered junk
                 {
                     // we dont need to add the entries themselves they are already added to the junk list per-category
                     //   this is just for notebook itself
                     nonJunkCount++;
-                }
-                else
-                {
-                    junkEntries.Add(entryRewards[i]);
+                    break; // we don't need to count, this is only to check if the notebook leads to at least one non-junk, we don't add entries per-each anymore
                 }
             }
 
-            if (nonJunkCount == 0) // notebook leads to something and is not junk
+            if (nonJunkCount == 0) // no non-junk entries means the notebook only leads to junk: we can junk it
             {
                 ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.MainInventory].Add(GameObjects.Item.ItemNotebook);
-                // why would we mark all of the entries as not junk when this code was to check notebook? think this is an glitch of refactoring earlier
-                //ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.NotebookEntries);
-            }
-            else // not all, add only the valid junk entries
-            {
-                foreach (var entry in junkEntries)
-                {
-                    if (entry.NewLocation != null)
-                        ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.NotebookEntries].Add((GameObjects.Item)entry.Item);
-                }
             }
         }
 
