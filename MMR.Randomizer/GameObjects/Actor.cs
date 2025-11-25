@@ -125,8 +125,8 @@ namespace MMR.Randomizer.GameObjects
             Scene.Woodfall)]
         [SwitchFlagsPlacement(size: 0x7F, shift: 0), SwitchFlagsPlacementZRot]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
-        //[EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
-        //    Scene.StoneTower)]
+        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
+            Scene.StoneTower)]
         [PlacementWeight(45)]
         TreasureChest = 0x6, // En_Box
 
@@ -1218,8 +1218,6 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x280)]
         [DynaAttributes(186, 101)] // holy shit, no wonder I could never put it anywhere
         [FlyingVariants(1)]
-        //[GroundVariants(1)] // testing
-        // needs limits because it can overload the dyna
         [VariantsWithRoomMax(max: 5, variant: 0, 1)]
         [FlyingToGroundHeightAdjustment(150)]
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 0)]
@@ -1305,6 +1303,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(1)]
         RunningBombChu = 0x6A, // En_Bom_Chu
 
+        // TODO what is this? is this just an objstacle from the race?
         [FileID(111)]
         [ObjectListIndex(0x191)]
         // multiple think this is all horse race obstacles
@@ -1824,7 +1823,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(136)]
         [ObjectListIndex(0xEE)]
-        [DynaAttributes(6, 8)]
+        [DynaAttributes(6, 8)] // issue: this is only the bean plant, and can we even spawn then with new actors without a path?
         // TODO add secret shrine and swamp spiderhouse
         [CheckRestricted(Scene.RomaniRanch, variant: ActorConst.ANY_VARIANT, Item.CollectableRomaniRanchSoftSoil1, Item.CollectableRomaniRanchSoftSoil2)]
         [CheckRestricted(Scene.Grottos, variant: ActorConst.ANY_VARIANT, Item.CollectableBeanGrottoSoftSoil1, Item.ChestBeanGrottoRedRupee)]
@@ -1891,7 +1890,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(GoldSkulltula, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F)]
         //[ForbidFromScene(Scene.SwampSpiderHouse )] // dont want to mess with this by accident until I know it has proper logic
-        [PlacementWeight(65)]
+        [PlacementWeight(45)]
         SoftSoilAndBeans = 0x91, // Obj_Bean
 
         [ActorizerEnabled]
@@ -2805,7 +2804,6 @@ namespace MMR.Randomizer.GameObjects
         [TreasureFlagsPlacement(mask: 0xFF, shift: 2)] // 0x3FC
         HoneyComb = 0xE4, // Obj_Comb
 
-        // now that we have dyna limits, this could be randomized because it will be rare because of dyna limits anyway
         [ActorizerEnabled]
         [FileID(218)]
         [ObjectListIndex(0x133)]
@@ -3199,7 +3197,7 @@ namespace MMR.Randomizer.GameObjects
 
         // unused actor, now used by a new injected actor
         [FileID(246)]
-        [DynaAttributes(12, 8)]
+        //[DynaAttributes(12, 8)] // this needs to be in the mmra
         [EnemizerScenesPlacementBlock(Scene.PinnacleRock//, // super annoying warping the player all the way back
             /*Scene.StoneTower, Scene.SouthernSwamp, Scene.SouthernSwampClear */)] // dyna crash possible
         [AlignedCompanionActor(GrassRockCluster, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x702, 0xC02, 0x802, 0x902, 0x0402, 0x1F02)]
@@ -3227,7 +3225,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
-        [EnemizerScenesPlacementBlock(//Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.StoneTower, // dyna crash
+        [EnemizerScenesPlacementBlock(
             Scene.HoneyAndDarling, // crush loop
             Scene.TradingPost)]  // might block door?
         [PlacementWeight(40)] // waaay too common
@@ -3333,11 +3331,10 @@ namespace MMR.Randomizer.GameObjects
                         0x003F, // goron trial
                         0x1000, 0x0B00, 0x0C00, 0x600, 0x002B)] // snowhead temple
         [CeilingVariants(0xFF01, 0xFF00, 0xFF02)]
-        //[EnemizerScenesPlacementBlock(Scene.GormanTrack, // dyna crash on trees
-        //    Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.StoneTower)] // assumed same as above
         [VariantsWithRoomMax(max: 10, variant: 0x1000, 0x0B00, 0x0C00, 0x600, 0x002B, 0x003F, 0x700, 0xD00, 0xA00)] // limit because of dyna
         [VariantsWithRoomMax(max: 10, variant: 0xFF01, 0xFF00, 0xFF02)] // still dyna
         [UnkillableAllVariants]
+        [PlacementWeight(100)]
         // we need to have weights per variant, we want to downweight mites but not tites
         IceCavernStelagtite = 0x11F, // Bg_Icicle // also stalagmite
 
@@ -4799,8 +4796,6 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x88)]
         [DynaAttributes(14, 14)]
         [BlockingVariantsAll]
-        //[EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, // dyna crash possible
-        //    Scene.StoneTower, Scene.DekuPlayground)] // dyna crash possible
         ClocktowerGearsAndOrgan = 0x1B6, // Bg_Ctower_Gear
 
         [ActorizerEnabled]
@@ -5361,12 +5356,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(445)]
         [ObjectListIndex(0x1C7)]
+        [DynaAttributes(24, 17)]
         // params, 0x10 pulls extra cutscenes, 0x7 is height I think (code only checks for == 0 or == 1), but 2,3,4 are seen in snowhead
         [GroundVariants(0x0, 0x10, 0x11, 0x12, 0x13, 0x14)] // we dont want to pull them, so not using vanilla params
         [WaterBottomVariants(0x0, 0x10, 0x11, 0x12, 0x13, 0x14)] // because its silly
         [SwitchFlagsPlacement(SwitchTrigger.SendsAndRecieves, size: 0x7F, shift: 8)] // 0x7F00
         [ForbidFromScene(Scene.SnowheadTemple, Scene.PiratesFortressExterior, Scene.StoneTowerTemple)]
-        [DynaAttributes(24, 17)]
         [BlockingVariantsAll]
         [UnkillableAllVariants]
         [PlacementWeight(65)]
@@ -5920,7 +5915,7 @@ namespace MMR.Randomizer.GameObjects
         [DynaAttributes(2, 4)]
         FlatsTombCurtain = 0x20D, // Bg_Haka_Curtain
 
-        //[ActorizerEnabled] // TODO disable, only enabled so I can test dyna
+        //[ActorizerEnabled]
         [FileID(485)]
         [ObjectListIndex(0x1F5)]
         [DynaAttributes(3, 5)] // weird
@@ -5928,7 +5923,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(486)]
         [ObjectListIndex(0x1F5)]
-        [DynaAttributes(2, 4)]
+        [DynaAttributes(2, 4)] // good small test dyna, object is kinda big tho
         OceanSpiderhouseGrate = 0x20F, // Bg_Kin2_Fence
 
         [ActorizerEnabled]
@@ -6262,8 +6257,6 @@ namespace MMR.Randomizer.GameObjects
             Item.HeartPieceNorthClockTown)]
         [GroundVariants(0x0, 0xFF, 0x80FF)]
         [VariantsWithRoomMax(max: 1, variant: 0x0, 0xFF, 0x80FF)]
-        //[EnemizerScenesPlacementBlock(//Scene.SouthernSwampClear,// known dyna issues
-        //    Scene.StoneTower, Scene.StoneTowerTemple, Scene.SouthernSwamp)] // assumed issues
         [UnkillableAllVariants]
         [AlignedCompanionActor(GrassRockCluster, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x702, 0xC02, 0x802, 0x902, 0x0402, 0x1F02)]
         [BlockingVariantsAll]
@@ -6278,12 +6271,10 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x0)]
         [GroundVariants(0x0)]
         [VariantsWithRoomMax(variant: 0, max: 3)] // dyna should be detecable now, we can add more
-        [EnemizerScenesPlacementBlock(//Scene.StoneTower, Scene.IkanaGraveyard, // too much dyna
-                                      //Scene.SouthernSwamp, Scene.SouthernSwampClear,
+        [EnemizerScenesPlacementBlock(
             Scene.GormanRaceTrack, Scene.DekuTrial)] // blocking potentially
         [UnkillableAllVariants]
         [BlockingVariantsAll]
-        //[OnlyOneActorPerRoom] // probably dyna crash to be worried about
         UnusedPirateElevator = 0x22A, // Obj_Y2lift
 
         // the gate in sewers heartpiece room, that blocks going backwards
@@ -6672,7 +6663,7 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(SwitchTrigger.Sends, size: 0x7F, shift: 9)] // FE00
         // we dont want to remove vanilla, use 0 as variant, vanilla is always populated by switch values
         [GroundVariants(0)]
-        [VariantsWithRoomMax(max: 6, variant: 0)] // limit because of dyna (untested)
+        [VariantsWithRoomMax(max: 10, variant: 0)]
         [UnkillableAllVariants]
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: -1, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         [AlignedCompanionActor(Bombiwa, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x807F, 0x8004, 0x8002,
@@ -6881,9 +6872,6 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [VariantsWithRoomMax(max:1, variant:0)]
         [UnkillableAllVariants]
-        //[EnemizerScenesPlacementBlock(//Scene.TerminaField, // boring
-            //Scene.GreatBayCoast,
-            //Scene.SouthernSwamp)] // dyna crash suspect, even if not in the second room
         [ForbidFromScene(Scene.IkanaCanyon, Scene.RoadToIkana)] // do not remove original
         [SwitchFlagsPlacement(size: 0x7F, shift: 0)] // spawned by ghost?
         [PlacementWeight(50)] // boring
