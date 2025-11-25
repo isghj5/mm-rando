@@ -6402,12 +6402,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x23A)]
         [CheckRestricted(Scene.MilkBar, variant: ActorConst.ANY_VARIANT, Item.MaskCircusLeader, Item.NotebookMeetToto, Item.NotebookMovingGorman)]
         [CheckRestricted(Scene.MayorsResidence, variant: ActorConst.ANY_VARIANT, Item.NotebookMeetToto)]
-        [GroundVariants(0x050B, 0x3FFF)] // sitting in mayors office // TODO which one
-        [PerchingVariants(0x050B, 0x3FFF)] // sitting in mayors office
-        [VariantsWithRoomMax(max: 0, variant: 0x050B, 0x3FFF)] // we dont want a sitting npc to be placed places, just replace, also talking to is softlock, and we cannot modify because rando needs this actor for things
+        // 0x3FFF is milkbar
+        [GroundVariants(0x050B, 0x3FFF)] // sitting in mayors office
+        [PerchingVariants(0x050B)] // sitting in mayors office
+        [VariantsWithRoomMax(max: 1, variant: 0x050B, 0x3FFF)] // we dont want a sitting npc to be placed places, just replace, also talking to is softlock, and we cannot modify because rando needs this actor for things
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(size: 0x7F, shift: 0)] // triggering the gorman check?
-        [PlacementWeight(90)]
+        [PlacementWeight(5)] // silly and broken, leave as rare spawn
         Toto = 0x234, // En_Toto // manager zora band member
 
         [EnemizerEnabled] // does not spawn outside of ikana
