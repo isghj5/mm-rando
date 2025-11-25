@@ -763,6 +763,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.ClocktowerGearsAndOrgan, Actor.RegularIceBlock)] // suspected too large and can block the owl
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered,
             Actor.Hiploop)] // after moving the actors around, one of them just instantly explodes touching water, TODO move them to better spots to avoid instead
+        [EnemizerSceneEnemyReplacementBlock(Actor.Monkey, 
+            Actor.PatrollingPirate)] // can get stuck in the deku palace door and knocking them down does NOT disable their collision
         [EnemizerSceneBlockSensitive(Actor.DekuBabaWithered, -1)] // the one near the grass can block the grass
         [EnemizerSceneBlockSensitive(Actor.DragonFly, -1)]
         [EnemizerSceneBlockSensitive(Actor.En_Owl, -1)]
