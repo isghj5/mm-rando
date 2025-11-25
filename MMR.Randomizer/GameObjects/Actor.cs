@@ -1034,7 +1034,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.DoggyRacetrack
         )]
         [UnkillableAllVariants]
-        [PlacementWeight(15)]
+        [PlacementWeight(90)]
         ObjectKankyo = 0x51, // Object_Kankyo
 
         Empty52 = 0x52,
@@ -5139,7 +5139,7 @@ namespace MMR.Randomizer.GameObjects
             0x0100, // only vanilla param weirdly
             0, 0x0080, 0x0180, 0x0200, 0x0280, 0x0380, 0x0400)]
         [UnkillableAllVariants]
-        [PlacementWeight(20)]
+        [PlacementWeight(90)]
         SnowCoveredTrees = 0x1D4, // En_Snowwd // tag: snowtree
 
         // I suspect since he has so few vars that he will be hard coded, and req decomp to fix
@@ -5298,7 +5298,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.PathToMountainVillage)]
         [BlockingVariantsAll]
-        [PlacementWeight(25)]
+        [PlacementWeight(80)]
         LargeSnowball = 0x1DC, // Obj_Snowball
 
         [FileID(438)]
@@ -5382,7 +5382,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFF00, 0xFF01, 0, 1)]
         [DifficultVariants(1, 0xF001)]
         [VariantsWithRoomMax(max: 1, variant: 1, 0xF001)] // limit the bigger one
-        [PlacementWeight(90)]
+        [PlacementWeight(100)]
         Eeno = 0x1E6, // En_Snowman
 
         // gold skull bonk detector
@@ -5618,7 +5618,7 @@ namespace MMR.Randomizer.GameObjects
         )]
         //[SwitchFlagsPlacement()] // does not appear to have switch flags
         [UnkillableAllVariants]
-        [PlacementWeight(25)]
+        [PlacementWeight(80)]
         SmallSnowball = 0x1F9, // Obj_Snowball2
 
         [FileID(466)]
@@ -5683,7 +5683,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(469)]
         [ObjectListIndex(0x1D5)]
         [GroundVariants(0xFFFF)]
-        [VariantsWithRoomMax(max: 0, variant: 0xFFFF)]
+        [VariantsWithRoomMax(max: 0, variant: 0xFFFF)] // too big, invisible, blows wind at you, probably crashes
         [ForbidFromScene(Scene.Snowhead)]
         //[OnlyOneActorPerRoom]
         [UnkillableAllVariants]
