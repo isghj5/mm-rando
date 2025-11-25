@@ -134,9 +134,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(45)]
         [ObjectListIndex(0x128)]
+        // gekko in gbt is spawned by bigslime
         [GroundVariants(1)] // woodfall
         [RemovalChance(40)] // medium boss
-        [PlacementWeight(0)] // wont spawn without snapper
+        [PlacementWeight(0)] // this does NOT work like max 0
+        [VariantsWithRoomMax(max:0, variant: 1)] // wont spawn without snapper
         Gekko = 0x7, // En_Pammetfrog the frog miniboss
 
         [EnemizerEnabled]
@@ -1255,6 +1257,7 @@ namespace MMR.Randomizer.GameObjects
         // miniboss
         [FileID(107)]
         [ObjectListIndex(0x128)]
+        // params: 0x2
         MadJelly = 0x65, // En_Bigslime
 
         [EnemizerEnabled]
@@ -3979,10 +3982,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x224)]
         KoumeInKiosk = 0x168, // En_Dnh
 
-        // TODO figure out why the hell its crashing
-        //   working theory: the objects being shuffled when moving from one room to another breaks object code
-        // code suggests even more params might exist than are used in vanilla
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // disabled vanilla version, use fixed version in actors folder
         [FileID(326)]
         [ObjectListIndex(0x40)] // 1? nah it uses something else
         // 0x2 is smaller scrub that surrounds link in the cutscene
@@ -3991,16 +3991,19 @@ namespace MMR.Randomizer.GameObjects
         //  one is the regular leaves pkmn, one is the old hint one from OOT reused for yellow flower, one is the tall one
         // 0x6 is big one in nightmare cutscene that link waves to
         [GroundVariants(0x2, 0x6)]
-        [VariantsWithRoomMax(max: 1, variant: 0x6, 0x2)]
+        //[VariantsWithRoomMax(max: 1, variant: 0x6, 0x2)]
         // crash on transition to witches area in swamp and secretary room in mayor's residence
         // Update crashes trying to update the skeleton, null pointer, reason unknown
         // seems to be room transition related, for now ban from any place where rooms change over
+        /*
         [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear, Scene.SouthernSwamp, Scene.MayorsResidence, Scene.StockPotInn,
             Scene.OceanSpiderHouse, Scene.DekuPalace, Scene.SwampSpiderHouse, Scene.DekuShrine, Scene.IkanaCanyon, Scene.BeneathTheWell,
             Scene.PiratesFortressRooms,
-            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.OceanSpiderHouse, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.OceanSpiderHouse, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
+            Scene.SecretShrine
+        )] // */ // testing all old places
         [UnkillableAllVariants]
-        [PlacementWeight(80)]
+        [PlacementWeight(50)]
         HallucinationScrub = 0x169, // En_Dnk
 
         [ActorizerEnabled]
