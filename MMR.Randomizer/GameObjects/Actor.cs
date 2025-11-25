@@ -7188,12 +7188,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(586)]
         [ObjectListIndex(0x203)]
-        [DynaAttributes(22,16)]
-        [GroundVariants( 0x550A, // taaaalll
+        [DynaAttributes(22,16)] // PER SEGMENT, we re-calculate before dyna test
+        // 0xF is segment count -1
+        [GroundVariants(
+            0x550A, // taaaalll
+            0x4404, // 5 tall
             0x6602)] // stone tower temple (vanilla)
         [WaterBottomVariants(0x7702)]
         [VariantsWithRoomMax(max: 10, variant: 0x6602)]
-        [VariantsWithRoomMax(max: 3, variant: 0x7702)]
+        [VariantsWithRoomMax(max: 3, variant: 0x4404)]
         [VariantsWithRoomMax(max: 1, variant: 0x550A)]
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 8)]
         [ForbidFromScene(Scene.StoneTowerTemple)]

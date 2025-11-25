@@ -4724,6 +4724,25 @@ namespace MMR.Randomizer
             }
         }
 
+        private static void UpdateDynaEdgeCases(SceneEnemizerData thisSceneData)
+        {
+            // there are a few weird edge cases in dyna, we need to adress them
+
+            // if we have punchable ikana towers, those are dyna general number times the segment count
+            if (thisSceneData.ChosenReplacementObjects.Any(swap => swap.NewV == GameObjects.Actor.PunchableStoneTowerPillars.ObjectIndex()))
+            {
+                var punchable = thisSceneData.Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.PunchableStoneTowerPillars);
+                for (int i = 0; i < punchable.Count; i++)
+                {
+                    var punchableActor = punchable[i];
+                    int numSegments = (punchableActor.Variants[0] & 0xF) + 1;
+                    punchableActor.DynaLoad.poly = numSegments * punchableActor.DynaLoad.poly;
+                    punchableActor.DynaLoad.vert = numSegments * punchableActor.DynaLoad.vert;
+                }
+            }
+        }
+
+
         private static bool TrimDynaActors(SceneEnemizerData thisSceneData, StringBuilder dynaLog)
         {
             /// too much dyna crashes the game, so we want to trim some of our dyna actors, removing them or turning them into something benign
@@ -5616,7 +5635,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Toto)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.PunchableStoneTowerPillars)) continue;
                 if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Dodongo, GameObjects.Actor.PirateColonel)) continue; // still broken
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.Freezard)) continue;
@@ -6949,8 +6968,10 @@ namespace MMR.Randomizer
 
                 WriteOutput($" set for size check: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
+
                 // dyna overflow is a common crash concern, here we need to check if we overflow and shrink the dyna actor count
                 var dynaLog = new StringBuilder();
+                UpdateDynaEdgeCases(thisSceneData);
                 var dynatest = thisSceneData.ActorCollection.isDynaSizeAcceptable();
                 if (dynatest != "acceptable")
                 {
@@ -7034,7 +7055,7 @@ namespace MMR.Randomizer
             for (int a = 0; a < thisSceneData.Actors.Count; a++)
             {
                 var actor = thisSceneData.Actors[a];
-                string dsize = actor.DynaLoad.poly > 0 ? $" dyn: [{actor.DynaLoad.poly}]" : "";
+                string dsize = actor.DynaLoad.poly > 0 ? $" dyn: [{actor.DynaLoad.poly}/{actor.DynaLoad.vert}]" : "";
                 var actorNameData = $"  Old actor:[{thisSceneData.Scene.SceneEnum}]r[{actor.Room.ToString("D2")}]n[{actor.OldName}]v[0x{actor.OldVariant.ToString("X4")}]";
                 WriteOutput(actorNameData +
                     $" replaced by new actor: [{actor.Variants[0].ToString("X4")}]" +
@@ -7859,6 +7880,7 @@ namespace MMR.Randomizer
             for (int act = 0; act < actorList.Count; act++)
             {
                 var actor = actorList[act];
+
                 this.DynaPolySize += actor.DynaLoad.poly;
                 this.DynaVertSize += actor.DynaLoad.vert;
             }
