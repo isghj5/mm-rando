@@ -823,7 +823,7 @@ namespace MMR.Randomizer
         {
             // I kept calling this instead of IsActorizerJunk by accident, might as well make it rather than do this every time
 
-            var item = _randomized.ItemList.Single(item => item.NewLocation == check).Item;
+            var item = _randomized.ItemList.Single(item => item.NewLocation!= null && item.NewLocation == check).Item;
             return IsActorizerJunk(item);
         }
 
@@ -922,9 +922,7 @@ namespace MMR.Randomizer
                     return map2; // we need to keep this tingle because their items are actual not-junk
                 }
                 // if heartpiece on picture is required, one of them has to remain regardless of their items
-                var check = _randomized.ItemList.Find(item => item.NewLocation != null && item.NewLocation == GameObjects.Item.HeartPiecePictobox);
-                var itemInCheck = check.Item;
-                if (strawPulled && !IsActorizerJunk(itemInCheck))
+                if (strawPulled && !IsActorizerCheckJunk(GameObjects.Item.HeartPiecePictobox))
                 {
                     return GameObjects.Item.HeartPiecePictobox;
                 }
@@ -1157,11 +1155,8 @@ namespace MMR.Randomizer
             {
                 try { 
                     // manually check if restrictions apply
-                    var tfCow1Item = _randomized.ItemList.Find(item => item.NewLocation != null && item.NewLocation == GameObjects.Item.ItemTerminaGrottoCowMilk1).Item;
-                    var tfCow2Item = _randomized.ItemList.Find(item => item.NewLocation != null && item.NewLocation == GameObjects.Item.ItemTerminaGrottoCowMilk2).Item;
-                    var gbcCow1Item = _randomized.ItemList.Find(item => item.NewLocation != null && item.NewLocation == GameObjects.Item.ItemCoastGrottoCowMilk1).Item;
-                    var gbcCow2Item = _randomized.ItemList.Find(item => item.NewLocation != null && item.NewLocation == GameObjects.Item.ItemCoastGrottoCowMilk2).Item;
-                    if (IsActorizerJunk(tfCow1Item) && IsActorizerJunk(tfCow2Item) && IsActorizerJunk(gbcCow1Item) && IsActorizerJunk(gbcCow2Item))
+                    if (IsActorizerCheckJunk(GameObjects.Item.ItemTerminaGrottoCowMilk1) && IsActorizerJunk(GameObjects.Item.ItemTerminaGrottoCowMilk2)
+                        && IsActorizerJunk(GameObjects.Item.ItemCoastGrottoCowMilk1) && IsActorizerJunk(GameObjects.Item.ItemCoastGrottoCowMilk2))
                     {
                         cow1.ChangeActor(GameObjects.Actor.Cow, vars: 0, modifyOld: true);
                         cow2.ChangeActor(GameObjects.Actor.Cow, vars: 0, modifyOld: true);
@@ -2686,8 +2681,8 @@ namespace MMR.Randomizer
             var swampSpiderhouseScene = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.SwampSpiderHouse);
 
             // if bugs arent required for anything in here, lets randomize the rocks
-            if (! (IsActorizerJunk(GameObjects.Item.CollectibleSwampSpiderToken9) && IsActorizerJunk(GameObjects.Item.CollectibleSwampSpiderToken11)
-                   && IsActorizerJunk(GameObjects.Item.CollectibleSwampSpiderToken12) )
+            if (! (IsActorizerCheckJunk(GameObjects.Item.CollectibleSwampSpiderToken9) && IsActorizerCheckJunk(GameObjects.Item.CollectibleSwampSpiderToken11)
+                   && IsActorizerCheckJunk(GameObjects.Item.CollectibleSwampSpiderToken12) )
                )
             {
                 return; // bugs are not junk, dont randomize
@@ -3220,42 +3215,35 @@ namespace MMR.Randomizer
                 map.Objects[objectIndex] = coinTossResultActor.actor.ObjectIndex();
             }
 
-            var mask = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.MaskGreatFairy).Item;
-            var magic = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.FairyMagic).Item;
-
-            if (IsActorizerJunk(mask) && IsActorizerJunk(magic))
+            if (IsActorizerCheckJunk(GameObjects.Item.MaskGreatFairy) && IsActorizerCheckJunk(GameObjects.Item.FairyMagic))
             {
                 ChangeGreatFairyActors(mapIndex: 0, objectIndex: 0,
                             actorIndex1: 1, 2, 4,
                             "TownFairy",
                             pos1: new vec16(2289, -30, -750), new vec16(2523, -30, -750), new vec16(2412, -30, -929));
             }
-            var spinattack = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.FairySpinAttack).Item;
-            if (IsActorizerJunk(spinattack))
+            if (IsActorizerCheckJunk(GameObjects.Item.FairySpinAttack))
             {
                 ChangeGreatFairyActors(mapIndex: 1, objectIndex: 0,
                             actorIndex1: 0, 1, -1,
                             "WoodfallFairy",
                             pos1: new vec16(1095, -30, -750), new vec16(1294, -30, -750), new vec16(2412, -30, -929));
             }
-            var doubleHappiness = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.FairyDoubleMagic).Item;
-            if (IsActorizerJunk(doubleHappiness))
+            if (IsActorizerCheckJunk(GameObjects.Item.FairyDoubleMagic))
             {
                 ChangeGreatFairyActors(mapIndex: 2, objectIndex: 0,
                             actorIndex1: 0, 1, -1,
                             "SnowheadFairy",
                             pos1: new vec16(-102, -30, -750), new vec16(93, -30, -750), new vec16(2412, -30, -929));
             }
-            var doubleBeef = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.FairyDoubleDefense).Item;
-            if (IsActorizerJunk(doubleBeef))
+            if (IsActorizerCheckJunk(GameObjects.Item.FairyDoubleDefense))
             {
                 ChangeGreatFairyActors(mapIndex: 3, objectIndex: 0,
                             actorIndex1: 0, 1, -1,
                             "GreatbayFairy",
                             pos1: new vec16(-1299, -30, -750), new vec16(-1098, -30, -750), new vec16(2412, -30, -929));
             }
-            var bigGoronSword = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemFairySword).Item;
-            if (IsActorizerJunk(bigGoronSword))
+            if (IsActorizerJunk(GameObjects.Item.ItemFairySword))
             {
                 ChangeGreatFairyActors(mapIndex: 4, objectIndex: 0,
                             actorIndex1: 0, 1, 3,
