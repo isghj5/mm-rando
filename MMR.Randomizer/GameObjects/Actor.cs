@@ -622,13 +622,20 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x3E)]
         [FileID(78)]
         [DynaAttributes(35, 30)]
-        // params: type is 0xFF, address offset for type 0 is 0xFF00
-        [GroundVariants(0x0)] // the 101 and above are for warp TO bosses
+        // params: type is 0xFF
+        // 0xFF01 is address offset, wont spawn tho
+        //[GroundVariants(0x0)] // the 101 and above are for warp TO bosses
+        [GroundVariants(
+            //0,
+            //0x2, 0x3, 0x4, 0x5
+            0x1
+        )] // the 101 and above are for warp TO bosses
+        [OnlyOneActorPerRoom]
         [VariantsWithRoomMax(max: 1, variant: 0x0)]
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [ForbidFromScene(Scene.DekuTrial, Scene.GoronTrial, Scene.LinkTrial, Scene.ZoraTrial)]
-        [PlacementWeight(15)]
+        [PlacementWeight(5)] // lame: never takes us someplace useful
         WarpDoor = 0x38, // Door_Warp1
 
         [ActorizerEnabled]
@@ -675,6 +682,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [ActorInstanceSize(0x2C8)]
         [ActorInitVarOffset(0x1D30)]
+        [DynaAttributes(12,12)] // after spawning a flower on death
         [FileID(81)]
         [ObjectListIndex(0x40)]
         // 0 runs away

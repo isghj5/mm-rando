@@ -819,6 +819,15 @@ namespace MMR.Randomizer
             return ActorizerKnownJunkCategories.Contains(category);
         }
 
+        public static bool IsActorizerCheckJunk(GameObjects.Item check)
+        {
+            // I kept calling this instead of IsActorizerJunk by accident, might as well make it rather than do this every time
+
+            var item = _randomized.ItemList.Single(item => item.NewLocation == check).Item;
+            return IsActorizerJunk(item);
+        }
+
+
         // todo move to actorutils
         // TODO rename to ACTOR is check blocked, as we will soon need to do this for actors not whole actor objects
         // for now its just the objectlessactors, checkrestricted
@@ -1098,6 +1107,7 @@ namespace MMR.Randomizer
             ExtendGrottoDirectIndexByte();
             FixJPGrottos();
             SwapSwampSpiderhouseRock();
+            EnableSethSwampSpiderhouse();
 
             // scene/object list modified for variety or compatiblity
             RemoveSTTUnusedPoe();
@@ -2697,6 +2707,30 @@ namespace MMR.Randomizer
             {
                 var index = m.Objects.FindIndex(obj => obj == 0x1F6); // object_ishi
                 m.Objects[index] = GameObjects.Actor.Nejiron.ObjectIndex();
+            }
+        }
+
+        private static void EnableSethSwampSpiderhouse()
+        {
+            /// seth from the spiderhouse that gives you the face mask is a different seth with a different object,
+            /// we randomize his spider form but thats a different actor
+            /// if hes not randomized, we want to randomize the og too though, as at least the object is worthless
+
+            // make sure hes randomized
+            if (!ACTORSENABLED) return;
+
+            if (!IsActorizerCheckJunk(GameObjects.Item.MaskTruth)) return;
+
+            var spiderhouse = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.SwampSpiderHouse);
+
+            var oldseth = spiderhouse.Maps[0].Actors[0];
+            oldseth.ChangeActor(GameObjects.Actor.BeanSeller, 0x0, modifyOld: true);
+            oldseth.OldName = oldseth.Name = "SethHisEyeWideOpen";
+
+            foreach(var map in spiderhouse.Maps)
+            {
+                // replacing OOT bearded man, which is acually used for seth in this case
+                map.Objects[15] = GameObjects.Actor.BeanSeller.ObjectIndex();
             }
         }
 
@@ -4740,6 +4774,23 @@ namespace MMR.Randomizer
                     punchableActor.DynaLoad.vert = numSegments * punchableActor.DynaLoad.vert;
                 }
             }
+
+            if (thisSceneData.ChosenReplacementObjects.Any(swap => swap.NewV == GameObjects.Actor.WarpDoor.ObjectIndex()))
+            {
+                var warpdoors = thisSceneData.Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.WarpDoor);
+                for (int i = 0; i < warpdoors.Count; i++)
+                {
+                    var door = warpdoors[i];
+                    if (door.Variants[0] == 0)
+                    {
+                        door.DynaLoad.poly = 0;
+                        door.DynaLoad.vert = 0;
+                    }
+                }
+            }
+
+
+
         }
 
 
@@ -5635,7 +5686,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.PunchableStoneTowerPillars)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.WarpDoor)) continue;
                 if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Dodongo, GameObjects.Actor.PirateColonel)) continue; // still broken
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.Freezard)) continue;
