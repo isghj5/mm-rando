@@ -631,6 +631,8 @@ namespace MMR.Randomizer.GameObjects
             152)] // vars: 0x23, too close to lab door
         [EnemizerSceneEnemyReplacementBlock(Actor.Seagulls,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can stop ting from falling
+        [EnemizerSceneEnemyReplacementBlock(Actor.IshiRock,
+            Actor.Hiploop)] // not sure if this bug still happens, but so stupid worth blocking twice
         GreatBayCoast = 0x34,
 
         [FileID(1332)]
@@ -1021,6 +1023,7 @@ namespace MMR.Randomizer.GameObjects
         //   Actor.Eyegore)]
         [EnemizerSceneBlockSensitive(Actor.RosaSisters, -1)]
         [EnemizerSceneBlockSensitive(Actor.MysteryHand, -1)]
+        [EnemizerSceneBlockSensitive(Actor.PostMan, -1)]
         StockPotInn = 0x5E,
 
         [FileID(1472)]

@@ -1183,6 +1183,8 @@ namespace MMR.Randomizer
 
             }
 
+            
+
         }
 
         #region Static Enemizer Changes and Fixes
@@ -2228,6 +2230,14 @@ namespace MMR.Randomizer
 
                 var stockpotInnScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.StockPotInn.FileID());
                 stockpotInnScene.Maps[4].Actors[4].ChangeYRotation(270); // mushroom was facing the right wall
+
+                var mailmanActor = stockpotInnScene.Maps[0].Actors[22];
+                if (mailmanActor.ActorEnum == GameObjects.Actor.PostMan)
+                {
+                    mailmanActor.Position = new vec16(185, 0, 107); // moved in front of anju, surely that wont be a problem
+                    mailmanActor.ChangeYRotation(270); // turn to face left towards anju
+                }
+                SceneUtils.UpdateScene(stockpotInnScene);
 
             }
 
@@ -5686,7 +5696,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.SunSwitch)) continue;
                 if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.Torch, GameObjects.Actor.PalmTree)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.RosaSisters, GameObjects.Actor.)) continue;
+                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.PostMan, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Gorman, GameObjects.Actor.HookshotWallAndPillar)) continue;
                 if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.DekuBaba, GameObjects.Actor.PirateColonel)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.Carpenter)) continue;
@@ -7860,7 +7870,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 92.1\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 93.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
