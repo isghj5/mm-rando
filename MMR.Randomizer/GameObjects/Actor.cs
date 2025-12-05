@@ -5402,8 +5402,10 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x300, 0x200, 0x100, 0x000)]
         [RespawningVariants(0x0)] // meg does NOT respawn but her death doesnt always trigger kills rooms, not sure why
         [DifficultAllVariants]
-        [VariantsWithRoomMax(max: 1, variant: 0x000, 0x100, 0x200, 0x300)] // only one per
-        [CompanionActor(Flame, ourVariant: 0x000, variant: 0xD)]      // meg gets purple flames // NOT DONE
+        //[VariantsWithRoomMax(max: 1, variant: 0x000, 0x100, 0x200, 0x300)] // only one per
+        [VariantsWithRoomMax(max: 2, variant: 0x100, 0x200, 0x300)] // only one per
+        // merged with her replacement actor instead, left for color reference or if I undo
+        //[CompanionActor(Flame, ourVariant: 0x000, variant: 0xD)]    // meg gets purple flames
         [CompanionActor(Flame, ourVariant: 0x100, variant: 0x4, 0x5)] // jo gets red flames
         [CompanionActor(Flame, ourVariant: 0x200, variant: 0x7FE)]    // beth gets blue flames
         [CompanionActor(Flame, ourVariant: 0x300, variant: 0x3)]      // amy gets green flames
