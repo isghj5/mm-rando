@@ -2227,17 +2227,27 @@ namespace MMR.Randomizer
                 roadToMountainsScene.Maps[0].Actors[44].Position.x = 2000;
                 roadToMountainsScene.Maps[0].Actors[44].Position.z = 6612;
                 ActorUtils.FlattenPitchRoll(roadToMountainsScene.Maps[0].Actors[44]);
+                SceneUtils.UpdateScene(roadToMountainsScene);
 
                 var stockpotInnScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.StockPotInn.FileID());
                 stockpotInnScene.Maps[4].Actors[4].ChangeYRotation(270); // mushroom was facing the right wall
-
                 var mailmanActor = stockpotInnScene.Maps[0].Actors[22];
-                if (mailmanActor.ActorEnum == GameObjects.Actor.PostMan)
+                if (mailmanActor.ActorEnum != GameObjects.Actor.PostMan)
                 {
                     mailmanActor.Position = new vec16(185, 0, 107); // moved in front of anju, surely that wont be a problem
                     mailmanActor.ChangeYRotation(270); // turn to face left towards anju
                 }
                 SceneUtils.UpdateScene(stockpotInnScene);
+
+                var oceanspiderhouseScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.OceanSpiderHouse.FileID());
+                var oshSeth = oceanspiderhouseScene.Maps[0].Actors[2];
+                if (oshSeth.ActorEnum != GameObjects.Actor.Seth1)
+                {
+                    oshSeth.Position.x = -113;
+                    oshSeth.Position.z = 325;
+                    oshSeth.ChangeYRotation(45);
+                }
+                SceneUtils.UpdateScene(oceanspiderhouseScene);
 
             }
 
@@ -5692,7 +5702,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.SkeleKnight)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.RegularZora, GameObjects.Actor.DragonFly)) continue;
-                if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.Monkey, GameObjects.Actor.TreasureChest)) continue;
+                if (TestHardSetObject(GameObjects.Scene.OceanSpiderHouse, GameObjects.Actor.Seth1, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.SunSwitch)) continue;
                 if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.Torch, GameObjects.Actor.PalmTree)) continue;
