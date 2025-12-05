@@ -2653,34 +2653,36 @@ namespace MMR.Randomizer
             // vanilla vines grotto is   50A0 <- (lower:1480) <=> (upper: 14F0) -> 5060
             // vanilla straight grotto is   5080 <- (brighter"A":1460) <=> (darker"B": 14E0) -> 5070
 
-            var grottoScene = RomData.MMFileList[GameObjects.Scene.Grottos.FileID()].Data;
-            ReadWriteUtils.Arr_WriteU16(grottoScene, 0x23C, 0xFFFF); // replace vines lower with generic exit
+            var grottoSceneData = RomData.MMFileList[GameObjects.Scene.Grottos.FileID()].Data;
+            ReadWriteUtils.Arr_WriteU16(grottoSceneData, 0x23C, 0xFFFF); // replace vines lower with generic exit
 
             // straight grotto: I want the player to enter from A side because its brighter and looks better
             // but B exit is boring compared to A exit, so I want to swap the B exit to exit to old A exit
-            ReadWriteUtils.Arr_WriteU16(grottoScene, 0x238, 0xFFFF); // replace straight A with generic exit
-            ReadWriteUtils.Arr_WriteU16(grottoScene, 0x23A, 0x5080); // replace straight B with old straight A exit
+            ReadWriteUtils.Arr_WriteU16(grottoSceneData, 0x238, 0xFFFF); // replace straight A with generic exit
+            ReadWriteUtils.Arr_WriteU16(grottoSceneData, 0x23A, 0x5080); // replace straight B with old straight A exit
 
             // lets change one of the JP entrances at random to some other place
             var randomGrottoExitAddress = (_seedRNG.Next(2) == 1) ? (0x23A) : (0x23E); // the two exits in the grotto scene exit list
             var randomSickEntrance = sickEntrances[_seedRNG.Next(sickEntrances.Count())];
             _syncedLog.AppendLine($"randomized jp_grotto exit address: [{randomSickEntrance.ToString("X4")}]");
 
-            ReadWriteUtils.Arr_WriteU16(grottoScene, randomGrottoExitAddress, randomSickEntrance);
+            ReadWriteUtils.Arr_WriteU16(grottoSceneData, randomGrottoExitAddress, randomSickEntrance);
 
             var grottosScene = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.Grottos);
 
             // straight jp grotto has only one object, padding of scene data means there is space for an object right behind it that we can use
             //  we can use the second object to give this area a chest by taking one of the useless mushrooms and changing it
             // expand object list to have both of our new objects, change dekubaba to dodongo to increase likelyhood of killable
-            grottosScene.Maps[6].Objects = new List<int> { GameObjects.Actor.Peahat.ObjectIndex(),
+            var straightDekubabaReplacement = GameObjects.Actor.MadShrub;
+            grottosScene.Maps[6].Objects = new List<int> { straightDekubabaReplacement.ObjectIndex(),
                                                            GameObjects.Actor.TreasureChest.ObjectIndex() };
             // we have to tell the room to load the extra object though
             var straightJPGrottoRoomFile = RomData.MMFileList[GameObjects.Scene.Grottos.FileID() + 7];
             straightJPGrottoRoomFile.Data[0x29] = 0x2; // setting object header object count from 1 to 2
-            // change dekubaba to peahat so its killable to get the new chest
-            grottosScene.Maps[6].Actors[2].ChangeActor(GameObjects.Actor.Peahat, vars: 0, modifyOld: true);
-            grottosScene.Maps[6].Actors[2].OldName = grottosScene.Maps[6].Actors[2].Name = "JpGrottoEnemy";
+            // change dekubaba to madscrub so its killable to get the new chest
+            var straightJGrottoEnemy = grottosScene.Maps[6].Actors[2];
+            straightJGrottoEnemy.ChangeActor(straightDekubabaReplacement, vars: 0xFF02, modifyOld: true);
+            straightJGrottoEnemy.OldName = straightJGrottoEnemy.Name = "JpGrottoEnemy";
 
             var newChestActor = grottosScene.Maps[6].Actors[7];
             // chest params: should be invisible until you kill the enemy, should not collide with any other chest flags in the scene, item: dont know
@@ -2691,6 +2693,21 @@ namespace MMR.Randomizer
             // turn the other useless mushroom into another buterfly for ambiance
             grottosScene.Maps[6].Actors[8].ChangeActor(GameObjects.Actor.Butterfly, 0x5324, modifyOld: true);
             grottosScene.Maps[6].Actors[8].Position.y = 58; // dont want spawning in the ground, we want flying around
+
+            // the bo that fall in the JP grotto are ceiling location, but regular bo types,
+            // so I need to change them but I dont think there are free params to use
+            // just change to a ceiling only actor, then change the objects
+
+            foreach (var bo in grottosScene.Maps[8].Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.Bo))
+            {
+                bo.OldVariant = bo.Variants[0] = 0xFA00;
+            }
+
+            // the object list for this scene is 3, so there is space for another object without expanding the scene
+            // lets re-use the other ceiling actor object in the spider grotto so we can have some more variety
+            var jGrottoRoomData = RomData.MMFileList[GameObjects.Scene.Grottos.FileID() + 8].Data;
+            grottosScene.Maps[8].Objects.Add(GameObjects.Actor.SkulltulaDummy.ObjectIndex());
+            jGrottoRoomData[0x29] = 4; // expand the list size officially
         }
 
         private static void SwapSwampSpiderhouseRock()
@@ -3658,13 +3675,16 @@ namespace MMR.Randomizer
             var grottosScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Grottos.FileID());
 
             // dodongo grotto has a useless blue icicle object. switch to Bo object so we can get Bo actors from jp grotto
+            var straightDekubabaReplacement = GameObjects.Actor.MadShrub;
             var dodongoGrottoObjectList = grottosScene.Maps[7].Objects;
-            dodongoGrottoObjectList[2] = GameObjects.Actor.Bo.ObjectIndex();
+            dodongoGrottoObjectList[2] = straightDekubabaReplacement.ObjectIndex();
             var randomActorChangeRoll = _seedRNG.Next(100);
-            if (randomActorChangeRoll < 25)
+            if (randomActorChangeRoll < 35)
             {
-                var randomIndex = randomActorChangeRoll < 12 ? (0) : (1);
-                grottosScene.Maps[7].Actors[randomIndex].ChangeActor(GameObjects.Actor.Bo, vars: 0xFF01, modifyOld: true); // match actor to object
+                var randomIndex = randomActorChangeRoll < 12 ? (0) : (1); // TODO fix
+                var secondDodongo = grottosScene.Maps[7].Actors[randomIndex];
+                secondDodongo.ChangeActor(straightDekubabaReplacement, vars: 0xFF02, modifyOld: true); // match actor to object
+                secondDodongo.OldName = secondDodongo.Name = "Dodongo 2";
             }
 
             // TODO do the same for peahat grotto

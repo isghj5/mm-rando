@@ -347,6 +347,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(58)]
         [ObjectListIndex(0x17)]
         [GroundVariants(0)]
+        [CeilingVariants(0)] // because thats cannon
         [DifficultAllVariants]
         [VariantsWithRoomMax(max: 2, variant: 0)]
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)] // cutscene softlock on hms
@@ -771,13 +772,16 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)] // can fly, but weirdly is very bad at changing height if you fight in a multi-level area
         [VariantsWithRoomMax(max: 0, variant: 0)] // for now block, we can remove but do not place
         [OnlyOneActorPerRoom] // only fight her if you fight only one
+        [DifficultAllVariants]
         [RespawningAllVariants] // is NOT unkillable, but assume never have light arrows until the last second of a run, do not place where can block an item
         [ForbidFromScene(Scene.InvertedStoneTowerTemple)] // lets not randomize his normal spawn
         // good candidate for night and dungeon spawn only
-        [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.RoadToIkana,
-            Scene.SouthernSwamp, Scene.WoodsOfMystery, Scene.Woodfall, Scene.TwinIslandsSpring, Scene.PathToSnowhead,
-            Scene.Snowhead, Scene.GoronVillage, Scene.DekuShrine, Scene.StoneTower)]
-        [RemovalChance(25)]
+        [EnemizerScenesPlacementBlock(Scene.TerminaField, //Scene.GreatBayCoast, Scene.ZoraCape, //Scene.RoadToIkana,
+            Scene.SouthernSwamp, Scene.WoodsOfMystery, Scene.Woodfall, //Scene.TwinIslandsSpring, //Scene.PathToSnowhead,
+            //Scene.Snowhead, Scene.GoronVillage,
+            Scene.DekuShrine//, //Scene.StoneTower
+        )]
+        [RemovalChance(25), PlacementWeight(90)]
         Gomess = 0x43, // En_Death 🤘
 
         [FileID(88)]
@@ -3969,7 +3973,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0xFF01, 0xFF05, 0xC200)]
         [CreditsBlockedAllVariants] // I can't remember which ones are actually an issue and which are not
         [CompanionActor(ClayPot, ourVariant: -1, variant: 0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
-        Bo = 0x164, // En_Mkk, boe, small ball of snow or soot
+        Bo = 0x164, // En_Mkk, boe, small ball of snow or soot enemy
 
         [FileID(323)]
         [ObjectListIndex(0x1)]
@@ -4747,7 +4751,7 @@ namespace MMR.Randomizer.GameObjects
         // huh? these repeat per dungeon? 
         //[FlyingVariants(0x5E00, 0x6000, 0x5800, 0x5600)]
         //[GroundVariants(0x5E00, 0x6000, 0x5800, 0x5600)]
-        [CeilingVariants(0x5E00, 0x6000, 0x5800, 0x5600)] // not really a thing, but lets see if we can't do this as a joke
+        //[CeilingVariants(0x5E00, 0x6000, 0x5800, 0x5600)] // not really a thing, but lets see if we can't do this as a joke
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [SwitchFlagsPlacement(size: 0x7F, shift: 9)] // 0xFE00
@@ -6081,7 +6085,6 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:1, variant: 0x24B, 0x20B, 0x2CB)]
         [SwitchFlagsPlacement(SwitchTrigger.SendsAndRecieves, size: 0x7F, shift: 6)]
         [DifficultAllVariants]
-        [PlacementWeight(30)]
         [RemovalChance(0)] // room doors are switch flag not kill enemy rooms
         [AlignedCompanionActor(TreasureChest, CompanionAlignment.OnTop, ourVariant: -1, variant:
             0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579, 0x561E, 0x5C79, 0x5991, 0x5B58,
@@ -6090,6 +6093,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.DekuPalace,
             Scene.OceanSpiderHouse, Scene.SwampSpiderHouse // if the player picks up and item at the same time they get grabbed its softlock, for now just block these areas
         )]
+        [PlacementWeight(25)]
         PirateColonel = 0x21D, // En_Kaizoku
 
         // TODO make the one that just looks at you a non-enemy type in the replacement

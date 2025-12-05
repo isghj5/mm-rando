@@ -94,7 +94,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1522)]
         [SceneInternalId(0x07)]
-        [ClearEnemyPuzzleRooms(7, 13)] // 7:dodongo, 13:peahat
+        [ClearEnemyPuzzleRooms(7, 13, 8)] // 7:dodongo, 13:peahat, 8: new jgrotto mystery
         [EnemizerSceneBlockSensitive(Actor.DekuBabaWithered, -1)] // can block the chest
         [EnemizerSceneBlockSensitive(Actor.DekuBaba, -1)] // this this is required to keep it off of withered as well
         [EnemizerSceneBlockSensitive(Actor.LargeWoodenCrate, -1)] // standing next to the buisness scrub
