@@ -438,6 +438,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.Lulu //Actor.StockpotBell, Actor.IkanaGravestone,  Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator,
             /*Actor.Bumper, Actor.ClocktowerGearsAndOrgan*/)]
         [EnemizerSceneEnemyReplacementBlock(Actor.CuttableIvyWall, // blocking a few skulltulla
+            Actor.Tijo, // big enough to block
             Actor.PalaceGuardDeku)] // small enough to not be blocking in other contexts
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)]
         [EnemizerSceneBlockSensitive(Actor.Bombiwa, Item.CollectableSwampSpiderHouseSoftSoil1, Item.CollectibleSwampSpiderToken14, Item.CollectibleSwampSpiderToken2, Item.CollectibleSwampSpiderToken13)]
