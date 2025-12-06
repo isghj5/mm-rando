@@ -208,6 +208,7 @@ namespace MMR.Randomizer.GameObjects
         [CreditsBlockedVariants(0x8000, 0x8002, 0x8003)] // invisble
         [VariantsWithRoomMax(max: 3, variant: 0, 0x8000, 0x4, 0x8004, 0x2, 0x8002)]
         [FlyingToGroundHeightAdjustment(150)]
+        [PlacementWeight(90)]
         Keese = 0xC, // En_Firefly
 
         // cannot be easily randomized away from horse because horse object is not part of the scene list
@@ -889,6 +890,7 @@ namespace MMR.Randomizer.GameObjects
             /*Scene.IkanaGraveyard, Scene.StoneTower */)] // dyna crash
         //*/
         //[EnemizerScenesPlacementBlock(Scene.DekuPalace, Scene.BeneathTheWell, Scene.BeneathGraveyard, Scene.RoadToIkana, Scene.StoneTower)]
+        [PlacementWeight(60)]
         UnusedStoneTowerStoneElevator = 0x4D, // Bg_F40_Flift
 
         // Has no File, burried in [code] file
@@ -2565,7 +2567,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.BeneathTheWell//,
             /* Scene.IkanaGraveyard, Scene.StoneTower */)] // dyna crash
         //[SwitchFlagsPlacement(size: 0xFF, shift: 0)] // removed and unused in our updated and fixed version
-        [PlacementWeight(50)]
+        [PlacementWeight(45)]
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
         EmptyC8 = 0xC8,
@@ -3859,7 +3861,7 @@ namespace MMR.Randomizer.GameObjects
         // switch flags are only for the graveyard, no other version uses it
         // hardcoded to use only in that scene too, so canno't use for anything else without modifying
         //[SwitchFlagsPlacement(size: 0xFF, shift: 8)]
-        [PlacementWeight(90)]
+        [PlacementWeight(80)]
         BadBat = 0x15B, // En_Bat
 
         // can hold many different types of graves or stones containing.. nothing bit broke
