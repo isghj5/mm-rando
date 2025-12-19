@@ -3292,7 +3292,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(256)]
         [ObjectListIndex(0x1)]
-        [SwitchFlagsPlacement(size: 0x7F, shift: 0)]
+        [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 0)]
         StalchildSpawner = 0x11B, // En_Encount4
 
         // this is the version that spawns in east clock town to give you the book if you knew the password

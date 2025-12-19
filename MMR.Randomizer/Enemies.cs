@@ -5726,7 +5726,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.SunSwitch)) continue;
                 if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.Torch, GameObjects.Actor.PalmTree)) continue;
-                if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.PostMan, GameObjects.Actor.BeanSeller)) continue;
+                if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.Keese, GameObjects.Actor.GoldSkulltula)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Gorman, GameObjects.Actor.HookshotWallAndPillar)) continue;
                 if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.DekuBaba, GameObjects.Actor.PirateColonel)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.Carpenter)) continue;
@@ -7465,7 +7465,7 @@ namespace MMR.Randomizer
                             } // */
                             else
                             {
-                                replacementEnemySearch = new Actor(injectedActor, filename);
+                                replacementEnemySearch = new Actor(injectedActor, Path.GetFileName(filePath));
                                 ReplacementCandidateList.Add(replacementEnemySearch);
                             }
 
