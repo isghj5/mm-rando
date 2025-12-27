@@ -1109,6 +1109,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
             Actor.Peahat, // small peahat can instant kill 1 heart hero
             Actor.LikeLike,
+            Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, // can block the area above
             Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BomberHideoutGuard,
                 Actor.Peahat, Actor.Tijo
