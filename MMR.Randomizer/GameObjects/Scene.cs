@@ -990,11 +990,15 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1459)]
         [SceneInternalId(0x60)]
         [ClearEnemyPuzzleRooms(2, 3, 4, 5)] // the miniboss rooms
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.TallGrass,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the rupees 
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the rupees 
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
             Actor.Shabom)] // report of them not spawning or falling out of bounds and softlock
-        [EnemizerSceneEnemyReplacementBlock(Actor.Wart,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wart,
             Actor.Hiploop, Actor.RedBubble)] // instant kill on water
-        [EnemizerSceneEnemyReplacementBlock(Actor.GaroMaster,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GaroMaster,
             Actor.Hiploop, Actor.RedBubble)] // instant kill on water
         SecretShrine = 0x5D,
 
