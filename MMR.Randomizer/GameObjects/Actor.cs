@@ -3033,12 +3033,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xD0)]
         // hmm, params are 0x7E00 >> 9 and thats it. path?
         // looks like -1 (7E) works as a path disable for this actor too
-        //[GroundVariants(0x7E00)]
+        [GroundVariants(0x7E00)]
         //[WaterBottomVariants(0x7E00)]
         [PathingVariants(0x0)]
         [PathingTypeVarsPlacement(mask: 0x7F00, shift: 9)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
+        [PlacementWeight(20)] // boring does nothing
         MuteZora = 0xF8, // En_Zo
 
         // swamp spiderhouse soil 

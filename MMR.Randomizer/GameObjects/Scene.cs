@@ -698,6 +698,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.DeathArmos, // light arrow requirement is a bit much, no logical way right now to check if important item behind light arrow
             Actor.Bo, Actor.StoneTowerMirror,
             Actor.MothSwarm, // can block
+            Actor.RegularZora, // perching type can block
             Actor.WoodenBarrel, // also the wooden blocking platform, which blocks climbing
             Actor.HookshotWallAndPillar, // can block climbing TODO fix in the code since this is silly
             Actor.BronzeBoulder, // doesn't stay in spot, falls to floor, blocks climbing start
