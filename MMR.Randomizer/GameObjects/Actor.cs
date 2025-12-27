@@ -2761,6 +2761,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.FishermansHut, // crash
             Scene.Grottos, // crash in generic grotto, untested in others, few paths
             Scene.AstralObservatory,
+            Scene.BeneathGraveyard, // assumed but not tested, something pathing was crashing down there with a path
             Scene.MountainVillageSpring, Scene.RanchBuildings)] // crash because not enough paths
         Dog = 0xE2, // En_Dg
 
