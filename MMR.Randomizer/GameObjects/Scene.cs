@@ -858,6 +858,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SquareSign,
             Actor.GibdoWell, Actor.GibdoWell)] // can stunlock at the door, doesnt stay down long enough
         [EnemizerSceneBlockSensitive(Actor.SquareSign, -1)] // long can block the small snowball, wide can block the door
+        [EnemizerSceneBlockSensitive(Actor.LargeWoodenCrate, -1)] // long can block the small snowball, wide can block the door
         GoronVillage = 0x4A,
 
         [FileID(1412)]
