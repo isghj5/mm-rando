@@ -134,6 +134,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(45)]
         [ObjectListIndex(0x128)]
+        [CheckRestricted(Item.FrogWoodfallTemple, Item.HeartPieceChoir)]
         // gekko in gbt is spawned by bigslime
         [GroundVariants(1)] // woodfall
         [RemovalChance(40)] // medium boss
