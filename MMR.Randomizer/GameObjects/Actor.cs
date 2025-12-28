@@ -1608,18 +1608,21 @@ namespace MMR.Randomizer.GameObjects
             0x460B, 0x4610, 0x018D, // stone tower temple
             0x6F0B, 0x710F, 0x7310, 0x7515, 0x770B, // inverted stone tower (is a field scene, but why)
             0xC00B, 0xC21E, 0xC40E, // secret shrine
+            0x550A, // pinnacle rock, but its shared with ground
             0x4110, // terminafield pot
+            0x451A, 0x551A, // non-vanilla, used as fake replacement for water pot in grave
             0xFF0B, 0xFF0D // non vanilla
         )]
         [WaterBottomVariants(
             0xFE0E, 0xFC0B, 0xFA1E, 0xF81E, 0xF60E, 0xF410, // secret shrine
-                                                            //0x550A, // pinnacle rock, but its shared with ground
+            //0x550A, // pinnacle rock, but its shared with ground
             0x410E, 0x450A, 0x470A, 0x490A, 0x4B0A, 0x4D0E, 0x530A, 0x570E, 0x590A, 0x5B0E, // pinnacle rock
             0xFF0F, 0xFF0B, 0xFF0E, 0xFF03 // non vanilla
         )]
         [VariantsWithRoomMax(max: 0, variant: 0x460B, 0x4610, 0x018D, // stone tower temple (dungeon keep)
             0xFE01, // deku shrine (dungeon keep)
             0x1E, 0x5, // spiderhouse clay pots with spiders
+            0x451A, 0x551A, // fake variant we use for water pot in grave, should still be valid but over-encourages droptable A
             0x202, 0x602, 0x802, 0xA02, 0xC02 // swords school, these are dungeon_keep pots cannot place without the object
         )]
         [ForbidFromScene(Scene.GoronRacetrack, // these are green pots they use a different object 

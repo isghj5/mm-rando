@@ -5726,7 +5726,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.GoronKid, GameObjects.Actor.LotteryKiosk)) continue;
                 if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.Torch, GameObjects.Actor.LostWoodsCutsceneTrees)) continue;
-                if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.Keese, GameObjects.Actor.GoldSkulltula)) continue;
+                if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.CeilingSpawner, GameObjects.Actor.GoldSkulltula)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Gorman, GameObjects.Actor.HookshotWallAndPillar)) continue;
                 if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.DekuBaba, GameObjects.Actor.PirateColonel)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.Carpenter)) continue;
@@ -6649,6 +6649,7 @@ namespace MMR.Randomizer
             AddAniObjectIfTerminaFieldTree(thisSceneData);
             RemoveScarecrowFromTradingPostIfSOTRandomized(thisSceneData);
             RemoveStalagmiteFromSnowheadIfTrick(thisSceneData);
+            ChangeGravePotsIfRandomized(thisSceneData);
         }
 
         private static void AddAniObjectIfTerminaFieldTree(SceneEnemizerData thisSceneData)
@@ -6720,7 +6721,24 @@ namespace MMR.Randomizer
             }
         }
 
+        private static void ChangeGravePotsIfRandomized(SceneEnemizerData thisSceneData)
+        {
+            // some of the pots are copies of water bottom pots, we need to change them to match,
+            // but only AFTER we know we want to randomize them because they don't have valid items
 
+            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.BeneathGraveyard)
+            {
+                // wont be in the valid Actors list if not being randomized
+                var troublePot = thisSceneData.Actors.Find(act => act.OldActorEnum == GameObjects.Actor.ClayPot && act.OldVariant == 0x450A);
+                if (troublePot != null)
+                {
+                    troublePot.OldVariant = troublePot.Variants[0] = 0x451A; // same drop, different flag
+
+                    var secondPot = thisSceneData.Scene.Maps[1].Actors[5]; // 550A
+                    secondPot.OldVariant = troublePot.Variants[0] = 0x551A;
+                }
+            }
+        }
 
         private static void TrimSceneAcceptableCandidateList(SceneEnemizerData thisSceneData)
         {
