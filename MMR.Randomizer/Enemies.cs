@@ -5714,7 +5714,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Stalchild)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Peahat)) continue;
                 if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Dodongo, GameObjects.Actor.PirateColonel)) continue; // still broken
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.Freezard)) continue;
