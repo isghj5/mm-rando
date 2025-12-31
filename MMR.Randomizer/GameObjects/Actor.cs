@@ -7049,7 +7049,7 @@ namespace MMR.Randomizer.GameObjects
         [CeilingVariants(0xFC00)]
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 9)]
         [OnlyOneActorPerRoom]
-        [RemovalChance(5), PlacementWeight(35)] // TODO
+        [RemovalChance(5), PlacementWeight(15)]
         HitSpot = 0x265, // En_Hit_Tag // hittag
 
         [ActorizerEnabled]
@@ -7805,7 +7805,7 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x3F, shift:2)] // 0x1FC
         [OnlyOneActorPerRoom] // as they give items or money, limit to one
         [UnkillableAllVariants]
-        [RemovalChance(5), PlacementWeight(23)] // free stuff, make it more rare
+        [RemovalChance(5), PlacementWeight(15)] // free stuff, make it more rare
         En_Invisible_Ruppe = 0x2AF, // En_Invisible_Ruppe
         
         [FileID(647)]
