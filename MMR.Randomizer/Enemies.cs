@@ -197,6 +197,47 @@ namespace MMR.Randomizer
             FreeOnlyCandidateList = freeOnlyCandidates.Select(act => new Actor(act, InjectedActors.Find(i => i.ActorId == (int) act))).ToList();
         }
 
+        private static void CheckForHardToFindBugsPre(SceneEnemizerData thisSceneData)
+        {
+            /// attempt to catch some odd issues that are rarely reproducable
+
+            var settingsPrompt = "If you get this error message, please submit to Isghj: \n Settings file, and this seed:";
+
+            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.PiratesFortressRooms && thisSceneData.Actors.Any(a => a.ActorEnum == GameObjects.Actor.PirateColonel))
+            {
+                throw new Exception("Pirates should not be randomized.\n" + settingsPrompt); // jan 2026
+            }
+            
+        }
+
+        private static void CheckForHardToFindBugsPost(SceneEnemizerData thisSceneData)
+        {
+            /// attempt to catch some odd issues that are rarely reproducable
+
+            var settingsPrompt = "If you get this error message, please submit to Isghj: \n Settings file, and this seed:";
+
+            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.BeneathGraveyard)
+            {
+                var goldSkulltula = thisSceneData.Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.GoldSkulltula &&  (act.Variants[0] & 0xFF00) < 0xFF00);
+                if (goldSkulltula.Count > 0)
+                    throw new Exception("Skulls should never be pathing in grave.\n" + settingsPrompt); // jan 2026
+            }
+
+            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.DoggyRacetrack)
+            {
+                var pots = thisSceneData.Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.RegularIceBlock && act.OldActorEnum == GameObjects.Actor.ClayPot );
+                if (pots.Count > 0)
+                {
+                    throw new Exception("Pots should not be ice.\n" + settingsPrompt); // jan 2026
+
+                }
+            }
+
+        }
+
+
+        #region Actorizer Junk detection
+
         private static void PrepareJunkSpiderTokens(List<ItemLocationPair> allSphereItems) // tag: spiderhouse
         {
             /// TODO this can be simplified, it was more complex before I realized spheres are kinda useless
@@ -560,6 +601,8 @@ namespace MMR.Randomizer
                 replaceList.Remove(removeActor);
             }
         }
+
+        #endregion
 
         #region Read and Write Scene Actors and Objects
 
@@ -6414,30 +6457,6 @@ namespace MMR.Randomizer
                     var testEnemyCompatibleVariants = oldActor.CompatibleVariants(testEnemy, thisSceneData.RNG, roomIsClearPuzzleRoom);
                     if (testEnemyCompatibleVariants == null || testEnemyCompatibleVariants.Count == 0) continue;  // no type compatibility, skip
 
-                    // this should be working in compatibleVariants now
-                    /*
-                    if (oldActor.Blockable == false)
-                    {
-                        if (testEnemy.ActorEnum.GetAttribute<BlockingVariantsAll>() != null)
-                        {
-                            continue; // test actor is always blocking, oldactor cannot be blocked, continue to next actor
-                        }
-                        else
-                        {
-                            testEnemyCompatibleVariants = testEnemy.RemoveBlockingTypes();
-                        }
-                    } 
-
-                    var respawningVariants = testEnemy.RespawningVariants;
-                    if ((oldActor.MustNotRespawn || roomIsClearPuzzleRoom) && respawningVariants != null)
-                    {
-                        testEnemyCompatibleVariants.RemoveAll(variant => respawningVariants.Contains(variant));
-                    }
-
-                    if (testEnemyCompatibleVariants.Count == 0) continue;  // no variants remain, leave
-
-                    // */
-
                     var enemyHasMaximums = testEnemy.HasVariantsWithRoomLimits();
                     var acceptableVariants = new List<int>();
 
@@ -6928,6 +6947,9 @@ namespace MMR.Randomizer
 
             GetSceneFreeActors(thisSceneData);
 
+
+            CheckForHardToFindBugsPre(thisSceneData);
+
             int loopsCount = 0;
             int objectTooLargeCount = 0;
             var previousyAssignedCandidate = new List<Actor>();
@@ -7133,6 +7155,7 @@ namespace MMR.Randomizer
 
             ActorizerForceDropHeavyGrassMinimum(thisSceneData);
 
+
             FixGroundToFlyingActorHeights(thisSceneData, flagLog); // putting flying actors on ground spawns can be weird
             FixRedeadSpawnScew(thisSceneData); // redeads don't like x/z rotation
             FixBrokenActorSpawnCutscenes(thisSceneData); // some actors dont like having bad cutscenes
@@ -7170,6 +7193,8 @@ namespace MMR.Randomizer
             WriteOutput("---------------------------------------------------------");
             thisSceneData.Log.Append(bogoLog);
             WriteOutput("####################################################### ");
+
+            CheckForHardToFindBugsPre(thisSceneData);
 
             // realign all scene companion actors
             MoveAlignedCompanionActors(thisSceneData);
@@ -7921,7 +7946,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 94.0\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 95.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
