@@ -311,6 +311,11 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         JabuJabuDeepBreath = 0x20B6, // wow this is still in here??
 
+        [Tags(Short, Long)]
+        DiamondSwitchHit = 0x20BA,
+
+        // todo hole here
+
         [Tags(Long)]
         FrogIncreaseSize = 0x20CC,
 
@@ -411,8 +416,16 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         SnowheadGoronCrashEarthquake = 0x2162,
 
+        // the switches that control water flow
+        [Tags(Looping)]
+        GBTValveRotate = 0x216B,
 
-        //[Tags(Short, Debug)]
+        [Tags(Long)]
+        GBTValveStop = 0x216C,
+
+        // todo hole
+
+        //[Tags(Looping)]
         //UFOAppear = 0x217b, // loops
 
         //[Tags(Long, Debug)] // ??? not used I don't think, I think this was meant for when you beat them but they went with fanfare instead
@@ -498,10 +511,42 @@ namespace MMR.Randomizer.Models.SoundEffects
         DinolfosCry = 0x3029,
 
         [Tags(Short)]
-        DinolfosAttack = 0x302A,
+        DinolfosAttack = 0x302A, // sword swing
+
+        [Tags(Short)]
+        DinolfosDamage = 0x302B,
 
         [Tags(Short, LowHpBeep)]
         DinolfosLaugh = 0x302C, // dodgeing your arrows
+
+        [Tags(Short, Long)]
+        DinolfosDies = 0x302D,
+
+        [Tags(LowHpBeep)]
+        DinolfosFootsteps = 0x302E,
+
+
+        [Tags(Short, LowHpBeep)]
+        StalchildAttack = 0x3031, // swing
+
+        [Tags(Short, LowHpBeep)]
+        StalchildDamage = 0x3032,
+
+        [Tags(Short, Long)]
+        StalchildDies = 0x3033,
+
+        [Tags(Short, Long)]
+        FloormasterSkid = 0x3034,
+
+        [Tags(Long)]
+        StalfosLaughOOT = 0x3038,
+
+        [Tags(Short)]
+        StalfosSlashOOT = 0x3039,
+
+        [Tags(Short,Long)]
+        StalfosDiesOOT = 0x303B,
+
 
         [Replacable(0xE89EA6, 0xE8A336, 0xE03C66, 0xE03E36, 0xE060FE)]
         [ReplacableByTags(Short)]
@@ -518,18 +563,59 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         WolfosAttack = 0x303F,
 
+        [Tags(Short, Long)]
+        KeeseDies = 0x3042,
+
         [Replacable(0xE0523E)]
         [ReplacableByTags(Short)]
         [Tags(Short)]
         WolfosTakeDamage = 0x3043,
+
+        [Tags(Short, Long)]
+        ArmosWakes = 0x3045,
+
+        [Tags(Short, Long)]
+        ArmosDamage = 0x3047, // and eyegore
+
+        [Tags(Short, Long)]
+        ArmosVoice = 0x3048,
 
         [Replacable(0xE8A426, 0xE05B26)]
         [ReplacableByTags(Short)]
         [Tags(Short)]
         WolfosDie = 0x304B,
 
+        [Tags(Long)]
+        SeaDragonAppears = 0x3053,
+
         [Tags(Short)]
         BombchuAim = 0x3055,
+
+        [Tags(Looping)]
+        BombchuRunning = 0x3056,
+
+        [Tags(Looping)]
+        DodongoInhale = 0x3058,
+
+        [Tags(Short)]
+        DodongoGulp = 0x305B,
+
+
+        // why is every jabu thing still in this game...
+        [Tags(Looping)]
+        OOTTailpasaranWiggling = 0x3064,
+        [Tags(Short)]
+        OOTTailpasaranFlinch = 0x3065,
+        [Tags(Short)]
+        OOTTailpasaranDies = 0x3066,
+
+        [Tags(Short)]
+        SkulltulaDescend = 0x3068,
+        [Tags(Long)]
+        SkulltulaQuiver = 0x306A, // thinking about turning around and looking behind themselves
+        [Tags(Short)]
+        SkulltulaDamage = 0x306B,
+        // dies is reused
 
         [Tags(Short)]
         TektiteDamage = 0x306D,
@@ -569,12 +655,67 @@ namespace MMR.Randomizer.Models.SoundEffects
         DekuGuards = 0x3089,
 
         [Tags(Short)]
-        AllDie = 0x308B,
+        EnemyDeathHit = 0x308B,
 
         [Replacable(0xCEEF0A)]
         [ReplacableByTags(Long)]
         [Tags(Long)]
         WallmasterAim = 0x3090,
+
+        [Tags(Short, Long)]
+        WallMasterAscend = 0x3091,
+
+        [Tags(Short, Long)]
+        WallMasterDamage = 0x3095,
+
+        [Tags(Short)]
+        GuayFlapWings = 0x3097,
+
+        // the jabu jabu floating jellyfish
+        [Tags(Short)]
+        OOTBiribiriFloat = 0x3098,
+
+        [Tags(Short)]
+        OOTBiribiriApproach = 0x3099,
+
+        [Tags(Looping)]
+        OOTBiribiriElectricLoop = 0x309A,
+
+        // big hole
+        [Tags(Short, Long)]
+        WizrobeAppear = 0x30A4,
+
+        //[Tags(Looping)]
+        //WizrobeRun = 0x30A5, // untested
+
+        [Tags(Looping)]
+        WizrobeCloneSpawningDiscord = 0x30A6, // starting phase 2
+
+        [Tags(Long)]
+        WizrobeLaugh = 0x30A7,
+
+        [Tags(Short, Long)]
+        WizrobeAttack = 0x30A8,
+
+        [Tags(Short, Long)]
+        WizrobeDamage = 0x30A9,
+
+        [Tags(Short, Long)]
+        WizrobeDies = 0x30AA,
+
+        // big octo
+
+        [Tags(Short)]
+        OOTPhantomDamage = 0x30AE, // is this just a re-used freezard sfx? mixed sequence?
+
+        [Tags(Short)]
+        OOTPhantomVoice = 0x30B2, // Ha! as he jumps toward the paintings, and maybe throws a ball
+
+        //[Tags(Short)]
+        //OOTPhantomDead = 0x32E1, // inaccurate docs, this is a leever sfx
+
+        [Tags(Short)]
+        UnusedGuayDamage = 0x30B3, // Normally you can only kill them, not hurt them without killing, so this never gets used
 
         [Tags(Short)]
         GoronCold = 0x30B4,
@@ -632,7 +773,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Replacable(0x00FB719E, 0x00FB72D6)]
         [Effect(0x000)]
         [Tags(Looping)]
-        [ReplacableByTags(Long, Looping)]
+        [ReplacableByTags(Long)]
         GoronKidCry = 0x30EA,
 
         [Replacable(0xE3C096)]
@@ -709,8 +850,23 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         IronKnuckleSwing = 0x3129,
 
+        // hole
+
         [Tags(Short)]
-        FloorTapping = 0x3137,
+        FloorMasterSmallLanding = 0x3137,
+
+        // majora boss mask
+
+        // gyorg
+
+        [Tags(Short)]
+        ShabomBounce = 0x3148,
+
+        [Tags(Short, Long)]
+        ShabomPop = 0x3149,
+
+
+        // goht
 
         [Replacable(0xCE5E22, 0xCE717E)]
         [ReplacableByTags(Long)]
@@ -718,10 +874,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         FrogBattleCry = 0x315C,
 
         [Tags(Short)]
-        DekuSurprised = 0x318B,
+        DekuPrincessSurprised = 0x318B,
 
         [Tags(Short)]
-        DekuHappy = 0x318C,
+        DekuPrincessHappy = 0x318C,
 
         [Tags(Short)]
         DekuButler = 0x318F,
@@ -729,11 +885,11 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         LikeLikeRoar = 0x3191, // sound of the like like trying to suck up link
 
-        [Tags(Short, LowHpBeep)]
+        [Tags(Short, LowHpBeep)] // tag gerudo fighter
         PirateDamage = 0x3199,
 
         [Tags(Long)]
-        PirateDead = 0x319A,
+        PirateDefeated = 0x319A,
 
         [Tags(Short)]
         PametFrogVoiceShort = 0x319F, // weird little sfx, like hes saying "else-that"
@@ -804,19 +960,23 @@ namespace MMR.Randomizer.Models.SoundEffects
         //UnknownBugSfx = 0x31F2,
 
         [Tags(Long, Short)]
-        KoumeShocked = 0x31FB, // skull kid kills koutake
+        KotakeShocked = 0x31FB, // skull kid attacked koume
 
         [Tags(Long)]
         ChuChuEmergeFromGround = 0x31FE,
 
         [Tags(Long)]
-        KoumeSnoring = 0x31FF,
+        KotakeSnoring = 0x31FF,
 
         [Tags(Short)]
-        KoumeStartledAwake = 0x3200,
+        KotakeStartledAwake = 0x3200, // fast: "Huh"?
+
+        // todo look into this, this is clearly wrong where should it really be?
+        //[Tags(Long)]
+        //DekuLinkPanicScream = 0x3200, // when he sees his reflection
 
         [Tags(Long)]
-        DekuLinkPanicScream = 0x3200, // when he sees his reflection
+        SleepingScrubSnoring = 0x3201,
 
         [Tags(Short)]
         GoronSatisfied = 0x3204,
@@ -1191,6 +1351,22 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Short, LowHpBeep)]
         GreatFairyLaugh = 0x6059,
+
+        // 5a-5c are unused pig sfx?
+
+        //[Tags(Long)]
+        //CursedManStunned = 0x6067, // not working?
+
+
+
+        // these should be ruto, but they are blank/silent
+        //Unk60 = 0x6060,
+        //Unk61 = 0x6061,
+        //Unk62 = 0x6062,
+        //Unk63 = 0x6063,
+        //Unk64 = 0x6064,
+        //Unk65 = 0x6065,
+        //Unk66 = 0x6066,
 
         [Tags(Short)]
         ReceptionistGiggle = 0x6078,
