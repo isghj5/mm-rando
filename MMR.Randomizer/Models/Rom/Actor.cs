@@ -823,10 +823,11 @@ namespace MMR.Randomizer.Models.Rom
                 {
                     foreach (var item in validCondition.BlockedChecks.ToList())
                     {
-                        if (Enemies.IsActorizerJunk(item))
-                        {
-                            validCondition.BlockedChecks.Remove(item);
-                        }
+                        // removed by request of beta testers: having actors block checks because the check is junk is too bug-like and annoying
+                        //if (Enemies.IsActorizerJunk(item))
+                        //{
+                        //    validCondition.BlockedChecks.Remove(item);
+                        //}
                     }
 
                     if (validCondition.BlockedChecks.Count == 0)
