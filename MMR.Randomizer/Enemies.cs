@@ -4960,7 +4960,6 @@ namespace MMR.Randomizer
                 var nightActorList = thisSceneData.Actors.Intersect(map.night.oldActorList).ToList();
                 var nightUniqueList = nightActorList.GroupBy(elem => elem.ActorEnum).Select(group => group.First()).ToList();
                 nightUniqueList.RemoveAll(u => u.ActorEnum == GameObjects.Actor.Empty);
-                //TrimAllActors(thisSceneData, nightUniqueList, nightActorList, allowLimits: false);
                 for (int a = 0; a < nightUniqueList.Count; a++)
                 {
                     var uniqueActor = new List<Actor> { nightUniqueList[a] };
@@ -6111,29 +6110,33 @@ namespace MMR.Randomizer
             //    should this include candidates? is that what we wanted?
             /// knownChangedActorList is all actors that were changed for this object that should have been changed to the candidates
             //    this seems pointless, we now have to contend with the possibility of all actors having every object, this has been depreicated
+            // we use it for day/night final trim though, need to rethink how much of this is necessary? 
             var restrictedActors = candidateAndCompanionGroup.FindAll(act => act.HasVariantsWithRoomLimits() || act.OnlyOnePerRoom != null);
             for (int actorIndex = 0; actorIndex < restrictedActors.Count; ++actorIndex)
             {
                 var problemActor = restrictedActors[actorIndex];
+                var blockedActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(problemActor.OldActorEnum);
 
                 // we need to split enemies per room
                 for (int roomIndex = 0; roomIndex < thisSceneData.Scene.Maps.Count; ++roomIndex)
                 {
-                    //var roomActors = knownChangedActorList.FindAll(act => act.Room == roomIndex && act.ActorId == problemActor.ActorId); // old: now that we can swap outside of given object, this might no longer work right
                     var roomActors = knownChangedActorList.FindAll(act => act.Room == roomIndex && act.ActorId == problemActor.ActorId);
-                    //var roomActors = thisSceneData.Actors.FindAll(act => act.Room == roomIndex && act.ActorId == problemActor.ActorId);
+                    //var roomActors = thisSceneData.Actors.FindAll(act => act.Room == roomIndex && act.ActorId == problemActor.ActorId); // why was this abandoned?
                     if (roomActors.Count == 0) continue; // nothing to trim: no actors in this room
                     var roomIsClearPuzzleRoom = thisSceneData.Scene.SceneEnum.IsClearEnemyPuzzleRoom(roomIndex);
-                    var roomFreeActors = GetRoomFreeActors(thisSceneData, roomIndex);
+                    var candidates = GetRoomFreeActors(thisSceneData, roomIndex);
+                    candidates.RemoveAll(u => blockedActors.Contains(u.ActorEnum));
                     if (!allowLimits)
                     {
-                        roomFreeActors.RemoveAll(u => u.OnlyOnePerRoom != null || u.HasVariantsWithRoomLimits());
+                        // assume final pass, don't even bother adding limited actors
+                        candidates.RemoveAll(u => u.OnlyOnePerRoom != null );
+                        candidates.RemoveAll(u => u.HasVariantsWithRoomLimits() );
                     }
 
                     if (problemActor.OnlyOnePerRoom != null)
                     {
                         // all actors merged together into one list in the function
-                        TrimSpecificActor(thisSceneData, problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom);
+                        TrimSpecificActor(thisSceneData, problemActor, roomActors, candidates, roomIsClearPuzzleRoom);
                     }
                     else
                     {
@@ -6141,14 +6144,14 @@ namespace MMR.Randomizer
                         foreach (var variant in limitedVariants)
                         {
                             // per actor/variant combo
-                            TrimSpecificActor(thisSceneData, problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom, variant: variant);
+                            TrimSpecificActor(thisSceneData, problemActor, roomActors, candidates, roomIsClearPuzzleRoom, variant: variant);
                         }
                     }
                 }
             } // end for trim restricted actors
         }
 
-        public static void TrimSpecificActor(SceneEnemizerData thisSceneData, Actor actorType, List<Actor> roomActors, List<Actor> roomFreeActors,
+        public static void TrimSpecificActor(SceneEnemizerData thisSceneData, Actor actorType, List<Actor> roomActors, List<Actor> replacementCandidates,
                                            bool roomIsClearPuzzleRoom, int variant = -1)
         {
             /// actors with maximum counts have their extras trimmed off, replaced with empty, or free/extra actors, depending on randomRate
@@ -6213,10 +6216,10 @@ namespace MMR.Randomizer
 
                 // if the actor being trimmed is a free actor, remove from possible replacements
                 // TODO this should really already happen before we get this far? can we assume we will never cross dip?
-                var freeActorSearch = roomFreeActors.Find(act => act.ActorId == actorType.ActorId);
+                var freeActorSearch = replacementCandidates.Find(act => act.ActorId == actorType.ActorId);
                 if (freeActorSearch != null)
                 {
-                    roomFreeActors.Remove(freeActorSearch);
+                    replacementCandidates.Remove(freeActorSearch);
                 }
 
                 Debug.Assert(roomActors.Count > 0);
@@ -6224,7 +6227,7 @@ namespace MMR.Randomizer
                 // kill the rest since max is reached
                 // we want to limit replacements here above the per-actor function to save re-doing it
                 var blockedActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(roomActors[0].OldActorEnum);
-                List<Actor> acceptableReplacementFreeActors = roomFreeActors.FindAll(a => !blockedActors.Contains(a.ActorEnum)).ToList();
+                List<Actor> acceptableReplacementFreeActors = replacementCandidates.FindAll(a => !blockedActors.Contains(a.ActorEnum)).ToList();
                 foreach (var enemy in trimCandidates) // for all specific actor in actorType
                 {
                     var enemyIndex = roomActors.IndexOf(enemy);

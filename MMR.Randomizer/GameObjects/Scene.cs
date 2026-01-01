@@ -477,7 +477,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.Dexihand)] // if it grabs you as you fall into a grotto hole it can hardlock
         [EnemizerSceneEnemyReplacementBlock(Actor.Monkey,
             Actor.PalaceGuardDeku)] // if placed behind regular guards, they will pop up to look at you and the other guards will also rise
-        [EnemizerSceneEnemyReplacementBlock(Actor.BronzeBoulder,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BronzeBoulder,
             Actor.GrottoHole)] // third one in the west side can get exit blocked by teh floating platform
         [EnemizerSceneEnemyReplacementBlock(Actor.SquareSign,
             Actor.En_Ani, Actor.GaboraBlacksmith, Actor.BomberHideoutGuard, // their talk box is so big they can dialogue block the flower to go back to top of flowers
