@@ -391,6 +391,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.ZoraEgg)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SpikedMine,
             Actor.LabFish)] // crash unknown reason, float math error
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SkulltulaDummy, // replacement for ceiling mines, so water mines are different
+            Actor.LargeBreakableIceDrop)] // blocks the hit switch
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PirateTelescope,
             Actor.ClocktowerGearsAndOrgan)] // can block the player into the wall
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.WoodenBarrel,
