@@ -203,8 +203,9 @@ namespace MMR.Randomizer
 
             var settingsPrompt = "If you get this error message, please submit to Isghj: \n Settings file, and this seed:";
 
-            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.PiratesFortressRooms && thisSceneData.Actors.Any(a => a.ActorEnum == GameObjects.Actor.PirateColonel))
+            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.PiratesFortressRooms && thisSceneData.Actors.Any(a => a.OldActorEnum == GameObjects.Actor.PirateColonel))
             {
+                var pirates = thisSceneData.Actors.FindAll(act => act.OldActorEnum == GameObjects.Actor.PirateColonel);
                 throw new Exception("Pirates should not be randomized.\n" + settingsPrompt); // jan 2026
             }
             
