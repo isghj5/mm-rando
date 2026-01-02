@@ -2290,9 +2290,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(158)]
         [ActorInstanceSize(0x198)]
-        [ObjectListIndex(0x2)] // pick up rock version
-        //[ObjectListIndex(0x1F6)] // NEVER USED IN MM, damn thing lied to me, even the boulders are object 2
-        // it actually uses one of two objects: gameplay_field or object_ishi, which is only in SSHouse
+        // dual object: most uses 2, except for swamp spiderhouse small rocks
+        [ObjectListIndex(0x2)]
         [ForbidFromScene(Scene.InvertedStoneTower, Scene.SwampSpiderHouse)] // we want the bugs, I think its too much to ask players to leave to get bugs
         [CheckRestricted(Scene.TerminaField, 0x2844, Item.CollectableTerminaFieldRock1)]
         [CheckRestricted(Scene.TerminaField, 0x2A44, Item.CollectableTerminaFieldRock2)] // wrong?
@@ -2304,8 +2303,6 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.TerminaField, 0x1A24, Item.CollectableTerminaFieldRock8)]
         [CheckRestricted(Scene.TerminaField, 0x1C24, Item.CollectableTerminaFieldRock9)]
         [CheckRestricted(Scene.RomaniRanch, 0x3C, Item.CollectableRomaniRanchInvisibleItem6)]
-        [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT,
-            Item.CollectableMountainVillageWinterMountainVillageSpringItem1)]
         //[CheckRestricted(Scene.SwampSpiderHouse, variant: ActorConst.ANY_VARIANT, // this is handled in enemies.cs, search "BugRock"
         //    Item.AllSoilPositions, ...)]
         [CheckRestricted(Scene.GreatBayCoast, variant: 0x32,
@@ -2329,19 +2326,22 @@ namespace MMR.Randomizer.GameObjects
             0x00A0, 0x0040, 0x1F0, // mountain spring
             0x60, 0x80, // twin islands spring
             0x32, // cape
-                  // 0xA6, // swamp spiderhouse, this one uses object_ishi, fixed separately
+            // 0xA6, // swamp spiderhouse, this one uses object_ishi, fixed separately
+            0x01F0, // goron shrine
             0x1F2, 0xA1,
             0xFE21, 0xFE61, 0xFE71, 0xFE81, 0xFEB1, 0xFE01, // non vanilla silver boulder, for more variety
             0xFE20, 0xFE60, 0xFE70, 0xFE80, 0xFEB0, 0xFE00 // non vanilla small rock, for more variety
-            )]
+        )]
         [WaterBottomVariants(0xFE01, // silver boulder
             0x30, // silver coast
             0x32, // cape
-            0xFEF0)] // regular small rock (like in pinaccle)
+            0xFEF0
+        )] // regular small rock (like in pinaccle)
         [WallVariants(0xFF04, 0xFF74, 0xFFA4, 0xFFB4, // non vanilla good drop tables
             0xFF05, 0xFF75, 0xFFA5, 0xFFB5, // wall boulders?
             0x2A44, 0x2014, 0x2214, 0x2414, 0x2C14, 0x1E14, 0x1A24, 0x1C24, // tf wall
-            0x4814, 0x4214, 0x4424, 0x4014, 0x4624)] // ikana graveyard
+            0x4814, 0x4214, 0x4424, 0x4014, 0x4624 // ikana graveyard
+        )] 
         [VariantsWithRoomMax(max: 3, variant: 0xFF00, 0xFF70, 0xFFA0, 0xFFB0,
             0x4814, 0x4214, 0x4424, 0x4014, 0x4624)]
         [BlockingVariants(0xA1, 0xFE01, 0x31)] // boulder types
@@ -3068,6 +3068,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(233)]
         [ObjectListIndex(0x2)]
         [CheckRestricted(Scene.RoadToIkana, variant: ActorConst.ANY_VARIANT, Item.ChestToIkanaGrotto)]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT,
+            Item.CollectableMountainVillageWinterMountainVillageSpringItem1)] // stair item, rocks under the stairs
         // parameters unknown
         [WaterBottomVariants(0)]
         [GroundVariants(0xFF)]
