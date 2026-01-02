@@ -2147,7 +2147,8 @@ namespace MMR.UI.Forms
                 CosmeticSettings = new CosmeticSettings(),
             };
 
-            tSeed.Text = Math.Abs(Environment.TickCount).ToString();
+            //tSeed.Text = Math.Abs(Environment.TickCount).ToString(); // old, poor range, keeps opening with similar range seeds
+            tSeed.Text = (new Random(Environment.TickCount)).Next(2147483647).ToString();
 
             tbUserLogic.Enabled = false;
             bLoadLogic.Enabled = false;
