@@ -4410,19 +4410,23 @@ namespace MMR.Randomizer.GameObjects
         [FileID(351)]
         [ObjectListIndex(0xBB)]
         // type: 0x3000: 0 is path, 1 air 2 water
+        // for patying, 0x7F is path
+        // for ceiling, 0x3f is link count, height from ceiling
         [WaterBottomVariants(0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x200B, 0x200C, 0x200D)]
-        [CeilingVariants(0x1014, 0x1016, 0x1017, 0x1018,
-            0x101E, 0x100D, 0x1011, 0x1019
+        [CeilingVariants(
+            0x100C, 0x100D, 0x100F, 0x1013, 0x1011, 0x1012, // istt
+            0x1014, 0x1016, 0x1017, 0x1018, // ikana castle (also d)
+            0x101E, 0x1019 // non-vanilla? when did I add this?
             )] // loads more, think there are flags here
-        [PerchingVariants(0x1012)] // non-vanilla link speed 12, attempting to perch
-        [PathingVariants(0x0000)] // pathing type? requires us to introduce paths which might confuse our rando tho
+        [PerchingVariants(0x100A)] // non-vanilla link speed A, attempting to perch
+        [PathingVariants(0x0000)] // rolls along the path, was likely meant to roll through a water current in vanilla
         [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
         // if I had a hanging from cieling thing like spiders this would work fine
-        //[WallVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
+        [WallVariants(0x1001, 0x1102)]
         [UnkillableAllVariants] // actorcat PROP, not detected as enemy
-        [FlyingToGroundHeightAdjustment(300)]
+        //[FlyingToGroundHeightAdjustment(300)]
         [VariantsWithRoomMax(max: 0, 0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // until I can get cieling detection modification, this is weird
-        [PlacementWeight(95)]
+        [PlacementWeight(80)]
         [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard)] // bug: getting placed on bats
         //[ForbidFromScene(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         SpikedMine = 0x185, // Obj_Mine
