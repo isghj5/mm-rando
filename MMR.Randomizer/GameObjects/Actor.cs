@@ -7418,8 +7418,9 @@ namespace MMR.Randomizer.GameObjects
             Item.HeartPieceTerminaBusinessScrub,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot1, Item.CollectableAstralObservatoryObservatoryBombersHideoutPot2,
             Item.CollectableAstralObservatoryObservatoryBombersHideoutPot3,
-            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2
-            )]
+            Item.CollectableAstralObservatorySewerPot1, Item.CollectableAstralObservatorySewerPot2,
+            Item.NotebookMeetBombers, Item.NotebookLearnBombersCode
+        )] // duplicated for all the different bombers
         [GroundVariants(0x0)]
         [OnlyOneActorPerRoom] // honestly tempted to not re-randomize him at all, kinda empty and does nothing
         [PlacementWeight(75)]

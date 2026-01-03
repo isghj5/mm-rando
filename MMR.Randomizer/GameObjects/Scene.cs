@@ -1143,7 +1143,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.Peahat, // small peahat can instant kill 1 heart hero
             Actor.LikeLike)] // If you start with one heart this can be a softlock
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BombersYouChase,
-            Actor.UnusedStoneTowerStoneElevator)]//, Actor.UnusedStoneTowerPlatform)]
+            Actor.UnusedStoneTowerStoneElevator)]
         [ActorizerSceneCreditsActor(Actor.CreditsBombShopMan, Actor.BombShopLady)]
         [EnemizerSceneBlockSensitive(Actor.GateSoldier, -1)]
         WestClockTown = 0x6A, // wct
