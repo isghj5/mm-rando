@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Immutable;
 
 // dotnet 4.5 req
 using System.Runtime.CompilerServices;
@@ -183,7 +184,8 @@ namespace MMR.Randomizer
                                 .ToList();
 
             // because this list needs to be re-evaluated per scene, start smaller here once
-            FreeCandidateList = freeCandidates.Select(act => new Actor(act, InjectedActors.Find(i => i.ActorId == (int) act))).ToList();
+            FreeCandidateList = freeCandidates.Select(act => new Actor(act, InjectedActors.Find(i => i.ActorId == (int)act))).ToList();
+
 
             var freeOnlyCandidates = new List<GameObjects.Actor>();
             if (ACTORSENABLED)
@@ -607,6 +609,7 @@ namespace MMR.Randomizer
 
         #region Read and Write Scene Actors and Objects
 
+        // todo: this function is big and complex enough to break apart
         public static void GetSceneEnemyActors(SceneEnemizerData thisSceneData)
         {
             /// Gets all actors in a scene, that we want to randomize
@@ -785,9 +788,8 @@ namespace MMR.Randomizer
                                 log.AppendLine($" in scene [{scene.SceneEnum}]m[{mapIndex}]r[{mapActor.RoomActorIndex}]" +
                                     $" common scoopable actor: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}] skipped the restriction: " +
                                     itemText);
-                            }// */
-                            else
-                            if (itemRestriction != null)
+                            }
+                            else if (itemRestriction != null)
                             {
 
                                 #if DEBUG
@@ -801,7 +803,7 @@ namespace MMR.Randomizer
                                 continue;
                             }
 
-                            if (matchingStandaloneActor.Variants.Contains(mapActor.OldVariant) == false)
+                            if ( ! matchingStandaloneActor.SortedVariants.Any(subArray => subArray.Contains(mapActor.OldVariant)))
                             {
                                 log.AppendLine($" in scene [{scene.SceneEnum}][{mapIndex}] standalone was skipped over: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}]");
                                 continue; // non valid
@@ -6374,7 +6376,7 @@ namespace MMR.Randomizer
                                                                 || (sceneIsField && act.ObjectId == (int)Scene.SceneSpecialObject.FieldKeep)
                                                                 || (sceneIsDungeon && act.ObjectId == (int)Scene.SceneSpecialObject.DungeonKeep))
                                                            && !(act.BlockedScenes != null && act.BlockedScenes.Contains(scene.SceneEnum))
-                                                          ).ToList();
+                                                          ).ToList(); 
 
             // special cases: these actors have dual objects where one object is a special object
             // we have to add special versions for replacmeent to match the special object variants
@@ -6412,6 +6414,13 @@ namespace MMR.Randomizer
                     iceblock.SortedVariants[(int)GameObjects.ActorType.Ground - 1] = newVariants;
 
                 }
+            }
+
+            // issue: so far sceneFreeActors uses reference copy to the global FreeCandidatesList, changes to each actor affect global, not cool
+            var convertedList = new List<Actor>(sceneFreeActors.Count);
+            for (int a = 0; a < sceneFreeActors.Count; a++)
+            {
+                convertedList.Add(sceneFreeActors[a].CopyActor());
             }
 
             thisSceneData.SceneFreeActors = sceneFreeActors;
@@ -7521,7 +7530,6 @@ namespace MMR.Randomizer
                                 var freeCandidateSearch = FreeCandidateList.Find(act => act.ActorId == injectedActor.ActorId);
                                 if (freeCandidateSearch == null)
                                 {
-                                    //FreeCandidateList.Add(replacementEnemySearch);
                                     FreeCandidateList.Add( new Actor(injectedActor, filename) );
                                 }
                                 else
