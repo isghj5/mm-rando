@@ -1525,13 +1525,14 @@ namespace MMR.Randomizer
 
             #if DEBUG
             // testing SFX
-            var debugSFX = SoundEffect.GBTStopCockRotate;
+            var debugSFX = SoundEffect.KotakeSleepSnore;
             Debug.WriteLine(debugSFX.ToString() + " is a debug sfx");
             // intro splash summon used to be used, not sure what I named it
             shuffledSoundEffects[SoundEffect.CuccoMorning] = debugSFX; // morning chicken crow
-            //shuffledSoundEffects[replacableSounds[29]] = debugSFX; // low health beep, was moved cannot set here
-            shuffledSoundEffects[SoundEffect.MenuSelect] = debugSFX; 
+            ////shuffledSoundEffects[replacableSounds[29]] = debugSFX; // low health beep, was moved cannot set here
+            shuffledSoundEffects[SoundEffect.FileSelectCursor] = debugSFX;
             shuffledSoundEffects[SoundEffect.DogBark] = debugSFX; // dog
+            shuffledSoundEffects[SoundEffect.ChuchuJumpAttack] = debugSFX; // this one is sometimes quiet for sfx, reason not known yet
             #endif
 
             shuffledSoundEffects.Remove(SoundEffect.LowHealthBeep); // handled in the WriteLowHealthSound function
