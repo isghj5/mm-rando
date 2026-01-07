@@ -495,13 +495,17 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Looping)]
         BoatMotorHum = 0x2154,
 
-        [Tags(Long)]
+        [Replacable(0xFC60C6)]
+        [ReplacableByTags(Long)]
+        [Tags(Long)] // NA_SE_EV_DORA_L
         GongLarge = 0x2156,
 
         [Tags(Short, LowHpBeep)]
         LogBounce = 0x2157,
 
-        [Tags(Short)]
+        [Replacable(0xFC60D2)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)] // NA_SE_EV_DORA_S
         GongSmall = 0x215A,
 
         [Tags(Long)]
@@ -776,13 +780,39 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         OOTTailpasaranDies = 0x3066,
 
-        [Tags(Short)]
+        // movement
+        [Replacable(0xD20316)] // NA_SE_EN_STALTU_DOWN
+        [ReplacableByTags(Short)]
+        [Tags(Short)] // the actual descent sound in-game is a chain of them
         SkulltulaDescend = 0x3068,
+
+        // movement
+        [Replacable(0xD20312)] // NA_SE_EN_STALTU_UP
+        [ReplacableByTags(Short, Long)]
         [Tags(Long)]
-        SkulltulaQuiver = 0x306A, // thinking about turning around and looking behind themselves
+        SkulltulaClimb = 0x3069, // climbing back up because player left
+
+        // quiet
+        [Replacable(0xDE85DE)] // NA_SE_EN_STALTU_LAUGH
+        [ReplacableByTags(Short)]
+        [Tags(Short)] // medium
+        CursedSkulltulaManSad = 0x306A, // thinking about turning around and looking behind themselves, this is NOT in the attack Skulltula in this game
+
+        [Replacable(0xD209B6)] // NA_SE_EN_STALTU_DAMAGE
+        [ReplacableByTags(Short, Long)]
         [Tags(Short)]
-        SkulltulaDamage = 0x306B,
-        // dies is reused
+        SkulltulaDamage = 0x306B, // NA_SE_EN_STALTU_DAMAGE
+
+        [Replacable(0xD1FE42)] // NA_SE_EN_STALTU_ROLL
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        SkulltulaRoll = 0x3084, // turning around
+
+        // moved to to the rest of th skulltula 
+        [Replacable(0xD20A4E)] // NA_SE_EN_STALTU_DEAD
+        [ReplacableByTags(Short, Long)]
+        [Tags(Long)]
+        SkulltulaDead = 0x3085,
 
         [Tags(Short)]
         TektiteDamage = 0x306D,
@@ -817,8 +847,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         DekuFaint = 0x3082,
 
-        [Tags(Short)]
-        SkulltulaDead = 0x3085,
+        // SkulltulaDead = 0x3085, // moved up to the rest of skulltula
 
         [Tags(Short)]
         MajoraGrowHead = 0x3088,
@@ -869,10 +898,11 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Looping)]
         WizrobeCloneSpawningDiscord = 0x30A6, // starting phase 2
 
+        // in unused code in the game, you can hit his ghosts with deku nuts to despawn them, they make this sfx
         [Replacable(0xEB16D2)]
         [ReplacableByTags(Long)]
         [Tags(Long)]
-        WizrobeLaugh = 0x30A7,
+        WizrobeLaughGhostDespawn = 0x30A7, // sounds like SM64 boo laugh
 
         [Replacable(0xEB0A66)]
         [ReplacableByTags(Long)]
@@ -888,6 +918,11 @@ namespace MMR.Randomizer.Models.SoundEffects
         [ReplacableByTags(Long)]
         [Tags(Long)]
         WizrobeDies = 0x30AA,
+
+        [Replacable(0xEB4A9E)] // NA_SE_EN_WIZ_LAUGH2, in En_Wiz_Fire
+        [ReplacableByTags(Long)]
+        [Tags(Long)]
+        WizrobeLaughReal = 0x30B0, // his actual maniac laugh you hear
 
         // big octo
 
@@ -1164,20 +1199,27 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         FrogVoice2 = 0x31A1,
 
-        //[Tags(Looping)]
-        //FreezardIceBreath = 0x31A4, // our code does not handle the automatic looping of this sample
+        [Replacable(0xDA65B2, 0xDA69BA)]
+        [ReplacableByTags(Looping)]
+        [Tags(Looping)]
+        FreezardIceBreath = 0x31A4,
 
+        [Replacable(0xDA5FE2)]
+        [ReplacableByTags(Short, Long)]
         [Tags(Short, LowHpBeep)]
         FreezardDamage = 0x31A5,
 
+        [Replacable(0xDA5DE2, 0xDA5E76, 0xDA6042, 0xDA60A6)]
+        [ReplacableByTags(Short, Long)]
         [Tags(Long)]
         FreezardDeath = 0x31A6,
 
         [Tags(Short)]
         DekuHurry = 0x31A7,
 
-        [Tags(Short)]
-        DekuKing = 0x31A8,
+        [ReplacableByTags(Short,Long)]
+        [Tags(Long)]
+        DekuKingTalk = 0x31A8,
 
         [Tags(Short)]
         GoronSleepy = 0x31AD,
@@ -1225,6 +1267,11 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         //[Tags(Long)]
         //UnknownBugSfx = 0x31F2,
+
+        [Replacable(0xEC618A)] // NA_SE_EN_KINGNUTS_DAMAGE
+        [ReplacableByTags(Long, Short)]
+        [Tags(Long)]
+        DekuKingBounce = 0x31F6, // princess attack
 
         // 0x31F9, 0x31FA leever sfx moved up with the rest of leever sfx
 
@@ -1472,6 +1519,11 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(SystemSound, Short, LowHpBeep)]
         [ReplacableByTags(Short)]
         GetSmallItem = 0x4024,
+
+        [Replacable(0xED05EA)] // NA_SE_SY_FOUND
+        [ReplacableByTags(Long, Short)]
+        [Tags(Long)] // tempted to leave this out its a bit annoying
+        DekuGuardWhistle = 0x402C, // !
 
         [Replacable(0x00C86DE2, 0x00C7E8EA, 0x00C7EFD2, 0x00C80A62, 0x00C841EE, 0x00C84242, 0xC843BA, 0x00C84456, 0x00C8453E, 0xC8458A, 0x00C846FE, 0x00C84ABE, 0x00C86DE2, 0xC844DE, 0xC84A3E, 0xC8CE2A, 0xC84B3E, 0xC81312, 0xC7F92E)]
         [Tags(SystemSound)]
