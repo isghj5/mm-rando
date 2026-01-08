@@ -69,7 +69,15 @@ namespace MMR.Randomizer.Models.SoundEffects
 
             foreach (var address in addresses)
             {
-                ReadWriteUtils.WriteToROM(address, newValue);
+                try
+                {
+                    ReadWriteUtils.WriteToROM(address, newValue);
+                }
+                catch (ObjectDisposedException AOORE) // the file was moved, likely actorizer, ignore
+                {
+                    System.Diagnostics.Debug.WriteLine($"SFX FAILED TO WRITE: [{source}] -> [{newSound}] at address [0x{address.ToString("X")}]");
+                    return false; 
+                }
             }
 
             return true;

@@ -5413,6 +5413,7 @@ namespace MMR.Randomizer
 
                 }
             }
+            //claimedSwitchFlags.Add(123); // debug
             if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.Grottos)
             {
                 // grotto have an extra list of switch flags:
@@ -5511,6 +5512,11 @@ namespace MMR.Randomizer
                         randomChest.ActorIdFlags |= 0x2000; // do not convert z rotation, we need it for chests
                         randomChest.Rotation.y |= 0x7F; // set cutscene value to -1 to allow the chest to appear without a working cutscene
                     }
+                    for (int c = 0; c < roomChests.Count; c++)
+                    {
+                        var chest = roomChests[c];
+                        chest.ActorIdFlags |= 0x2000; // set flag to prevent Z rotation conversion
+                    }
                 }
             }
 
@@ -5570,14 +5576,14 @@ namespace MMR.Randomizer
                 if (usableSwitches.Contains(switchFlags)) // not detected in vanilla, leave as is and claim
                 {
                     usableSwitches.Remove(switchFlags);
-                    log.AppendLine($" = i[{actorIndex}][{actor.ActorEnum}] had switch flags which were not detect as used, and claimed switch [{switchFlags}]=");
+                    log.AppendLine($" = i[{actor.RoomActorIndex}][{actor.ActorEnum}] had switch flags which were not detect as used, and claimed switch [{switchFlags}]=");
                 }
                 else // we have switch flag and we have a collision, we need to change it
                 {
                     var newSwitch = usableSwitches[0];
                     ActorUtils.SetActorSwitchFlags(actor, (short) newSwitch);
                     usableSwitches.RemoveAt(0);
-                    log.AppendLine($" + i[{actorIndex}][{actor.ActorEnum}] had switch flags modified to [{newSwitch}] to avoid conflicts with others +");
+                    log.AppendLine($" + i[{actor.RoomActorIndex}][{actor.ActorEnum}] had switch flags modified to [{newSwitch}] to avoid conflicts with others +");
                 }
             }
         }
@@ -5608,6 +5614,7 @@ namespace MMR.Randomizer
             var usableTreasureFlags = new List<int>();
             usableTreasureFlags.AddRange(Enumerable.Range(0, 31));
             usableTreasureFlags.RemoveAll(tflag => claimedTreasureFlags.Contains(tflag));
+            //usableTreasureFlags.Remove(0x1D); // testing
             usableTreasureFlags.Reverse(); // we want to start at 31 and decend, under the assumption that they always used lower values
             // Because of limited treasure flags, if we run out, just reuse the ones only our new actors are using
             var copyOfUsable = usableTreasureFlags.ToList();
@@ -5627,7 +5634,7 @@ namespace MMR.Randomizer
                 if (usableTreasureFlags.Contains(treasureFlags))
                 {
                     usableTreasureFlags.Remove(treasureFlags);
-                    log.AppendLine($" +++ [{actorIndex}][{actor.ActorEnum}] had treasure flags that didn't collide, leaving alone with switch [{treasureFlags}] +++");
+                    log.AppendLine($" +++ [{actor.RoomActorIndex}][{actor.ActorEnum}] had treasure flags that didn't collide, leaving alone with switch [{treasureFlags}] +++");
 
                 }
                 else // we have switch flag and we have a collision, we need to change it
@@ -5635,7 +5642,7 @@ namespace MMR.Randomizer
                     var newSwitch = usableTreasureFlags[0];
                     ActorUtils.SetActorTreasureFlags(actor, (short)newSwitch);
                     usableTreasureFlags.Remove(newSwitch);
-                    log.AppendLine($" +++ [{actorIndex}][{actor.ActorEnum}] had treasure flags modified to [{newSwitch}] +++");
+                    log.AppendLine($" +++ [{actor.RoomActorIndex}][{actor.ActorEnum}] had treasure flags modified to [{newSwitch}] +++");
                 }
             }
         }
@@ -5759,7 +5766,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Peahat)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.TreasureChest)) continue;
                 if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Dodongo, GameObjects.Actor.PirateColonel)) continue; // still broken
                 if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.Freezard)) continue;
@@ -7189,7 +7196,7 @@ namespace MMR.Randomizer
             {
                 var actor = thisSceneData.Actors[a];
                 string dsize = actor.DynaLoad.poly > 0 ? $" dyn: [{actor.DynaLoad.poly}/{actor.DynaLoad.vert}]" : "";
-                var actorNameData = $"  Old actor:[{thisSceneData.Scene.SceneEnum}]r[{actor.Room.ToString("D2")}]n[{actor.OldName}]v[0x{actor.OldVariant.ToString("X4")}]";
+                var actorNameData = $"  Old actor:[{thisSceneData.Scene.SceneEnum}]r[{actor.Room.ToString("D2")}]n[{actor.RoomActorIndex.ToString("D3")}]a[{actor.OldName}]v[0x{actor.OldVariant.ToString("X4")}]";
                 WriteOutput(actorNameData +
                     $" replaced by new actor: [{actor.Variants[0].ToString("X4")}]" +
                     $"[{actor.Name}]"
@@ -7955,7 +7962,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 95.0\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 96.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

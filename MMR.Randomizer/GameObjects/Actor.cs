@@ -73,16 +73,25 @@ namespace MMR.Randomizer.GameObjects
             Item.ChestEastClockTownSilverRupee)]
         [CheckRestricted(Scene.SouthClockTown, variant: ActorConst.ANY_VARIANT, Item.ChestSouthClockTownPurpleRupee, Item.ChestSouthClockTownRedRupee)]
         // these three are from inverted stone tower, however when placed in TF, 2/3 were invisible chests
+        // switch flags are on z rotation
         // type: 0x7 seems to be enemy clear, also type 1, 0x5 is woodentype, 0xC is switch activated
         // 0xF000 is type, 0x001F are chest flags, 0x0FE0 would be the item then
-        // gomess is 0x27BE, which does not spawn util you kill him, so obviously the top byte is NOT that simple in MM, snowhead is 27BE
-        // dont use CM as reference, rando changes how the chests work for item rando to work
-        [GroundVariants(0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
+        // Zoey changed how typ works, its now two separate nibles:
+        // ss aa
+        // size: 0 small wooden, 1 small gold, 2 large gold, 3 boss key
+        // appearance; 0 always present, 1 invisible, 2 appears when room is clear, 3 appears when switch is set
+        // 5 becomes small gold hidden, 
+
+
+        [GroundVariants(0x57BE, 0x59DD, 0x56BF,  0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, //0x5A1E,
             0x5080, // road to ikana
             0x50CA, // east clock town
-            0x50A1, // south clock town
-                    //0xBAEE, // Invisible with switch activation, this one should be rare (0x10--(large gold) + 0x--11(spawn on switch clear))
+            //0x50A1, // south clock town, was broken in tf
+            //0x70A3, // bat cave
+            //0x9180, //0x1180, // grave, issue
+            //0x5FDE, // issue chest
+            //0xBAEE, // Invisible with switch activation, this one should be rare (0x10--(large gold) + 0x--11(spawn on switch clear))
             0x0AFB, 0x099C)] // two free, the rest are gold invisible
         [WaterBottomVariants(0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, //0x5A1E,

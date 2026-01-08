@@ -35,7 +35,7 @@ namespace MMR.Randomizer.Utils
             #if DEBUG
             string settingstring = $"{setting} + DEBUG BUILD\x00";
             #else
-            string settingstring = $"{setting} + Isghj's Actorizer Test 95.0\x00";
+            string settingstring = $"{setting} + Isghj's Actorizer Test 96.0\x00";
             #endif
             int f = GetFileIndexForWriting(veraddr);
             var file = RomData.MMFileList[f];
@@ -113,6 +113,7 @@ namespace MMR.Randomizer.Utils
             {
                 mmFileList = RomData.MMFileList;
             }
+            if (fileIndex == -1) return;
             var file = mmFileList[fileIndex];
             if (file.Data == null || file.Data.Length == 0)
             {
@@ -148,6 +149,8 @@ namespace MMR.Randomizer.Utils
         public static int GetFileIndexForWriting(int rAddr)
         {
             int index = AddrToFile(rAddr);
+            if (index == -1)
+                throw new ObjectDisposedException($"Cannot find file for writing");
             CheckCompressed(index);
             if (RomData.MMFileList[index].IsReadOnly)
             {
@@ -155,6 +158,8 @@ namespace MMR.Randomizer.Utils
             }
             return index;
         }
+
+
 
         public static int ByteswapROM(string filename)
         {
