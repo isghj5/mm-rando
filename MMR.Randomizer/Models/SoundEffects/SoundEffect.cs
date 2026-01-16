@@ -1268,7 +1268,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         //[Tags(Long)]
         //UnknownBugSfx = 0x31F2,
 
-        [Replacable(0xEC618A)] // NA_SE_EN_KINGNUTS_DAMAGE
+        [Replacable(0xEBCBBA)] // NA_SE_EN_KINGNUTS_DAMAGE
         [ReplacableByTags(Long, Short)]
         [Tags(Long)]
         DekuKingBounce = 0x31F6, // princess attack
