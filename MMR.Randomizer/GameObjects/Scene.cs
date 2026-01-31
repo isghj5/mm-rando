@@ -394,6 +394,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SkulltulaDummy, // replacement for ceiling mines, so water mines are different
             Actor.LargeBreakableIceDrop)] // blocks the hit switch
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PirateTelescope,
+            Actor.WoodfallTempleWoodenFlower, // can void warp the player on entrance
             Actor.ClocktowerGearsAndOrgan)] // can block the player into the wall
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.WoodenBarrel,
             Actor.TreasureChest)] // can block the player into the wall

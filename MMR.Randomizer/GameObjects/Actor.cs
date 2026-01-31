@@ -4864,9 +4864,10 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         // this could work but is a headache, we need to make sure all checks that are reachable by deku and nut are included...
         //[CheckRestricted(Scene.DekuPalace, ActorConst.ANY_VARIANT,Item.MaskScents)]
-        [CheckRestricted(Scene.Woodfall, ActorConst.ANY_VARIANT, Item.ChestWoodfallBlueRupee, Item.ChestWoodfallRedRupee,
-            Item.CollectableWoodfallItem1, Item.CollectableWoodfallPot1, Item.CollectableWoodfallPot2)]
+        [CheckRestricted(Scene.Woodfall, ActorConst.ANY_VARIANT,
+            Item.ChestWoodfallBlueRupee, Item.ChestWoodfallRedRupee, Item.CollectableWoodfallItem1, Item.CollectableWoodfallPot1, Item.CollectableWoodfallPot2)]
         [ForbidFromScene(Scene.SouthernSwamp, // no easy way to identify if we need deku hopping
+            Scene.SouthernSwampClear, // debugging: we want to try to receate an enemizer presenting bug ZZZZ
             Scene.DekuPalace)] // see above
         //[RemovalChance(15)] I want this for woodfall only not all areas, hmm
         Lilypad = 0x1B9, // Bg_Lotus

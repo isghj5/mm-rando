@@ -5776,7 +5776,8 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.RegularZora, GameObjects.Actor.DragonFly)) continue;
                 if (TestHardSetObject(GameObjects.Scene.OceanSpiderHouse, GameObjects.Actor.Seth1, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.GoronKid, GameObjects.Actor.LotteryKiosk)) continue;
+                if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.En_Owl, GameObjects.Actor.UnusedStoneTowerStoneElevator)) continue;
+                if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.RegularFrogs, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.Torch, GameObjects.Actor.LostWoodsCutsceneTrees)) continue;
                 if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.CeilingSpawner, GameObjects.Actor.GoldSkulltula)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Gorman, GameObjects.Actor.HookshotWallAndPillar)) continue;
