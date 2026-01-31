@@ -937,6 +937,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1444)]
         [SceneInternalId(0x59)]
+        [EnemizerSceneBlockSensitive(Actor.ClayPot)] // realy big actors (like wooden flower) can block the chests
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.HookshotWallAndPillar,
             Actor.WoodfallTempleWoodenFlower)] // can block the chests ABOVE IT on the terrace
         InvertedStoneTower = 0x56, // NOT TEMPLE
