@@ -66,36 +66,33 @@ namespace MMR.Randomizer.Attributes
             return location != Item.SongOath && (!location.Region(itemList).HasValue || !_templeRegions.Contains(location.Region(itemList).Value));
         }
 
-        private static Dictionary<RegionArea, Item> RegionAreaDungeonEntrance = new Dictionary<RegionArea, Item>
-        {
-            { RegionArea.Swamp, Item.AreaWoodFallTempleAccess },
-            { RegionArea.Mountain, Item.AreaSnowheadTempleAccess },
-            { RegionArea.Ocean, Item.AreaGreatBayTempleAccess },
-            { RegionArea.Canyon, Item.AreaInvertedStoneTowerTempleAccess },
-        };
-
-        private static Dictionary<Item, RegionArea> DungeonEntranceRegionArea = RegionAreaDungeonEntrance.ToDictionary(x => x.Value, x => x.Key);
-
-        private static RegionArea? GetNewRegionArea(Item check, ItemList itemList)
-        {
-            var regionArea = check.RegionArea(itemList);
-            if (regionArea.HasValue && RegionAreaDungeonEntrance.ContainsKey(regionArea.Value))
-            {
-                var dungeonEntranceToFind = RegionAreaDungeonEntrance[regionArea.Value];
-                var dungeonNewEntrance = itemList[dungeonEntranceToFind].NewLocation ?? dungeonEntranceToFind;
-                regionArea = DungeonEntranceRegionArea[dungeonNewEntrance];
-            }
-            return regionArea;
-        }
-
         private bool KeepWithinArea(Item item, Item location, ItemList itemList)
         {
-            return GetNewRegionArea(item, itemList) == (_templeRegions.Contains(location.Region(itemList)) ? GetNewRegionArea(location, itemList) : location.RegionArea(itemList));
+            return item.RegionAreaOfTemple(itemList) == (_templeRegions.Contains(location.Region(itemList)) ? location.RegionAreaOfTemple(itemList) : location.RegionArea(itemList));
         }
 
         private bool KeepFairyWithinArea(Item item, Item location, ItemList itemList)
         {
-            return item.RegionArea(itemList) == (_templeRegions.Contains(location.Region(itemList)) ? GetNewRegionArea(location, itemList) : location.RegionArea(itemList));
+            RegionArea fairyRegionArea;
+            switch (item.RegionArea(itemList))
+            {
+                case RegionArea.Swamp:
+                    fairyRegionArea = Item.FairySpinAttack.RegionArea(itemList).Value;
+                    break;
+                case RegionArea.Mountain:
+                    fairyRegionArea = Item.FairyDoubleMagic.RegionArea(itemList).Value;
+                    break;
+                case RegionArea.Ocean:
+                    fairyRegionArea = Item.FairyDoubleDefense.RegionArea(itemList).Value;
+                    break;
+                case RegionArea.Canyon:
+                    fairyRegionArea = Item.ItemFairySword.RegionArea(itemList).Value;
+                    break;
+                default:
+                    fairyRegionArea = RegionArea.None;
+                    break;
+            }
+            return fairyRegionArea == (_templeRegions.Contains(location.Region(itemList)) ? location.RegionAreaOfTemple(itemList) : location.RegionArea(itemList));
         }
     }
 }

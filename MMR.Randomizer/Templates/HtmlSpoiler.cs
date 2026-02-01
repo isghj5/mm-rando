@@ -68,19 +68,29 @@ namespace MMR.Randomizer.Templates
  if (spoiler.BlitzExtraItems.Any()) { 
 
             this.Write("<h2>Blitz Starting Items</h2>\r\n");
-         foreach (var remains in spoiler.BlitzExtraItems) {
+         foreach (var item in spoiler.BlitzExtraItems) {
 
             this.Write("<div>");
-            this.Write(this.ToStringHelper.ToStringWithCulture(remains.Name()));
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name()));
             this.Write("</div>\r\n");
  } 
  } 
- if (spoiler.DungeonEntrances.Any()) { 
+ if (spoiler.RandomStartingItems.Any()) { 
+
+            this.Write("<h2>Blitz Starting Items</h2>\r\n");
+         foreach (var item in spoiler.RandomStartingItems) {
+
+            this.Write("<div>");
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name()));
+            this.Write("</div>\r\n");
+ } 
+ } 
+ if (spoiler.Entrances.Any()) { 
 
             this.Write("<h2>Dungeon Entrance Replacements</h2>\r\n<table border=\"1\" class=\"item-replacement" +
                     "s\">\r\n    <tr>\r\n        <th>Entrance</th>\r\n        <th></th>\r\n        <th>New Des" +
                     "tination</th>\r\n    </tr>\r\n");
-         foreach (var dungeonEntrance in spoiler.DungeonEntrances) {
+         foreach (var dungeonEntrance in spoiler.Entrances) {
             this.Write("    <tr data-id=\"");
             this.Write(this.ToStringHelper.ToStringWithCulture(dungeonEntrance.DestinationId));
             this.Write("\" data-newlocationid=\"");

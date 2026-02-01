@@ -1,0 +1,391 @@
+[
+  {
+    "name": "Web.output_type",
+    "options": [
+      {
+        "name": "z64",
+        "text": ".z64 (N64/Emulator)",
+        "controls_visibility_setting": "Web.wad_file,Web.common_key_file,Web.common_key_string,Web.wad_channel_id,Web.wad_channel_title"
+      },
+      {
+        "name": "wad",
+        "text": ".wad (WiiVC)"
+      }
+    ],
+    "default": "z64",
+    "text": "Output Type",
+    "tooltip": "",
+    "type": "Radiobutton",
+    "shared": false,
+    "hide_when_disabled": true
+  },
+  {
+    "name": "Web.wad_file",
+    "options": [],
+    "default": "",
+    "text": "WAD File",
+    "tooltip": "Your original MM 1.2 NTSC-U / NTSC-J WAD file (.wad)",
+    "type": "Fileinput",
+    "shared": false,
+    "file_types": [
+      {
+        "name": "WAD Files",
+        "extensions": [ "wad" ]
+      },
+      {
+        "name": "All Files",
+        "extensions": [ "*" ]
+      }
+    ],
+    "hide_when_disabled": true
+  },
+  {
+    "name": "Web.common_key_file",
+    "options": [],
+    "default": "",
+    "text": "Wii Common Key File",
+    "tooltip": "The Wii Common Key is a copyrighted 32 character string needed for WAD encryption.<br>Google to find it! Do not ask on Discord!",
+    "type": "Fileinput",
+    "shared": false,
+    "file_types": [
+      {
+        "name": "BIN Files",
+        "extensions": [ "bin" ]
+      },
+      {
+        "name": "All Files",
+        "extensions": [ "*" ]
+      }
+    ],
+    "hide_when_disabled": true
+  },
+  {
+    "name": "Web.common_key_string",
+    "options": [],
+    "default": "",
+    "text": "Alternatively Enter Wii Common Key",
+    "tooltip": "The Wii Common Key is a copyrighted 32 character string needed for WAD encryption.<br>Google to find it! Do not ask on Discord!",
+    "type": "Textinput",
+    "shared": false,
+    "size": "full",
+    "max_length": 32,
+    "hide_when_disabled": true
+  },
+  {
+    "name": "Web.wad_channel_id",
+    "options": [],
+    "default": "NMRE",
+    "text": "WAD Channel ID",
+    "tooltip": "4 characters, should end with E to ensure Dolphin compatibility.<br>Note: If you have multiple MMR WAD files with different Channel IDs installed, the game can crash on a soft reset. Use a Title Deleter to remove old WADs.",
+    "type": "Textinput",
+    "shared": false,
+    "size": "small",
+    "max_length": 4,
+    "no_line_break": true,
+    "hide_when_disabled": true
+  },
+  {
+    "name": "Web.wad_channel_title",
+    "options": [],
+    "default": "MMRandomizer",
+    "text": "WAD Channel Title",
+    "tooltip": "20 characters max",
+    "type": "Textinput",
+    "shared": false,
+    "size": "medium",
+    "max_length": 20,
+    "hide_when_disabled": true
+  },
+  {
+    "name": "Web.presets",
+    "options": [],
+    "default": "[New Preset]",
+    "text": "",
+    "tooltip": "Select a setting preset to apply. You can also save your own presets to use at a later date.<br />Available Presets:<br />Season 6:<br />The competitive settings for MMR Standard Season 6.<br /><br />Blitz:<br />Blitz Settings - meant for highly competitive play and short seeds.<br /><br />Allsanity (in 3 different variants):<br />The hardest settings you can imagine. Everything is enabled, and different requirements make the difference. Use this if you want to test your limits and how deep your MM knowledge reaches.<br /><br />Advanced:<br />A challenge for those who want to prove their knowhow of glitches and strats. These settings expect you to get your items in unorthodox ways more often than not, and hints and mechanics might be more complex than you are used to.<br /><br />Classic:<br />Classic MMR Racing settings improved with modern conveniences. Relive season 1/2 settings with a twist.<br /><br />Modern:<br />The competitive settings for the previous MMR Standard season, but without a random starting mask.<br /><br />SG Live 2025:<br />The competitive settings for the SG Live 2025 tournament.",
+    "type": "Presetinput",
+    "shared": false
+  },
+  {
+    "name": "Web.generate_from_file",
+    "options": [
+      {
+        "name": true,
+        "text": "checked",
+        "controls_visibility_setting": "OutputSettings.GenerateSpoilerLog,GameplaySettings.DrawHash",
+        "controls_visibility_section": "preset_section",
+        "controls_visibility_tab": "main_tab,randomization_tab,gimmicks_tab,comfort_tab,shorten_cutscenes_tab"
+      },
+      {
+        "name": false,
+        "text": "unchecked",
+        "controls_visibility_setting": "Web.repatch_cosmetics,OutputSettings.InputROMFilename,Web.output_type,Web.wad_file,Web.common_key_file,Web.common_key_string,Web.wad_channel_id,Web.wad_channel_title",
+        "controls_visibility_tab": "cosmetics_tab"
+      }
+    ],
+    "default": false,
+    "text": "Generate From Patch File",
+    "tooltip": "",
+    "type": "Checkbutton",
+    "shared": false
+  },
+  {
+    "name": "Web.patch_file",
+    "options": [],
+    "default": "",
+    "text": "Patch File",
+    "tooltip": "",
+    "type": "Fileinput",
+    "shared": false,
+    "file_types": [
+      {
+        "name": "Patch File",
+        "extensions": [ "mmr" ]
+      },
+      {
+        "name": "All Files",
+        "extensions": [ "*" ]
+      }
+    ]
+  },
+  {
+    "name": "Web.repatch_cosmetics",
+    "options": [
+      {
+        "name": true,
+        "text": "checked"
+      },
+      {
+        "name": false,
+        "text": "unchecked",
+        "controls_visibility_tab": "cosmetics_tab"
+      }
+    ],
+    "default": true,
+    "text": "Override Original Cosmetics",
+    "tooltip": "",
+    "type": "Checkbutton",
+    "shared": false
+  },
+  {
+    "name": "Web.persist_in_cache",
+    "options": [
+      {
+        "name": true,
+        "text": "checked"
+      },
+      {
+        "name": false,
+        "text": "unchecked"
+      }
+    ],
+    "default": true,
+    "text": "Persist Files in Cache",
+    "tooltip": "",
+    "type": "Checkbutton",
+    "shared": false
+  },
+  {
+    "name": "Web.RandomStartingItemGroups",
+    "default": {},
+    "text": "Random Starting Item Pools",
+    "function": "openRandomStartingItemsWindow",
+    "tooltip": "Customize several random starting item pools",
+    "type": "Button",
+    "shared": true
+  },
+  {
+    "name": "Web.HintPriorities",
+    "default": {},
+    "text": "Customize Hint Priorities",
+    "function": "openHintPrioritiesWindow",
+    "tooltip": "Customize hint priority tiers for competitive hint generation",
+    "type": "Button",
+    "shared": true
+  },
+  {
+    "name": "Web.CosmeticDPadPreset",
+    "text": "D-Pad Mapping",
+    "default": "Default",
+    "tooltip": "",
+    "type": "Combobox",
+    "shared": false,
+    "options": [
+      {
+        "name": "Default",
+        "text": "Default",
+        "controls_visibility_setting": "CosmeticSettings.DPad.Pad.Values"
+      },
+      {
+        "name": "VC",
+        "text": "Virtual Console",
+        "controls_visibility_setting": "CosmeticSettings.DPad.Pad.Values"
+      },
+      {
+        "name": "Custom",
+        "text": "Custom"
+      }
+    ]
+  },
+  {
+    "name": "Web.custom_music_directorypicker",
+    "text": "Custom Music",
+    "default": "",
+    "options": [],
+    "tooltip": "Upload custom music files in MMR's dedicated .mmrs format.<br>You can upload individual files or directories consisting of multiple<br>custom sequences. Implementation into the seed is controlled by<br>the CosmeticSettings.Music setting.<br>Note: Multiple directories at once can only be uploaded by dragging them<br>onto the text field.",
+    "type": "Directoryinput",
+    "shared": false,
+    "file_types": [
+      {
+        "name": "MMR Sequence Files",
+        "extensions": [ "mmrs" ]
+      }
+    ],
+    "hide_when_disabled": true
+  },
+  {
+    "name": "GameplaySettings.OverrideHintPriorities",
+    "invisible": true
+  },
+  {
+    "name": "GameplaySettings.OverrideImportanceIndicatorTiers",
+    "invisible": true
+  },
+  {
+    "name": "GameplaySettings.OverrideHintItemCaps",
+    "invisible": true
+  },
+  {
+    "name": "GameplaySettings.RandomStartingItemGroups",
+    "invisible": true
+  },
+  {
+    "name": "GameplaySettings.DrawHash",
+    "text": "Show Verification Hash Icons"
+  },
+  {
+    "name": "GameplaySettings.TrapWeights",
+    "no_inner_line_break": true
+  },
+  {
+    "name": "GameplaySettings.OverrideNumberOfRequiredGossipHints",
+    "text": "Override Required Gossip Hints"
+  },
+  {
+    "name": "GameplaySettings.OverrideNumberOfNonRequiredGossipHints",
+    "text": "Override Non Required Gossip Hints"
+  },
+  {
+    "name": "GameplaySettings.OverrideMaxNumberOfClockTownGossipHints",
+    "text": "Override Max Clock Town Gossip Hints"
+  },
+  {
+    "name": "GameplaySettings.OverrideNumberOfRequiredGaroHints",
+    "text": "Override Required Garo Hints"
+  },
+  {
+    "name": "GameplaySettings.OverrideNumberOfNonRequiredGaroHints",
+    "text": "Override Non Required Garo Hints"
+  },
+  {
+    "name": "GameplaySettings.OverrideMaxNumberOfClockTownGaroHints",
+    "text": "Override Max Clock Town Garo Hints"
+  },
+  {
+    "name": "CosmeticSettings.UseTunicColors",
+    "no_line_break": true,
+    "options": [
+      {
+        "name": true,
+        "text": "checked"
+      },
+      {
+        "name": false,
+        "text": "unchecked",
+        "controls_visibility_setting": "CosmeticSettings.TunicColors"
+      }
+    ]
+  },
+  {
+    "name": "CosmeticSettings.UseEnergyColors",
+    "no_line_break": true,
+    "options": [
+      {
+        "name": true,
+        "text": "checked"
+      },
+      {
+        "name": false,
+        "text": "unchecked",
+        "controls_visibility_setting": "CosmeticSettings.EnergyColors"
+      }
+    ]
+  },
+  {
+    "name": "CosmeticSettings.Music",
+    "tooltip": "Select a music option<br><br> - Default: Vanilla background music.<br> - Random: Randomized background music.<br> - None: No background music.",
+    "options": [
+      {
+        "name": "Default",
+        "text": "Default",
+        "controls_visibility_setting": "CosmeticSettings.MusicLuckRollChance,Web.custom_music_directorypicker"
+      },
+      {
+        "name": "Random",
+        "text": "Random"
+      },
+      {
+        "name": "None",
+        "text": "None",
+        "controls_visibility_setting": "CosmeticSettings.MusicLuckRollChance,Web.custom_music_directorypicker"
+      }
+    ]
+  },
+  {
+    "name": "CosmeticSettings.MusicLuckRollChance",
+    "size": "small",
+    "max_length": 5,
+    "invisible": false
+  },
+  {
+    "name": "CosmeticSettings.DPad.State",
+    "text": "D-Pad State",
+    "options": [
+      {
+        "name": "Disabled",
+        "text": "Disabled",
+        "controls_visibility_setting": "Web.CosmeticDPadPreset,CosmeticSettings.DPad.Display,CosmeticSettings.DPad.Pad.Values"
+      },
+      {
+        "name": "Enabled",
+        "text": "Enabled"
+      }
+    ]
+  },
+  {
+    "name": "CosmeticSettings.DPad.Display",
+    "text": "D-Pad Display"
+  },
+  {
+    "name": "OutputSettings.InputROMFilename",
+    "type": "Fileinput",
+    "default": "",
+    "shared": false,
+    "file_types": [
+      {
+        "name": "ROM Files",
+        "extensions": [ "z64", "n64" ]
+      },
+      {
+        "name": "All Files",
+        "extensions": [ "*" ]
+      }
+    ],
+    "hide_when_disabled": true
+  },
+  {
+    "name": "OutputSettings.GenerateSpoilerLog",
+    "text": "Create Spoiler Log",
+    "shared": true,
+    "hide_when_disabled": true
+  }
+]

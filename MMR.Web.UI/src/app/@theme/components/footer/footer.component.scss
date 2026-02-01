@@ -1,0 +1,49 @@
+@import '../../styles/themes';
+@import '@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .socials {
+    font-size: 28px;
+
+    a {
+      padding: 5.6px;
+      color: nb-theme(color-success-600);
+      transition: color ease-out 0.1s;
+
+      &:hover {
+        color: nb-theme(color-basic-1100);
+      }
+    }
+  }
+
+  span {
+    a#updateButton {
+      color: nb-theme(color-warning-600);
+    }
+  }
+
+  @include media-breakpoint-down(is) {
+    .socials {
+      font-size: 21px;
+    }
+  }
+
+  .copyright {
+    display: initial;
+    margin-left: 5px;
+    @media (max-width: 505px) {
+      display: none;
+    }
+  }
+  .socials {
+      font-size: 21px;
+    @media (max-width: 322px) {
+      font-size: 12px;
+    }
+  }
+}

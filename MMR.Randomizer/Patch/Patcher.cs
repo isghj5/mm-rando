@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Numerics;
 using System.Security.Cryptography;
 using VCDiff.Decoders;
 using VCDiff.Encoders;
@@ -18,22 +17,37 @@ namespace MMR.Randomizer.Patch
     public static class Patcher
     {
         /// <summary>
-        /// Patch file magic number ("MMRP").
+        /// Patch file magic number for decrypted content ("MMRP").
         /// </summary>
-        public const uint PatchMagic = 0x4D4D5250;
+        public const uint PatchMagicDecrypted = 0x4D4D5250;
 
+        /// <summary>
+        /// Patch file magic number for encrypted content ("MMRE").
+        /// </summary>
+        public const uint PatchMagicEncrypted = 0x4D4D5245;
+
+        public static readonly byte[] Version;
         private static readonly byte[] key;
         private static readonly byte[] iv;
+        private static readonly byte[] moduleId;
 
         static Patcher()
         {
-            var bigInt = new BigInteger(typeof(Patcher).Assembly.ManifestModule.ModuleVersionId.ToByteArray());
-            var random = new Random((int)(bigInt & int.MaxValue));
+            Version = new byte[4]
+            {
+                (byte)typeof(Randomizer).Assembly.GetName().Version.Major,
+                (byte)typeof(Randomizer).Assembly.GetName().Version.Minor,
+                (byte)typeof(Randomizer).Assembly.GetName().Version.Build,
+                0,
+            };
+            var random = new Random(ConvertUtils.BytesToInt(Version));
             var buffer = new byte[16];
             random.NextBytes(buffer);
             key = buffer.ToArray();
             random.NextBytes(buffer);
             iv = buffer.ToArray();
+            random.NextBytes(buffer);
+            moduleId = buffer.ToArray();
         }
 
         /// <summary>
@@ -95,9 +109,28 @@ namespace MMR.Randomizer.Patch
         {
             try
             {
+                // Parse outer header.
+                using var readerIn = new BeBinaryReader(inStream);
+
+                // Validate MMRE patch magic.
+                var magicEncrypted = readerIn.ReadUInt32();
+                ValidateMagic(magicEncrypted, true);
+
+                var patchVersion = readerIn.ReadBytes(4);
+                ValidateVersion(patchVersion);
+                var patchModuleId = readerIn.ReadBytes(16);
+                ValidateModuleId(patchModuleId);
+                var compressedSize = readerIn.ReadUInt32();
+                var decompressedSize = readerIn.ReadUInt32();
+
+                var compressedContents = readerIn.ReadBytes((int)compressedSize);
+                var compressedStream = new MemoryStream(compressedContents);
+
+                readerIn.Close();
+
                 var aes = Aes.Create();
                 var hashAlg = new SHA256Managed();
-                using (var cryptoStream = new CryptoStream(inStream, aes.CreateDecryptor(key, iv), CryptoStreamMode.Read))
+                using (var cryptoStream = new CryptoStream(compressedStream, aes.CreateDecryptor(key, iv), CryptoStreamMode.Read))
                 using (var hashStream = new CryptoStream(cryptoStream, hashAlg, CryptoStreamMode.Read))
                 using (var decompressStream = new GZipStream(hashStream, CompressionMode.Decompress))
                 using (var memoryStream = new MemoryStream())
@@ -107,9 +140,9 @@ namespace MMR.Randomizer.Patch
                     memoryStream.Seek(0, SeekOrigin.Begin);
                     using var reader = new BeBinaryReader(memoryStream);
 
-                    // Validate patch magic.
+                    // Validate MMRP patch magic.
                     var magic = reader.ReadUInt32();
-                    ValidateMagic(magic);
+                    ValidateMagic(magic, false);
 
                     Span<byte> headerBytes = stackalloc byte[PatchHeader.Size];
                     while (reader.BaseStream.Position != reader.BaseStream.Length)
@@ -159,59 +192,85 @@ namespace MMR.Randomizer.Patch
         /// <returns><see cref="SHA256"/> hash of the patch.</returns>
         public static byte[] CreatePatch(Stream outStream, List<MMFile> originalMMFiles)
         {
-            var aes = Aes.Create();
-            var hashAlg = new SHA256Managed();
-            using (var cryptoStream = new CryptoStream(outStream, aes.CreateEncryptor(key, iv), CryptoStreamMode.Write))
-            using (var hashStream = new CryptoStream(cryptoStream, hashAlg, CryptoStreamMode.Write))
-            using (var compressStream = new GZipStream(hashStream, CompressionMode.Compress))
-            using (var writer = new BeBinaryWriter(compressStream))
+            var rawStream = new MemoryStream();
+            var writer = new BeBinaryWriter(rawStream);
+            
+            // Write MMRP magic value.
+            writer.WriteUInt32(PatchMagicDecrypted);
+
+            Span<byte> headerBytes = stackalloc byte[PatchHeader.Size];
+            for (var fileIndex = 0; fileIndex < RomData.MMFileList.Count; fileIndex++)
             {
-                // Write magic value.
-                writer.WriteUInt32(PatchMagic);
+                var file = RomData.MMFileList[fileIndex];
 
-                Span<byte> headerBytes = stackalloc byte[PatchHeader.Size];
-                for (var fileIndex = 0; fileIndex < RomData.MMFileList.Count; fileIndex++)
+                // Check whether file should be included in the patch.
+                if (file.Data == null || (file.IsCompressed && !file.WasEdited))
                 {
-                    var file = RomData.MMFileList[fileIndex];
+                    continue;
+                }
 
-                    // Check whether file should be included in the patch.
-                    if (file.Data == null || (file.IsCompressed && !file.WasEdited))
-                    {
-                        continue;
-                    }
+                if (fileIndex >= originalMMFiles.Count)
+                {
+                    var index = (uint)fileIndex;
+                    var address = (uint)file.Addr;
 
-                    if (fileIndex >= originalMMFiles.Count)
-                    {
-                        var index = (uint)fileIndex;
-                        var address = (uint)file.Addr;
+                    // Create header for appending new file.
+                    var header = PatchHeader.CreateNew(index, address, file.Data.Length, file.IsStatic);
+                    header.Write(headerBytes);
 
-                        // Create header for appending new file.
-                        var header = PatchHeader.CreateNew(index, address, file.Data.Length, file.IsStatic);
-                        header.Write(headerBytes);
+                    // Write header bytes and file contents.
+                    writer.Write(headerBytes);
+                    writer.Write(file.Data);
+                }
+                else
+                {
+                    RomUtils.CheckCompressed(fileIndex, originalMMFiles);
+                    var originalFile = originalMMFiles[fileIndex];
 
-                        // Write header bytes and file contents.
-                        writer.Write(headerBytes);
-                        writer.Write(file.Data);
-                    }
-                    else
-                    {
-                        RomUtils.CheckCompressed(fileIndex, originalMMFiles);
-                        var originalFile = originalMMFiles[fileIndex];
+                    var index = (uint)fileIndex;
+                    var address = (uint)file.Addr;
+                    var diff = VcDiffEncodeManaged(originalFile.Data, file.Data);
 
-                        var index = (uint)fileIndex;
-                        var address = (uint)file.Addr;
-                        var diff = VcDiffEncodeManaged(originalFile.Data, file.Data);
+                    // Create header for patching existing file.
+                    var header = PatchHeader.CreateExisting(index, address, diff.Length, file.IsStatic);
+                    header.Write(headerBytes);
 
-                        // Create header for patching existing file.
-                        var header = PatchHeader.CreateExisting(index, address, diff.Length, file.IsStatic);
-                        header.Write(headerBytes);
-
-                        // Write header bytes and diff bytes.
-                        writer.Write(headerBytes);
-                        writer.Write(diff);
-                    }
+                    // Write header bytes and diff bytes.
+                    writer.Write(headerBytes);
+                    writer.Write(diff);
                 }
             }
+
+            uint decompressedSize = (uint)rawStream.Length;
+
+            var encryptedStream = new MemoryStream();
+            var aes = Aes.Create();
+            var hashAlg = new SHA256Managed();
+            using (var cryptoStream = new CryptoStream(encryptedStream, aes.CreateEncryptor(key, iv), CryptoStreamMode.Write, true))
+            using (var hashStream = new CryptoStream(cryptoStream, hashAlg, CryptoStreamMode.Write, true))
+            using (var compressStream = new GZipStream(hashStream, CompressionMode.Compress, leaveOpen: true))
+            {
+                compressStream.Write(rawStream.ToArray());
+            }
+
+            writer.Close();
+            rawStream.Close();
+
+            uint compressedSize = (uint)encryptedStream.Length;
+
+            // Write outer header and contents.
+            var writerOut = new BeBinaryWriter(outStream);
+
+            writerOut.WriteUInt32(PatchMagicEncrypted);
+            writerOut.Write(Version);
+            writerOut.Write(moduleId);
+            writerOut.WriteUInt32(compressedSize);
+            writerOut.WriteUInt32(decompressedSize);
+            writerOut.Write(encryptedStream.ToArray());
+
+            encryptedStream.Close();
+            writerOut.Close();
+
             return hashAlg.Hash;
         }
 
@@ -219,13 +278,30 @@ namespace MMR.Randomizer.Patch
         /// Validate magic value and throw a <see cref="PatchMagicException"/> if invalid.
         /// </summary>
         /// <param name="magic">Magic value</param>
-        static void ValidateMagic(uint magic)
+        static void ValidateMagic(uint magic, bool encrypted)
         {
-            if (magic != PatchMagic)
+            if (encrypted && magic != PatchMagicEncrypted || !encrypted && magic != PatchMagicDecrypted)
             {
                 throw new PatchMagicException(magic);
             }
         }
+
+        static void ValidateVersion(byte[] inVersion)
+        {
+            if (!inVersion.SequenceEqual(Version))
+            {
+                throw new IOException($"Patch version {string.Join(".", inVersion)} does not match {string.Join(".", Version)}.");
+            }
+        }
+
+        static void ValidateModuleId(byte[] inId)
+        {
+            if (!inId.SequenceEqual(moduleId))
+            {
+                throw new IOException($"Patch module id does not match.");
+            }
+        }
+
 
         /// <summary>
         /// Perform VCDiff decode (apply a diff).

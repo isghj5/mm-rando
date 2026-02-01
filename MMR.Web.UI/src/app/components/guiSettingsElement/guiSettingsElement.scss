@@ -1,0 +1,533 @@
+@import '../../../app/@theme/styles/themes';
+
+@include nb-install-component() {
+
+  nb-input {
+    margin-right: 28px;
+  }
+
+  .input-sm {
+    padding-top: 2.1px;
+    padding-bottom: 2.1px;
+    margin-right: 28px;
+  }
+
+  .btn-small {
+    padding: 3.85px 21px;
+  }
+
+  .selectXSmall {
+    max-width: 300px;
+  }
+
+  .radioGroupLabel {
+    position: relative;
+    left: 10px;
+    margin-bottom: 11.2px;
+  }
+
+  .radioButton {
+    margin-right: 10px;
+    line-height: 2.2;
+  }
+
+  .comboBoxLabel {
+    position: relative;
+    display: block;
+    left: 10px;
+    width: calc(100% - 10px);
+
+    &.oneLineComboBox {
+      left: 0;
+    }
+  }
+
+  .rgbColorPickerLabel {
+    margin-top: 10px;
+    left: 0 !important;
+  }
+
+  .oneLineComboBox {
+    display: inline-block !important;
+    margin-bottom: 10px;
+    
+    @media (max-width: 768px) {
+      display: block !important;
+      width: 100% !important;
+      margin-bottom: 15px;
+    }
+  }
+  
+  .ignoreNoLineBreak {
+    left: 0 !important;
+    width: 100% !important;
+    
+    &.oLCBLabelFirst,
+    &.oLCBLabelSecond {
+      width: 100% !important;
+      margin-right: 0 !important;
+      text-align: left !important;
+    }
+    
+    &.oLCBSelect {
+      width: 100% !important;
+      margin-right: 0 !important;
+    }
+    
+    & + .settingPadding {
+      display: block !important;
+      height: 10px !important;
+    }
+    
+    mat-grid-tile {
+      min-width: 100% !important;
+      width: 100% !important;
+    }
+  }
+  
+  .oneLineComboBox {
+    mat-grid-tile {
+      min-width: auto !important;
+      width: auto !important;
+    }
+    
+    .oLCBLabelFirst,
+    .oLCBLabelSecond,
+    .oLCBSelect {
+      display: inline-block !important;
+      vertical-align: top !important;
+    }
+  }
+
+  // Slider styling
+  .slider-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 8px 0;
+    padding: 5px 0;
+    
+    .range-slider {
+      flex: 1;
+      height: 6px; // Thinner slider
+      border-radius: 3px;
+      background: #e0e0e0;
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px; // Smaller thumb
+        height: 20px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ff6b9d, #c44569);
+        cursor: pointer;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        transition: all 0.2s ease;
+        
+        &:hover {
+          transform: scale(1.1);
+          box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+        }
+      }
+      
+      &::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ff6b9d, #c44569);
+        cursor: pointer;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        transition: all 0.2s ease;
+        
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+      
+      &::-webkit-slider-track {
+        background: linear-gradient(to right, #ff6b9d 0%, #ff6b9d 50%, #e0e0e0 50%, #e0e0e0 100%);
+        border-radius: 3px;
+        height: 6px;
+      }
+      
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        
+        &::-webkit-slider-thumb {
+          background: #ccc;
+          cursor: not-allowed;
+          transform: none;
+        }
+        
+        &::-moz-range-thumb {
+          background: #ccc;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+
+
+  .oLCBLabelFirst {
+    width: 160px;
+    left: 0px;
+    text-align: left;
+
+    @media (max-width: 1248px) {
+      width: 110px;
+    }
+  }
+
+  .oLCBLabelSecond {
+    width: 106px;
+    left: 0px;
+    text-align: right;
+    margin-right: 12px;
+
+    @media (max-width: 1536px) {
+      width: 104px;
+      margin-right: 8px;
+    }
+
+    @media (max-width: 1248px) {
+      width: 58px;
+      margin-right: 6px;
+    }
+  }
+
+  .oLCBSelect {
+    width: 21%;
+    margin-right: 10px;
+
+    @media (max-width: 1290px) {
+      margin-right: 2px;
+      width: 23%;
+    }
+
+    @media (max-width: 1248px) {
+      margin-right: 2px;
+      width: 27%;
+    }
+
+    @media (max-width: 1000px) {
+      margin-right: 2px;
+      width: 28%;
+    }
+
+    @media (max-width: 970px) {
+      margin-right: 2px;
+      width: 29%;
+    }
+
+    @media (max-width: 920px) {
+      margin-right: 2px;
+      width: 23%;
+    }
+  }
+
+  .selectContainerWithInfo {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .spaceForInfo {
+    min-width: 90%;
+
+    @media (max-width: 254px) {
+      min-width: 82%;
+    }
+  }
+
+  div.select-wrapper {
+    display: flex;
+
+    nb-select {
+      flex-grow: 1;
+    }
+  }
+
+  img.select-info {
+    content: "o";
+    width: 26px;
+    height: 26px;
+    padding: 13px;
+    font-size: 2em;
+    margin-left: 5px;
+    background-image: nb-theme(tooltip-src);
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+
+    &.info-icon-colors {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    &.disabled {
+      opacity: 0;
+    }
+  }
+
+  p.numberTextInputLabel {
+    position: relative;
+    left: 10px;
+    line-height: 0;
+    margin-bottom: 0;
+    margin-top: 8px !important;
+  }
+
+  mat-grid-tile div .numberTextInput {
+    position: relative;
+    left: 15px;
+    max-width: 36px;
+    text-align: center;
+    padding-left: 5.25px !important;
+    padding-right: 5.25px !important;
+    margin-right: 28px;
+  }
+
+  .numberTextInputSmall {
+    max-width: 50px;
+  }
+
+  .numberTextInputMedium {
+    max-width: 120px;
+  }
+
+  .numberTextInputFull {
+    left: 0px;
+    width: 100%;
+    max-width: initial !important;
+    text-align: left;
+    padding-right: initial !important;
+    margin-top: 12px;
+    margin-right: 14px !important;
+  }
+
+  .secondaryInputLabel {
+    margin-left: 25px;
+    
+    &.innerDictionaryLabel {
+      margin-left: 15px;
+      margin-right: 10px;
+      display: inline-block;
+      vertical-align: top;
+    }
+  }
+
+  .innerDictionarySetting {
+    display: inline-block;
+    margin-right: 15px;
+    vertical-align: top;
+    
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .ignoreNoLineBreak {
+    & + .settingPadding,
+    & + .dictSettingPadding {
+      display: block !important;
+      height: 5px !important;
+      margin-top: 2px !important;
+    }
+    
+    .innerDictionarySetting {
+      margin-bottom: 2px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .colorPickerContainer {
+    height: 0px;  
+    width: 0px;
+    overflow: hidden;
+  }
+
+
+  .scale {
+    position: relative;
+    top: -7px;
+    min-width: 100%;
+    pointer-events: none;
+
+    ::ng-deep .mat-slider-wrapper {
+      pointer-events: auto;
+    }
+  }
+
+  .ioInputLabel {
+    position: relative;
+    left: 10px;
+    line-height: 0;
+    margin-bottom: 8px;
+    margin-top: 8px !important;
+  }
+
+  .ioInput {
+    position: relative;
+    left: 0px;
+    width: calc(100% - 120px);
+    text-align: left;
+    padding-left: 5.25px !important;
+    margin-top: 5.6px;
+    margin-right: 14px !important;
+  }
+
+  .ioInputWeb {
+    position: relative;
+    left: 0px;
+    width: calc(100% - 230px);
+    text-align: left;
+    padding-left: 5.25px !important;
+    margin-top: 12px;
+    margin-right: 14px !important;
+  }
+
+  .ioHiddenInputWeb {
+    display: none;
+  }
+
+  .ioInputBrowseButton {
+    margin-right: 6px !important;
+  }
+
+  .presetButton {
+    margin-top: 14px !important;
+    margin-right: 6px !important;
+    
+    @media (max-width: 768px) {
+      font-size: 11px !important;
+      padding: 6px 8px !important;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 10px !important;
+      padding: 4px 6px !important;
+    }
+  }
+
+  .settingButton {
+    margin-right: 6px !important;
+    white-space: normal !important;
+    text-align: center !important;
+    min-height: 30px !important;
+    line-height: 1.2 !important;
+    height: auto !important;
+    max-width: 95% !important;
+    width: 95% !important;
+    box-sizing: border-box !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    padding: 8px 12px !important;
+  }
+
+  .dictSettingPadding {
+    height: 8px;
+  }
+
+  .linkedDictAfterRadioPadding {
+    height: 13px;
+  }
+
+  .linkedDictSettingPadding {
+    height: 8px;
+  }
+
+  .settingCBPadding {
+    height: 13px;
+  }
+
+  .noInnerLineBreakContainer {
+    min-height: auto;
+    height: auto;
+    padding: 2px 0;
+
+    .innerSetting {
+      margin-bottom: 2px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .dictionaryNoInnerLineBreak {
+    height: auto;
+    min-height: 36px;
+    display: flex;
+    flex-direction: row;
+    gap: 1px;
+    flex-wrap: wrap;
+    
+    &.wrapped {
+      flex-direction: column;
+      padding-bottom: 2px;
+      
+      .innerSetting {
+        margin-bottom: 2px;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+    
+    .innerSetting {
+      display: flex;
+      align-items: center;
+      min-height: 36px;
+      
+      &.noInnerLineBreakContainer {
+        margin-bottom: 2px;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+    
+    ::ng-deep nb-card {
+      height: auto;
+      min-height: inherit;
+
+      nb-card-body {
+        height: auto;
+        min-height: inherit;
+        padding: 1rem;
+
+        .wrapped & {
+          padding-bottom: 1rem;
+        }
+      }
+    }
+  }
+
+  p.disabled {
+    opacity: 0.38;
+  }
+
+  span.disabled {
+    opacity: 0.38;
+  }
+
+  input:disabled {
+    opacity: 0.38;
+  }
+
+  zsr-gui-color-picker.disabled {
+    filter: nb-theme(colorpicker-disabled-filter);
+  }
+}

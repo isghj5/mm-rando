@@ -68,6 +68,11 @@ namespace MMR.Randomizer.Utils
             for (var i = 0; i < logic.Count; i++)
             {
                 var logicItem = logic[i];
+                var item = (Item)i;
+                if (Enum.IsDefined(item) && item.ToString() != logicItem.Id)
+                {
+                    throw new Exception($"Logic doesn't line up with code at {logicItem.Id}");
+                }
                 itemList.Add(new ItemObject
                 {
                     ID = i,
@@ -104,7 +109,7 @@ namespace MMR.Randomizer.Utils
                 var currentItem = new ItemObject
                 {
                     ID = (int)item,
-                    Name = item.Name() ?? item.ToString(),
+                    Name = item.ToString(),
                     TimeAvailable = 63
                 };
 
@@ -163,7 +168,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static LogicPaths GetImportantLocations(ItemList itemList, GameplaySettings settings, Item location, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedLocations = null, Dictionary<Item, ItemObject> itemsByLocation = null, CancellationTokenSource cts = null, params Item[] exclude)
+        public static LogicPaths GetImportantLocations(ItemList itemList, GameplaySettings settings, Item location, List<ItemLogic> itemLogic, int timeAvailable = 63, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedLocations = null, Dictionary<Item, ItemObject> itemsByLocation = null, CancellationTokenSource cts = null, params Item[] exclude)
         {
             if (settings.LogicMode == LogicMode.NoLogic)
             {
@@ -174,7 +179,6 @@ namespace MMR.Randomizer.Utils
             {
                 itemsByLocation = itemList.ToDictionary(io => io.NewLocation ?? io.Item);
             }
-            var itemObject = itemsByLocation[location];
             if (logicPath == null)
             {
                 logicPath = new List<Item>();
@@ -196,20 +200,41 @@ namespace MMR.Randomizer.Utils
                     return null;
                 }
             }
-            logicPath.Add(location);
+            if (location != Item.OtherEpona)
+            {
+                logicPath.Add(location);
+            }
             if (checkedLocations == null)
             {
                 checkedLocations = new Dictionary<Item, LogicPaths>();
             }
-            if (checkedLocations.ContainsKey(location))
+            var checkedLocation = checkedLocations.GetValueOrDefault(location);
+            if (checkedLocation != null && !checkedLocation.Important.Intersect(exclude).Any() && !exclude.Contains(location))
             {
-                if (logicPath.Intersect(checkedLocations[location].Required).Any())
+                if (logicPath.Intersect(checkedLocation.Required).Any())
                 {
                     return null;
                 }
-                return checkedLocations[location];
+                return checkedLocation;
             }
             var locationLogic = itemLogic[(int)location];
+            var io = itemsByLocation[location];
+            if (ItemUtils.IsLogicallyJunk(io.Item))
+            {
+                timeAvailable = (int)TimeOfDay.All;
+            }
+            else if ((io.Item.IsTemporary() || location.IsFake()) && timeAvailable < locationLogic.TimeAvailable)
+            {
+                timeAvailable &= locationLogic.TimeAvailable;
+                if (timeAvailable == 0)
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                timeAvailable = locationLogic.TimeAvailable;
+            }
             var required = new List<Item>();
             var important = new List<Item>();
             if (locationLogic.RequiredItemIds != null && locationLogic.RequiredItemIds.Any())
@@ -228,7 +253,7 @@ namespace MMR.Randomizer.Utils
 
                     var requiredLocation = itemList[requiredItemId].NewLocation ?? requiredItemId;
 
-                    var childPaths = GetImportantLocations(itemList, settings, requiredLocation, itemLogic, logicPath.ToList(), checkedLocations, itemsByLocation, cts, exclude);
+                    var childPaths = GetImportantLocations(itemList, settings, requiredLocation, itemLogic, timeAvailable, logicPath.ToList(), checkedLocations, itemsByLocation, cts, exclude);
                     if (childPaths == null)
                     {
                         return null;
@@ -275,7 +300,7 @@ namespace MMR.Randomizer.Utils
 
                         var conditionalLocation = itemList[conditionalItemId].NewLocation ?? conditionalItemId;
 
-                        var childPaths = GetImportantLocations(itemList, settings, conditionalLocation, itemLogic, logicPath.ToList(), checkedLocations, itemsByLocation, cts, exclude);
+                        var childPaths = GetImportantLocations(itemList, settings, conditionalLocation, itemLogic, timeAvailable, logicPath.ToList(), checkedLocations, itemsByLocation, cts, exclude);
                         if (childPaths == null)
                         {
                             conditionalRequired = null;
@@ -329,7 +354,7 @@ namespace MMR.Randomizer.Utils
                 Important = important.Union(required).Distinct().ToList().AsReadOnly(),
                 RequiredSongLocations = requiredSongLocations.Distinct().ToList().AsReadOnly()
             };
-            if (location.Region(itemList).HasValue && location.Entrance() == null)
+            if (location.Location() != null || timeAvailable == (int)TimeOfDay.All)
             {
                 checkedLocations[location] = result;
             }

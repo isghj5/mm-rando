@@ -1,4 +1,5 @@
 ﻿using MMR.Common.Utils;
+using MMR.Randomizer.Attributes.Entrance;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models;
@@ -8,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System; // changed for needing enum? why did enum stop working by itself, dotnet version?
 
 namespace MMR.Randomizer.Utils
 {
@@ -46,19 +48,21 @@ namespace MMR.Randomizer.Utils
 
             Dictionary<Item, Item> dungeonEntrances = new Dictionary<Item, Item>();
             var entrances = new List<Item>();
-            if (settings.RandomizeDungeonEntrances)
+            if (settings.EntranceMode.HasFlag(EntranceMode.DungeonEntrances))
             {
-                entrances.Add(Item.AreaWoodFallTempleAccess);
-                entrances.Add(Item.AreaSnowheadTempleAccess);
-                entrances.Add(Item.AreaGreatBayTempleAccess);
-                entrances.Add(Item.AreaInvertedStoneTowerTempleAccess);
+                entrances.AddRange(Enum.GetValues<Item>().Where(item => item.EntranceType() == EntranceType.Dungeon));
             }
-            if (settings.RandomizeBossRooms)
+            if (settings.EntranceMode.HasFlag(EntranceMode.BossRooms))
             {
-                entrances.Add(Item.AreaOdolwasLair);
-                entrances.Add(Item.AreaGohtsLair);
-                entrances.Add(Item.AreaGyorgsLair);
-                entrances.Add(Item.AreaTwinmoldsLair);
+                entrances.AddRange(Enum.GetValues<Item>().Where(item => item.EntranceType() == EntranceType.Boss));
+            }
+            if (settings.EntranceMode.HasFlag(EntranceMode.Grottos))
+            {
+                entrances.AddRange(Enum.GetValues<Item>().Where(item => item.EntranceType() == EntranceType.Grotto));
+            }
+            if (settings.EntranceMode.HasFlag(EntranceMode.SimpleInteriors))
+            {
+                entrances.AddRange(Enum.GetValues<Item>().Where(item => item.EntranceType() == EntranceType.Interior));
             }
             foreach (var entrance in entrances.OrderBy(e => entrances.IndexOf(randomized.ItemList[e].NewLocation.Value)))
             {
@@ -76,10 +80,11 @@ namespace MMR.Randomizer.Utils
                 Version = Randomizer.AssemblyVersion + " + Isghj's Actorizer Test 96.0",
                 SettingsString = settingsString,
                 Seed = randomized.Seed,
-                DungeonEntrances = dungeonEntrances.Select(kvp => new SpoilerDungeonEntrance(kvp)).ToList(),
+                Entrances = dungeonEntrances.Select(kvp => new SpoilerDungeonEntrance(kvp)).ToList(),
                 ItemList = itemList.ToList(),
                 Logic = randomized.Logic,
                 BlitzExtraItems = randomized.BlitzExtraItems.AsReadOnly(),
+                RandomStartingItems = randomized.RandomStartingItems.AsReadOnly(),
                 Spheres = randomized.Spheres,
                 GossipHints = randomized.GossipQuotes?.ToDictionary(me => (GossipQuote) me.Id, (me) =>
                 {
@@ -137,6 +142,7 @@ namespace MMR.Randomizer.Utils
                         Cost = mc.Value,
                     };
                 }).Where(mc => mc != null).ToList(),
+                GibdoRequirements = settings.RandomizeGibdoRequirements ? randomized.GibdoRequirements.Where(g => g.LogicEntry.HasValue).ToList() : new List<GibdoRequirement>(),
             };
 
             if (outputSettings.GenerateHTMLLog)
@@ -160,26 +166,30 @@ namespace MMR.Randomizer.Utils
                     Settings = settings,
                     Seed = spoiler.Seed,
                     Version = spoiler.Version,
-                    DungeonEntrances = spoiler.DungeonEntrances,
+                    DungeonEntrances = spoiler.Entrances,
                     Items = spoiler.ItemList.GroupBy(item => item.Region).OrderBy(g => g.Key).ToDictionary(g => g.Key.Name(), g => g.ToList()),
                     BlitzExtraItems = spoiler.BlitzExtraItems.Select(item => item.Name()).ToList().AsReadOnly(),
+                    RandomStartingItems = spoiler.RandomStartingItems.Select(item => item.Name()).ToList().AsReadOnly(),
                     Playthrough = spoiler.Spheres,
                     GossipHints = spoiler.GossipHints,
                     Prices = spoiler.MessageCosts,
                 };
                 File.WriteAllText(Path.Combine(directory, filename + "_SpoilerLog.json"), JsonSerializer.Serialize(spoilerJson));
             }
+        }
 
-            if (outputSettings.GenerateSettingsJson)
+        public static void CreateSettingsJson(int seed, GameplaySettings settings, OutputSettings outputSettings)
+        {
+            var directory = Path.GetDirectoryName(outputSettings.OutputROMFilename);
+            var filename = $"{Path.GetFileNameWithoutExtension(outputSettings.OutputROMFilename)}";
+
+            var settingsJson = new SettingsOutputJson
             {
-                var settingsJson = new SettingsOutputJson
-                {
-                    Settings = settings,
-                    Seed = spoiler.Seed,
-                    Version = spoiler.Version,
-                };
-                File.WriteAllText(Path.Combine(directory, filename + "_Settings.json"), JsonSerializer.Serialize(settingsJson));
-            }
+                Settings = settings,
+                Seed = seed,
+                Version = Randomizer.AssemblyVersion,
+            };
+            File.WriteAllText(Path.Combine(directory, filename + "_Settings.json"), JsonSerializer.Serialize(settingsJson));
         }
 
         private static void CreateTextSpoilerLog(Spoiler spoiler, string path)
@@ -193,20 +203,36 @@ namespace MMR.Randomizer.Utils
             if (spoiler.BlitzExtraItems.Any())
             {
                 log.AppendLine(" Blitz Starting Items");
-                foreach (var remain in spoiler.BlitzExtraItems)
+                foreach (var item in spoiler.BlitzExtraItems)
                 {
-                    log.AppendLine(remain.Name());
+                    log.AppendLine(item.Name());
                 }
                 log.AppendLine("");
             }
 
-            if (spoiler.DungeonEntrances.Any())
+            if (spoiler.RandomStartingItems.Any())
             {
-                log.AppendLine($" {"Entrance",-21}    {"Destination"}");
-                log.AppendLine();
-                foreach (var kvp in spoiler.DungeonEntrances)
+                log.AppendLine(" Random Starting Items");
+                foreach (var item in spoiler.RandomStartingItems)
                 {
-                    log.AppendLine($"{kvp.Entrance,-21} -> {kvp.Destination}");
+                    log.AppendLine(item.Name());
+                }
+                log.AppendLine("");
+            }
+
+            if (spoiler.Entrances.Any())
+            {
+                log.AppendLine();
+                log.AppendLine($" {"Entrance",-30}    {"Destination"}");
+                foreach (var entranceType in spoiler.Entrances.GroupBy(entrance => entrance.EntranceType).OrderBy(g => g.Key))
+                {
+                    log.AppendLine();
+                    log.AppendLine($" {entranceType.Key}");
+
+                    foreach (var kvp in entranceType)
+                    {
+                        log.AppendLine($"{kvp.Entrance,-30} -> {kvp.Destination}");
+                    }
                 }
                 log.AppendLine("");
             }
@@ -216,7 +242,7 @@ namespace MMR.Randomizer.Utils
             {
                 log.AppendLine();
                 log.AppendLine($" {region.Key.Name()}");
-                foreach (var item in region.OrderBy(item => item.NewLocationName))
+                foreach (var item in region.GroupBy(item => new { item.NewLocationName, item.IsImportant, item.IsRequired, item.IsImportantSong, item.IsLocationJunked }).Select(g => g.First()).OrderBy(item => item.NewLocationName))
                 {
                     if (item.IsLocationJunked)
                     {
@@ -233,6 +259,16 @@ namespace MMR.Randomizer.Utils
                 foreach (var price in spoiler.MessageCosts)
                 {
                     log.AppendLine($"{price.Name,-50} -> {price.Cost}");
+                }
+            }
+
+            if (spoiler.GibdoRequirements.Count > 0)
+            {
+                log.AppendLine();
+                log.AppendLine($" {"Gibdo",-50}    Required Item");
+                foreach (var gibdoRequirement in spoiler.GibdoRequirements)
+                {
+                    log.AppendLine($"{gibdoRequirement.LogicEntry.Value.ToString().AddSpaces(),-50} -> {gibdoRequirement.ItemRequired.ToString().AddSpaces()}" + (gibdoRequirement.Amount > 1 ? $" ({gibdoRequirement.Amount})" : ""));
                 }
             }
 

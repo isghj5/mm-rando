@@ -1,0 +1,53 @@
+<div class="colorPicker">
+  <!--Multi Array Color Picker-->
+  <ng-container *ngIf="colorArraySize != null">
+    <ng-container *ngFor="let dummy of [].constructor(colorArraySize); index as pickerIndex">
+      <div class="colorPickerContainer">
+                 <input #refColorPicker [colorPicker]="convertValueRGBToColorPickerRGB(colorValue[pickerIndex])"
+                 cpAlphaChannel="disabled" cpOutputFormat="rgba"
+                 cpAddColorButton="true" [cpPresetColors]="['rgb(255,255,255)', 'rgb(0,0,0)']"
+                 cpUseRootViewContainer="true" cpSaveClickOutside="true"
+                 (colorPickerChange)="pickNewColor($event, pickerIndex)"
+                 (colorPickerClose)="afterColorPickerClosed(pickerIndex)" />
+      </div>
+      <nb-user size="medium"
+               showName="false"
+               showTitle="false"
+               showInitials="false"
+               shape="rectangle"
+               badgeStatus="success"
+               [badgeText]="getRGBDisplayValue(colorValue[pickerIndex])"
+               [color]="convertValueRGBToColorPickerRGB(colorValue[pickerIndex])"
+               [disabled]="disabled"
+               (click)="openColorPicker(refColorPicker, pickerIndex)"
+               [nbPopover]="tooltip ? tooltipComponent : null" [nbPopoverContext]="tooltip ? {tooltip: tooltip} : null" [nbPopoverTrigger]="tooltip?.length > 0 ? 'hint' : 'noop'" [nbPopoverPlacement]="tooltip ? 'top' : null" [nbPopoverAdjustment]="tooltip ? 'clockwise' : null">
+      </nb-user>
+    </ng-container>
+  </ng-container>
+  <!--Single Color Picker-->
+  <ng-container *ngIf="colorArraySize == null">
+
+    <div class="colorPickerContainer">
+             <input #refColorPicker [colorPicker]="convertValueRGBToColorPickerRGB(colorValue)"
+              cpAlphaChannel="disabled" cpOutputFormat="rgba"
+              cpAddColorButton="true" [cpPresetColors]="['rgb(255,255,255)', 'rgb(0,0,0)']" cpUseRootViewContainer="true" cpSaveClickOutside="true"
+              (colorPickerChange)="pickNewColor($event)"
+              (colorPickerClose)="afterColorPickerClosed()" />
+    </div>
+    <nb-user size="medium"
+             showName="false"
+             showTitle="false"
+             showInitials="false"
+             shape="rectangle"
+             badgeStatus="success"
+             [badgeText]="getRGBDisplayValue(colorValue)"
+             [color]="convertValueRGBToColorPickerRGB(colorValue)"
+             [disabled]="disabled"
+             (click)="openColorPicker(refColorPicker)"
+             [nbPopover]="tooltip ? tooltipComponent : null" [nbPopoverContext]="tooltip ? {tooltip: tooltip} : null" [nbPopoverTrigger]="tooltip?.length > 0 ? 'hint' : 'noop'" [nbPopoverPlacement]="tooltip ? 'top' : null" [nbPopoverAdjustment]="tooltip ? 'clockwise' : null">
+    </nb-user>
+  </ng-container>
+
+  <button class="randomizeButton" [disabled]="disabled" nbButton status="info" size="small" (click)="randomizeColors()">Randomize
+  </button>
+</div>

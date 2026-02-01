@@ -25,6 +25,7 @@ namespace MMR.Randomizer.Utils
     {
         const int FILE_TABLE = 0x1A500;
         const int SIGNATURE_ADDRESS = 0x1A4D0;
+        const int OVERLAY_TABLE = 0xC45510;
         public static void SetStrings(byte[] hack, string ver, string setting)
         {
             ResourceUtils.ApplyHack(hack);
@@ -107,6 +108,12 @@ namespace MMR.Randomizer.Utils
             }
         }
 
+        public static int VRAMToFile(uint vram)
+        {
+            return RomData.MMFileList.FindIndex(
+                file => vram >= file.VRamStart && vram < file.VRamEnd);
+        }
+
         public static void CheckCompressed(int fileIndex, List<MMFile> mmFileList = null)
         {
             if (mmFileList == null)
@@ -159,7 +166,12 @@ namespace MMR.Randomizer.Utils
             return index;
         }
 
-
+        public static int GetFileIndexForWritingVRAM(uint vram)
+        {
+            int index = VRAMToFile(vram);
+            CheckCompressed(index);
+            return index;
+        }
 
         public static int ByteswapROM(string filename)
         {
@@ -494,6 +506,19 @@ namespace MMR.Randomizer.Utils
                 dmaId += 1;
             }
             ExtractAll(ROM);
+            for (int i = 0; i < 690; i++)
+            {
+                var vrom = (int) ReadWriteUtils.ReadU32(OVERLAY_TABLE + i * 0x20);
+                if (vrom == 0)
+                {
+                    continue;
+                }
+                var vramStart = ReadWriteUtils.ReadU32(OVERLAY_TABLE + i * 0x20 + 0x8);
+                var vramEnd = ReadWriteUtils.ReadU32(OVERLAY_TABLE + i * 0x20 + 0xC);
+                var fileIndex = GetFileIndexForWriting(vrom);
+                RomData.MMFileList[fileIndex].VRamStart = vramStart;
+                RomData.MMFileList[fileIndex].VRamEnd = vramEnd;
+            }
         }
 
         public static bool CheckOldCRC(BinaryReader ROM)

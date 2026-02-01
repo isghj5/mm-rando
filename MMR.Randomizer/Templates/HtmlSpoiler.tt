@@ -103,12 +103,20 @@
 <# if (spoiler.BlitzExtraItems.Any()) { 
 #>
 <h2>Blitz Starting Items</h2>
-<#         foreach (var remains in spoiler.BlitzExtraItems) {
+<#         foreach (var item in spoiler.BlitzExtraItems) {
 #>
-<div><#= remains.Name() #></div>
+<div><#= item.Name() #></div>
 <# } #>
 <# } #>
-<# if (spoiler.DungeonEntrances.Any()) { 
+<# if (spoiler.RandomStartingItems.Any()) { 
+#>
+<h2>Blitz Starting Items</h2>
+<#         foreach (var item in spoiler.RandomStartingItems) {
+#>
+<div><#= item.Name() #></div>
+<# } #>
+<# } #>
+<# if (spoiler.Entrances.Any()) { 
 #>
 <h2>Dungeon Entrance Replacements</h2>
 <table border="1" class="item-replacements">
@@ -117,7 +125,7 @@
         <th></th>
         <th>New Destination</th>
     </tr>
-<#         foreach (var dungeonEntrance in spoiler.DungeonEntrances) {#>
+<#         foreach (var dungeonEntrance in spoiler.Entrances) {#>
     <tr data-id="<#= dungeonEntrance.DestinationId #>" data-newlocationid="<#= dungeonEntrance.EntranceId #>" class="unavailable">
         <td class="newlocation"><#= dungeonEntrance.Entrance #></td>
         <td><input type="checkbox"/></td>

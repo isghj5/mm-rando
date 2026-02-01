@@ -1,0 +1,153 @@
+@use '@angular/material' as mat;
+@import 'themes';
+
+:root {
+  @include mat.slider-overrides((
+    active-track-color: #d620a2,
+    inactive-track-color: #380432,
+    handle-color: #d620a2,
+    with-tick-marks-active-container-color: white,
+    with-tick-marks-inactive-container-color: white,
+  ));
+  
+  --mdc-slider-with-tick-marks-container-shape: 2px;
+  --mdc-slider-with-tick-marks-container-size: 4px;
+  --mdc-slider-label-container-color: #d620a2;
+  --mat-slider-value-indicator-opacity: 0.9;
+}
+
+@include nb-install() {
+
+  .mat-mdc-slide-toggle {
+    --mdc-switch-selected-track-color: #{nb-theme(color-primary-100)} !important;
+    --mdc-switch-selected-handle-color: #{nb-theme(color-primary-100)} !important;
+    --mdc-switch-selected-hover-track-color: #{nb-theme(color-primary-100)} !important;
+    --mdc-switch-selected-hover-handle-color: #{nb-theme(color-primary-100)} !important;
+    --mdc-switch-selected-focus-track-color: #{nb-theme(color-primary-100)} !important;
+    --mdc-switch-selected-focus-handle-color: #{nb-theme(color-primary-100)} !important;
+    --mdc-switch-selected-pressed-track-color: #{nb-theme(color-primary-100)} !important;
+    --mdc-switch-selected-pressed-handle-color: #{nb-theme(color-primary-100)} !important;
+    
+    .mdc-label { color: #{nb-theme(text-basic-color)} !important; }
+  }
+  
+  .mat-mdc-radio-button {
+    .mdc-form-field { color: #{nb-theme(text-basic-color)} !important; }
+    
+    .mdc-radio__native-control:enabled:checked ~ .mdc-radio__background .mdc-radio__outer-circle {
+      border-color: #{nb-theme(color-primary-100)} !important;
+    }
+    
+    .mdc-radio__native-control:enabled:checked ~ .mdc-radio__background .mdc-radio__inner-circle {
+      border-color: #{nb-theme(color-primary-100)} !important;
+    }
+    
+    .mdc-radio__native-control:enabled ~ .mdc-radio__background .mdc-radio__outer-circle {
+      border-color: #{nb-theme(color-basic-600)} !important;
+    }
+  }
+  
+  .mat-mdc-slider {
+    width: 90% !important;
+    min-width: 90% !important;
+    
+    .mdc-slider__track--inactive { background-color: #d620a2 !important; }
+    .mdc-slider__track--active { background-color: #380432 !important; }
+    
+    .mdc-slider__thumb-knob,
+    .mdc-slider__thumb-knob:active,
+    .mdc-slider__thumb-knob:focus,
+    .mdc-slider__thumb-knob:hover,
+    .mdc-slider__thumb:active .mdc-slider__thumb-knob,
+    .mdc-slider__thumb:focus .mdc-slider__thumb-knob,
+    .mdc-slider__thumb:hover .mdc-slider__thumb-knob {
+      background-color: #d620a2 !important;
+    }
+    
+    .mdc-slider__track {
+      height: 4px !important;
+      min-height: 4px !important;
+      width: 100% !important;
+    }
+  }
+  
+  .slider-container {
+    width: 100%;
+    
+    .mat-slider,
+    .mat-mdc-slider {
+      width: 90% !important;
+      min-width: 90% !important;
+      
+      .mdc-slider {
+        width: 90% !important;
+        min-width: 90% !important;
+      }
+    }
+  }
+  
+  .slider-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+    
+    .numberTextInputLabel { 
+      margin-right: 10px; 
+      flex-shrink: 0; 
+    }
+
+    .slider-value-input {
+      min-width: 40px;
+      max-width: 48px !important;
+      text-align: center !important;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+      padding: 4px 8px;
+      background: rgba(255, 107, 157, 0.1);
+      border-radius: 4px;
+      border: 1px solid rgba(255, 107, 157, 0.3);
+      flex-shrink: 0;
+      
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      
+      &[type=number] {
+        -moz-appearance: textfield;
+      }
+      
+      &:focus {
+        border-color: #ff6b9d;
+        box-shadow: 0 0 0 2px rgba(255, 107, 157, 0.2);
+      }
+    }
+    
+    // Responsive adjustments for smaller screens
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      
+      .numberTextInputLabel {
+        margin-right: 0;
+        margin-bottom: 4px;
+      }
+      
+      .slider-value-input {
+        align-self: flex-start;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .slider-value-input {
+        min-width: 60px;
+        max-width: 80px !important;
+      }
+    }
+  }
+}

@@ -70,8 +70,18 @@ namespace MMR.Randomizer.Utils
 
         public static void WriteToROM(int Addr, byte[] val)
         {
-            int f = RomUtils.GetFileIndexForWriting(Addr);
-            int dest = Addr - RomData.MMFileList[f].Addr;
+            int f;
+            int dest;
+            if (Addr < 0)
+            {
+                f = RomUtils.GetFileIndexForWritingVRAM((uint)Addr);
+                dest = (int)(Addr - RomData.MMFileList[f].VRamStart);
+            }
+            else
+            {
+                f = RomUtils.GetFileIndexForWriting(Addr);
+                dest = Addr - RomData.MMFileList[f].Addr;
+            }
             Arr_Insert(val, 0, val.Length, RomData.MMFileList[f].Data, dest);
         }
 

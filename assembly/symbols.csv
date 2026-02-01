@@ -23,6 +23,7 @@
 0x800A7D28,z2_random_drop_spawn
 0x800af710,z2_Effect_GetPlayState
 0x800B16B8,z2_EffectSsKiraKira_SpawnSmall
+0x800B16F4,z2_EffectSsKiraKira_SpawnDispersed
 0x800B26A8,z2_EffectSsHitmark_SpawnCustomScale
 0x800B320C,z2_EffectSsIceSmoke_Spawn
 0x800B3BA4,z2_SetShape
@@ -62,6 +63,7 @@
 0x800BB0C0,z2_Actor_SpawnAsChild
 0x800BB498,z2_ActorRemove
 0x800BDC5C,z2_Actor_ChangeAnimation
+0x800BDFC0,z2_Gfx_DrawDListOpa
 0x800C3C2C,z2_BgCheck_GetCollisionHeader
 0x800C4F84,z2_BgCheck_EntityCheckCeiling
 0x800C6248,z2_DynaPoly_GetActor
@@ -127,6 +129,7 @@
 0x80114978,z2_CheckItemObtainability
 0x801149A0,z2_RemoveItem
 0x80114E90,z2_HasEmptyBottle
+0x80114F2C,z2_Inventory_HasItemInBottle
 0x8011552C,z2_HudSetAButtonText
 0x80115908,z2_Health_ChangeBy
 0x801159EC,z2_AddRupees
@@ -140,6 +143,7 @@
 0x801233E4,z2_CanInteract
 0x8012364C,z2_Inventory_GetBtnItem
 0x80123C90,z2_Player_SetEquipmentData
+0x80123D50,z2_Player_UpdateBottleHeld
 0x801242DC,z2_801242DC
 0x8012BC50,z2_8012BC50
 0x8012BF78,z2_Gfx_CallSetupDL
@@ -153,6 +157,7 @@
 0x8012F2E0,z2_object_spawn
 0x8012F4FC,z2_load_objects
 0x8012F608,z2_GetObjectIndex
+0x801306A4,z2_Scene_SetExitFade
 0x80131758,z2_AnimatedMat_Draw
 0x801323A0,z2_Entrance_GetTransitionFlags
 0x80132338,z2_Entrance_GetSceneIdAbsolute

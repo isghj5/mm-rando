@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 17
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "MM Randomizer GUI", "MM Randomizer GUI.njsproj", "{C9BC1C46-8498-44A7-84E0-3638398143A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C9BC1C46-8498-44A7-84E0-3638398143A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9BC1C46-8498-44A7-84E0-3638398143A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9BC1C46-8498-44A7-84E0-3638398143A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9BC1C46-8498-44A7-84E0-3638398143A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10923A9C-5DAD-4702-B4A2-CB39A67E84C8}
+	EndGlobalSection
+EndGlobal

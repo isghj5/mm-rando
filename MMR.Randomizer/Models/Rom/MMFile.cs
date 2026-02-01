@@ -13,7 +13,9 @@ namespace MMR.Randomizer.Models.Rom
         public bool IsCompressed;
         public bool WasEdited;
         public bool IsStatic;
-        public bool IsReadOnly;
+        public uint VRamStart;
+        public uint VRamEnd;
+        public bool IsReadOnly; // Used for actorizer injected files, we dont want to use default (address->write to) and write hacks to the wrong spot
 
         public MMFile Clone()
         {
@@ -26,6 +28,8 @@ namespace MMR.Randomizer.Models.Rom
                 IsCompressed = IsCompressed, // is normally compressed
                 WasEdited = WasEdited,
                 IsStatic = IsStatic,
+                VRamStart = VRamStart,
+                VRamEnd = VRamEnd,
                 IsReadOnly = IsReadOnly,
                 Data = Data?.ToArray()
             };

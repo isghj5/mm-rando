@@ -17,6 +17,7 @@ copy: mm copy-only
 copy-only:
 	cp $(GEN_DIR)/rom_patch.bin $(RES_DIR)
 	cp $(GEN_DIR)/symbols.json  $(RES_DIR)
+	cp -r $(GEN_DIR)/patches       $(RES_DIR)
 
 symbols:
 	$(PYTHON) scripts/symbols.py -o src/Symbols.asm symbols.csv

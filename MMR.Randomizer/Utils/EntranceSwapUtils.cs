@@ -1,6 +1,8 @@
 ﻿using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MMR.Randomizer.Utils
 {
@@ -13,42 +15,67 @@ namespace MMR.Randomizer.Utils
                 { 93, 94 },     // twin islands
                 { 77, 72 }      // goron village
             };
-        internal static void WriteNewEntrance(DungeonEntrance exit, DungeonEntrance newSpawn)
+        internal static void WriteNewEntrance(Entrance exit, Entrance newSpawn)
         {
+            foreach (var hackContent in exit.HackContent(exit == newSpawn))
+            {
+                ResourceUtils.ApplyHack(hackContent);
+            }
+
             var spawnId = newSpawn.SpawnId();
-            foreach (var exitInfo in exit.ExitIndices())
+            if (spawnId.HasValue)
             {
-                var sceneNumber = exitInfo.Item1;
-                var exitIndex = exitInfo.Item2;
-                EntranceUtils.WriteSceneExits(sceneNumber, exitIndex, spawnId);
-                if (sceneSync.ContainsKey(sceneNumber))
+                var exitPolygonType = exit.ExitPolygonType();
+                if (exitPolygonType != null)
                 {
-                    EntranceUtils.WriteSceneExits(sceneSync[sceneNumber], exitIndex, spawnId);
+                    EntranceUtils.WritePolygonTypeExitIndex(exitPolygonType.SceneId, exitPolygonType.PolygonType, exitPolygonType.NewExitIndices, spawnId.Value);
+                }
+                foreach (var exitInfo in exit.ExitIndices())
+                {
+                    var sceneNumber = exitInfo.Item1;
+                    var exitIndex = exitInfo.Item2;
+                    EntranceUtils.WriteSceneExits(sceneNumber, exitIndex, spawnId.Value);
+                    if (sceneSync.ContainsKey(sceneNumber))
+                    {
+                        EntranceUtils.WriteSceneExits(sceneSync[sceneNumber], exitIndex, spawnId.Value);
+                    }
+                }
+                foreach (var cutsceneExitInfo in exit.ExitCutscenes())
+                {
+                    var sceneNumber = cutsceneExitInfo.Item1;
+                    var setupIndex = cutsceneExitInfo.Item2;
+                    var cutsceneIndex = cutsceneExitInfo.Item3;
+                    EntranceUtils.WriteCutsceneExits(sceneNumber, setupIndex, cutsceneIndex, spawnId.Value);
+                    if (sceneSync.ContainsKey(sceneNumber))
+                    {
+                        EntranceUtils.WriteCutsceneExits(sceneSync[sceneNumber], setupIndex, cutsceneIndex, spawnId.Value);
+                    }
+                }
+                foreach (var address in exit.ExitAddresses())
+                {
+                    ReadWriteUtils.WriteToROM(address, spawnId.Value);
                 }
             }
-            foreach (var cutsceneExitInfo in exit.ExitCutscenes())
+            else
             {
-                var sceneNumber = cutsceneExitInfo.Item1;
-                var setupIndex = cutsceneExitInfo.Item2;
-                var cutsceneIndex = cutsceneExitInfo.Item3;
-                EntranceUtils.WriteCutsceneExits(sceneNumber, setupIndex, cutsceneIndex, spawnId);
-                if (sceneSync.ContainsKey(sceneNumber))
+                if (!exit.ExitActorParams().Any())
                 {
-                    EntranceUtils.WriteCutsceneExits(sceneSync[sceneNumber], setupIndex, cutsceneIndex, spawnId);
+                    throw new Exception($"Failed to make any changes for {exit} leading to {newSpawn}.");
                 }
             }
-            foreach (var address in exit.ExitAddresses())
+            var spawnActorParams = newSpawn.SpawnActorParams();
+            foreach (var exitActorParams in exit.ExitActorParams())
             {
-                ReadWriteUtils.WriteToROM(address, spawnId);
+                EntranceUtils.WriteSceneActorParams(exitActorParams.SceneId, exitActorParams.SetupIndex, exitActorParams.RoomIndex, exitActorParams.ActorIndex, spawnActorParams.ActorId, spawnActorParams.Param, spawnActorParams.ParamMask, spawnActorParams.RotXParam, spawnActorParams.RotYParam, spawnActorParams.RotZParam);
             }
         }
 
-        internal static void WriteSpawnToROM(DungeonEntrance newSpawn)
-        {
-            var spawnAddress = newSpawn.SpawnId();
-            ReadWriteUtils.WriteToROM(0xBDB882, spawnAddress);
-            ReadWriteUtils.WriteToROM(0x02E90FD4, spawnAddress);
-            ReadWriteUtils.WriteToROM(0x02E90FDC, spawnAddress);
-        }
+        //internal static void WriteSpawnToROM(Entrance newSpawn)
+        //{
+        //    var spawnAddress = newSpawn.SpawnId();
+        //    ReadWriteUtils.WriteToROM(0xBDB882, spawnAddress);
+        //    ReadWriteUtils.WriteToROM(0x02E90FD4, spawnAddress);
+        //    ReadWriteUtils.WriteToROM(0x02E90FDC, spawnAddress);
+        //}
     }
 }

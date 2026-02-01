@@ -41,7 +41,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x11)]
         [EnemizerSceneEnemyReplacementBlock(Actor.HoneyAndDarling,
            Actor.UnusedFallingBridge)] // can instant crash you at the door
-        HoneyAndDarling = 0x04,
+        HoneyDarling = 0x04,
 
         [FileID(1145)]
         [ClearEnemyPuzzleRooms(1, 2, 4)]

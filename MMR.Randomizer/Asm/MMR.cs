@@ -45,7 +45,7 @@ namespace MMR.Randomizer.Asm
         public ushort LocationLullaby;
         public ushort LocationLullabyIntro;
 
-        public byte ExtraStartingMaps;
+        public ushort ExtraStartingMapsAndTokens;
         public byte[] ExtraStartingItemIds;
         public ushort ExtraStartingItemIdsLength;
 
@@ -97,8 +97,7 @@ namespace MMR.Randomizer.Asm
                 writer.WriteUInt16(this.LocationLullaby);
                 writer.WriteUInt16(this.LocationLullabyIntro);
 
-                writer.WriteByte(this.ExtraStartingMaps);
-                writer.WriteByte(0); // padding
+                writer.WriteUInt16(this.ExtraStartingMapsAndTokens);
                 writer.WriteBytes(this.ExtraStartingItemIds);
                 writer.WriteUInt16(this.ExtraStartingItemIdsLength);
                 foreach (var val in this.ItemsToReturnIds)
@@ -147,6 +146,9 @@ namespace MMR.Randomizer.Asm
         public ushort LocationLullabyIntro { get; set; }
 
         public TingleMap ExtraStartingMaps { get; set; }
+
+        public byte ExtraStartingSwampSkullTokens { get; set; }
+        public byte ExtraStartingOceanSkullTokens { get; set; }
 
         public List<byte> ExtraStartingItemIds { get; set; }
 
@@ -216,7 +218,7 @@ namespace MMR.Randomizer.Asm
                 LocationLullaby = this.LocationLullaby,
                 LocationLullabyIntro = this.LocationLullabyIntro,
 
-                ExtraStartingMaps = (byte)this.ExtraStartingMaps,
+                ExtraStartingMapsAndTokens = (ushort)(((byte)this.ExtraStartingMaps) | (this.ExtraStartingSwampSkullTokens << 6) | (this.ExtraStartingOceanSkullTokens << 11)),
                 ExtraStartingItemIds = extraStartingItemIds,
                 ExtraStartingItemIdsLength = (ushort)this.ExtraStartingItemIds.Count,
 

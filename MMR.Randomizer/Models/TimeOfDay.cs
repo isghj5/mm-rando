@@ -12,5 +12,6 @@ namespace MMR.Randomizer.Models
         Night2 = 8,
         Day3 = 16,
         Night3 = 32,
+        All = Day1 | Night1 | Day2 | Night2 | Day3 | Night3
     }
 }

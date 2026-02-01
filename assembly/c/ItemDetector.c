@@ -43,10 +43,38 @@ static void ProcessActorGiIndex(Actor* actor, GlobalContext* ctxt, u16 giIndex) 
     }
 }
 
-static void ProcessGoldenSkulltulaFlag(Actor* actor, GlobalContext* ctxt, u16 skulltulaFlag) {
+static ColorRGBA8 sparklePrimColor = { 255, 255, 127, 0 };
+static ColorRGBA8 sparkleEnvColor = { 255, 255, 255, 0 };
+static Vec3f sparkleVelocity = { 0.0f, 0.1f, 0.0f };
+static Vec3f sparkleAcceleration = { 0.0f, 0.01f, 0.0f };
+
+static void ProcessObjectSparkle(Actor* actor, GlobalContext* ctxt, f32 spreadXZ, f32 spreadY, f32 yOffset) {
+    Vec3f pos;
+    pos.x = actor->currPosRot.pos.x + ((z2_Rand_ZeroOne() - 0.5f) * spreadXZ);
+    pos.y = actor->currPosRot.pos.y + ((z2_Rand_ZeroOne() - yOffset) * spreadY);
+    pos.z = actor->currPosRot.pos.z + ((z2_Rand_ZeroOne() - 0.5f) * spreadXZ);
+    z2_EffectSsKiraKira_SpawnDispersed(ctxt, &pos, &sparkleVelocity, &sparkleAcceleration, &sparklePrimColor, &sparkleEnvColor, 2000, 16);
+}
+
+static void ProcessObjectSparkleGi(Actor* actor, GlobalContext* ctxt, u16 giIndex, f32 spreadXZ, f32 spreadY, f32 yOffset) {
+    if (!giIndex) {
+        return;
+    }
+    if (!MISC_CONFIG.flags.minorDropSparkle) {
+        return;
+    }
+    if (!MMR_GetGiEntry(giIndex)->message) {
+        return;
+    }
+    ProcessObjectSparkle(actor, ctxt, spreadXZ, spreadY, yOffset);
+}
+
+static u16 ProcessGoldenSkulltulaFlag(Actor* actor, GlobalContext* ctxt, u16 skulltulaFlag) {
     u16 enSwBaseGiIndex = ctxt->sceneNum == SCENE_KINSTA1 ? 0x13A : 0x158;
     *SkulltulaSoundTimerPtr(actor) = -2;
-    ProcessActorGiIndex(actor, ctxt, enSwBaseGiIndex + skulltulaFlag);
+    u16 giIndex = enSwBaseGiIndex + skulltulaFlag;
+    ProcessActorGiIndex(actor, ctxt, giIndex);
+    return giIndex;
 }
 
 /**
@@ -62,9 +90,11 @@ static bool StrayFairyGivesItem(Actor* actor, GlobalContext* ctxt) {
     return (flag != 1) && (flag != 8);
 }
 
-static void ProcessStrayFairyFlag(Actor* actor, GlobalContext* ctxt, u16 strayFairyFlag) {
+static u16 ProcessStrayFairyFlag(Actor* actor, GlobalContext* ctxt, u16 strayFairyFlag) {
     u16 curDungeonOffset = *(u16*)0x801F3F38;
-    ProcessActorGiIndex(actor, ctxt, 0x16D + (curDungeonOffset * 0x14) + strayFairyFlag);
+    u16 giIndex = 0x16D + (curDungeonOffset * 0x14) + strayFairyFlag;
+    ProcessActorGiIndex(actor, ctxt, giIndex);
+    return giIndex;
 }
 
 void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
@@ -72,7 +102,7 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
         return;
     }
 
-    if (!MISC_CONFIG.flags.fairyMaskShimmer && !MISC_CONFIG.flags.skullTokenSounds) {
+    if (!MISC_CONFIG.flags.fairyMaskShimmer && !MISC_CONFIG.flags.skullTokenSounds && !MISC_CONFIG.flags.minorDropSparkle) {
         return;
     }
 
@@ -86,7 +116,7 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
     }
 
     // great fairy mask already flagged to shimmer and skulltula sound timer already set, or those features are disabled
-    if ((!MISC_CONFIG.flags.fairyMaskShimmer || (ctxt->actorCtx.unk5 & 0x8)) && (!MISC_CONFIG.flags.skullTokenSounds || skulltulaSoundTimer > 1)) {
+    if ((!MISC_CONFIG.flags.fairyMaskShimmer || (ctxt->actorCtx.unk5 & 0x8)) && (!MISC_CONFIG.flags.skullTokenSounds || skulltulaSoundTimer > 1) && !MISC_CONFIG.flags.minorDropSparkle) {
         return;
     }
 
@@ -367,7 +397,9 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             if (actor->params == 0x1800) {
                 ProcessActorGiIndex(actor, ctxt, 0xA3);
             }
-            ProcessActorGiIndex(actor, ctxt, GossipStone_GetGiIndex((ActorEnGs*)actor, ctxt));
+            u16 gossipStoneGiIndex = GossipStone_GetGiIndex((ActorEnGs*)actor, ctxt);
+            ProcessActorGiIndex(actor, ctxt, gossipStoneGiIndex);
+            // ProcessObjectSparkleGi(actor, ctxt, gossipStoneGiIndex, 50.0f, 50.0f, 0.0f);
             break;
         case ACTOR_EN_SCOPENUTS: // Business Scrub
             if (actor->params == 0x1F) {
@@ -545,21 +577,25 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
                 ProcessActorGiIndex(actor, ctxt, Rupee_GetGiIndex(actor));
             }
             break;
-        case ACTOR_OBJ_COMB: // beehive
+        case ACTOR_OBJ_COMB:; // beehive
+            u16 objCombGiIndex = 0;
             if (actor->params & 0x8000) { // Golden Skulltula
-                ProcessGoldenSkulltulaFlag(actor, ctxt, actor->params & 0x1F);
+                objCombGiIndex = ProcessGoldenSkulltulaFlag(actor, ctxt, actor->params & 0x1F);
             } else if (actor->params & 0x80) { // Bees
                 // Ignore
             } else if (actor->params & 0x3F == 0xC) { // Piece of Heart
                 ProcessActorGiIndex(actor, ctxt, 0x111);
+                objCombGiIndex = 0x111;
             } else {
                 u16 objCombFlag = (actor->params >> 8) & 0x7F;
                 if (actor->params & 0x3F == 0x11) { // Stray Fairy
                     ProcessStrayFairyFlag(actor, ctxt, objCombFlag);
                 } else {
-                    ProcessActorGiIndex(actor, ctxt, Rupee_CollectableFlagToGiIndex(objCombFlag));
+                    objCombGiIndex = Rupee_CollectableFlagToGiIndex(objCombFlag);
+                    ProcessActorGiIndex(actor, ctxt, objCombGiIndex);
                 }
             }
+            ProcessObjectSparkleGi(actor, ctxt, objCombGiIndex, 20.0f, -20.0f, 0.0f);
             break;
         case ACTOR_EN_FISH2: // Marine Research Lab Fish
             ProcessActorGiIndex(actor, ctxt, 0x112);
@@ -624,36 +660,42 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
                 ProcessGoldenSkulltulaFlag(actor, ctxt, (actor->params & 0xFC) >> 2);
             }
             break;
-        case ACTOR_OBJ_TSUBO: // Pot
+        case ACTOR_OBJ_TSUBO:; // Pot
+            u16 tsuboGiIndex = 0;
             if (actor->initPosRot.rot.z == 2) { // spawns skulltula
-                ProcessGoldenSkulltulaFlag(actor, ctxt, actor->params & 0x1F);
+                tsuboGiIndex = ProcessGoldenSkulltulaFlag(actor, ctxt, actor->params & 0x1F);
             } else {
                 u16 tsuboFlag = actor->params >> 9 & 0x7F;
                 if (actor->params & 0x3F == 0x11) { // Stray Fairy
-                    ProcessStrayFairyFlag(actor, ctxt, tsuboFlag);
+                    tsuboGiIndex = ProcessStrayFairyFlag(actor, ctxt, tsuboFlag);
                 } else {
-                    ProcessActorGiIndex(actor, ctxt, Rupee_CollectableFlagToGiIndex(tsuboFlag));
+                    tsuboGiIndex = Rupee_CollectableFlagToGiIndex(tsuboFlag);
+                    ProcessActorGiIndex(actor, ctxt, tsuboGiIndex);
                 }
             }
+            ProcessObjectSparkleGi(actor, ctxt, tsuboGiIndex, 35.0f, 35.0f, 0.0f);
             break;
         case ACTOR_OBJ_MAKEKINSUTA: // Soft Soil with Golden Skulltula
             ProcessGoldenSkulltulaFlag(actor, ctxt, (actor->params & 0x1F00) >> 8);
             break;
-        case ACTOR_OBJ_KIBAKO2: // Large Crate
+        case ACTOR_OBJ_KIBAKO2:; // Large Crate
+            u16 objKibakoGiIndex = 0;
             if (((actor->params) >> 0xF) & 1) { // Spawns Golden Skulltula
                 ProcessGoldenSkulltulaFlag(actor, ctxt, actor->params & 0x1F);
             } else {
                 u16 kibako2Flag = actor->params >> 8 & 0x7F;
                 if (actor->params & 0x3F == 0x11) { // Stray Fairy
-                    ProcessStrayFairyFlag(actor, ctxt, kibako2Flag);
+                    objKibakoGiIndex = ProcessStrayFairyFlag(actor, ctxt, kibako2Flag);
                 } else {
-                    ProcessActorGiIndex(actor, ctxt, Rupee_CollectableFlagToGiIndex(kibako2Flag));
+                    objKibakoGiIndex = Rupee_CollectableFlagToGiIndex(kibako2Flag);
+                    ProcessActorGiIndex(actor, ctxt, objKibakoGiIndex);
                 }
             }
+            ProcessObjectSparkleGi(actor, ctxt, objKibakoGiIndex, 80.0f, 60.0f, 0.0f);
             break;
         case ACTOR_BG_KIN2_PICTURE: // Skullkid Picture
             if (!(actor->params & 0x20)) { // Spawns Golden Skulltula
-                ProcessGoldenSkulltulaFlag(actor, ctxt, actor->params & 0x1F);
+                ProcessGoldenSkulltulaFlag(actor, ctxt, actor->params & 0x1Fa);
             }
             break;
         case ACTOR_EN_KUJIYA: // Lottery
@@ -679,8 +721,13 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             break;
         case ACTOR_EN_KUSA: // Grass
             if (actor->params & 3 == 3) {
-                u16 kusaFlag = (actor->params >> 8) & 0x7F;
-                ProcessActorGiIndex(actor, ctxt, Rupee_CollectableFlagToGiIndex(kusaFlag));
+                u8 isCut = *(((u8*)actor)+0x197);
+                if (!isCut) {
+                    u16 kusaFlag = (actor->params >> 8) & 0x7F;
+                    u16 kusaGiIndex = Rupee_CollectableFlagToGiIndex(kusaFlag);
+                    ProcessActorGiIndex(actor, ctxt, kusaGiIndex);
+                    ProcessObjectSparkleGi(actor, ctxt, kusaGiIndex, 20.0f, 20.0f, 0.0f);
+                }
             }
             break;
         case ACTOR_OBJ_SNOWBALL: // Large Snowball
@@ -689,11 +736,38 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
         case ACTOR_OBJ_KIBAKO:; // Small Crate
         case ACTOR_OBJ_FLOWERPOT:; // Flower Pot
             u16 collectibleFlag = (actor->params >> 8) & 0x7F;
+            u16 giIndex = 0;
             if (actor->params & 0x3F == 0x11) { // Stray Fairy
-                ProcessStrayFairyFlag(actor, ctxt, collectibleFlag);
+                giIndex = ProcessStrayFairyFlag(actor, ctxt, collectibleFlag);
             } else {
-                ProcessActorGiIndex(actor, ctxt, Rupee_CollectableFlagToGiIndex(collectibleFlag));
+                giIndex = Rupee_CollectableFlagToGiIndex(collectibleFlag);
+                ProcessActorGiIndex(actor, ctxt, giIndex);
             }
+            f32 spreadXZ;
+            f32 spreadY;
+            switch (actor->id) {
+                case ACTOR_OBJ_SNOWBALL:
+                    spreadXZ = 120.0f;
+                    spreadY = 60.0f;
+                    break;
+                case ACTOR_OBJ_KIBAKO:
+                    spreadXZ = 40.0f;
+                    spreadY = 40.0f;
+                    break;
+                case ACTOR_OBJ_SNOWBALL2:
+                    spreadXZ = 30.0f;
+                    spreadY = 25.0f;
+                    break;
+                case ACTOR_OBJ_FLOWERPOT:
+                    spreadXZ = 20.0f;
+                    spreadY = 20.0f;
+                    break;
+                default:
+                    spreadXZ = 60.0f;
+                    spreadY = 60.0f;
+                    break;
+            }
+            ProcessObjectSparkleGi(actor, ctxt, giIndex, spreadXZ, spreadY, 0.0f);
             break;
         case ACTOR_EN_INVISIBLE_RUPPE:; // Invisible Rupee
             u16 invisibleRupeeFlag = actor->params >> 2;
@@ -746,7 +820,9 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             break;
         case ACTOR_EN_ISHI:; // Small Rock
             u16 ishiFlag = (actor->params >> 9) & 0x7F;
-            ProcessActorGiIndex(actor, ctxt, Rupee_CollectableFlagToGiIndex(ishiFlag));
+            u16 ishiGiIndex = Rupee_CollectableFlagToGiIndex(ishiFlag);
+            ProcessActorGiIndex(actor, ctxt, ishiGiIndex);
+            ProcessObjectSparkleGi(actor, ctxt, ishiGiIndex, 20.0f, 20.0f, 0.0f);
             break;
         case ACTOR_EN_TK: // Dampe
             if (actor->draw) {
@@ -764,8 +840,10 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
                 ProcessActorGiIndex(actor, ctxt, Minifrog_GetGiIndex(minifrog, ctxt));
             }
             break;
-        case ACTOR_EN_BUTTE: // Butterfly
-            ProcessActorGiIndex(actor, ctxt, Bufferfly_GetGiIndex((ActorEnButte*)actor, ctxt));
+        case ACTOR_EN_BUTTE:; // Butterfly
+            u16 butteGiIndex = Bufferfly_GetGiIndex((ActorEnButte*)actor, ctxt);
+            ProcessActorGiIndex(actor, ctxt, butteGiIndex);
+            ProcessObjectSparkleGi(actor, ctxt, butteGiIndex, 10.0f, 40.0f, 0.5f);
             break;
         default:
             *SkulltulaSoundTimerPtr(actor) = -1;

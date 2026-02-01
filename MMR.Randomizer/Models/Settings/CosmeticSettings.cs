@@ -94,7 +94,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Sets the Low health beeping sfx
         /// </summary>
-        [SettingName("Low Heatlh Sound")]
+        [SettingName("Low Health Sound")]
         [Description("Select a Low Health SFX setting:\n\n - Default: Vanilla sound.\n - Disabled: No sound will play.\n - Random: a random SFX will be chosen.\n - Specific SFX: a specific SFX will play as the low health sfx.")]
         public LowHealthSFX LowHealthSFX { get; set; }
 

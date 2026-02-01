@@ -7,6 +7,7 @@ namespace MMR.Randomizer.Attributes
     {
         public Region? Region { get; }
         public Item? Reference { get; }
+        public bool PassToLocation { get; }
 
         public RegionAttribute(Region region)
         {
@@ -16,6 +17,12 @@ namespace MMR.Randomizer.Attributes
         public RegionAttribute(Item reference)
         {
             Reference = reference;
+        }
+
+        public RegionAttribute(Item reference, bool passToLocation)
+        {
+            Reference = reference;
+            PassToLocation = passToLocation;
         }
     }
 }

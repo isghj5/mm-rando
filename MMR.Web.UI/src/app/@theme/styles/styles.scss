@@ -1,0 +1,750 @@
+@use '@nebular/theme/styles/globals' as *;
+@use 'themes' as *;
+
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import 'material';
+
+// loading progress bar theme
+@import './pace.theme';
+
+// install the framework and custom global styles
+@include nb-install() {
+
+  // loading progress bar
+  @include ngx-pace-theme();
+
+
+
+  ngx-app {
+    // framework global styles
+    @include nb-theme-global();
+
+    // theme related changes restoring the old look and feel scoped to generator to not mess with outer website
+    #generator {
+      .columns {
+        //Electron
+        top: 30px;
+        height: 91%;
+        left: 0px;
+        padding-left: 0px;
+        position: absolute;
+      }
+
+      .webLayout {
+        .columns {
+          //Web
+          [nbButton].footerGenerateButton.appearance-filled.status-success {
+            bottom: 8px;
+          }
+
+          top: 0px;
+          height: 100%;
+        }
+      }
+
+      .ioInput,
+      .ioInputWeb,
+      .numberTextInput {
+        background: nb-theme(color-basic-1200) !important;
+      }
+
+      [nbInput].status-basic {
+        &.footerInput, &.footerInput:hover,
+        &.footerInputWeb, &.footerInputWeb:hover,
+        &.footerInputShort, &.footerInputShort:hover {
+          background-color: nb-theme(color-basic-1200);
+        }
+      }
+
+      div.record-picker {
+        ul {
+          border-bottom: unset;
+        }
+
+        .selected {
+          background-color: nb-theme(color-basic-1100) !important;
+        }
+      }
+
+      nb-popover {
+        .arrow {
+          &::after {
+            border-bottom: 11px solid nb-theme(color-basic-700);
+            border-left: 11px solid transparent;
+            border-right: 11px solid transparent;
+          }
+
+          border-bottom: 11px solid nb-theme(color-warning-500);
+          border-left: 11px solid transparent;
+          border-right: 11px solid transparent;
+        }
+
+        border: 2px solid nb-theme(color-warning-500) !important;
+      }
+
+      nb-card-body {
+        color: nb-theme(color-basic-600);
+
+        .selected {
+          background: nb-theme(color-basic-1100) !important;
+        }
+      }
+
+      nb-card.select.primary {
+        border: 2px solid nb-theme(color-info-500) !important;
+      }
+
+      .btn-xsmall {
+        max-width: 300px;
+      }
+
+      nb-select {
+        line-height: 0.8 !important;
+      }
+
+      // Generator tab styling
+      nb-tab li, nb-tab p {
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+      }
+
+      nb-option, nb-option.selected {
+        color: nb-theme(color-basic-1000);
+
+        &:hover {
+          background-color: nb-theme(color-success-300) !important;
+        }
+      }
+
+      .textInput:focus {
+        border-color: nb-theme(color-info-500) !important;
+      }
+
+      .numberInput:focus {
+        border-color: nb-theme(color-info-500) !important;
+      }
+
+      .progress-value.success {
+        background-color: nb-theme(color-basic-1100) !important;
+        color: nb-theme(color-basic-1000);
+      }
+
+      .form-control {
+        background-color: nb-theme(color-basic-1200) !important;
+        display: block;
+        width: 100%;
+        font-size: 14px;
+        line-height: 1.5;
+        color: nb-theme(color-basic-600);
+        background-clip: padding-box;
+        border-radius: 3.5px;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        padding: 10.5px 15.75px;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        font-weight: 400;
+      }
+
+      .form-control:focus {
+        background-color: nb-theme(color-basic-1200) !important;
+      }
+
+      nb-select {
+        &.appearance-outline.status-basic {
+          .select-button[disabled] {
+            &:hover {
+              background-color: nb-theme(color-basic-900);
+              cursor: default;
+            }
+
+            background-color: nb-theme(color-basic-200);
+          }
+
+          .select-button {
+            &:hover {
+              background-color: nb-theme(color-basic-300);
+            }
+
+            &:focus {
+              background-color: nb-theme(color-basic-300);
+            }
+
+            nb-icon {
+              color: nb-theme(color-basic-100);
+            }
+
+            padding: 7px 17.5px;
+            font-size: 10.5px;
+            line-height: 1.25;
+            border-radius: 10.5px;
+            color: nb-theme(color-basic-100);
+            font-weight: nb-theme(picker-font-weight);
+            font-family: Roboto;
+
+            position: relative;
+            min-width: auto;
+            width: 100%;
+            text-align: start;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            border: none;
+
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            transition: none;
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-decoration: none;
+            display: inline-block;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+        }
+
+        &.selectXSmall {
+          display: block;
+        }
+
+        &.select-colors {
+          display: inline-block;
+          max-width: 300px;
+          width: 72%;
+        }
+      }
+
+      input.form-control.ng-valid.size-medium.status-basic.shape-rectangle {
+        max-width: unset;
+        border-radius: 2.38px;
+        padding: 10.5px 15.75px;
+        height: 28px;
+        margin: 1px 0 9px 0;
+        background-color: white;
+      }
+
+      nb-dialog-container {
+        input.size-small.status-basic.shape-rectangle {
+          line-height: unset;
+          padding: 5.25px 15.75px;
+        }
+
+        nb-card-header {
+          border: 0;
+          padding: 17.5px;
+          font-family: Roboto;
+          font-size: 15.75px;
+          font-weight: 600;
+
+          button[nbbutton] {
+            padding: 7px 17.5px;
+            font-size: 10.5px;
+            box-shadow: unset;
+          }
+        }
+
+        nb-card-footer {
+          border: 0;
+          padding: 17.5px;
+        }
+
+        .footerButtonWrapper {
+          padding: 0;
+          font-family: Roboto;
+          font-size: 15.75px;
+          font-weight: 600;
+
+          button[nbbutton].shape-rectangle {
+            line-height: 14px;
+            padding: 10.5px 21px;
+            font-size: 12.25px;
+
+            &.status-basic, &.status-primary {
+              background-color: nb-theme(color-warning-200);
+              border-color: nb-theme(color-warning-200);
+
+              &:hover {
+                background-color: nb-theme(color-warning-300);
+                border-color: nb-theme(color-warning-300);
+              }
+
+              &.yes {
+                background-color: nb-theme(color-warning-200);
+                border: nb-theme(color-warning-200);
+              }
+            }
+
+            &.status-danger {
+              padding: 10.5px 21px;
+              background-image: unset;
+              box-shadow: unset;
+            }
+          }
+        }
+
+        nb-card-body {
+          font-family: Roboto, "Helvetica Neue", sans-serif;
+        }
+
+        button[nbbutton] {
+          font-family: Roboto;
+          font-weight: 500;
+          font-size: 12.25px;
+          background-image: unset;
+
+          &.status-danger {
+            font-size: 12.25px;
+            line-height: 1.25;
+            border-radius: 10.5px;
+            background-color: nb-theme(color-warning-900);
+            border-color: nb-theme(color-warning-900);
+            color: nb-theme(color-success-700);
+
+            &:hover {
+              opacity: 0.9;
+            }
+          }
+        }
+      }
+
+      input.size-small.status-basic.shape-rectangle {
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        border-radius: 2.38px;
+        font-size: 12.25px;
+        padding: 1.4px 7px;
+        position: relative;
+        left: 0;
+        max-width: unset;
+        border: 2px solid nb-theme(color-primary-900);
+        text-align: left;
+        font-weight: 400;
+        line-height: 1.15;
+
+        &.ioInput {
+        }
+
+        &.numberTextInputFull.numberTextInput {
+          left: 0;
+          width: 100%;
+          text-align: left;
+        }
+
+        &.numberTextInput {
+          &.numberTextInputSmall {
+            max-width: 70px;
+          }
+
+          &.numberTextInputMedium {
+            max-width: 120px;
+          }
+
+          position: relative;
+          left: 15px;
+          max-width: 45px;
+          min-width: 30px;
+          width: auto;
+          text-align: center;
+          padding-top: 2.1px;
+          padding-bottom: 2.1px;
+        }
+      }
+
+      p.subheaderLabel {
+        margin-top: 0;
+        margin-bottom: 3px;
+      }
+
+      nb-tabset {
+        ul {
+          border-bottom: nb-theme(tile-border) solid nb-theme(color-basic-800);
+
+          > li.tab.active {
+            background-color: unset;
+
+            .tab-link::before {
+              height: 5px;
+            }
+
+            > a > span {
+              font-weight: nb-theme(menu-font-weight);
+              color: nb-theme(color-success-500);
+            }
+          }
+
+          > li > a > span {
+            &:hover {
+              font-weight: nb-theme(menu-hover-font-weight);
+            }
+
+            font-weight: 400;
+            font-family: Roboto;
+            line-height: 15px;
+            text-transform: none;
+          }
+        }
+
+        &.footerTabset ul.tabset {
+          margin-left: 8px;
+        }
+      }
+
+      nb-layout-header {
+        background-color: nb-theme(color-warning-100);
+
+        nav {
+          height: 1.25em;
+        }
+
+        div.dragRegion {
+          position: absolute;
+          left: 2px;
+          top: 2px;
+          width: calc(100% - 4px);
+          height: calc(100% - 2px);
+          pointer-events: none;
+          -webkit-app-region: drag;
+        }
+      }
+
+      .layout .layout-container .content .columns {
+        nb-layout-column.main-content {
+          background: nb-theme(color-success-800);
+          padding: 0;
+        }
+
+        nb-layout-column {
+          padding: 0 31.5px 0;
+        }
+      }
+
+      .webLayout {
+        nb-card {
+          height: 100%;
+        }
+
+        .settingsTabset {
+          height: 72%;
+        }
+      }
+
+      nb-card {
+        border: 0;
+        font-size: 14px;
+        line-height: 1.25;
+        background: nb-theme(background-basic-color-1);
+        color: #000;
+        margin-bottom: 21px;
+        border-radius: 2.38px;
+        box-shadow: none;
+        font-weight: 400;
+
+        &.popover-card {
+          border-radius: 8px;
+        }
+      }
+
+      nb-option-list {
+        border: 2px solid nb-theme(color-success-1100);
+        border-radius: nb-theme(dropdown-border-radius);
+
+        nb-option {
+          background-color: nb-theme(color-basic-700);
+          padding: 10.5px 21px;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          user-select: none;
+          font-weight: 500;
+
+          &:hover {
+            background-color: nb-theme(color-info-500);
+            color: nb-theme(color-basic-100);
+          }
+
+          &.selected {
+            background-color: nb-theme(color-basic-1100);
+            color: nb-theme(color-basic-100);
+          }
+
+          [nbInput].size-small:not(.input-full-width) {
+            max-width: inherit;
+          }
+        }
+      }
+
+      .form-control.ng-pristine.ng-valid.size-medium.status-basic.shape-rectangle {
+        &.ng-untouched, &.ng-touched {
+          border-radius: 2.38px;
+          padding: 10.5px 15.75px;
+          height: 28px;
+          margin: 1px 0 9px 0;
+          background-color: white;
+          border: 0;
+        }
+      }
+      .form-control.ng-pristine.size-medium.status-basic.shape-rectangle:disabled,
+      .form-control.size-medium.status-basic.shape-rectangle.nb-transition.ng-dirty:disabled {
+        &.ng-untouched, &.ng-touched {
+          border-radius: 2.38px;
+          padding: 10.5px 15.75px;
+          height: 28px;
+          margin: 1px 0 9px 0;
+          filter: opacity(0.3);
+          max-width: initial;
+          border: 0;
+        }
+      }
+
+      [nbButton], button.btn {
+        &.appearance-filled {
+          &.status-primary.headerButton {
+            background-color: nb-theme(color-info-500);
+            border-color: nb-theme(color-info-500);
+            color: nb-theme(color-success-700);
+          }
+
+          &.status-success {
+            &:hover {
+              background-color: nb-theme(color-warning-300);
+              border-color: nb-theme(color-warning-300);
+            }
+
+            bottom: 13px;
+            background-color: nb-theme(color-warning-200);
+            border-color: nb-theme(color-warning-200);
+            color: nb-theme(color-info-300);
+            padding: 10.5px 21px;
+            font-family: Roboto;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            @media (max-width: 959px) {
+              bottom: 8px;
+            }
+          }
+
+          &.status-primary, &.status-basic {
+            color: nb-theme(color-info-300);
+            background-color: nb-theme(color-warning-200);
+            border-color: nb-theme(color-warning-200);
+
+            &:disabled, &:hover:disabled {
+              background-color: nb-theme(color-basic-200);
+              border-color: nb-theme(color-basic-200);
+            }
+
+            &:hover {
+              background-color: nb-theme(color-warning-300);
+              border-color: nb-theme(color-warning-300);
+            }
+          }
+
+          &.size-medium.status-primary.shape-rectangle, &.size-medium.status-basic.shape-rectangle {
+            font-family: Roboto;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 4px 0 0 0;
+            letter-spacing: 0.4px;
+            height: 28px;
+            background-image: unset;
+          }
+        }
+      }
+
+      [nbButton].appearance-filled.status-info {
+        font-family: Roboto;
+        font-weight: 500;
+        font-size: 14px;
+        color: nb-theme(color-info-300);
+        background-color: nb-theme(color-info-500);
+        border-color: nb-theme(color-info-500);
+        box-shadow: none;
+      }
+
+      button.size-small.status-info.shape-rectangle {
+        font-size: 12.25px;
+        font-weight: 500;
+        padding: 3.85px 21px;
+        font-family: Roboto;
+        letter-spacing: 0.4px;
+        background-color: nb-theme(color-info-500);
+
+        &:hover {
+          background-color: nb-theme(color-warning-400);
+          border-color: nb-theme(color-warning-400);
+        }
+      }
+
+      div.dual-list > div.listbox > div.buttonBox > button[nbButton].btn.appearance-filled.status-basic.size-medium.shape-rectangle {
+        color: nb-theme(color-basic-100);
+        background-color: nb-theme(color-basic-500);
+        border-color: nb-theme(color-basic-500);
+
+        &:disabled, &:hover:disabled {
+          background-color: nb-theme(color-basic-1300);
+          border-color: nb-theme(color-basic-1300);
+        }
+
+        &:hover {
+          background-color: nb-theme(color-basic-300);
+          border-color: nb-theme(color-basic-300);
+        }
+      }
+
+      p.footerInputLabel {
+        left: 3px;
+      }
+
+      div.scrollable-container nb-layout-footer[fixed].fixed nav.fixed {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        padding: 17.5px;
+        height: 40px;
+        width: 100%;
+        background: nb-theme(color-warning-800);
+        color: nb-theme(color-success-700) !important;
+
+        a {
+          text-decoration: none;
+        }
+      }
+
+      nb-tab {
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        font-size: 14px;
+
+        h3 {
+          font-family: Roboto;
+        }
+
+        li, p {
+          font-family: Roboto, "Helvetica Neue", sans-serif;
+        }
+
+        a, a:hover, a:active {
+          color: nb-theme(color-primary-800);
+        }
+      }
+
+      [nbInput].status-basic, [nbInput].status-basic:hover {
+        background-color: nb-theme(color-basic-1200);
+        font-weight: 600 !important;
+        color: nb-theme(color-basic-400);
+      }
+
+      .tabset .tab a {
+        color: nb-theme(color-basic-1000) !important;
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      nb-tabset .tab.active .tab-link::before,
+      nb-tabset .tab:hover .tab-link::before {
+        background-color: nb-theme(color-success-400) !important;
+      }
+
+      nb-tabset a.tab {
+        height: 45px;
+
+        &.active {
+          margin-top: 6px;
+        }
+      }
+
+      nb-tabset a.tab-link {
+        background-color: transparent;
+        cursor: pointer;
+        padding: 14px 14px 8.4px 14px;
+        color: nb-theme(color-basic-1000);
+        font-family: Roboto;
+        font-size: 15.75px;
+        font-weight: 700;
+        line-height: 14px;
+        text-transform: uppercase;
+        margin-top: 7px;
+      }
+
+      mat-grid-tile.mat-grid-tile {
+        background-color: nb-theme(color-success-900);
+        border-radius: nb-theme(tile-border-radius);
+        border: nb-theme(tile-border) solid nb-theme(color-info-100);
+      }
+
+      p {
+        margin-top: 0;
+      }
+
+      ::-webkit-scrollbar {
+        background: nb-theme(color-primary-200);
+        width: nb-theme(scrollbar-width);
+      }
+
+      ::-webkit-scrollbar-track {
+        background: nb-theme(color-success-1100);
+        box-shadow: 0 0 3px nb-theme(color-success-200) inset;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: nb-theme(color-primary-200);
+      }
+    }
+
+    //DB: Tooltip delay
+    @keyframes tooltipFadeIn {
+      from {
+        opacity: 0;
+      }
+      75% {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    //Scrollbar style for Combobox
+    .cdk-overlay-pane {
+
+      > nb-popover {
+        animation-name: tooltipFadeIn;
+        animation-duration: 600ms;
+      }
+
+      mmr-gui-tooltip > nb-card > nb-card-body {
+        background-color: nb-theme(color-success-100);
+        color: nb-theme(color-basic-1000);
+        border-radius: nb-theme(border-radius);
+      }
+    }
+
+    nb-badge.status-success {
+      color: nb-theme(color-info-1000);
+    }
+  }
+}
+
+ngx-app {
+  font-size: 14px;
+}
+
+.color-picker {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: none !important;
+  will-change: auto !important;
+  position: fixed !important;
+  z-index: 9999 !important;
+  
+  &.positioned {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: opacity 0.1s ease-in-out !important;
+  }
+
+  .arrow {
+    display: none !important;
+  }
+}

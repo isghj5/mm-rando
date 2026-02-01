@@ -166,6 +166,11 @@ namespace MMR.Common.Extensions
             }
         }
 
+        public static bool SequenceEqualIgnoreOrder<TSource>(this IEnumerable<TSource> source, IEnumerable<TSource> other)
+        {
+            return source.OrderBy(x => x).SequenceEqual(other.OrderBy(x => x));
+        }
+
         public static byte[] FindAndReplace(this byte[] src, byte[] find, byte[] replace)
         {
             var result = new List<byte>();

@@ -183,16 +183,6 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] death_moon_crash {
-            get {
-                object obj = ResourceManager.GetObject("death_moon_crash", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] death_reduces_max_hearts {
             get {
                 object obj = ResourceManager.GetObject("death_reduces_max_hearts", resourceCulture);
@@ -233,9 +223,9 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] dm_4 {
+        internal static byte[] dm_8x {
             get {
-                object obj = ResourceManager.GetObject("dm_4", resourceCulture);
+                object obj = ResourceManager.GetObject("dm_8x", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -1,0 +1,381 @@
+<ng-container [ngSwitch]="subSetting ? subSetting.type : setting.type">
+
+  <!--Toggle-->
+  <ng-container *ngSwitchCase="'Checkbutton'">
+    <mat-slide-toggle name="toggle-{{setting.name}}" [disabled]="!visibilitySettingsMap[setting.name]" labelPosition="after" [(ngModel)]="assignmentSettingsMap[assignmentSettingName]" (ngModelChange)="app.checkVisibility($event, setting, app.findOption(setting.options, $event))"
+                      [nbPopover]="tooltipComponent" [nbPopoverContext]="{tooltip: settingTooltip}" [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'hint' : 'noop'" nbPopoverPlacement="right" nbPopoverAdjustment="counterclockwise">{{settingText}}</mat-slide-toggle>
+  </ng-container>
+
+  <!--Radio-->
+  <ng-container *ngSwitchCase="'Radiobutton'">
+    <p *ngIf="!skipLabel" class="radioGroupLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name]}">{{settingText}}</p>
+    <mat-radio-group name="radio-{{setting.name}}" [disabled]="!visibilitySettingsMap[setting.name]" labelPosition="after" [(ngModel)]="assignmentSettingsMap[assignmentSettingName]" (ngModelChange)="app.checkVisibility($event, setting, app.findOption(setting.options, $event))"
+                     [nbPopover]="tooltipComponent" [nbPopoverContext]="{tooltip: settingTooltip}" [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'hint' : 'noop'" nbPopoverPlacement="top" nbPopoverAdjustment="clockwise">
+      <mat-radio-button *ngFor="let option of setting.options; index as optionIndex" class="radioButton" [value]="option.name">
+        {{option.text}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </ng-container>
+  <!--Combo-->
+  <ng-container *ngSwitchCase="'Combobox'">
+    <span *ngIf="!skipLabel && section.is_colors && assignmentSettingsMap[assignmentSettingName] === 'Custom Color' && global.generator_customColorMap[setting.name].length > 0" class="comboBoxLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name], 'oneLineComboBox': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'ignoreNoLineBreak': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && !app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'oLCBLabelFirst': app.getColumnCount(refEl) > 2 && setting.no_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'oLCBLabelSecond': app.getColumnCount(refEl) > 2 && itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex)}">{{settingText}} ({{global.generator_customColorMap[setting.name]}})</span>
+    <span *ngIf="!skipLabel && (!section.is_colors || assignmentSettingsMap[assignmentSettingName] !== 'Custom Color' || global.generator_customColorMap[setting.name].length === 0)" class="comboBoxLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name], 'oneLineComboBox': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'ignoreNoLineBreak': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && !app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'oLCBLabelFirst': app.getColumnCount(refEl) > 2 && setting.no_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'oLCBLabelSecond': app.getColumnCount(refEl) > 2 && itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex)}">{{settingText}}</span>
+    <div [ngClass]="{'selectContainerWithInfo': app.getColumnCount(refEl) === 1}">
+
+      <!--Custom Color Picker for Cosmetics-->
+      <ng-container *ngIf="section.is_colors">
+        <div class="colorPickerContainer"
+             [ngClass]="{'oneLineComboBox oLCBPicker': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'ignoreNoLineBreak': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && !app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex)}">
+          <input #refColorPicker [(colorPicker)]="global.generator_customColorMap[setting.name]"
+                 cpAlphaChannel="disabled" cpOutputFormat="hex" cpUseRootViewContainer="true"
+                 cpAddColorButton="true" [cpPresetColors]="['#fff', '#000']"
+                 cpMaxPresetColorsLength="5"
+                 (colorPickerClose)="app.afterSettingChange(true)" />
+        </div>
+      </ng-container>
+
+      <!--Combobox-->
+      <nb-select class="selectXSmall"
+                 [ngClass]="{'oneLineComboBox oLCBSelect': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'ignoreNoLineBreak': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && !app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'select-colors': section.is_colors, 'spaceForInfo': app.getColumnCount(refEl) === 1}"
+                 [disabled]="!visibilitySettingsMap[setting.name]"
+                 [(selected)]="assignmentSettingsMap[assignmentSettingName]"
+                 (selectedChange)="app.checkVisibility($event, setting, app.findOption(setting.options, $event), refColorPicker ? refColorPicker : null)"
+                 [nbPopover]="tooltipComponent"
+                 [nbPopoverContext]="{tooltip: settingTooltip}"
+                 [nbPopoverTrigger]="settingTooltip?.length > 0 && app.getColumnCount(refEl) > 1 ? 'click' : 'noop'"
+                 [nbPopoverPlacement]="'right'"
+                 [nbPopoverAdjustment]="'horizontal'"
+                 size="xsmall">
+        <nb-option *ngFor="let option of setting.options; index as optionIndex" [value]="option.name">{{option.text}}</nb-option>
+      </nb-select>
+
+      <img class="select-info"
+           [ngClass]="{'disabled': !settingTooltip, 'info-icon-colors': section.is_colors}"
+           *ngIf="app.getColumnCount(refEl) === 1"
+           [nbPopover]="tooltipComponent"
+           [nbPopoverContext]="{tooltip: settingTooltip}"
+           [nbPopoverTrigger]="settingTooltip?.length > 0 ? 'hover' : 'noop'"
+           [nbPopoverPlacement]="'top'"
+           [nbPopoverAdjustment]="'vertical'" />
+
+    </div>
+  </ng-container>
+
+  <!--Indexed Combo-->
+  <ng-container *ngSwitchCase="'IndexCombobox'">
+
+    <ng-template ngFor let-subItem [ngForOf]="setting.index_text" let-subItemIndex="index">
+
+      <span *ngIf="!skipLabel" class="comboBoxLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name], 'oneLineComboBox': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'ignoreNoLineBreak': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && !app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'oLCBLabelFirst': app.getColumnCount(refEl) > 2 && setting.no_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'oLCBLabelSecond': app.getColumnCount(refEl) > 2 && itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex)}">{{subItem}}</span>
+      <div [ngClass]="{'selectContainerWithInfo': app.getColumnCount(refEl) === 1}">
+        <!--Indexed Combobox-->
+        <nb-select class="selectXSmall"
+                   [ngClass]="{'oneLineComboBox oLCBSelect': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'ignoreNoLineBreak': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && !app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'spaceForInfo': app.getColumnCount(refEl) === 1}"
+                   [disabled]="!visibilitySettingsMap[setting.name]"
+                   [(selected)]="assignmentSettingsMap[assignmentSettingName][subItemIndex]"
+                   (selectedChange)="app.checkVisibility($event, setting, app.findOption(setting.options, $event), null)"
+                   [nbPopover]="tooltipComponent"
+                   [nbPopoverContext]="{tooltip: settingTooltip}"
+                   [nbPopoverTrigger]="settingTooltip?.length > 0 && app.getColumnCount(refEl) > 1 ? 'click' : 'noop'"
+                   [nbPopoverPlacement]="'right'"
+                   [nbPopoverAdjustment]="'horizontal'"
+                   size="xsmall">
+          <nb-option *ngFor="let option of setting.options; index as optionIndex" [value]="option.name">{{option.text}}</nb-option>
+        </nb-select>
+
+        <img class="select-info"
+             [ngClass]="{'disabled': !settingTooltip}"
+             *ngIf="app.getColumnCount(refEl) === 1"
+             [nbPopover]="tooltipComponent"
+             [nbPopoverContext]="{tooltip: settingTooltip}"
+             [nbPopoverTrigger]="settingTooltip?.length > 0 ? 'hover' : 'noop'"
+             [nbPopoverPlacement]="'top'"
+             [nbPopoverAdjustment]="'vertical'" />
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <!--Multiple Select-->
+  <ng-container *ngSwitchCase="'MultipleSelect'">
+    <span *ngIf="!skipLabel" class="comboBoxLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name],
+      'oneLineComboBox': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex),
+      'ignoreNoLineBreak': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && !app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex),
+      'oLCBLabelFirst': app.getColumnCount(refEl) > 2 && setting.no_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex),
+      'oLCBLabelSecond': app.getColumnCount(refEl) > 2 && itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex)
+      }">
+      {{settingText}}
+    </span>
+    <div class="select-wrapper" [ngClass]="{'selectContainerWithInfo': app.getColumnCount(refEl) === 1}">
+      <nb-select multiple placeholder="None" class="selectXSmall"
+                 [ngClass]="{'oneLineComboBox oLCBSelect': app.getColumnCount(refEl) > 2 && setting.no_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'ignoreNoLineBreak': app.getColumnCount(refEl) > 2 && setting.no_line_break && !app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'spaceForInfo': app.getColumnCount(refEl) === 1}"
+                 [disabled]="!visibilitySettingsMap[setting.name]"
+                 [(selected)]="assignmentSettingsMap[assignmentSettingName]"
+                 (selectedChange)="app.checkVisibility($event, setting, app.findOption(setting.options, $event))"
+                 [nbPopover]="tooltipComponent"
+                 [nbPopoverContext]="{tooltip: settingTooltip}"
+                 [nbPopoverTrigger]="settingTooltip?.length > 0 && app.getColumnCount(refEl) > 1 ? 'click' : 'noop'"
+                 [nbPopoverPlacement]="'right'"
+                 [nbPopoverAdjustment]="'horizontal'">
+        <nb-select-label *ngIf="assignmentSettingsMap[assignmentSettingName].length !== setting.options.length && assignmentSettingsMap[assignmentSettingName].length > 2">Selected: {{assignmentSettingsMap[assignmentSettingName].length}}</nb-select-label>
+        <nb-select-label *ngIf="assignmentSettingsMap[assignmentSettingName].length === setting.options.length">All</nb-select-label>
+        <nb-option *ngFor="let option of setting.options; index as optionIndex" [value]="option.name">{{option.text}}</nb-option>
+      </nb-select>
+      <img class="select-info"
+           [ngClass]="{disabled: !settingTooltip}"
+           *ngIf="app.getColumnCount(refEl) === 1"
+           [nbPopover]="tooltipComponent"
+           [nbPopoverContext]="{tooltip: settingTooltip}"
+           [nbPopoverTrigger]="settingTooltip?.length > 0 ? 'hover' : 'noop'"
+           [nbPopoverPlacement]="'top'"
+           [nbPopoverAdjustment]="'vertical'" />
+    </div>
+  </ng-container>
+
+  <!--Scale-->
+  <ng-container *ngSwitchCase="'Scale'">
+    <div class="slider-header">
+      <span *ngIf="!skipLabel && (!setting.size || setting.size === 'small' || setting.size === 'medium')" class="numberTextInputLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name]}">{{settingText}}:</span>
+      <p *ngIf="!skipLabel && setting.size === 'full'" class="numberTextInputLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name]}">{{settingText}}</p>
+
+      <input class="slider-value-input"
+             nbInput
+             [disabled]="!visibilitySettingsMap[setting.name]"
+             type="text"
+             [maxlength]="setting.max_length ? setting.max_length : setting.max ? setting.max.toString().length : 6"
+             fieldSize="small"
+             (focus)="app.inputFocusIn(setting.name, subSetting ? subSetting.name : null)"
+             (focusout)="app.numberInputFocusOut(setting, true, subSetting)"
+             [(ngModel)]="assignmentSettingsMap[assignmentSettingName]"
+             [nbPopover]="tooltipComponent"
+             [nbPopoverContext]="{tooltip: settingTooltip}"
+             [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'hint' : 'noop'" nbPopoverPlacement="right" nbPopoverAdjustment="counterclockwise">
+    </div>
+    
+    <div class="slider-container">
+
+      <mat-slider class="mat-slider"
+                  [min]="setting.min"
+                  [max]="setting.max"
+                  step="1"
+                  [disabled]="!visibilitySettingsMap[setting.name]"
+                  [nbPopover]="tooltipComponent"
+                  [nbPopoverContext]="{tooltip: settingTooltip}"
+                  [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'hint' : 'noop'"
+                  nbPopoverPlacement="bottom"
+                  nbPopoverAdjustment="counterclockwise"
+                  [discrete]="true"
+                  [showTickMarks]="true">
+        <input matSliderThumb
+               [value]="assignmentSettingsMap[assignmentSettingName]"
+               (valueChange)="assignmentSettingsMap[assignmentSettingName] = $event; app.afterSettingChange()">
+      </mat-slider>
+    </div>
+  </ng-container>
+
+  <!--Text Input-->
+  <ng-container *ngSwitchCase="'Textinput'">
+    <span *ngIf="!skipLabel && (!setting.size || setting.size === 'small' || setting.size === 'medium')" class="numberTextInputLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name], 'secondaryInputLabel': sectionSettings[itemIndex-1].no_line_break && app.shouldRespectNoLineBreak(refEl, sectionSettings[itemIndex-1], sectionSettings, itemIndex-1)}">{{settingText}}:</span>
+    <p *ngIf="!skipLabel && setting.size === 'full'" class="numberTextInputLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name]}">{{settingText}}</p>
+    <input class="numberTextInput" [disabled]="!visibilitySettingsMap[setting.name]" [ngClass]="{numberTextInputSmall: setting.size === 'small', numberTextInputMedium: setting.size === 'medium', numberTextInputFull: setting.size === 'full'}" nbInput type="text" [maxlength]="setting.max_length ? setting.max_length : 260" fieldSize="small"
+           (focus)="app.inputFocusIn(setting.name, subSetting ? subSetting.name : null)" (focusout)="app.inputFocusOut(setting.name, false, undefined, subSetting ? subSetting.name : null)" [(ngModel)]="assignmentSettingsMap[assignmentSettingName]" [nbPopover]="tooltipComponent" [nbPopoverContext]="{tooltip: settingTooltip}" [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'hint' : 'noop'" nbPopoverPlacement="right" nbPopoverAdjustment="counterclockwise">
+  </ng-container>
+
+  <!--Text Box-->
+  <ng-container *ngSwitchCase="'Textbox'">
+    <span *ngIf="!skipLabel && (!setting.size || setting.size === 'small' || setting.size === 'medium')" class="numberTextInputLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name]}">{{settingText}}</span>
+    <p *ngIf="!skipLabel && setting.size === 'full'" class="numberTextInputLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name]}">{{settingText}}</p>
+  </ng-container>
+
+  <!--Number-->
+  <ng-container *ngSwitchCase="'Numberinput'">
+    <span *ngIf="!skipLabel && (!setting.size || setting.size === 'small' || setting.size === 'medium')" class="numberTextInputLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name], 'secondaryInputLabel': subSettingIndex > 0 && setting.no_inner_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex)}">{{settingText}}:</span>
+    <p *ngIf="!skipLabel && setting.size === 'full'" class="numberTextInputLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name]}">{{settingText}}</p>
+    <input class="numberTextInput" [disabled]="!visibilitySettingsMap[setting.name]" [ngClass]="{numberTextInputSmall: setting.size === 'small', numberTextInputMedium: setting.size === 'medium', numberTextInputFull: setting.size === 'full'}" nbInput type="text" [maxlength]="setting.max_length ? setting.max_length : setting.max ? setting.max.toString().length : 6" fieldSize="small"
+           (focus)="app.inputFocusIn(setting.name, subSetting ? subSetting.name : null)" (focusout)="app.numberInputFocusOut(setting, true, subSetting)" [(ngModel)]="assignmentSettingsMap[assignmentSettingName]" [nbPopover]="tooltipComponent" [nbPopoverContext]="{tooltip: settingTooltip}" [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'hint' : 'noop'" nbPopoverPlacement="right" nbPopoverAdjustment="counterclockwise">
+  </ng-container>
+
+  <!--Button-->
+  <ng-container *ngSwitchCase="'Button'">
+    <button class="settingButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="this[setting.function](setting, assignmentSettingsMap, assignmentSettingName, settingDefault, settingText, settingTooltip, $event)">{{dynamicSettingText}}</button>
+  </ng-container>
+
+  <!--File Select-->
+  <ng-container *ngSwitchCase="'Fileinput'">
+    <p *ngIf="!skipLabel" class="ioInputLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name]}">{{settingText}}</p>
+    <!--Electron-->
+    <ng-container *ngIf="global.getGlobalVar('electronAvailable')">
+      <input class="ioInput" nbInput [disabled]="!visibilitySettingsMap[setting.name]" type="text" maxlength="260" fieldSize="small"
+             (focus)="app.inputFocusIn(setting.name, subSetting ? subSetting.name : null)" (focusout)="app.inputFocusOut(setting.name, false, undefined, subSetting ? subSetting.name : null)" [(ngModel)]="assignmentSettingsMap[assignmentSettingName]"
+             [nbPopover]="tooltipComponent" [nbPopoverContext]="{tooltip: settingTooltip}" [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'hint' : 'noop'" nbPopoverPlacement="top" nbPopoverAdjustment="clockwise">
+      <button class="ioInputBrowseButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="app.browseForFile(setting)">Browse</button>
+    </ng-container>
+    <!--Web-->
+    <ng-container *ngIf="!global.getGlobalVar('electronAvailable')">
+      <!--Visible: Drag Enabled-->
+      <ng-container *ngIf="visibilitySettingsMap[setting.name]">
+        <input class="ioInputWeb" nbInput [disabled]="!visibilitySettingsMap[setting.name]" readonly type="text" maxlength="260" fieldSize="small" [ngModel]="app.getVariableType(assignmentSettingsMap[assignmentSettingName]) === 'string' ? assignmentSettingsMap[assignmentSettingName] : assignmentSettingsMap[assignmentSettingName].name"
+               (ngModelChange)="app.afterSettingChange()" [nbPopover]="tooltipComponent" [nbPopoverContext]="{tooltip: settingTooltip}" [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'hint' : 'noop'" nbPopoverPlacement="top" nbPopoverAdjustment="clockwise" ngfDrop [(file)]="assignmentSettingsMap[assignmentSettingName]">
+      </ng-container>
+      <!--Not Visible: Drag Disabled-->
+      <ng-container *ngIf="!visibilitySettingsMap[setting.name]">
+        <input class="ioInputWeb" nbInput [disabled]="!visibilitySettingsMap[setting.name]" readonly type="text" maxlength="260" fieldSize="small" [ngModel]="app.getVariableType(assignmentSettingsMap[assignmentSettingName]) === 'string' ? assignmentSettingsMap[assignmentSettingName] : assignmentSettingsMap[assignmentSettingName].name"
+               (ngModelChange)="app.afterSettingChange()" [nbPopover]="tooltipComponent" [nbPopoverContext]="{tooltip: settingTooltip}" [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'hint' : 'noop'" nbPopoverPlacement="top" nbPopoverAdjustment="clockwise">
+      </ng-container>
+      <button class="ioInputBrowseButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" ngfSelect [(file)]="assignmentSettingsMap[assignmentSettingName]">Browse</button>
+      <button class="ioInputBrowseButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="assignmentSettingsMap[assignmentSettingName] = ''">Clear</button>
+    </ng-container>
+  </ng-container>
+
+  <!--Directory Select-->
+  <ng-container *ngSwitchCase="'Directoryinput'">
+    <p *ngIf="!skipLabel" class="ioInputLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name]}">{{settingText}}</p>
+    <!--Electron-->
+    <ng-container *ngIf="global.getGlobalVar('electronAvailable')">
+      <input class="ioInput" nbInput [disabled]="!visibilitySettingsMap[setting.name]" type="text" maxlength="260" fieldSize="small"
+             (focus)="app.inputFocusIn(setting.name, subSetting ? subSetting.name : null)" (focusout)="app.inputFocusOut(setting.name, false, undefined, subSetting ? subSetting.name : null)" [(ngModel)]="assignmentSettingsMap[assignmentSettingName]"
+             [nbPopover]="tooltipComponent" [nbPopoverContext]="{tooltip: settingTooltip}" [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'hint' : 'noop'" nbPopoverPlacement="top" nbPopoverAdjustment="clockwise">
+      <button class="ioInputBrowseButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="app.browseForDirectory(setting)">Browse</button>
+    </ng-container>
+    <!--Web-->
+    <ng-container *ngIf="!global.getGlobalVar('electronAvailable')">
+      <input class="ioInputWeb" nbInput [disabled]="!visibilitySettingsMap[setting.name]" readonly type="text" maxlength="260" fieldSize="small" [ngModel]="app.getVariableType(assignmentSettingsMap[assignmentSettingName]) === 'string' ? assignmentSettingsMap[assignmentSettingName] : assignmentSettingsMap[assignmentSettingName].name"
+             (ngModelChange)="app.afterSettingChange()" [nbPopover]="tooltipComponent" [nbPopoverContext]="{tooltip: settingTooltip}" [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'hint' : 'noop'" nbPopoverPlacement="top" nbPopoverAdjustment="clockwise" (dragover)="app.onDirectoryDragOverWeb($event, setting)" (drop)="app.onDirectoryDropWeb($event, setting)">
+
+      <!--Desktop supports directory picker, mobile only a file picker-->
+      <ng-container *ngIf="global.getGlobalVar('webSupportDirectoryPicker')">
+        <input #refHiddenDirectoryInput class="ioHiddenInputWeb" type="file" webkitdirectory multiple (change)="app.onDirectorySelectedWeb($event, setting)">
+        <button class="ioInputBrowseButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="refHiddenDirectoryInput.click()">Browse</button>
+      </ng-container>
+      <ng-container *ngIf="!global.getGlobalVar('webSupportDirectoryPicker')">
+        <input #refHiddenDirectoryInput class="ioHiddenInputWeb" type="file" multiple (change)="app.onDirectorySelectedWeb($event, setting)">
+        <button class="ioInputBrowseButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="refHiddenDirectoryInput.click()">Browse</button>
+      </ng-container>
+
+      <button class="ioInputBrowseButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="assignmentSettingsMap[assignmentSettingName] = ''">Clear</button>
+    </ng-container>
+  </ng-container>
+
+  <!--Preset Select-->
+  <ng-container *ngSwitchCase="'Presetinput'">
+    <div class="select-wrapper" [ngClass]="{'selectContainerWithInfo': app.getColumnCount(refEl) === 1}">
+      <nb-select #refPresetSelect
+                 class="selectXSmall"
+                 [ngClass]="{'spaceForInfo': app.getColumnCount(refEl) === 1}"
+                 [disabled]="!visibilitySettingsMap[setting.name]"
+                 [(selected)]="assignmentSettingsMap[assignmentSettingName]"
+                 [nbPopover]="tooltipComponent"
+                 [nbPopoverContext]="{tooltip: settingTooltip}"
+                 [nbPopoverTrigger]="settingTooltip?.length > 0 && app.getColumnCount(refEl) > 1 ? 'click' : 'noop'"
+                 [nbPopoverPlacement]="'start-top'"
+                 [nbPopoverAdjustment]="'horizontal'"
+                 size="xsmall">
+        <nb-option *ngFor="let presetKey of getPresetArray(); index as presetIndex"
+                   [value]="presetKey">{{presetKey}}</nb-option>
+      </nb-select>
+      <img class="select-info"
+           [ngClass]="{disabled: !settingTooltip}"
+           *ngIf="app.getColumnCount(refEl) === 1"
+           [nbPopover]="tooltipComponent"
+           [nbPopoverContext]="{tooltip: settingTooltip}"
+           [nbPopoverTrigger]="settingTooltip?.length > 0 ? 'hover' : 'noop'"
+           [nbPopoverPlacement]="'top'"
+           [nbPopoverAdjustment]="'vertical'" />
+    </div>
+    <button class="presetButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="loadPreset()">Load</button>
+    <button class="presetButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="savePreset(refPresetSelect)">Save</button>
+    <button class="presetButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="deletePreset()">Remove</button>
+  </ng-container>
+
+  <!--SearchBox-->
+  <ng-container *ngSwitchCase="'SearchBox'">
+    <gui-modular-listbox [disabled]="!visibilitySettingsMap[setting.name]"
+                     [source]="setting.linked_setting ? setting.options[assignmentSettingsMap[setting.linked_setting]] : setting.options"
+                     [(destination)]="assignmentSettingsMap[assignmentSettingName]" (destinationChange)="app.checkVisibility($event, setting)"
+                     height="100%" key="name" display="text" filter="true"
+                     [tagFilter]="setting.tags && setting.linked_setting ? setting.tags[assignmentSettingsMap[setting.linked_setting]] : setting.tags && setting.tags.length > 0 ? setting.tags : null"
+                     [tooltipComponent]="tooltipComponent" tooltip="tooltip" [nbPopover]="tooltipComponent" [nbPopoverContext]="{tooltip: settingTooltip}" [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'click' : 'noop'" nbPopoverPlacement="right" nbPopoverAdjustment="counterclockwise"
+                     [enableHexString]="false"
+                     [enablePresets]="false"
+                     [enableCoDependentFilters]="false"
+                     [enableResponsiveDesign]="false"
+                     [valueIsHexString]="false">
+    </gui-modular-listbox>
+  </ng-container>
+
+  <!--SearchBox MMR-->
+  <ng-container *ngSwitchCase="'SearchBoxMMR'">
+    <gui-modular-listbox [disabled]="!visibilitySettingsMap[setting.name]" [source]="setting.options" [(destination)]="assignmentSettingsMap[assignmentSettingName]" (destinationChange)="app.checkVisibility($event, setting)"
+                  height="100%" key="name" display="text" valueIsHexString="true" [coDependentFilters]="setting.multi_tags" [presets]="setting.presets && setting.presets.presets && setting.presets.presets.length > 0 ? setting.presets : null" filter="true" [tagFilter]="setting.tags && setting.tags.length > 0 ? setting.tags : null" [tooltipComponent]="tooltipComponent" tooltip="tooltip" [nbPopover]="tooltipComponent" [nbPopoverContext]="{tooltip: settingTooltip}" [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'click' : 'noop'" nbPopoverPlacement="right" nbPopoverAdjustment="counterclockwise"
+                  [enableHexString]="true"
+                  [enablePresets]="true"
+                  [enableCoDependentFilters]="true"
+                  [enableResponsiveDesign]="true">
+    </gui-modular-listbox>
+  </ng-container>
+
+  <!--Color Picker RGB-->
+  <ng-container *ngSwitchCase="'Color'">
+    <span *ngIf="!skipLabel" class="comboBoxLabel rgbColorPickerLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name]}">{{settingText}}</span>
+    <zsr-gui-color-picker [ngClass]="{'disabled': !visibilitySettingsMap[setting.name]}" [disabled]="!visibilitySettingsMap[setting.name]" [(colorValue)]="assignmentSettingsMap[assignmentSettingName]" (colorValueChange)="app.checkVisibility($event, setting)" [colorArraySize]="setting.color_array ? settingDefault.length : null"
+                          [tooltipComponent]="tooltipComponent" [tooltip]="settingTooltip">
+    </zsr-gui-color-picker>
+  </ng-container>
+
+  <!--Dictionary Single-->
+  <ng-container *ngSwitchCase="'Dictionary'">
+    <span class="comboBoxLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name], 'oneLineComboBox': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'ignoreNoLineBreak': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && !app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'oLCBLabelFirst': app.getColumnCount(refEl) > 2 && setting.no_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'oLCBLabelSecond': app.getColumnCount(refEl) > 2 && itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex)}">{{settingText}}</span>
+    <div class="dictionaryNoInnerLineBreak" 
+         [ngClass]="{'wrapped': setting.no_inner_line_break && !app.shouldRespectNoInnerLineBreak(refEl, setting, sectionSettings, itemIndex)}"
+         [style.min-height.px]="setting.no_inner_line_break ? 36 + app.calculateOptimalHeightForNoInnerLineBreak(setting, refEl) : 36">
+      <ng-template ngFor let-keySetting [ngForOf]="setting.keys" let-keyItemIndex="index">
+        <!--<ng-container *ngIf="visibilitySettingsMap[setting.name] || !setting.hide_when_disabled">-->
+        <span *ngIf="!setting.no_inner_line_break" class="comboBoxLabel" [ngClass]="{'disabled': !visibilitySettingsMap[setting.name], 'oneLineComboBox': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'ignoreNoLineBreak': app.getColumnCount(refEl) > 2 && (setting.no_line_break || (itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break)) && !app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'oLCBLabelFirst': app.getColumnCount(refEl) > 2 && setting.no_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex), 'oLCBLabelSecond': app.getColumnCount(refEl) > 2 && itemIndex > 0 && sectionSettings[itemIndex-1].no_line_break && app.shouldRespectNoLineBreak(refEl, setting, sectionSettings, itemIndex)}">{{keySetting.text}}</span>
+        <div class="innerSetting" [ngClass]="{'noInnerLineBreakContainer': setting.no_inner_line_break}">
+          <gui-settings-element [app]="app" [section]="section" [sectionSettings]="sectionSettings" [setting]="setting" [itemIndex]="itemIndex" [subSetting]="generateDictSetting(setting, keySetting)" [subSettingIndex]="keyItemIndex" [refEl]="refEl"
+                                [assignmentSettingsMap]="assignmentSettingsMap[assignmentSettingName]" [assignmentSettingName]="keySetting.name" [visibilitySettingsMap]="visibilitySettingsMap"
+                                [tooltipComponent]="tooltipComponent" [settingDefault]="setting.default" [settingText]="keySetting.text" [settingTooltip]="keySetting.tooltip" [skipLabel]="!setting.no_inner_line_break">
+
+          </gui-settings-element>
+        </div>
+        <!--Padding - only show when not wrapped -->
+        <div *ngIf="setting.keys.length > keyItemIndex && setting.no_inner_line_break && app.shouldRespectNoInnerLineBreak(refEl, setting, sectionSettings, itemIndex)" class="dictSettingPadding"></div>
+        <!--</ng-container>-->
+      </ng-template>
+    </div>
+  </ng-container>
+
+  <!--Dictionary Linked-->
+  <ng-container *ngSwitchCase="'DictionaryLinked'">
+    <mat-radio-group name="radio-linked-{{setting.name}}" [disabled]="!visibilitySettingsMap[setting.name]" labelPosition="after" [(ngModel)]="assignmentSettingsMap[assignmentSettingName]"
+                     (ngModelChange)="app.checkVisibility($event, setting)"
+                     [nbPopover]="tooltipComponent" [nbPopoverContext]="{tooltip: settingTooltip}" [nbPopoverTrigger]="settingTooltip && settingTooltip.length > 0 ? 'hint' : 'noop'"
+                     nbPopoverPlacement="top" nbPopoverAdjustment="clockwise">
+      <mat-radio-button *ngFor="let option of setting.keys; index as optionIndex" class="radioButton" [value]="option.name">
+        {{option.text}}
+      </mat-radio-button>
+
+      <!--Padding-->
+      <div class="linkedDictAfterRadioPadding"></div>
+
+      <ng-template ngFor let-keySetting [ngForOf]="setting.options" let-keyItemIndex="index">
+        <ng-container *ngIf="keySetting.default[assignmentSettingsMap[assignmentSettingName]] != null && (visibilitySettingsMap[keySetting.name] || !keySetting.hide_when_disabled)">
+
+          <gui-settings-element [app]="app" [section]="section" [sectionSettings]="setting.options" [setting]="keySetting" [itemIndex]="keyItemIndex" [refEl]="refEl"
+                                [assignmentSettingsMap]="assignmentSettingsMap[keySetting.name]" [assignmentSettingName]="assignmentSettingsMap[assignmentSettingName]"
+                                [visibilitySettingsMap]="evaluateLinkedDictSettingVisibility(keySetting, setting.options, assignmentSettingsMap[assignmentSettingName], visibilitySettingsMap)"
+                                [tooltipComponent]="tooltipComponent" [settingDefault]="keySetting.default[assignmentSettingsMap[assignmentSettingName]]" [settingText]="keySetting.text"
+                                [settingTooltip]="keySetting.tooltip">
+
+          </gui-settings-element>
+
+          <!--Padding-->
+          <div *ngIf="app.getNextVisibleSetting(setting.options, keyItemIndex + 1) && (!keySetting.no_line_break || !app.shouldRespectNoLineBreak(refEl, keySetting, setting.options, keyItemIndex))" class="linkedDictSettingPadding"
+               [ngClass]="{'settingCBPadding': keySetting.type !== 'Checkbutton' && app.getNextVisibleSetting(setting.options, keyItemIndex + 1).type === 'Checkbutton'}">
+          </div>
+        </ng-container>
+      </ng-template>
+
+    </mat-radio-group>
+  </ng-container>
+
+</ng-container>

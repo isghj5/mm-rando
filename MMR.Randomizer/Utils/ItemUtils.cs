@@ -228,7 +228,9 @@ namespace MMR.Randomizer.Utils
                 .Cast<Item>()
                 .Where(item => item.HasAttribute<StartingItemAttribute>()
                     || item.HasAttribute<StartingTingleMapAttribute>()
-                    || item.HasAttribute<StartingItemIdAttribute>());
+                    || item.HasAttribute<StartingItemIdAttribute>()
+                    || item.HasAttribute<StartingItemSkullAttribute>()
+                    );
         }
 
         // todo cache
@@ -331,29 +333,80 @@ namespace MMR.Randomizer.Utils
 
         private static List<Item> HintedJunkLocations;
 
-        public static void PrepareHintedJunkLocations(GameplaySettings settings, Random random)
+        public static void CheckAndUpdateHintedJunkLocations(GameplaySettings settings, ItemList itemList, Item item, Item location, Random random)
+        {
+            if (settings.OverrideHintItemCaps != null && settings.OverrideHintPriorities != null)
+            {
+                if (!IsJunk(item))
+                {
+                    var tierIndex = settings.OverrideHintPriorities.FindIndex(tier => tier.Contains(location));
+                    if (tierIndex >= 0)
+                    {
+                        var cap = settings.OverrideHintItemCaps.ElementAtOrDefault(tierIndex);
+                        if (cap > 0)
+                        {
+                            var tier = settings.OverrideHintPriorities[tierIndex];
+                            var nonJunk = tier
+                                .Where(location => !IsLocationJunk(location, settings))
+                                .GroupBy(location => ItemCombinableHints.GetValueOrDefault(location).name ?? location.ToString())
+                                .Where(group => group.Any(tierLocation =>
+                                {
+                                    var tierItemObject = itemList.FirstOrDefault(io => io.NewLocation == tierLocation);
+                                    if (tierItemObject != null && !IsJunk(tierItemObject.Item))
+                                    {
+                                        return true;
+                                    }
+                                    return false;
+                                }));
+                            if (nonJunk.Count() >= cap)
+                            {
+                                var remainingTier = tier.Except(nonJunk.SelectMany(group => group)).Except(HintedJunkLocations);
+                                HintedJunkLocations.AddRange(remainingTier);
+                            }
+                        }
+                    }
+                }
+                if (settings.CustomItemList.Where(item => itemList[item].Item == item && !IsJunk(item)).All(item => itemList[item].NewLocation.HasValue))
+                {
+                    HintedJunkLocations.AddRange(settings.OverrideHintPriorities.SelectMany((tier, i) =>
+                    {
+                        var cap = settings.OverrideHintItemCaps.ElementAtOrDefault(i);
+                        if (cap > 0 && !HintedJunkLocations.Intersect(tier).Any())
+                        {
+                            var groupedLocations = tier
+                                .Where(location => !IsLocationJunk(location, settings))
+                                .GroupBy(location => ItemCombinableHints.GetValueOrDefault(location).name ?? location.ToString())
+                                .ToList();
+                            var hintedLocations = groupedLocations.Where(group => group.Any(tierLocation =>
+                                {
+                                    var tierItemObject = itemList.FirstOrDefault(io => io.NewLocation == tierLocation);
+                                    if (tierItemObject != null && !IsJunk(tierItemObject.Item))
+                                    {
+                                        return true;
+                                    }
+                                    return false;
+                                }))
+                                .ToList();
+                            var numberOfAdditionalGroupsToJunk = groupedLocations.Count - cap;
+                            if (numberOfAdditionalGroupsToJunk > 0)
+                            {
+                                return groupedLocations
+                                    .Except(hintedLocations)
+                                    .ToList()
+                                    .Random(numberOfAdditionalGroupsToJunk, random)
+                                    .SelectMany(g => g)
+                                    .ToList();
+                            }
+                        }
+                        return new List<Item>();
+                    }));
+                }
+            }
+        }
+
+        public static void PrepareHintedJunkLocations()
         {
             HintedJunkLocations = new List<Item>();
-            if (settings.OverrideHintPriorities != null && settings.OverrideHintItemCaps != null)
-            {
-                HintedJunkLocations = settings.OverrideHintPriorities.SelectMany((tier, i) =>
-                {
-                    var cap = settings.OverrideHintItemCaps.ElementAtOrDefault(i);
-                    if (cap > 0)
-                    {
-                        var groupedLocations = tier
-                            .Where(location => !IsLocationJunk(location, settings))
-                            .GroupBy(location => ItemCombinableHints.GetValueOrDefault(location).name ?? location.ToString())
-                            .ToList();
-                        var numberOfLocationsToJunk = groupedLocations.Count - cap;
-                        return groupedLocations
-                            .Random(numberOfLocationsToJunk, random)
-                            .SelectMany(g => g)
-                            .ToList();
-                    }
-                    return new List<Item>();
-                }).ToList();
-            }
         }
 
         private static List<Item> BlitzJunkLocations;
@@ -522,10 +575,12 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsLocationJunk(Item location, GameplaySettings settings)
         {
+            var mainLocation = location.MainLocation();
             return settings.CustomJunkLocations.Contains(location)
                 || (HintedJunkLocations?.Contains(location) == true)
                 || (BlitzJunkLocations?.Contains(location) == true)
-                || (SettingJunkLocations?.Contains(location) == true);
+                || (SettingJunkLocations?.Contains(location) == true)
+                || (mainLocation.HasValue && IsLocationJunk(mainLocation.Value, settings));
         }
 
         public static bool CanBeRequired(Item item)

@@ -1,0 +1,101 @@
+<div class="pageContainer">
+  <nb-card [ngClass]="{webLayout: !global.getGlobalVar('electronAvailable')}" [nbSpinner]="generatorBusy" nbSpinnerStatus="info" nbSpinnerSize="large" nbSpinnerMessage="Please wait...">
+    <nb-card-body *ngIf="global.getGlobalVar('appReady')">
+      <nb-tabset *ngIf="global.getGlobalVar('generatorSettingsArray') && global.getGlobalVar('generatorSettingsArray').length > 0" #refTabSet class="settingsTabset" fullWidth>
+        <nb-tab *ngFor="let tab of getTabList(false); index as tabIndex" [disabled]="!global.generator_tabsVisibilityMap[tab.name]" [tabTitle]="tab.text" [active]="tabIndex === 0" [nbSpinner]="settingsBusy" nbSpinnerStatus="primary" nbSpinnerSize="medium" nbSpinnerMessage="">
+          <mat-grid-list #refList [responsiveCols]="{xs: 1, sm: 2, md: 12, lg: 12, xl: 12}" gutterSize="0.5%" [rowHeight]="calculateRowHeight(refList, tab)">
+            <mat-grid-tile #refEl *ngFor="let section of tab.sections; index as sectionIndex" [colspan]="getColumnWidth(refEl, tab.sections, sectionIndex, tab.sections.length, section['col_span'] ? section['col_span'] : 0)" [rowspan]="getColumnHeight(refEl, section)">
+              <mat-grid-tile-header *ngIf="section.text && section.text.length > 0">
+                <h3>{{section.text}}</h3>
+              </mat-grid-tile-header>
+              <div class="tileContainer" [ngClass]="section.text && section.text.length > 0 ? 'tileContainerWithHeader' : null">
+                <div class="tileContent">
+                  <p *ngIf="section.subheader && section.subheader.length > 0" class="subheaderLabel" [innerHTML]="section.subheader"></p>
+                  <!--Auto Parsed Tabs based on JSON-->
+                  <ng-template ngFor let-setting [ngForOf]="section.settings" let-itemIndex="index">
+                    <ng-container *ngIf="!setting.invisible && (!setting.is_linked && (global.generator_settingsVisibilityMap[setting.name] || !setting.hide_when_disabled))">
+                      <gui-settings-element [app]="this" [section]="section" [sectionSettings]="section.settings" [setting]="setting" [itemIndex]="itemIndex" [refEl]="refEl"
+                                            [assignmentSettingsMap]="global.generator_settingsMap" [assignmentSettingName]="setting.name" [visibilitySettingsMap]="global.generator_settingsVisibilityMap"
+                                            [tooltipComponent]="tooltipComponent" [settingDefault]="setting.default" [settingText]="setting.text" [settingTooltip]="setting.tooltip">
+                      </gui-settings-element>
+                      <!--Padding-->
+                      <div *ngIf="getNextVisibleSetting(section.settings, itemIndex + 1) && (!setting.no_line_break || !this.shouldRespectNoLineBreak(refEl, setting, section.settings, itemIndex))" class="settingPadding" [ngClass]="{'settingCBPadding': setting.type !== 'Checkbutton' && getNextVisibleSetting(section.settings, itemIndex + 1).type === 'Checkbutton'}"></div>
+                    </ng-container>
+                  </ng-template>
+                </div>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </nb-tab>
+      </nb-tabset>
+      <!-- Mobile scroll indicator - only shown when scrolling is needed and not in generate_from_file mode -->
+      <div *ngIf="showMobileScrollIndicator" class="mobile-scroll-indicator"></div>
+      <div class="tabsetPadding"></div>
+      <!--Static Footer Tabset-->
+      <nb-tabset #refTabFooter class="footerTabset" [ngClass]="{'generateFromFileMode': global.generator_settingsMap['Web.generate_from_file'] === true}" (changeTab)="changeFooterTabSelection($event)" [nbPopover]="tooltipComponent" [nbPopoverContext]="{tooltip: '\'' + generateFromSeedTabTitle + '\': Generate a fresh seed with your provided settings.<br><br>\'' + generateFromFileTabTitle + '\': Use your pre-existing patch file to generate your ROM.'}" [nbPopoverTrigger]="global.getGlobalVar('electronAvailable') || global.getGlobalVar('appType') === 'patcher' || global.getGlobalVar('appType') === 'patcher_only' ? 'noop' : 'hint'" nbPopoverPlacement="top" nbPopoverAdjustment="clockwise">
+        <nb-tab *ngIf="global.getGlobalVar('appType') === 'generator'" [tabTitle]="generateFromSeedTabTitle" active>
+          <!--Electron-->
+          <ng-container *ngIf="global.getGlobalVar('electronAvailable')">
+            <p class="footerInputLabel">Seed</p>
+            <input class="footerInput" nbInput type="text" maxlength="10" fieldSize="small" (focus)="seedInputFocusIn()" (focusout)="seedInputFocusOut()" [(ngModel)]="seedString">
+            <!--Padding-->
+            <div class="tabsetPadding"></div>
+            <button class="footerGenerateButton" nbButton fullWidth status="success" [disabled]="!generateSeedButtonEnabled" (click)="generateSeed()">Generate!</button>
+          </ng-container>
+          <!--Web-->
+          <ng-container *ngIf="!global.getGlobalVar('electronAvailable')">
+            <p class="footerInputLabel">Seed</p>
+            <input class="footerInputShort" nbInput type="text" maxlength="10" fieldSize="small" (focus)="seedInputFocusIn()" (focusout)="seedInputFocusOut()" [(ngModel)]="seedString">
+            <!--Padding-->
+            <div class="tabsetPadding"></div>
+            <!--Release Versions Only (not available in MMR for now)
+            <ng-container *ngIf="global.getGlobalVar('webIsMasterVersion')">
+              <button class="footerGenerateButtonNormalSmall" nbButton status="success" [disabled]="!generateSeedButtonEnabled" (click)="generateSeed()">Generate Seed!</button>
+              <button class="footerGenerateButtonRaceSmall" nbButton status="info" [disabled]="!generateSeedButtonEnabled" (click)="generateSeed(false, true)">Generate Race Seed!</button>
+            </ng-container>-->
+            <!--Dev Version (the default in MMR)-->
+            <!--<ng-container *ngIf="!global.getGlobalVar('webIsMasterVersion')">-->
+              <ng-container>
+                <button class="footerGenerateButtonNormalSmall" nbButton status="success" [disabled]="!generateSeedButtonEnabled" (click)="generateSeed()">Generate Seed!</button>
+                <button class="footerGenerateButtonRaceSmall" nbButton status="success" [disabled]="!generateSeedButtonEnabled" (click)="generateSeed(false, true)">Generate Race Seed!</button>
+              </ng-container>
+          </ng-container>
+        </nb-tab>
+        <nb-tab [tabTitle]="generateFromFileTabTitle" [active]="global.getGlobalVar('appType') !== 'generator'">
+          <!--Electron-->
+          <ng-container *ngIf="global.getGlobalVar('electronAvailable')">
+            <p class="footerInputLabel">Patch File</p>
+            <input class="footerInput" nbInput type="text" maxlength="260" fieldSize="small" (focus)="inputFocusIn('Web.patch_file')" (focusout)="inputFocusOut('Web.patch_file', true)" [(ngModel)]="global.generator_settingsMap['Web.patch_file']" name="patch-file-input">
+            <button class="footerButtonPatchFileBrowse" nbButton status="info" size="small" (click)="browseForPatchFile()">Select File</button>
+            <!--Padding-->
+            <div class="tabsetPadding"></div>
+            <button class="footerGenerateButton" nbButton fullWidth status="success" [disabled]="!generateSeedButtonEnabled" (click)="generateSeed(true)">Generate!</button>
+          </ng-container>
+          <!--Web-->
+          <ng-container *ngIf="!global.getGlobalVar('electronAvailable')">
+            <!--Generator-->
+            <ng-container *ngIf="global.getGlobalVar('appType') === 'generator'">
+              <p class="footerInputLabel">Patch File</p>
+              <input class="footerInputWeb" nbInput readonly type="text" maxlength="260" fieldSize="small" [ngModel]="getVariableType(global.generator_settingsMap['Web.patch_file']) === 'string' ? global.generator_settingsMap['Web.patch_file'] : global.generator_settingsMap['Web.patch_file'].name" (ngModelChange)="onPatchFileInputChange($event)" name="patch-file-web-input" ngfDrop [(file)]="global.generator_settingsMap['Web.patch_file']">
+              <button class="footerButtonPatchFileBrowse" nbButton status="info" size="small" ngfSelect [(file)]="global.generator_settingsMap['Web.patch_file']">Select File</button>
+              <button class="footerButtonPatchFileBrowse" nbButton status="info" size="small" (click)="global.generator_settingsMap['Web.patch_file'] = ''">Clear</button>
+              <!--Padding-->
+              <div class="settingPadding"></div>
+              <mat-slide-toggle labelPosition="after" [(ngModel)]="global.generator_settingsMap['Web.persist_in_cache']" (ngModelChange)="afterSettingChange(true)">Persist Files in Cache</mat-slide-toggle>
+              <!--Padding-->
+              <div class="tabsetPadding"></div>
+              <button class="footerGenerateButton" nbButton fullWidth status="success" [disabled]="!generateSeedButtonEnabled" (click)="patchROM()">Patch ROM!</button>
+            </ng-container>
+            <!--Patcher-->
+            <ng-container *ngIf="global.getGlobalVar('appType') === 'patcher' || global.getGlobalVar('appType') === 'patcher_only'">
+              <mat-slide-toggle labelPosition="after" [(ngModel)]="global.generator_settingsMap['Web.persist_in_cache']" (ngModelChange)="afterSettingChange(true)">Persist Files in Cache</mat-slide-toggle>
+              <!--Padding-->
+              <div class="tabsetPadding"></div>
+              <button class="footerGenerateButton" nbButton fullWidth status="success" [disabled]="!generateSeedButtonEnabled" (click)="patchROM()">Patch ROM!</button>
+            </ng-container>
+          </ng-container>
+        </nb-tab>
+      </nb-tabset>
+    </nb-card-body>
+  </nb-card>
+</div>

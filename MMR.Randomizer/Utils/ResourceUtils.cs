@@ -11,7 +11,7 @@ namespace MMR.Randomizer.Utils
         public static void ApplyHack(byte[] hack_content)
         {
             int addr = 0;
-            while (hack_content[addr] != 0xFF)
+            while (addr < hack_content.Length && hack_content[addr] != 0xFF)
             {
                 //Debug.WriteLine(addr.ToString("X4"));
                 uint dest = ReadWriteUtils.Arr_ReadU32(hack_content, addr);

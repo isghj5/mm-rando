@@ -46,9 +46,16 @@ static ResettingItem resettingItems[resettingItemsLength] = {
 static void Savedata_SetStartingItems(GlobalContext* ctxt) {
     // Give extra starting maps.
     for (u8 i = 0; i < 6; i++) {
-        if (((MMR_CONFIG.extraStartingMaps.value >> i) & 1) != 0) {
+        if (((MMR_CONFIG.extraStartingMapsAndTokens.value >> i) & 1) != 0) {
             z2_GiveMap(i);
         }
+    }
+    // Give extra starting skull tokens
+    if (MMR_CONFIG.extraStartingMapsAndTokens.swampTokens) {
+        gSaveContext.perm.skullTokens[0] = MMR_CONFIG.extraStartingMapsAndTokens.swampTokens;
+    }
+    if (MMR_CONFIG.extraStartingMapsAndTokens.oceanTokens) {
+        gSaveContext.perm.skullTokens[1] = MMR_CONFIG.extraStartingMapsAndTokens.oceanTokens;
     }
     // Give extra starting items.
     for (u8 i = 0; i < MMR_CONFIG.extraStartingItems.length; i++) {
@@ -67,6 +74,14 @@ static void Savedata_ResetStartingItems(GlobalContext* ctxt) {
                 break;
             }
         }
+    }
+
+    // Give extra starting skull tokens if they got reset
+    if (gSaveContext.perm.skullTokens[0] == 0 && MMR_CONFIG.extraStartingMapsAndTokens.swampTokens) {
+        gSaveContext.perm.skullTokens[0] = MMR_CONFIG.extraStartingMapsAndTokens.swampTokens;
+    }
+    if (gSaveContext.perm.skullTokens[1] == 0 && MMR_CONFIG.extraStartingMapsAndTokens.oceanTokens) {
+        gSaveContext.perm.skullTokens[1] = MMR_CONFIG.extraStartingMapsAndTokens.oceanTokens;
     }
 
     // Give returnable items

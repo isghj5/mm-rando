@@ -4,42 +4,50 @@
 const static u16 sBaseGiIndex = 0x4D1;
 
 u16 Bufferfly_GetGiIndex(ActorEnButte* actor, GlobalContext* ctxt) {
+    if ((actor->base.params & 1) == 0) {
+        return 0;
+    }
     u16 giIndex = 0;
 
-    switch (ctxt->sceneNum) {
-        case SCENE_30GYOSON: // Great Bay Coast
-            giIndex = sBaseGiIndex;
-            break;
-        case SCENE_KAKUSIANA: // Grottos
-            switch (ctxt->roomContext.currRoom.num) {
-                case 0: // Ocean Gossip Stones
-                    giIndex = sBaseGiIndex + 1;
-                    break;
-                case 12: // Magic Bean Salesman
-                    giIndex = sBaseGiIndex + 2;
-                    break;
-                case 10: // Cows
-                    switch (gSaveContext.extra.unk87) {
-                        case 0: // Termina Field Cow Grotto
-                            giIndex = sBaseGiIndex + 3;
-                            break;
-                        case 2: // Great Bay Coast Cow Grotto
-                            giIndex = sBaseGiIndex + 4;
-                            break;
-                    }
-                    break;
-            }
-            break;
-        case SCENE_10YUKIYAMANOMURA2: // Mountain Village (Spring)
-            if (actor->base.initPosRot.pos.x > 0.0f) {
-                giIndex = sBaseGiIndex + 5;
-            } else {
-                giIndex = sBaseGiIndex + 6;
-            }
-            break;
-        case SCENE_00KEIKOKU: // Termina Field
-            giIndex = sBaseGiIndex + 7;
-            break;
+    u16 butterflyId = actor->base.params >> 1;
+    if (butterflyId) {
+        giIndex = sBaseGiIndex + butterflyId;
+    } else {
+        switch (ctxt->sceneNum) {
+            case SCENE_30GYOSON: // Great Bay Coast
+                giIndex = sBaseGiIndex;
+                break;
+            case SCENE_KAKUSIANA: // Grottos
+                switch (ctxt->roomContext.currRoom.num) {
+                    case 0: // Ocean Gossip Stones
+                        giIndex = sBaseGiIndex + 1;
+                        break;
+                    case 12: // Magic Bean Salesman
+                        giIndex = sBaseGiIndex + 2;
+                        break;
+                    case 10: // Cows
+                        switch (gSaveContext.extra.respawn[RESPAWN_MODE_GROTTO_RETURN].data) {
+                            case 0: // Termina Field Cow Grotto
+                                giIndex = sBaseGiIndex + 3;
+                                break;
+                            case 2: // Great Bay Coast Cow Grotto
+                                giIndex = sBaseGiIndex + 4;
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case SCENE_10YUKIYAMANOMURA2: // Mountain Village (Spring)
+                if (actor->base.initPosRot.pos.x > 0.0f) {
+                    giIndex = sBaseGiIndex + 5;
+                } else {
+                    giIndex = sBaseGiIndex + 6;
+                }
+                break;
+            case SCENE_00KEIKOKU: // Termina Field
+                giIndex = sBaseGiIndex + 7;
+                break;
+        }
     }
 
     return giIndex;

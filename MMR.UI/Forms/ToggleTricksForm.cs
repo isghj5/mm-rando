@@ -1,5 +1,6 @@
 ﻿using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models;
+using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Utils;
 using MMR.UI.Controls;
 using MMR.UI.Forms.Tooltips;

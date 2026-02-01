@@ -1,6 +1,9 @@
-﻿using MMR.Randomizer.Extensions;
+﻿using MMR.Common.Extensions;
+using MMR.Randomizer.Attributes.Setting;
+using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models;
+using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Utils;
 using MMR.UI.Forms.Tooltips;
 using System;
@@ -190,7 +193,8 @@ namespace MMR.UI.Forms
             var control = (Control)sender;
             var index = tHintPriorities.GetRow(control);
 
-            var form = new ItemSelectorForm(ItemUtils.AllLocations(), Result[index]);
+            var settingItemListAttribute = typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.OverrideHintPriorities)).GetAttribute<SettingItemListAttribute>();
+            var form = new ItemSelectorForm(settingItemListAttribute.ItemList, Result[index], settingItemListAttribute.LabelExtractor);
             form.ShowDialog();
 
             if (form.DialogResult == DialogResult.OK)
@@ -297,7 +301,8 @@ namespace MMR.UI.Forms
 
         private void bAddLevel_Click(object sender, EventArgs e)
         {
-            var form = new ItemSelectorForm(ItemUtils.AllLocations(), Enumerable.Empty<Item>());
+            var settingItemListAttribute = typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.OverrideHintPriorities)).GetAttribute<SettingItemListAttribute>();
+            var form = new ItemSelectorForm(settingItemListAttribute.ItemList, Enumerable.Empty<Item>(), settingItemListAttribute.LabelExtractor);
             form.ShowDialog();
 
             if (form.DialogResult == DialogResult.OK && form.ReturnItems.Count > 0)

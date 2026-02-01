@@ -167,7 +167,7 @@ void Fairy_SetHealthAccumulator(ActorEnElf* actor, GlobalContext* ctxt) {
     }
 }
 
-const static u16 sBaseGiIndex = 0x4D9;
+const static u16 sBaseGiIndex = 0x4E5;
 
 Actor* Fairy_SpawnFairyGroupMember(ActorContext* actorCtxt, GlobalContext* ctxt, s16 id, f32 x, f32 y, f32 z, s16 rx,
                    s16 ry, s16 rz, s32 params, s32 count) {

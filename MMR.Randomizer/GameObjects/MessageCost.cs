@@ -1,4 +1,4 @@
-﻿using MMR.Randomizer.Models;
+﻿using MMR.Randomizer.Models.Settings;
 using System.Collections.Generic;
 
 namespace MMR.Randomizer.GameObjects
@@ -183,7 +183,7 @@ namespace MMR.Randomizer.GameObjects
             new MessageCost
             {
                 MessageIds = { (5609, 0), (5619, 0) },
-                LocationsAffected = { Item.ShopItemBusinessScrubMagicBean },
+                LocationsAffected = { Item.ShopItemBusinessScrubMagicBeanInSwamp, Item.ShopItemBusinessScrubMagicBeanInTown },
                 SubtractPriceAddresses = { 0x01051B70 + 0x672 },
                 PriceAddresses = { 0x01051B70 + 0x65A },
                 Cost = 10,
@@ -193,7 +193,7 @@ namespace MMR.Randomizer.GameObjects
             new MessageCost
             {
                 MessageIds = { (5632, 0), (5638, 0) },
-                LocationsAffected = { Item.UpgradeBiggestBombBag },
+                LocationsAffected = { Item.UpgradeBiggestBombBagInMountain, Item.UpgradeBiggestBombBagInSwamp },
                 SubtractPriceAddresses = { 0x1052262 },
                 PriceAddresses = { 0x105226A },
                 Cost = 200,
@@ -203,7 +203,7 @@ namespace MMR.Randomizer.GameObjects
             new MessageCost
             {
                 MessageIds = { (5650, 0), (5655, 0) },
-                LocationsAffected = { Item.ShopItemBusinessScrubGreenPotion },
+                LocationsAffected = { Item.ShopItemBusinessScrubGreenPotionInMountain, Item.ShopItemBusinessScrubGreenPotionInOcean },
                 SubtractPriceAddresses = { 0x01051B70 + 0x74A },
                 PriceAddresses = { 0x01051B70 + 0x752 },
                 Cost = 40,
@@ -213,7 +213,7 @@ namespace MMR.Randomizer.GameObjects
             new MessageCost
             {
                 MessageIds = { (5670, 0), (5677, 0) },
-                LocationsAffected = { Item.ShopItemBusinessScrubBluePotion },
+                LocationsAffected = { Item.ShopItemBusinessScrubBluePotionInCanyon, Item.ShopItemBusinessScrubBluePotionInOcean },
                 SubtractPriceAddresses = { 0x01051B70 + 0x7AA },
                 PriceAddresses = { 0x01051B70 + 0x7B2 },
                 Cost = 100,
@@ -445,7 +445,7 @@ namespace MMR.Randomizer.GameObjects
             new MessageCost
             {
                 MessageIds = { (1622, 0), (1623, 0) },
-                LocationsAffected = { Item.UpgradeBigBombBag },
+                LocationsAffected = { Item.UpgradeBigBombBagInBombShop },
                 Cost = 90,
             },
 
@@ -642,7 +642,7 @@ namespace MMR.Randomizer.GameObjects
                 Name = "Curiosity Shop Big Bomb Bag",
                 MessageIds = { (10715, 0), (10716, 0) },
                 Cost = 100,
-                // Big Bomb Bag logic not affected due to time of day logic
+                LocationsAffected = { Item.UpgradeBigBombBagInCuriosityShop },
             },
             new MessageCost
             {

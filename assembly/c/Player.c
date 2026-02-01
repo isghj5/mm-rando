@@ -985,6 +985,10 @@ void Player_SetGiantMaskTransformationState(GlobalContext* ctxt, ActorPlayer* pl
     player->stateFlags.state1 |= newState;
 }
 
+bool Player_ShouldAutoRemoveMask(ActorPlayer* player) {
+    return player->mask == 0x14 /* PLAYER_MASK_GIANT */ && !(player->stateFlags.state2 & PLAYER_STATE2_DIVING) && gSaveContext.perm.unk24.currentMagic == 0;
+}
+
 static const u8* sAudioBaseFilter = (u8*)0x801D66E0;
 
 void Player_HandleIronGoronLand(GlobalContext* ctxt, ActorPlayer* player) {
@@ -1094,7 +1098,7 @@ void Player_OnDekuWaterVoid(GlobalContext* ctxt, ActorPlayer* player) {
     z2_PerformEnterWaterEffects(ctxt, player);
     // End displaced code
 
-    if (ctxt->warpType) {
+    if (MISC_CONFIG.flags.takeDamageFromVoid && ctxt->warpType && !ctxt->transitionMode && gSaveContext.extra.voidFlag != 1) {
         Player_ForceInflictDamage(ctxt, player, -16);
     }
 }

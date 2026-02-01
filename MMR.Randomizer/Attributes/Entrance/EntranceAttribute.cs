@@ -4,33 +4,18 @@ namespace MMR.Randomizer.Attributes.Entrance
 {
     public class EntranceAttribute : Attribute
     {
-        public EntranceType? Type { get; private set; }
+        public GameObjects.Entrance Entrance { get; }
+        public GameObjects.Entrance? Pair { get; }
 
-        public EntranceAttribute(EntranceType entranceType)
+        public EntranceAttribute(GameObjects.Entrance entrance)
         {
-            Type = entranceType;
+            Entrance = entrance;
         }
 
-        public EntranceAttribute()
+        public EntranceAttribute(GameObjects.Entrance entrance, GameObjects.Entrance pair)
         {
-
+            Entrance = entrance;
+            Pair = pair;
         }
-    }
-
-    public enum EntranceType
-    {
-        Interior,
-        Overworld,
-        InteriorExit,
-        Permanent,
-        Dungeon,
-        Boss,
-        Trial,
-        DungeonExit,
-        TrialExit,
-        OwlWarp,
-        Telescope,
-        Grotto,
-        VoidRespawn
     }
 }

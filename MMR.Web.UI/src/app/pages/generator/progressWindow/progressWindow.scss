@@ -1,0 +1,32 @@
+@import '../../../../app/@theme/styles/themes';
+
+@include nb-install-component() {
+  ::ng-deep {
+    .progress-window {
+      margin-left: auto;
+      margin-right: auto;
+      width: 90%;
+
+      .headerButton {
+        float: right;
+        margin-top: -10px;
+        margin-right: -10px;
+      }
+
+      .footerButtonWrapper {
+        margin-top: 18px;
+        text-align: center;
+      }
+
+      button + button {
+        margin-left: 14px;
+      }
+    }
+
+    @media (min-width: 560px) {
+      .progress-window {
+        width: 532px;
+      }
+    }
+  }
+}

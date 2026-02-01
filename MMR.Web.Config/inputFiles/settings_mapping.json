@@ -1,0 +1,493 @@
+{
+  "Tabs": [
+    {
+      "name": "general_tab",
+      "text": "ROM Options",
+      "app_type": [ "generator" ],
+      "sections": [
+        {
+          "name": "general_section_web_generator",
+          "text": "",
+          "exclude_from_electron": true,
+          "col_span": 4,
+          "row_span": [ 1, 1, 1 ],
+          "settings": [
+            "OutputSettings.GenerateSpoilerLog",
+            "Web.output_type",
+            "OutputSettings.InputROMFilename",
+            "Web.wad_file",
+            "Web.common_key_file",
+            "Web.common_key_string",
+            "Web.wad_channel_id",
+            "Web.wad_channel_title"
+          ]
+        },
+        {
+          "name": "preset_section",
+          "text": "Settings Presets",
+          "subheader": "Presets are settings that can be saved and loaded from.<br>Loading a preset will overwrite all settings that affect the seed.",
+          "row_span": [ 1, 1, 1 ],
+          "settings": [
+            "Web.presets"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "general_tab_web_patcher",
+      "text": "ROM Generation",
+      "app_type": [ "patcher", "patcher_only" ],
+      "exclude_from_electron": true,
+      "sections": [
+        {
+          "name": "general_section",
+          "text": "",
+          "col_span": 4,
+          "row_span": [ 1, 1, 1 ],
+          "settings": [
+            "Web.output_type",
+            "OutputSettings.InputROMFilename",
+            "Web.wad_file",
+            "Web.common_key_file",
+            "Web.common_key_string",
+            "Web.wad_channel_id",
+            "Web.wad_channel_title"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "main_tab",
+      "text": "Main Settings",
+      "app_type": [ "generator" ],
+      "hide_when_disabled": true,
+      "sections": [
+        {
+          "name": "generation_section",
+          "text": "Generation Settings",
+          "col_span": 2,
+          "row_span": [ 2, 2, 3 ],
+          "settings": [
+            "GameplaySettings.LogicMode",
+            "GameplaySettings.UserLogicFileName",
+            "GameplaySettings.ItemPlacement",
+            "Web.RandomStartingItemGroups",
+            "GameplaySettings.RandomStartingItemGroups"
+          ]
+        },
+        {
+          "name": "allowed_tricks_section",
+          "text": "Enable Tricks",
+          "col_span": 2,
+          "row_span": [ 3, 3, 3 ],
+          "settings": [
+            "GameplaySettings.EnabledTricks"
+          ]
+        },
+        {
+          "name": "starting_items_section",
+          "text": "Extra Starting Items",
+          "col_span": 2,
+          "row_span": [ 3, 3, 3 ],
+          "settings": [
+            "GameplaySettings.CustomStartingItemListString"
+          ]
+        },
+        {
+          "name": "junk_locations_section",
+          "text": "Enforce Junk Locations",
+          "col_span": 2,
+          "row_span": [ 3, 3, 3 ],
+          "settings": [
+            "GameplaySettings.CustomJunkLocationsString"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "randomization_tab",
+      "text": "Randomization",
+      "app_type": [ "generator" ],
+      "hide_when_disabled": true,
+      "sections": [
+        {
+          "name": "item_section",
+          "text": "Item List",
+          "col_span": 4,
+          "row_span": [ 10, 12, 12 ],
+          "settings": [
+            "GameplaySettings.CustomItemListString"
+          ]
+        },
+        {
+          "name": "shuffle_section",
+          "text": "Shuffling",
+          "row_span": [ 4, 6, 6 ],
+          "settings": [
+            "GameplaySettings.EntranceMode",
+            "GameplaySettings.VictoryMode",
+            "GameplaySettings.PriceMode",
+            "GameplaySettings.BossRemainsMode",
+            "GameplaySettings.BossKeyMode",
+            "GameplaySettings.SmallKeyMode",
+            "GameplaySettings.StrayFairyMode",
+            "GameplaySettings.DungeonNavigationMode"
+          ]
+        },
+        {
+          "name": "other_shuffle_section",
+          "text": "Other",
+          "row_span": [ 4, 6, 6 ],
+          "settings": [
+            "GameplaySettings.ProgressiveUpgrades",
+            "GameplaySettings.RandomizeGibdoRequirements",
+            "GameplaySettings.AddSongs",
+            "GameplaySettings.RandomizeEnemies",
+            "GameplaySettings.StartingItemMode",
+            "GameplaySettings.RequiredBossRemains"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gimmicks_tab",
+      "text": "Gimmicks",
+      "app_type": "generator",
+      "hide_when_disabled": true,
+      "sections": [
+        {
+          "name": "movement_section",
+          "text": "Movement / Clock",
+          "col_span": 2,
+          "row_span": [ 2, 2, 2 ],
+          "settings": [
+            "GameplaySettings.MovementMode",
+            "GameplaySettings.FloorType",
+            "GameplaySettings.ContinuousDekuHopping",
+            "GameplaySettings.HookshotAnySurface",
+            "GameplaySettings.ClimbMostSurfaces",
+            "GameplaySettings.IronGoron",
+            "GameplaySettings.ClockSpeed",
+            "GameplaySettings.AutoInvert",
+            "GameplaySettings.HideClock"
+          ]
+        },
+        {
+          "name": "traps_section",
+          "text": "Traps",
+          "col_span": 2,
+          "row_span": [ 2, 2, 2 ],
+          "settings": [
+            "GameplaySettings.TrapAmount",
+            "GameplaySettings.TrapAppearance",
+            "GameplaySettings.TrapQuirks",
+            "GameplaySettings.TrapWeights"
+          ]
+        },
+        {
+          "name": "challenges_section",
+          "text": "Challenges",
+          "col_span": 2,
+          "row_span": [ 2, 2, 2 ],
+          "settings": [
+            "GameplaySettings.DamageMode",
+            "GameplaySettings.DamageEffect",
+            "GameplaySettings.DeathMode",
+            "GameplaySettings.FewerHealthDrops",
+            "GameplaySettings.ByoAmmo",
+            "GameplaySettings.TakeDamageOnEpona",
+            "GameplaySettings.TakeDamageWhileShielding",
+            "GameplaySettings.TakeDamageFromVoid",
+            "GameplaySettings.TakeDamageFromGorons",
+            "GameplaySettings.TakeDamageFromGibdosFaster",
+            "GameplaySettings.TakeDamageGettingCaught",
+            "GameplaySettings.TakeDamageFromDog",
+            "GameplaySettings.TakeDamageFromDexihands"
+          ]
+        },
+        {
+          "name": "other_section",
+          "text": "Other",
+          "col_span": 2,
+          "row_span": [ 2, 2, 2 ],
+          "settings": [
+            "GameplaySettings.BlastMaskCooldown",
+            "GameplaySettings.NutandStickDrops",
+            "GameplaySettings.OcarinaUnderwater",
+            "GameplaySettings.EnableSunsSong",
+            "GameplaySettings.FreeScarecrow",
+            "GameplaySettings.AllowFierceDeityAnywhere",
+            "GameplaySettings.GiantMaskAnywhere",
+            "GameplaySettings.InstantTransform",
+            "GameplaySettings.BombArrows",
+            "GameplaySettings.VanillaMoonTrialAccess",
+            "GameplaySettings.Character"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "comfort_tab",
+      "text": "Comfort",
+      "app_type": [ "generator" ],
+      "hide_when_disabled": true,
+      "sections": [
+        {
+          "name": "speedup_section",
+          "text": "Speed Ups",
+          "row_span": [ 1, 1, 1 ],
+          "settings": [
+            "GameplaySettings.SpeedupDampe",
+            "GameplaySettings.SpeedupLabFish",
+            "GameplaySettings.SpeedupBank",
+            "GameplaySettings.SpeedupBeavers",
+            "GameplaySettings.SpeedupDogRace",
+            "GameplaySettings.DoubleArcheryRewards",
+            "GameplaySettings.SpeedupBabyCuccos",
+            "GameplaySettings.RequiredZoraEggs"
+          ]
+        },
+        {
+          "name": "hints_section",
+          "text": "Hints",
+          "row_span": [ 1, 1, 1 ],
+          "settings": [
+            "GameplaySettings.HintsIndicateImportance",
+            "GameplaySettings.MixGossipAndGaroHints",
+            "Web.HintPriorities",
+            "GameplaySettings.OverrideHintPriorities",
+            "GameplaySettings.OverrideImportanceIndicatorTiers",
+            "GameplaySettings.OverrideHintItemCaps",
+            "GameplaySettings.RemainsHint",
+            "GameplaySettings.OathHint",
+            "GameplaySettings.FairyAndSkullHint"
+          ]
+        },
+        {
+          "name": "special_hints_section",
+          "text": "Gossip Stone / Garo Hints",
+          "row_span": [ 1, 1, 1 ],
+          "settings": [
+            "GameplaySettings.GossipHintStyle",
+            "GameplaySettings.FreeHints",
+            "GameplaySettings.ClearHints",
+            "GameplaySettings.ImportanceCount",
+            "GameplaySettings.OverrideNumberOfRequiredGossipHints",
+            "GameplaySettings.OverrideNumberOfNonRequiredGossipHints",
+            "GameplaySettings.OverrideMaxNumberOfClockTownGossipHints",
+            "GameplaySettings.GaroHintStyle",
+            "GameplaySettings.FreeGaroHints",
+            "GameplaySettings.ClearGaroHints",
+            "GameplaySettings.ImportanceCountGaro",
+            "GameplaySettings.OverrideNumberOfRequiredGaroHints",
+            "GameplaySettings.OverrideNumberOfNonRequiredGaroHints",
+            "GameplaySettings.OverrideMaxNumberOfClockTownGaroHints"
+          ]
+        },
+        {
+          "name": "comfort_section",
+          "text": "Comfort Options",
+          "row_span": [ 1, 1, 1 ],
+          "settings": [
+            "GameplaySettings.CritWiggleDisable",
+            "GameplaySettings.QuickTextEnabled",
+            "GameplaySettings.FastPush",
+            "GameplaySettings.CloseCows",
+            "GameplaySettings.EnablePictoboxSubject",
+            "GameplaySettings.LenientGoronSpikes",
+            "GameplaySettings.TargetHealthBar",
+            "GameplaySettings.FillWallet",
+            "GameplaySettings.HiddenRupeesSparkle",
+            "GameplaySettings.MinorDropSparkle",
+            "GameplaySettings.SaferGlitches",
+            "GameplaySettings.EasyFrameByFrame",
+            "GameplaySettings.ChestGameMinimap",
+            "GameplaySettings.UpdateShopAppearance",
+            "GameplaySettings.UpdateChests",
+            "GameplaySettings.UpdateWorldModels",
+            "GameplaySettings.UpdateNPCText",
+            "GameplaySettings.PreventDowngrades",
+            "GameplaySettings.FixEponaSword",
+            "GameplaySettings.QuestItemStorage",
+            "GameplaySettings.KeepQuestTradeThroughTime",
+            "GameplaySettings.ArrowCycling",
+            "GameplaySettings.ElegySpeedup",
+            "GameplaySettings.BombchuDrops",
+            "GameplaySettings.KegDrops",
+            "GameplaySettings.TolerantGossipStones",
+            "GameplaySettings.FairyMaskShimmer",
+            "GameplaySettings.SkulltulaTokenSounds"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "shorten_cutscenes_tab",
+      "text": "Shorten Cutscenes",
+      "app_type": [ "generator" ],
+      "hide_when_disabled": true,
+      "sections": [
+        {
+          "name": "main_section",
+          "text": "",
+          "col_span": 4,
+          "row_span": [ 2, 2, 2 ],
+          "settings": [
+            "GameplaySettings.ShortenCutsceneSettings.General",
+            "GameplaySettings.ShortenCutsceneSettings.BossIntros"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cosmetics_tab",
+      "text": "Cosmetics",
+      "app_type": [ "generator", "patcher" ],
+      "is_cosmetics": true,
+      "hide_when_disabled": true,
+      "sections": [
+        {
+          "name": "charactercosmetics_section",
+          "text": "Character Cosmetics",
+          "is_colors": true,
+          "col_span": 2,
+          "row_span": [ 3, 3, 3 ],
+          "settings": [
+            [
+              "CosmeticSettings.UseTunicColors",
+              "CosmeticSettings.TunicColors",
+              "CosmeticSettings.Instruments",
+              "CosmeticSettings.UseEnergyColors",
+              "CosmeticSettings.EnergyColors"
+            ]
+          ]
+        },
+        {
+          "name": "hud_section",
+          "text": "HUD",
+          "is_colors": true,
+          "col_span": 1,
+          "row_span": [ 7, 7, 7 ],
+          "settings": [
+            "CosmeticSettings.HeartsSelection",
+            "CosmeticSettings.MagicSelection",
+            "CosmeticSettings.ShiftHueMiscUI",
+            "CosmeticSettings.HudColors.ButtonA",
+            "CosmeticSettings.HudColors.ButtonB",
+            "CosmeticSettings.HudColors.ButtonC",
+            "CosmeticSettings.HudColors.ButtonStart",
+            "CosmeticSettings.HudColors.ClockEmblem",
+            "CosmeticSettings.HudColors.ClockEmblemInverted1",
+            "CosmeticSettings.HudColors.ClockEmblemInverted2",
+            "CosmeticSettings.HudColors.ClockEmblemSun",
+            "CosmeticSettings.HudColors.ClockMoon",
+            "CosmeticSettings.HudColors.ClockSun",
+            "CosmeticSettings.HudColors.Heart",
+            "CosmeticSettings.HudColors.HeartDD",
+            "CosmeticSettings.HudColors.Magic",
+            "CosmeticSettings.HudColors.MagicInf",
+            "CosmeticSettings.HudColors.Map",
+            "CosmeticSettings.HudColors.MapEntranceCursor",
+            "CosmeticSettings.HudColors.MapPlayerCursor",
+            "CosmeticSettings.HudColors.RupeeIcon1",
+            "CosmeticSettings.HudColors.RupeeIcon2",
+            "CosmeticSettings.HudColors.RupeeIcon3",
+            "CosmeticSettings.HudColors.RupeeIcon4",
+            "CosmeticSettings.HudColors.ButtonIconA",
+            "CosmeticSettings.HudColors.ButtonIconB",
+            "CosmeticSettings.HudColors.ButtonIconC",
+            "CosmeticSettings.HudColors.MenuAInner1",
+            "CosmeticSettings.HudColors.MenuAInner2",
+            "CosmeticSettings.HudColors.MenuAOuter1",
+            "CosmeticSettings.HudColors.MenuAOuter2",
+            "CosmeticSettings.HudColors.MenuCInner1",
+            "CosmeticSettings.HudColors.MenuCInner2",
+            "CosmeticSettings.HudColors.MenuCOuter1",
+            "CosmeticSettings.HudColors.MenuCOuter2",
+            "CosmeticSettings.HudColors.NoteA1",
+            "CosmeticSettings.HudColors.NoteA2",
+            "CosmeticSettings.HudColors.NoteAShadow1",
+            "CosmeticSettings.HudColors.NoteAShadow2",
+            "CosmeticSettings.HudColors.NoteC1",
+            "CosmeticSettings.HudColors.NoteC2",
+            "CosmeticSettings.HudColors.NoteCShadow1",
+            "CosmeticSettings.HudColors.NoteCShadow2",
+            "CosmeticSettings.HudColors.PauseTitleA",
+            "CosmeticSettings.HudColors.PauseTitleC",
+            "CosmeticSettings.HudColors.Prompt1",
+            "CosmeticSettings.HudColors.Prompt2",
+            "CosmeticSettings.HudColors.PromptGlow",
+            "CosmeticSettings.HudColors.ScoreLines",
+            "CosmeticSettings.HudColors.ScoreNote",
+            "CosmeticSettings.HudColors.DPad",
+            "CosmeticSettings.HudColors.MenuBorder1",
+            "CosmeticSettings.HudColors.MenuBorder2",
+            "CosmeticSettings.HudColors.MenuSubtitleText",
+            "CosmeticSettings.HudColors.ShopCursor1",
+            "CosmeticSettings.HudColors.ShopCursor2"
+          ]
+        },
+        {
+          "name": "other_section",
+          "text": "Other",
+          "col_span": 1,
+          "row_span": [ 7, 7, 7 ],
+          "settings": [
+            "CosmeticSettings.TatlColorSchema",
+            "CosmeticSettings.EnableHoldZTargeting",
+            "CosmeticSettings.KeepPictoboxAntialiasing",
+            "CosmeticSettings.RainbowTunic",
+            "CosmeticSettings.BombTrapsRandomizeTunicColor",
+            "CosmeticSettings.CameraStyle",
+            "CosmeticSettings.DPad.State",
+            "Web.CosmeticDPadPreset",
+            "CosmeticSettings.DPad.Display",
+            "CosmeticSettings.DPad.Pad.Values"
+          ]
+        },
+        {
+          "name": "musicsound_section",
+          "text": "Music / Sound",
+          "col_span": 2,
+          "row_span": [ 4, 4, 4 ],
+          "settings": [
+            "CosmeticSettings.RandomizeSounds",
+            "CosmeticSettings.EnableNightBGM",
+            "CosmeticSettings.DisableCombatMusic",
+            "CosmeticSettings.RemoveMinorMusic",
+            "CosmeticSettings.ShowTrackName",
+            "CosmeticSettings.DisableFanfares",
+            "CosmeticSettings.Music",
+            "Web.custom_music_directorypicker",
+            "CosmeticSettings.MusicLuckRollChance",
+            "CosmeticSettings.LowHealthSFX"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "footer_tab_web",
+      "text": "",
+      "exclude_from_electron": true,
+      "footer": true,
+      "sections": [
+        {
+          "name": "seed_section",
+          "text": "",
+          "settings": [
+            "Web.generate_from_file"
+          ]
+        },
+        {
+          "name": "file_section",
+          "text": "",
+          "settings": [
+            "Web.patch_file",
+            "Web.repatch_cosmetics",
+            "Web.persist_in_cache"
+          ]
+        }
+      ]
+    }
+  ]
+}

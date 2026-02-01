@@ -191,7 +191,7 @@ namespace MMR.DiscordBot.Modules
 
             var tournamentSeedReply = await ReplyNoTagAsync("Sending seed...");
             await LogToDiscord($"User {Context.User.Username} requested to send a prepared tournament seed.");
-            var (_, patchPath, hashIconPath, spoilerLogPath, _) = _mmrService.GetSeedPaths(dateTime, version);
+            var (_, patchPath, hashIconPath, spoilerLogPath, mysterySpoilerPath, _) = _mmrService.GetSeedPaths(dateTime, version);
             try
             {
                 if (File.Exists(patchPath) && File.Exists(hashIconPath) && File.Exists(spoilerLogPath))
@@ -202,6 +202,10 @@ namespace MMR.DiscordBot.Modules
                         await user.SendFileAsync(hashIconPath);
                     }
                     await Context.User.SendFileAsync(spoilerLogPath);
+                    if (File.Exists(mysterySpoilerPath))
+                    {
+                        await Context.User.SendFileAsync(mysterySpoilerPath);
+                    }
                     await Context.User.SendFileAsync(hashIconPath);
                     await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "Success.");
                     await LogToDiscord($"User {Context.User.Username} successfully sent a prepared tournament seed.");
@@ -219,6 +223,7 @@ namespace MMR.DiscordBot.Modules
             finally
             {
                 File.Delete(spoilerLogPath);
+                File.Delete(mysterySpoilerPath);
                 File.Delete(patchPath);
                 File.Delete(hashIconPath);
                 await TournamentSeedRepository.DeleteById(Context.User.Id);
@@ -483,11 +488,16 @@ namespace MMR.DiscordBot.Modules
                 await ReplyNoTagAsync("You haven't generated any seeds recently.");
                 return;
             }
-            var (_, _, _, spoilerLogPath, _) = _mmrService.GetSeedPaths(userSeedEntity.LastSeedRequest, userSeedEntity.Version ?? "1.13.0.13");
+            var (_, _, _, spoilerLogPath, mysterySpoilerPath, _) = _mmrService.GetSeedPaths(userSeedEntity.LastSeedRequest, userSeedEntity.Version ?? "1.13.0.13");
             if (File.Exists(spoilerLogPath))
             {
                 await ReplySendFileAsync(spoilerLogPath);
                 File.Delete(spoilerLogPath);
+                if (File.Exists(mysterySpoilerPath))
+                {
+                    await ReplySendFileAsync(mysterySpoilerPath);
+                    File.Delete(mysterySpoilerPath);
+                }
             }
             else
             {

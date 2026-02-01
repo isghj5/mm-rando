@@ -33,8 +33,22 @@ namespace MMR.CLI
     public class SettingItemListItem
     {
         public string Label { get; set; }
-        public int Index { get; set; }
+        public int? Index { get; set; }
+        public string Value { get; set; }
         public Dictionary<string, object> AdditionalInformation { get; set; }
+    }
+
+    public class SettingDictionary<TKey, TValue>
+    {
+        public string KeySettingPath { get; set; }
+        public Dictionary<TKey, TValue> Values { get; set; }
+    }
+
+    public class SettingProperty
+    {
+        public string Name { get; set; }
+        public string DataType { get; set; }
+        public List<SettingItemListItem> ItemList { get; set; }
     }
 
     public class SettingConfig
@@ -45,6 +59,7 @@ namespace MMR.CLI
         public string Label { get; set; }
         public string Tooltip { get; set; }
         public object DefaultValue { get; set; }
+        public List<SettingProperty> Properties { get; set; }
         public List<SettingValue> Keys { get; set; }
         public List<SettingValue> Values { get; set; }
         public List<SettingItemListItem> ItemList { get; set; }
@@ -52,8 +67,8 @@ namespace MMR.CLI
         public object MinValue { get; set; }
         public object MaxValue { get; set; }
         public Dictionary<object, List<string>> SettingExcludes { get; set; }
-        public Dictionary<LogicMode, Dictionary<string, List<SettingValue>>> TrickInfo { get; set; }
-        public Dictionary<LogicMode, bool> InLogic { get; set; }
+        public SettingDictionary<LogicMode, Dictionary<string, List<SettingValue>>> TrickInfo { get; set; }
+        public SettingDictionary<LogicMode, bool> InLogic { get; set; }
         public List<string> Index { get; set; }
     }
 
@@ -95,7 +110,6 @@ namespace MMR.CLI
                     }
                 });
 
-                Regex addSpacesRegex = new Regex("(?<!^)([A-Z])");
                 var path = new Stack<string>();
                 var settings = new List<SettingConfig>();
                 void processType(object defaultValue)
@@ -116,45 +130,50 @@ namespace MMR.CLI
                             continue;
                         }
                         path.Push(property.Name);
-                        string ToLabel(string label)
-                        {
-                            return addSpacesRegex.Replace(label, " $1");
-                        }
                         var rangeAttribute = property.GetAttribute<RangeAttribute>();
+                        var relativePath = string.Join(".", path.Skip(1).Reverse());
                         SettingConfig settingConfig = new SettingConfig
                         {
                             Path = string.Join(".", path.Reverse()),
-                            Label = property.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(property.Name),
+                            Label = property.GetAttribute<SettingNameAttribute>()?.Name ?? property.Name.AddSpaces(),
                             Tooltip = property.GetAttribute<DescriptionAttribute>()?.Description,
                             MinValue = rangeAttribute?.Minimum,
                             MaxValue = rangeAttribute?.Maximum,
                             SettingExcludes = property.HasAttribute<SettingExcludeAttribute>()
-                                ? property.GetAttributes<SettingExcludeAttribute>().ToDictionary(attr => attr.PropertyValue, attr => attr.SettingPaths)
+                                ? property.GetAttributes<SettingExcludeAttribute>().ToDictionary(attr => attr.PropertyValue, attr => attr.SettingPaths.Select(p => relativePath + "." + p).ToList())
                                 : null,
-                            InLogic = property.GetAttribute<SettingTabAttribute>()?.TabType == SettingTabAttribute.Type.Gimmicks ? itemLists.ToDictionary(kvp => kvp.Key, kvp =>
+                            InLogic = property.GetAttribute<SettingTabAttribute>()?.TabType == SettingTabAttribute.Type.Gimmicks ? new SettingDictionary<LogicMode, bool>
                             {
-                                return kvp.Value.Any(io => !string.IsNullOrWhiteSpace(io.SettingExpression) && LogicUtils.ParseSettingExpression(io.SettingExpression).VisitsMember(declaringType, property.Name));
-                            }) : null,
+                                KeySettingPath = $"{nameof(GameplaySettings)}.{nameof(GameplaySettings.LogicMode)}",
+                                Values = itemLists.ToDictionary(kvp => kvp.Key, kvp =>
+                                {
+                                    return kvp.Value.Any(io => !string.IsNullOrWhiteSpace(io.SettingExpression) && LogicUtils.ParseSettingExpression(io.SettingExpression).VisitsMember(declaringType, property.Name));
+                                })
+                        } : null,
                         };
                         if (settingConfig.Path == $"{nameof(GameplaySettings)}.{nameof(GameplaySettings.EnabledTricks)}")
                         {
-                            settingConfig.TrickInfo = itemLists.ToDictionary(kvp => kvp.Key, kvp =>
+                            settingConfig.TrickInfo = new SettingDictionary<LogicMode, Dictionary<string, List<SettingValue>>>
                             {
-                                var tricks = kvp.Value.Where(io => io.IsTrick);
-                                var categories = tricks.Select(io => string.IsNullOrWhiteSpace(io.TrickCategory) ? "Misc" : io.TrickCategory).Distinct().ToList();
-
-                                foreach (var i in tricks)
+                                KeySettingPath = $"{nameof(GameplaySettings)}.{nameof(GameplaySettings.LogicMode)}",
+                                Values = itemLists.ToDictionary(kvp => kvp.Key, kvp =>
                                 {
-                                    i.TrickCategory = string.IsNullOrWhiteSpace(i.TrickCategory) ? "Misc" : i.TrickCategory;
-                                }
+                                    var tricks = kvp.Value.Where(io => io.IsTrick);
+                                    var categories = tricks.Select(io => string.IsNullOrWhiteSpace(io.TrickCategory) ? "Misc" : io.TrickCategory).Distinct().ToList();
 
-                                return tricks.GroupBy(io => io.TrickCategory).ToDictionary(g => g.Key, g => g.Select(io => new SettingValue
-                                {
-                                    Label = io.Name,
-                                    Tooltip = io.TrickTooltip,
-                                    Value = io.TrickUrl,
-                                }).ToList());
-                            });
+                                    foreach (var i in tricks)
+                                    {
+                                        i.TrickCategory = string.IsNullOrWhiteSpace(i.TrickCategory) ? "Misc" : i.TrickCategory;
+                                    }
+
+                                    return tricks.GroupBy(io => io.TrickCategory).ToDictionary(g => g.Key, g => g.Select(io => new SettingValue
+                                    {
+                                        Label = io.Name,
+                                        Tooltip = io.TrickTooltip,
+                                        Value = io.TrickUrl,
+                                    }).ToList());
+                                })
+                            };
                         }
 
                         var settingIndexLabels = property.GetAttribute<SettingIndexValuesAttribute>();
@@ -165,6 +184,20 @@ namespace MMR.CLI
 
                         var settingTypeAttribute = property.GetAttribute<SettingTypeAttribute>();
                         var settingItemListAttribute = property.GetAttribute<SettingItemListAttribute>();
+                        if (settingConfig.Path == $"{nameof(GameplaySettings)}.{nameof(GameplaySettings.RandomStartingItemGroups)}")
+                        {
+                            settingItemListAttribute = typeof(RandomStartingItemGroup).GetProperty(nameof(RandomStartingItemGroup.Items)).GetAttribute<SettingItemListAttribute>();
+                            settingConfig.ItemList = settingItemListAttribute.ItemList.Select(item =>
+                            {
+                                var itemListItem = new SettingItemListItem
+                                {
+                                    Value = item.ToString(),
+                                    Label = settingItemListAttribute.LabelExtractor(item),
+                                    AdditionalInformation = settingItemListAttribute.AdditionalInformationExtractors.ToDictionary(kvp => kvp.Key, kvp => kvp.Value(item)),
+                                };
+                                return itemListItem;
+                            }).ToList();
+                        }
                         if (settingTypeAttribute != null)
                         {
                             settingConfig.DataType = property.GetAttribute<SettingTypeAttribute>().Type;
@@ -177,7 +210,7 @@ namespace MMR.CLI
                                 }).ToList();
                             }
                         }
-                        else if (settingItemListAttribute != null)
+                        else if (settingItemListAttribute != null && property.PropertyType == typeof(string))
                         {
                             settingConfig.DataType = "ItemList";
                             settingConfig.ItemList = settingItemListAttribute.ItemList.Select((item, index) =>
@@ -211,7 +244,7 @@ namespace MMR.CLI
                                     settingConfig.Keys = Enum.GetValues(keyType).Cast<Enum>().Where(v => keyType == typeof(TransformationForm) ? true : Convert.ToInt32(v) > 0).Select(key => new SettingValue
                                     {
                                         Value = key.ToString(),
-                                        Label = key.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(key.ToString()),
+                                        Label = key.GetAttribute<SettingNameAttribute>()?.Name ?? key.ToString().AddSpaces(),
                                         Tooltip = key.GetAttribute<DescriptionAttribute>()?.Description,
                                     }).ToList();
                                     if (valueType.IsEnum)
@@ -220,7 +253,7 @@ namespace MMR.CLI
                                         settingConfig.Values = Enum.GetValues(valueType).Cast<Enum>().Select(v => new SettingValue
                                         {
                                             Value = v.ToString(),
-                                            Label = v.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(v.ToString()),
+                                            Label = v.GetAttribute<SettingNameAttribute>()?.Name ?? v.ToString().AddSpaces(),
                                         }).ToList();
                                     }
                                     else
@@ -242,7 +275,7 @@ namespace MMR.CLI
                                     settingConfig.Values = Enum.GetValues(itemType).Cast<Enum>().Where(v => Convert.ToInt32(v) > 0 || (v.ToString() != "None" && v.ToString() != "Fake")).Select(v => new SettingValue
                                     {
                                         Value = v.ToString(),
-                                        Label = v.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(v.ToString()),
+                                        Label = v.GetAttribute<SettingNameAttribute>()?.Name ?? v.ToString().AddSpaces(),
                                         Tooltip = v.GetAttribute<DescriptionAttribute>()?.Description,
                                     }).ToList();
                                 }
@@ -257,10 +290,59 @@ namespace MMR.CLI
                                         }
                                         else if (itemType2.IsEnum)
                                         {
-                                            //settingConfig.DataType = "Enum[][]";
-                                            //settingConfig.Values = Enum.GetNames(itemType2).ToList();
+                                            if (settingItemListAttribute != null)
+                                            {
+                                                settingConfig.DataType = "Item[][]";
+                                                settingConfig.ItemList = settingItemListAttribute.ItemList.Select((item, index) =>
+                                                {
+                                                    var itemListItem = new SettingItemListItem
+                                                    {
+                                                        Value = item.ToString(),
+                                                        Label = settingItemListAttribute.LabelExtractor(item),
+                                                        AdditionalInformation = settingItemListAttribute.AdditionalInformationExtractors.ToDictionary(kvp => kvp.Key, kvp => kvp.Value(item)),
+                                                    };
+                                                    return itemListItem;
+                                                }).ToList();
+                                            }
+                                            else
+                                            {
+                                                //settingConfig.DataType = "Enum[][]";
+                                                //settingConfig.Values = Enum.GetNames(itemType2).ToList();
+                                            }
                                         }
+                                        
                                     }
+                                }
+                                else if (itemType.IsClass)
+                                {
+                                    settingConfig.DataType = "object[]";
+                                    settingConfig.Properties = itemType.GetProperties().Select(p =>
+                                    {
+                                        var settingItemListAttribute = p.GetAttribute<SettingItemListAttribute>();
+                                        if (settingItemListAttribute != null)
+                                        {
+                                            return new SettingProperty
+                                            {
+                                                Name = p.Name,
+                                                DataType = "Item[]",
+                                                ItemList = settingItemListAttribute.ItemList.Select(item =>
+                                                {
+                                                    var itemListItem = new SettingItemListItem
+                                                    {
+                                                        Label = settingItemListAttribute.LabelExtractor(item),
+                                                        Value = item.ToString(),
+                                                        AdditionalInformation = settingItemListAttribute.AdditionalInformationExtractors.ToDictionary(kvp => kvp.Key, kvp => kvp.Value(item)),
+                                                    };
+                                                    return itemListItem;
+                                                }).ToList()
+                                            };
+                                        }
+                                        return new SettingProperty
+                                        {
+                                            Name = p.Name,
+                                            DataType = p.PropertyType.Name,
+                                        };
+                                    }).ToList();
                                 }
                                 else
                                 {
@@ -280,7 +362,7 @@ namespace MMR.CLI
                             settingConfig.Values = Enum.GetValues(property.PropertyType).Cast<Enum>().Select(v => new SettingValue
                             {
                                 Value = v.ToString(),
-                                Label = isFlagsEnum && Convert.ToInt32(v) == 0 ? null : v.GetAttribute<SettingNameAttribute>()?.Name ?? ToLabel(v.ToString()),
+                                Label = isFlagsEnum && Convert.ToInt32(v) == 0 ? null : v.GetAttribute<SettingNameAttribute>()?.Name ?? v.ToString().AddSpaces(),
                                 Tooltip = v.GetAttribute<DescriptionAttribute>()?.Description,
                             }).ToList();
                         }
@@ -297,6 +379,10 @@ namespace MMR.CLI
                         if (settingConfig != null)
                         {
                             settingConfig.DefaultValue = property.GetValue(defaultValue);
+                            if (settingConfig.DefaultValue == null)
+                            {
+                                settingConfig.DefaultValue = new WriteableNull();
+                            }
                             settings.Add(settingConfig);
                         }
                         path.Pop();
@@ -388,13 +474,16 @@ namespace MMR.CLI
                     Console.WriteLine($"File not found \"{settingsPath}\".");
                     return -1;
                 }
-                if (loadedConfiguration.GameplaySettings == null)
+                if (!argsDictionary.ContainsKey("-inputpatch"))
                 {
-                    Console.WriteLine($"Error loading GameplaySettings from \"{settingsPath}\".");
-                    return -1;
+                    if (loadedConfiguration.GameplaySettings == null)
+                    {
+                        Console.WriteLine($"Error loading GameplaySettings from \"{settingsPath}\".");
+                        return -1;
+                    }
+                    configuration.GameplaySettings = loadedConfiguration.GameplaySettings;
+                    Console.WriteLine($"Loaded ${nameof(Configuration.GameplaySettings)} from \"{settingsPath}\".");
                 }
-                configuration.GameplaySettings = loadedConfiguration.GameplaySettings;
-                Console.WriteLine($"Loaded ${nameof(Configuration.GameplaySettings)} from \"{settingsPath}\".");
                 if (loadedConfiguration.CosmeticSettings != null && argsDictionary.ContainsKey("-cosmeticSettings"))
                 {
                     configuration.CosmeticSettings = loadedConfiguration.CosmeticSettings;
@@ -404,6 +493,11 @@ namespace MMR.CLI
                 {
                     configuration.OutputSettings = loadedConfiguration.OutputSettings;
                     Console.WriteLine($"Loaded ${nameof(Configuration.OutputSettings)} from \"{settingsPath}\".");
+                }
+                if (loadedConfiguration.WebSettings != null && argsDictionary.ContainsKey("-webSettings"))
+                {
+                    configuration.WebSettings = loadedConfiguration.WebSettings;
+                    Console.WriteLine($"Loaded ${nameof(Configuration.WebSettings)} from \"{settingsPath}\".");
                 }
             }
 
@@ -451,6 +545,9 @@ namespace MMR.CLI
             configuration.OutputSettings.GenerateSpoilerLogJson |= argsDictionary.ContainsKey("-spoilerJson");
             configuration.OutputSettings.GenerateSettingsJson |= argsDictionary.ContainsKey("-infoJson");
             configuration.OutputSettings.GenerateHashJson |= argsDictionary.ContainsKey("-hashJson");
+            configuration.OutputSettings.GenerateCompressionInfoJson |= argsDictionary.ContainsKey("-compressionJson");
+            configuration.OutputSettings.GenerateRandomizedMusicInfoJson |= argsDictionary.ContainsKey("-randomMusicJson");
+            configuration.OutputSettings.IsPatchForVC |= argsDictionary.ContainsKey("-vcPatch");
 
             int seed;
             if (argsDictionary.ContainsKey("-seed"))
@@ -513,7 +610,7 @@ namespace MMR.CLI
             var validationResult = configuration.GameplaySettings.Validate() ?? configuration.OutputSettings.Validate();
             if (validationResult != null)
             {
-                Console.WriteLine(validationResult);
+                Console.Error.WriteLine("Error: " + validationResult);
                 return -1;
             }
 
@@ -535,15 +632,22 @@ namespace MMR.CLI
             try
             {
                 string result;
-                using (var progressBar = new ProgressBar())
+                if (argsDictionary.ContainsKey("-noProgressBar"))
                 {
-                    //var progressReporter = new TextWriterProgressReporter(Console.Out);
-                    var progressReporter = new ProgressBarProgressReporter(progressBar, maxImportanceWait);
+                    var progressReporter = new TextWriterProgressReporter(Console.Out);
                     result = ConfigurationProcessor.Process(configuration, seed, progressReporter);
+                }
+                else
+                {
+                    using (var progressBar = new ProgressBar())
+                    {
+                        var progressReporter = new ProgressBarProgressReporter(progressBar, maxImportanceWait);
+                        result = ConfigurationProcessor.Process(configuration, seed, progressReporter);
+                    }
                 }
                 if (result != null)
                 {
-                    Console.Error.WriteLine(result);
+                    Console.Error.WriteLine("Error: " + result);
                 }
                 else
                 {
@@ -651,14 +755,17 @@ namespace MMR.CLI
                     configuration = Configuration.FromJson(Req.ReadToEnd());
                 }
 
-                if (configuration.GameplaySettings.Logic != null)
+                if (configuration.GameplaySettings != null)
                 {
-                    configuration.GameplaySettings.UserLogicFileName = path;
-                    configuration.GameplaySettings.Logic = null;
-                }
-                if (!File.Exists(configuration.GameplaySettings.UserLogicFileName))
-                {
-                    configuration.GameplaySettings.UserLogicFileName = string.Empty;
+                    if (configuration.GameplaySettings.Logic != null)
+                    {
+                        configuration.GameplaySettings.UserLogicFileName = path;
+                        configuration.GameplaySettings.Logic = null;
+                    }
+                    if (!File.Exists(configuration.GameplaySettings.UserLogicFileName))
+                    {
+                        configuration.GameplaySettings.UserLogicFileName = string.Empty;
+                    }
                 }
                 return configuration;
             }

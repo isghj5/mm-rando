@@ -1,0 +1,8 @@
+@forward '@nebular/theme/styles/theming';
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default';
+
+@import "theme.mmr-dark";
+@import "theme.mmr-light";
+
+$nb-enabled-themes: (mmr-dark, mmr-light);

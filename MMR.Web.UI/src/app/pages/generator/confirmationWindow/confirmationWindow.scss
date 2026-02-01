@@ -1,0 +1,31 @@
+@import '../../../../app/@theme/styles/themes';
+
+@include nb-install-component() {
+  ::ng-deep {
+    .confirmation-window {
+      margin-left: auto;
+      margin-right: auto;
+      width: 90%;
+
+      .headerButton {
+        float: right;
+        margin-top: -10px;
+        margin-right: -10px;
+      }
+
+      .footerButtonWrapper {
+        text-align: center;
+      }
+
+      button + button {
+        margin-left: 14px;
+      }
+    }
+
+    @media (min-width: 560px) {
+      .confirmation-window {
+        width: 532px;
+      }
+    }
+  }
+}

@@ -1,0 +1,319 @@
+@import '../../../../app/@theme/styles/themes';
+
+@include nb-install-component() {
+  ::ng-deep {
+
+    .mmrItemSelector-window {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      
+      container-type: inline-size;
+      container-name: item-selector-dialog;
+      
+      overflow-x: hidden;
+      
+      box-sizing: border-box;
+      
+      min-width: 0;
+      min-height: 0;
+
+      nb-card-body {
+          overscroll-behavior: contain;
+      }
+      
+      .headerButton {
+        float: right;
+        margin-top: -10px;
+        margin-right: -10px;
+      }
+
+      .footerButtonWrapper {
+        text-align: center;
+      }
+
+      button + button {
+        margin-left: 14px;
+      }
+
+      .dialog-title {
+        text-align: center;
+        font-size: 1.7em;
+        font-weight: bold;
+        margin-bottom: 0.2em;
+        color: #fff;
+      }
+
+      .search-container {
+        margin-bottom: 20px;
+        
+        .search-input {
+          width: 100%;
+          background: #222 !important;
+          color: #fff !important;
+          border: 1px solid #444;
+          border-radius: 4px;
+          padding: 8px 12px;
+          font-size: 1em;
+          
+          &::placeholder {
+            color: #888;
+          }
+          
+          &:focus {
+            border-color: #5a7cff;
+            outline: none;
+          }
+        }
+      }
+
+      .items-container {
+        flex: 1 1 0;
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin-bottom: 20px;
+        
+        min-width: 0;
+        width: 100%;
+        
+        .items-grid {
+          display: grid;
+          gap: 5px;
+          width: 100%;
+          min-width: 0;
+          
+          --min-column-width: 200px;
+          --preferred-column-width: 250px;
+          
+          grid-template-columns: repeat(auto-fit, minmax(var(--min-column-width), 1fr));
+          
+          @container (min-width: 800px) {
+            grid-template-columns: repeat(3, 1fr);
+          }
+          
+          @container (min-width: 600px) and (max-width: 799px) {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          
+          @container (max-width: 599px) {
+            grid-template-columns: 1fr;
+          }
+          
+          @supports not (container-type: inline-size) {
+            @media (min-width: 1200px) {
+              grid-template-columns: repeat(3, 1fr);
+            }
+            
+            @media (max-width: 1199px) and (min-width: 900px) {
+              grid-template-columns: repeat(2, 1fr);
+            }
+            
+            @media (max-width: 899px) and (min-width: 600px) {
+              grid-template-columns: repeat(2, 1fr);
+            }
+            
+            @media (max-width: 599px) {
+              grid-template-columns: 1fr;
+            }
+          }
+          
+          @container (max-width: 500px) {
+            --min-column-width: 280px;
+            gap: 4px;
+          }
+          
+          @container (max-width: 400px) {
+            --min-column-width: 260px;
+            gap: 3px;
+          }
+        }
+        
+        .item-entry {
+          display: flex;
+          align-items: flex-start;
+          gap: 8px;
+          padding: 8px 12px;
+          background: #222;
+          border: 1px solid #333;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          min-height: 44px;
+          width: 100%;
+          box-sizing: border-box;
+          min-width: 0;
+          
+          @container (max-width: 600px) {
+            padding: 10px 12px;
+            min-height: 48px;
+          }
+          
+          &:hover {
+            background: #333;
+            border-color: #555;
+          }
+          
+          &.selected {
+            background: #2a4a8a;
+            border-color: #5a7cff;
+          }
+          
+          input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin: 0;
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 2px;
+          }
+          
+          .item-label {
+            color: #fff;
+            font-size: 0.9em;
+            flex: 1;
+            line-height: 1.3;
+            max-width: none;
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            overflow: hidden;
+            min-width: 0;
+          }
+        }
+      }
+
+      .selection-controls {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 0;
+        margin-bottom: 16px; // Add margin bottom instead of border-top
+        
+        button {
+          padding: 6px 12px;
+          font-size: 0.9em;
+          width: 100px; // Fixed width for both buttons
+        }
+        
+        .selection-count {
+          color: #ccc;
+          font-size: 0.9em;
+          margin-left: auto;
+        }
+      }
+
+      .footer-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 18px;
+        margin: 18px 0 6px 0;
+      }
+
+      .footer-buttons button {
+        width: 90px !important;
+        height: 40px !important;
+        padding: 8px 24px !important;
+        font-size: 0.9rem !important;
+        font-weight: 500 !important;
+        border-radius: 4px !important;
+        transition: all 0.2s ease !important;
+        
+        // Ensure both buttons have the same box-sizing and line-height
+        box-sizing: border-box !important;
+        line-height: 1.2 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        
+        // Override any Nebular-specific button styling
+        min-width: 90px !important;
+        max-width: 90px !important;
+        min-height: 40px !important;
+        max-height: 40px !important;
+      }
+
+      @media (max-width: 1280px) {
+        .items-grid {
+          gap: 6px;
+        }
+        
+        .item-entry {
+          padding: 6px 10px;
+          
+          .item-label {
+            font-size: 0.85em;
+          }
+        }
+      }
+
+      @media (max-width: 1000px) {
+        padding: 8px 4px 0 4px;
+        
+        .search-container {
+          margin-bottom: 16px;
+        }
+        
+        .items-container {
+          margin-bottom: 16px;
+        }
+      }
+
+      @media (max-width: 800px) {
+        .selection-controls {
+          flex-direction: row; // Keep buttons in a row on mobile
+          align-items: center;
+          gap: 8px;
+          
+          button {
+            width: 120px; // Fixed width on mobile
+          }
+          
+          .selection-count {
+            margin-left: auto;
+            text-align: right; // Keep right-aligned when in row
+          }
+        }
+      }
+
+      @media (max-width: 724px) {
+        .mmrItemSelector-window {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+
+      @media (max-width: 650px) {
+        width: 100vw;
+        padding: 0;
+        
+        .dialog-title {
+          margin-bottom: 0.1em;
+          padding-bottom: 2px;
+        }
+        
+        .search-container {
+          margin: 0 8px 16px 8px;
+          flex-shrink: 0; // Don't shrink search container
+        }
+        
+        .selection-controls {
+          margin: 0 8px 16px 8px;
+          flex-shrink: 0; // Don't shrink selection controls
+          
+          button {
+            width: 110px; // Fixed width on very small screens
+            padding: 8px 16px; // Larger padding for better touch targets
+          }
+        }
+      }
+
+      @media (max-width: 550px) {
+        .headerButton {
+          display: none;
+        }
+      }
+    } 
+  }
+}

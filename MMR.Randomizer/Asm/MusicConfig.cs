@@ -108,7 +108,7 @@ namespace MMR.Randomizer.Asm
 
         public void FinalizeSettings(CosmeticSettings settings)
         {
-            if (settings.Music == Models.Music.Random)
+            if (settings.Music == Models.Settings.Music.Random)
             {
                 SequenceMaskFileIndex = RomUtils.AppendFile(new byte[NUM_SEQUENCES * SEQUENCE_DATA_SIZE]);
             }
@@ -117,7 +117,7 @@ namespace MMR.Randomizer.Asm
                 SequenceMaskFileIndex = null;
             }
 
-            if (settings.Music == Models.Music.Random && settings.ShowTrackName)
+            if (settings.Music == Models.Settings.Music.Random && settings.ShowTrackName)
             {
                 SequenceNamesFileIndex = RomUtils.AppendFile(new byte[NUM_SEQUENCES * SEQUENCE_NAME_MAX_SIZE]);
             }

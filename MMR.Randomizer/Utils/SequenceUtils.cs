@@ -61,7 +61,7 @@ namespace MMR.Randomizer.Utils
             MAX_TYPE2_MUSIC_BUDGET  = 0x6000;
         }
 
-        public static void ReadSequenceInfo()
+        public static void ReadSequenceInfo(bool skipMMRS = false, List<SequenceInfo> extraSequences = null)
         {
             /// Reads the Seqs.txt file for sequence information about the game and user configuration
 
@@ -205,7 +205,20 @@ namespace MMR.Randomizer.Utils
                 });
 
                 ScanZSEQUENCE(directory); // scan for base zseq in music folder
-                ScanForMMRS(directory); // scan for base mmrs in music folder
+
+                if (!skipMMRS)
+                    ScanForMMRS(directory); // scan for base mmrs in music folder
+
+                if (extraSequences != null)
+                {
+                    foreach (var extraSong in extraSequences)
+                    {
+                        if (extraSong != null && extraSong.SequenceBinaryList != null)
+                        {
+                            RomData.SequenceList.Add(extraSong);
+                        }
+                    }
+                }
             }
         }
 

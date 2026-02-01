@@ -53,6 +53,7 @@ extern int z2_CanInteract(GlobalContext* ctxt);
 extern u8 z2_Player_MaskIdToItemId(s32 maskIdMinusOne);
 extern void z2_Player_SetBootData(GlobalContext* ctxt, ActorPlayer* player);
 extern void z2_Player_SetEquipmentData(GlobalContext* ctxt, ActorPlayer* player);
+extern void z2_Player_UpdateBottleHeld(GlobalContext* ctxt, ActorPlayer* player, s32 itemId, s32 itemAction);
 extern int z2_Player_InBlockingCsMode(GlobalContext* ctxt, ActorPlayer* player);
 extern int z2_Inventory_GetBtnItem(GlobalContext* ctxt, ActorPlayer* player, s32 buttonIndex);
 extern void z2_DrawButtonAmounts(GlobalContext* ctxt, u32 arg1, u16 alpha);
@@ -155,6 +156,8 @@ extern void z2_load_scene();
 
 extern void z2_EffectSsKiraKira_SpawnSmall(GlobalContext* globalCtx, Vec3f* pos, Vec3f* velocity, Vec3f* accel,
                                  ColorRGBA8* primColor, ColorRGBA8* envColor);
+extern void z2_EffectSsKiraKira_SpawnDispersed(GlobalContext* globalCtx, Vec3f* pos, Vec3f* velocity, Vec3f* accel,
+                                 ColorRGBA8* primColor, ColorRGBA8* envColor, s16 scale, s32 life);
 extern void z2_EffectSsHitmark_SpawnCustomScale(GlobalContext* ctxt, s32 type, s16 scale, Vec3f* pos);
 extern void z2_EffectSsIceSmoke_Spawn(GlobalContext* ctxt, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale);
 
@@ -167,6 +170,7 @@ extern void z2_SetShape(ActorShape* shape, f32 yDisplacement, void* shadowDrawFu
 extern void z2_Actor_ChangeAnimation(SkelAnime* skelAnime, ActorAnimationEntry* animation, s32 index);
 extern void z2_Actor_OffsetOfPointInActorCoords(Actor* actor, Vec3f* offset, Vec3f* point);
 extern f32 z2_Player_GetHeight_WithoutEpona(ActorPlayer* player);
+extern void z2_Gfx_DrawDListOpa(GlobalContext* ctxt, Gfx* dList);
 
 // Function Prototypes (Actor Cutscene).
 extern void z2_ActorCutscene_ClearWaiting(void);
@@ -229,6 +233,7 @@ extern bool z2_SetGetItemLongrange(Actor* actor, GlobalContext* ctxt, u16 giInde
 extern void z2_GiveItem(GlobalContext* ctxt, u8 itemId);
 extern u8 z2_IsItemKnown(u8 itemId);
 extern bool z2_HasEmptyBottle();
+extern bool z2_Inventory_HasItemInBottle(u8 item);
 extern void z2_GiveMap(u32 mapIndex);
 extern s16 z2_Inventory_GetSkullTokenCount(s16 sceneIndex);
 extern s32 z2_Health_ChangeBy(GlobalContext* ctxt, s16 healthChange);
@@ -261,6 +266,7 @@ extern f32 z2_Math3D_Vec3fDistSq(Vec3f* a, Vec3f* b);
 // Function Prototypes (Objects).
 extern s8 z2_GetObjectIndex(const SceneContext* ctxt, u16 objectId);
 
+extern void z2_Scene_SetExitFade(GlobalContext* ctxt);
 extern s32 z2_Entrance_GetSceneIdAbsolute(u16 entrance);
 extern s32 z2_Entrance_GetTransitionFlags(u16 entrance);
 

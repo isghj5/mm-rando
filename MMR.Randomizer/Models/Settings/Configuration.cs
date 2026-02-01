@@ -1,5 +1,4 @@
-﻿using MMR.Common.Utils;
-
+﻿
 namespace MMR.Randomizer.Models.Settings
 {
     public class Configuration
@@ -8,14 +7,16 @@ namespace MMR.Randomizer.Models.Settings
         public CosmeticSettings CosmeticSettings { get; set; }
         public OutputSettings OutputSettings { get; set; }
 
+        public WebSettings WebSettings { get; set; } = null;
+
         public override string ToString()
         {
-            return JsonSerializer.Serialize(this);
+            return JsonCustomSerializer.Serialize(this);
         }
 
         public static Configuration FromJson(string json)
         {
-            return JsonSerializer.Deserialize<Configuration>(json);
+            return JsonCustomSerializer.Deserialize<Configuration>(json);
         }
     }
 }

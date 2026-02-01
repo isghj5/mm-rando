@@ -15,7 +15,7 @@ namespace MMR.Randomizer.Models
 
         public string SettingsString { get; set; }
 
-        public List<SpoilerDungeonEntrance> DungeonEntrances { get; set; }
+        public List<SpoilerDungeonEntrance> Entrances { get; set; }
 
         public int Seed { get; set; }
 
@@ -44,7 +44,10 @@ namespace MMR.Randomizer.Models
 
         public List<NameCostPair> MessageCosts { get; set; }
 
+        public List<GibdoRequirement> GibdoRequirements { get; set; }
+
         public ReadOnlyCollection<Item> BlitzExtraItems { get; set; }
+        public ReadOnlyCollection<Item> RandomStartingItems { get; set; }
         public List<List<ItemLocationPair>> Spheres { get; set; }
     }
 }

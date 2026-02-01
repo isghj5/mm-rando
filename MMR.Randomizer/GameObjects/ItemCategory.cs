@@ -208,6 +208,9 @@ namespace MMR.Randomizer.GameObjects
         [Description("Randomize the frog choir members.")]
         Frogs,
 
+        [Description("Randomize the items dropped from palm trees.")]
+        Trees,
+
         [Description("Randomize items that require glitches to collect.")]
         GlitchesRequired,
     }

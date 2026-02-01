@@ -11,6 +11,9 @@ build/*.txt
 build/generated/*.bin
 build/generated/*.json
 build/generated/*.txt
+build/generated/patches/*.bin
+build/generated/patches/*.json
+build/generated/patches/*.txt
 
 # Ignore private vagrant directory
 .vagrant*

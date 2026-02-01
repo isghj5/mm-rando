@@ -3,10 +3,8 @@ using MMR.Randomizer.Utils;
 using MMR.Randomizer.GameObjects;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using MMR.Randomizer.Extensions;
 using MMR.Common.Extensions;
 using MMR.Randomizer.Attributes.Setting;
 
@@ -15,18 +13,22 @@ namespace MMR.UI.Forms
     public partial class StartingItemEditForm : Form
     {
         private readonly List<Item> _startingItems;
+        private Func<Item, string> _labelExtractor;
         private bool updating = false;
-        private const int ItemGroupCount = 5;
+        private const int ItemGroupCount = 7;
 
         public string ExternalLabel { get; private set; }
         public List<Item> CustomStartingItemList { get; private set; } = new List<Item>();
         public string CustomStartingItemListString { get; private set; }
 
+
         public StartingItemEditForm()
         {
             InitializeComponent();
 
-            _startingItems = typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.CustomStartingItemListString)).GetAttribute<SettingItemListAttribute>().ItemList.ToList();
+            var settingListItemAttribute = typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.CustomStartingItemListString)).GetAttribute<SettingItemListAttribute>();
+            _startingItems = settingListItemAttribute.ItemList.ToList();
+            _labelExtractor = settingListItemAttribute.LabelExtractor;
 
             PrintToListView();
 
@@ -45,8 +47,8 @@ namespace MMR.UI.Forms
         {
             foreach (var item in _startingItems)
             {
-                if (!item.Name().ToLower().Contains(tSearchString.Text.ToLower())) { continue; }
-                lStartingItems.Items.Add(new ListViewItem { Text = item.Name(), Tag = item, Checked = CustomStartingItemList.Contains(item) });
+                if (!_labelExtractor(item).ToLower().Contains(tSearchString.Text.ToLower())) { continue; }
+                lStartingItems.Items.Add(new ListViewItem { Text = _labelExtractor(item), Tag = item, Checked = CustomStartingItemList.Contains(item) });
             }
         }
 

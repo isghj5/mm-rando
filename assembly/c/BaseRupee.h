@@ -5,7 +5,7 @@
 
 void Rupee_LoadCollectableTable(GlobalContext* ctxt);
 u16 Rupee_CollectableFlagToGiIndex(u16 collectableFlag);
-void Rupee_CheckAndSetGiIndex(Actor* actor, GlobalContext* ctxt, u16 giIndex);
+bool Rupee_CheckAndSetGiIndex(Actor* actor, GlobalContext* ctxt, u16 giIndex);
 u16 Rupee_GetDrawGiIndex(Actor* actor);
 u16 Rupee_GetGiIndex(Actor* actor);
 void Rupee_SetDrawGiIndex(Actor* actor, u16 drawGiIndex);

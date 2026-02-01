@@ -9,7 +9,6 @@ void Music_Update(GlobalContext* ctxt);
 // Magic number for MusicConfig: "MUSI"
 #define MUSIC_CONFIG_MAGIC 0x4D555349
 
-#define SEQUENCE_DATA_SIZE 0x30
 #define SEQUENCE_NAME_MAX_SIZE 0x20
 
 enum SequencePlayState {
@@ -19,27 +18,23 @@ enum SequencePlayState {
     SEQUENCE_PLAY_STATE_ZORA            = 0b0000000000000100,
     SEQUENCE_PLAY_STATE_DEKU            = 0b0000000000001000,
     SEQUENCE_PLAY_STATE_HUMAN           = 0b0000000000010000,
-    SEQUENCE_PLAY_STATE_OUTDOORS        = 0b0000000000100000,
-    SEQUENCE_PLAY_STATE_INDOORS         = 0b0000000001000000,
-    SEQUENCE_PLAY_STATE_CAVE            = 0b0000000010000000,
-    SEQUENCE_PLAY_STATE_EPONA           = 0b0000000100000000,
-    SEQUENCE_PLAY_STATE_SWIM            = 0b0000001000000000,
-    SEQUENCE_PLAY_STATE_SPIKE_ROLLING   = 0b0000010000000000,
-    SEQUENCE_PLAY_STATE_COMBAT          = 0b0000100000000000,
-    SEQUENCE_PLAY_STATE_CRITICAL_HEALTH = 0b0001000000000000
+    SEQUENCE_PLAY_STATE_DAY             = 0b0000000000100000,
+    SEQUENCE_PLAY_STATE_NIGHT           = 0b0000000001000000,
+    SEQUENCE_PLAY_STATE_OUTDOORS        = 0b0000000010000000,
+    SEQUENCE_PLAY_STATE_INDOORS         = 0b0000000100000000,
+    SEQUENCE_PLAY_STATE_CAVE            = 0b0000001000000000,
+    SEQUENCE_PLAY_STATE_EPONA           = 0b0000010000000000,
+    SEQUENCE_PLAY_STATE_SWIM            = 0b0000100000000000,
+    SEQUENCE_PLAY_STATE_SPIKE_ROLLING   = 0b0001000000000000,
+    SEQUENCE_PLAY_STATE_COMBAT          = 0b0010000000000000,
+    SEQUENCE_PLAY_STATE_CRITICAL_HEALTH = 0b0100000000000000
 };
 
-typedef struct MusicState {
-    /* 0x00 */ u8 loadedSequenceId;
-    /* 0x01 */ u8 hasSequenceMaskFile;
-    /* 0x02 */ u8 fileSelectMusicFormIndex;
-    /* 0x03 */ u8 fileSelectMusicMiscIndex;
-    /* 0x04 */ u16 currentState;
-    /* 0x06 */ u16 forceMute;
-    /* 0x08 */ u16 playMask[0x10];
-    /* 0x28 */ union {
+typedef struct SequenceData {
+    /* 0x00 */ u16 playMask[0x10];
+    /* 0x20 */ union {
         struct {
-            u16                : 3;
+            u16                : 1;
             u16 criticalHealth : 1;
             u16 combat         : 1;
             u16 spikeRolling   : 1;
@@ -48,6 +43,8 @@ typedef struct MusicState {
             u16 cave           : 1;
             u16 indoors        : 1;
             u16 outdoors       : 1;
+            u16 night          : 1;
+            u16 day            : 1;
             u16 human          : 1;
             u16 deku           : 1;
             u16 zora           : 1;
@@ -56,7 +53,17 @@ typedef struct MusicState {
         };
         u16 value;
     } cumulativeStates;
-    /* 0x2A */ u8 pad2A[0xE]; // everdrive rounds down to 0x10s when loading from rom
+    /* 0x22 */ u8 pad2A[0xE]; // everdrive rounds down to 0x10s when loading from rom
+} SequenceData; // size = 0x30
+
+typedef struct MusicState {
+    /* 0x00 */ u8 loadedSequenceId;
+    /* 0x01 */ u8 hasSequenceMaskFile;
+    /* 0x02 */ u8 fileSelectMusicFormIndex;
+    /* 0x03 */ u8 fileSelectMusicMiscIndex;
+    /* 0x04 */ u16 currentState;
+    /* 0x06 */ u16 forceMute;
+    /* 0x08 */ SequenceData sequenceData;
 } MusicState; // size = 0x38
 
 typedef struct {

@@ -104,7 +104,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static void WriteNewItem(ItemObject itemObject, List<MessageEntry> newMessages, GameplaySettings settings, ChestTypeAttribute.ChestType? overrideChestType, MessageTable messageTable, ExtendedObjects extendedObjects)
+        public static void WriteNewItem(ItemObject itemObject, ItemList itemList, List<MessageEntry> newMessages, GameplaySettings settings, ChestTypeAttribute.ChestType? overrideChestType, MessageTable messageTable, ExtendedObjects extendedObjects)
         {
             var item = itemObject.Item;
             var location = itemObject.NewLocation.Value;
@@ -228,7 +228,7 @@ namespace MMR.Randomizer.Utils
 
             if (settings.UpdateChests)
             {
-                UpdateChest(location, item, overrideChestType);
+                UpdateChest(location, item, itemList, overrideChestType);
             }
 
             if (settings.UpdateShopAppearance)
@@ -303,7 +303,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        private static void UpdateChest(Item location, Item item, ChestTypeAttribute.ChestType? overrideChestType)
+        private static void UpdateChest(Item location, Item item, ItemList itemList, ChestTypeAttribute.ChestType? overrideChestType)
         {
             var chestType = item.GetAttribute<ChestTypeAttribute>().Type;
             if (overrideChestType.HasValue)
@@ -324,17 +324,29 @@ namespace MMR.Randomizer.Utils
                 }
             }
 
-            var grottoChestAttribute = location.GetAttribute<GrottoChestAttribute>();
-            if (grottoChestAttribute != null)
+            if (location.HasAttribute<GrottoChestAttribute>())
             {
-                foreach (var address in grottoChestAttribute.Addresses)
+                var grottoLocation = location.GetAttribute<RegionAttribute>().Reference.Value;
+                var grottoNewLocation = itemList[grottoLocation].NewLocation ?? grottoLocation;
+                var grottoEntrance = grottoNewLocation.Entrances()[0];
+
+                var newChestType = (byte)chestType;
+                newChestType <<= 5;
+
+                foreach (var exitActorParams in grottoEntrance.ExitActorParams())
                 {
-                    var grottoVariable = ReadWriteUtils.Read(address);
-                    grottoVariable &= 0x1F; // remove existing chest type
-                    var newChestType = (byte)chestType;
-                    newChestType <<= 5;
-                    grottoVariable |= newChestType; // add new chest type
-                    ReadWriteUtils.WriteToROM(address, grottoVariable);
+                    EntranceUtils.WriteSceneActorParams(
+                        exitActorParams.SceneId,
+                        exitActorParams.SetupIndex,
+                        exitActorParams.RoomIndex,
+                        exitActorParams.ActorIndex,
+                        0x55,
+                        newChestType,
+                        0x60,
+                        null,
+                        null,
+                        null
+                    );
                 }
             }
         }

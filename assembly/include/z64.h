@@ -1075,13 +1075,13 @@ struct GlobalContext {
     /* 0x1887A */ u16 warpDestination;
     /* 0x1887C */ s8 unk1887C;
     /* 0x1887D */ UNK_TYPE1 pad1887D[0x2];
-    /* 0x1887F */ u8 unk1887F;
+    /* 0x1887F */ u8 transitionType;
     /* 0x18880 */ UNK_TYPE1 pad18880[0x4];
     /* 0x18884 */ CollisionCheckContext colCheckCtx;
     /* 0x18B20 */ UNK_TYPE1 pad18B20[0x28];
     /* 0x18B48 */ u8 curSpawn;
     /* 0x18B49 */ UNK_TYPE1 pad18B49[0x1];
-    /* 0x18B4A */ u8 unk18B4A;
+    /* 0x18B4A */ u8 transitionMode;
     /* 0x18B4B */ UNK_TYPE1 pad18B4B[0x309];
     /* 0x18E54 */ SceneTableEntry* currentSceneTableEntry;
     /* 0x18E58 */ UNK_TYPE1 pad18E58[0x400];
@@ -1352,6 +1352,31 @@ typedef union {
     u8 bytes[0x1C];
 } PermanentSceneFlags; // size = 0x1C
 
+typedef struct RespawnData {
+    /* 0x00 */ Vec3f pos;
+    /* 0x0C */ s16 yaw;
+    /* 0x0E */ s16 playerParams;
+    /* 0x10 */ u16 entrance;
+    /* 0x12 */ u8 roomIndex;
+    /* 0x13 */ s8 data;
+    /* 0x14 */ u32 tempSwitchFlags;
+    /* 0x18 */ u32 unk_18;
+    /* 0x1C */ u32 tempCollectFlags;
+} RespawnData; // size = 0x20
+
+// TODO: properly name DOWN, RETURN and TOP
+typedef enum RespawnMode {
+    /* 0 */ RESPAWN_MODE_DOWN,                          // "RESTART_MODE_DOWN"
+    /* 1 */ RESPAWN_MODE_RETURN,                        // "RESTART_MODE_RETURN"
+    /* 2 */ RESPAWN_MODE_TOP,                           // "RESTART_MODE_TOP"
+    /* 3 */ RESPAWN_MODE_GROTTO_RETURN,                 // Related to grottos
+    /* 4 */ RESPAWN_MODE_GORON,                         // "RESTART_MODE_GORON"
+    /* 5 */ RESPAWN_MODE_ZORA,                          // "RESTART_MODE_ZORA"
+    /* 6 */ RESPAWN_MODE_DEKU,                          // "RESTART_MODE_NUTS"
+    /* 7 */ RESPAWN_MODE_HUMAN,                         // "RESTART_MODE_CHILD"
+    /* 8 */ RESPAWN_MODE_MAX
+} RespawnMode;
+
 typedef struct HorseData {
     /* 0x0 */ s16 sceneId;                             // "spot_no"
     /* 0x2 */ Vec3s pos;                               // "horse_x", "horse_y" and "horse_z"
@@ -1535,12 +1560,17 @@ typedef struct {
     /* 0x008 */ u32 titleSetupIndex;
     /* 0x00C */ s32 sceneSetupIndex;
     /* 0x010 */ s32 voidFlag;
-    /* 0x014 */ UNK_TYPE1 pad14[0x2E];
-    /* 0x042 */ s16 unk42;
-    /* 0x044 */ UNK_TYPE1 pad44[0x43];
-    // u16 64 = after death entrance
-    /* 0x087 */ s8 unk87;
-    /* 0x088 */ UNK_TYPE1 pad88[0xA8];
+    /* 0x014 */ RespawnData respawn[RESPAWN_MODE_MAX];
+    /* 0x114 */ f32 entranceSpeed;
+    /* 0x118 */ u16 entranceSound;
+    /* 0x11A */ UNK_TYPE1 unk_3DBA;
+    /* 0x11B */ u8 retainWeatherMode;
+    /* 0x11C */ s16 dogParams;
+    /* 0x11E */ u8 envHazardTextTriggerFlags;
+    /* 0x11F */ u8 showTitleCard;
+    /* 0x120 */ s16 nayrusLoveTimer;
+    /* 0x122 */ UNK_TYPE1 unk_3DC2;
+    /* 0x128 */ OSTime postmanTimerStopOsTime;
     /* 0x130 */ u8 timers[0x40];
     /* 0x170 */ UNK_TYPE1 pad170[0x106];
     /* 0x276 */ u8 seqId;
@@ -1561,8 +1591,10 @@ typedef struct {
     /* 0x2AC */ u8 cutsceneTrigger;
     /* 0x2AD */ UNK_TYPE1 pad2AD[0x5];
     /* 0x2B2 */ u16 environmentTime;
-    /* 0x2B4 */ UNK_TYPE1 pad2B4[0x4];
-    /* 0x2B8 */ s16 unk2b8;
+    /* 0x2B4 */ u8 dogIsLost;
+    /* 0x2B5 */ u8 nextTransitionType;
+    /* 0x2B6 */ s16 worldMapArea;
+    /* 0x2B8 */ s16 sunsSongState;
     /* 0x2BA */ s16 healthAccumulator;                 // "life_mode"
     /* 0x2BC */ s32 unk_3F5C;                          // "bet_rupees"
     /* 0x2C0 */ u8 screenScaleFlag;                    // "framescale_flag"

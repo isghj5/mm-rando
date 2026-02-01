@@ -6,6 +6,7 @@
 #include "Items.h"
 #include "Music.h"
 #include "SaveFile.h"
+#include "macro.h"
 
 struct MMRConfig MMR_CONFIG = {
     .magic = MMR_CONFIG_MAGIC,
@@ -337,8 +338,8 @@ GetItemEntry* MMR_GetNewGiEntry(u16 giIndex) {
 
 static u16 gFanfares[] = { 0x4831, 0x4855, 0x0922, 0x0924, 0x0037, 0x0039, 0x0052 };
 
-#define ITEM_QUEUE_LENGTH 4
-static u16 itemQueue[ITEM_QUEUE_LENGTH] = { 0, 0, 0, 0 };
+#define ITEM_QUEUE_LENGTH 8
+static u16 itemQueue[ITEM_QUEUE_LENGTH] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 static s16 forceProcessIndex = -1;
 static u16 lastProcessedGiIndex = 0;
 
@@ -406,6 +407,7 @@ void MMR_ProcessItemQueue(GlobalContext* ctxt) {
             for (u8 i = 0; i < ITEM_QUEUE_LENGTH - 1; i++) {
                 itemQueue[i] = itemQueue[i + 1];
             }
+            itemQueue[ITEM_QUEUE_LENGTH - 1] = 0;
             if (forceProcessIndex >= 0) {
                 forceProcessIndex--;
             }
@@ -434,6 +436,9 @@ u32 MMR_GetMinorItemSfxId(u8 item) {
         return 0x4824;
     }
     if (item == ITEM_MAGIC_JAR || item == ITEM_MAGIC_JAR_LARGE || item == CUSTOM_ITEM_CRIMSON_RUPEE || item == CUSTOM_ITEM_RUPOOR) {
+        return 0x4824;
+    }
+    if (item == ITEM_POWDER_KEG && INV_CONTENT(ITEM_POWDER_KEG) != ITEM_NONE && MISC_CONFIG.flags.kegDrops) {
         return 0x4824;
     }
     if (item == CUSTOM_ITEM_ICE_TRAP) {

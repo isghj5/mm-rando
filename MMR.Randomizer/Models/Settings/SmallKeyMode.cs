@@ -2,10 +2,10 @@
 using System;
 using System.ComponentModel;
 
-namespace MMR.Randomizer.Models
+namespace MMR.Randomizer.Models.Settings
 {
     [Flags]
-    [Description("Small Key Mode")]
+    [Description("Small Keys")]
     public enum SmallKeyMode
     {
         Default,

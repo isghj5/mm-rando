@@ -1,9 +1,9 @@
 using MMR.Common.Extensions;
 using MMR.Randomizer.Attributes;
-using MMR.Randomizer.Constants;
+using MMR.Randomizer.Attributes.Entrance;
+using MMR.Randomizer.Attributes.Gibdo;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
-using MMR.Randomizer.LogicMigrator;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Models.Settings;
@@ -11,12 +11,8 @@ using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -38,18 +34,27 @@ namespace MMR.Randomizer
         private class Dependence
         {
             public Item[] Items { get; set; }
-            public DependenceType Type { get; set; }
+            public DependenceType Type { get; }
+            public int? TimeAvailable { get; }
 
-            public static Dependence Dependent => new Dependence { Type = DependenceType.Dependent };
-            public static Dependence NotDependent => new Dependence { Type = DependenceType.NotDependent };
-            public static Dependence Circular(params Item[] items) => new Dependence { Items = items, Type = DependenceType.Circular };
+            private Dependence(DependenceType type, int? timeAvailable = null)
+            {
+                Type = type;
+                TimeAvailable = timeAvailable;
+            }
+
+            public static Dependence Dependent => new Dependence(DependenceType.Dependent);
+            public static Dependence TimeOfDay => new Dependence(DependenceType.TimeOfDay);
+            public static Dependence NotDependent(int timeAvailable) => new Dependence(DependenceType.NotDependent, timeAvailable);
+            public static Dependence Circular(params Item[] items) => new Dependence(DependenceType.Circular) { Items = items };
         }
 
         private enum DependenceType
         {
             Dependent,
             NotDependent,
-            Circular
+            Circular,
+            TimeOfDay,
         }
 
         // Starting items should not be replaced by trade items, or items that can be downgraded.
@@ -306,23 +311,114 @@ namespace MMR.Randomizer
 
         #endregion
 
-        private void EntranceShuffle()
+        private void ShuffleEntrances()
         {
-            var dungeonEntrances = new List<Item>
+            if (_settings.EntranceMode.HasFlag(EntranceMode.BossRooms))
             {
-                Item.AreaWoodFallTempleAccess,
-                Item.AreaSnowheadTempleAccess,
-                Item.AreaGreatBayTempleAccess,
-                Item.AreaInvertedStoneTowerTempleAccess,
-            };
+                BossShuffle();
+            }
 
-            var dungeonExits = new List<Item>
+            if (_settings.EntranceMode.HasFlag(EntranceMode.DungeonEntrances))
             {
-                Item.AreaWoodFallTempleClear,
-                Item.AreaSnowheadTempleClear,
-                Item.AreaGreatBayTempleClear,
-                Item.AreaStoneTowerClear,
-            };
+                DungeonEntranceShuffle();
+            }
+
+            foreach (var entranceMode in Enum.GetValues<EntranceMode>())
+            {
+                if (_settings.EntranceMode.HasFlag(entranceMode))
+                {
+                    var entranceType = entranceMode.EntranceType();
+                    if (entranceType.HasValue)
+                    {
+                        OtherEntranceShuffle(entranceType.Value);
+                    }
+                }
+            }
+        }
+
+        private bool CheckEntranceMatch(Item entrance, Item targetEntrance)
+        {
+            if (!entrance.Entrances()[0].SpawnId().HasValue && !targetEntrance.Entrances()[0].ExitActorParams().Any())
+            {
+                return false;
+            }
+
+            if (_settings.LogicMode == LogicMode.NoLogic)
+            {
+                return true;
+            }
+
+            if (ItemList[entrance].TimeNeeded != 0 && (ItemList[entrance].TimeNeeded & ItemList[targetEntrance].TimeAvailable) == 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private void PlaceEntrance(Item entrance, List<Item> targets, Func<Item, Item, ItemList, bool> restriction = null)
+        {
+            if (ItemList[entrance].NewLocation.HasValue)
+            {
+                return;
+            }
+
+            var remainingTargets = targets.ToList();
+
+            if (restriction != null)
+            {
+                remainingTargets.RemoveAll(location => !restriction(entrance, location, ItemList));
+            }
+
+            Item targetEntrance;
+            do
+            {
+                if (remainingTargets.Count == 0)
+                {
+                    throw new RandomizationException($"Unable to place {entrance.Entrance()} anywhere.");
+                }
+
+                targetEntrance = remainingTargets.Random(Random);
+                remainingTargets.Remove(targetEntrance);
+            }
+            while (!CheckEntranceMatch(entrance, targetEntrance));
+
+            ItemList[entrance].NewLocation = targetEntrance;
+            ItemList[entrance].IsRandomized = true;
+
+            targets.Remove(targetEntrance);
+        }
+
+        private void OtherEntranceShuffle(EntranceType entranceType)
+        {
+            var entrances = Enum.GetValues<Item>().Where(item => item.EntranceType() == entranceType);
+            var targets = entrances.Where(entrance => !ItemList.Any(io => io.NewLocation == entrance)).ToList();
+
+            if (entranceType == EntranceType.Interior && _settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinArea))
+            {
+                var fairyFountains = entrances.Where(entrance => entrance.AdditionalEntranceTypes().Contains(EntranceType.FairyFountain));
+                var remainingRegionAreas = fairyFountains.Select(f => f.RegionArea(ItemList)).ToList();
+                foreach (var entrance in fairyFountains)
+                {
+                    PlaceEntrance(entrance, targets, (entrance, target, itemList) =>
+                    {
+                        return remainingRegionAreas.Contains(target.RegionArea(itemList));
+                    });
+                    remainingRegionAreas.Remove(ItemList[entrance].NewLocation.Value.RegionArea(ItemList));
+                }
+            }
+
+            foreach (var entrance in entrances)
+            {
+                PlaceEntrance(entrance, targets);
+            }
+        }
+
+        private void DungeonEntranceShuffle()
+        {
+            var dungeonEntrances = Enum.GetValues<Item>().Where(item => item.EntranceType() == EntranceType.Dungeon).ToList();
+
+            var dungeonExits = Enum.GetValues<Item>().Where(item => item.EntranceType() == EntranceType.DungeonExit).ToList();
 
             var randomized = Enumerable.Range(0, 4).ToList().OrderBy(_ => Random.Next()).ToList();
 
@@ -353,21 +449,9 @@ namespace MMR.Randomizer
 
         private void BossShuffle()
         {
-            var bossEntrances = new List<Item>
-            {
-                Item.AreaOdolwasLair,
-                Item.AreaGohtsLair,
-                Item.AreaGyorgsLair,
-                Item.AreaTwinmoldsLair,
-            };
+            var bossEntrances = Enum.GetValues<Item>().Where(item => item.EntranceType() == EntranceType.Boss).ToList();
 
-            var bossExits = new List<Item>
-            {
-                Item.AreaWoodFallTempleClear,
-                Item.AreaSnowheadTempleClear,
-                Item.AreaGreatBayTempleClear,
-                Item.AreaStoneTowerClear,
-            };
+            var bossExits = Enum.GetValues<Item>().Where(item => item.EntranceType() == EntranceType.DungeonExit).ToList();
 
             var bossKills = new List<Item>
             {
@@ -1120,17 +1204,56 @@ namespace MMR.Randomizer
                 }
             }
 
+            if (_settings.RequiredZoraEggs < 7)
+            {
+                var zoraEggAll = ItemList[Item.ZoraEggAll];
+                if (_settings.CustomItemList.Contains(Item.BottleCatchEgg) && _settings.CustomItemList.Contains(Item.BottleCatchFish))
+                {
+                    var zoraEggsAllForFish = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        DependsOnItems = zoraEggAll.DependsOnItems.ToList(),
+                    };
+                    ItemList.Add(zoraEggsAllForFish);
+                    ItemList[Item.BottleCatchEgg].Conditionals.Add(new List<Item>
+                    {
+                        Item.BottleCatchEgg,
+                        zoraEggsAllForFish.Item
+                    });
+                }
+
+                zoraEggAll.Conditionals = zoraEggAll.DependsOnItems.Combinations(_settings.RequiredZoraEggs).Select(x => x.ToList()).ToList();
+                zoraEggAll.DependsOnItems.Clear();
+            }
+
+            var unrandomizedEntranceTypes = Enum.GetValues<EntranceMode>()
+                .Where(em => !_settings.EntranceMode.HasFlag(em))
+                .Select(em => em.EntranceType())
+                .Where(entranceType => entranceType.HasValue)
+                .Append(null)
+                .ToList();
+
+            if (!_settings.EntranceMode.HasFlag(EntranceMode.DungeonEntrances))
+            {
+                unrandomizedEntranceTypes.Add(EntranceType.Dungeon);
+                unrandomizedEntranceTypes.Add(EntranceType.DungeonExit);
+            }
+
+            if (!_settings.EntranceMode.HasFlag(EntranceMode.BossRooms))
+            {
+                unrandomizedEntranceTypes.Add(EntranceType.Boss);
+            }
+
             Func<ItemObject, bool> filter = io => !io.ItemOverride.HasValue
                 && !_settings.CustomItemList.Contains(io.Item)
+                && unrandomizedEntranceTypes.Contains(io.Item.EntranceType())
                 && (!io.Item.MainLocation().HasValue || !_settings.CustomItemList.Contains(io.Item.MainLocation().Value))
                 && io.DependsOnItems.Count == 0
-                && io.Conditionals.Count == 0;
+                && io.Conditionals.Count == 0
+                && io.TimeAvailable == 63;
 
-            var unrandomizedSphereZeroItems = ItemList
-                .Where(filter)
-                .Select(io => io.Item)
-                .ToList();
-            unrandomizedSphereZeroItems.Remove(Item.OtherInaccessible);
+            var unrandomizedSphereZeroItems = new List<Item>();
             bool updated;
             do
             {
@@ -1186,12 +1309,15 @@ namespace MMR.Randomizer
 
         private void PrepareAdditionalItemData()
         {
+            RandomizeGibdoRequirements();
+
             RandomizePrices();
 
             UpdateLogicForSettings();
 
             ItemUtils.PrepareJunkItems(_settings, ItemList);
             _randomized.BlitzExtraItems = new List<Item>();
+            _randomized.RandomStartingItems = new List<Item>();
             if (_settings.CustomJunkLocations.Count > ItemUtils.JunkItems.Count) // TODO also account for HintedJunkLocations and BlitzJunkLocations
             {
                 throw new Exception($"Too many Enforced Junk Locations. Select up to {ItemUtils.JunkItems.Count}.");
@@ -1203,7 +1329,7 @@ namespace MMR.Randomizer
             Random = new Random(_seed);
         }
 
-        private Dependence CheckDependence(Item currentItem, Item target, List<Item> dependencyPath)
+        private Dependence CheckDependence(Item currentItem, Item target, List<Item> dependencyPath, int timeAvailable)
         {
             var targetName = target.Location() ?? ItemList[target].Name;
             Debug.WriteLine($"CheckDependence({currentItem.Name()}, {targetName}[{target}])");
@@ -1212,7 +1338,22 @@ namespace MMR.Randomizer
 
             if (currentItemObject.TimeNeeded == 0 && ItemUtils.IsLogicallyJunk(currentItem))
             {
-                return Dependence.NotDependent;
+                return Dependence.NotDependent(timeAvailable);
+            }
+
+            var itemHere = ItemList.SingleOrDefault(io => io.NewLocation == target)?.Item;
+            if (itemHere?.IsTemporary() == false && itemHere?.Entrance() == null)
+            {
+                timeAvailable = currentTargetObject.TimeAvailable;
+            }
+            else if (!itemHere.HasValue || !ItemUtils.IsLogicallyJunk(itemHere.Value))
+            {
+                if ((currentTargetObject.TimeAvailable & timeAvailable) == 0)
+                {
+                    Debug.WriteLine($"{target} is available at {(TimeOfDay)currentTargetObject.TimeAvailable} but the time of day chain is only available at {(TimeOfDay)timeAvailable}");
+                    return Dependence.TimeOfDay;
+                }
+                timeAvailable &= currentTargetObject.TimeAvailable;
             }
 
             //check timing
@@ -1221,7 +1362,7 @@ namespace MMR.Randomizer
                 if ((currentItemObject.TimeNeeded & currentTargetObject.TimeAvailable) == 0)
                 {
                     Debug.WriteLine($"{currentItem} is needed at {currentItemObject.TimeNeeded} but {targetName} is only available at {currentTargetObject.TimeAvailable}");
-                    return Dependence.Dependent;
+                    return Dependence.TimeOfDay;
                 }
             }
 
@@ -1245,6 +1386,7 @@ namespace MMR.Randomizer
                 int k = 0;
                 var circularDependencies = new List<Item>();
                 var conditionRemoves = new List<int[]>();
+                var hasTimeOfDayConditionals = false;
                 for (int i = 0; i < currentTargetObject.Conditionals.Count; i++)
                 {
                     bool match = false;
@@ -1279,8 +1421,13 @@ namespace MMR.Randomizer
                             {
                                 var childPath = dependencyPath.ToList();
                                 childPath.Add(d);
-                                DependenceChecked[d] = CheckDependence(currentItem, d, childPath);
+                                DependenceChecked[d] = CheckDependence(currentItem, d, childPath, timeAvailable);
                             }
+                        }
+
+                        if (DependenceChecked[d].TimeAvailable.HasValue && DependenceChecked[d].TimeAvailable.Value != (int)TimeOfDay.All)
+                        {
+                            hasTimeOfDayConditionals = true;
                         }
 
                         if (DependenceChecked[d].Type != DependenceType.NotDependent)
@@ -1289,18 +1436,19 @@ namespace MMR.Randomizer
                             {
                                 DependenceChecked[d] = Dependence.Dependent;
                             }
-                            if (DependenceChecked[d].Type == DependenceType.Dependent)
+                            switch (DependenceChecked[d].Type)
                             {
-                                int[] check = new int[] { (int)target, i, j };
+                                case DependenceType.Dependent:
+                                    int[] check = new int[] { (int)target, i, j };
 
-                                if (!conditionRemoves.Any(c => c.SequenceEqual(check)))
-                                {
-                                    conditionRemoves.Add(check);
-                                }
-                            }
-                            else
-                            {
-                                circularDependencies = circularDependencies.Union(DependenceChecked[d].Items).ToList();
+                                    if (!conditionRemoves.Any(c => c.SequenceEqual(check)))
+                                    {
+                                        conditionRemoves.Add(check);
+                                    }
+                                    break;
+                                case DependenceType.Circular:
+                                    circularDependencies = circularDependencies.Union(DependenceChecked[d].Items).ToList();
+                                    break;
                             }
                             if (!match)
                             {
@@ -1320,7 +1468,7 @@ namespace MMR.Randomizer
                     Debug.WriteLine($"All conditionals of {targetName} failed dependency check for {currentItem}.");
                     return Dependence.Dependent;
                 }
-                else
+                else if (!hasTimeOfDayConditionals)
                 {
                     foreach (var cr in conditionRemoves)
                     {
@@ -1334,7 +1482,7 @@ namespace MMR.Randomizer
 
             if (currentTargetObject.DependsOnItems == null)
             {
-                return Dependence.NotDependent;
+                return Dependence.NotDependent(timeAvailable);
             }
 
             foreach (var cannotRequireItem in currentItemObject.CannotRequireItems)
@@ -1352,7 +1500,7 @@ namespace MMR.Randomizer
             foreach (var dependency in currentTargetObject.DependsOnItems)
             {
                 if (!currentItemIsTemporary
-                    && (target == Item.MaskBlast || target == Item.NotebookSaveOldLady || target == Item.UpgradeBigBombBag)
+                    && (target == Item.MaskBlast || target == Item.NotebookSaveOldLady || target == Item.UpgradeBigBombBagInBombShop)
                     && (dependency == Item.TradeItemKafeiLetter || dependency == Item.TradeItemPendant))
                 {
                     // Permanent items ignore Kafei Letter and Pendant on Blast Mask check.
@@ -1390,7 +1538,7 @@ namespace MMR.Randomizer
                     {
                         var childPath = dependencyPath.ToList();
                         childPath.Add(location);
-                        DependenceChecked[location] = CheckDependence(currentItem, location, childPath);
+                        DependenceChecked[location] = CheckDependence(currentItem, location, childPath, timeAvailable);
                     }
                     if (DependenceChecked[location].Type != DependenceType.NotDependent)
                     {
@@ -1404,7 +1552,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            return Dependence.NotDependent;
+            return Dependence.NotDependent(timeAvailable);
         }
 
         private void RemoveConditionals(Item currentItem)
@@ -1466,7 +1614,7 @@ namespace MMR.Randomizer
                         targetItemObject.Conditionals.Clear();
                     }
                 }
-            };
+            }
         }
 
         private void AddConditionals(Item target, Item currentItem, int d)
@@ -1505,7 +1653,7 @@ namespace MMR.Randomizer
         private void CheckConditionals(Item currentItem, Item target, List<Item> dependencyPath)
         {
             var targetItemObject = ItemList[target];
-            if (target == Item.MaskBlast || target == Item.NotebookSaveOldLady || target == Item.UpgradeBigBombBag)
+            if (target == Item.MaskBlast || target == Item.NotebookSaveOldLady || target == Item.UpgradeBigBombBagInBombShop)
             {
                 if (_timeTravelPlaced && !currentItem.IsTemporary())
                 {
@@ -1566,6 +1714,11 @@ namespace MMR.Randomizer
             }
 
             if (_randomized.BlitzExtraItems.Contains(currentItem))
+            {
+                return true;
+            }
+
+            if (_randomized.RandomStartingItems.Contains(currentItem))
             {
                 return true;
             }
@@ -1631,10 +1784,10 @@ namespace MMR.Randomizer
 
             //check direct dependence
             ConditionRemoves = new List<int[]>();
-            DependenceChecked = new Dictionary<Item, Dependence> { { target, new Dependence { Type = DependenceType.Dependent } } };
+            DependenceChecked = new Dictionary<Item, Dependence> { { target, Dependence.Dependent } };
             var dependencyPath = new List<Item> { target };
 
-            if (CheckDependence(currentItem, target, dependencyPath).Type != DependenceType.NotDependent)
+            if (CheckDependence(currentItem, target, dependencyPath, (int)TimeOfDay.All).Type != DependenceType.NotDependent)
             {
                 return false;
             }
@@ -1821,7 +1974,7 @@ namespace MMR.Randomizer
             }
 
             var availableItems = targets.ToList();
-            if (currentItem > Item.SongOath)
+            if (!currentItem.CanBeStartedWith())
             {
                 availableItems.Remove(Item.MaskDeku);
                 availableItems.Remove(Item.SongHealing);
@@ -1862,6 +2015,8 @@ namespace MMR.Randomizer
                 {
                     currentItemObject.NewLocation = targetLocation;
                     currentItemObject.IsRandomized = true;
+
+                    ItemUtils.CheckAndUpdateHintedJunkLocations(_settings, ItemList, currentItem, targetLocation, Random);
 
                     Debug.WriteLine($"----Placed {currentItem.Name()} at {targetLocation.Location()}----");
 
@@ -2126,6 +2281,10 @@ namespace MMR.Randomizer
 
                     foreach (var item in messageCost.ItemsAffected)
                     {
+                        if (item == Item.ItemPowderKeg && _settings.KegDrops)
+                        {
+                            continue;
+                        }
                         foreach (var io in ItemList)
                         {
                             if (io.DependsOnItems.Contains(item))
@@ -2142,6 +2301,88 @@ namespace MMR.Randomizer
                             }
                         }
                     }
+                }
+            }
+        }
+
+        private void RandomizeGibdoRequirements()
+        {
+            _randomized.GibdoRequirements = new List<GibdoRequirement>();
+
+            if (!_settings.RandomizeGibdoRequirements)
+            {
+                foreach (var gibdoRequirement in GibdoRequirement.GibdoRequirements)
+                {
+                    var amountAttribute = gibdoRequirement.ItemRequired.GetAttribute<ItemGibdoAmountAttribute>();
+                    var amount = amountAttribute?.DefaultAmount ?? 1;
+                    _randomized.GibdoRequirements.Add(new GibdoRequirement(gibdoRequirement.ItemRequired, gibdoRequirement.LogicEntry)
+                    {
+                        Amount = amount,
+                    });
+                }
+                return;
+            }
+
+            var candidates = Enum.GetValues<GibdoRequirement.GibdoRequirementItem>().ToList();
+            candidates.Remove(GibdoRequirement.GibdoRequirementItem.None);
+            if (!_settings.BombchuDrops)
+            {
+                candidates.Remove(GibdoRequirement.GibdoRequirementItem.Bombchu);
+            }
+
+            foreach (var gibdoRequirement in GibdoRequirement.GibdoRequirements)
+            {
+                var chosen = candidates.Random(Random);
+                var amountAttribute = chosen.GetAttribute<ItemGibdoAmountAttribute>();
+                var amount = amountAttribute?.DefaultAmount ?? 1;
+                if (amountAttribute != null) // && settings - should randomize amounts
+                {
+                    amount = (byte) Random.Next(amountAttribute.Min, amountAttribute.Max + 1);
+                }
+                _randomized.GibdoRequirements.Add(new GibdoRequirement(chosen, gibdoRequirement.LogicEntry)
+                {
+                    Amount = amount,
+                });
+
+                candidates.Remove(chosen);
+            }
+
+            if (_settings.LogicMode != LogicMode.NoLogic)
+            {
+                var logicChanges = new Dictionary<Item, ItemObject>();
+
+                foreach (var gibdoRequirement in _randomized.GibdoRequirements.Where(r => r.LogicEntry.HasValue))
+                {
+                    var newLogic = new ItemObject();
+
+                    var logicReference = gibdoRequirement.ItemRequired.GetAttribute<ItemGibdoLogicReferenceAttribute>()?.Reference;
+
+                    if (logicReference.HasValue)
+                    {
+                        var logicReferenceClone = new ItemObject
+                        {
+                            ID = ItemList.Count,
+                            TimeAvailable = 63,
+                            DependsOnItems = ItemList[logicReference.Value].DependsOnItems.ToList(),
+                            Conditionals = ItemList[logicReference.Value].Conditionals.Select(c => c.ToList()).ToList(),
+                        };
+                        ItemList.Add(logicReferenceClone);
+                        newLogic.DependsOnItems.Add(logicReferenceClone.Item);
+                    }
+
+                    newLogic.DependsOnItems.AddRange(gibdoRequirement.ItemRequired.GetAttributes<ItemGibdoLogicRequirementsAttribute>()
+                        .Where(attr => (attr.MinAmount == 0 || attr.MinAmount <= gibdoRequirement.Amount) && (attr.MaxAmount == 0 || attr.MaxAmount >= gibdoRequirement.Amount))
+                        .SelectMany(attr => attr.Items.ToList()));
+                    newLogic.Conditionals.AddRange(gibdoRequirement.ItemRequired.GetAttributes<ItemGibdoLogicConditionalAttribute>()
+                        .Where(attr => (attr.MinAmount == 0 || attr.MinAmount <= gibdoRequirement.Amount) && (attr.MaxAmount == 0 || attr.MaxAmount >= gibdoRequirement.Amount))
+                        .Select(attr => attr.Items.ToList()));
+                    logicChanges[gibdoRequirement.LogicEntry.Value] = newLogic;
+                }
+
+                foreach (var (location, newLogic) in logicChanges)
+                {
+                    ItemList[location].DependsOnItems = newLogic.DependsOnItems;
+                    ItemList[location].Conditionals = newLogic.Conditionals;
                 }
             }
         }
@@ -2167,6 +2408,7 @@ namespace MMR.Randomizer
         {
             var freeItems = _settings.CustomStartingItemList
                 .Union(_randomized.BlitzExtraItems)
+                .Union(_randomized.RandomStartingItems)
                 .Union(ItemList.Where(io => io.NewLocation.HasValue && ItemUtils.IsStartingLocation(io.NewLocation.Value)).Select(io => io.Item))
                 .ToList();
 
@@ -2338,6 +2580,7 @@ namespace MMR.Randomizer
 
             itemList.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
             itemList.RemoveAll(item => _randomized.BlitzExtraItems.Contains(item));
+            itemList.RemoveAll(item => _randomized.RandomStartingItems.Contains(item));
 
             if (!_settings.AddSongs)
             {
@@ -2744,6 +2987,8 @@ namespace MMR.Randomizer
                             ItemList[item].NewLocation = check;
                             ItemList[item].IsRandomized = true;
 
+                            ItemUtils.CheckAndUpdateHintedJunkLocations(_settings, ItemList, item, check, Random);
+
                             Debug.WriteLine($"----Plando Placed {item.Name()} at {check.Location()}----");
 
                             itemPool.Remove(check);
@@ -2986,11 +3231,12 @@ namespace MMR.Randomizer
                     StartingItemMode.AllowTemporaryItems => ItemUtils.StartingItems(),
                     _ => Enumerable.Empty<Item>(),
                 })
-                .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item) && !_randomized.BlitzExtraItems.Contains(item))
+                .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item) && !_randomized.BlitzExtraItems.Contains(item) && !_randomized.RandomStartingItems.Contains(item))
                 .Cast<Item?>()
                 .ToList();
             var itemHearts = _settings.CustomStartingItemList
                 .Union(_randomized.BlitzExtraItems)
+                .Union(_randomized.RandomStartingItems)
                 .Where(item => !ItemList[item].NewLocation.HasValue && (_settings.AddSongs || !item.IsSong()))
                 .Cast<Item?>()
                 .ToList();
@@ -3310,17 +3556,11 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(5, "Preparing ruleset...");
                 PrepareRulesetItemData();
 
-                if (_settings.RandomizeBossRooms)
-                {
-                    progressReporter.ReportProgress(10, "Shuffling bosses...");
-                    BossShuffle();
-                }
+                ItemUtils.PrepareHintedJunkLocations();
 
-                if (_settings.RandomizeDungeonEntrances)
-                {
-                    progressReporter.ReportProgress(20, "Shuffling entrances...");
-                    EntranceShuffle();
-                }
+                progressReporter.ReportProgress(15, "Shuffling entrances...");
+
+                ShuffleEntrances();
 
                 PrepareAdditionalItemData();
 
@@ -3330,13 +3570,12 @@ namespace MMR.Randomizer
                 SetupItems();
 
                 _randomized.BlitzExtraItems.AddRange(ItemUtils.PrepareBlitz(_settings, ItemList, Random));
+                _randomized.RandomStartingItems.AddRange(_settings.RandomStartingItemGroups.SelectMany(g => g.Items.Random(g.Amount, Random)));
 
-                foreach (var item in _randomized.BlitzExtraItems)
+                foreach (var item in _randomized.BlitzExtraItems.Union(_randomized.RandomStartingItems))
                 {
                     ItemList[item].ItemOverride = Item.RecoveryHeart;
                 }
-
-                ItemUtils.PrepareHintedJunkLocations(_settings, Random);
 
                 // TODO check junk location count against junk item count
 
@@ -3364,6 +3603,7 @@ namespace MMR.Randomizer
                 
                 var freeItemIds = _settings.CustomStartingItemList
                     .Union(_randomized.BlitzExtraItems)
+                    .Union(_randomized.RandomStartingItems)
                     .Cast<int>()
                     .Union(ItemList.Where(io => io.NewLocation.HasValue && ItemUtils.IsStartingLocation(io.NewLocation.Value)).Select(io => io.ID))
                     .ToList();
@@ -3428,7 +3668,8 @@ namespace MMR.Randomizer
                                 && (!ItemList[itemLogic.ItemId].IsTrick || _settings.EnabledTricks.Contains(ItemList[itemLogic.ItemId].Name))
                                 && LogicUtils.IsSettingEnabled(_settings, ItemList[itemLogic.ItemId].SettingExpression)
                                 && !itemLogic.RequiredItemIds.Any()
-                                && !itemLogic.ConditionalItemIds.Any())
+                                && !itemLogic.ConditionalItemIds.Any()
+                                && ((TimeOfDay)itemLogic.TimeAvailable).HasFlag(TimeOfDay.Day1))
                             {
                                 freeItemIds.Add(itemLogic.ItemId);
                                 updated = true;
@@ -3463,8 +3704,18 @@ namespace MMR.Randomizer
                         : logicForImportance;
 
                     var checkedLocations = new Dictionary<Item, LogicUtils.LogicPaths>();
+                    foreach (var location in ItemUtils.AllLocations())
+                    {
+                        var focusedCheckedLocations = checkedLocations.ToDictionary(x => x.Key, x => x.Value);
+                        LogicUtils.GetImportantLocations(ItemList, _settings, location, logicForImportance, checkedLocations: focusedCheckedLocations);
+                        if (!focusedCheckedLocations.ContainsKey(location))
+                        {
+                            throw new RandomizationException($"Location {location.Location(ItemList)} is inaccessible.");
+                        }
+                        checkedLocations[location] = focusedCheckedLocations[location];
+                    }
                     var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.OtherCredits, logicForImportance, checkedLocations: checkedLocations);
-                    var importantLocations = logicPaths?.Important.Where(item => item.Region(ItemList).HasValue && item.Entrance() == null).Distinct().ToHashSet();
+                    var importantLocations = logicPaths?.Important.Where(item => item.Region(ItemList).HasValue).Distinct().ToHashSet();
                     var requiredSongLocations = logicPaths?.RequiredSongLocations.ToList();
                     if (importantLocations == null)
                     {
@@ -3482,14 +3733,15 @@ namespace MMR.Randomizer
                     progressReporter.ReportProgress(32, "Verifying item importance...", cts);
                     try
                     {
-                        Parallel.ForEach(importantLocations.ToList(), po, (location, state) =>
+                        Parallel.ForEach(importantLocations.Where(location => location.Entrance() == null).ToList(), po, (location, state) =>
                         {
                             var item = ItemList.First(io => io.NewLocation == (location.MainLocation() ?? location)).Item;
                             if (!ItemUtils.CanBeRequired(item))
                             {
                                 return;
                             }
-                            var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.OtherCredits, logicForRequiredItems, cts: cts, exclude: location);
+                            var checkedLocationsCopy = checkedLocations.ToDictionary(x => x.Key, x => x.Value);
+                            var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.OtherCredits, logicForRequiredItems, cts: cts, checkedLocations: checkedLocationsCopy, exclude: location);
                             if (checkPaths != null)
                             {
                                 locationsRequiredForMoonAccess.Remove(location, out bool _);
@@ -3531,22 +3783,22 @@ namespace MMR.Randomizer
                     _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.Keys.ToList().AsReadOnly();
 
                     var spheres = new List<List<ItemLocationPair>>();
-                    var acquired = new List<Item>();
-                    acquired.AddRange(_settings.CustomStartingItemList);
-                    acquired.AddRange(_randomized.BlitzExtraItems);
-                    var ioAcquired = new List<ItemObject>();
+                    var acquired = new Dictionary<Item, int>();
+                    _settings.CustomStartingItemList.ForEach(item => acquired[item] = (int)TimeOfDay.All);
+                    _randomized.BlitzExtraItems.ForEach(item => acquired[item] = (int)TimeOfDay.All);
+                    _randomized.RandomStartingItems.ForEach(item => acquired[item] = (int)TimeOfDay.All);
+                    var idAcquired = new Dictionary<int, int>();
                     bool spheresUpdated;
-                    bool hasAcquired(ItemObject io)
+                    int timeAcquired(ItemLogic il)
                     {
-                        return io.DependsOnItems.Where(item => ItemList[item].Item == item).All(acquired.Contains)
-                            && (
-                                !io.Conditionals.Any()
-                                || io.Conditionals.Any(c => c.Where(item => ItemList[item].Item == item).All(acquired.Contains))
-                            );
+                        return il.TimeAvailable & il.RequiredItemIds.Cast<Item>().Where(item => ItemList[item].Item == item).Aggregate((int)TimeOfDay.All, (result, item) => result & acquired.GetValueOrDefault(item))
+                            & (!il.ConditionalItemIds.Any() ? (int)TimeOfDay.All : il.ConditionalItemIds.Aggregate(0, (result, c) => result | c.Cast<Item>().Where(item => ItemList[item].Item == item).Aggregate((int)TimeOfDay.All, (r, item) => r & acquired.GetValueOrDefault(item))));
                     }
-                    bool shouldAppearInPlaythrough(ItemObject io)
+                    bool shouldAppearInPlaythrough(ItemLogic il)
                     {
-                        return io.IsRandomized && io.Item.DungeonEntrances() == null;
+                        var io = ItemList[il.ItemId];
+                        il.ShouldAutoAcquire = !io.IsRandomized || il.IsFakeItem;
+                        return !il.ShouldAutoAcquire;
                     }
                     do
                     {
@@ -3555,32 +3807,59 @@ namespace MMR.Randomizer
                         {
                             fakeItemsUpdated = false;
 
-                            foreach (var io in ItemList.Where(io => !ioAcquired.Contains(io)))
+                            foreach (var il in _randomized.Logic.Where(il => idAcquired.GetValueOrDefault(il.ItemId) != (int)TimeOfDay.All))
                             {
-                                var location = (Item)io.ID;
+                                var location = (Item)il.ItemId;
                                 var mainLocation = location.MainLocation();
                                 if (mainLocation.HasValue)
                                 {
-                                    if (shouldAppearInPlaythrough(ItemList[mainLocation.Value]))
+                                    if (shouldAppearInPlaythrough(_randomized.Logic[(int)mainLocation.Value]))
                                     {
                                         continue;
                                     }
                                 }
-                                else if (shouldAppearInPlaythrough(io))
+                                else if (shouldAppearInPlaythrough(il))
                                 {
                                     continue;
                                 }
-                                if (hasAcquired(io))
+                                var result = timeAcquired(il);
+                                if (result > 0)
                                 {
                                     if (mainLocation.HasValue)
                                     {
-                                        ioAcquired.Add(ItemList[mainLocation.Value]);
+                                        var key = _randomized.Logic[(int)mainLocation.Value].ItemId;
+                                        if (idAcquired.ContainsKey(key))
+                                        {
+                                            idAcquired[key] |= result;
+                                        }
+                                        else
+                                        {
+                                            idAcquired[key] = result;
+                                        }
                                     }
 
                                     var item = ItemList.Single(x => (x.NewLocation ?? x.Item) == (mainLocation ?? location)).Item;
-                                    acquired.Add(item);
-                                    ioAcquired.Add(io);
-                                    fakeItemsUpdated = true;
+                                    if (acquired.ContainsKey(item))
+                                    {
+                                        acquired[item] |= result;
+                                    }
+                                    else
+                                    {
+                                        acquired[item] = result;
+                                    }
+                                    if (idAcquired.ContainsKey(il.ItemId))
+                                    {
+                                        if (idAcquired[il.ItemId] != result)
+                                        {
+                                            fakeItemsUpdated = true;
+                                        }
+                                        idAcquired[il.ItemId] |= result;
+                                    }
+                                    else
+                                    {
+                                        idAcquired[il.ItemId] = result;
+                                        fakeItemsUpdated = true;
+                                    }
                                 }
                             }
 
@@ -3588,14 +3867,14 @@ namespace MMR.Randomizer
 
                         spheresUpdated = false;
                         var currentSphere = new List<ItemLocationPair>();
-                        var currentSphereItems = new List<Item>();
-                        foreach (var io in ItemList.Where(io => !ioAcquired.Contains(io)))
+                        var currentSphereItems = new List<(Item, int)>();
+                        foreach (var io in _randomized.Logic.Where(io => idAcquired.GetValueOrDefault(io.ItemId) != (int)TimeOfDay.All))
                         {
-                            var location = (Item)io.ID;
+                            var location = (Item)io.ItemId;
                             var mainLocation = location.MainLocation();
                             if (mainLocation.HasValue)
                             {
-                                if (!shouldAppearInPlaythrough(ItemList[mainLocation.Value]))
+                                if (!shouldAppearInPlaythrough(_randomized.Logic[(int)mainLocation.Value]))
                                 {
                                     continue;
                                 }
@@ -3604,37 +3883,70 @@ namespace MMR.Randomizer
                             {
                                 continue;
                             }
-                            if (hasAcquired(io))
+                            var result = timeAcquired(io);
+                            if (result > 0 && result != idAcquired.GetValueOrDefault(io.ItemId))
                             {
-                                ioAcquired.Add(io);
+                                var item = ItemList.Single(x => x.NewLocation == (mainLocation ?? location)).Item;
+                                if (!item.IsFake() && !item.IsTemporary())
+                                {
+                                    result = (int)TimeOfDay.All;
+                                }
+                                if (idAcquired.ContainsKey(io.ItemId))
+                                {
+                                    idAcquired[io.ItemId] |= result;
+                                }
+                                else
+                                {
+                                    idAcquired[io.ItemId] = result;
+                                }
 
                                 if (mainLocation.HasValue)
                                 {
-                                    ioAcquired.Add(ItemList[mainLocation.Value]);
-                                    currentSphereItems.Add(location);
+                                    var key = ItemList[mainLocation.Value].ID;
+                                    if (idAcquired.ContainsKey(key))
+                                    {
+                                        idAcquired[key] |= result;
+                                    }
+                                    else
+                                    {
+                                        idAcquired[key] = result;
+                                    }
+                                    currentSphereItems.Add((location, result));
                                 }
 
-                                var item = ItemList.Single(x => x.NewLocation == (mainLocation ?? location)).Item;
-                                currentSphereItems.Add(item);
-                                if (location.DungeonEntrances() != null)
+                                currentSphereItems.Add((item, result));
+                                if (_randomized.ImportantLocations.Contains(location))
                                 {
-                                    currentSphere.Add(new ItemLocationPair
+                                    if (location.Entrances() != null)
                                     {
-                                        Item = item.Entrance() ?? item.ToString(),
-                                        Location = location.Entrance() ?? location.ToString(),
-                                    });
-                                }
-                                else if (_randomized.ImportantLocations.Contains(location))
-                                {
-                                    currentSphere.Add(new ItemLocationPair
+                                        currentSphere.Add(new ItemLocationPair
+                                        {
+                                            Item = item.Entrance() ?? item.ToString(),
+                                            Location = location.Exit() ?? location.ToString(),
+                                        });
+                                    }
+                                    else
                                     {
-                                        Item = item.ProgressiveUpgradeName(_settings.ProgressiveUpgrades),
-                                        Location = location.Location(ItemList) ?? location.ToString(),
-                                    });
+                                        currentSphere.Add(new ItemLocationPair
+                                        {
+                                            Item = item.ProgressiveUpgradeName(_settings.ProgressiveUpgrades),
+                                            Location = location.Location(ItemList) ?? location.ToString(),
+                                        });
+                                    }
                                 }
                             }
                         }
-                        acquired.AddRange(currentSphereItems);
+                        foreach (var (item, ta) in currentSphereItems)
+                        {
+                            if (acquired.ContainsKey(item))
+                            {
+                                acquired[item] |= ta;
+                            }
+                            else
+                            {
+                                acquired[item] = ta;
+                            }
+                        }
 
                         if (currentSphere.Any())
                         {

@@ -1,0 +1,478 @@
+@import '../../../app/@theme/styles/themes';
+
+@include nb-install-component() {
+  :host ::ng-deep .cdk-overlay-pane > nb-popover {
+    animation-duration: 2000ms !important;
+  }
+  // Tooltip styling for cross-list tooltips
+  :host ::ng-deep nb-popover {
+    .popover-content {
+      font-size: 0.875rem; // Smaller font size for better fit
+      line-height: 1.4;
+      max-width: 300px; // Limit tooltip width
+      word-wrap: break-word;
+
+      @media (max-width: 768px) {
+        font-size: 0.8rem; // Even smaller on mobile
+        max-width: 250px;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 0.75rem; // Smallest on very small screens
+        max-width: 200px;
+      }
+    }
+    // Ensure proper positioning for right/left tooltips
+    &.nb-popover-right,
+    &.nb-popover-left {
+      .arrow {
+        border-width: 8px;
+      }
+    }
+
+    &.nb-popover-right .arrow {
+      border-right-color: nb-theme(color-basic-800);
+      left: -8px;
+    }
+
+    &.nb-popover-left .arrow {
+      border-left-color: nb-theme(color-basic-800);
+      right: -8px;
+    }
+  }
+
+  div.record-picker {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 1px solid nb-theme(color-info-800);
+    border-radius: 8px;
+    position: relative;
+    min-height: calc(100% - 69.6px);
+    max-height: calc(100% - 69.6px);
+    height: 100%;
+
+    @media (max-width: 960px) and (max-height: 960px) {
+      min-height: calc(100% - 50px);
+      max-height: calc(100% - 50px);
+    }
+  }
+
+  div.pickerWithTagFilter {
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid nb-theme(color-info-800);
+    border-radius: 8px;
+    position: relative;
+    min-height: calc(100% - 103px);
+    max-height: calc(100% - 103px);
+
+    @media (max-width: 960px) and (max-height: 960px) {
+      min-height: calc(100% - 72px);
+      max-height: calc(100% - 70px);
+    }
+
+    @media (max-width: 959px) {
+      min-height: calc(100% - 89px) !important;
+      max-height: calc(100% - 89px) !important;
+    }
+  }
+
+  div.pickerWithTagFilterOneNoPreset {
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid nb-theme(color-info-800);
+    border-radius: 8px;
+    position: relative;
+    min-height: calc(100% - 121.8px);
+    max-height: calc(100% - 121.8px);
+
+    @media (max-width: 960px) and (max-height: 960px) {
+      min-height: calc(100% - 89.6px);
+      max-height: calc(100% - 91px);
+    }
+
+    @media (max-width: 959px) {
+      min-height: calc(100% - 102px);
+      max-height: calc(100% - 102px);
+    }
+  }
+
+  div.pickerWithTagFilterMultiNoPreset {
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid nb-theme(color-info-800);
+    border-radius: 8px;
+    position: relative;
+    min-height: calc(100% - 144px);
+    max-height: calc(100% - 144px);
+
+    @media (max-width: 960px) and (max-height: 960px) {
+      min-height: calc(100% - 112.8px);
+      max-height: calc(100% - 114.2px);
+    }
+  }
+
+  div.pickerWithTagFilterMultiPreset {
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid nb-theme(color-info-800);
+    border-radius: 8px;
+    position: relative;
+    min-height: calc(100% - 214.8px);
+    max-height: calc(100% - 214.8px);
+
+    @media (max-width: 960px) and (max-height: 960px) {
+      min-height: calc(100% - 181.8px);
+      max-height: calc(100% - 183.2px);
+    }
+  }
+
+  .record-picker ul {
+    margin: 0;
+    padding: 0 0 1px 0;
+    height: 100%;
+
+    &.over {
+      background-color: unset !important;
+    }
+  }
+
+  .record-picker li {
+    border-top: thin solid nb-theme(color-info-800);
+    border-bottom: 1px solid nb-theme(color-info-800);
+    display: block;
+    padding: 2px 2px 2px 10px;
+    margin-bottom: -1px;
+    font-size: 0.85em;
+    cursor: pointer;
+    white-space: pre-line; //always text wrap to be safe
+    min-height: 16px;
+  }
+
+  .record-picker li:hover {
+    background-color: nb-theme(color-info-900);
+  }
+
+  .record-picker li.selected {
+    background-color: nb-theme(color-info-700);
+  }
+
+  .record-picker li.selected:hover {
+    background-color: nb-theme(color-info-600);
+  }
+
+  .record-picker li.disabled {
+    opacity: 0.5;
+    cursor: default;
+    background-color: inherit;
+  }
+
+  .record-picker li:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-top: none;
+  }
+
+  .record-picker li:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom: none;
+  }
+
+  .record-picker label {
+    display: inline-block;
+    line-height: 1.25;
+    cursor: pointer;
+    font-weight: inherit;
+    font-size: 14px;
+    padding: 4px;
+    margin-bottom: -1px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    @media (max-width: 1900px) {
+      font-size: 13px;
+    }
+
+    @media (max-width: 1750px) {
+      font-size: 12px;
+    }
+
+    @media (max-width: 1630px) {
+      font-size: 11px;
+    }
+
+    @media (max-width: 500px) {
+      font-size: 10px;
+    }
+  }
+
+  .record-picker ul.over {
+    background-color: lightgray;
+  }
+
+  .dual-list-wrapper {
+    display: -webkit-box;
+    display: block;
+    flex-direction: row;
+    align-content: flex-start;
+  }
+
+  .dual-list {
+    max-height: 100%;
+    display: -webkit-box;
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+  }
+  /* When hex string input is enabled, give a bit less overall height to avoid overflow */
+  .dual-list-withHexString {
+    max-height: 93% !important;
+  }
+
+  .dual-list-withTagFilterOneNoPreset {
+    max-height: 90% !important;
+  }
+
+  .dual-list-withTagFilterMultiPreset {
+    max-height: 93% !important;
+  }
+
+  .dual-list .listbox {
+    width: 50%;
+    margin: 0px;
+  }
+
+  .dual-list .button-bar {
+    margin-top: 8px;
+  }
+  /* &nbsp;&nbsp;&nbsp;&#9654; */
+  .point-right::after {
+    content: "\25B6";
+    padding-left: 0;
+  }
+  /* &#9664;&nbsp;&nbsp;&nbsp; */
+  .point-left::before {
+    content: "\25C0";
+    padding-right: 0;
+  }
+
+  .dual-list .button-bar button {
+    width: 47%;
+    // Responsive font sizing for mobile to prevent text clipping
+    @media (max-width: 768px) {
+      font-size: 11px !important;
+      padding: 4px 6px !important;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 10px !important;
+      padding: 3px 4px !important;
+    }
+  }
+
+  .buttonBox {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .buttonBox button {
+    width: 28%;
+    margin-right: 3px;
+    // Responsive font sizing for mobile to prevent text clipping
+    @media (max-width: 768px) {
+      font-size: 11px !important;
+      padding: 4px 6px !important;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 10px !important;
+      padding: 3px 4px !important;
+    }
+  }
+
+  .buttonBox .switchButton {
+    width: 40%;
+
+    @media (max-width: 420px) {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+
+  button.btn-block {
+    display: block;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  button.btn {
+    height: 28px;
+    padding: 0;
+    // Responsive font sizing for mobile to prevent text clipping
+    @media (max-width: 768px) {
+      font-size: 11px !important;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 10px !important;
+    }
+  }
+
+  button.pull-left {
+    margin-right: 5px;
+  }
+
+  .input-md {
+    height: 28px;
+    padding: 0;
+  }
+
+  .filter {
+    margin-bottom: -27px;
+  }
+
+  .filter::after {
+    content: "o";
+    width: 40px;
+    color: transparent;
+    font-size: 2em;
+    background-image: nb-theme(filter-icon);
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: .2;
+    top: -30px;
+    left: calc(100% - 21px);
+    position: relative;
+  }
+
+  .tagFilterSelect {
+    max-width: 100%;
+    width: 100%;
+    padding-bottom: 4.2px !important;
+
+    ::ng-deep button {
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+  }
+
+  .tagFilterSelectPadding {
+    height: 32px;
+  }
+
+  .tagFilterSingleSelectPadding {
+    height: 49px;
+
+    @media (max-width: 1350px) {
+      height: 48px;
+    }
+
+    @media (max-width: 986px) {
+      height: 46.5px;
+    }
+
+    @media (max-width: 959px) {
+      height: 36px;
+    }
+  }
+
+  .tagFilterMultiSelectPadding {
+    height: 97.5px;
+
+    @media (max-width: 1350px) {
+      height: 95.5px;
+    }
+
+    @media (max-width: 1000px) {
+      height: 94px;
+    }
+
+    @media (max-width: 959px) {
+      height: 72px;
+    }
+  }
+
+  .hexTextInput {
+    position: relative;
+    left: 0px;
+    width: 100%;
+    max-width: initial !important;
+    text-align: left;
+    padding-left: 5.25px !important;
+    padding-right: initial !important;
+    margin-right: 14px !important;
+    margin-bottom: 5.6px;
+
+    @media (max-width: 959px) {
+      margin-top: 0px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .hexPresetsPad {
+    margin-top: 50px;
+
+    @media (max-width: 1350px) {
+      margin-top: 49px;
+    }
+
+    @media (max-width: 1000px) {
+      margin-top: 48px;
+    }
+
+    @media (max-width: 959px) {
+      margin-top: 40px;
+    }
+
+    @media (max-width: 399px) {
+      margin-top: 38px;
+    }
+  }
+
+  .comboBoxLabel {
+    position: relative;
+    display: block;
+    left: 10px;
+    width: calc(100% - 10px);
+
+    @media (max-width: 959px) {
+      align-self: center;
+      width: 150px;
+      margin-right: 15px;
+      margin-top: -8px;
+    }
+  }
+
+  .form-filter-box {
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 959px) {
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      margin-bottom: 5px;
+    }
+  }
+
+  div.select-wrapper {
+    display: flex;
+    padding-bottom: 5.6px !important;
+
+    nb-select {
+      flex-grow: 1;
+    }
+  }
+
+  .selectXSmall {
+    max-width: 340px;
+    overflow: hidden;
+  }
+}

@@ -22,10 +22,16 @@ namespace MMR.Randomizer
                 {
                     randomized = randomizer.Randomize(progressReporter);
 
-                    if ((configuration.OutputSettings.GenerateSpoilerLog || configuration.OutputSettings.GenerateHTMLLog || configuration.OutputSettings.GenerateSpoilerLogJson || configuration.OutputSettings.GenerateSettingsJson)
+                    if ((configuration.OutputSettings.GenerateSpoilerLog || configuration.OutputSettings.GenerateHTMLLog || configuration.OutputSettings.GenerateSpoilerLogJson)
                         && configuration.GameplaySettings.LogicMode != LogicMode.Vanilla)
                     {
                         SpoilerUtils.CreateSpoilerLog(randomized, configuration.GameplaySettings, configuration.OutputSettings);
+                    }
+
+
+                    if (configuration.OutputSettings.GenerateSettingsJson)
+                    {
+                        SpoilerUtils.CreateSettingsJson(randomized.Seed, configuration.GameplaySettings, configuration.OutputSettings);
                     }
                 }
                 catch (RandomizationException ex)
@@ -47,12 +53,12 @@ namespace MMR.Randomizer
                 }
                 if (configuration.OutputSettings.OutputVC && !Directory.Exists(Values.VCDirectory))
                 {
-                    return "Error: vc folder is missing and WiiVC wad creation was selected.\n\n"
+                    return "vc folder is missing and WiiVC wad creation was selected.\n\n"
                         + "If you did not extract the whole randomizer, you must extract the vc folder. If this is a beta release, copy the vc folder from the main release.";
                 }
 
                 var startTime = DateTime.Now;
-                var builder = new Builder(randomized, configuration.CosmeticSettings);
+                var builder = new Builder(randomized, configuration.CosmeticSettings, configuration.WebSettings);
 
                 try
                 {
@@ -60,11 +66,11 @@ namespace MMR.Randomizer
                 }
                 catch (ROMOverflowException ex)
                 {
-                    return $"Error: {ex.Message}";
+                    return ex.Message;
                 }
                 catch (PatchMagicException)
                 {
-                    return $"Error applying patch: Not a valid patch file";
+                    return "Error applying patch: Not a valid patch file";
                 }
                 catch (IOException ex)
                 {

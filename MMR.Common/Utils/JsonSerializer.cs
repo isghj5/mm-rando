@@ -30,6 +30,7 @@ namespace MMR.Common.Utils
             {
                 new JsonColorConverter(),
                 new JsonStringEnumConverter(),
+                new NullConverter(),
             }
         };
 

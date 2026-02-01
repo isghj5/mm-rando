@@ -1,4 +1,4 @@
-﻿namespace MMR.Randomizer.Models
+﻿namespace MMR.Randomizer.Models.Settings
 {
     public enum TatlColorSchema
     {

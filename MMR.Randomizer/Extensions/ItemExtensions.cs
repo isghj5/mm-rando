@@ -79,25 +79,27 @@ namespace MMR.Randomizer.Extensions
             {
                 return null;
             }
-            if (itemList == null)
+
+            var regionAttribute = item.GetAttribute<RegionAttribute>();
+            if (regionAttribute == null || !regionAttribute.PassToLocation)
             {
                 return location;
             }
 
-            var reference = item.GetAttribute<RegionAttribute>()?.Reference;
+            var reference = regionAttribute.Reference;
             if (reference == null)
             {
                 return location;
             }
 
-            var referenceNewLocation = itemList[reference.Value].NewLocation ?? reference.Value;
-            var itemCategory = item.GetAttribute<ItemPoolAttribute>()?.ItemCategory;
+            var referenceNewLocation = reference.Value;
 
-            var alteredLocation = Enum.GetValues<Item>()
-                .Where(x => x.GetAttribute<ItemPoolAttribute>()?.ItemCategory == itemCategory)
-                .FirstOrDefault(x => x.GetAttribute<RegionAttribute>().Reference == referenceNewLocation);
+            if (itemList != null)
+            {
+                referenceNewLocation = itemList[referenceNewLocation].NewLocation ?? referenceNewLocation;
+            }
 
-            return alteredLocation.Location();
+            return referenceNewLocation.Exit() + " " + location;
         }
 
         private static IReadOnlyDictionary<Item, RegionAttribute> _regionAttributes = Enum.GetValues<Item>().ToDictionary(x => x, x => x.GetAttribute<RegionAttribute>());
@@ -143,6 +145,28 @@ namespace MMR.Randomizer.Extensions
             return item.GetAttribute<RegionAreaAttribute>()?.RegionArea ?? item.Region(itemList)?.RegionArea();
         }
 
+        private static Dictionary<RegionArea, Item> RegionAreaDungeonEntrance = new Dictionary<RegionArea, Item>
+        {
+            { GameObjects.RegionArea.Swamp, Item.AreaWoodFallTempleAccess },
+            { GameObjects.RegionArea.Mountain, Item.AreaSnowheadTempleAccess },
+            { GameObjects.RegionArea.Ocean, Item.AreaGreatBayTempleAccess },
+            { GameObjects.RegionArea.Canyon, Item.AreaInvertedStoneTowerTempleAccess },
+        };
+
+        private static Dictionary<Item, RegionArea> DungeonEntranceRegionArea = RegionAreaDungeonEntrance.ToDictionary(x => x.Value, x => x.Key);
+
+        public static RegionArea? RegionAreaOfTemple(this Item check, ItemList itemList)
+        {
+            var regionArea = check.RegionArea(itemList);
+            if (regionArea.HasValue && RegionAreaDungeonEntrance.ContainsKey(regionArea.Value))
+            {
+                var dungeonEntranceToFind = RegionAreaDungeonEntrance[regionArea.Value];
+                var dungeonNewEntrance = itemList[dungeonEntranceToFind].NewLocation ?? dungeonEntranceToFind;
+                regionArea = DungeonEntranceRegionArea[dungeonNewEntrance];
+            }
+            return regionArea;
+        }
+
         private static IReadOnlyDictionary<Item, Item?> _mainLocations = Enum.GetValues<Item>().ToDictionary(x => x, x => x.GetAttribute<MainLocationAttribute>()?.Location);
         public static Item? MainLocation(this Item item)
         {
@@ -153,6 +177,12 @@ namespace MMR.Randomizer.Extensions
         public static string Entrance(this Item item)
         {
             return _entrances.GetValueOrDefault(item);
+        }
+
+        private static IReadOnlyDictionary<Item, string> _exits = Enum.GetValues<Item>().ToDictionary(x => x, x => x.GetAttribute<ExitNameAttribute>()?.Name);
+        public static string Exit(this Item item)
+        {
+            return _exits.GetValueOrDefault(item);
         }
 
         public static ShopTextAttribute ShopTexts(this Item item)
@@ -235,17 +265,18 @@ namespace MMR.Randomizer.Extensions
         {
             return item.HasAttribute<StartingTingleMapAttribute>()
                 || item.HasAttribute<StartingItemIdAttribute>()
-                || item.HasAttribute<StartingItemAttribute>();
+                || item.HasAttribute<StartingItemAttribute>()
+                || item.HasAttribute<StartingItemSkullAttribute>();
         }
 
-        public static IList<DungeonEntrance> DungeonEntrances(this Item item)
+        public static IList<Entrance> Entrances(this Item item)
         {
-            if (!item.HasAttribute<DungeonEntranceAttribute>())
+            if (!item.HasAttribute<EntranceAttribute>())
             {
                 return null;
             }
-            var result = new List<DungeonEntrance>();
-            var attr = item.GetAttribute<DungeonEntranceAttribute>();
+            var result = new List<Entrance>();
+            var attr = item.GetAttribute<EntranceAttribute>();
             result.Add(attr.Entrance);
             if (attr.Pair.HasValue)
             {
@@ -337,6 +368,16 @@ namespace MMR.Randomizer.Extensions
         public static bool IsBlockingBombTrapPlacement(this Item item)
         {
             return item.HasAttribute<BlockBombTrapPlacementAttribute>();
+        }
+
+        public static EntranceType? EntranceType(this Item item)
+        {
+            return item.GetAttribute<EntranceTypeAttribute>()?.Type;
+        }
+
+        public static IEnumerable<EntranceType> AdditionalEntranceTypes(this Item item)
+        {
+            return item.GetAttribute<EntranceTypeAttribute>()?.AdditionalTypes ?? Enumerable.Empty<EntranceType>();
         }
     }
 }

@@ -23,6 +23,7 @@
 .definelabel z2_rupee_drop_spawn, 0x800A7AD4
 .definelabel z2_random_drop_spawn, 0x800A7D28
 .definelabel z2_EffectSsKiraKira_SpawnSmall, 0x800B16B8
+.definelabel z2_EffectSsKiraKira_SpawnDispersed, 0x800B16F4
 .definelabel z2_EffectSsHitmark_SpawnCustomScale, 0x800B26A8
 .definelabel z2_EffectSsIceSmoke_Spawn, 0x800B320C
 .definelabel z2_SetShape, 0x800B3BA4
@@ -63,6 +64,7 @@
 .definelabel z2_Actor_SpawnAsChild, 0x800BB0C0
 .definelabel z2_ActorRemove, 0x800BB498
 .definelabel z2_Actor_ChangeAnimation, 0x800BDC5C
+.definelabel z2_Gfx_DrawDListOpa, 0x800BDFC0
 .definelabel z2_BgCheck_GetCollisionHeader, 0x800C3C2C
 .definelabel z2_BgCheck_EntityCheckCeiling, 0x800C4F84
 .definelabel z2_DynaPoly_GetActor, 0x800C6248
@@ -129,6 +131,7 @@
 .definelabel z2_CheckItemObtainability, 0x80114978
 .definelabel z2_RemoveItem, 0x801149A0
 .definelabel z2_HasEmptyBottle, 0x80114E90
+.definelabel z2_Inventory_HasItemInBottle, 0x80114F2C
 .definelabel z2_HudSetAButtonText, 0x8011552C
 .definelabel z2_Health_ChangeBy, 0x80115908
 .definelabel z2_AddRupees, 0x801159EC
@@ -142,6 +145,7 @@
 .definelabel z2_CanInteract, 0x801233E4
 .definelabel z2_Inventory_GetBtnItem, 0x8012364C
 .definelabel z2_Player_SetEquipmentData, 0x80123C90
+.definelabel z2_Player_UpdateBottleHeld, 0x80123D50
 .definelabel z2_801242DC, 0x801242DC
 .definelabel z2_Player_DrawGetItem, 0x8012697C
 .definelabel z2_PlayerGormanTears, 0x80127594
@@ -161,6 +165,7 @@
 .definelabel z2_object_spawn, 0x8012F2E0
 .definelabel z2_load_objects, 0x8012F4FC
 .definelabel z2_GetObjectIndex, 0x8012F608
+.definelabel z2_Scene_SetExitFade, 0x801306A4
 .definelabel z2_AnimatedMat_Draw, 0x80131758
 .definelabel z2_Entrance_GetSceneIdAbsolute, 0x80132338
 .definelabel z2_Entrance_GetTransitionFlags, 0x801323A0

@@ -59,7 +59,7 @@ namespace MMR.Randomizer.Attributes.Setting
         public Func<Item, string> LabelExtractor { get; }
         public Dictionary<string, Func<Item, object>> AdditionalInformationExtractors { get; }
 
-        public SettingItemListAttribute(string itemUtilsPropertyName, bool showItemName, bool showLocationName, params string[] additionalInformation)
+        public SettingItemListAttribute(string itemUtilsPropertyName, LabelType mainLabel, LabelType subLabel, params string[] additionalInformation)
         {
             ItemList = (IEnumerable<Item>)typeof(ItemUtils).GetMethod(itemUtilsPropertyName).Invoke(null, new object[0]);
 
@@ -69,18 +69,33 @@ namespace MMR.Randomizer.Attributes.Setting
                 return result;
             });
 
-            if(showItemName && showLocationName)
+            if(mainLabel == LabelType.Location && subLabel == LabelType.Name)
             {
                 LabelExtractor = (item) => $"{item.Location()} ({item.Name()})";
             }
-            else if (showItemName)
+            else if (mainLabel == LabelType.Name && subLabel == LabelType.Location)
+            {
+                LabelExtractor = (item) => $"{item.Name()} ({item.Location()})";
+            }
+            else if (mainLabel == LabelType.Name)
             {
                 LabelExtractor = (item) => item.Name();
             }
-            else if (showLocationName)
+            else if (mainLabel == LabelType.Location)
             {
                 LabelExtractor = (item) => item.Location();
             }
+            else
+            {
+                throw new ArgumentException("Invalid label arguments.");
+            }
+        }
+
+        public enum LabelType
+        {
+            None,
+            Name,
+            Location,
         }
     }
 

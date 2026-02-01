@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows.Forms;
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Extensions;
-using MMR.Randomizer.Models;
 
 namespace MMR.UI.Forms
 {
@@ -14,17 +13,17 @@ namespace MMR.UI.Forms
 
         private IEnumerable<Item> _baseItemList;
 
-        private bool _showLocationNames;
+        private Func<Item, string> _labelExtractor;
 
-        public ItemSelectorForm(IEnumerable<Item> baseItemList, IEnumerable<Item> selectedItems, bool checkboxes = true, bool showLocationNames = true)
+        public ItemSelectorForm(IEnumerable<Item> baseItemList, IEnumerable<Item> selectedItems, Func<Item, string> labelExtractor)
         {
             InitializeComponent();
             _baseItemList = baseItemList;
-            _showLocationNames = showLocationNames;
+            _labelExtractor = labelExtractor;
             ReturnItems = selectedItems.ToList();
             UpdateItems();
             this.ActiveControl = textBoxFilter;
-            lItems.CheckBoxes = checkboxes;
+            lItems.CheckBoxes = true;
         }
 
         public void UpdateItems(string filter = null)
@@ -33,11 +32,11 @@ namespace MMR.UI.Forms
             var items = _baseItemList;
             if (!string.IsNullOrWhiteSpace(filter))
             {
-                items = items.Where(item => GetLabel(item).ToLower().Contains(filter));
+                items = items.Where(item => _labelExtractor(item).ToLower().Contains(filter));
             }
             foreach (var item in items)
             {
-                var label = GetLabel(item);
+                var label = _labelExtractor(item);
                 var listViewItem = new ListViewItem(label);
                 listViewItem.Tag = item;
                 listViewItem.Checked = ReturnItems.Contains(item);
@@ -49,11 +48,6 @@ namespace MMR.UI.Forms
         {
             DialogResult = DialogResult.OK;
             Close();
-        }
-
-        private string GetLabel(Item item)
-        {
-            return (_showLocationNames ? item.Location() : item.Name()) ?? item.ToString();
         }
 
         private void lItems_MouseDoubleClick(object sender, MouseEventArgs e)

@@ -1,0 +1,46 @@
+<nb-card class="mmrItemSelector-window">
+  <nb-card-header>
+    <div class="dialog-title" style="text-align:center; font-size:1.5em; font-weight:bold;">{{ dialogHeader }}</div>
+    <button nbButton class="headerButton" size="xsmall" status="danger" (click)="cancelDialog()" style="position:absolute; right:16px; top:16px;">X</button>
+  </nb-card-header>
+  <hr style="margin: 0 0 18px 0;" />
+  <nb-card-body>
+    <div class="search-container">
+      <input nbInput 
+             type="text" 
+             [placeholder]="searchPlaceholder" 
+             [(ngModel)]="searchTerm" 
+             (ngModelChange)="onSearchChange()"
+             [autofocus]="false"
+             class="search-input">
+    </div>
+    <div class="selection-controls">
+      <button nbButton size="small" status="basic" (click)="selectAll()" #selectAllBtn>Select All</button>
+      <button nbButton size="small" status="basic" (click)="deselectAll()">Deselect All</button>
+      <span class="selection-count">Selected: {{ getSelectedCount() }}</span>
+    </div>
+    <div class="items-container">
+      <div class="items-grid">
+        <div *ngFor="let item of filteredItems" 
+             class="item-entry"
+             [class.selected]="item.selected"
+             (click)="toggleItem(item)"
+             [nbTooltip]="item.regionDisplay ? (tagDisplayPrefix + item.regionDisplay) : null"
+             nbTooltipPlacement="top">
+          <input type="checkbox" 
+                 [checked]="item.selected" 
+                 [name]="item.regionDisplay || null"
+                 (click)="$event.stopPropagation()"
+                 (change)="toggleItem(item)">
+          <span class="item-label">{{ item.label }}</span>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="footer-buttons" style="display:flex; justify-content:flex-end; gap:18px; margin:18px 0 6px 0;">
+      <button nbButton status="danger" (click)="cancelDialog()" style="padding:8px 24px;">Cancel</button>
+      <button nbButton status="primary" (click)="confirmDialog()" style="padding:8px 24px;">Save</button>
+    </div>
+  </nb-card-footer>
+</nb-card> 

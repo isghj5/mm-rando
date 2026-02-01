@@ -70,6 +70,15 @@ namespace MMR.Randomizer.Models.Settings
         [JsonIgnore]
         public bool GenerateCosmeticsPatch { get; set; }
 
+        [JsonIgnore]
+        public bool GenerateCompressionInfoJson{ get; set; }
+
+        [JsonIgnore]
+        public bool GenerateRandomizedMusicInfoJson { get; set; }
+
+        [JsonIgnore]
+        public bool IsPatchForVC { get; set; }
+
         public string Validate()
         {
             if (!GenerateROM && !OutputVC && !GenerateCosmeticsPatch && (InputPatchFilename != null || (!GeneratePatch && !GenerateSpoilerLog && !GenerateHTMLLog)))
@@ -83,6 +92,10 @@ namespace MMR.Randomizer.Models.Settings
             if (InputPatchFilename != null && string.IsNullOrWhiteSpace(InputPatchFilename))
             {
                 return "No patch selected.";
+            }
+            if (IsPatchForVC && (GenerateROM || OutputVC))
+            {
+                return $"Cannot use {nameof(IsPatchForVC)} with z64 or wad output enabled.";
             }
             return null;
         }

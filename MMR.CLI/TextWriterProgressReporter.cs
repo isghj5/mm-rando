@@ -17,7 +17,7 @@ namespace MMR.CLI
 
             public void ReportProgress(int percentProgress, string message, CancellationTokenSource ctsItemImportance)
             {
-                _textWriter.WriteLine(message);
+                _textWriter.WriteLine($"{percentProgress}% {message}");
             }
         }
     }

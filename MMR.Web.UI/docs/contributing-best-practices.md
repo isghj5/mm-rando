@@ -1,0 +1,10 @@
+## Best practices
+These are the 3 key pillars to ensure a peaceful harmony between the local GUI settings and the website version:
+
+* The website strictly differentiates builds by version. A version bump of some kind is always necessary to distinguish between two builds. Don't deploy the same version twice, even as a hotfix. Versions can be unlisted for that instead if needed. Deployment is triggered manually, so nothing happening in the repo will trigger anything automatically. TreZc0_ manages access credentials to the deployment portal for interested parties where website builds can be triggered on command
+
+* The following actions need GUI adjustment: adding, deleting and renaming a setting
+  * Soft changes: Deleting or renaming a setting. This only requires a change in the settings_mapping.json. The affected setting needs to be removed from the mapping file or its name changed to reflect the updated C# name
+  * Hard changes: Adding a setting. If the settings type already exists in the GUI (types listed in the architecture.md) which should mostly be the case this becomes a soft change and the settings name only needs to be added into the appropiate place of the settings_mapping.json. Mimicking the existing Windows Forms GUI layout is a best practice for consistency, so finding the correct insertion point should always be relatively straightforward. If the settings type does not exist, the Angular GUI needs to be updated
+
+* Remember to *always* keep the settings_mapping.json in sync with the defined settings in the C# base. Test the GUI in Electron dev mode after major setting additions to check if the layout is okay and it all works. Remember that the website is an external actor using the CLI and expecting it to work a certain way. This also includes the file and folder structure of the project. Keep in mind that a bad deployment will potentially reach thousands of users very quickly

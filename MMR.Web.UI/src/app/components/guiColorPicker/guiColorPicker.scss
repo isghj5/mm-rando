@@ -1,0 +1,27 @@
+@import '../../../app/@theme/styles/themes';
+
+@include nb-install-component() {
+  .colorPicker {
+    display: flex;
+  }
+
+  .colorPickerContainer {
+    height: 0px;
+    width: 0px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .randomizeButton {
+    position: relative;
+    top: -5px;
+    margin-top: 14px !important;
+    margin-right: 0px !important;
+    padding: 3.85px 10px !important;
+
+    @media (max-width: 1080px) {
+      padding: 3.85px 5px !important;
+      font-size: 0.65rem !important;
+    }
+  }
+}

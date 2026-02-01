@@ -246,7 +246,7 @@ namespace MMR.Randomizer
             /// TODO this can be simplified, it was more complex before I realized spheres are kinda useless
             List<GameObjects.Item> allSpiderTokens = _randomized.ItemList.FindAll(item => item.Item.ItemCategory() == GameObjects.ItemCategory.SkulltulaTokens).Select(u => u.Item).ToList();
 
-            if ((_randomized.Settings.VictoryMode & Models.VictoryMode.SkullTokens) > 0)
+            if ((_randomized.Settings.VictoryMode & VictoryMode.SkullTokens) > 0)
                 return; // victory mode for fairies is enabled, none are junk: leave early
 
             // some items we didnt consider junk for short depth checks, are junk here just because these are really late game
@@ -262,7 +262,7 @@ namespace MMR.Randomizer
                 ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.SkulltulaTokens].AddRange(tokensSearched);
             }
 
-            if (_randomized.Settings.LogicMode != Models.LogicMode.Casual)
+            if (_randomized.Settings.LogicMode != LogicMode.Casual)
             {
                 var swampSkullReward = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.MaskTruth).Item;
                 // check if the reward is important, if not add them 
@@ -330,7 +330,7 @@ namespace MMR.Randomizer
         {
             var allFaires = _randomized.ItemList.FindAll(item => item.Item.ClassicCategory() == GameObjects.ClassicCategory.StrayFairies).Select(u => u.Item).ToList();
 
-            if ((_randomized.Settings.VictoryMode & Models.VictoryMode.Fairies) > 0)
+            if ((_randomized.Settings.VictoryMode & VictoryMode.Fairies) > 0)
                 return; // victory mode for fairies is enabled, none are junk: leave early
 
             void AddFairies(string tokenSearch)
@@ -339,7 +339,7 @@ namespace MMR.Randomizer
                 ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.StrayFairies].AddRange(fairySearched);
             }
 
-            if (_randomized.Settings.LogicMode != Models.LogicMode.Casual)
+            if (_randomized.Settings.LogicMode != LogicMode.Casual)
             {
                 var extendedJunkCategories = ActorizerKnownJunkCategories.ToList();
                 extendedJunkCategories.Add(GameObjects.ItemCategory.Milk);
@@ -399,7 +399,7 @@ namespace MMR.Randomizer
         {
             /// Notebook entries are junk IF the settings do not specify getting all notebook is required to beat the seed
 
-            if ((_randomized.Settings.VictoryMode & Models.VictoryMode.Notebook) > 0)
+            if ((_randomized.Settings.VictoryMode & VictoryMode.Notebook) > 0)
                 return; // victory mode for notebook entries is enabled, none are junk: leave early
 
             // if not required for victory, the entries themselves are always junk
@@ -443,9 +443,9 @@ namespace MMR.Randomizer
         private static void PrepareJunkScoopList(List<ItemLocationPair> allSphereItems)
         {
             // if the scoops are vanilla they can never be considered junk
-            if (_randomized.Settings.LogicMode == Models.LogicMode.Vanilla) return;
+            if (_randomized.Settings.LogicMode == LogicMode.Vanilla) return;
             // currently, we cannot discern if scoops are important or not in no logic
-            if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic) return;
+            if (_randomized.Settings.LogicMode == LogicMode.NoLogic) return;
             
             //Debug.Assert(allSpehere )
 
@@ -484,8 +484,8 @@ namespace MMR.Randomizer
         private static void PrepareJunkHeartPieces()
         {
             // if not casual logic, we want to add these since those crazy people think hearts are junk
-            if (((_randomized.Settings.VictoryMode & Models.VictoryMode.Hearts) == 0) // hearts are NOT required win condition
-               && (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic || _randomized.Settings.LogicMode == Models.LogicMode.Glitched))
+            if (((_randomized.Settings.VictoryMode & VictoryMode.Hearts) == 0) // hearts are NOT required win condition
+               && (_randomized.Settings.LogicMode == LogicMode.NoLogic || _randomized.Settings.LogicMode == LogicMode.Glitched))
             {
                 var heartPieces = _randomized.ItemList.FindAll(itemObj => itemObj.Item.ItemCategory() == GameObjects.ItemCategory.PiecesOfHeart).Select(itemObj => itemObj.Item).ToList();
                 ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.PiecesOfHeart].AddRange(heartPieces);
@@ -509,12 +509,14 @@ namespace MMR.Randomizer
             // this does not work, without me knowing when they are junk or not TODO
             /// if the player does not get hints from these, they should count as junk, but dont know if thats a setting I can look up
 
-            if (_randomized.Settings.LogicMode == Models.LogicMode.Vanilla
-                || _randomized.Settings.LogicMode == Models.LogicMode.Casual)
+            if (_randomized.Settings.LogicMode == LogicMode.Vanilla
+                || _randomized.Settings.LogicMode == LogicMode.Casual)
             {
                 return;
             }
 
+            // with 2.0, entrando, these settings values no longer exist, don't know how to change them, for now just disable this and assume all compass/map are not-junk
+            /* 
             if (_randomized.Settings.RandomizeBossRooms == false)
             {
                 var compass = _randomized.ItemList.FindAll(itemObj => itemObj.Item.ItemCategory() == GameObjects.ItemCategory.Navigation
@@ -530,6 +532,7 @@ namespace MMR.Randomizer
                                                   .Select(itemObj => itemObj.Item).ToList();
                 ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.Navigation].AddRange(maps);
             }
+            // */
         }
 
         private static void PrepareJunkItems()
@@ -548,7 +551,7 @@ namespace MMR.Randomizer
             }
 
             var allSphereItems = new List<ItemLocationPair>();
-            if (_randomized.Settings.LogicMode == Models.LogicMode.Casual || _randomized.Settings.LogicMode == Models.LogicMode.Glitched)
+            if (_randomized.Settings.LogicMode == LogicMode.Casual || _randomized.Settings.LogicMode == LogicMode.Glitched)
             {
                 allSphereItems = _randomized.Spheres.SelectMany(u => u).ToList();
             }
@@ -773,7 +776,7 @@ namespace MMR.Randomizer
                                 continue; // not valid to consider this actor
 
                             var itemRestriction = ObjectIsCheckBlocked(scene.SceneEnum, mapActor.ActorEnum, mapActor.OldVariant);
-                            var chanceOfRandomization = (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic) ? (90) : (60);
+                            var chanceOfRandomization = (_randomized.Settings.LogicMode == LogicMode.NoLogic) ? (90) : (60);
                             var randomRoll = thisSceneData.RNG.Next(100);
                             // if common scoopable actor, some are allowed but not all, for now lets make it random
                             if (itemRestriction != null && (commonScoopableActors.Contains(mapActor.OldActorEnum)
@@ -1015,7 +1018,7 @@ namespace MMR.Randomizer
 
             /* // issue: this COMPLETELY ignores bean seller is vanilla and does not show up in sphere list because -- ! ZOEY ! --
             if (testActor == GameObjects.Actor.BeanSeller
-                && (_randomized.Settings.LogicMode != Models.LogicMode.NoLogic && _randomized.Settings.LogicMode != Models.LogicMode.Vanilla))
+                && (_randomized.Settings.LogicMode != LogicMode.NoLogic && _randomized.Settings.LogicMode != LogicMode.Vanilla))
             {
                 var freeBeanSample = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemMagicBean).Item;
                 if (!IsActorizerJunk(freeBeanSample))
@@ -5044,7 +5047,7 @@ namespace MMR.Randomizer
                     return;
 
                 }
-                if (_randomized.Settings.LogicMode == Models.LogicMode.NoLogic)
+                if (_randomized.Settings.LogicMode == LogicMode.NoLogic)
                 {
                     var vanillaBeans = map.Actors.FindAll(act => act.OldActorEnum == GameObjects.Actor.SoftSoilAndBeans && act.ActorEnum == GameObjects.Actor.SoftSoilAndBeans);
                     if (vanillaBeans != null && vanillaBeans.Count > 0)
@@ -7433,7 +7436,7 @@ namespace MMR.Randomizer
                     continue;
                 }
 
-                if (_randomized.Settings.Character == Models.Character.AdultLink && filePath.Contains("Anope.mmra"))
+                if (_randomized.Settings.Character == Character.AdultLink && filePath.Contains("Anope.mmra"))
                 {
                     continue; // this OOT epona replacement actor does not work with adult oot link mod because it replaces horse assets
                 }

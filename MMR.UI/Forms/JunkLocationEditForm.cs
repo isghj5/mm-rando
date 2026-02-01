@@ -1,5 +1,4 @@
 ﻿using MMR.Randomizer.Models.Settings;
-using MMR.Randomizer.Utils;
 using MMR.Randomizer.GameObjects;
 using System;
 using System.Collections.Generic;
@@ -33,7 +32,7 @@ namespace MMR.UI.Forms
             if (CustomJunkLocations != null)
             {
                 UpdateString(CustomJunkLocations);
-                ExternalLabel = $"{CustomJunkLocations.Count}/{_junkLocations.Count} items selected";
+                ExternalLabel = $"{CustomJunkLocations.Count}/{_junkLocations.Count} locations selected";
             }
             else
             {

@@ -2884,7 +2884,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)] // credits version with no dialogue but at least htey have a collider?
         [VariantsWithRoomMax(max: 5, variant: 0)]
         [UnkillableAllVariants]
-        HoneyAndDarlingCredits = 0xE9, // En_Tg
+        HoneyDarlingCredits = 0xE9, // En_Tg
 
         EmptyEA = 0xEA,
         EmptyEB = 0xEB,
@@ -3257,7 +3257,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [EnemizerScenesPlacementBlock(
-            Scene.HoneyAndDarling, // crush loop
+            Scene.HoneyDarling, // crush loop
             Scene.TradingPost)]  // might block door?
         [PlacementWeight(40)] // waaay too common
         UnusedFallingBridge = 0x114, // Obj_Chikuwa
@@ -4162,7 +4162,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.DekuTrial, Scene.GoronTrial, Scene.ZoraTrial, Scene.LinkTrial,
             Scene.SwordsmansSchool, Scene.ZoraHall, Scene.GoronRacetrack,
             // these are missing special object at all
-            Scene.SPOT00, Scene.HoneyAndDarling, Scene.MayorsResidence, Scene.MilkBar,
+            Scene.SPOT00, Scene.HoneyDarling, Scene.MayorsResidence, Scene.MilkBar,
             Scene.FishermansHut, Scene.PoeHut, Scene.MusicBoxHouse, Scene.StockPotInn, Scene.BombShop, Scene.GiantsChamber,
             Scene.TreasureChestShop, Scene.LotteryShop, Scene.GoronShop, Scene.SakonsHideout, Scene.DekuShrine,
             Scene.OdolwasLair, Scene.GohtsLair, Scene.GyorgsLair, Scene.TwinmoldsLair,
@@ -4755,7 +4755,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(395)]
         [ObjectListIndex(0x1A0)]
         [DynaAttributes(58, 41)]
-        HoneyAndDarlingRotationPlatform = 0x1AE, // Bg_Fu_Kaiten
+        HoneyDarlingRotationPlatform = 0x1AE, // Bg_Fu_Kaiten
 
         [FileID(396)]
         [ObjectListIndex(0x1)]
@@ -4891,7 +4891,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(408)]
         [ObjectListIndex(0x1A0)]
         // has dyna but its a water box, dont care
-        HoneyAndDarlingWaterLevel = 0x1BC, // Bg_Fu_Mizu
+        HoneyDarlingWaterLevel = 0x1BC, // Bg_Fu_Mizu
 
         // wrong one, the one we want is burrowed, but he also does NOT come with a flower, its secondary
         [FileID(409)]
@@ -5261,7 +5261,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.WestClockTown, /*Scene.EastClockTown,*/ Scene.NorthClockTown, Scene.SouthClockTown, Scene.LaundryPool,
             Scene.TouristCenter, Scene.DekuKingChamber, Scene.DekuShrine, Scene.MountainSmithy, Scene.GoronGrave, Scene.GoronShrine, Scene.FishermansHut, Scene.ZoraHall, Scene.MarineLab, Scene.SecretShrine, Scene.IkanaCastle, Scene.IgosDuIkanasLair, Scene.SwordsmansSchool,
             Scene.TradingPost, Scene.BombShop, Scene.PotionShop, Scene.GoronShop, Scene.ZoraHallRooms, Scene.TreasureChestShop, Scene.SwampShootingGallery, Scene.TownShootingGallery, Scene.BeneathTheWell,
-            Scene.HoneyAndDarling, Scene.PostOffice, Scene.MayorsResidence, Scene.StockPotInn
+            Scene.HoneyDarling, Scene.PostOffice, Scene.MayorsResidence, Scene.StockPotInn
         )]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
@@ -6679,7 +6679,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         //[Minum]
         [EnemizerScenesPlacementBlock(Scene.RanchBuildings, Scene.ClockTowerInterior,
-            Scene.HoneyAndDarling, Scene.PostOffice, Scene.MayorsResidence, Scene.TreasureChestShop,
+            Scene.HoneyDarling, Scene.PostOffice, Scene.MayorsResidence, Scene.TreasureChestShop,
             Scene.MarineLab, Scene.AstralObservatory,
             Scene.TownShootingGallery, Scene.SwampShootingGallery, Scene.PotionShop, Scene.GoronShop, Scene.ZoraHallRooms,
             Scene.PoeHut, Scene.MusicBoxHouse, Scene.BeneathGraveyard)]

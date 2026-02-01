@@ -58,6 +58,7 @@ typedef struct {
     u32 hiddenRupeesSparkle : 1;
     u32 saferGlitches       : 1;
     u32 bombchuDrops        : 1;
+    u32 kegDrops            : 1;
     u32 instantTransform    : 1;
     u32 bombArrows          : 1;
     u32 giantMaskAnywhere   : 1;
@@ -66,12 +67,13 @@ typedef struct {
     u32 easyFrameByFrame    : 1;
     u32 fairyMaskShimmer    : 1;
     u32 skullTokenSounds    : 1;
+    u32 minorDropSparkle    : 1;
     u32 takeDamageOnEpona   : 1;
     u32 takeDamageOnShield  : 1;
     u32 takeDamageFromVoid  : 1;
     u32 oceanTokensRandomized : 1;
     u32 moonCrashFileErase  : 1;
-    u32                     : 25;
+    u32                     : 23;
 } MiscFlags;
 
 typedef union {

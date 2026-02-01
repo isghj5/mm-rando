@@ -1,5 +1,4 @@
 ﻿using MMR.Randomizer.GameObjects;
-using MMR.Randomizer.Extensions;
 using System;
 
 namespace MMR.Randomizer.Attributes.Entrance
@@ -10,6 +9,11 @@ namespace MMR.Randomizer.Attributes.Entrance
         public SpawnAttribute(Scene scene, byte spawnIndex)
         {
             SpawnId = (ushort)(((byte)scene << 9) + (spawnIndex << 4));
+        }
+
+        public SpawnAttribute(ushort spawnId)
+        {
+            SpawnId = spawnId;
         }
     }
 }

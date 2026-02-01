@@ -7,15 +7,23 @@
 #include "macro.h"
 
 bool gShouldForceItemSpawn = false;
+static u16 sDefaultGiIndex = 0;
 
 void Item00_Constructor(ActorEnItem00* actor, GlobalContext* ctxt) {
+    u16 giIndex = 0;
     if (actor->collectableFlag != 0) {
-        u16 giIndex = Rupee_CollectableFlagToGiIndex(actor->collectableFlag);
-        if (giIndex > 0) {
-            Rupee_SetGiIndex(&actor->base, giIndex);
-            u16 drawGiIndex = MMR_GetNewGiIndex(ctxt, 0, giIndex, false);
-            Rupee_SetDrawGiIndex(&actor->base, drawGiIndex);
-        }
+        giIndex = Rupee_CollectableFlagToGiIndex(actor->collectableFlag);
+    }
+
+    if (!giIndex && sDefaultGiIndex) {
+        giIndex = sDefaultGiIndex;
+        sDefaultGiIndex = 0;
+    }
+
+    if (giIndex) {
+        Rupee_SetGiIndex(&actor->base, giIndex);
+        u16 drawGiIndex = MMR_GetNewGiIndex(ctxt, 0, giIndex, false);
+        Rupee_SetDrawGiIndex(&actor->base, drawGiIndex);
     }
 }
 
@@ -70,6 +78,12 @@ s8 Item00_CanBeSpawned(u16 params) {
 }
 
 s16 Item00_GetAlteredDropId(s16 dropId) {
+    if (dropId == ITEM00_BOMBS_A && MISC_CONFIG.flags.kegDrops && INV_CONTENT(ITEM_POWDER_KEG) != ITEM_NONE && AMMO(ITEM_POWDER_KEG) == 0) {
+        sDefaultGiIndex = 0x34; // GI_POWDER_KEG;
+        return ITEM00_BOMBS_A;
+    }
+
+
     if ((((dropId == ITEM00_BOMBS_A) || (dropId == ITEM00_BOMBS_0) || (dropId == ITEM00_BOMBS_B)) &&
          (INV_CONTENT(ITEM_BOMB) == ITEM_NONE)) ||
         (((dropId == ITEM00_ARROWS_10) || (dropId == ITEM00_ARROWS_30) || (dropId == ITEM00_ARROWS_40) ||
@@ -91,14 +105,14 @@ s16 Item00_GetAlteredDropId(s16 dropId) {
         u8 bombchuCount = AMMO(ITEM_BOMBCHU);
         if (bombCount > 15 && bombchuCount > 15) {
             if (z2_Rand_ZeroOne() < 0.5f) {
-                return dropId;
+                return ITEM00_BOMBS_A;
             }
 
             return ITEM00_BOMBS_0; // altered to be 5 Bombchu
         }
 
         if (bombCount <= bombchuCount) {
-            return dropId;
+            return ITEM00_BOMBS_A;
         }
 
         return ITEM00_BOMBS_0; // altered to be 5 Bombchu

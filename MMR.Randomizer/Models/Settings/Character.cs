@@ -1,6 +1,6 @@
 ﻿using MMR.Randomizer.Attributes.Setting;
 
-namespace MMR.Randomizer.Models
+namespace MMR.Randomizer.Models.Settings
 {
     public enum Character
     {

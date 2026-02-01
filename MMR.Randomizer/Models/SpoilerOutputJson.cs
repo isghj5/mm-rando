@@ -1,4 +1,5 @@
-﻿using MMR.Randomizer.Extensions;
+﻿using MMR.Randomizer.Attributes.Entrance;
+using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models.Settings;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace MMR.Randomizer.Models
         public List<NameCostPair> Prices { get; set; }
 
         public ReadOnlyCollection<string> BlitzExtraItems { get; set; }
+        public ReadOnlyCollection<string> RandomStartingItems { get; set; }
         public List<List<ItemLocationPair>> Playthrough { get; set; }
     }
 
@@ -32,13 +34,15 @@ namespace MMR.Randomizer.Models
         public string Destination { get; set; }
         public int EntranceId { get; }
         public int DestinationId { get; }
+        public EntranceType EntranceType { get; set; }
 
         public SpoilerDungeonEntrance(KeyValuePair<Item, Item> entrance)
         {
-            Entrance = entrance.Key.Entrance();
+            Entrance = entrance.Key.Exit() ?? entrance.Key.Entrance();
             Destination = entrance.Value.Entrance();
             EntranceId = (int)entrance.Key;
             DestinationId = (int)entrance.Value;
+            EntranceType = entrance.Key.EntranceType().Value;
         }
     }
 }

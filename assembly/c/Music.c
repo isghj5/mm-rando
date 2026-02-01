@@ -29,9 +29,9 @@ static void LoadMuteMask() {
         if (index) {
             DmaEntry entry = dmadata[index];
 
-            u32 start = entry.romStart + (sequenceId * SEQUENCE_DATA_SIZE);
+            u32 start = entry.romStart + (sequenceId * sizeof(SequenceData));
 
-            z2_RomToRam(start, &musicState.playMask, SEQUENCE_DATA_SIZE);
+            z2_RomToRam(start, &musicState.sequenceData, sizeof(SequenceData));
             musicState.hasSequenceMaskFile = 1;
         } else {
             musicState.hasSequenceMaskFile = 0;
@@ -47,33 +47,38 @@ static u16 CalculateCurrentState() {
     if (player) {
         state = 1 << player->form;
 
+        if (gSaveContext.perm.isNight) {
+            state = musicState.sequenceData.cumulativeStates.night ? state | SEQUENCE_PLAY_STATE_NIGHT : SEQUENCE_PLAY_STATE_NIGHT;
+        } else {
+            state = musicState.sequenceData.cumulativeStates.day ? state | SEQUENCE_PLAY_STATE_DAY : SEQUENCE_PLAY_STATE_DAY;
+        }
         if (!sIsMusicIndoors && !sIsMusicCave) {
-            state = musicState.cumulativeStates.outdoors ? state | SEQUENCE_PLAY_STATE_OUTDOORS : SEQUENCE_PLAY_STATE_OUTDOORS;
+            state = musicState.sequenceData.cumulativeStates.outdoors ? state | SEQUENCE_PLAY_STATE_OUTDOORS : SEQUENCE_PLAY_STATE_OUTDOORS;
         }
         if (sIsMusicIndoors) {
-            state = musicState.cumulativeStates.indoors ? state | SEQUENCE_PLAY_STATE_INDOORS : SEQUENCE_PLAY_STATE_INDOORS;
+            state = musicState.sequenceData.cumulativeStates.indoors ? state | SEQUENCE_PLAY_STATE_INDOORS : SEQUENCE_PLAY_STATE_INDOORS;
         }
         if (sIsMusicCave) {
-            state = musicState.cumulativeStates.cave ? state | SEQUENCE_PLAY_STATE_CAVE : SEQUENCE_PLAY_STATE_CAVE;
+            state = musicState.sequenceData.cumulativeStates.cave ? state | SEQUENCE_PLAY_STATE_CAVE : SEQUENCE_PLAY_STATE_CAVE;
         }
         if (player->stateFlags.state1 & PLAYER_STATE1_EPONA) {
-            state = musicState.cumulativeStates.epona ? state | SEQUENCE_PLAY_STATE_EPONA : SEQUENCE_PLAY_STATE_EPONA;
+            state = musicState.sequenceData.cumulativeStates.epona ? state | SEQUENCE_PLAY_STATE_EPONA : SEQUENCE_PLAY_STATE_EPONA;
         }
         if (player->stateFlags.state1 & PLAYER_STATE1_SWIM || player->stateFlags.state3 & PLAYER_STATE3_ZORA_SWIM || *sAudioBaseFilter == 0x20) {
-            state = musicState.cumulativeStates.swimming ? state | SEQUENCE_PLAY_STATE_SWIM : SEQUENCE_PLAY_STATE_SWIM;
+            state = musicState.sequenceData.cumulativeStates.swimming ? state | SEQUENCE_PLAY_STATE_SWIM : SEQUENCE_PLAY_STATE_SWIM;
         }
         if (player->stateFlags.state3 & PLAYER_STATE3_GORON_SPIKE) {
-            state = musicState.cumulativeStates.spikeRolling ? state | SEQUENCE_PLAY_STATE_SPIKE_ROLLING : SEQUENCE_PLAY_STATE_SPIKE_ROLLING;
+            state = musicState.sequenceData.cumulativeStates.spikeRolling ? state | SEQUENCE_PLAY_STATE_SPIKE_ROLLING : SEQUENCE_PLAY_STATE_SPIKE_ROLLING;
         }
         if (gGlobalContext.actorCtx.targetContext.nearbyEnemy) {
-            state = musicState.cumulativeStates.combat ? state | SEQUENCE_PLAY_STATE_COMBAT : SEQUENCE_PLAY_STATE_COMBAT;
+            state = musicState.sequenceData.cumulativeStates.combat ? state | SEQUENCE_PLAY_STATE_COMBAT : SEQUENCE_PLAY_STATE_COMBAT;
         }
         if (z2_LifeMeter_IsCritical()) {
-            state = musicState.cumulativeStates.criticalHealth ? state | SEQUENCE_PLAY_STATE_CRITICAL_HEALTH : SEQUENCE_PLAY_STATE_CRITICAL_HEALTH;
+            state = musicState.sequenceData.cumulativeStates.criticalHealth ? state | SEQUENCE_PLAY_STATE_CRITICAL_HEALTH : SEQUENCE_PLAY_STATE_CRITICAL_HEALTH;
         }
     } else if (gGameStateInfo.fileSelect.loadedRamAddr) {
         u16 formMask = 0;
-        u16 cumulativeStates = musicState.cumulativeStates.value;
+        u16 cumulativeStates = musicState.sequenceData.cumulativeStates.value;
         u16 nonCumulativeStates = ~cumulativeStates;
         if (gGlobalContext.state.input[0].pressEdge.buttons.du || gGlobalContext.state.input[0].pressEdge.buttons.l) {
             u8 startIndex = musicState.fileSelectMusicFormIndex;
@@ -127,11 +132,11 @@ static void ProcessChannel(u8 channelIndex, u16 stateMask) {
             shouldBeMuted = musicState.forceMute & (1 << channelIndex);
         }
         if (!shouldBeMuted) {
-            u16 playMask = musicState.playMask[channelIndex];
-            u16 formMask = playMask & ~musicState.cumulativeStates.value;
-            u16 miscMask = playMask & musicState.cumulativeStates.value;
-            u16 formState = stateMask & ~musicState.cumulativeStates.value;
-            u16 miscState = stateMask & musicState.cumulativeStates.value;
+            u16 playMask = musicState.sequenceData.playMask[channelIndex];
+            u16 formMask = playMask & ~musicState.sequenceData.cumulativeStates.value;
+            u16 miscMask = playMask & musicState.sequenceData.cumulativeStates.value;
+            u16 formState = stateMask & ~musicState.sequenceData.cumulativeStates.value;
+            u16 miscState = stateMask & musicState.sequenceData.cumulativeStates.value;
             bool shouldPlay = (!miscMask || (miscMask & miscState)) && (formMask & formState);
             shouldBeMuted = !shouldPlay;
         }

@@ -57,5 +57,11 @@ namespace MMR.Randomizer.Extensions
         {
             return str != null && trickUrlRegex.IsMatch(str);
         }
+
+        private static Regex _addSpacesRegex = new Regex("(?<!^)([A-Z])");
+        public static string AddSpaces(this string value)
+        {
+            return _addSpacesRegex.Replace(value, " $1");
+        }
     }
 }

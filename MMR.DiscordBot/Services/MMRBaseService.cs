@@ -13,7 +13,9 @@ namespace MMR.DiscordBot.Services
     public abstract class MMRBaseService
     {
         private const string MMR_CLI = "MMR_CLI";
+        private const string MYSTERY_MAKER = "MYSTERY_MAKER";
         protected string _cliPath;
+        protected string _mysteryMakerPath;
         private readonly HttpClient _httpClient;
         private static readonly ThreadQueue _threadQueue = new ThreadQueue();
         private CancellationTokenSource _cancelTokenSource;
@@ -21,25 +23,32 @@ namespace MMR.DiscordBot.Services
 
         protected abstract string Version { get; }
 
-        public MMRBaseService()
+        private string GetEnvironmentVariableDirectory(string variable)
         {
-            _cliPath = Environment.GetEnvironmentVariable(MMR_CLI);
-            if (string.IsNullOrWhiteSpace(_cliPath))
+            var result = Environment.GetEnvironmentVariable(variable);
+            if (string.IsNullOrWhiteSpace(result))
             {
-                Console.WriteLine($"Warning: Environment Variable '{MMR_CLI}' is missing.");
+                Console.WriteLine($"Warning: Environment Variable '{variable}' is missing.");
             }
             else
             {
-                _cliPath = Path.Combine(_cliPath, Version);
-                if (!Directory.Exists(_cliPath))
+                result = Path.Combine(result, Version);
+                if (!Directory.Exists(result))
                 {
-                    Console.WriteLine($"Warning: Directory '{_cliPath}' does not exist.");
+                    Console.WriteLine($"Warning: Directory '{result}' does not exist.");
                 }
                 else
                 {
-                    Console.WriteLine($"{MMR_CLI} path = {_cliPath}");
+                    Console.WriteLine($"{variable} path = {result}");
                 }
             }
+            return result;
+        }
+
+        public MMRBaseService()
+        {
+            _cliPath = GetEnvironmentVariableDirectory(MMR_CLI);
+            _mysteryMakerPath = GetEnvironmentVariableDirectory(MYSTERY_MAKER);
 
             _httpClient = new HttpClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(120);
@@ -48,10 +57,13 @@ namespace MMR.DiscordBot.Services
 
         public bool IsReady()
         {
-            return !string.IsNullOrWhiteSpace(_cliPath) && Directory.Exists(_cliPath);
+            return !string.IsNullOrWhiteSpace(_cliPath)
+                && Directory.Exists(_cliPath)
+                && !string.IsNullOrWhiteSpace(_mysteryMakerPath)
+                && Directory.Exists(_mysteryMakerPath);
         }
 
-        public (string filename, string patchPath, string hashIconPath, string spoilerLogPath, string version) GetSeedPaths(DateTime seedDate, string version)
+        public (string filename, string patchPath, string hashIconPath, string spoilerLogPath, string mysterySpoilerPath, string version) GetSeedPaths(DateTime seedDate, string version)
         {
             if (string.IsNullOrWhiteSpace(version))
             {
@@ -62,7 +74,8 @@ namespace MMR.DiscordBot.Services
             var patchPath = Path.Combine(_cliPath, "output", $"{filename}.mmr");
             var hashIconPath = Path.Combine(_cliPath, "output", $"{filename}.png");
             var spoilerLogPath = Path.Combine(_cliPath, "output", $"{filename}_SpoilerLog.txt");
-            return (filename, patchPath, hashIconPath, spoilerLogPath, version);
+            var mysterySpoilerPath = Path.Combine(_cliPath, "output", $"{filename}_MysterySpoiler.txt");
+            return (filename, patchPath, hashIconPath, spoilerLogPath, mysterySpoilerPath, version);
         }
 
         public string GetSettingsPath(ulong guildId, string settingName)
@@ -154,13 +167,22 @@ namespace MMR.DiscordBot.Services
             await notifyOfPosition(-1);
             try
             {
-                var (filename, patchPath, hashIconPath, spoilerLogPath, version) = GetSeedPaths(now, null);
+                var (filename, patchPath, hashIconPath, spoilerLogPath, mysterySpoilerPath, version) = GetSeedPaths(now, null);
                 var attempts = 1; // TODO increase number of attempts and alter seed each attempt
                 while (attempts > 0)
                 {
                     try
                     {
-                        var success = await GenerateSeed(filename, settingsPath, _cancelTokenSource.Token);
+                        var settingFileName = Path.GetFileNameWithoutExtension(settingsPath);
+                        bool success;
+                        if (settingFileName.StartsWith("Mystery_"))
+                        {
+                            success = await GenerateMystery(filename, settingsPath, mysterySpoilerPath, _cancelTokenSource.Token);
+                        }
+                        else
+                        {
+                            success = await GenerateSeed(filename, settingsPath, _cancelTokenSource.Token);
+                        }
                         if (success)
                         {
                             if (File.Exists(patchPath) && File.Exists(hashIconPath))
@@ -203,7 +225,7 @@ namespace MMR.DiscordBot.Services
             var seed = await GetSeed();
             var processInfo = new ProcessStartInfo("dotnet");
             processInfo.WorkingDirectory = _cliPath;
-            processInfo.Arguments = $"{cliDllPath} -output \"{output}.z64\" -seed {seed} -spoiler -patch";
+            processInfo.Arguments = $"{cliDllPath} -output \"{output}.z64\" -seed {seed} -spoiler -outputpatch";
             if (!string.IsNullOrWhiteSpace(settingsPath))
             {
                 processInfo.Arguments += $" -settings \"{settingsPath}\"";
@@ -233,6 +255,61 @@ namespace MMR.DiscordBot.Services
             }
 
             return proc.ExitCode == 0;
+        }
+
+        private async Task<bool> GenerateMystery(string filename, string mysteryPath, string mysterySpoilerPath, CancellationToken cancellationToken)
+        {
+            var processFilename = Path.Combine(_mysteryMakerPath, "MysteryMaker.exe");
+            var processInfo = new ProcessStartInfo(processFilename, $"-i {mysteryPath} --settings-only");
+
+            processInfo.WorkingDirectory = _mysteryMakerPath;
+            processInfo.ErrorDialog = false;
+            processInfo.UseShellExecute = false;
+            processInfo.RedirectStandardOutput = true;
+            processInfo.RedirectStandardError = true;
+            processInfo.CreateNoWindow = true;
+
+            var proc = Process.Start(processInfo);
+            proc.ErrorDataReceived += (sender, errorLine) => { if (errorLine.Data != null) Trace.WriteLine(errorLine.Data); };
+            proc.OutputDataReceived += (sender, outputLine) => { if (outputLine.Data != null) Trace.WriteLine(outputLine.Data); };
+            proc.BeginErrorReadLine();
+            proc.BeginOutputReadLine();
+
+            while (!proc.WaitForExit(1000))
+            {
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    proc.Kill();
+                }
+            }
+
+            if (proc.ExitCode != 0)
+            {
+                return false;
+            }
+
+            var expectedMysteryFilename = Path.GetFileNameWithoutExtension(mysteryPath);
+            if (expectedMysteryFilename.EndsWith("base"))
+            {
+                expectedMysteryFilename = expectedMysteryFilename.Remove(expectedMysteryFilename.Length - 4);
+            }
+            var expectedMysterySpoilerFilename = expectedMysteryFilename + "1_MysterySpoiler.txt";
+            expectedMysteryFilename += "1.json";
+
+            var settingFile = Path.Combine(_mysteryMakerPath, "output", expectedMysteryFilename);
+            var mysterySpoiler = Path.Combine(_mysteryMakerPath, "output", expectedMysterySpoilerFilename);
+
+            if (!File.Exists(settingFile))
+            {
+                return false;
+            }
+
+            var result = await GenerateSeed(filename, settingFile, cancellationToken);
+
+            File.Delete(settingFile);
+            File.Move(mysterySpoiler, mysterySpoilerPath);
+
+            return result;
         }
 
         private async Task<int> GetSeed()

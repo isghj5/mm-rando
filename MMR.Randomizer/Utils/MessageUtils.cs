@@ -4,6 +4,7 @@ using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Rom;
+using MMR.Randomizer.Models.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -394,6 +395,7 @@ namespace MMR.Randomizer.Utils
                 {
                     var restrictionAttributes = gossipQuote.GetAttributes<GossipRestrictAttribute>().ToList();
                     ItemObject item = null;
+                    var candidates = unusedItems.ToList();
                     var forceClear = false;
                     while (item == null)
                     {
@@ -413,21 +415,22 @@ namespace MMR.Randomizer.Utils
                                 restrictionAttributes.Remove(chosen);
                             }
                         }
-                        else if (unusedItems.Any())
+                        else if (candidates.Any())
                         {
                             if (hintStyle == GossipHintStyle.Competitive)
                             {
-                                item = unusedItems.FirstOrDefault(io => unusedItems.Count(x => x.ID == io.ID) == 1);
+                                item = candidates.FirstOrDefault(io => candidates.Count(x => x.ID == io.ID) == 1);
                                 if (item == null)
                                 {
-                                    item = unusedItems.Random(random);
+                                    item = candidates.Random(random);
                                 }
                             }
                             else
                             {
-                                item = unusedItems.Random(random);
+                                item = candidates.Random(random);
                                 if (ItemUtils.IsJunk(item.Item) && (clearHintsEnabled || random.Next(8) != 0))
                                 {
+                                    candidates.Remove(item);
                                     item = null;
                                 }
                             }
