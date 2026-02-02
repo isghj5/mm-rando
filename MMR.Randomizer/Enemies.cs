@@ -5769,18 +5769,18 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.TreasureChest)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.TreasureChest)) continue;
                 if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Dodongo, GameObjects.Actor.PirateColonel)) continue; // still broken
-                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.Freezard)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Dodongo, GameObjects.Actor.PirateColonel)) continue; // still broken
+                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.Freezard)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; /// what was this again? hotspring?
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.SkeleKnight)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.RegularZora, GameObjects.Actor.DragonFly)) continue;
                 if (TestHardSetObject(GameObjects.Scene.OceanSpiderHouse, GameObjects.Actor.Seth1, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.En_Owl, GameObjects.Actor.UnusedStoneTowerStoneElevator)) continue;
-                if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.RegularFrogs, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.En_Owl, GameObjects.Actor.UnusedStoneTowerStoneElevator)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.RegularFrogs, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.Torch, GameObjects.Actor.LostWoodsCutsceneTrees)) continue;
                 if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.CeilingSpawner, GameObjects.Actor.GoldSkulltula)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Gorman, GameObjects.Actor.HookshotWallAndPillar)) continue;
@@ -7966,7 +7966,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 96.0\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 96.1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
