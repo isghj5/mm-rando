@@ -1551,14 +1551,28 @@ namespace MMR.Randomizer
 
             #if DEBUG
             // testing SFX
-            var debugSFX = SoundEffect.WizrobeLaughReal;
+            var debugSFX = SoundEffect.SwordForgeClang;
             Debug.WriteLine(debugSFX.ToString() + " is a debug sfx");
             // intro splash summon used to be used, not sure what I named it
-            shuffledSoundEffects[SoundEffect.CuccoMorning] = debugSFX; // morning chicken crow
+            //shuffledSoundEffects[SoundEffect.CuccoMorning] = debugSFX; // morning chicken crow
             ////shuffledSoundEffects[replacableSounds[29]] = debugSFX; // low health beep, was moved cannot set here
-            shuffledSoundEffects[SoundEffect.FileSelectCursor] = debugSFX;
-            shuffledSoundEffects[SoundEffect.DogBark] = debugSFX; // dog
-            shuffledSoundEffects[SoundEffect.ChuchuJumpAttack] = debugSFX; // this one is sometimes quiet for sfx, reason not known yet
+            //shuffledSoundEffects[SoundEffect.FileSelectCursor] = debugSFX;
+            //shuffledSoundEffects[SoundEffect.DogBark] = debugSFX; // dog
+            //shuffledSoundEffects[SoundEffect.ChuchuJumpAttack] = debugSFX; // this one is sometimes quiet for sfx, reason not known yet
+            // LOOPING TEST
+            //shuffledSoundEffects[SoundEffect.KotakeSleepSnore] = debugSFX;
+            //shuffledSoundEffects[SoundEffect.DodongoInhale] = debugSFX;
+
+            // modify sct entrance list so the tower takes me to kotake for loop testing
+            /*
+            RomUtils.CheckCompressed(1516);
+            ushort targetTestEntrance = 0x0400; // potion shop
+            var sct = RomData.MMFileList[1516].Data;// GameObjects.Scene.SouthClockTown.FileID());
+            // sct has three separate exit lists, for different scene layers, 0xC10 tower entrance is first entry of all of them
+            ReadWriteUtils.Arr_WriteU16(sct, 0x0184, targetTestEntrance);
+            ReadWriteUtils.Arr_WriteU16(sct, 0x564C, targetTestEntrance);
+            ReadWriteUtils.Arr_WriteU16(sct, 0x69DC, targetTestEntrance);
+            // */
             #endif
 
             shuffledSoundEffects.Remove(SoundEffect.LowHealthBeep); // handled in the WriteLowHealthSound function

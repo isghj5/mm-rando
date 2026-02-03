@@ -29,7 +29,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         LinkLandsOnHisBack = 0x0050,
 
-        [Tags(Looping)]
+        // [Tags(Looping)]
         LinkWasShocked = 0x0068,
 
         [Tags(Long)]
@@ -62,8 +62,8 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, Long)]
         OOTFaroresWarp = 0x007B,
 
-        [Tags(Looping)]
-        OOTNayrusLove = 0x007C,
+        //[Tags(Looping)]
+        //OOTNayrusLove = 0x007C,
 
         //[Tags(Short)]
         //OOTFdBoots = 0x008D, // wrong name, squishy kind of boot sound
@@ -73,18 +73,18 @@ namespace MMR.Randomizer.Models.SoundEffects
         OOTNayrusLoveCrystalForming = 0x00C3, // 4 seconds ish
 
 
-        [Tags(Looping)]
-        GreatFairyHeal = 0x00C4,
+        //[Tags(Looping)]
+        //GreatFairyHeal = 0x00C4,
 
         [Tags(Short,Long)]
         GiantLinkWalk = 0x00CE,
 
         // this is when you collect great fairy stray, not regular fairy
-        [Tags(Looping)]
-        StrayFairyHeal = 0x00CF,
+        //[Tags(Looping)]
+        //StrayFairyHeal = 0x00CF,
 
-        [Tags(Looping)]
-        LooseFootSlidingRegular = 0x00D0, // slidding sfx, not link voice
+        //[Tags(Looping)]
+        //LooseFootSlidingRegular = 0x00D0, // slidding sfx, not link voice
 
         //[Tags(Short)]
         //DekuLinkBubbleShootSpit = 0x00E0, // this is just rude
@@ -198,19 +198,19 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         BowFlick = 0x1030, // twang
 
-        [Replacable(0xD71FF6)]
-        [Tags(Looping)]
-        [ReplacableByTags(Looping)]
-        BombchuRunning = 0x1031, // bombchu the item, soundeffect as it runs along the ground
+        //[Replacable(0xD71FF6)]
+        //[ReplacableByTags(Looping)] 
+        //[Tags(Looping)]
+        //BombchuRunning = 0x1031, // bombchu the item, soundeffect as it runs along the ground
 
-        [Tags(Looping)]
-        OOTMirrorShieldCharge1 = 0x1032, // these three still work
+        //[Tags(Looping)]
+        //OOTMirrorShieldCharge1 = 0x1032, // these three still work
 
-        [Tags(Looping)]
-        OOTMirrorShieldCharge2 = 0x1033,
+        //[Tags(Looping)]
+        //OOTMirrorShieldCharge2 = 0x1033,
 
-        [Tags(Looping)]
-        OOTMirrorShieldCharge3 = 0x1034,
+        //[Tags(Looping)]
+        //OOTMirrorShieldCharge3 = 0x1034,
 
         [Tags(Long)]
         FireArrowHitSound = 0x103A,
@@ -236,11 +236,11 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         KakashiJump = 0x1047, // small hop he does when hes happy talking to you
 
-        [Tags(Looping)]
-        RoaringFlame = 0x1048, // flame circle sfx I think
+        //[Tags(Looping)]
+        //RoaringFlame = 0x1048, // flame circle sfx I think
 
-        [Tags(Looping)]
-        ShieldBeam = 0x1049, // the beam is shining on something, very glassy pad
+        //[Tags(Looping)]
+        //ShieldBeam = 0x1049, // the beam is shining on something, very glassy pad
 
         [Tags(Short)]
         OOTFishOn = 0x104A, // snappy, whipy
@@ -317,8 +317,8 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         TatlHides = 0x205F,
 
-        [Tags(Looping)]
-        OOTGateOpen = 0x2067, // suspected looping
+        //[Tags(Looping)]
+        //OOTGateOpen = 0x2067,
 
         [Tags(Short, LowHpBeep)]
         FishFlop = 0x2069,
@@ -407,10 +407,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         MonkeyJoy = 0x2101,
 
-        [Replacable(0xEFF8F2, 0xEFD69E)]
-        [ReplacableByTags(Looping)]
-        [Tags(Looping)]
-        BeaverMotor = 0x2108,
+        //[Replacable(0xEFF8F2, 0xEFD69E)]
+        //[ReplacableByTags(Looping)]
+        //[Tags(Looping)]
+        //BeaverMotor = 0x2108,
 
         [Replacable(0xEFD566, 0xEFF8E2)]
         [ReplacableByTags(Short)]
@@ -464,8 +464,8 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         TatlFlyingBrake = 0x2136, // tatl has arrived
 
-        [Tags(Looping)]
-        SmallFairyHeal = 0x2138, // looping, cannot use without stopping that
+        //[Tags(Looping)]
+        //SmallFairyHeal = 0x2138,
 
         [Tags(Long)]
         ClockTowerBounce = 0x2140,
@@ -490,10 +490,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         UmbrellaOpen = 0x2152,
 
-        [Replacable(0x100056A, 0x1000746)]
-        [ReplacableByTags(Looping)]
-        [Tags(Looping)]
-        BoatMotorHum = 0x2154,
+        //[Replacable(0x100056A, 0x1000746)]
+        //[ReplacableByTags(Looping)]
+        //[Tags(Looping)]
+        //BoatMotorHum = 0x2154,
 
         [Replacable(0xFC60C6)]
         [ReplacableByTags(Long)]
@@ -512,16 +512,16 @@ namespace MMR.Randomizer.Models.SoundEffects
         SnowheadGoronCrashEarthquake = 0x2162,
 
         // the switches that control water flow
-        [Tags(Looping)]
-        GBTValveRotate = 0x216B,
+        //[Tags(Looping)]
+        //GBTValveRotate = 0x216B,
 
         [Tags(Long)]
         GBTValveStop = 0x216C,
 
         // todo hole
 
-        [Tags(Looping)]
-        UFOAppear = 0x217b, // loops
+        //[Tags(Looping)]
+        //UFOAppear = 0x217b,
 
         //[Tags(Long, Debug)] // ??? not used I don't think, I think this was meant for when you beat them but they went with fanfare instead
         //UFODash = 0x217c,
@@ -547,8 +547,8 @@ namespace MMR.Randomizer.Models.SoundEffects
         //[Tags(Debug)]
         //MoonGrumble= 0x219D,
 
-        [Tags(Looping)]
-        MoonU2= 0x219E, // looping moon quake
+        //[Tags(Looping)]
+        //MoonU2 = 0x219E, // looping moon quake
 
         [Tags(Short, LowHpBeep)]
         TatlDashNormal = 0x219F,
@@ -556,14 +556,14 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         STBlockCollide = 0x21A4, // CLANG
 
-        [Tags(Looping)]
-        TatlAngryAtSakon = 0x21A5, // looping version of a previous sample
+        //[Tags(Looping)]
+        //TatlAngryAtSakon = 0x21A5, // looping version of a previous sample, lots of tatl bell ringing (phone ringing kinda)
 
-        [Tags(Looping)]
-        UFOLight = 0x21A8,
+        //[Tags(Looping)]
+        //UFOLight = 0x21A8,
 
-        [Tags(Looping)]
-        FireworksLaunched = 0x21B9,
+        //[Tags(Looping)]
+        //FireworksLaunched = 0x21B9,
 
         [Tags(Short)]
         SwordForgeClang = 0x21C2,
@@ -596,20 +596,20 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         GaroAppear = 0x3012,
 
-        [Replacable(0xE43142, 0xE4364A)] // NA_SE_EN_MIBOSS_VOICE1_OLD
-        [ReplacableByTags(Looping)]
-        [Tags(Looping)]
-        OdolwaTaunt1 = 0x3015, // ooh-ah-la-dai, summoning bugs, looping
+        //[Replacable(0xE43142, 0xE4364A)] // NA_SE_EN_MIBOSS_VOICE1_OLD
+        //[ReplacableByTags(Looping)]
+        //[Tags(Looping)]
+        //OdolwaTaunt1 = 0x3015, // ooh-ah-la-dai, summoning bugs, looping
 
-        [Replacable(0xE43D2A, 0xE43642)] // NA_SE_EN_MIBOSS_VOICE2_OLD
-        [ReplacableByTags(Looping)]
-        [Tags(Looping)]
-        OdolwaTaunt2 = 0x3016, // keh-laaaah-veh! taunting you to attack, looping
+        //[Replacable(0xE43D2A, 0xE43642)] // NA_SE_EN_MIBOSS_VOICE2_OLD
+        //[ReplacableByTags(Looping)]
+        //[Tags(Looping)]
+        //OdolwaTaunt2 = 0x3016, // keh-laaaah-veh! taunting you to attack, looping
 
-        [Replacable(0xE45032)] // NA_SE_EN_MIBOSS_VOICE3_OLD
-        [ReplacableByTags(Looping)]
-        [Tags(Looping)]
-        OdolwaTaunt3 = 0x3017, // hey-dah-vah! summoning moths, looping
+        //[Replacable(0xE45032)] // NA_SE_EN_MIBOSS_VOICE3_OLD
+        //[ReplacableByTags(Looping)]
+        //[Tags(Looping)]
+        //OdolwaTaunt3 = 0x3017, // hey-dah-vah! summoning moths, looping
 
         [Tags(Long)]
         TwinMoldAppears = 0x3019,
@@ -708,15 +708,15 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)] // ~3 seconds?
         RealBombchuVoice = 0x3055, // do-do-DO-do sfx, idle sound
 
-        [Replacable(0xEC13DA)] // NA_SE_EN_BOMCHU_RUN
-        [ReplacableByTags(Looping, Long)]
-        [Tags(Looping)]
-        RealBombchuAgroAndBombSizzle = 0x3056,
+        //[Replacable(0xEC13DA)] // NA_SE_EN_BOMCHU_RUN
+        //[ReplacableByTags(Looping, Long)]
+        //[Tags(Looping)]
+        //RealBombchuAgroAndBombSizzle = 0x3056,
 
-        [Replacable(0xCF1F42)] // NA_SE_EN_DODO_J_BREATH
-        [ReplacableByTags(Looping, Long)]
-        [Tags(Looping)]
-        DodongoInhale = 0x3058,
+        //[Replacable(0xCF1F42)] // NA_SE_EN_DODO_J_BREATH
+        //[ReplacableByTags(Looping, Long)]
+        //[Tags(Looping)]
+        //DodongoInhale = 0x3058,
 
         [Replacable(0xCF2116)]
         [ReplacableByTags(Short, Long)] // there is a long enough gap could still be funny
@@ -773,7 +773,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         DekubabaWakeup = 0x31E2, // Waking up
 
         // why is every jabu thing still in this game...
-        [Tags(Looping)]
+        //[Tags(Looping)]
         OOTTailpasaranWiggling = 0x3064,
         [Tags(Short)]
         OOTTailpasaranFlinch = 0x3065,
@@ -877,8 +877,8 @@ namespace MMR.Randomizer.Models.SoundEffects
         OOTBiribiriFloat = 0x3098,
         [Tags(Short)]
         OOTBiribiriApproach = 0x3099,
-        [Tags(Looping)]
-        OOTBiribiriElectricLoop = 0x309A,
+        //[Tags(Looping)]
+        //OOTBiribiriElectricLoop = 0x309A,
 
         // todo gap
 
@@ -888,15 +888,15 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, Long)]
         WizrobeAppear = 0x30A4 | 0x800,
 
-        [Replacable(0xEAF62A, 0xEAFD22, 0xEB02A2, 0xEB04CE)]
-        [ReplacableByTags(Looping)]
-        [Tags(Looping)]
-        WizrobeRun = 0x30A5,
+        //[Replacable(0xEAF62A, 0xEAFD22, 0xEB02A2, 0xEB04CE)]
+        //[ReplacableByTags(Looping)]
+        //[Tags(Looping)]
+        //WizrobeRun = 0x30A5,
 
-        [Replacable(0xEAF476, 0xEAFEC6, 0xEB006E)]
-        [ReplacableByTags(Looping)]
-        [Tags(Looping)]
-        WizrobeCloneSpawningDiscord = 0x30A6, // starting phase 2
+        //[Replacable(0xEAF476, 0xEAFEC6, 0xEB006E)]
+        //[ReplacableByTags(Looping)]
+        //[Tags(Looping)]
+        //WizrobeCloneSpawningDiscord = 0x30A6, // starting phase 2
 
         // in unused code in the game, you can hit his ghosts with deku nuts to despawn them, they make this sfx
         [Replacable(0xEB16D2)]
@@ -1017,9 +1017,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         GoronKidSob = 0x30E9,
 
         [Replacable(0x00FB719E, 0x00FB72D6)]
-        [Effect(0x000)]
-        [Tags(Looping)] // is this really looping? putting a looping here is weird
+        //[Tags(Looping)] // is this really looping? putting a looping here is weird
+        // honestly don't even want this one being placed anywhere, it sucks
         [ReplacableByTags(Long)]
+        [Effect(0x000)]
         GoronKidCry = 0x30EA,
 
         [Replacable(0xE3C096)]
@@ -1031,7 +1032,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         PoeLaugh = 0x30EC,
 
         [Tags(Short, Long)]
-        SnapperShoutsGagrap = 0x30F3,
+        SnapperShoutsGagRap = 0x30F3,
 
         [Tags(Short, Long)]
         SnapperStruggles = 0x30F6,
@@ -1057,14 +1058,14 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         KotakeWitchCackle = 0x3103, // is this koume in the boat house?
 
-        //[Tags(Short, Debug)]
+        //[Tags(Looping, Debug)]
         //KotakeSwirl = 0x3104, // looping, broom circling sfx before merging from OOT
 
         [Tags(Long)]
         KoumeBlastingOff = 0x3105,
 
         //[Tags(Long, Debug)]
-        //KotakeConjureBroom = 0x3106, // looping, summon broom and then hovering on broom while talking
+        //KoumeConjureBroom = 0x3106, // looping, summon broom and then hovering on broom while talking
 
         [Tags(Long, Short)]
         BigGoronFallsAsleepFinal = 0x3107,
@@ -1128,19 +1129,19 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         EenomMiniThrow = 0x3168,
 
-        [Replacable(0xF7C79E)] // NA_SE_EN_YMAJIN_MOVE 
-        [ReplacableByTags(Looping)]
-        [Tags(Looping)]
-        EenoMoving = 0x3169,
+        //[Replacable(0xF7C79E)] // NA_SE_EN_YMAJIN_MOVE 
+        //[ReplacableByTags(Looping)] // replacements are just loud and weird usually
+        //[Tags(Looping)]
+        //EenoMoving = 0x3169, // wiggle-wiggle sound as they shuffle on the floor
 
-        [Replacable(0xF7C7BE)] // NA_SE_EN_YMAJIN_MINI_MOVE 
-        [ReplacableByTags(Looping)]
-        [Tags(Looping)]
-        EenoMiniMoving = 0x316A,
+        //[Replacable(0xF7C7BE)] // NA_SE_EN_YMAJIN_MINI_MOVE 
+        // [ReplacableByTags(Looping)] // replacements are just loud and weird usually
+        //[Tags(Looping)]
+        //EenoMiniMoving = 0x316A,
 
         [Replacable(0xF7DB82)] // NA_SE_EN_YMAJIN_DEAD_BREAK 
-        [ReplacableByTags(Looping)]
-        [Tags(Looping)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
         EenoBreak = 0x316F,
 
         // why are they so inconsistently placed in the sfx table?
@@ -1199,10 +1200,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         FrogVoice2 = 0x31A1,
 
-        [Replacable(0xDA65B2, 0xDA69BA)]
-        [ReplacableByTags(Looping)]
-        [Tags(Looping)]
-        FreezardIceBreath = 0x31A4,
+        //[Replacable(0xDA65B2, 0xDA69BA)]
+        //[ReplacableByTags(Looping)]
+        //[Tags(Looping)]
+        //FreezardIceBreath = 0x31A4,
 
         [Replacable(0xDA5FE2)]
         [ReplacableByTags(Short, Long)]
@@ -1287,10 +1288,10 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         // bug: replacemenet sfx keeps restarting every frame, sounds horrible, reason unknown example: goronspikeretract
         //[Replacable(0xEF4ABE)] // NA_SE_EN_KOTAKE_SLEEP
-        //[ReplacableByTags(Long)]
-        //[Effect(0x800)]
-        [Tags(Long)]
-        KotakeSleepSnore = 0x31FF,
+        //[ReplacableByTags(Looping)] // every frame
+        //[Effect(zero)] // no effect flag, with flag its silent
+        //[Tags(Looping)] // we cannot use it as a long sfx, it naturally loops
+        //KotakeSleepSnore = 0x31FF, // vanilla
 
         [Replacable(0xEF4E42)] // NA_SE_EN_KOTAKE_SLEEP
         [ReplacableByTags(Short,Long)] // loud wake up might be funny
@@ -1574,8 +1575,9 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long, Short, LowHpBeep)]
         OOTGrottoSortcutExit = 0x5004, // think this is still used somewhere?
 
-        [Tags(Looping)] // sad
-        GrottoExit = 0x5005,
+        // this is the only other looping sfx that can go into witch snore that isn't broken??
+        //[Tags(Looping)]
+        //GrottoExit = 0x5005, // there is a second one of these in the table that should be the same
 
         [Tags(Long, Short, LowHpBeep)]
         VoidReturn = 0x5006,
