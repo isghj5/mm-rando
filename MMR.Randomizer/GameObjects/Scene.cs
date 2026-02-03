@@ -128,6 +128,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.Beamos, Actor.LikeLike, Actor.Freezard, //, Actor.BomberHideoutGuard // annoying
             Actor.Seagulls, // with new height adjust its basically invisible
             Actor.PirateColonel, // too annoying every generic grotto
+            Actor.WoodfallTempleWoodenFlower, // blocking
+            Actor.Dodongo, // if the dodongo spawns in one spawn location, he nudges the player as they fall into the grotto back into the exit
             Actor.Hiploop// water causes instant death
         )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.IshiRock, // generic grotto
@@ -144,8 +146,6 @@ namespace MMR.Randomizer.GameObjects
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can get the player locked behind them near the grotto stones
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SkulltulaDummy,
             Actor.GBTFreezableWaterfall, Actor.CursedSpiderMan)] // both can block the chest under the skulltula in lens cave
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.TallGrass,
-            Actor.Dodongo)] // if the dodongo spawns in one spawn location, he nudges the player as they fall into the grotto back into the exit
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.HoneyComb,
             Actor.Seagulls, // weird
             Actor.UnusedFallingBridge, // might block ability to enter the grotto
