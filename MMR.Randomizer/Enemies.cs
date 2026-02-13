@@ -7316,6 +7316,14 @@ namespace MMR.Randomizer
                     newInjectedActor.wallVariants = newWallVariantsShort;
                     continue;
                 }
+                if (command == "respawning_variants")
+                {
+                    var newRespawningVariants = valueStr.Split(",").ToList();
+                    var newRespawningVariantsShort = newRespawningVariants.Select(variant => Convert.ToInt32(variant.Trim(), 16)).ToList();
+
+                    newInjectedActor.respawningVariants = newRespawningVariantsShort;
+                    continue;
+                }
 
                 if (command == "variant_with_max")
                 {
