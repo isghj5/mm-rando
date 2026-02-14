@@ -76,6 +76,10 @@ export class GUISettingsElement implements OnInit {
   }
 
 
+  // Preset button feedback states
+  loadButtonText: string = "Load";
+  private loadButtonTimeout: any = null;
+
   constructor(differs: IterableDiffers, private cd: ChangeDetectorRef, public global: GUIGlobal, private dialogService: NbDialogService) {
 
   }
@@ -119,9 +123,27 @@ export class GUISettingsElement implements OnInit {
         // Trigger a refresh_gui event to notify the parent component to update
         this.global.globalEmitter.emit({ name: "refresh_gui" });
 
+        // Show success feedback on button
+        this.showLoadSuccess();
+
         //console.log("Preset loaded");
       }
     }
+  }
+
+  private showLoadSuccess() {
+    if (this.loadButtonTimeout) {
+      clearTimeout(this.loadButtonTimeout);
+    }
+
+    this.loadButtonText = "Done!";
+    this.cd.markForCheck();
+
+    this.loadButtonTimeout = setTimeout(() => {
+      this.loadButtonText = "Load";
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }, 1000);
   }
 
   savePreset(refPresetSelect: NbSelectComponent) {
@@ -219,6 +241,173 @@ export class GUISettingsElement implements OnInit {
         });
       }
     }
+  }
+
+  exportPreset() {
+
+    let presetName = this.global.generator_settingsMap["Web.presets"];
+    let targetPreset = this.global.generator_presets[presetName];
+
+    if (!targetPreset) {
+      return;
+    }
+
+    if (("isNewPreset" in targetPreset) && targetPreset.isNewPreset == true) {
+      this.dialogService.open(DialogWindowComponent, {
+        autoFocus: true, closeOnBackdropClick: true, closeOnEsc: true, hasBackdrop: true, hasScroll: false, context: { dialogHeader: "Warning", dialogMessage: "You need to save this custom preset first." }
+      });
+      return;
+    }
+
+    let settingsToExport = targetPreset.settings;
+    let exportObject = {
+      name: presetName,
+      settings: settingsToExport
+    };
+
+    let jsonString = JSON.stringify(exportObject, null, 2);
+    let blob = new Blob([jsonString], { type: 'application/json' });
+    let url = URL.createObjectURL(blob);
+
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = presetName.replace(/[^a-z0-9]/gi, '_') + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  importPresets(fileInput: HTMLInputElement) {
+    fileInput.click();
+  }
+
+  async onImportFilesSelected(event: Event) {
+
+    let input = event.target as HTMLInputElement;
+    let files = input.files;
+
+    if (!files || files.length === 0) {
+      return;
+    }
+
+    let importedCount = 0;
+    let skippedCount = 0;
+    let errorCount = 0;
+    let errorMessages: string[] = [];
+
+    for (let i = 0; i < files.length; i++) {
+      let file = files[i];
+
+      try {
+        let fileContent = await this.global.readFileIntoMemoryWeb(file, false);
+
+        if (!fileContent || fileContent.length < 1) {
+          errorCount++;
+          errorMessages.push(`${file.name}: File is empty`);
+          continue;
+        }
+
+        if (fileContent.length > (1000 * 1000)) {
+          errorCount++;
+          errorMessages.push(`${file.name}: File is too large (max 1MB)`);
+          continue;
+        }
+
+        let parsedContent;
+        try {
+          parsedContent = JSON.parse(fileContent);
+        }
+        catch (parseErr) {
+          errorCount++;
+          errorMessages.push(`${file.name}: Invalid JSON syntax`);
+          continue;
+        }
+
+        if (!parsedContent || typeof parsedContent !== 'object') {
+          errorCount++;
+          errorMessages.push(`${file.name}: Invalid preset format`);
+          continue;
+        }
+
+        let presetName: string;
+        let presetSettings: any;
+
+        if ('name' in parsedContent && 'settings' in parsedContent && typeof parsedContent.settings === 'object') {
+          presetName = parsedContent.name;
+          presetSettings = parsedContent.settings;
+        }
+        else if (Object.keys(parsedContent).length > 0) {
+          presetName = file.name.replace(/\.json$/i, '');
+          presetSettings = parsedContent;
+        }
+        else {
+          errorCount++;
+          errorMessages.push(`${file.name}: Empty or invalid preset`);
+          continue;
+        }
+
+        if (!presetName || presetName.trim().length === 0) {
+          presetName = file.name.replace(/\.json$/i, '');
+        }
+        presetName = presetName.trim();
+
+        let existingPreset = this.global.generator_presets[presetName];
+        if (existingPreset) {
+          if (("isNewPreset" in existingPreset) || ("isDefaultPreset" in existingPreset) || ("isProtectedPreset" in existingPreset)) {
+            let suffix = 1;
+            let newName = presetName + "_" + suffix;
+            while (this.global.generator_presets[newName]) {
+              suffix++;
+              newName = presetName + "_" + suffix;
+            }
+            presetName = newName;
+          }
+        }
+
+        this.global.generator_presets[presetName] = { settings: presetSettings };
+        importedCount++;
+
+      }
+      catch (ex) {
+        errorCount++;
+        errorMessages.push(`${file.name}: ${ex.error || 'Unknown error'}`);
+      }
+    }
+
+    input.value = '';
+
+    if (importedCount > 0) {
+      this.global.saveCurrentPresetsToFile();
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }
+
+    let message = '';
+    if (importedCount > 0) {
+      message += `Successfully imported ${importedCount} preset${importedCount > 1 ? 's' : ''}.`;
+    }
+    if (skippedCount > 0) {
+      message += ` Skipped ${skippedCount} duplicate${skippedCount > 1 ? 's' : ''}.`;
+    }
+    if (errorCount > 0) {
+      message += ` Failed to import ${errorCount} file${errorCount > 1 ? 's' : ''}.`;
+      if (errorMessages.length > 0) {
+        message += '\n\nErrors:\n' + errorMessages.slice(0, 5).join('\n');
+        if (errorMessages.length > 5) {
+          message += `\n... and ${errorMessages.length - 5} more`;
+        }
+      }
+    }
+
+    if (message.length > 0) {
+      this.dialogService.open(DialogWindowComponent, {
+        autoFocus: true, closeOnBackdropClick: true, closeOnEsc: true, hasBackdrop: true, hasScroll: false,
+        context: { dialogHeader: errorCount > 0 && importedCount === 0 ? "Error" : "Import Complete", dialogMessage: message }
+      });
+    }
+
+    console.log(`Preset import complete: ${importedCount} imported, ${skippedCount} skipped, ${errorCount} errors`);
   }
 
   //Button settings type listeners

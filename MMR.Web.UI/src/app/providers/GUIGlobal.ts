@@ -411,6 +411,34 @@ export class GUIGlobal implements OnDestroy {
     //Get user presets if appType = generator
     if (this.getGlobalVar("appType") == "generator") {
 
+      // Initialize presets with system defaults if not provided (e.g., in ng-dev mode)
+      if (!res.presets || Object.keys(res.presets).length === 0) {
+        res.presets = {
+          "[New Preset]": { isNewPreset: true },
+          "Default / Beginner": { isDefaultPreset: true }
+        };
+
+        try {
+          let presetsUrl = (<any>window).location.protocol + "//" + (<any>window).location.host + "/angular/dev/" + this.getGlobalVar("webSourceVersion").replace(/ /g, "_") + "/utils/presets_default.json";
+
+          let builtInPresets: any = await this.http.get(presetsUrl, { responseType: "json" }).toPromise();
+
+          if (builtInPresets && typeof builtInPresets === 'object') {
+            let adjustedBuiltInPresets = {};
+
+            Object.keys(builtInPresets).forEach(presetName => {
+              if (!(presetName in res.presets)) {
+                adjustedBuiltInPresets[presetName] = { isProtectedPreset: true, settings: builtInPresets[presetName] };
+              }
+            });
+
+            Object.assign(res.presets, adjustedBuiltInPresets);
+          }
+        } catch (err) {
+          console.warn("Could not load presets_default.json:", err);
+        }
+      }
+
       let userPresets = null;
 
       try {
@@ -752,6 +780,14 @@ export class GUIGlobal implements OnDestroy {
     this.setGlobalVar('generatorCosmeticsArray', guiSettings.cosmeticsArray);
     this.setGlobalVar('generatorCosmeticsObj', guiSettings.cosmeticsObj);
     this.setGlobalVar('generatorGoalDistros', guiSettings.distroArray);
+
+    // Initialize presets with system defaults if not provided (e.g., in ng-dev mode)
+    if (!guiSettings.presets || Object.keys(guiSettings.presets).length === 0) {
+      guiSettings.presets = {
+        "[New Preset]": { isNewPreset: true },
+        "Default / Beginner": { isDefaultPreset: true }
+      };
+    }
 
     this.generator_presets = guiSettings.presets;
   }

@@ -173,6 +173,11 @@ namespace MMR.Randomizer.Utils
                     Playthrough = spoiler.Spheres,
                     GossipHints = spoiler.GossipHints,
                     Prices = spoiler.MessageCosts,
+                    GibdoRequirements = spoiler.GibdoRequirements.Select(gibdoRequirement => new GibdoRequirementPair
+                    {
+                        Gibdo = gibdoRequirement.LogicEntry.Value.ToString(),
+                        Requirement = $"{gibdoRequirement.ItemRequired.ToString().AddSpaces()}" + (gibdoRequirement.Amount > 1 ? $" ({gibdoRequirement.Amount})" : ""),
+                    }).ToList(),
                 };
                 File.WriteAllText(Path.Combine(directory, filename + "_SpoilerLog.json"), JsonSerializer.Serialize(spoilerJson));
             }

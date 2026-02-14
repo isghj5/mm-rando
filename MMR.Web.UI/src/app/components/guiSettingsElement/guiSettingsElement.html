@@ -281,9 +281,14 @@
            [nbPopoverPlacement]="'top'"
            [nbPopoverAdjustment]="'vertical'" />
     </div>
-    <button class="presetButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="loadPreset()">Load</button>
-    <button class="presetButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="savePreset(refPresetSelect)">Save</button>
-    <button class="presetButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="deletePreset()">Remove</button>
+    <div>
+      <button class="presetButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="loadPreset()">{{loadButtonText}}</button>
+      <button class="presetButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="savePreset(refPresetSelect)">Save</button>
+      <button class="presetButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="deletePreset()">Remove</button>
+    </div>
+    <button class="presetButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="exportPreset()">Export</button>
+    <input #refImportFileInput class="ioHiddenInputWeb" type="file" accept=".json" multiple (change)="onImportFilesSelected($event)">
+    <button class="presetButton" [disabled]="!visibilitySettingsMap[setting.name]" nbButton status="info" size="small" (click)="importPresets(refImportFileInput)">Import</button>
   </ng-container>
 
   <!--SearchBox-->

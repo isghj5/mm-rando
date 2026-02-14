@@ -7,25 +7,14 @@ namespace MMR.Randomizer.Attributes.Gibdo
     {
         public byte ItemAction { get; }
         public byte Item { get; }
-        public ushort MessageId { get; }
-        public string CustomMessage { get; }
-        public ushort Data { get; }
+        public ushort MessageId { get; set; }
+        public string CustomMessage { get; set; }
+        public ushort Data { get; set; }
 
-        public ItemGibdoAttribute(byte itemAction, byte item, ushort messageId, ushort data = 0)
+        public ItemGibdoAttribute(byte itemAction, byte item)
         {
             ItemAction = itemAction;
             Item = item;
-            MessageId = messageId;
-            Data = data;
-        }
-
-        public ItemGibdoAttribute(byte itemAction, byte item, string customMessage, ushort messageId = default, ushort data = 0)
-        {
-            ItemAction = itemAction;
-            Item = item;
-            CustomMessage = customMessage;
-            MessageId = messageId;
-            Data = data;
         }
     }
 }

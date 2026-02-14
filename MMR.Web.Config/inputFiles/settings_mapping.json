@@ -70,9 +70,10 @@
           "settings": [
             "GameplaySettings.LogicMode",
             "GameplaySettings.UserLogicFileName",
-            "GameplaySettings.ItemPlacement",
-            "Web.RandomStartingItemGroups",
-            "GameplaySettings.RandomStartingItemGroups"
+            "GameplaySettings.VictoryMode",
+            "GameplaySettings.PriceMode",
+            "GameplaySettings.BossRemainsMode",
+            "GameplaySettings.RequiredBossRemains"
           ]
         },
         {
@@ -124,10 +125,9 @@
           "text": "Shuffling",
           "row_span": [ 4, 6, 6 ],
           "settings": [
+            "GameplaySettings.ItemPlacement",
+            "GameplaySettings.RandomStartingItemGroups",
             "GameplaySettings.EntranceMode",
-            "GameplaySettings.VictoryMode",
-            "GameplaySettings.PriceMode",
-            "GameplaySettings.BossRemainsMode",
             "GameplaySettings.BossKeyMode",
             "GameplaySettings.SmallKeyMode",
             "GameplaySettings.StrayFairyMode",
@@ -144,7 +144,7 @@
             "GameplaySettings.AddSongs",
             "GameplaySettings.RandomizeEnemies",
             "GameplaySettings.StartingItemMode",
-            "GameplaySettings.RequiredBossRemains"
+            "Web.RandomStartingItemGroups"
           ]
         }
       ]
@@ -233,21 +233,6 @@
       "hide_when_disabled": true,
       "sections": [
         {
-          "name": "speedup_section",
-          "text": "Speed Ups",
-          "row_span": [ 1, 1, 1 ],
-          "settings": [
-            "GameplaySettings.SpeedupDampe",
-            "GameplaySettings.SpeedupLabFish",
-            "GameplaySettings.SpeedupBank",
-            "GameplaySettings.SpeedupBeavers",
-            "GameplaySettings.SpeedupDogRace",
-            "GameplaySettings.DoubleArcheryRewards",
-            "GameplaySettings.SpeedupBabyCuccos",
-            "GameplaySettings.RequiredZoraEggs"
-          ]
-        },
-        {
           "name": "hints_section",
           "text": "Hints",
           "row_span": [ 1, 1, 1 ],
@@ -322,15 +307,31 @@
       ]
     },
     {
-      "name": "shorten_cutscenes_tab",
-      "text": "Shorten Cutscenes",
+      "name": "speedups_tab",
+      "text": "Speedups",
       "app_type": [ "generator" ],
       "hide_when_disabled": true,
       "sections": [
         {
-          "name": "main_section",
-          "text": "",
-          "col_span": 4,
+          "name": "speedup_section",
+          "text": "Speed Ups",
+          "col_span": 2,
+          "row_span": [ 2, 2, 2 ],
+          "settings": [
+            "GameplaySettings.SpeedupDampe",
+            "GameplaySettings.SpeedupLabFish",
+            "GameplaySettings.SpeedupBank",
+            "GameplaySettings.SpeedupBeavers",
+            "GameplaySettings.SpeedupDogRace",
+            "GameplaySettings.DoubleArcheryRewards",
+            "GameplaySettings.SpeedupBabyCuccos",
+            "GameplaySettings.RequiredZoraEggs"
+          ]
+        },
+        {
+          "name": "Shorten Cutscenes",
+          "text": "Shorten Cutscenes",
+          "col_span": 2,
           "row_span": [ 2, 2, 2 ],
           "settings": [
             "GameplaySettings.ShortenCutsceneSettings.General",
