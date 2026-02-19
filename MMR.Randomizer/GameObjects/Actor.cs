@@ -457,7 +457,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 0, variant: 0xF0, 0xF1, 0xF2, 0xF3, 0xF4)] // spring only
         [UnkillableAllVariants]
         [AlignedCompanionActor(RegularZora, CompanionAlignment.InFront, ourVariant: -1, variant: 0x13, 0x14, 0x15)]
-        //[ForbidFromScene(Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.LaundryPool)]
+        [EnemizerScenesPlacementBlock(Scene.MountainVillageSpring)] // suspected cause of softlock when attempting frog minigame
         RegularFrogs = 0x22, // En_Minifrog
 
         Empty23 = 0x23,
@@ -4957,6 +4957,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x001, // regular
             0x100, 0x101)] // talking spots I think
         [VariantsWithRoomMax(max: 0, variant: 0x101, 0x100)] // doesn't spawn correctly
+        [VariantsWithRoomMax(max: 10, variant: 0x001)] // doesn't spawn correctly
         [UnkillableAllVariants]
         [RemovalChance(80), PlacementWeight(50)]
         GreatBayFisherman = 0x1C2, // En_Tsn
