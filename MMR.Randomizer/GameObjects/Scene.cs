@@ -939,6 +939,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1444)]
         [SceneInternalId(0x59)]
+        [DynaHeadroom(450, 450)] // untested, 704/490 triggered +22, for now this value seems generous, its a small scene with few actors
         [EnemizerSceneBlockSensitive(Actor.ClayPot)] // realy big actors (like wooden flower) can block the chests
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.HookshotWallAndPillar,
             Actor.WoodfallTempleWoodenFlower)] // can block the chests ABOVE IT on the terrace
