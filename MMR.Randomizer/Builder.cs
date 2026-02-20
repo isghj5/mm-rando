@@ -6920,14 +6920,14 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(64, "Writing items...");
                 WriteItems(messageTable);
 
-                progressReporter.ReportProgress(65, "Reading Enemies ...");
+                progressReporter.ReportProgress(65, "Writing entrances...");
+                WriteEntrances();
+
+                progressReporter.ReportProgress(66, "Reading Enemies ...");
                 CheckEnemizerFreeGaroHints();
                 ReadEnemies(outputSettings);
 
-                progressReporter.ReportProgress(66, "Writing entrances...");
-                WriteEntrances();
-
-                progressReporter.ReportProgress(66, "Writing cutscenes...");
+                progressReporter.ReportProgress(67, "Writing cutscenes...");
                 WriteCutscenes(messageTable);
 
                 progressReporter.ReportProgress(67, "Writing gimmicks...");
