@@ -2273,7 +2273,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(157)]
         [ObjectListIndex(0xFD)]
-        [CheckRestricted(Scene.GoronVillage, variant: ActorConst.ANY_VARIANT, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
+        // entrando can randomize the cave, don't know what the items are going to be
+        //[CheckRestricted(Scene.GoronVillage, variant: ActorConst.ANY_VARIANT, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
         // path is 0xF000, if you set to max (F) then its none-pathing and just auto flies away
         [PerchingVariants(0xF18B, // southern swamp // and clear swamp??? he was there??
             0xF000,
@@ -2286,7 +2287,9 @@ namespace MMR.Randomizer.GameObjects
         // variant 1
         //[GroundVariants(0xF080)] // instant talks to you with monkey dialgoue but talking doesnt end: softlock
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 0)] // already flown away
-        [ForbidFromScene(Scene.SouthernSwamp)] // since we want the hint
+        [ForbidFromScene(
+            Scene.GoronVillage, // until we get entrando item detection working
+            Scene.SouthernSwamp)] // since we want the hint
         [VariantsWithRoomMax(max: 1, variant: 0xF180)] // only want to waste one slot on the hint owl
         [VariantsWithRoomMax(max: 0, variant: 0x2102, 0x1102, 0x0102)] // these are pathing, do not place
         [VariantsWithRoomMax(max: 10, variant: 0xF000)]
@@ -3607,7 +3610,7 @@ namespace MMR.Randomizer.GameObjects
         // deku palace moving platform, all of them require paths
         [FileID(280)]
         [ObjectListIndex(0x163)]
-        [SwitchFlagsPlacementXRot]
+        [SwitchFlagsPlacementXRot] // huh? switch flag for what?
         Obj_Raillift = 0x13C, // Obj_Raillift
 
         [ActorizerEnabled]
@@ -4920,7 +4923,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(411)]
         [ObjectListIndex(0x1A8)]
         [DynaAttributes(10, 8)]
-        [CheckRestricted(Scene.GoronVillage, variant: ActorConst.ANY_VARIANT, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
+        // can't do this here, entrando makes this complicated
+        //[CheckRestricted(Scene.GoronVillage, variant: ActorConst.ANY_VARIANT, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
         [CheckRestricted(Scene.PathToSnowhead, variant: ActorConst.ANY_VARIANT, Item.HeartPieceToSnowhead)]
         [CheckRestricted(Scene.IkanaCastle, variant: ActorConst.ANY_VARIANT, Item.SongElegy,
             Item.CollectableAncientCastleOfIkana1FWestStaircasePot1, Item.CollectableAncientCastleOfIkanaFireCeilingRoomPot1,
@@ -4930,6 +4934,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x0)]
         [VariantsWithRoomMax(max: 0, variant: 0x0)] // invisible, not even seen just looks empty, unless I can move actors to sit ontop of them or something
         [UnkillableAllVariants]
+        [ForbidFromScene(Scene.GoronVillage)] // until we get entrando item detection working
         FlyingLensCaveIcePlatforms = 0x1C0, // Obj_Visiblock
 
         [ActorizerEnabled]
