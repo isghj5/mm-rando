@@ -5144,13 +5144,17 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1FD0)]
         [FileID(426)]
         [ObjectListIndex(0x1B5)]
+        // params 0x7F00 and 0x7F are different speeds for vertical and horizonal?
         // looks like two params 0x378 and 0x7F and both are some form of animation speed...??
         [WaterVariants(0x3FA8)] // stt (underwater wall)
         [WallVariants(0x1932, // greatbay
             0x3FFF)] // istt hanging from wall
         [GroundVariants(
             0x191E)] // below well
-        [PerchingVariants(0x2034, 0x3EFE)] // non-vanilla variants so they can show up on perchest
+        [WaterBottomVariants(0x4FA9)] // non-vanilla variants so we have some water variety
+        [PerchingVariants(0x2034, 0x3EFE)] // non-vanilla variants so they can show up on perches
+        [CeilingVariants(0x7054, 0x7EFE)] // non-vanilla variants so they can show up on ceiling
+        [VariantsWithRoomMax(max: 5, variant: 0x4FA9)]
         [VariantsWithRoomMax(max: 3, variant: 0x1932, 0x3FFF, 0x191E)]
         [VariantsWithRoomMax(max: 0, variant: 0x3FA8)] // do not place water variant because dont hav a water wall type yet, which is what this really is, putting in water floats in the water column
         [ForbidFromScene(Scene.StoneTowerTemple)]

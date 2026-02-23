@@ -3506,6 +3506,44 @@ namespace MMR.Randomizer
             }
         }
 
+        public static void FixSpecificActorRotations(SceneEnemizerData thisSceneData)
+        {
+            // several actors need to have their rotations fixed after being placed
+
+            // TODO: we should probably abstract repeat checks into common inlinable code
+
+            for(int a = 0; a < thisSceneData.Actors.Count; a++)
+            {
+                var testActor = thisSceneData.Actors[a];
+
+                var wallVariants = testActor.GetWallVariants();
+                // for now I want this manually just for dexihand: rotate forward a touch because its on a wall
+                if (testActor.ActorEnum == GameObjects.Actor.Dexihand && testActor.OldActorEnum != GameObjects.Actor.Dexihand
+                    && wallVariants != null && wallVariants.Contains(testActor.Variants[0]))
+                {
+                    testActor.ChangeXRotation(60); // pitch rotation down a bit
+                }
+
+
+                // rotate darmani grave to face forward, for some reason the actor is rotated 180
+                if (testActor.ActorEnum == GameObjects.Actor.DarmaniGrave && testActor.OldActorEnum != GameObjects.Actor.DarmaniGrave)
+                {
+                    testActor.ChangeYRotation(180); // pitch rotation down a bit
+                }
+
+                var ceilingVariants = testActor.GetCeilingVariants();
+                // if dexihand is on ceiling, rotate so its dangling properly
+                if (testActor.ActorEnum == GameObjects.Actor.Dexihand && testActor.OldActorEnum != GameObjects.Actor.Dexihand
+                        && ceilingVariants != null && ceilingVariants.Contains(testActor.Variants[0]))
+                {
+                    testActor.ChangeXRotation(180); // full rotation
+                }
+
+
+            }
+
+        }
+
         public static void FixWoodfallTempleGekkoMiniboss()
         {
             /// we cannot randomize the snapper in woodfall temple without breaking the gekko miniboss
@@ -5375,12 +5413,6 @@ namespace MMR.Randomizer
                 }
 
                 var wallVariants = testActor.GetWallVariants();
-                // for now I want this manually just for dexihand: rotate forward a touch because its on a wall
-                if (testActor.ActorEnum == GameObjects.Actor.Dexihand && testActor.OldActorEnum != GameObjects.Actor.Dexihand
-                    && wallVariants != null && wallVariants.Contains(testActor.OldVariant))
-                {
-                    testActor.Rotation.x = ActorUtils.MergeRotationAndFlags(60, flags: testActor.Rotation.x); // pitch rotation down a bit
-                }
                 // special case: monkey spawns with an extra height offset from the floor, not at the location of the visible model
                 if (testActor.ActorEnum == GameObjects.Actor.Monkey && testActor.Variants[0] == 0x02FF
                     && wallVariants != null && wallVariants.Contains(testActor.OldVariant))
@@ -7184,6 +7216,7 @@ namespace MMR.Randomizer
             SwitchSkullfishBackToEncount1(thisSceneData);
             FixSnowballActorSpawns(thisSceneData);
             FixNewGrottoZRotation(thisSceneData);
+            FixSpecificActorRotations(thisSceneData);
             EnsureOnlyOneKankyo(thisSceneData);
             FixKaizokuType(thisSceneData);
             ForceWaterCeilingSpawnerInGBT(thisSceneData);
