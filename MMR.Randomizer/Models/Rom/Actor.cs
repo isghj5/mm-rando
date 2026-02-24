@@ -391,6 +391,7 @@ namespace MMR.Randomizer.Models.Rom
             this.OldVariant = this.Variants[0] = variant;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetVariants(List<int> variants)
         {
             // this is here so I can watch for variant corruption, because not sure how to breakpoint
@@ -855,5 +856,31 @@ namespace MMR.Randomizer.Models.Rom
 
             this.Blockable = true; // no block reasons listed, all conditions cleared
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool ChangedToNewActor(GameObjects.Actor actor)
+        {
+            // is this actor changed to a new specific actor, and wasnt previously the same actor type
+            return this.ActorEnum == actor && this.OldActorEnum != actor;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool CurrentVariantIsType(ActorType type)
+        {
+            // "is this actor, after randomization, of a certain type" is tested too much, might as well separate it
+
+            var listOfVariantsThatMatchType = this.SortedVariants[ (int) type - 1]; // type list starts with "unset"
+            return listOfVariantsThatMatchType != null && listOfVariantsThatMatchType.Contains(this.Variants[0]);
+        }
+
+        public bool OldVariantIsType(ActorType type)
+        {
+            // "is this actor, before randomization, of a certain type" is tested too much, might as well separate it
+
+            var listOfVariantsThatMatchType = this.SortedVariants[(int)type - 1]; // type list starts with "unset"
+            return listOfVariantsThatMatchType != null && listOfVariantsThatMatchType.Contains(this.OldVariant);
+        }
+
+
     }
 }

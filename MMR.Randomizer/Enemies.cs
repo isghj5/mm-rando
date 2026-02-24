@@ -3510,38 +3510,32 @@ namespace MMR.Randomizer
         {
             // several actors need to have their rotations fixed after being placed
 
-            // TODO: we should probably abstract repeat checks into common inlinable code
-
             for(int a = 0; a < thisSceneData.Actors.Count; a++)
             {
                 var testActor = thisSceneData.Actors[a];
 
                 var wallVariants = testActor.GetWallVariants();
                 // for now I want this manually just for dexihand: rotate forward a touch because its on a wall
-                if (testActor.ActorEnum == GameObjects.Actor.Dexihand && testActor.OldActorEnum != GameObjects.Actor.Dexihand
-                    && wallVariants != null && wallVariants.Contains(testActor.Variants[0]))
+                if (testActor.ChangedToNewActor(GameObjects.Actor.Dexihand)
+                    && testActor.CurrentVariantIsType(GameObjects.ActorType.Wall))
                 {
                     testActor.ChangeXRotation(60); // pitch rotation down a bit
                 }
 
-
                 // rotate darmani grave to face forward, for some reason the actor is rotated 180
-                if (testActor.ActorEnum == GameObjects.Actor.DarmaniGrave && testActor.OldActorEnum != GameObjects.Actor.DarmaniGrave)
+                if (testActor.ChangedToNewActor(GameObjects.Actor.DarmaniGrave))
                 {
                     testActor.ChangeYRotation(180); // pitch rotation down a bit
                 }
 
-                var ceilingVariants = testActor.GetCeilingVariants();
                 // if dexihand is on ceiling, rotate so its dangling properly
-                if (testActor.ActorEnum == GameObjects.Actor.Dexihand && testActor.OldActorEnum != GameObjects.Actor.Dexihand
-                        && ceilingVariants != null && ceilingVariants.Contains(testActor.Variants[0]))
+                if (testActor.ChangedToNewActor(GameObjects.Actor.Dexihand)
+                        && testActor.CurrentVariantIsType(GameObjects.ActorType.Ceiling))
                 {
                     testActor.ChangeXRotation(180); // full rotation
                 }
 
-
             }
-
         }
 
         public static void FixWoodfallTempleGekkoMiniboss()
@@ -5348,15 +5342,12 @@ namespace MMR.Randomizer
 
                 //var flyingVariants = testActor.GetFlyingVariants(); // BROKEN, we want the new actor this checks the old Variants list
                 var newVariantIsFlying = testActor.IsNewChoiceFlying();
-                var oldGroundVariants = testActor.GetGroundVariants();
-                var oldWaterSurfaceVariants = testActor.GetWaterTopVariants();
-                var oldPathVariants = testActor.GetPathingVariants();
                 // if previous spawn was ground and the replacement actor has an attribute, adjust height
                 // bug: type for bee in mountain spring is FLYING, should be ground, todo fix
                 if (newVariantIsFlying && 
-                    ((oldGroundVariants != null && oldGroundVariants.Contains(testActor.OldVariant)) // previous ground
-                     || (oldPathVariants != null && oldPathVariants.Contains(testActor.OldVariant)) // previous pathing(ground)
-                     || (oldWaterSurfaceVariants != null && oldWaterSurfaceVariants.Contains(testActor.OldVariant)) // water surface too
+                    (testActor.OldVariantIsType(GameObjects.ActorType.Ground) // previous ground
+                     || testActor.OldVariantIsType(GameObjects.ActorType.Pathing) // previous pathing(ground)
+                     || testActor.OldVariantIsType(GameObjects.ActorType.WaterTop) // water surface too
                      || testActor.OldActorEnum == GameObjects.Actor.ClayPot // dungeon pots dont show up as ground types, need to be a special spot here
                      || testActor.OldActorEnum == GameObjects.Actor.TallGrass // field tall grass dont show up as ground types, need to be a special spot here
                       || testActor.OldActorEnum == GameObjects.Actor.BlueBubble)) // our new actor can fly
@@ -5375,8 +5366,8 @@ namespace MMR.Randomizer
 
                 // lower swimming off the surface
                 var waterVariants = testActor.GetWaterVariants();
-                if ((waterVariants != null && waterVariants.Contains(testActor.Variants[0])) && // chosen variant is water (swimming)
-                    (oldWaterSurfaceVariants != null && oldWaterSurfaceVariants.Contains(testActor.OldVariant))) // previous water surface 
+                if (testActor.CurrentVariantIsType(GameObjects.ActorType.Water) &&
+                    testActor.OldVariantIsType(GameObjects.ActorType.WaterTop)) 
                 {
                     short randomHeight = (short)(10 + _seedRNG.Next(20));
                     testActor.Position.y -= randomHeight; // always lower flying enemies on ceiling placement, its usually way too high
@@ -5386,9 +5377,8 @@ namespace MMR.Randomizer
 
                 // raise swimming off the floor
                 //var waterVariants = testActor.ActorEnum.GetAttribute<WaterVariantsAttribute>();
-                var oldWaterBottomVariants = testActor.GetWaterBottomVariants();
-                if ((waterVariants != null && waterVariants.Contains(testActor.Variants[0])) && // chosen variant is water (swimming)
-                    (oldWaterBottomVariants != null && oldWaterBottomVariants.Contains(testActor.OldVariant))) // previous water bottom 
+                if (testActor.CurrentVariantIsType(GameObjects.ActorType.Water) &&
+                    testActor.OldVariantIsType(GameObjects.ActorType.WaterBottom)) 
                 {
                     short randomHeight = (short)(10 + _seedRNG.Next(70));
                     testActor.Position.y += randomHeight; // always lower flying enemies on ceiling placement, its usually way too high
@@ -5398,7 +5388,7 @@ namespace MMR.Randomizer
 
                 var oldCeilingVariants = testActor.GetCeilingVariants();
                 if (newVariantIsFlying && // chosen variant is flying
-                    (oldCeilingVariants != null && oldCeilingVariants.Contains(testActor.OldVariant))) // previous ceiling 
+                    testActor.OldVariantIsType(GameObjects.ActorType.Ceiling))
                 {
                     short randomHeight = (short)(50 + (_seedRNG.Next() % 50));
                     testActor.Position.y -= randomHeight; // always lower flying enemies on ceiling placement, its usually way too high
@@ -5415,12 +5405,12 @@ namespace MMR.Randomizer
                 var wallVariants = testActor.GetWallVariants();
                 // special case: monkey spawns with an extra height offset from the floor, not at the location of the visible model
                 if (testActor.ActorEnum == GameObjects.Actor.Monkey && testActor.Variants[0] == 0x02FF
-                    && wallVariants != null && wallVariants.Contains(testActor.OldVariant))
+                    && testActor.CurrentVariantIsType(GameObjects.ActorType.Wall))
                 {
                     testActor.Position.y -= 90; // too high annoyingly
                 }
                 // special case: woodfall wooden flower spawns in the ground, needs to be raised
-                if (testActor.ActorEnum == GameObjects.Actor.WoodfallTempleWoodenFlower && testActor.OldActorEnum != GameObjects.Actor.WoodfallTempleWoodenFlower)
+                if (testActor.ChangedToNewActor(GameObjects.Actor.WoodfallTempleWoodenFlower))
                 {
                     testActor.Position.y += 100;
                 }
