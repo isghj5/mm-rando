@@ -1414,6 +1414,13 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Resources.mods.fix_moon_trial_access);
             }
+
+            /// return MM swimming on B button mash to OOT levels
+            RomUtils.CheckCompressed(38);
+            var playerData = RomData.MMFileList[38].Data;
+            // weirdly, if you use 6.0 the animation glitches? non-devisible value maybe? 10.0 messes with the water ripples somehow and is not faster
+            ReadWriteUtils.Arr_WriteU16(playerData, 0x19D94 + 2, 0x40A0); // change the float 4020 (2.5f) to 40A0 (5.0f)
+
         }
 
         private void WriteSunsSong(MessageTable messageTable)
