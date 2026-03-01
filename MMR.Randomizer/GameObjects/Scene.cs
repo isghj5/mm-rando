@@ -601,6 +601,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee, // these are moved around the room, including the tackle display case
                         Actor.DekuKing, // if close to scarecrow can hardlock clock skip
                         Actor.WoodfallTempleWoodenFlower, // can block the trading post its too big
+                        Actor.LikeLike, // In out for blood this can be instant death
                         Actor.Hiploop)] // water explosion
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
                         Actor.LikeLike, // In out for blood this can be instant death
