@@ -33,6 +33,7 @@ namespace MMR.Randomizer.Models.Rom
         public List<int> Variants { get; private set; }
         //public List<int> Variants = new List<int> { 0 };
         public List<List<int>> SortedVariants = null;
+        public List<List<int>> NewSortedVariants = null;
         public int OldVariant;
         public bool MustNotRespawn = false;
         public ActorType Type; 
@@ -288,6 +289,8 @@ namespace MMR.Randomizer.Models.Rom
             {
                 Variants[0] = vars;
             }
+
+            this.NewSortedVariants = null;
 
             this.OnlyOnePerRoom = newActorType.GetAttribute<OnlyOneActorPerRoom>();
 
@@ -864,12 +867,20 @@ namespace MMR.Randomizer.Models.Rom
             return this.ActorEnum == actor && this.OldActorEnum != actor;
         }
 
+
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool CurrentVariantIsType(ActorType type)
         {
             // "is this actor, after randomization, of a certain type" is tested too much, might as well separate it
 
-            var listOfVariantsThatMatchType = this.SortedVariants[ (int) type - 1]; // type list starts with "unset"
+            // TODO I couldn't find a faster way to build the specific type list, because list of attribute isn't working
+            //  realistic: undo this whole function and go back to hardcode list 
+
+            if (this.NewSortedVariants == null)
+                this.NewSortedVariants = BuildVariantList(this.ActorEnum); // the old sorted list is still for the old actor, quickly generate one for chosen replacement
+
+            var listOfVariantsThatMatchType = this.NewSortedVariants[ (int) type - 1]; // type list starts with "unset"
             return listOfVariantsThatMatchType != null && listOfVariantsThatMatchType.Contains(this.Variants[0]);
         }
 

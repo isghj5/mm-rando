@@ -3515,11 +3515,21 @@ namespace MMR.Randomizer
                 var testActor = thisSceneData.Actors[a];
 
                 var wallVariants = testActor.GetWallVariants();
-                // for now I want this manually just for dexihand: rotate forward a touch because its on a wall
-                if (testActor.ChangedToNewActor(GameObjects.Actor.Dexihand)
-                    && testActor.CurrentVariantIsType(GameObjects.ActorType.Wall))
+                if (testActor.ChangedToNewActor(GameObjects.Actor.Dexihand))
                 {
-                    testActor.ChangeXRotation(60); // pitch rotation down a bit
+                    // for now I want this manually just for dexihand: rotate forward a touch because its on a wall
+                    if (testActor.CurrentVariantIsType(GameObjects.ActorType.Wall))
+                    {
+                        testActor.ChangeXRotation(60); // pitch rotation down a bit
+                        continue;
+                    }
+                    // if dexihand is on ceiling, rotate so its dangling properly
+                    if (testActor.CurrentVariantIsType(GameObjects.ActorType.Ceiling))
+                    {
+                        testActor.ChangeXRotation(180); // full rotation
+                        continue;
+                    }
+
                 }
 
                 // rotate darmani grave to face forward, for some reason the actor is rotated 180
@@ -3528,12 +3538,6 @@ namespace MMR.Randomizer
                     testActor.ChangeYRotation(180); // pitch rotation down a bit
                 }
 
-                // if dexihand is on ceiling, rotate so its dangling properly
-                if (testActor.ChangedToNewActor(GameObjects.Actor.Dexihand)
-                        && testActor.CurrentVariantIsType(GameObjects.ActorType.Ceiling))
-                {
-                    testActor.ChangeXRotation(180); // full rotation
-                }
 
             }
         }
@@ -5804,7 +5808,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.En_Owl, GameObjects.Actor.UnusedStoneTowerStoneElevator)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.RegularFrogs, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.Torch, GameObjects.Actor.LostWoodsCutsceneTrees)) continue;
-                if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.CeilingSpawner, GameObjects.Actor.GoldSkulltula)) continue;
+                if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.CeilingSpawner, GameObjects.Actor.Dexihand)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Gorman, GameObjects.Actor.HookshotWallAndPillar)) continue;
                 if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.DekuBaba, GameObjects.Actor.PirateColonel)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.Carpenter)) continue;
