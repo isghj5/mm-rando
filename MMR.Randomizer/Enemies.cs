@@ -1279,6 +1279,9 @@ namespace MMR.Randomizer
             secretShrineScene.Maps[2].Actors[1].Position.y = 0;
             secretShrineScene.Maps[2].Actors[2].Position.y = 0;
 
+            var linkTrialScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.LinkTrial.FileID());
+            linkTrialScene.Maps[1].Actors[0].Position.y = 1; // up high dinofos spawn, red bubble would spawn in the air, lower to ground
+
             // one of the snappers is right in front of the chest, if actorizer, that actor could be something that doesnt have to be killable, could block the chest
             woodfalltempleScene.Maps[6].Actors[1].Position.z = -55; // room 7, z was -25, 
 
@@ -1296,9 +1299,6 @@ namespace MMR.Randomizer
             greatbaytempleScene.Maps[10].Actors[3].Position.z = 344; // new vec16(3525, -180, 630); // this was hard to open if chest
             // the bombchu along the red pipe in the pre-wart room needs the same kind of moving
             greatbaytempleScene.Maps[6].Actors[7].Position = new vec16(-1840, -570, -870);
-
-            var linkTrialScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.LinkTrial.FileID());
-            linkTrialScene.Maps[1].Actors[0].Position.y = 1; // up high dinofos spawn, red bubble would spawn in the air, lower to ground
 
             var piratesFortressCourtyardScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PiratesFortress.FileID());
             piratesFortressCourtyardScene.Maps[0].Actors[17].Position.x = 1267; // the pirate at the top of ladder, needs to be moved further into the bridge
@@ -5810,7 +5810,7 @@ namespace MMR.Randomizer
                 if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.Torch, GameObjects.Actor.LostWoodsCutsceneTrees)) continue;
                 if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.CeilingSpawner, GameObjects.Actor.Dexihand)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Gorman, GameObjects.Actor.HookshotWallAndPillar)) continue;
-                if (TestHardSetObject(GameObjects.Scene.WoodfallTemple, GameObjects.Actor.DekuBaba, GameObjects.Actor.PirateColonel)) continue;
+                if (TestHardSetObject(GameObjects.Scene.LinkTrial, GameObjects.Actor.Dinofos, GameObjects.Actor.Shabom)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.Carpenter)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.SwimmingZora, GameObjects.Actor.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;

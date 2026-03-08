@@ -239,8 +239,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.IkanaGravestone, Actor.Bumper, Actor.En_Ani)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SpikedMine,
             Actor.Desbreko)] // lag
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
-            Actor.Shabom)] // get's stuck in the ceiling where you cannot kill them, TODO is this still true after ceiling to flying was dropped?
+        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
+        //    Actor.Shabom)] // gets stuck in the ceiling where you cannot kill them, TODO is this still true after ceiling to flying was dropped?
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DragonFly,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the breakable floor under them
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Nejiron,
@@ -266,8 +266,8 @@ namespace MMR.Randomizer.GameObjects
            Actor.Bo)] // they just fall down to the "floor" and its awkward
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DeathArmos,
             Actor.PatrollingPirate)] // casual, causes a need for stone mask to procede through the temple
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
-           Actor.Shabom)] // can clip through the ceiling becoming impossible to attack
+        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
+        //   Actor.Shabom)] // can clip through the ceiling becoming impossible to attack
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot, // these are up above the area when fighing lava ceiling wizrobe
            Actor.Poe, Actor.Armos,
             //Actor.Freezard, Actor.Deatharmos, // loud enough you can aleast know they are there
@@ -1003,8 +1003,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the rupees 
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the rupees 
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
-            Actor.Shabom)] // report of them not spawning or falling out of bounds and softlock
+        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
+        //    Actor.Shabom)] // report of them not spawning or falling out of bounds and softlock
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wart,
             Actor.Hiploop, Actor.RedBubble)] // instant kill on water
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GaroMaster,

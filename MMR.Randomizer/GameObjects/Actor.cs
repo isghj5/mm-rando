@@ -396,6 +396,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0xFFFF)] // 0 works, but OOT used FFFF
         [GroundVariants(0xFFFF)] // 0 works, but OOT used FFFF
         [DifficultVariants(0x2)]
+        [FlyingToGroundHeightAdjustment(150)]
         [PlacementWeight(90)]
         Shabom = 0x1D, // En_Bubble, the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
@@ -6314,7 +6315,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(513)]
         [ObjectListIndex(0x20E)]
         [DynaAttributes(12, 8)]
-        [FlyingToGroundHeightAdjustment(15)]
+        [FlyingToGroundHeightAdjustment(50)]
         [FlyingVariants(0x0)]
         [GroundVariants(0x0)]
         [VariantsWithRoomMax(variant: 0, max: 3)] // dyna should be detecable now, we can add more
