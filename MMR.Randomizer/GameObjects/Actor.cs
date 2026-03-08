@@ -6112,7 +6112,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         GBTFreezableWaterfall = 0x21C, // Bg_Dblue_Waterfall
 
-        [EnemizerEnabled]
+        //[EnemizerEnabled] // needs to be a custom actor now because of fixes
         [FileID(500)]
         [ObjectListIndex(0x204)]
         // params: 0x3F at bottom is the exit address, top is switch flag

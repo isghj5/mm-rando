@@ -889,7 +889,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1419)]
         [SceneInternalId(0x51)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SpiritHouseOwner,
-            Actor.PirateColonel, // crash, assumed cutscene TODO why is cutscene active?
+            Actor.PirateColonel, // crash, assumed camera or cutscene, TODO fix
             Actor.Torch, Actor.IshiRock)] // very lame
         PoeHut = 0x4E, // Ghost Hut
 
