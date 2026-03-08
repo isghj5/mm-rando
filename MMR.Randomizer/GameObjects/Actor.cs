@@ -1215,7 +1215,7 @@ namespace MMR.Randomizer.GameObjects
         [BlockingVariantsAll] // might turn this off again, but at can cause issues, esp in deku palace and races
         //[ForbidFromScene(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead,
         //    Scene.TerminaField)]
-        [RemovalChance(10)]
+        //[RemovalChance(10)] // disabled until we have logic to detect what items are behind the grottos
         GrottoHole = 0x55, // Door_Ana
 
         Empty56 = 0x56,
