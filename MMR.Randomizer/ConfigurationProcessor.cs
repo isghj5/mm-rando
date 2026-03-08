@@ -79,7 +79,7 @@ namespace MMR.Randomizer
                 catch (Exception ex)
                 {
                     string nl = Environment.NewLine;
-                    return $"Error building ROM: {ex.Message}{nl}{nl}Please contact the development team and provide them more information";
+                    return $"Error building ROM: {ex.Message} {ex.StackTrace} {nl}{nl}Please contact the development team and provide them more information";
                 }
 
                 Debug.WriteLine($" seed build time : [{((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString()} (ms)]");

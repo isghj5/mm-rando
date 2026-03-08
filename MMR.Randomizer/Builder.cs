@@ -7097,7 +7097,15 @@ namespace MMR.Randomizer
                     foreach (var seq in RomData.PointerizedSequences)
                     {
                         var substituteSeq = gameSequences.Find(u => u.Replaces == seq.Replaces);
-                        pointerizedSequences.Add(seq.Name, substituteSeq != null ? substituteSeq.Name : seq.Replaces.ToString());
+                        string seqName = seq.Name;
+
+                        if (seqName.Length < 1)
+                        {
+                            var originalSeq = gameSequences.Find(u => u.Replaces == seq.PreviousSlot);
+                            seqName = originalSeq.Name;
+                        }
+
+                        pointerizedSequences.Add(seqName, substituteSeq != null ? substituteSeq.Name : seq.Replaces.ToString());
                     }
                     File.WriteAllText(Path.Combine(directory, filename + "_RandomizedMusicPointerizedSeqs.json"), JsonSerializer.Serialize(pointerizedSequences));
 
