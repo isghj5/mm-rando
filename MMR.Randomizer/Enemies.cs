@@ -993,7 +993,8 @@ namespace MMR.Randomizer
                     GameObjects.Item.NotebookPromiseCuriosityShopMan,
                     GameObjects.Item.NotebookUniteAnjuAndKafei
                 };
-                if (_randomized.ImportantLocations != null && _randomized.ImportantLocations.Union(checksPostBoxLeadsTo).Count() > 0)
+                if (_randomized.Settings.LogicMode == LogicMode.NoLogic || _randomized.ImportantLocations != null
+                      && _randomized.ImportantLocations.Union(checksPostBoxLeadsTo).Count() > 0)
                 {
                     // if we need a mailbox, keep one
                     var shortStrawPostbox = _randomized.Seed % 3;
