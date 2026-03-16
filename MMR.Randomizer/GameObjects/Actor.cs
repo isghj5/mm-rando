@@ -2833,7 +2833,7 @@ namespace MMR.Randomizer.GameObjects
             )]
         [UnkillableAllVariants]
         // uses weekeventarg 83_02
-        [TreasureFlagsPlacement(mask: 0xFF, shift: 2)] // 0x3FC
+        [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
         HoneyComb = 0xE4, // Obj_Comb
 
         [ActorizerEnabled]
