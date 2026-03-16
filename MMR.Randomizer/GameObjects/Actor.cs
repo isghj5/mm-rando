@@ -6318,6 +6318,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingToGroundHeightAdjustment(50)]
         [FlyingVariants(0x0)]
         [GroundVariants(0x0)]
+        [WaterTopVariants(0x0)]
         [VariantsWithRoomMax(variant: 0, max: 3)] // dyna should be detecable now, we can add more
         [EnemizerScenesPlacementBlock(
             Scene.GormanRaceTrack, Scene.DekuTrial)] // blocking potentially
@@ -6566,7 +6567,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(531)]
         [ObjectListIndex(0x218)]
-        [CheckRestricted(Scene.GreatBayCoast, variant: ActorConst.ANY_VARIANT, Item.HeartPieceFishermanGame)]
+        [CheckRestricted(Scene.GreatBayCoast, variant: ActorConst.ANY_VARIANT, Item.HeartPieceFishermanGame,
+            Item.CollectableGreatBayCoastPalmTree1, Item.CollectableGreatBayCoastPalmTree2, Item.CollectableGreatBayCoastPalmTree3)]
+        [CheckRestricted(Scene.ZoraCape, variant: ActorConst.ANY_VARIANT,
+            Item.CollectableZoraCapeShorePalmTree1, Item.CollectableZoraCapeShorePalmTree2,
+            Item.CollectableZoraCapeRockPalmTree, Item.CollectableZoraCapeScarecrowPalmTree, Item.CollectableZoraCapeLonePalmTree)]
         [DynaAttributes(16, 12)]
         [GroundVariants(0x8000, 0x0)]
         [VariantsWithRoomMax(max: 10, 0x8000, 0x0)]
