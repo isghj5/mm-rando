@@ -5159,6 +5159,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 3, variant: 0x1932, 0x3FFF, 0x191E)]
         [VariantsWithRoomMax(max: 0, variant: 0x3FA8)] // do not place water variant because dont hav a water wall type yet, which is what this really is, putting in water floats in the water column
         [ForbidFromScene(Scene.StoneTowerTemple)]
+        [RespawningVariants(0x7054, 0x7EFE)] // we don't want ceiling ones in rooms where you have to clear enemies, as they are hard to reach
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GoronRacetrack)]
         [PlacementWeight(80)]
         Dexihand = 0x1D1, // En_WdHand : ???'s water logged brother
