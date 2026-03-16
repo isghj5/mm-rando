@@ -5796,22 +5796,22 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.AnjusGrandmaCredits)) continue;
-                if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
-                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.SoftSoilAndBeans, GameObjects.Actor.PunchableStoneTowerPillars)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.AnjusGrandmaCredits)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.SoftSoilAndBeans, GameObjects.Actor.PunchableStoneTowerPillars)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.Freezard)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; /// what was this again? hotspring?
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.SkeleKnight)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.RegularZora, GameObjects.Actor.DragonFly)) continue;
-                if (TestHardSetObject(GameObjects.Scene.OceanSpiderHouse, GameObjects.Actor.Seth1, GameObjects.Actor.BeanSeller)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.OceanSpiderHouse, GameObjects.Actor.Seth1, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.En_Owl, GameObjects.Actor.UnusedStoneTowerStoneElevator)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, GameObjects.Actor.RegularFrogs, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.Torch, GameObjects.Actor.LostWoodsCutsceneTrees)) continue;
-                if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.CeilingSpawner, GameObjects.Actor.Dexihand)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.GoronShrine, GameObjects.Actor.Torch, GameObjects.Actor.LostWoodsCutsceneTrees)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, GameObjects.Actor.CeilingSpawner, GameObjects.Actor.Dexihand)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Gorman, GameObjects.Actor.HookshotWallAndPillar)) continue;
-                if (TestHardSetObject(GameObjects.Scene.PoeHut, GameObjects.Actor.SpiritHouseOwner, GameObjects.Actor.PirateColonel)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.PoeHut, GameObjects.Actor.SpiritHouseOwner, GameObjects.Actor.PirateColonel)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.SquareSign, GameObjects.Actor.Carpenter)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.SwimmingZora, GameObjects.Actor.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.BeanSeller)) continue;
@@ -7191,8 +7191,8 @@ namespace MMR.Randomizer
                 // 23 to 25
                 //target.ChangeActor(GameObjects.Actor.ObjSwitch, vars: 0x7C14); // crashes
                 //target.ChangeActor(GameObjects.Actor.ObjSwitch, vars: 0x7C04); // 2 also crashes
-                thisSceneData.Scene.Maps[13].Actors[0].ChangeActor(GameObjects.Actor.ReDead, vars: 0x7804);
-                thisSceneData.Scene.Maps[13].Actors[3].ChangeActor(GameObjects.Actor.ReDead, vars: 0xF7FE);
+                //thisSceneData.Scene.Maps[13].Actors[0].ChangeActor(GameObjects.Actor.ReDead, vars: 0x7804);
+                //thisSceneData.Scene.Maps[13].Actors[3].ChangeActor(GameObjects.Actor.ReDead, vars: 0xF7FE);
             }
             /////////////////////////////
             #endif
@@ -8002,7 +8002,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 97.2\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 97.3\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

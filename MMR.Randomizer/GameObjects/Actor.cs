@@ -1088,9 +1088,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(99)]
         //[CheckRestricted(Scene.NorthClockTown, ActorConst.ANY_VARIANT,
         //    item:Item.)] //TODO finish this
-        [ForbidFromScene(Scene.TerminaField, // too many here, and we want the hints
-            Scene.NorthClockTown, // so many checks
-            Scene.LaundryPool, Scene.MountainVillage)] // old joke
+        //[ForbidFromScene(Scene.TerminaField, // too many here, and we want the hints
+        //    Scene.NorthClockTown, // so many checks
+        //    Scene.LaundryPool, Scene.MountainVillage)] // old joke
         [CheckRestricted(Scene.TerminaField, variant: 0x1F,
             check: Item.HeartPiecePeahat)]
         [CheckRestricted(Scene.RoadToSouthernSwamp, variant: ActorConst.ANY_VARIANT,
@@ -1213,8 +1213,10 @@ namespace MMR.Randomizer.GameObjects
             0x8003
         )]
         [BlockingVariantsAll] // might turn this off again, but at can cause issues, esp in deku palace and races
-        //[ForbidFromScene(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead,
-        //    Scene.TerminaField)]
+        // block removal until we have logic for entrando
+        [ForbidFromScene(Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.WoodsOfMystery, Scene.DekuPalace, Scene.PathToSnowhead, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.MountainVillageSpring, Scene.GreatBayCoast, Scene.GreatBayCoast, Scene.ZoraCape, Scene.RoadToIkana, Scene.IkanaGraveyard, Scene.IkanaCanyon, 
+            Scene.NorthClockTown, // so many checks
+            Scene.LaundryPool, Scene.MountainVillage)]
         //[RemovalChance(10)] // disabled until we have logic to detect what items are behind the grottos
         GrottoHole = 0x55, // Door_Ana
 
