@@ -226,10 +226,11 @@ namespace MMR.Randomizer.Utils
                 SceneUtils.UpdateSceneFlagMask(getItemIndex);
             }
 
-            if (settings.UpdateChests)
+            if (!settings.UpdateChests)
             {
-                UpdateChest(location, item, itemList, overrideChestType);
+                overrideChestType = location.GetAttribute<ChestTypeAttribute>().Type;
             }
+            UpdateChest(location, item, itemList, overrideChestType);
 
             if (settings.UpdateShopAppearance)
             {

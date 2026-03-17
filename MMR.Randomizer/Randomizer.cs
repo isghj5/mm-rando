@@ -1348,12 +1348,18 @@ namespace MMR.Randomizer
             }
             else if (!itemHere.HasValue || !ItemUtils.IsLogicallyJunk(itemHere.Value))
             {
-                if ((currentTargetObject.TimeAvailable & timeAvailable) == 0)
+                var timeToCheck = currentTargetObject.TimeSetup;
+                if (timeToCheck == (int)TimeOfDay.None)
                 {
-                    Debug.WriteLine($"{target} is available at {(TimeOfDay)currentTargetObject.TimeAvailable} but the time of day chain is only available at {(TimeOfDay)timeAvailable}");
+                    timeToCheck = currentTargetObject.TimeAvailable;
+                }
+
+                if ((timeToCheck & timeAvailable) == 0)
+                {
+                    Debug.WriteLine($"{target} is at {(TimeOfDay)timeToCheck} but the time of day chain is only available at {(TimeOfDay)timeAvailable}");
                     return Dependence.TimeOfDay;
                 }
-                timeAvailable &= currentTargetObject.TimeAvailable;
+                timeAvailable &= timeToCheck;
             }
 
             //check timing
