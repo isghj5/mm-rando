@@ -5800,7 +5800,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.SoftSoilAndBeans, GameObjects.Actor.PunchableStoneTowerPillars)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.Freezard)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.LikeLike, GameObjects.Actor.ReDead)) continue; /// what was this again? hotspring?
+                if (TestHardSetObject(GameObjects.Scene.DoggyRacetrack, GameObjects.Actor.ClayPot, GameObjects.Actor.BedroomPostman)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.SkeleKnight)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.RegularZora, GameObjects.Actor.DragonFly)) continue;
@@ -6569,6 +6569,8 @@ namespace MMR.Randomizer
                     // reminder: these are companions that fully mix into the actor list
                     if (targetActors.Count <= 3) continue;
 
+                    var sceneReplacementRestrictions = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(targetActors[0].ActorEnum);
+
                     // for now, we ignore the second element and focus only on the blocking for all objects
                     // we would need to change to per-actor candidates list to get around this
                     var objectHasBlockingSensitivity = targetActors.Any(actor => actor.Blockable == false);
@@ -6592,6 +6594,9 @@ namespace MMR.Randomizer
                         {
                             continue; // cannot use
                         }
+
+                        // if candidate is blocked from being put in this spot, ignore this possibility
+                        if (sceneReplacementRestrictions != null && sceneReplacementRestrictions.Contains(companionType)) continue;
 
                         /*if (objectHasBlockingSensitivity && companionType.IsBlockingActor()) // actor is blocking type, physically
                         {
@@ -6641,7 +6646,7 @@ namespace MMR.Randomizer
                                                      .OrderBy(act => thisSceneData.RNG.Next()) // randomize list
                                                      .ToList();
 
-            if (actorsWithCompanions.Count <= 2) return;
+            if (actorsWithCompanions.Count <= 2) return; ///ZZZ
 
             for (int i = 0; i < actorsWithCompanions.Count; ++i)
             {
