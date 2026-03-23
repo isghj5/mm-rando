@@ -248,6 +248,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.Lightblock, -1)]
         [EnemizerSceneBlockSensitive(Actor.Hiploop, -1)]
         [EnemizerSceneBlockSensitive(Actor.Nejiron, -1)] // chest in room 4
+        [EnemizerSceneBlockSensitive(Actor.Beamos, -1)]
         StoneTowerTemple = 0x13,
 
         [FileID(1188)]
@@ -261,6 +262,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.BlueBubble, -1)]
         [EnemizerSceneBlockSensitive(Actor.Dexihand, -1)] // replacement needs to not block the floating rupee items
         [EnemizerSceneBlockSensitive(Actor.Lightblock, -1)]
+        [EnemizerSceneBlockSensitive(Actor.DeathArmos, -1)] // can block the maze
         [ClearEnemyPuzzleRooms(4)] // wizrobe room is a clear all room
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Poe,
            Actor.Bo)] // they just fall down to the "floor" and its awkward
