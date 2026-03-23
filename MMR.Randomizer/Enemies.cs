@@ -891,7 +891,7 @@ namespace MMR.Randomizer
             var checkRestrictedAttr = testActor.GetAttributes<CheckRestrictedAttribute>();
             if (checkRestrictedAttr != null && checkRestrictedAttr.Count() > 0) // actor has check restrictions
             {
-                var reducedList = checkRestrictedAttr.ToList().FindAll(attr => attr.Scene == sceneEnum || (int) attr.Scene == -1);
+                var reducedList = checkRestrictedAttr.ToList().FindAll(attr => attr.Scene == sceneEnum || (int)attr.Scene == -1);
 
                 foreach (var restriction in reducedList) // can have multiple rules
                 {
@@ -1006,7 +1006,7 @@ namespace MMR.Randomizer
 
                 }// else: randomize all
             }
-            if (_randomized.Settings.FreeScarecrow == false && testActor == GameObjects.Actor.Scarecrow && 
+            if (_randomized.Settings.FreeScarecrow == false && testActor == GameObjects.Actor.Scarecrow &&
                 (sceneEnum == GameObjects.Scene.TradingPost || sceneEnum == GameObjects.Scene.AstralObservatory))
             {
                 // only two scenes, one is even one is odd, lets use the seed and the scene ID
@@ -1017,22 +1017,28 @@ namespace MMR.Randomizer
                 }
             }
 
-            /* // issue: this COMPLETELY ignores bean seller is vanilla and does not show up in sphere list because -- ! ZOEY ! --
-            if (testActor == GameObjects.Actor.BeanSeller
-                && (_randomized.Settings.LogicMode != LogicMode.NoLogic && _randomized.Settings.LogicMode != LogicMode.Vanilla))
+            // MMR now offers hints at more actors if we add additional win conditions, if those conditions are active we need to avoid randomizing actors
+            if (_randomized.Settings.VictoryMode.HasFlag(VictoryMode.SkullTokens))
             {
-                var freeBeanSample = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemMagicBean).Item;
-                if (!IsActorizerJunk(freeBeanSample))
+                if (sceneEnum == GameObjects.Scene.OceanSpiderHouse && testActor == GameObjects.Actor.Seth1)
                 {
-                    return true;
+                    return GameObjects.Item.OtherKillMajora;
                 }
-                // instead of checking the checks, we should check the items, in this case is bean important?
-                var sphereItems = _randomized.Spheres.SelectMany(u => u).ToList();
-                if (sphereItems.Any(u => u.Item1 == "Magic Bean"))
+                if (sceneEnum == GameObjects.Scene.SwampSpiderHouse && testActor == GameObjects.Actor.CursedSpiderMan)
                 {
-                    return true; // bean is needed somewhere, cannot remove in case this is the requirement
+                    return GameObjects.Item.OtherKillMajora;
                 }
-            } // */
+            }
+            if (_randomized.Settings.VictoryMode.HasFlag(VictoryMode.Fairies))
+            {
+                if (sceneEnum == GameObjects.Scene.FairyFountain && testActor == GameObjects.Actor.GreatFairy)
+                {
+                    return GameObjects.Item.OtherKillMajora;
+                }
+            }
+            // todo: add happy mask salesman
+
+
             return null;
         }
 
@@ -3267,6 +3273,8 @@ namespace MMR.Randomizer
 
             if (!ACTORSENABLED) return; // note: because of this function, great bay fairy is not in the vanillaenemylist
 
+            if (_randomized.Settings.VictoryMode.HasFlag(VictoryMode.Fairies)) return; // they are needed for hints if you need all fairies
+
             var greatfairyFountainScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.FairyFountain.FileID());
 
             void ChangeGreatFairyActors(int mapIndex, int objectIndex, int actorIndex1, int actorIndex2, int actorIndex3,  string fairyName,
@@ -4275,6 +4283,8 @@ namespace MMR.Randomizer
             tunnelMap.Actors[1].Position.z -= 50; // both mines
             tunnelMap.Actors[2].Position.z -= 50;
         }
+
+
 
         private static void FixSwordSchoolPotRandomization()
         {
