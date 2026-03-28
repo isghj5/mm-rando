@@ -780,6 +780,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.DragonFly, -1)]
         [EnemizerSceneBlockSensitive(Actor.En_Owl, -1)]
         [EnemizerSceneBlockSensitive(Actor.BigOcto, -1)]
+        [EnemizerSceneBlockSensitive(Actor.SquareSign, -1)] // right next to ssh door
         SouthernSwamp = 0x42, // poisoned
 
         [FileID(1362)]
