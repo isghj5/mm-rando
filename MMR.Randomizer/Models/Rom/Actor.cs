@@ -10,6 +10,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using MMR.Randomizer.Attributes;
+using MMR.Randomizer.Enemizer;
 
 namespace MMR.Randomizer.Models.Rom
 {

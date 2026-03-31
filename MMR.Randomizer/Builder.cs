@@ -1647,7 +1647,7 @@ namespace MMR.Randomizer
             {
                 Enemies.ShuffleEnemies();
 
-                Enemies.UpdateActorOverlayTable();
+                Enemizer.ActorInjection.UpdateActorOverlayTable();
             }
         }
 
