@@ -198,9 +198,6 @@ namespace MMR.Randomizer
 
         }
 
-
-
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ReplacementListContains(GameObjects.Actor actor)
         {
@@ -442,8 +439,6 @@ namespace MMR.Randomizer
         }
 
         
-
-
         // todo move to actorutils
         // TODO rename to ACTOR is check blocked, as we will soon need to do this for actors not whole actor objects
         // for now its just the objectlessactors, checkrestricted
@@ -728,7 +723,7 @@ namespace MMR.Randomizer
             /// changes after randomization, actors objects already written, at this point we can detect IF an actor was randomized
             /// ie: was not randomized because of item, or chance of not randomizing
 
-            FixKafeiPlacements();
+            SceneModification.FixKafeiPlacements();
             SceneModification.MoveActorsIfRandomized(ACTORSENABLED);
 
             // if eyegore in the temples is removed, the door behind will not open
@@ -855,126 +850,7 @@ namespace MMR.Randomizer
             // somehow print the actor results for our randomization to log
         }
 
-        public static void FixKafeiPlacements()
-        {
-            if (!VanillaEnemyList.Contains(GameObjects.Actor.Kafei)) return;
-
-            /// if Kafei is randomized, his default placements are silly, move them to be more natural
-            var southClockTown = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.SouthClockTown);
-            var sctKafei = southClockTown.Maps[0].Actors[2];
-            if (sctKafei.ActorEnum != GameObjects.Actor.Kafei) // changed
-            {
-                // move to the bench so hes not lurking out of sight behind the laundry room area
-                sctKafei.Position = new vec16(-615, 16, 425);
-                sctKafei.Rotation.y = ActorUtils.MergeRotationAndFlags(90, flags: sctKafei.Rotation.y);
-                SceneUtils.UpdateScene(southClockTown);
-            }
-
-            var eastClockTown = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.EastClockTown);
-            var ectKafei = eastClockTown.Maps[0].Actors[2];
-            if (ectKafei.ActorEnum != GameObjects.Actor.Kafei) // changed
-            {
-                // sitting just outside of town door, move inwards a bit
-                ectKafei.Position = new vec16(1475, 60, -747);
-                ectKafei.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: sctKafei.Rotation.y);
-                SceneUtils.UpdateScene(eastClockTown);
-            }
-
-            var laundryPool = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.LaundryPool);
-            var lpKafei = laundryPool.Maps[0].Actors[9];
-            if (lpKafei.ActorEnum != GameObjects.Actor.Kafei) // changed
-            {
-                // sitting beyond the path back to SCT, move to bridge
-                lpKafei.Position = new vec16(-2080, -95, 582);
-                SceneUtils.UpdateScene(laundryPool);
-            }
-
-            var ikanaCanyon = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.IkanaCanyon);
-            var ikanaKafei = ikanaCanyon.Maps[4].Actors[9];
-            if (ikanaKafei.ActorEnum != GameObjects.Actor.Kafei) // changed
-            {
-                // move to his favorite rock
-                ikanaKafei.Position = new vec16(2523, -160, 5080);
-                SceneUtils.UpdateScene(ikanaCanyon);
-            }
-
-        }
-
-        public static void FixWaterPostboxes(SceneEnemizerData thisSceneData)
-        {
-            /// makes underwater post boxes have the correct vars
-            /// this probably shouldnt be its own code I just want underwater postboxes without the vanilla vars thinking they can be water
-            /// and un-willing right now to re-write the parameter system to specify vanilla or not
-
-            //if ( ! thisSceneData.Objects.Contains(GameObjects.Actor.Postbox.ObjectIndex())) return;
-            // that doesnt work if we are borrowing a vanilla un-touched object
-            // lets skip short circuit, it's not that much faster to search all objects when we can search all actors, most areas have small lists
-
-            foreach (var box in thisSceneData.Actors.FindAll(a => a.ActorId == (int)GameObjects.Actor.Postbox))
-            {
-                var oldVariant = box.Variants[0];
-                if (box.Variants[0] > 4) // non-vanilla is greater than 4, but vanilla requires specific numbers
-                    box.Variants[0] &= 0x4; // revert to vanilla after choosing
-                Debug.Assert(box.Variants[0] <= 0x04 && box.Variants[0] >= 0);
-            }
-        }
-
-        public static void FixSnowballActorSpawns(SceneEnemizerData thisSceneData)
-        {
-            /// The large snowballs can sometimes spawn an actor when you break them,
-            /// but they are too stupid to handle the possibility of the actor object missing, crash
-            /// but we cannot block them from spawning based on params because params is not used to specify
-            /// instead, the parameter that controls snowball type is rotation.y, so we nullify it here per-scene where we add them
-
-            var largeSnowballs = thisSceneData.Actors.FindAll(actor => actor.ActorEnum == GameObjects.Actor.LargeSnowball);
-            if (largeSnowballs.Count > 0)
-            {
-                for(int i = 0; i < largeSnowballs.Count; i++)
-                {
-                    var snowball = largeSnowballs[i];
-                    // where zero rotation (type 0) just drops an item, no actor
-                    snowball.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 0, flags: snowball.Rotation.y);
-                }
-            }
-        }
-
-        private static void FixNewGrottoZRotation(SceneEnemizerData thisSceneData)
-        {
-            /// grottos that have an upper byte of 0x0 with a type of 0x000 or 0x200 are z rotation reading types,
-            /// because they use the lower byte for item/chest characteristic (en_torch)
-            /// so we have to update the zrotation to match
-
-            var allGrottos = thisSceneData.Actors.FindAll(a => a.ActorEnum == GameObjects.Actor.GrottoHole);
-            for(int a = 0; a < allGrottos.Count(); a++)
-            {
-                var actor = allGrottos[a];
-                var variant = actor.Variants[0];
-                var type = (variant & 0x300) >> 8;
-                var upperAddress = variant & 0xF000;
-                if (upperAddress == 0 && (type == 0 || type == 2))
-                {
-                    var lowerByte = variant & 0xFF; // item/chest passed to regular grotto
-                    // 0xFF lower byte is cow grotto, no items passed, we want address A
-                    // else: regular grotto, we want address 4
-                    var newRotation = 0;
-                    switch (lowerByte)
-                    {
-                        case 0xFF:
-                            newRotation = 0xA; // cow grotto needs entrance A
-                            break;
-                        case 0x1F:             // tf grottos, shouldnt be placed because we dont know the rotation they used, this is backup
-                            newRotation = 0x1;
-                            break;
-                        default:
-                            newRotation = 0x4; // other assumes generic grotto
-                            break;
-                    }
-
-                    actor.ChangeZRotation(newRotation);
-                    actor.ActorIdFlags |= 0x2000; // do not convert Z rotation into 360 angle, leave alone to use as parameter
-                }
-            }
-        }
+        
 
         public static void FixSpecificActorRotations(SceneEnemizerData thisSceneData)
         {
@@ -1011,71 +887,6 @@ namespace MMR.Randomizer
 
             }
         }
-
-
-        public static void FixStreamSfxVolume()
-        {
-            /// EnStream is an unused actor leftover from OOT
-            ///   it is the swirling water vortexes that if you swim into you will void out in OOT: Water Temple
-            /// However this actor has a flaw: it calls a function to play a swirling water sfx
-            ///   but it uses the wrong function to play the sfx, it plays the same volume from any distance which is really annoying
-            /// so here we change it back to the default sfx function almost all actors use to fix it
-            /// we are lucky that the old and new function takes the same parameters, so we can change just the jal
-            ///   decomp tells me there are no other changes needed to swap them
-
-            // except I now use a custom mmra actor to replace this so that they match water height, this now hits the wrong spot
-
-            //if (!ReplacementListContains(GameObjects.Actor.En_Stream)) return;
-
-            var streamFid = GameObjects.Actor.En_Stream.FileListIndex();
-            RomUtils.CheckCompressed(streamFid);
-            var streamData = RomData.MMFileList[streamFid].Data;
-            ReadWriteUtils.Arr_WriteU32(streamData, 0x39C, 0x0C02E3B2); // jal func_800B8FE8() -> Actor_PlaySfxAtPos()
-        }
-
-        /* private static void RecreateFishing()
-        {
-
-            /// fishing testing
-
-            // to place in spring, we remove some  other actors and objects to get fishing working, as its huge
-
-            var springTwinIslandsScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TwinIslandsSpring.FileID());
-            var springTwinIsleMap = springTwinIslandsScene.Maps[0];
-            // wolfos
-            //springTwinIsleMap.Actors[0].ChangeActor(GameObjects.Actor.Empty); // woflos one, we want him to become fisherman
-            springTwinIsleMap.Actors[0].Position = new vec16(199, 100, 809); // move fisherman to spot in the lake -50
-            springTwinIsleMap.Actors[0].Rotation.y = (short) ActorUtils.MergeRotationAndFlags(-270, 0x7F);
-            springTwinIsleMap.Actors[0].ChangeActor(GameObjects.Actor.OOTFishing, 0x200); // 0xFFFF is the whole thing
-            springTwinIsleMap.Objects[9] = GameObjects.Actor.OOTFishing.ObjectIndex();
-
-            springTwinIsleMap.Actors[1].ChangeActor(GameObjects.Actor.Empty); // worthless one
-            springTwinIsleMap.Actors[1].OldActorEnum = GameObjects.Actor.OOTFishing;
-
-            // tektite
-            springTwinIsleMap.Actors[2].ChangeActor(GameObjects.Actor.Empty); // one whole tek
-            springTwinIsleMap.Objects[1] = GameObjects.Actor.Empty.ObjectIndex();
-
-            // goron son
-            springTwinIsleMap.Actors[20].ChangeActor(GameObjects.Actor.Empty);
-            springTwinIsleMap.Objects[6] = GameObjects.Actor.Empty.ObjectIndex();
-
-            // guay
-            springTwinIsleMap.Actors[5].ChangeActor(GameObjects.Actor.Empty);
-            springTwinIsleMap.Actors[6].ChangeActor(GameObjects.Actor.Empty);
-            springTwinIsleMap.Objects[7] = GameObjects.Actor.Empty.ObjectIndex();
-            // keese // why is there a keese object here?
-            springTwinIsleMap.Objects[0] = 0x1AB; // either empty or we could try to spawn the proprietor
-            // skullfish encounter
-            springTwinIsleMap.Actors[21].ChangeActor(GameObjects.Actor.Empty);
-            springTwinIsleMap.Actors[27].ChangeActor(GameObjects.Actor.Empty);
-            springTwinIsleMap.Actors[28].ChangeActor(GameObjects.Actor.Empty);
-            springTwinIsleMap.Objects[8] = GameObjects.Actor.Empty.ObjectIndex();
-
-            // nothing left for enemizer to do so it wont write the scene, we have to do that here
-            SceneUtils.UpdateScene(springTwinIslandsScene);
-
-        } // */
 
         private static void BlockBabyGoronIfNoSFXRando()
         {
@@ -1114,8 +925,7 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_WriteU32(codeFile, 0x046054, 0x00000000); // postman
         }
 
-
-        public static List<GameObjects.Actor> GetSceneFairyDroppingEnemyTypes(SceneEnemizerData thisSceneData)
+        public static List<GameObjects.Actor> FindSceneFairyDroppingEnemies(SceneEnemizerData thisSceneData)
         {
             /// Reads the list of specific actors of fairies, checks the list of actors we read from the scene, gets the actor types for GetMatches
             /// why? because our object focused code needs to whittle the list of actors for a enemy replacement, 
@@ -1143,13 +953,15 @@ namespace MMR.Randomizer
 
         public static void SetupGrottoActor(Actor enemy, int newVariant)
         {
+            /// Configures a new grotto to have the right parameters
+
             // todo is this a duplicate of the other function I just wrote?
 
-            /// Grottos can get their address index from an array, where the index can be their Z rotation.
-            ///   so we re-encoded variants to hold the data we want, check out the actor enum entry for more info
-            ///   the lower two bytes are used to set the chest, but we have a chest grotto with upper byte index, so reuse for rotation here
-            ///   the game does not use the top two bits of the second byte, so we use one as a flag for rotation type grottos
-            ///   we also set the time flags to always, because it makes no sense for a hole to only exist day or night, holes are forever
+            // Grottos can get their address index from an array, where the index can be their Z rotation.
+            //   so we re-encoded variants to hold the data we want, check out the actor enum entry for more info
+            //   the lower two bytes are used to set the chest, but we have a chest grotto with upper byte index, so reuse for rotation here
+            //   the game does not use the top two bits of the second byte, so we use one as a flag for rotation type grottos
+            //   we also set the time flags to always, because it makes no sense for a hole to only exist day or night, holes are forever
             enemy.ChangeActor(GameObjects.Actor.GrottoHole, vars: newVariant);
             //if ((newVariant & 0x0400) != 0) // grotto that uses rotation to set value
             {
@@ -1264,7 +1076,7 @@ namespace MMR.Randomizer
             }
         }
 
-        private static void UpdateDynaEdgeCases(SceneEnemizerData thisSceneData)
+        private static void UpdateDynaLoadCalculationEdgeCases(SceneEnemizerData thisSceneData)
         {
             // there are a few weird edge cases in dyna, we need to adress them
 
@@ -3352,7 +3164,7 @@ namespace MMR.Randomizer
             TrimSceneAcceptableCandidateList(thisSceneData);
 
             // we want to check for actor types that contain fairies per-scene for speed
-            var fairyDroppingActors = GetSceneFairyDroppingEnemyTypes(thisSceneData);
+            var fairyDroppingActors = FindSceneFairyDroppingEnemies(thisSceneData);
 
             // we group enemies with objects because some objects can be reused for multiple enemies, potential minor boost to variety
             GenerateActorCandidates(thisSceneData, fairyDroppingActors);
@@ -3510,7 +3322,7 @@ namespace MMR.Randomizer
 
                 // dyna overflow is a common crash concern, here we need to check if we overflow and shrink the dyna actor count
                 var dynaLog = new StringBuilder();
-                UpdateDynaEdgeCases(thisSceneData);
+                UpdateDynaLoadCalculationEdgeCases(thisSceneData);
                 var dynatest = thisSceneData.ActorCollection.isDynaSizeAcceptable();
                 if (dynatest != "acceptable")
                 {
@@ -3575,10 +3387,10 @@ namespace MMR.Randomizer
             FixGroundToFlyingActorHeights(thisSceneData, flagLog); // putting flying actors on ground spawns can be weird
             FixRedeadSpawnScew(thisSceneData); // redeads don't like x/z rotation
             FixBrokenActorSpawnCutscenes(thisSceneData); // some actors dont like having bad cutscenes
-            FixWaterPostboxes(thisSceneData);
+            SceneModification.FixWaterPostboxes(thisSceneData);
             SceneModification.SwitchSkullfishBackToEncount1(thisSceneData);
-            FixSnowballActorSpawns(thisSceneData);
-            FixNewGrottoZRotation(thisSceneData);
+            SceneModification.FixSnowballActorSpawns(thisSceneData);
+            SceneModification.FixNewGrottoZRotation(thisSceneData);
             FixSpecificActorRotations(thisSceneData);
             EnsureOnlyOneKankyo(thisSceneData);
             FixKaizokuType(thisSceneData);
