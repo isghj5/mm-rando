@@ -2800,7 +2800,52 @@ namespace MMR.Randomizer.Enemizer
                 stationaryScrub.Position = new vec16(-629, 0, -348);
                 stationaryScrub.ChangeYRotation(270);
             }
+        }
 
+        public static void SwitchSkullfishBackToEncount1(Enemies.SceneEnemizerData thisSceneData)
+        {
+            /// in order for the ocean skullfish to spawn over and over and harrass the player
+            /// we have to use a different spawning actor, EnEncount1
+            /// here, we take a special case of parameters I made up, and switch it back
+            /// also, skullfish parameters use rotation heavily, modify them here too
+
+            // TODO why is this a last second change? this could have been a pre-fix in Earlyfixes I think? re-examine
+
+            if (!thisSceneData.Objects.Contains((int)GameObjects.Actor.SkullFish.ObjectIndex())) return;
+
+            for (int a = 0; a < thisSceneData.Actors.Count; a++)
+            {
+                var actor = thisSceneData.Actors[a];
+
+                if (actor.ActorEnum == GameObjects.Actor.SkullFish)
+                {
+                    var validDropIds = new int[] {
+                        0x3, 0x11, 0x7, // stone tower temple
+                        0, 0xE, 0x7, 0xD, // gbt
+                        0x1, // encount in gbt
+                        // cape is always drop nothing, lame
+                    };
+                    var nextDropId = validDropIds[thisSceneData.RNG.Next(validDropIds.Length)];
+
+                    if (actor.Variants[0] == 0xFFFF) // encount swap
+                    {
+                        actor.ChangeActor(GameObjects.Actor.En_Encount1, vars: 0x105E);
+                        actor.ChangeXRotation(0x38); // x rotation is the rate at which they re-spawn, 0x28 is the fast one near the cape, 0x6Xsomething other places
+                        actor.ChangeYRotation((nextDropId - 1));    // y rotation is item drop pool index
+                        actor.ChangeZRotation(0x32); // z rotation is agro range, cape is 0x32
+
+                    }
+                    else
+                    {
+                        // z rotation for non encount types (PR2 type 2) is drop table
+                        // reminder, its (z-rot -1) to get index, as zero is ignore case
+                        actor.ChangeZRotation(nextDropId - 1);
+                    }
+
+                    // in order for an actor to get the rotation raw, instead of converted, we need to set a flag for each parameter
+                    actor.ActorIdFlags |= 0x8000 | 0x4000 | 0x2000;
+                }
+            }
         }
 
         private static void MovePostmanIfRandomized(Scene terminaField)

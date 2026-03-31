@@ -8,7 +8,7 @@ using MMR.Randomizer.Models.Rom;
 using System.Diagnostics;
 
 using System.Runtime.CompilerServices;
-
+using MMR.Randomizer.Enemizer;
 
 namespace MMR.Randomizer.Utils
 {
