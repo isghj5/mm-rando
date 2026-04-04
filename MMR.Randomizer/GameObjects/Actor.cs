@@ -6128,6 +6128,7 @@ namespace MMR.Randomizer.GameObjects
             0x5080, 0x50CA, 0x50A1, 0x0AFB, 0x099C)]
         [EnemizerScenesPlacementBlock(
             Scene.DekuPalace,
+            Scene.GormanRaceTrack, // can lock the race and the cremia trip
             Scene.OceanSpiderHouse, Scene.SwampSpiderHouse // if the player picks up and item at the same time they get grabbed its softlock, for now just block these areas
         )]
         [RemovalChance(0), PlacementWeight(25)] // room doors are switch flag not kill enemy rooms
