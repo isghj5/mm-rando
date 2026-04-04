@@ -700,7 +700,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         WolfosDie = 0x304B,
 
-        [Tags(Long)]
+        [Tags(Looping)]
         SeaDragonAppears = 0x3053,
 
         [Replacable(0xEC1006, 0xEC13C6)] // NA_SE_EN_BOMCHU_AIM and NA_SE_EN_BOMCHU_VOICE
