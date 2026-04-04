@@ -2797,12 +2797,13 @@ namespace MMR.Randomizer.GameObjects
         // these used to be banned, but we should be able to use them now:
         // DekuShrine RoadToIkana GoronVillage
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior, // cursed if put on hms
-                                                                //Scene.Woodfall, // they fall off into the water and quietly swim, lame?
-                                                                //Scene.SecretShrine, Scene.BeneathGraveyard, // these guys are actually enemies, you can get stuck in a room with them
+            //Scene.Woodfall, // they fall off into the water and quietly swim, lame?
+            //Scene.SecretShrine, Scene.BeneathGraveyard, // these guys are actually enemies, you can get stuck in a room with them
             Scene.FishermansHut, // crash
             Scene.Grottos, // crash in generic grotto, untested in others, few paths
             Scene.AstralObservatory,
-            Scene.BeneathGraveyard, // assumed but not tested, something pathing was crashing down there with a path
+            Scene.BeneathGraveyard,
+            Scene.TradingPost,
             Scene.MountainVillageSpring, Scene.RanchBuildings)] // crash because not enough paths
         Dog = 0xE2, // En_Dg
 
@@ -4449,14 +4450,15 @@ namespace MMR.Randomizer.GameObjects
         [FileID(351)]
         [ObjectListIndex(0xBB)]
         // type: 0x3000: 0 is path, 1 air 2 water
-        // for patying, 0x7F is path
+        // for pathing, 0x7F is path
         // for ceiling, 0x3f is link count, height from ceiling
-        [WaterBottomVariants(0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x200B, 0x200C, 0x200D)]
         [CeilingVariants(
             0x100C, 0x100D, 0x100F, 0x1013, 0x1011, 0x1012, // istt
             0x1014, 0x1016, 0x1017, 0x1018, // ikana castle (also d)
             0x101E, 0x1019 // non-vanilla? when did I add this?
             )] // loads more, think there are flags here
+        // TODO problem: these lengths aren't matching the distance to bottom, I might have to manually adjust
+        [WaterBottomVariants(0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x200B, 0x200C, 0x200D)]
         [PerchingVariants(0x100A)] // non-vanilla link speed A, attempting to perch
         [PathingVariants(0x0000)] // rolls along the path, was likely meant to roll through a water current in vanilla
         [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
@@ -5857,7 +5859,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 4, variant: 0, 1, 2, 3, 4, 5)]
         [RespawningVariants(0)] // marked respawned to avoid: being placed on flying fairy enemy, because it doesnt come down, and boss rooms (boring)
         [ForbidFromScene(Scene.PiratesFortressRooms)] // pirate beehive cutscene
-        [PlacementWeight(75)]
+        [PlacementWeight(68)]
         GiantBeee = 0x204, // En_Bee
 
         [ActorizerEnabled]
