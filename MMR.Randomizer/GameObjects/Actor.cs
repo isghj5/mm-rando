@@ -1421,9 +1421,31 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0001)]
         Eff_Dust = 0x7B, // Eff_Dust
 
+        [ActorizerEnabled]
         [FileID(117)]
         [ActorInstanceSize(0x16C)]
-        [ObjectListIndex(0001)]
+        [ObjectListIndex(0xD2)]
+        // 2 has special code for ranch, and thats it
+        [GroundVariants( 0x0, // road to ikana
+            0x2, // road to southern swamp
+            0x3, // ranch, jails epona
+            0x4, 0x5, // ranch, static
+        //)]
+        // because the type is 2, none of these are doing anything
+        //[PathingVariants( // except none of these paths make sense either
+            // TODO these wont randomize in actorizer becuase we dont have an object to detect and match, what to do 
+            0x0302, // cape, path is a weird outer parimeter in the water? maybe a beaver race was going to be here?
+            0x0402, // great bay coast, leads to zog
+            0x0502, // southern swamp?? its in the entrance/exit?? not sure what it's doing
+            0x0405,
+
+            0x0802 // the only one that locks in epona
+            )]
+        [VariantsWithRoomMax(max:0, 0x0302, 0x0402, 0x0502, 0x0405)] // all broken
+        [BlockingVariantsAll]
+        // TODO test in race
+        [ForbidFromScene(Scene.RomaniRanch)] // might be needed for game
+        [RemovalChance(5), PlacementWeight(5)] // boring
         HorseJumpingFence = 0x7C, // Bg_Umajump
 
         [FileID(122)]
