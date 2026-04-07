@@ -55,6 +55,7 @@ namespace MMR.UI.Forms
             InitializeHUDGroupBox();
             InitializeTransformationFormSettings();
             InitializeShortenCutsceneSettings();
+            InitalizeActorizerOptions();
             InitializeItemPoolSettings();
             InitializeDungeonModeSettings();
             InitializeTrapSettings();
@@ -223,6 +224,10 @@ namespace MMR.UI.Forms
                 { cBombTrapTunicColors, cfg => cfg.CosmeticSettings.BombTrapsRandomizeTunicColor },
                 { cRainbowTunic, cfg => cfg.CosmeticSettings.RainbowTunic },
                 { cCameraStyle, cfg => cfg.CosmeticSettings.CameraStyle },
+
+                // actor
+                { cActorMode, cfg => cfg.GameplaySettings.ActorMode},
+
             };
 
             foreach (var (control, expression) in simpleControls)
@@ -813,6 +818,11 @@ namespace MMR.UI.Forms
                     }
                 }
             }
+        }
+
+        private void InitalizeActorizerOptions()
+        {
+            // todo
         }
 
         private void InitalizeLowHealthSFXOptions()
@@ -1492,6 +1502,7 @@ namespace MMR.UI.Forms
             cLink.SelectedIndex = (int)_configuration.GameplaySettings.Character;
             cTatl.SelectedIndex = (int)_configuration.CosmeticSettings.TatlColorSchema;
             cCameraStyle.SelectedIndex = (int)_configuration.CosmeticSettings.CameraStyle;
+            cActorMode.SelectedIndex = (int)_configuration.GameplaySettings.ActorMode;
             cGravity.SelectedIndex = (int)_configuration.GameplaySettings.MovementMode;
             cLowHealthSFXComboBox.SelectedIndex = cLowHealthSFXComboBox.Items.IndexOf(_configuration.CosmeticSettings.LowHealthSFX.ToString());
             cNutAndStickDrops.SelectedIndex = (int)_configuration.GameplaySettings.NutandStickDrops;
@@ -2033,6 +2044,7 @@ namespace MMR.UI.Forms
             cHintImportance.Enabled = v;
 
             cCameraStyle.Enabled = v;
+            cActorMode.Enabled = v;
             cTargettingStyle.Enabled = v;
             cInstantPictobox.Enabled = v;
             cRainbowTunic.Enabled = v;
@@ -2244,6 +2256,7 @@ namespace MMR.UI.Forms
                     tSettings.TabPages.Insert(2, tabGimmicks);
                     tSettings.TabPages.Insert(3, tabComfort);
                     tSettings.TabPages.Insert(4, tabShortenCutscenes);
+                    tSettings.TabPages.Insert(5, tabActorizer);
                 }
             }
             else
@@ -2253,6 +2266,7 @@ namespace MMR.UI.Forms
                 tSettings.TabPages.Remove(tabGimmicks);
                 tSettings.TabPages.Remove(tabComfort);
                 tSettings.TabPages.Remove(tabShortenCutscenes);
+                tSettings.TabPages.Remove(tabActorizer);
             }
 
             // Other..?

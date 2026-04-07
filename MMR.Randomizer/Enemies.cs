@@ -57,7 +57,7 @@ namespace MMR.Randomizer
         public static List<Actor> FreeCandidateList { get; set; }
         public static List<Actor> FreeOnlyCandidateList { get; set; } // not worthy by themselves, only if object was already selected
         private static Mutex _LogMutex = new Mutex();
-        private static bool ACTORSENABLED = true; 
+        private static bool ACTORSENABLED;
         private static Random _seedRNG;
         private static Models.RandomizedResult _randomized;
         private static OutputSettings _outputSettings;
@@ -121,7 +121,7 @@ namespace MMR.Randomizer
                             .ToList(); //*/
 
             // special request for enemizer: do not randomize bigocto
-            if ( ! ACTORSENABLED)
+            if (_randomized.Settings.ActorMode == ActorMode.Enemizer)
             {
                 VanillaEnemyList.Remove(GameObjects.Actor.BigOcto);
             }
@@ -129,8 +129,17 @@ namespace MMR.Randomizer
             // list of replacement actors we can use to replace with
             // for now they are the same, in the future players will control how they load
             ReplacementCandidateList = new List<Actor>();
-            //foreach (var actor in EnemiesOnly) // for use with enemies only
-            foreach (var actor in VanillaEnemyList)
+
+            List<GameObjects.Actor> ChosenCandidatesList;
+            if (_randomized.Settings.ActorMode == ActorMode.EnemizerOutForBlood)
+            {
+                ChosenCandidatesList = EnemiesOnly;
+            }
+            else
+            {
+                ChosenCandidatesList = VanillaEnemyList;
+            }
+            foreach (var actor in ChosenCandidatesList)
             {
                 if (actor.NoPlacableVariants() == false)
                 {
@@ -2002,7 +2011,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.SoftSoilAndBeans, GameObjects.Actor.PunchableStoneTowerPillars)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.Freezard)) continue;
-                if (TestHardSetObject(GameObjects.Scene.DoggyRacetrack, GameObjects.Actor.ClayPot, GameObjects.Actor.BedroomPostman)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.DoggyRacetrack, GameObjects.Actor.ClayPot, GameObjects.Actor.BedroomPostman)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.SkeleKnight)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.RegularZora, GameObjects.Actor.DragonFly)) continue;
@@ -3446,6 +3455,8 @@ namespace MMR.Randomizer
             _outputSettings = outputSettings;
             _cosmeticSettings = cosmeticSettings;
             _syncedLog = new StringBuilder();
+
+            ACTORSENABLED = randomized.Settings.ActorMode == ActorMode.Actorizer || randomized.Settings.ActorMode == ActorMode.EnemizerOutForBlood;
 
             PrepareEnemyLists();
             JunkDetection.PrepareJunkItems(randomized);

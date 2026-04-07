@@ -1635,7 +1635,7 @@ namespace MMR.Randomizer
         private void ReadEnemies(OutputSettings outputSettings)
         {
             // split from WriteEnemies because some work needs to happen before itemizer actor fixes
-            if (_randomized.Settings.RandomizeEnemies)
+            if (_randomized.Settings.ActorMode != ActorMode.Default)
             {
                 Enemies.ReadActors(outputSettings, _cosmeticSettings, _randomized);
             }
@@ -1643,7 +1643,7 @@ namespace MMR.Randomizer
 
         private void WriteEnemies()
         {
-            if (_randomized.Settings.RandomizeEnemies)
+            if (_randomized.Settings.ActorMode != ActorMode.Default)
             {
                 Enemies.ShuffleEnemies();
 
