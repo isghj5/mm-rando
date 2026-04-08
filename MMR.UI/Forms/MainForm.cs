@@ -229,8 +229,7 @@ namespace MMR.UI.Forms
                 { cActorMode, cfg => cfg.GameplaySettings.ActorMode},
                 { cFormItemRestrictionUnlock, cfg => cfg.GameplaySettings.FormsItemRestrictionUnlocked},
                 { cLocationItemRestrictionUnlock, cfg => cfg.GameplaySettings.LocationsItemRestrictionUnlocked},
-
-
+                { cFasterCommonFileLoad, cfg => cfg.GameplaySettings.FasterCommonFileLoad},
             };
 
             foreach (var (control, expression) in simpleControls)
@@ -369,6 +368,7 @@ namespace MMR.UI.Forms
                 // actor
                 { cFormItemRestrictionUnlock, (typeof(GameplaySettings), nameof(GameplaySettings.FormsItemRestrictionUnlocked)) },
                 { cLocationItemRestrictionUnlock, (typeof(GameplaySettings), nameof(GameplaySettings.LocationsItemRestrictionUnlocked)) },
+                { cFasterCommonFileLoad, (typeof(GameplaySettings), nameof(GameplaySettings.FasterCommonFileLoad)) },
 
             };
 
@@ -1502,7 +1502,7 @@ namespace MMR.UI.Forms
             nRequiredZoraEggs.Value = _configuration.GameplaySettings.RequiredZoraEggs;
             cFormItemRestrictionUnlock.Checked = _configuration.GameplaySettings.FormsItemRestrictionUnlocked;
             cLocationItemRestrictionUnlock.Checked = _configuration.GameplaySettings.LocationsItemRestrictionUnlocked;
-
+            cFasterCommonFileLoad.Checked = _configuration.GameplaySettings.FasterCommonFileLoad;
             cDMult.SelectedIndex = (int)_configuration.GameplaySettings.DamageMode;
             cDeathMode.SelectedIndex = (int)_configuration.GameplaySettings.DeathMode;
             cDType.SelectedIndex = (int)_configuration.GameplaySettings.DamageEffect;
@@ -2056,6 +2056,7 @@ namespace MMR.UI.Forms
             cActorMode.Enabled = v;
             cFormItemRestrictionUnlock.Enabled = v;
             cLocationItemRestrictionUnlock.Enabled = v;
+            cFasterCommonFileLoad.Enabled = v;
             cTargettingStyle.Enabled = v;
             cInstantPictobox.Enabled = v;
             cRainbowTunic.Enabled = v;

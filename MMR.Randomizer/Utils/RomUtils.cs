@@ -285,19 +285,20 @@ namespace MMR.Randomizer.Utils
             Debug.WriteLine($" compress all files time : [{(DateTime.Now).Subtract(startTime).TotalMilliseconds} (ms)]");
         }
 
-        private static void SetFilesToRemainDecompressed(OutputSettings settings)
+        public static void SetFilesToRemainDecompressed(OutputSettings outputSettings, GameplaySettings gameplaySettings)
         {
             /// Now that files can remain uncompressed and be expected to work, lets leave some commonly accessed files de-compressed so they don't cost as much to load
 
-            if (settings.OutputVC)
+            if ( gameplaySettings.FasterCommonFileLoad == false
+              || outputSettings.OutputVC) // this does not work with wiivc right now
             {
-                return; // this does not work with wiivc right now
+                return; 
             }
-
 
             var listOfFiles = new List<int>()
             {
                 //scenes
+                // these were disabled because they messed with a power users settings, but they didn't do as much as some of the other files anyway
                 //GameObjects.Scene.TerminaField.FileID(),
                 //GameObjects.Scene.TerminaField.FileID() + 1, // room 0
                 //GameObjects.Scene.SouthClockTown.FileID(),
@@ -350,7 +351,6 @@ namespace MMR.Randomizer.Utils
         public static byte[] BuildROM(OutputSettings settings)
         {
 
-            SetFilesToRemainDecompressed(settings);
 
             CompressMMFiles();
 

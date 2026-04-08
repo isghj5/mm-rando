@@ -953,5 +953,6 @@ namespace MMR.Randomizer.Models.Settings
 
         public bool LocationsItemRestrictionUnlocked { get; set; }
 
+        public bool FasterCommonFileLoad { get; set; }
     }
 }

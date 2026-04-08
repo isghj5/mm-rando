@@ -7130,6 +7130,8 @@ namespace MMR.Randomizer
             {
                 progressReporter.ReportProgress(75, "Building ROM...");
 
+                RomUtils.SetFilesToRemainDecompressed(outputSettings, _randomized.Settings);
+
                 byte[] ROM = null;
                 if (outputSettings.GenerateROM)
                 {

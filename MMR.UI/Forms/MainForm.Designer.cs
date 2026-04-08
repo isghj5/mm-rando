@@ -115,6 +115,8 @@ namespace MMR.UI.Forms
             this.btn_hud = new System.Windows.Forms.Button();
             this.tFormCosmetics = new System.Windows.Forms.TabControl();
             this.tabActorizer = new System.Windows.Forms.TabPage();
+            this.cLocationItemRestrictionUnlock = new System.Windows.Forms.CheckBox();
+            this.cFormItemRestrictionUnlock = new System.Windows.Forms.CheckBox();
             this.lActorMode = new System.Windows.Forms.Label();
             this.cActorMode = new System.Windows.Forms.ComboBox();
             this.tabShortenCutscenes = new System.Windows.Forms.TabPage();
@@ -290,8 +292,7 @@ namespace MMR.UI.Forms
             this.lCustomStartingItemAmount = new System.Windows.Forms.Label();
             this.bStartingItemEditor = new System.Windows.Forms.Button();
             this.tSettings = new System.Windows.Forms.TabControl();
-            this.cFormItemRestrictionUnlock = new System.Windows.Forms.CheckBox();
-            this.cLocationItemRestrictionUnlock = new System.Windows.Forms.CheckBox();
+            this.cFasterCommonFileLoad = new System.Windows.Forms.CheckBox();
             this.gGameOutput.SuspendLayout();
             this.mMenu.SuspendLayout();
             this.ttOutput.SuspendLayout();
@@ -1195,6 +1196,7 @@ namespace MMR.UI.Forms
             // 
             // tabActorizer
             // 
+            this.tabActorizer.Controls.Add(this.cFasterCommonFileLoad);
             this.tabActorizer.Controls.Add(this.cLocationItemRestrictionUnlock);
             this.tabActorizer.Controls.Add(this.cFormItemRestrictionUnlock);
             this.tabActorizer.Controls.Add(this.lActorMode);
@@ -1206,6 +1208,30 @@ namespace MMR.UI.Forms
             this.tabActorizer.TabIndex = 5;
             this.tabActorizer.Text = "Actorizer";
             this.tabActorizer.UseVisualStyleBackColor = true;
+            // 
+            // cLocationItemRestrictionUnlock
+            // 
+            this.cLocationItemRestrictionUnlock.AutoSize = true;
+            this.cLocationItemRestrictionUnlock.Checked = true;
+            this.cLocationItemRestrictionUnlock.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cLocationItemRestrictionUnlock.Location = new System.Drawing.Point(250, 35);
+            this.cLocationItemRestrictionUnlock.Name = "cLocationItemRestrictionUnlock";
+            this.cLocationItemRestrictionUnlock.Size = new System.Drawing.Size(144, 19);
+            this.cLocationItemRestrictionUnlock.TabIndex = 3;
+            this.cLocationItemRestrictionUnlock.Text = "Location Items Unlock";
+            this.cLocationItemRestrictionUnlock.UseVisualStyleBackColor = true;
+            // 
+            // cFormItemRestrictionUnlock
+            // 
+            this.cFormItemRestrictionUnlock.AutoSize = true;
+            this.cFormItemRestrictionUnlock.Checked = true;
+            this.cFormItemRestrictionUnlock.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cFormItemRestrictionUnlock.Location = new System.Drawing.Point(250, 9);
+            this.cFormItemRestrictionUnlock.Name = "cFormItemRestrictionUnlock";
+            this.cFormItemRestrictionUnlock.Size = new System.Drawing.Size(126, 19);
+            this.cFormItemRestrictionUnlock.TabIndex = 2;
+            this.cFormItemRestrictionUnlock.Text = "Form Items Unlock";
+            this.cFormItemRestrictionUnlock.UseVisualStyleBackColor = true;
             // 
             // lActorMode
             // 
@@ -3444,29 +3470,17 @@ namespace MMR.UI.Forms
             this.tSettings.Size = new System.Drawing.Size(918, 389);
             this.tSettings.TabIndex = 10;
             // 
-            // cFormItemRestrictionUnlock
+            // cFasterCommonFileLoad
             // 
-            this.cFormItemRestrictionUnlock.AutoSize = true;
-            this.cFormItemRestrictionUnlock.Checked = true;
-            this.cFormItemRestrictionUnlock.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cFormItemRestrictionUnlock.Location = new System.Drawing.Point(250, 9);
-            this.cFormItemRestrictionUnlock.Name = "cFormItemRestrictionUnlock";
-            this.cFormItemRestrictionUnlock.Size = new System.Drawing.Size(126, 19);
-            this.cFormItemRestrictionUnlock.TabIndex = 2;
-            this.cFormItemRestrictionUnlock.Text = "Form Items Unlock";
-            this.cFormItemRestrictionUnlock.UseVisualStyleBackColor = true;
-            // 
-            // cLocationItemRestrictionUnlock
-            // 
-            this.cLocationItemRestrictionUnlock.AutoSize = true;
-            this.cLocationItemRestrictionUnlock.Checked = true;
-            this.cLocationItemRestrictionUnlock.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cLocationItemRestrictionUnlock.Location = new System.Drawing.Point(250, 35);
-            this.cLocationItemRestrictionUnlock.Name = "cLocationItemRestrictionUnlock";
-            this.cLocationItemRestrictionUnlock.Size = new System.Drawing.Size(144, 19);
-            this.cLocationItemRestrictionUnlock.TabIndex = 3;
-            this.cLocationItemRestrictionUnlock.Text = "Location Items Unlock";
-            this.cLocationItemRestrictionUnlock.UseVisualStyleBackColor = true;
+            this.cFasterCommonFileLoad.AutoSize = true;
+            this.cFasterCommonFileLoad.Checked = true;
+            this.cFasterCommonFileLoad.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cFasterCommonFileLoad.Location = new System.Drawing.Point(250, 61);
+            this.cFasterCommonFileLoad.Name = "cFasterCommonFileLoad";
+            this.cFasterCommonFileLoad.Size = new System.Drawing.Size(161, 19);
+            this.cFasterCommonFileLoad.TabIndex = 4;
+            this.cFasterCommonFileLoad.Text = "Faster Common File Load";
+            this.cFasterCommonFileLoad.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -3826,6 +3840,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label lActorMode;
         private System.Windows.Forms.CheckBox cLocationItemRestrictionUnlock;
         private System.Windows.Forms.CheckBox cFormItemRestrictionUnlock;
+        private System.Windows.Forms.CheckBox cFasterCommonFileLoad;
     }
 }
 
