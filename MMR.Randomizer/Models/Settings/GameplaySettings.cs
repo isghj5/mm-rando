@@ -948,5 +948,10 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         [Description("Select an actor mode.\n Actorizer randomizes all NPCs and enemies togther into one pool.\n Enemizer only randomizes enemies. \n Out For Blood removes NPCs and repalces them with enemies, making the world more hostile.")]
         public ActorMode ActorMode { get; set; }
+
+        public bool FormsItemRestrictionUnlocked { get; set; }
+
+        public bool LocationsItemRestrictionUnlocked { get; set; }
+
     }
 }

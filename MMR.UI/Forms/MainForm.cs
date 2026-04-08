@@ -227,6 +227,9 @@ namespace MMR.UI.Forms
 
                 // actor
                 { cActorMode, cfg => cfg.GameplaySettings.ActorMode},
+                { cFormItemRestrictionUnlock, cfg => cfg.GameplaySettings.FormsItemRestrictionUnlocked},
+                { cLocationItemRestrictionUnlock, cfg => cfg.GameplaySettings.LocationsItemRestrictionUnlocked},
+
 
             };
 
@@ -363,6 +366,9 @@ namespace MMR.UI.Forms
                 { cTakeDamageGettingCaught, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageGettingCaught))},
                 { cTakeDamageFromDog, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromDog))},
                 { cTakeDamageFromDexihands, (typeof(GameplaySettings), nameof(GameplaySettings.TakeDamageFromDexihands))},
+                // actor
+                { cFormItemRestrictionUnlock, (typeof(GameplaySettings), nameof(GameplaySettings.FormsItemRestrictionUnlocked)) },
+                { cLocationItemRestrictionUnlock, (typeof(GameplaySettings), nameof(GameplaySettings.LocationsItemRestrictionUnlocked)) },
 
             };
 
@@ -1494,6 +1500,8 @@ namespace MMR.UI.Forms
             cSpeedupBabyCucco.Checked = _configuration.GameplaySettings.SpeedupBabyCuccos;
             cGiantMaskAnywhere.Checked = _configuration.GameplaySettings.GiantMaskAnywhere;
             nRequiredZoraEggs.Value = _configuration.GameplaySettings.RequiredZoraEggs;
+            cFormItemRestrictionUnlock.Checked = _configuration.GameplaySettings.FormsItemRestrictionUnlocked;
+            cLocationItemRestrictionUnlock.Checked = _configuration.GameplaySettings.LocationsItemRestrictionUnlocked;
 
             cDMult.SelectedIndex = (int)_configuration.GameplaySettings.DamageMode;
             cDeathMode.SelectedIndex = (int)_configuration.GameplaySettings.DeathMode;
@@ -1503,6 +1511,7 @@ namespace MMR.UI.Forms
             cTatl.SelectedIndex = (int)_configuration.CosmeticSettings.TatlColorSchema;
             cCameraStyle.SelectedIndex = (int)_configuration.CosmeticSettings.CameraStyle;
             cActorMode.SelectedIndex = (int)_configuration.GameplaySettings.ActorMode;
+            
             cGravity.SelectedIndex = (int)_configuration.GameplaySettings.MovementMode;
             cLowHealthSFXComboBox.SelectedIndex = cLowHealthSFXComboBox.Items.IndexOf(_configuration.CosmeticSettings.LowHealthSFX.ToString());
             cNutAndStickDrops.SelectedIndex = (int)_configuration.GameplaySettings.NutandStickDrops;
@@ -2045,6 +2054,8 @@ namespace MMR.UI.Forms
 
             cCameraStyle.Enabled = v;
             cActorMode.Enabled = v;
+            cFormItemRestrictionUnlock.Enabled = v;
+            cLocationItemRestrictionUnlock.Enabled = v;
             cTargettingStyle.Enabled = v;
             cInstantPictobox.Enabled = v;
             cRainbowTunic.Enabled = v;

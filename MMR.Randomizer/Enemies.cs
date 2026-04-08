@@ -747,13 +747,15 @@ namespace MMR.Randomizer
 
         private static void EnableAllFormItems()
         {
+            if ( ! _randomized.Settings.FormsItemRestrictionUnlocked) return;
+
             /// let deku nut
 
             const int FORM_FD = 0; // let me use enum as int without a cast and I'll use it
             const int FORM_GORON = 1;
             //const int FORM_ZORA  = 2;
             const int FORM_DEKU = 3;
-            //const int FORM_CHILD = 4;
+            const int FORM_CHILD = 4;
 
 
             var codeFile = RomData.MMFileList[31].Data;
@@ -772,7 +774,7 @@ namespace MMR.Randomizer
             }
 
             // however there are some that are broken/bugged and should never be used
-            for (int form = 0; form < 4; form++) // dont overwrite regular link which is form 5
+            for (int form = FORM_FD; form < FORM_CHILD; form++) // dont overwrite regular link which is form 5
             {
                 // hookshot item is 0xF ( _can_ crash, cause unknown, pj64 doesnt crash so I cant even debug it)
                 codeFile[startLoc + (form * formDataWidth) + 0xF] = 0x00;
@@ -794,6 +796,10 @@ namespace MMR.Randomizer
             // Dekulink can lock up if he gets a recoil while using sword/stick
             codeFile[startLoc + (FORM_DEKU * formDataWidth) + 0x8] = 0x00;
             codeFile[startLoc + (FORM_DEKU * formDataWidth) + 0x10] = 0x00;
+
+            // I don't know why zfg cares so much about child kegging
+            codeFile[startLoc + (FORM_CHILD * formDataWidth) + 0x0C] = 0x00;
+
         }
 
         public static void DisableAllLocationRestrictions()
@@ -3526,7 +3532,7 @@ namespace MMR.Randomizer
 
                 EnemizerLateFixes(); // fix IF randomized
                 //LowerEnemiesResourceLoad();
-                if (ACTORSENABLED)
+                if (_randomized.Settings.LocationsItemRestrictionUnlocked)
                 {
                     DisableAllLocationRestrictions();  //experimental
                 }
