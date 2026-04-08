@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 30;
+        public const int CurrentVersion = 31;
 
         public static string ApplyMigrations(string logic)
         {
@@ -272,6 +272,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 30)
             {
                 AddZoraEggs(logicObject);
+            }
+
+            if (logicObject.Version < 31)
+            {
+                AddEnemyMode(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -5599,6 +5604,18 @@ namespace MMR.Randomizer.LogicMigrator
             DeleteUnusedLogicItems(logicObject, 1500);
 
             logicObject.Version = 30;
+        }
+
+        private static void AddEnemyMode(JsonFormatLogic logicObject)
+        {
+            foreach (var item in logicObject.Logic)
+            {
+                if (item.SettingExpression != null)
+                {
+                    item.SettingExpression = item.SettingExpression.Replace("settings.RandomizeEnemies", "settings.EnemyMode.HasFlag(EnemyMode.Randomized)");
+                }
+            }
+            logicObject.Version = 31;
         }
 
         private static void DeleteUnusedLogicItems(JsonFormatLogic logicObject, int minimumIndex)

@@ -103,7 +103,6 @@ namespace MMR.UI.Forms
                 // Main Settings
                 { cMixSongs, cfg => cfg.GameplaySettings.AddSongs },
                 { cProgressiveUpgrades, cfg => cfg.GameplaySettings.ProgressiveUpgrades },
-                { cEnemy, cfg => cfg.GameplaySettings.RandomizeEnemies },
                 { cGibdoRequirements, cfg => cfg.GameplaySettings.RandomizeGibdoRequirements },
                 { cMode, cfg => cfg.GameplaySettings.LogicMode },
                 { cItemPlacement, cfg => cfg.GameplaySettings.ItemPlacement },
@@ -471,6 +470,7 @@ namespace MMR.UI.Forms
         private void InitializeDungeonModeSettings()
         {
             var properties = new List<PropertyInfo>();
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.EnemyMode)));
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.EntranceMode)));
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.VictoryMode)));
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.PriceMode)));
@@ -1415,7 +1415,6 @@ namespace MMR.UI.Forms
             cMixSongs.Checked = _configuration.GameplaySettings.AddSongs;
             cProgressiveUpgrades.Checked = _configuration.GameplaySettings.ProgressiveUpgrades;
             cSFX.Checked = _configuration.CosmeticSettings.RandomizeSounds;
-            cEnemy.Checked = _configuration.GameplaySettings.RandomizeEnemies;
             cGibdoRequirements.Checked = _configuration.GameplaySettings.RandomizeGibdoRequirements;
             if (_configuration.GameplaySettings.ShortenCutsceneSettings == null)
             {
@@ -2024,7 +2023,6 @@ namespace MMR.UI.Forms
             cRequiredBossRemains.Enabled = v;
             cMixSongs.Enabled = v;
             cProgressiveUpgrades.Enabled = v;
-            cEnemy.Enabled = v;
             cItemPlacement.Enabled = v;
 
             //bHumanTunic.Enabled = v;

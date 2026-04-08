@@ -3,6 +3,8 @@ using System;
 using System.Drawing;
 using System.Linq;
 
+
+
 namespace MMR.UI.Forms
 {
     partial class MainForm
@@ -25,6 +27,7 @@ namespace MMR.UI.Forms
             base.Dispose(disposing);
         }
 
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -39,88 +42,100 @@ namespace MMR.UI.Forms
             this.loadSettings = new System.Windows.Forms.OpenFileDialog();
             this.saveSettings = new System.Windows.Forms.SaveFileDialog();
             this.tROMName = new System.Windows.Forms.TextBox();
-            this.cDrawHash = new System.Windows.Forms.CheckBox();
-            this.gGameOutput = new System.Windows.Forms.GroupBox();
-            this.cHTMLLog = new System.Windows.Forms.CheckBox();
-            this.cPatch = new System.Windows.Forms.CheckBox();
-            this.cSpoiler = new System.Windows.Forms.CheckBox();
-            this.cN64 = new System.Windows.Forms.CheckBox();
-            this.cVC = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.bApplyPatch = new System.Windows.Forms.Button();
-            this.saveROM = new System.Windows.Forms.SaveFileDialog();
-            this.cEnergy = new System.Windows.Forms.ColorDialog();
-            this.cTunic = new System.Windows.Forms.ColorDialog();
-            this.bRandomise = new System.Windows.Forms.Button();
-            this.bReroll = new System.Windows.Forms.Button();
-            this.saveWad = new System.Windows.Forms.SaveFileDialog();
-            this.mMenu = new System.Windows.Forms.MenuStrip();
-            this.mFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.mCustomise = new System.Windows.Forms.ToolStripMenuItem();
-            this.mDPadConfig = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mLogicEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.mHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.mManual = new System.Windows.Forms.ToolStripMenuItem();
-            this.mSep1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.openBROM = new System.Windows.Forms.OpenFileDialog();
-            this.pProgress = new System.Windows.Forms.ProgressBar();
-            this.bgWorker = new System.ComponentModel.BackgroundWorker();
-            this.lStatus = new System.Windows.Forms.Label();
-            this.tSeed = new System.Windows.Forms.TextBox();
-            this.lSeed = new System.Windows.Forms.Label();
-            this.cDummy = new System.Windows.Forms.CheckBox();
-            this.openPatch = new System.Windows.Forms.OpenFileDialog();
-            this.ttOutput = new System.Windows.Forms.TabControl();
-            this.tpOutputSettings = new System.Windows.Forms.TabPage();
-            this.tpPatchSettings = new System.Windows.Forms.TabPage();
-            this.lPatchVersion = new System.Windows.Forms.Label();
-            this.tPatch = new System.Windows.Forms.TextBox();
-            this.bLoadPatch = new System.Windows.Forms.Button();
-            this.bSkip = new System.Windows.Forms.Button();
-            this.tabCosmetics = new System.Windows.Forms.TabPage();
-            this.gCosmeticOther = new System.Windows.Forms.GroupBox();
-            this.cCameraStyle = new System.Windows.Forms.ComboBox();
-            this.lCameraStyle = new System.Windows.Forms.Label();
-            this.cRainbowTunic = new System.Windows.Forms.CheckBox();
-            this.cBombTrapTunicColors = new System.Windows.Forms.CheckBox();
-            this.cInstantPictobox = new System.Windows.Forms.CheckBox();
-            this.cTatl = new System.Windows.Forms.ComboBox();
-            this.lTatl = new System.Windows.Forms.Label();
-            this.cTargettingStyle = new System.Windows.Forms.CheckBox();
-            this.gCosmeticMusicSound = new System.Windows.Forms.GroupBox();
-            this.cDisableFanfares = new System.Windows.Forms.CheckBox();
-            this.cMusicTrackNames = new System.Windows.Forms.CheckBox();
-            this.cRemoveMinorMusic = new System.Windows.Forms.CheckBox();
-            this.lLuckRoll = new System.Windows.Forms.Label();
-            this.tLuckRollPercentage = new System.Windows.Forms.NumericUpDown();
-            this.lMusic = new System.Windows.Forms.Label();
-            this.cMusic = new System.Windows.Forms.ComboBox();
-            this.cSFX = new System.Windows.Forms.CheckBox();
-            this.cCombatMusicDisable = new System.Windows.Forms.CheckBox();
-            this.cEnableNightMusic = new System.Windows.Forms.CheckBox();
-            this.cLowHealthSFXComboBox = new System.Windows.Forms.ComboBox();
-            this.lLowHealthSFXComboBox = new System.Windows.Forms.Label();
-            this.cHUDGroupBox = new System.Windows.Forms.GroupBox();
-            this.cHueShiftMiscUI = new System.Windows.Forms.CheckBox();
-            this.cHUDTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.cHUDHeartsComboBox = new System.Windows.Forms.ComboBox();
-            this.cHeartsLabel = new System.Windows.Forms.Label();
-            this.cMagicLabel = new System.Windows.Forms.Label();
-            this.cHUDMagicComboBox = new System.Windows.Forms.ComboBox();
-            this.btn_hud = new System.Windows.Forms.Button();
-            this.tFormCosmetics = new System.Windows.Forms.TabControl();
-            this.tabActorizer = new System.Windows.Forms.TabPage();
-            this.cLocationItemRestrictionUnlock = new System.Windows.Forms.CheckBox();
-            this.cFormItemRestrictionUnlock = new System.Windows.Forms.CheckBox();
-            this.lActorMode = new System.Windows.Forms.Label();
-            this.cActorMode = new System.Windows.Forms.ComboBox();
-            this.tabShortenCutscenes = new System.Windows.Forms.TabPage();
-            this.tShortenCutscenes = new System.Windows.Forms.TabControl();
+            this.tSettings = new System.Windows.Forms.TabControl();
+            this.tabMain = new System.Windows.Forms.TabPage();
+            this.tOtherCustomizations = new System.Windows.Forms.TabControl();
+            this.tOtherCustomization = new System.Windows.Forms.TabPage();
+            this.cGibdoRequirements = new System.Windows.Forms.CheckBox();
+            this.cRequiredBossRemains = new System.Windows.Forms.ComboBox();
+            this.lRequiredRemains = new System.Windows.Forms.Label();
+            this.cStartingItems = new System.Windows.Forms.ComboBox();
+            this.lStartingItems = new System.Windows.Forms.Label();
+            this.cProgressiveUpgrades = new System.Windows.Forms.CheckBox();
+            this.cMixSongs = new System.Windows.Forms.CheckBox();
+            this.cEnemy = new System.Windows.Forms.CheckBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.lNumTricksEnabled = new System.Windows.Forms.Label();
+            this.lItemPlacement = new System.Windows.Forms.Label();
+            this.cItemPlacement = new System.Windows.Forms.ComboBox();
+            this.bToggleTricks = new System.Windows.Forms.Button();
+            this.cMode = new System.Windows.Forms.ComboBox();
+            this.bLoadLogic = new System.Windows.Forms.Button();
+            this.lMode = new System.Windows.Forms.Label();
+            this.tbUserLogic = new System.Windows.Forms.TextBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.tJunkLocationsList = new System.Windows.Forms.TextBox();
+            this.bJunkLocationsEditor = new System.Windows.Forms.Button();
+            this.lJunkLocationsAmount = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.bRandomStartingItems = new System.Windows.Forms.Button();
+            this.tStartingItemList = new System.Windows.Forms.TextBox();
+            this.lCustomStartingItemAmount = new System.Windows.Forms.Label();
+            this.bStartingItemEditor = new System.Windows.Forms.Button();
+            this.tabItemPool = new System.Windows.Forms.TabPage();
+            this.cItemPoolAdvanced = new System.Windows.Forms.CheckBox();
+            this.pClassicItemPool = new System.Windows.Forms.Panel();
+            this.lItemPoolText = new System.Windows.Forms.Label();
+            this.bItemPoolEdit = new System.Windows.Forms.Button();
+            this.tItemPool = new System.Windows.Forms.TextBox();
+            this.tableItemPool = new System.Windows.Forms.TableLayoutPanel();
+            this.pLocationCategories = new System.Windows.Forms.Panel();
+            this.tabGimmicks = new System.Windows.Forms.TabPage();
+            this.gGimmicksChallenges = new System.Windows.Forms.GroupBox();
+            this.cDeathMode = new System.Windows.Forms.ComboBox();
+            this.lDeathMode = new System.Windows.Forms.Label();
+            this.cMoonCrashFileErase = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageFromDexihands = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cTakeDamageFromGibdosFaster = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageGettingCaught = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageFromGorons = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageFromDog = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageFromVoid = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageWhileShielding = new System.Windows.Forms.CheckBox();
+            this.cTakeDamageOnEpona = new System.Windows.Forms.CheckBox();
+            this.cFewerHealthDrops = new System.Windows.Forms.CheckBox();
+            this.cDType = new System.Windows.Forms.ComboBox();
+            this.lDType = new System.Windows.Forms.Label();
+            this.cByoAmmo = new System.Windows.Forms.CheckBox();
+            this.cDMult = new System.Windows.Forms.ComboBox();
+            this.lDMult = new System.Windows.Forms.Label();
+            this.gGimmicksMovement = new System.Windows.Forms.GroupBox();
+            this.cIronGoron = new System.Windows.Forms.CheckBox();
+            this.cClimbMostSurfaces = new System.Windows.Forms.CheckBox();
+            this.cHookshotAnySurface = new System.Windows.Forms.CheckBox();
+            this.cFloors = new System.Windows.Forms.ComboBox();
+            this.lFloors = new System.Windows.Forms.Label();
+            this.lGravity = new System.Windows.Forms.Label();
+            this.cGravity = new System.Windows.Forms.ComboBox();
+            this.cContinuousDekuHopping = new System.Windows.Forms.CheckBox();
+            this.gTraps = new System.Windows.Forms.GroupBox();
+            this.lTrapWeightings = new System.Windows.Forms.Label();
+            this.lTrapsAppearance = new System.Windows.Forms.Label();
+            this.lTrapAmount = new System.Windows.Forms.Label();
+            this.cTrapAmount = new System.Windows.Forms.ComboBox();
+            this.cTrapsAppearance = new System.Windows.Forms.ComboBox();
+            this.cIceTrapQuirks = new System.Windows.Forms.CheckBox();
+            this.gGimmicksClock = new System.Windows.Forms.GroupBox();
+            this.cAutoInvert = new System.Windows.Forms.ComboBox();
+            this.lAutoInvert = new System.Windows.Forms.Label();
+            this.cClockSpeed = new System.Windows.Forms.ComboBox();
+            this.lClockSpeed = new System.Windows.Forms.Label();
+            this.cHideClock = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.gGimmicksOther = new System.Windows.Forms.GroupBox();
+            this.cVanillaMoonTrials = new System.Windows.Forms.CheckBox();
+            this.cBombArrows = new System.Windows.Forms.CheckBox();
+            this.cGiantMaskAnywhere = new System.Windows.Forms.CheckBox();
+            this.cInstantTransformations = new System.Windows.Forms.CheckBox();
+            this.cFreeScarecrow = new System.Windows.Forms.CheckBox();
+            this.cFDAnywhere = new System.Windows.Forms.CheckBox();
+            this.cBlastCooldown = new System.Windows.Forms.ComboBox();
+            this.cUnderwaterOcarina = new System.Windows.Forms.CheckBox();
+            this.cSunsSong = new System.Windows.Forms.CheckBox();
+            this.lBlastMask = new System.Windows.Forms.Label();
+            this.lNutAndStickDrops = new System.Windows.Forms.Label();
+            this.cNutAndStickDrops = new System.Windows.Forms.ComboBox();
             this.tabComfort = new System.Windows.Forms.TabPage();
             this.gHintsGeneral = new System.Windows.Forms.GroupBox();
             this.cFairyAndSkullHints = new System.Windows.Forms.CheckBox();
@@ -198,114 +213,103 @@ namespace MMR.UI.Forms
             this.cQuestItemStorage = new System.Windows.Forms.CheckBox();
             this.cNoDowngrades = new System.Windows.Forms.CheckBox();
             this.cEasyFrameByFrame = new System.Windows.Forms.CheckBox();
-            this.tabGimmicks = new System.Windows.Forms.TabPage();
-            this.gGimmicksChallenges = new System.Windows.Forms.GroupBox();
-            this.cDeathMode = new System.Windows.Forms.ComboBox();
-            this.lDeathMode = new System.Windows.Forms.Label();
-            this.cMoonCrashFileErase = new System.Windows.Forms.CheckBox();
-            this.cTakeDamageFromDexihands = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cTakeDamageFromGibdosFaster = new System.Windows.Forms.CheckBox();
-            this.cTakeDamageGettingCaught = new System.Windows.Forms.CheckBox();
-            this.cTakeDamageFromGorons = new System.Windows.Forms.CheckBox();
-            this.cTakeDamageFromDog = new System.Windows.Forms.CheckBox();
-            this.cTakeDamageFromVoid = new System.Windows.Forms.CheckBox();
-            this.cTakeDamageWhileShielding = new System.Windows.Forms.CheckBox();
-            this.cTakeDamageOnEpona = new System.Windows.Forms.CheckBox();
-            this.cFewerHealthDrops = new System.Windows.Forms.CheckBox();
-            this.cDType = new System.Windows.Forms.ComboBox();
-            this.lDType = new System.Windows.Forms.Label();
-            this.cByoAmmo = new System.Windows.Forms.CheckBox();
-            this.cDMult = new System.Windows.Forms.ComboBox();
-            this.lDMult = new System.Windows.Forms.Label();
-            this.gGimmicksMovement = new System.Windows.Forms.GroupBox();
-            this.cIronGoron = new System.Windows.Forms.CheckBox();
-            this.cClimbMostSurfaces = new System.Windows.Forms.CheckBox();
-            this.cHookshotAnySurface = new System.Windows.Forms.CheckBox();
-            this.cFloors = new System.Windows.Forms.ComboBox();
-            this.lFloors = new System.Windows.Forms.Label();
-            this.lGravity = new System.Windows.Forms.Label();
-            this.cGravity = new System.Windows.Forms.ComboBox();
-            this.cContinuousDekuHopping = new System.Windows.Forms.CheckBox();
-            this.gTraps = new System.Windows.Forms.GroupBox();
-            this.lTrapWeightings = new System.Windows.Forms.Label();
-            this.lTrapsAppearance = new System.Windows.Forms.Label();
-            this.lTrapAmount = new System.Windows.Forms.Label();
-            this.cTrapAmount = new System.Windows.Forms.ComboBox();
-            this.cTrapsAppearance = new System.Windows.Forms.ComboBox();
-            this.cIceTrapQuirks = new System.Windows.Forms.CheckBox();
-            this.gGimmicksClock = new System.Windows.Forms.GroupBox();
-            this.cAutoInvert = new System.Windows.Forms.ComboBox();
-            this.lAutoInvert = new System.Windows.Forms.Label();
-            this.cClockSpeed = new System.Windows.Forms.ComboBox();
-            this.lClockSpeed = new System.Windows.Forms.Label();
-            this.cHideClock = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.gGimmicksOther = new System.Windows.Forms.GroupBox();
-            this.cVanillaMoonTrials = new System.Windows.Forms.CheckBox();
-            this.cBombArrows = new System.Windows.Forms.CheckBox();
-            this.cGiantMaskAnywhere = new System.Windows.Forms.CheckBox();
-            this.cInstantTransformations = new System.Windows.Forms.CheckBox();
-            this.cFreeScarecrow = new System.Windows.Forms.CheckBox();
-            this.cFDAnywhere = new System.Windows.Forms.CheckBox();
-            this.cBlastCooldown = new System.Windows.Forms.ComboBox();
-            this.cUnderwaterOcarina = new System.Windows.Forms.CheckBox();
-            this.cSunsSong = new System.Windows.Forms.CheckBox();
-            this.lBlastMask = new System.Windows.Forms.Label();
-            this.lNutAndStickDrops = new System.Windows.Forms.Label();
-            this.cNutAndStickDrops = new System.Windows.Forms.ComboBox();
-            this.tabItemPool = new System.Windows.Forms.TabPage();
-            this.cItemPoolAdvanced = new System.Windows.Forms.CheckBox();
-            this.lItemPoolText = new System.Windows.Forms.Label();
-            this.bItemPoolEdit = new System.Windows.Forms.Button();
-            this.pClassicItemPool = new System.Windows.Forms.Panel();
-            this.tItemPool = new System.Windows.Forms.TextBox();
-            this.tableItemPool = new System.Windows.Forms.TableLayoutPanel();
-            this.pLocationCategories = new System.Windows.Forms.Panel();
-            this.tabMain = new System.Windows.Forms.TabPage();
-            this.tOtherCustomizations = new System.Windows.Forms.TabControl();
-            this.tOtherCustomization = new System.Windows.Forms.TabPage();
-            this.cGibdoRequirements = new System.Windows.Forms.CheckBox();
-            this.cRequiredBossRemains = new System.Windows.Forms.ComboBox();
-            this.lRequiredRemains = new System.Windows.Forms.Label();
-            this.cStartingItems = new System.Windows.Forms.ComboBox();
-            this.lStartingItems = new System.Windows.Forms.Label();
-            this.cProgressiveUpgrades = new System.Windows.Forms.CheckBox();
-            this.cMixSongs = new System.Windows.Forms.CheckBox();
-            this.cEnemy = new System.Windows.Forms.CheckBox();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.lNumTricksEnabled = new System.Windows.Forms.Label();
-            this.lItemPlacement = new System.Windows.Forms.Label();
-            this.cItemPlacement = new System.Windows.Forms.ComboBox();
-            this.bToggleTricks = new System.Windows.Forms.Button();
-            this.cMode = new System.Windows.Forms.ComboBox();
-            this.bLoadLogic = new System.Windows.Forms.Button();
-            this.lMode = new System.Windows.Forms.Label();
-            this.tbUserLogic = new System.Windows.Forms.TextBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.tJunkLocationsList = new System.Windows.Forms.TextBox();
-            this.bJunkLocationsEditor = new System.Windows.Forms.Button();
-            this.lJunkLocationsAmount = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.bRandomStartingItems = new System.Windows.Forms.Button();
-            this.tStartingItemList = new System.Windows.Forms.TextBox();
-            this.lCustomStartingItemAmount = new System.Windows.Forms.Label();
-            this.bStartingItemEditor = new System.Windows.Forms.Button();
-            this.tSettings = new System.Windows.Forms.TabControl();
+            this.tabShortenCutscenes = new System.Windows.Forms.TabPage();
+            this.tShortenCutscenes = new System.Windows.Forms.TabControl();
+            this.tabActorizer = new System.Windows.Forms.TabPage();
             this.cFasterCommonFileLoad = new System.Windows.Forms.CheckBox();
-            this.gGameOutput.SuspendLayout();
-            this.mMenu.SuspendLayout();
-            this.ttOutput.SuspendLayout();
-            this.tpOutputSettings.SuspendLayout();
-            this.tpPatchSettings.SuspendLayout();
-            this.tabCosmetics.SuspendLayout();
-            this.gCosmeticOther.SuspendLayout();
-            this.gCosmeticMusicSound.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tLuckRollPercentage)).BeginInit();
-            this.cHUDGroupBox.SuspendLayout();
-            this.cHUDTableLayoutPanel.SuspendLayout();
-            this.tabActorizer.SuspendLayout();
-            this.tabShortenCutscenes.SuspendLayout();
+            this.cLocationItemRestrictionUnlock = new System.Windows.Forms.CheckBox();
+            this.cFormItemRestrictionUnlock = new System.Windows.Forms.CheckBox();
+            this.lActorMode = new System.Windows.Forms.Label();
+            this.cActorMode = new System.Windows.Forms.ComboBox();
+            this.tabCosmetics = new System.Windows.Forms.TabPage();
+            this.gCosmeticOther = new System.Windows.Forms.GroupBox();
+            this.cCameraStyle = new System.Windows.Forms.ComboBox();
+            this.lCameraStyle = new System.Windows.Forms.Label();
+            this.cRainbowTunic = new System.Windows.Forms.CheckBox();
+            this.cBombTrapTunicColors = new System.Windows.Forms.CheckBox();
+            this.cInstantPictobox = new System.Windows.Forms.CheckBox();
+            this.cTatl = new System.Windows.Forms.ComboBox();
+            this.lTatl = new System.Windows.Forms.Label();
+            this.cTargettingStyle = new System.Windows.Forms.CheckBox();
+            this.gCosmeticMusicSound = new System.Windows.Forms.GroupBox();
+            this.cDisableFanfares = new System.Windows.Forms.CheckBox();
+            this.cMusicTrackNames = new System.Windows.Forms.CheckBox();
+            this.cRemoveMinorMusic = new System.Windows.Forms.CheckBox();
+            this.lLuckRoll = new System.Windows.Forms.Label();
+            this.tLuckRollPercentage = new System.Windows.Forms.NumericUpDown();
+            this.lMusic = new System.Windows.Forms.Label();
+            this.cMusic = new System.Windows.Forms.ComboBox();
+            this.cSFX = new System.Windows.Forms.CheckBox();
+            this.cCombatMusicDisable = new System.Windows.Forms.CheckBox();
+            this.cEnableNightMusic = new System.Windows.Forms.CheckBox();
+            this.cLowHealthSFXComboBox = new System.Windows.Forms.ComboBox();
+            this.lLowHealthSFXComboBox = new System.Windows.Forms.Label();
+            this.cHUDGroupBox = new System.Windows.Forms.GroupBox();
+            this.cHueShiftMiscUI = new System.Windows.Forms.CheckBox();
+            this.cHUDTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.cHUDHeartsComboBox = new System.Windows.Forms.ComboBox();
+            this.cHeartsLabel = new System.Windows.Forms.Label();
+            this.cMagicLabel = new System.Windows.Forms.Label();
+            this.cHUDMagicComboBox = new System.Windows.Forms.ComboBox();
+            this.btn_hud = new System.Windows.Forms.Button();
+            this.tFormCosmetics = new System.Windows.Forms.TabControl();
+            this.cDrawHash = new System.Windows.Forms.CheckBox();
+            this.gGameOutput = new System.Windows.Forms.GroupBox();
+            this.cHTMLLog = new System.Windows.Forms.CheckBox();
+            this.cPatch = new System.Windows.Forms.CheckBox();
+            this.cSpoiler = new System.Windows.Forms.CheckBox();
+            this.cN64 = new System.Windows.Forms.CheckBox();
+            this.cVC = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.bApplyPatch = new System.Windows.Forms.Button();
+            this.saveROM = new System.Windows.Forms.SaveFileDialog();
+            this.cEnergy = new System.Windows.Forms.ColorDialog();
+            this.cTunic = new System.Windows.Forms.ColorDialog();
+            this.bRandomise = new System.Windows.Forms.Button();
+            this.bReroll = new System.Windows.Forms.Button();
+            this.saveWad = new System.Windows.Forms.SaveFileDialog();
+            this.mMenu = new System.Windows.Forms.MenuStrip();
+            this.mFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mCustomise = new System.Windows.Forms.ToolStripMenuItem();
+            this.mDPadConfig = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mLogicEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.mManual = new System.Windows.Forms.ToolStripMenuItem();
+            this.mSep1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.openBROM = new System.Windows.Forms.OpenFileDialog();
+            this.pProgress = new System.Windows.Forms.ProgressBar();
+            this.bgWorker = new System.ComponentModel.BackgroundWorker();
+            this.lStatus = new System.Windows.Forms.Label();
+            this.tSeed = new System.Windows.Forms.TextBox();
+            this.lSeed = new System.Windows.Forms.Label();
+            this.cDummy = new System.Windows.Forms.CheckBox();
+            this.openPatch = new System.Windows.Forms.OpenFileDialog();
+            this.ttOutput = new System.Windows.Forms.TabControl();
+            this.tpOutputSettings = new System.Windows.Forms.TabPage();
+            this.tpPatchSettings = new System.Windows.Forms.TabPage();
+            this.lPatchVersion = new System.Windows.Forms.Label();
+            this.tPatch = new System.Windows.Forms.TextBox();
+            this.bLoadPatch = new System.Windows.Forms.Button();
+            this.bSkip = new System.Windows.Forms.Button();
+            this.tSettings.SuspendLayout();
+            this.tabMain.SuspendLayout();
+            this.tOtherCustomizations.SuspendLayout();
+            this.tOtherCustomization.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.tabItemPool.SuspendLayout();
+            this.tabGimmicks.SuspendLayout();
+            this.gGimmicksChallenges.SuspendLayout();
+            this.gGimmicksMovement.SuspendLayout();
+            this.gTraps.SuspendLayout();
+            this.gGimmicksClock.SuspendLayout();
+            this.gGimmicksOther.SuspendLayout();
             this.tabComfort.SuspendLayout();
             this.gHintsGeneral.SuspendLayout();
             this.gGaroHints.SuspendLayout();
@@ -320,20 +324,19 @@ namespace MMR.UI.Forms
             ((System.ComponentModel.ISupportInitialize)(this.nMaxGossipWotH)).BeginInit();
             this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
-            this.tabGimmicks.SuspendLayout();
-            this.gGimmicksChallenges.SuspendLayout();
-            this.gGimmicksMovement.SuspendLayout();
-            this.gTraps.SuspendLayout();
-            this.gGimmicksClock.SuspendLayout();
-            this.gGimmicksOther.SuspendLayout();
-            this.tabItemPool.SuspendLayout();
-            this.tabMain.SuspendLayout();
-            this.tOtherCustomizations.SuspendLayout();
-            this.tOtherCustomization.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.tSettings.SuspendLayout();
+            this.tabShortenCutscenes.SuspendLayout();
+            this.tabActorizer.SuspendLayout();
+            this.tabCosmetics.SuspendLayout();
+            this.gCosmeticOther.SuspendLayout();
+            this.gCosmeticMusicSound.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tLuckRollPercentage)).BeginInit();
+            this.cHUDGroupBox.SuspendLayout();
+            this.cHUDTableLayoutPanel.SuspendLayout();
+            this.gGameOutput.SuspendLayout();
+            this.mMenu.SuspendLayout();
+            this.ttOutput.SuspendLayout();
+            this.tpOutputSettings.SuspendLayout();
+            this.tpPatchSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // bopen
@@ -364,917 +367,1239 @@ namespace MMR.UI.Forms
             this.tROMName.Size = new System.Drawing.Size(772, 23);
             this.tROMName.TabIndex = 1;
             // 
-            // cDrawHash
-            // 
-            this.cDrawHash.AutoSize = true;
-            this.cDrawHash.BackColor = System.Drawing.Color.Transparent;
-            this.cDrawHash.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cDrawHash.Location = new System.Drawing.Point(132, 74);
-            this.cDrawHash.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cDrawHash.Name = "cDrawHash";
-            this.cDrawHash.Size = new System.Drawing.Size(111, 19);
-            this.cDrawHash.TabIndex = 28;
-            this.cDrawHash.Text = "Hash Icons .png";
-            this.cDrawHash.UseVisualStyleBackColor = false;
-            this.cDrawHash.CheckedChanged += new System.EventHandler(this.cDrawHash_CheckedChanged);
-            // 
-            // gGameOutput
-            // 
-            this.gGameOutput.Controls.Add(this.cHTMLLog);
-            this.gGameOutput.Controls.Add(this.cPatch);
-            this.gGameOutput.Controls.Add(this.cDrawHash);
-            this.gGameOutput.Controls.Add(this.cSpoiler);
-            this.gGameOutput.Controls.Add(this.cN64);
-            this.gGameOutput.Controls.Add(this.cVC);
-            this.gGameOutput.Location = new System.Drawing.Point(15, 468);
-            this.gGameOutput.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gGameOutput.Name = "gGameOutput";
-            this.gGameOutput.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gGameOutput.Size = new System.Drawing.Size(264, 103);
-            this.gGameOutput.TabIndex = 16;
-            this.gGameOutput.TabStop = false;
-            this.gGameOutput.Text = "Outputs";
-            // 
-            // cHTMLLog
-            // 
-            this.cHTMLLog.AutoSize = true;
-            this.cHTMLLog.BackColor = System.Drawing.Color.Transparent;
-            this.cHTMLLog.ForeColor = System.Drawing.Color.Black;
-            this.cHTMLLog.Location = new System.Drawing.Point(132, 48);
-            this.cHTMLLog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cHTMLLog.Name = "cHTMLLog";
-            this.cHTMLLog.Size = new System.Drawing.Size(121, 19);
-            this.cHTMLLog.TabIndex = 14;
-            this.cHTMLLog.Text = "Item Tracker .html";
-            this.cHTMLLog.UseVisualStyleBackColor = false;
-            // 
-            // cPatch
-            // 
-            this.cPatch.AutoSize = true;
-            this.cPatch.BackColor = System.Drawing.Color.Transparent;
-            this.cPatch.ForeColor = System.Drawing.Color.Black;
-            this.cPatch.Location = new System.Drawing.Point(19, 74);
-            this.cPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cPatch.Name = "cPatch";
-            this.cPatch.Size = new System.Drawing.Size(88, 19);
-            this.cPatch.TabIndex = 15;
-            this.cPatch.Text = "Patch .mmr";
-            this.cPatch.UseVisualStyleBackColor = false;
-            this.cPatch.CheckedChanged += new System.EventHandler(this.cPatch_CheckedChanged);
-            // 
-            // cSpoiler
-            // 
-            this.cSpoiler.AutoSize = true;
-            this.cSpoiler.BackColor = System.Drawing.Color.Transparent;
-            this.cSpoiler.ForeColor = System.Drawing.Color.Black;
-            this.cSpoiler.Location = new System.Drawing.Point(132, 22);
-            this.cSpoiler.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cSpoiler.Name = "cSpoiler";
-            this.cSpoiler.Size = new System.Drawing.Size(102, 19);
-            this.cSpoiler.TabIndex = 8;
-            this.cSpoiler.Text = "Spoiler log .txt";
-            this.cSpoiler.UseVisualStyleBackColor = false;
-            // 
-            // cN64
-            // 
-            this.cN64.AutoSize = true;
-            this.cN64.BackColor = System.Drawing.Color.Transparent;
-            this.cN64.Checked = true;
-            this.cN64.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cN64.ForeColor = System.Drawing.Color.Black;
-            this.cN64.Location = new System.Drawing.Point(19, 21);
-            this.cN64.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cN64.Name = "cN64";
-            this.cN64.Size = new System.Drawing.Size(100, 19);
-            this.cN64.TabIndex = 10;
-            this.cN64.Text = "N64 ROM .z64";
-            this.cN64.UseVisualStyleBackColor = false;
-            // 
-            // cVC
-            // 
-            this.cVC.AutoSize = true;
-            this.cVC.BackColor = System.Drawing.Color.Transparent;
-            this.cVC.ForeColor = System.Drawing.Color.Black;
-            this.cVC.Location = new System.Drawing.Point(19, 47);
-            this.cVC.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cVC.Name = "cVC";
-            this.cVC.Size = new System.Drawing.Size(89, 19);
-            this.cVC.TabIndex = 9;
-            this.cVC.Text = "Wii VC .wad";
-            this.cVC.UseVisualStyleBackColor = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(315, 420);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(277, 15);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "ROM must be Majora\'s Mask (U) ending with \".z64\"";
-            // 
-            // bApplyPatch
-            // 
-            this.bApplyPatch.Location = new System.Drawing.Point(461, 10);
-            this.bApplyPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.bApplyPatch.Name = "bApplyPatch";
-            this.bApplyPatch.Size = new System.Drawing.Size(115, 54);
-            this.bApplyPatch.TabIndex = 16;
-            this.bApplyPatch.Text = "Apply Patch";
-            this.bApplyPatch.UseVisualStyleBackColor = true;
-            this.bApplyPatch.Click += new System.EventHandler(this.bApplyPatch_Click);
-            // 
-            // saveROM
-            // 
-            this.saveROM.DefaultExt = "z64";
-            this.saveROM.Filter = "ROM files|*.z64";
-            // 
-            // cTunic
-            // 
-            this.cTunic.Color = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(105)))), ((int)(((byte)(27)))));
-            // 
-            // bRandomise
-            // 
-            this.bRandomise.Location = new System.Drawing.Point(487, 10);
-            this.bRandomise.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.bRandomise.Name = "bRandomise";
-            this.bRandomise.Size = new System.Drawing.Size(115, 54);
-            this.bRandomise.TabIndex = 5;
-            this.bRandomise.Text = "Randomize";
-            this.bRandomise.UseVisualStyleBackColor = true;
-            this.bRandomise.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bRandomise_MouseDown);
-            // 
-            // bReroll
-            // 
-            this.bReroll.Location = new System.Drawing.Point(366, 10);
-            this.bReroll.Name = "bReroll";
-            this.bReroll.Size = new System.Drawing.Size(88, 23);
-            this.bReroll.TabIndex = 8;
-            this.bReroll.Text = "Re-Roll Seed";
-            this.bReroll.UseVisualStyleBackColor = true;
-            this.bReroll.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bReroll_MouseDown);
-            // 
-            // saveWad
-            // 
-            this.saveWad.DefaultExt = "wad";
-            this.saveWad.Filter = "VC files|*.wad";
-            // 
-            // mMenu
-            // 
-            this.mMenu.BackColor = System.Drawing.SystemColors.Control;
-            this.mMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.mMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mFile,
-            this.mCustomise,
-            this.toolsToolStripMenuItem,
-            this.mHelp});
-            this.mMenu.Location = new System.Drawing.Point(0, 0);
-            this.mMenu.Name = "mMenu";
-            this.mMenu.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.mMenu.Size = new System.Drawing.Size(922, 24);
-            this.mMenu.TabIndex = 12;
-            this.mMenu.Text = "mMenu";
-            // 
-            // mFile
-            // 
-            this.mFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveSettingsToolStripMenuItem,
-            this.loadSettingsToolStripMenuItem,
-            this.mExit});
-            this.mFile.Name = "mFile";
-            this.mFile.Size = new System.Drawing.Size(37, 20);
-            this.mFile.Text = "File";
-            // 
-            // saveSettingsToolStripMenuItem
-            // 
-            this.saveSettingsToolStripMenuItem.Name = "saveSettingsToolStripMenuItem";
-            this.saveSettingsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.saveSettingsToolStripMenuItem.Text = "Save Settings...";
-            this.saveSettingsToolStripMenuItem.Click += new System.EventHandler(this.SaveSettingsToolStripMenuItem_Click);
-            // 
-            // loadSettingsToolStripMenuItem
-            // 
-            this.loadSettingsToolStripMenuItem.Name = "loadSettingsToolStripMenuItem";
-            this.loadSettingsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.loadSettingsToolStripMenuItem.Text = "Load Settings...";
-            this.loadSettingsToolStripMenuItem.Click += new System.EventHandler(this.LoadSettingsToolStripMenuItem_Click);
-            // 
-            // mExit
-            // 
-            this.mExit.Name = "mExit";
-            this.mExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.mExit.Size = new System.Drawing.Size(154, 22);
-            this.mExit.Text = "Exit";
-            this.mExit.Click += new System.EventHandler(this.mExit_Click);
-            // 
-            // mCustomise
-            // 
-            this.mCustomise.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mDPadConfig});
-            this.mCustomise.Name = "mCustomise";
-            this.mCustomise.Size = new System.Drawing.Size(75, 20);
-            this.mCustomise.Text = "Customize";
-            // 
-            // mDPadConfig
-            // 
-            this.mDPadConfig.Name = "mDPadConfig";
-            this.mDPadConfig.Size = new System.Drawing.Size(184, 22);
-            this.mDPadConfig.Text = "D-Pad Configuration";
-            this.mDPadConfig.Click += new System.EventHandler(this.mDPadConfig_Click);
-            // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mLogicEdit});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // mLogicEdit
-            // 
-            this.mLogicEdit.Name = "mLogicEdit";
-            this.mLogicEdit.Size = new System.Drawing.Size(137, 22);
-            this.mLogicEdit.Text = "Logic editor";
-            this.mLogicEdit.Click += new System.EventHandler(this.mLogicEdit_Click);
-            // 
-            // mHelp
-            // 
-            this.mHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mManual,
-            this.mSep1,
-            this.mAbout});
-            this.mHelp.Name = "mHelp";
-            this.mHelp.Size = new System.Drawing.Size(44, 20);
-            this.mHelp.Text = "Help";
-            // 
-            // mManual
-            // 
-            this.mManual.Name = "mManual";
-            this.mManual.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.mManual.Size = new System.Drawing.Size(133, 22);
-            this.mManual.Text = "Manual";
-            this.mManual.Click += new System.EventHandler(this.mManual_Click);
-            // 
-            // mSep1
-            // 
-            this.mSep1.Name = "mSep1";
-            this.mSep1.Size = new System.Drawing.Size(130, 6);
-            // 
-            // mAbout
-            // 
-            this.mAbout.Name = "mAbout";
-            this.mAbout.Size = new System.Drawing.Size(133, 22);
-            this.mAbout.Text = "About";
-            this.mAbout.Click += new System.EventHandler(this.mAbout_Click);
-            // 
-            // openBROM
-            // 
-            this.openBROM.Filter = "ROM files|*.z64;*.v64;*.n64";
-            // 
-            // pProgress
-            // 
-            this.pProgress.Location = new System.Drawing.Point(15, 592);
-            this.pProgress.Margin = new System.Windows.Forms.Padding(2);
-            this.pProgress.Name = "pProgress";
-            this.pProgress.Size = new System.Drawing.Size(892, 22);
-            this.pProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.pProgress.TabIndex = 13;
-            // 
-            // bgWorker
-            // 
-            this.bgWorker.WorkerReportsProgress = true;
-            // 
-            // lStatus
-            // 
-            this.lStatus.AutoSize = true;
-            this.lStatus.BackColor = System.Drawing.Color.Transparent;
-            this.lStatus.Location = new System.Drawing.Point(13, 573);
-            this.lStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lStatus.Name = "lStatus";
-            this.lStatus.Size = new System.Drawing.Size(48, 15);
-            this.lStatus.TabIndex = 13;
-            this.lStatus.Text = "Ready...";
-            // 
-            // tSeed
-            // 
-            this.tSeed.Location = new System.Drawing.Point(90, 10);
-            this.tSeed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tSeed.MaxLength = 10;
-            this.tSeed.Name = "tSeed";
-            this.tSeed.Size = new System.Drawing.Size(269, 23);
-            this.tSeed.TabIndex = 2;
-            this.tSeed.Enter += new System.EventHandler(this.tSeed_Enter);
-            this.tSeed.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tSeed_KeyDown);
-            this.tSeed.Leave += new System.EventHandler(this.tSeed_Leave);
-            // 
-            // lSeed
-            // 
-            this.lSeed.AutoSize = true;
-            this.lSeed.BackColor = System.Drawing.Color.Transparent;
-            this.lSeed.ForeColor = System.Drawing.Color.Black;
-            this.lSeed.Location = new System.Drawing.Point(4, 14);
-            this.lSeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lSeed.Name = "lSeed";
-            this.lSeed.Size = new System.Drawing.Size(82, 15);
-            this.lSeed.TabIndex = 3;
-            this.lSeed.Text = "Random seed:";
-            // 
-            // cDummy
-            // 
-            this.cDummy.AutoSize = true;
-            this.cDummy.Enabled = false;
-            this.cDummy.Location = new System.Drawing.Point(684, 582);
-            this.cDummy.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cDummy.Name = "cDummy";
-            this.cDummy.Size = new System.Drawing.Size(83, 19);
-            this.cDummy.TabIndex = 9;
-            this.cDummy.Text = "checkBox1";
-            this.cDummy.UseVisualStyleBackColor = true;
-            this.cDummy.Visible = false;
-            // 
-            // openPatch
-            // 
-            this.openPatch.Filter = "MMR Patch files|*.mmr";
-            // 
-            // ttOutput
-            // 
-            this.ttOutput.Controls.Add(this.tpOutputSettings);
-            this.ttOutput.Controls.Add(this.tpPatchSettings);
-            this.ttOutput.Location = new System.Drawing.Point(289, 470);
-            this.ttOutput.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.ttOutput.Name = "ttOutput";
-            this.ttOutput.SelectedIndex = 0;
-            this.ttOutput.Size = new System.Drawing.Size(620, 103);
-            this.ttOutput.TabIndex = 15;
-            this.ttOutput.SelectedIndexChanged += new System.EventHandler(this.ttOutput_Changed);
-            // 
-            // tpOutputSettings
-            // 
-            this.tpOutputSettings.Controls.Add(this.bReroll);
-            this.tpOutputSettings.Controls.Add(this.bRandomise);
-            this.tpOutputSettings.Controls.Add(this.tSeed);
-            this.tpOutputSettings.Controls.Add(this.lSeed);
-            this.tpOutputSettings.Location = new System.Drawing.Point(4, 24);
-            this.tpOutputSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tpOutputSettings.Name = "tpOutputSettings";
-            this.tpOutputSettings.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tpOutputSettings.Size = new System.Drawing.Size(612, 75);
-            this.tpOutputSettings.TabIndex = 0;
-            this.tpOutputSettings.Text = "Generate New Seed";
-            this.tpOutputSettings.UseVisualStyleBackColor = true;
-            // 
-            // tpPatchSettings
-            // 
-            this.tpPatchSettings.Controls.Add(this.lPatchVersion);
-            this.tpPatchSettings.Controls.Add(this.tPatch);
-            this.tpPatchSettings.Controls.Add(this.bApplyPatch);
-            this.tpPatchSettings.Controls.Add(this.bLoadPatch);
-            this.tpPatchSettings.Location = new System.Drawing.Point(4, 24);
-            this.tpPatchSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tpPatchSettings.Name = "tpPatchSettings";
-            this.tpPatchSettings.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tpPatchSettings.Size = new System.Drawing.Size(612, 75);
-            this.tpPatchSettings.TabIndex = 1;
-            this.tpPatchSettings.Text = "Generate From Patch File";
-            this.tpPatchSettings.UseVisualStyleBackColor = true;
-            // 
-            // lPatchVersion
-            // 
-            this.lPatchVersion.AutoSize = true;
-            this.lPatchVersion.Location = new System.Drawing.Point(133, 15);
-            this.lPatchVersion.Name = "lPatchVersion";
-            this.lPatchVersion.Size = new System.Drawing.Size(280, 15);
-            this.lPatchVersion.TabIndex = 18;
-            this.lPatchVersion.Text = "Patch must be .mmr file generated by MMR v0.0.0.x";
-            // 
-            // tPatch
-            // 
-            this.tPatch.Location = new System.Drawing.Point(7, 40);
-            this.tPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tPatch.Name = "tPatch";
-            this.tPatch.ReadOnly = true;
-            this.tPatch.Size = new System.Drawing.Size(446, 23);
-            this.tPatch.TabIndex = 17;
-            // 
-            // bLoadPatch
-            // 
-            this.bLoadPatch.Location = new System.Drawing.Point(6, 7);
-            this.bLoadPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.bLoadPatch.Name = "bLoadPatch";
-            this.bLoadPatch.Size = new System.Drawing.Size(120, 30);
-            this.bLoadPatch.TabIndex = 16;
-            this.bLoadPatch.Text = "Load Patch...";
-            this.bLoadPatch.UseVisualStyleBackColor = true;
-            this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
-            // 
-            // bSkip
-            // 
-            this.bSkip.Location = new System.Drawing.Point(834, 591);
-            this.bSkip.Name = "bSkip";
-            this.bSkip.Size = new System.Drawing.Size(75, 23);
-            this.bSkip.TabIndex = 17;
-            this.bSkip.Text = "Skip";
-            this.bSkip.UseVisualStyleBackColor = true;
-            this.bSkip.Visible = false;
-            this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
-            // 
-            // tabCosmetics
-            // 
-            this.tabCosmetics.Controls.Add(this.gCosmeticOther);
-            this.tabCosmetics.Controls.Add(this.gCosmeticMusicSound);
-            this.tabCosmetics.Controls.Add(this.cHUDGroupBox);
-            this.tabCosmetics.Controls.Add(this.tFormCosmetics);
-            this.tabCosmetics.Location = new System.Drawing.Point(4, 24);
-            this.tabCosmetics.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabCosmetics.Name = "tabCosmetics";
-            this.tabCosmetics.Size = new System.Drawing.Size(910, 361);
-            this.tabCosmetics.TabIndex = 4;
-            this.tabCosmetics.Text = "Cosmetics";
-            this.tabCosmetics.UseVisualStyleBackColor = true;
-            // 
-            // gCosmeticOther
-            // 
-            this.gCosmeticOther.Controls.Add(this.cCameraStyle);
-            this.gCosmeticOther.Controls.Add(this.lCameraStyle);
-            this.gCosmeticOther.Controls.Add(this.cRainbowTunic);
-            this.gCosmeticOther.Controls.Add(this.cBombTrapTunicColors);
-            this.gCosmeticOther.Controls.Add(this.cInstantPictobox);
-            this.gCosmeticOther.Controls.Add(this.cTatl);
-            this.gCosmeticOther.Controls.Add(this.lTatl);
-            this.gCosmeticOther.Controls.Add(this.cTargettingStyle);
-            this.gCosmeticOther.Location = new System.Drawing.Point(299, 3);
-            this.gCosmeticOther.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gCosmeticOther.Name = "gCosmeticOther";
-            this.gCosmeticOther.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gCosmeticOther.Size = new System.Drawing.Size(598, 149);
-            this.gCosmeticOther.TabIndex = 47;
-            this.gCosmeticOther.TabStop = false;
-            this.gCosmeticOther.Text = "Other";
-            // 
-            // cCameraStyle
-            // 
-            this.cCameraStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cCameraStyle.FormattingEnabled = true;
-            this.cCameraStyle.Items.AddRange(new object[] {
-            "Default",
-            "Responsive",
-            "Instant"});
-            this.cCameraStyle.Location = new System.Drawing.Point(10, 78);
-            this.cCameraStyle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cCameraStyle.Name = "cCameraStyle";
-            this.cCameraStyle.Size = new System.Drawing.Size(150, 23);
-            this.cCameraStyle.TabIndex = 46;
-            // 
-            // lCameraStyle
-            // 
-            this.lCameraStyle.AutoSize = true;
-            this.lCameraStyle.BackColor = System.Drawing.Color.Transparent;
-            this.lCameraStyle.ForeColor = System.Drawing.Color.Black;
-            this.lCameraStyle.Location = new System.Drawing.Point(7, 63);
-            this.lCameraStyle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lCameraStyle.Name = "lCameraStyle";
-            this.lCameraStyle.Size = new System.Drawing.Size(75, 15);
-            this.lCameraStyle.TabIndex = 45;
-            this.lCameraStyle.Text = "Camera style";
-            // 
-            // cRainbowTunic
-            // 
-            this.cRainbowTunic.AutoSize = true;
-            this.cRainbowTunic.BackColor = System.Drawing.Color.Transparent;
-            this.cRainbowTunic.Location = new System.Drawing.Point(199, 112);
-            this.cRainbowTunic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cRainbowTunic.Name = "cRainbowTunic";
-            this.cRainbowTunic.Size = new System.Drawing.Size(104, 19);
-            this.cRainbowTunic.TabIndex = 44;
-            this.cRainbowTunic.Text = "Rainbow Tunic";
-            this.cRainbowTunic.UseVisualStyleBackColor = false;
-            // 
-            // cBombTrapTunicColors
-            // 
-            this.cBombTrapTunicColors.AutoSize = true;
-            this.cBombTrapTunicColors.BackColor = System.Drawing.Color.Transparent;
-            this.cBombTrapTunicColors.Location = new System.Drawing.Point(199, 37);
-            this.cBombTrapTunicColors.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cBombTrapTunicColors.Name = "cBombTrapTunicColors";
-            this.cBombTrapTunicColors.Size = new System.Drawing.Size(214, 19);
-            this.cBombTrapTunicColors.TabIndex = 43;
-            this.cBombTrapTunicColors.Text = "Bomb Traps Randomize Tunic Color";
-            this.cBombTrapTunicColors.UseVisualStyleBackColor = false;
-            // 
-            // cInstantPictobox
-            // 
-            this.cInstantPictobox.AutoSize = true;
-            this.cInstantPictobox.BackColor = System.Drawing.Color.Transparent;
-            this.cInstantPictobox.Location = new System.Drawing.Point(199, 87);
-            this.cInstantPictobox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cInstantPictobox.Name = "cInstantPictobox";
-            this.cInstantPictobox.Size = new System.Drawing.Size(180, 19);
-            this.cInstantPictobox.TabIndex = 42;
-            this.cInstantPictobox.Text = "Instant Pictobox on Emulator";
-            this.cInstantPictobox.UseVisualStyleBackColor = false;
-            // 
-            // cTatl
-            // 
-            this.cTatl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cTatl.FormattingEnabled = true;
-            this.cTatl.Items.AddRange(new object[] {
-            "Default",
-            "Dark",
-            "Hot",
-            "Cool",
+            // tSettings
+            // 
+            this.tSettings.Controls.Add(this.tabMain);
+            this.tSettings.Controls.Add(this.tabItemPool);
+            this.tSettings.Controls.Add(this.tabGimmicks);
+            this.tSettings.Controls.Add(this.tabComfort);
+            this.tSettings.Controls.Add(this.tabShortenCutscenes);
+            this.tSettings.Controls.Add(this.tabActorizer);
+            this.tSettings.Controls.Add(this.tabCosmetics);
+            this.tSettings.Location = new System.Drawing.Point(4, 28);
+            this.tSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tSettings.Name = "tSettings";
+            this.tSettings.SelectedIndex = 0;
+            this.tSettings.Size = new System.Drawing.Size(918, 389);
+            this.tSettings.TabIndex = 10;
+            // 
+            // tabMain
+            // 
+            this.tabMain.Controls.Add(this.tOtherCustomizations);
+            this.tabMain.Controls.Add(this.groupBox9);
+            this.tabMain.Controls.Add(this.groupBox6);
+            this.tabMain.Controls.Add(this.groupBox4);
+            this.tabMain.Location = new System.Drawing.Point(4, 24);
+            this.tabMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabMain.Name = "tabMain";
+            this.tabMain.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabMain.Size = new System.Drawing.Size(910, 361);
+            this.tabMain.TabIndex = 0;
+            this.tabMain.Text = "Main Settings";
+            this.tabMain.UseVisualStyleBackColor = true;
+            // 
+            // tOtherCustomizations
+            // 
+            this.tOtherCustomizations.Controls.Add(this.tOtherCustomization);
+            this.tOtherCustomizations.Location = new System.Drawing.Point(7, 195);
+            this.tOtherCustomizations.Name = "tOtherCustomizations";
+            this.tOtherCustomizations.SelectedIndex = 0;
+            this.tOtherCustomizations.Size = new System.Drawing.Size(894, 160);
+            this.tOtherCustomizations.TabIndex = 22;
+            // 
+            // tOtherCustomization
+            // 
+            this.tOtherCustomization.Controls.Add(this.cGibdoRequirements);
+            this.tOtherCustomization.Controls.Add(this.cRequiredBossRemains);
+            this.tOtherCustomization.Controls.Add(this.lRequiredRemains);
+            this.tOtherCustomization.Controls.Add(this.cStartingItems);
+            this.tOtherCustomization.Controls.Add(this.lStartingItems);
+            this.tOtherCustomization.Controls.Add(this.cProgressiveUpgrades);
+            this.tOtherCustomization.Controls.Add(this.cMixSongs);
+            this.tOtherCustomization.Controls.Add(this.cEnemy);
+            this.tOtherCustomization.Location = new System.Drawing.Point(4, 24);
+            this.tOtherCustomization.Name = "tOtherCustomization";
+            this.tOtherCustomization.Padding = new System.Windows.Forms.Padding(3);
+            this.tOtherCustomization.Size = new System.Drawing.Size(886, 132);
+            this.tOtherCustomization.TabIndex = 0;
+            this.tOtherCustomization.Text = "Other";
+            this.tOtherCustomization.UseVisualStyleBackColor = true;
+            // 
+            // cGibdoRequirements
+            // 
+            this.cGibdoRequirements.AutoSize = true;
+            this.cGibdoRequirements.BackColor = System.Drawing.Color.Transparent;
+            this.cGibdoRequirements.ForeColor = System.Drawing.Color.Black;
+            this.cGibdoRequirements.Location = new System.Drawing.Point(193, 11);
+            this.cGibdoRequirements.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cGibdoRequirements.Name = "cGibdoRequirements";
+            this.cGibdoRequirements.Size = new System.Drawing.Size(134, 19);
+            this.cGibdoRequirements.TabIndex = 31;
+            this.cGibdoRequirements.Text = "Gibdo Requirements";
+            this.cGibdoRequirements.UseVisualStyleBackColor = false;
+            // 
+            // cRequiredBossRemains
+            // 
+            this.cRequiredBossRemains.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cRequiredBossRemains.FormattingEnabled = true;
+            this.cRequiredBossRemains.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4 (Default)"});
+            this.cRequiredBossRemains.Location = new System.Drawing.Point(193, 76);
+            this.cRequiredBossRemains.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cRequiredBossRemains.Name = "cRequiredBossRemains";
+            this.cRequiredBossRemains.Size = new System.Drawing.Size(160, 23);
+            this.cRequiredBossRemains.TabIndex = 30;
+            // 
+            // lRequiredRemains
+            // 
+            this.lRequiredRemains.AutoSize = true;
+            this.lRequiredRemains.Location = new System.Drawing.Point(193, 61);
+            this.lRequiredRemains.Name = "lRequiredRemains";
+            this.lRequiredRemains.Size = new System.Drawing.Size(134, 15);
+            this.lRequiredRemains.TabIndex = 29;
+            this.lRequiredRemains.Text = "Boss Remains For Moon";
+            // 
+            // cStartingItems
+            // 
+            this.cStartingItems.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cStartingItems.FormattingEnabled = true;
+            this.cStartingItems.Items.AddRange(new object[] {
+            "None",
             "Random",
-            "Rainbow (cycle)"});
-            this.cTatl.Location = new System.Drawing.Point(10, 33);
-            this.cTatl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTatl.Name = "cTatl";
-            this.cTatl.Size = new System.Drawing.Size(150, 23);
-            this.cTatl.TabIndex = 41;
+            "Allow Temporary Items"});
+            this.cStartingItems.Location = new System.Drawing.Point(6, 76);
+            this.cStartingItems.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cStartingItems.Name = "cStartingItems";
+            this.cStartingItems.Size = new System.Drawing.Size(160, 23);
+            this.cStartingItems.TabIndex = 27;
             // 
-            // lTatl
+            // lStartingItems
             // 
-            this.lTatl.AutoSize = true;
-            this.lTatl.BackColor = System.Drawing.Color.Transparent;
-            this.lTatl.ForeColor = System.Drawing.Color.Black;
-            this.lTatl.Location = new System.Drawing.Point(7, 18);
-            this.lTatl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lTatl.Name = "lTatl";
-            this.lTatl.Size = new System.Drawing.Size(62, 15);
-            this.lTatl.TabIndex = 40;
-            this.lTatl.Text = "Tatl theme";
+            this.lStartingItems.AutoSize = true;
+            this.lStartingItems.Location = new System.Drawing.Point(6, 61);
+            this.lStartingItems.Name = "lStartingItems";
+            this.lStartingItems.Size = new System.Drawing.Size(80, 15);
+            this.lStartingItems.TabIndex = 22;
+            this.lStartingItems.Text = "Starting Items";
             // 
-            // cTargettingStyle
+            // cProgressiveUpgrades
             // 
-            this.cTargettingStyle.AutoSize = true;
-            this.cTargettingStyle.BackColor = System.Drawing.Color.Transparent;
-            this.cTargettingStyle.Location = new System.Drawing.Point(199, 62);
-            this.cTargettingStyle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTargettingStyle.Name = "cTargettingStyle";
-            this.cTargettingStyle.Size = new System.Drawing.Size(140, 19);
-            this.cTargettingStyle.TabIndex = 37;
-            this.cTargettingStyle.Text = "Default Hold Z-Target";
-            this.cTargettingStyle.UseVisualStyleBackColor = false;
+            this.cProgressiveUpgrades.AutoSize = true;
+            this.cProgressiveUpgrades.BackColor = System.Drawing.Color.Transparent;
+            this.cProgressiveUpgrades.ForeColor = System.Drawing.Color.Black;
+            this.cProgressiveUpgrades.Location = new System.Drawing.Point(6, 11);
+            this.cProgressiveUpgrades.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cProgressiveUpgrades.Name = "cProgressiveUpgrades";
+            this.cProgressiveUpgrades.Size = new System.Drawing.Size(139, 19);
+            this.cProgressiveUpgrades.TabIndex = 21;
+            this.cProgressiveUpgrades.Text = "Progressive Upgrades";
+            this.cProgressiveUpgrades.UseVisualStyleBackColor = false;
             // 
-            // gCosmeticMusicSound
+            // cMixSongs
             // 
-            this.gCosmeticMusicSound.Controls.Add(this.cDisableFanfares);
-            this.gCosmeticMusicSound.Controls.Add(this.cMusicTrackNames);
-            this.gCosmeticMusicSound.Controls.Add(this.cRemoveMinorMusic);
-            this.gCosmeticMusicSound.Controls.Add(this.lLuckRoll);
-            this.gCosmeticMusicSound.Controls.Add(this.tLuckRollPercentage);
-            this.gCosmeticMusicSound.Controls.Add(this.lMusic);
-            this.gCosmeticMusicSound.Controls.Add(this.cMusic);
-            this.gCosmeticMusicSound.Controls.Add(this.cSFX);
-            this.gCosmeticMusicSound.Controls.Add(this.cCombatMusicDisable);
-            this.gCosmeticMusicSound.Controls.Add(this.cEnableNightMusic);
-            this.gCosmeticMusicSound.Controls.Add(this.cLowHealthSFXComboBox);
-            this.gCosmeticMusicSound.Controls.Add(this.lLowHealthSFXComboBox);
-            this.gCosmeticMusicSound.Location = new System.Drawing.Point(8, 159);
-            this.gCosmeticMusicSound.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gCosmeticMusicSound.Name = "gCosmeticMusicSound";
-            this.gCosmeticMusicSound.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gCosmeticMusicSound.Size = new System.Drawing.Size(484, 195);
-            this.gCosmeticMusicSound.TabIndex = 46;
-            this.gCosmeticMusicSound.TabStop = false;
-            this.gCosmeticMusicSound.Text = "Music / Sound";
+            this.cMixSongs.AutoSize = true;
+            this.cMixSongs.BackColor = System.Drawing.Color.Transparent;
+            this.cMixSongs.ForeColor = System.Drawing.Color.Black;
+            this.cMixSongs.Location = new System.Drawing.Point(6, 36);
+            this.cMixSongs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMixSongs.Name = "cMixSongs";
+            this.cMixSongs.Size = new System.Drawing.Size(138, 19);
+            this.cMixSongs.TabIndex = 3;
+            this.cMixSongs.Text = "Mix songs with items";
+            this.cMixSongs.UseVisualStyleBackColor = false;
             // 
-            // cDisableFanfares
+            // cEnemy
             // 
-            this.cDisableFanfares.AutoSize = true;
-            this.cDisableFanfares.Location = new System.Drawing.Point(154, 76);
-            this.cDisableFanfares.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cDisableFanfares.Name = "cDisableFanfares";
-            this.cDisableFanfares.Size = new System.Drawing.Size(111, 19);
-            this.cDisableFanfares.TabIndex = 50;
-            this.cDisableFanfares.Text = "Disable Fanfares";
-            this.cDisableFanfares.UseVisualStyleBackColor = true;
+            this.cEnemy.AutoSize = true;
+            this.cEnemy.BackColor = System.Drawing.Color.Transparent;
+            this.cEnemy.ForeColor = System.Drawing.Color.Black;
+            this.cEnemy.Location = new System.Drawing.Point(193, 36);
+            this.cEnemy.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cEnemy.Name = "cEnemy";
+            this.cEnemy.Size = new System.Drawing.Size(149, 19);
+            this.cEnemy.TabIndex = 9;
+            this.cEnemy.Text = "Enemies/Actors (BETA!)";
+            this.cEnemy.UseVisualStyleBackColor = false;
             // 
-            // cMusicTrackNames
+            // groupBox9
             // 
-            this.cMusicTrackNames.AutoSize = true;
-            this.cMusicTrackNames.BackColor = System.Drawing.Color.Transparent;
-            this.cMusicTrackNames.ForeColor = System.Drawing.Color.Black;
-            this.cMusicTrackNames.Location = new System.Drawing.Point(154, 50);
-            this.cMusicTrackNames.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cMusicTrackNames.Name = "cMusicTrackNames";
-            this.cMusicTrackNames.Size = new System.Drawing.Size(125, 19);
-            this.cMusicTrackNames.TabIndex = 49;
-            this.cMusicTrackNames.Text = "Show Track Names";
-            this.cMusicTrackNames.UseVisualStyleBackColor = false;
+            this.groupBox9.Controls.Add(this.lNumTricksEnabled);
+            this.groupBox9.Controls.Add(this.lItemPlacement);
+            this.groupBox9.Controls.Add(this.cItemPlacement);
+            this.groupBox9.Controls.Add(this.bToggleTricks);
+            this.groupBox9.Controls.Add(this.cMode);
+            this.groupBox9.Controls.Add(this.bLoadLogic);
+            this.groupBox9.Controls.Add(this.lMode);
+            this.groupBox9.Controls.Add(this.tbUserLogic);
+            this.groupBox9.Location = new System.Drawing.Point(7, 7);
+            this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox9.Size = new System.Drawing.Size(444, 172);
+            this.groupBox9.TabIndex = 29;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Generation Settings";
             // 
-            // cRemoveMinorMusic
+            // lNumTricksEnabled
             // 
-            this.cRemoveMinorMusic.AutoSize = true;
-            this.cRemoveMinorMusic.BackColor = System.Drawing.Color.Transparent;
-            this.cRemoveMinorMusic.ForeColor = System.Drawing.Color.Black;
-            this.cRemoveMinorMusic.Location = new System.Drawing.Point(154, 23);
-            this.cRemoveMinorMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cRemoveMinorMusic.Name = "cRemoveMinorMusic";
-            this.cRemoveMinorMusic.Size = new System.Drawing.Size(139, 19);
-            this.cRemoveMinorMusic.TabIndex = 48;
-            this.cRemoveMinorMusic.Text = "Remove Minor Music";
-            this.cRemoveMinorMusic.UseVisualStyleBackColor = false;
+            this.lNumTricksEnabled.Location = new System.Drawing.Point(96, 22);
+            this.lNumTricksEnabled.Name = "lNumTricksEnabled";
+            this.lNumTricksEnabled.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lNumTricksEnabled.Size = new System.Drawing.Size(271, 18);
+            this.lNumTricksEnabled.TabIndex = 21;
+            this.lNumTricksEnabled.Text = "0 tricks enabled";
             // 
-            // lLuckRoll
+            // lItemPlacement
             // 
-            this.lLuckRoll.AutoSize = true;
-            this.lLuckRoll.BackColor = System.Drawing.Color.Transparent;
-            this.lLuckRoll.ForeColor = System.Drawing.Color.Black;
-            this.lLuckRoll.Location = new System.Drawing.Point(154, 99);
-            this.lLuckRoll.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lLuckRoll.Name = "lLuckRoll";
-            this.lLuckRoll.Size = new System.Drawing.Size(119, 15);
-            this.lLuckRoll.TabIndex = 47;
-            this.lLuckRoll.Text = "Luck Roll Chance (%)";
+            this.lItemPlacement.AutoSize = true;
+            this.lItemPlacement.BackColor = System.Drawing.Color.Transparent;
+            this.lItemPlacement.ForeColor = System.Drawing.Color.Black;
+            this.lItemPlacement.Location = new System.Drawing.Point(13, 111);
+            this.lItemPlacement.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lItemPlacement.Name = "lItemPlacement";
+            this.lItemPlacement.Size = new System.Drawing.Size(126, 15);
+            this.lItemPlacement.TabIndex = 21;
+            this.lItemPlacement.Text = "Item Placement Order:";
             // 
-            // tLuckRollPercentage
+            // cItemPlacement
             // 
-            this.tLuckRollPercentage.DecimalPlaces = 2;
-            this.tLuckRollPercentage.Location = new System.Drawing.Point(154, 114);
-            this.tLuckRollPercentage.Name = "tLuckRollPercentage";
-            this.tLuckRollPercentage.Size = new System.Drawing.Size(117, 23);
-            this.tLuckRollPercentage.TabIndex = 46;
-            this.tLuckRollPercentage.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.tLuckRollPercentage.Value = new decimal(new int[] {
-            333,
-            0,
-            0,
-            131072});
-            // 
-            // lMusic
-            // 
-            this.lMusic.AutoSize = true;
-            this.lMusic.BackColor = System.Drawing.Color.Transparent;
-            this.lMusic.ForeColor = System.Drawing.Color.Black;
-            this.lMusic.Location = new System.Drawing.Point(4, 99);
-            this.lMusic.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lMusic.Name = "lMusic";
-            this.lMusic.Size = new System.Drawing.Size(39, 15);
-            this.lMusic.TabIndex = 43;
-            this.lMusic.Text = "Music";
-            // 
-            // cMusic
-            // 
-            this.cMusic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cMusic.FormattingEnabled = true;
-            this.cMusic.Items.AddRange(new object[] {
-            "Default",
+            this.cItemPlacement.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cItemPlacement.FormattingEnabled = true;
+            this.cItemPlacement.Items.AddRange(new object[] {
             "Random",
-            "None"});
-            this.cMusic.Location = new System.Drawing.Point(7, 114);
-            this.cMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cMusic.Name = "cMusic";
-            this.cMusic.Size = new System.Drawing.Size(140, 23);
-            this.cMusic.TabIndex = 42;
+            "Bespoke",
+            "Classic"});
+            this.cItemPlacement.Location = new System.Drawing.Point(142, 104);
+            this.cItemPlacement.Name = "cItemPlacement";
+            this.cItemPlacement.Size = new System.Drawing.Size(121, 23);
+            this.cItemPlacement.TabIndex = 20;
             // 
-            // cSFX
+            // bToggleTricks
             // 
-            this.cSFX.AutoSize = true;
-            this.cSFX.BackColor = System.Drawing.Color.Transparent;
-            this.cSFX.ForeColor = System.Drawing.Color.Black;
-            this.cSFX.Location = new System.Drawing.Point(7, 23);
-            this.cSFX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cSFX.Name = "cSFX";
-            this.cSFX.Size = new System.Drawing.Size(107, 19);
-            this.cSFX.TabIndex = 36;
-            this.cSFX.Text = "Randomize SFX";
-            this.cSFX.UseVisualStyleBackColor = false;
+            this.bToggleTricks.Location = new System.Drawing.Point(341, 39);
+            this.bToggleTricks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bToggleTricks.Name = "bToggleTricks";
+            this.bToggleTricks.Size = new System.Drawing.Size(96, 25);
+            this.bToggleTricks.TabIndex = 19;
+            this.bToggleTricks.Text = "Edit Tricks";
+            this.bToggleTricks.UseVisualStyleBackColor = true;
+            this.bToggleTricks.Click += new System.EventHandler(this.bToggleTricks_Click);
             // 
-            // cCombatMusicDisable
+            // cMode
             // 
-            this.cCombatMusicDisable.AutoSize = true;
-            this.cCombatMusicDisable.Location = new System.Drawing.Point(7, 76);
-            this.cCombatMusicDisable.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cCombatMusicDisable.Name = "cCombatMusicDisable";
-            this.cCombatMusicDisable.Size = new System.Drawing.Size(145, 19);
-            this.cCombatMusicDisable.TabIndex = 45;
-            this.cCombatMusicDisable.Text = "Disable Combat Music";
-            this.cCombatMusicDisable.UseVisualStyleBackColor = true;
+            this.cMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cMode.FormattingEnabled = true;
+            this.cMode.Items.AddRange(new object[] {
+            "Casual",
+            "Glitched",
+            "Vanilla Layout",
+            "User Logic",
+            "No Logic"});
+            this.cMode.Location = new System.Drawing.Point(96, 40);
+            this.cMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMode.Name = "cMode";
+            this.cMode.Size = new System.Drawing.Size(237, 23);
+            this.cMode.TabIndex = 1;
+            this.cMode.SelectedIndexChanged += new System.EventHandler(this.cMode_SelectedIndexChanged);
             // 
-            // cEnableNightMusic
+            // bLoadLogic
             // 
-            this.cEnableNightMusic.AutoSize = true;
-            this.cEnableNightMusic.Location = new System.Drawing.Point(7, 50);
-            this.cEnableNightMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cEnableNightMusic.Name = "cEnableNightMusic";
-            this.cEnableNightMusic.Size = new System.Drawing.Size(123, 19);
-            this.cEnableNightMusic.TabIndex = 38;
-            this.cEnableNightMusic.Text = "Enable Night BGM";
-            this.cEnableNightMusic.UseVisualStyleBackColor = true;
+            this.bLoadLogic.Location = new System.Drawing.Point(13, 71);
+            this.bLoadLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bLoadLogic.Name = "bLoadLogic";
+            this.bLoadLogic.Size = new System.Drawing.Size(79, 28);
+            this.bLoadLogic.TabIndex = 17;
+            this.bLoadLogic.Text = "Open Logic";
+            this.bLoadLogic.UseVisualStyleBackColor = true;
+            this.bLoadLogic.Click += new System.EventHandler(this.bLoadLogic_Click);
             // 
-            // cLowHealthSFXComboBox
+            // lMode
             // 
-            this.cLowHealthSFXComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cLowHealthSFXComboBox.FormattingEnabled = true;
-            this.cLowHealthSFXComboBox.Location = new System.Drawing.Point(7, 163);
-            this.cLowHealthSFXComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cLowHealthSFXComboBox.Name = "cLowHealthSFXComboBox";
-            this.cLowHealthSFXComboBox.Size = new System.Drawing.Size(140, 23);
-            this.cLowHealthSFXComboBox.TabIndex = 25;
+            this.lMode.AutoSize = true;
+            this.lMode.BackColor = System.Drawing.Color.Transparent;
+            this.lMode.ForeColor = System.Drawing.Color.Black;
+            this.lMode.Location = new System.Drawing.Point(10, 43);
+            this.lMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lMode.Name = "lMode";
+            this.lMode.Size = new System.Drawing.Size(75, 15);
+            this.lMode.TabIndex = 0;
+            this.lMode.Text = "Mode/Logic:";
             // 
-            // lLowHealthSFXComboBox
+            // tbUserLogic
             // 
-            this.lLowHealthSFXComboBox.AutoSize = true;
-            this.lLowHealthSFXComboBox.Location = new System.Drawing.Point(4, 142);
-            this.lLowHealthSFXComboBox.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lLowHealthSFXComboBox.Name = "lLowHealthSFXComboBox";
-            this.lLowHealthSFXComboBox.Size = new System.Drawing.Size(89, 15);
-            this.lLowHealthSFXComboBox.TabIndex = 25;
-            this.lLowHealthSFXComboBox.Text = "Low Health SFX";
+            this.tbUserLogic.Location = new System.Drawing.Point(96, 74);
+            this.tbUserLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbUserLogic.Name = "tbUserLogic";
+            this.tbUserLogic.ReadOnly = true;
+            this.tbUserLogic.Size = new System.Drawing.Size(341, 23);
+            this.tbUserLogic.TabIndex = 18;
             // 
-            // cHUDGroupBox
+            // groupBox6
             // 
-            this.cHUDGroupBox.Controls.Add(this.cHueShiftMiscUI);
-            this.cHUDGroupBox.Controls.Add(this.cHUDTableLayoutPanel);
-            this.cHUDGroupBox.Location = new System.Drawing.Point(499, 159);
-            this.cHUDGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cHUDGroupBox.Name = "cHUDGroupBox";
-            this.cHUDGroupBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cHUDGroupBox.Size = new System.Drawing.Size(398, 195);
-            this.cHUDGroupBox.TabIndex = 44;
-            this.cHUDGroupBox.TabStop = false;
-            this.cHUDGroupBox.Text = "HUD";
+            this.groupBox6.Controls.Add(this.tJunkLocationsList);
+            this.groupBox6.Controls.Add(this.bJunkLocationsEditor);
+            this.groupBox6.Controls.Add(this.lJunkLocationsAmount);
+            this.groupBox6.Location = new System.Drawing.Point(459, 96);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox6.Size = new System.Drawing.Size(442, 83);
+            this.groupBox6.TabIndex = 28;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Enforce Junk Locations";
             // 
-            // cHueShiftMiscUI
+            // tJunkLocationsList
             // 
-            this.cHueShiftMiscUI.AutoSize = true;
-            this.cHueShiftMiscUI.Location = new System.Drawing.Point(10, 91);
-            this.cHueShiftMiscUI.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cHueShiftMiscUI.Name = "cHueShiftMiscUI";
-            this.cHueShiftMiscUI.Size = new System.Drawing.Size(216, 19);
-            this.cHueShiftMiscUI.TabIndex = 1;
-            this.cHueShiftMiscUI.Text = "Randomize Hue of Miscellaneous UI";
-            this.cHueShiftMiscUI.UseVisualStyleBackColor = true;
+            this.tJunkLocationsList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tJunkLocationsList.Location = new System.Drawing.Point(13, 51);
+            this.tJunkLocationsList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tJunkLocationsList.Name = "tJunkLocationsList";
+            this.tJunkLocationsList.Size = new System.Drawing.Size(374, 23);
+            this.tJunkLocationsList.TabIndex = 26;
+            this.tJunkLocationsList.Text = "--";
+            this.tJunkLocationsList.TextChanged += new System.EventHandler(this.tJunkLocationsList_TextChanged);
             // 
-            // cHUDTableLayoutPanel
+            // bJunkLocationsEditor
             // 
-            this.cHUDTableLayoutPanel.ColumnCount = 3;
-            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 58F));
-            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
-            this.cHUDTableLayoutPanel.Controls.Add(this.cHUDHeartsComboBox, 1, 0);
-            this.cHUDTableLayoutPanel.Controls.Add(this.cHeartsLabel, 0, 0);
-            this.cHUDTableLayoutPanel.Controls.Add(this.cMagicLabel, 0, 1);
-            this.cHUDTableLayoutPanel.Controls.Add(this.cHUDMagicComboBox, 1, 1);
-            this.cHUDTableLayoutPanel.Controls.Add(this.btn_hud, 2, 0);
-            this.cHUDTableLayoutPanel.Location = new System.Drawing.Point(2, 18);
-            this.cHUDTableLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cHUDTableLayoutPanel.Name = "cHUDTableLayoutPanel";
-            this.cHUDTableLayoutPanel.RowCount = 2;
-            this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.cHUDTableLayoutPanel.Size = new System.Drawing.Size(362, 66);
-            this.cHUDTableLayoutPanel.TabIndex = 0;
+            this.bJunkLocationsEditor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bJunkLocationsEditor.Location = new System.Drawing.Point(384, 50);
+            this.bJunkLocationsEditor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bJunkLocationsEditor.Name = "bJunkLocationsEditor";
+            this.bJunkLocationsEditor.Size = new System.Drawing.Size(46, 25);
+            this.bJunkLocationsEditor.TabIndex = 26;
+            this.bJunkLocationsEditor.Text = "Edit";
+            this.bJunkLocationsEditor.UseVisualStyleBackColor = true;
+            this.bJunkLocationsEditor.Click += new System.EventHandler(this.bJunkLocationsEditor_Click);
             // 
-            // cHUDHeartsComboBox
+            // lJunkLocationsAmount
             // 
-            this.cHUDHeartsComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cHUDHeartsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cHUDHeartsComboBox.FormattingEnabled = true;
-            this.cHUDHeartsComboBox.Location = new System.Drawing.Point(62, 3);
-            this.cHUDHeartsComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cHUDHeartsComboBox.Name = "cHUDHeartsComboBox";
-            this.cHUDHeartsComboBox.Size = new System.Drawing.Size(205, 23);
-            this.cHUDHeartsComboBox.TabIndex = 32;
-            this.cHUDHeartsComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDHeartsComboBox_SelectedIndexChanged);
+            this.lJunkLocationsAmount.AutoSize = true;
+            this.lJunkLocationsAmount.Location = new System.Drawing.Point(10, 28);
+            this.lJunkLocationsAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lJunkLocationsAmount.Name = "lJunkLocationsAmount";
+            this.lJunkLocationsAmount.Size = new System.Drawing.Size(121, 15);
+            this.lJunkLocationsAmount.TabIndex = 27;
+            this.lJunkLocationsAmount.Text = "0/0 locations selected";
             // 
-            // cHeartsLabel
+            // groupBox4
             // 
-            this.cHeartsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cHeartsLabel.AutoSize = true;
-            this.cHeartsLabel.Location = new System.Drawing.Point(4, 9);
-            this.cHeartsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.cHeartsLabel.Name = "cHeartsLabel";
-            this.cHeartsLabel.Size = new System.Drawing.Size(44, 15);
-            this.cHeartsLabel.TabIndex = 33;
-            this.cHeartsLabel.Text = "Hearts:";
+            this.groupBox4.Controls.Add(this.bRandomStartingItems);
+            this.groupBox4.Controls.Add(this.tStartingItemList);
+            this.groupBox4.Controls.Add(this.lCustomStartingItemAmount);
+            this.groupBox4.Controls.Add(this.bStartingItemEditor);
+            this.groupBox4.Location = new System.Drawing.Point(459, 7);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox4.Size = new System.Drawing.Size(442, 83);
+            this.groupBox4.TabIndex = 17;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Extra Starting Items";
             // 
-            // cMagicLabel
+            // bRandomStartingItems
             // 
-            this.cMagicLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cMagicLabel.AutoSize = true;
-            this.cMagicLabel.Location = new System.Drawing.Point(4, 42);
-            this.cMagicLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.cMagicLabel.Name = "cMagicLabel";
-            this.cMagicLabel.Size = new System.Drawing.Size(43, 15);
-            this.cMagicLabel.TabIndex = 34;
-            this.cMagicLabel.Text = "Magic:";
+            this.bRandomStartingItems.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bRandomStartingItems.Location = new System.Drawing.Point(217, 17);
+            this.bRandomStartingItems.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bRandomStartingItems.Name = "bRandomStartingItems";
+            this.bRandomStartingItems.Size = new System.Drawing.Size(214, 25);
+            this.bRandomStartingItems.TabIndex = 28;
+            this.bRandomStartingItems.Text = "+ Random Starting Items";
+            this.bRandomStartingItems.UseVisualStyleBackColor = true;
+            this.bRandomStartingItems.Click += new System.EventHandler(this.bRandomStartingItems_Click);
             // 
-            // cHUDMagicComboBox
+            // tStartingItemList
             // 
-            this.cHUDMagicComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cHUDMagicComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cHUDMagicComboBox.FormattingEnabled = true;
-            this.cHUDMagicComboBox.Location = new System.Drawing.Point(62, 36);
-            this.cHUDMagicComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cHUDMagicComboBox.Name = "cHUDMagicComboBox";
-            this.cHUDMagicComboBox.Size = new System.Drawing.Size(205, 23);
-            this.cHUDMagicComboBox.TabIndex = 35;
-            this.cHUDMagicComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDMagicComboBox_SelectedIndexChanged);
+            this.tStartingItemList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tStartingItemList.Location = new System.Drawing.Point(13, 52);
+            this.tStartingItemList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tStartingItemList.Name = "tStartingItemList";
+            this.tStartingItemList.Size = new System.Drawing.Size(374, 23);
+            this.tStartingItemList.TabIndex = 26;
+            this.tStartingItemList.Text = "--";
+            this.tStartingItemList.TextChanged += new System.EventHandler(this.tStartingItemList_TextChanged);
             // 
-            // btn_hud
+            // lCustomStartingItemAmount
             // 
-            this.btn_hud.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btn_hud.AutoSize = true;
-            this.btn_hud.Location = new System.Drawing.Point(275, 11);
-            this.btn_hud.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btn_hud.Name = "btn_hud";
-            this.cHUDTableLayoutPanel.SetRowSpan(this.btn_hud, 2);
-            this.btn_hud.Size = new System.Drawing.Size(83, 43);
-            this.btn_hud.TabIndex = 31;
-            this.btn_hud.Text = "Customize";
-            this.btn_hud.UseVisualStyleBackColor = true;
-            this.btn_hud.Click += new System.EventHandler(this.btn_hud_Click);
+            this.lCustomStartingItemAmount.AutoSize = true;
+            this.lCustomStartingItemAmount.Location = new System.Drawing.Point(10, 29);
+            this.lCustomStartingItemAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lCustomStartingItemAmount.Name = "lCustomStartingItemAmount";
+            this.lCustomStartingItemAmount.Size = new System.Drawing.Size(102, 15);
+            this.lCustomStartingItemAmount.TabIndex = 27;
+            this.lCustomStartingItemAmount.Text = "0/0 items selected";
             // 
-            // tFormCosmetics
+            // bStartingItemEditor
             // 
-            this.tFormCosmetics.Location = new System.Drawing.Point(7, 3);
-            this.tFormCosmetics.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tFormCosmetics.Name = "tFormCosmetics";
-            this.tFormCosmetics.SelectedIndex = 0;
-            this.tFormCosmetics.Size = new System.Drawing.Size(285, 149);
-            this.tFormCosmetics.TabIndex = 39;
+            this.bStartingItemEditor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bStartingItemEditor.Location = new System.Drawing.Point(385, 51);
+            this.bStartingItemEditor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bStartingItemEditor.Name = "bStartingItemEditor";
+            this.bStartingItemEditor.Size = new System.Drawing.Size(46, 25);
+            this.bStartingItemEditor.TabIndex = 26;
+            this.bStartingItemEditor.Text = "Edit";
+            this.bStartingItemEditor.UseVisualStyleBackColor = true;
+            this.bStartingItemEditor.Click += new System.EventHandler(this.bStartingItemEditor_Click);
             // 
-            // tabActorizer
+            // tabItemPool
             // 
-            this.tabActorizer.Controls.Add(this.cFasterCommonFileLoad);
-            this.tabActorizer.Controls.Add(this.cLocationItemRestrictionUnlock);
-            this.tabActorizer.Controls.Add(this.cFormItemRestrictionUnlock);
-            this.tabActorizer.Controls.Add(this.lActorMode);
-            this.tabActorizer.Controls.Add(this.cActorMode);
-            this.tabActorizer.Location = new System.Drawing.Point(4, 24);
-            this.tabActorizer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabActorizer.Name = "tabActorizer";
-            this.tabActorizer.Size = new System.Drawing.Size(910, 361);
-            this.tabActorizer.TabIndex = 5;
-            this.tabActorizer.Text = "Actorizer";
-            this.tabActorizer.UseVisualStyleBackColor = true;
+            this.tabItemPool.Controls.Add(this.cItemPoolAdvanced);
+            this.tabItemPool.Controls.Add(this.pClassicItemPool);
+            this.tabItemPool.Controls.Add(this.lItemPoolText);
+            this.tabItemPool.Controls.Add(this.bItemPoolEdit);
+            this.tabItemPool.Controls.Add(this.tItemPool);
+            this.tabItemPool.Controls.Add(this.tableItemPool);
+            this.tabItemPool.Controls.Add(this.pLocationCategories);
+            this.tabItemPool.Location = new System.Drawing.Point(4, 24);
+            this.tabItemPool.Name = "tabItemPool";
+            this.tabItemPool.Size = new System.Drawing.Size(910, 361);
+            this.tabItemPool.TabIndex = 6;
+            this.tabItemPool.Text = "Item Randomization";
+            this.tabItemPool.UseVisualStyleBackColor = true;
             // 
-            // cLocationItemRestrictionUnlock
+            // cItemPoolAdvanced
             // 
-            this.cLocationItemRestrictionUnlock.AutoSize = true;
-            this.cLocationItemRestrictionUnlock.Checked = true;
-            this.cLocationItemRestrictionUnlock.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cLocationItemRestrictionUnlock.Location = new System.Drawing.Point(250, 35);
-            this.cLocationItemRestrictionUnlock.Name = "cLocationItemRestrictionUnlock";
-            this.cLocationItemRestrictionUnlock.Size = new System.Drawing.Size(144, 19);
-            this.cLocationItemRestrictionUnlock.TabIndex = 3;
-            this.cLocationItemRestrictionUnlock.Text = "Location Items Unlock";
-            this.cLocationItemRestrictionUnlock.UseVisualStyleBackColor = true;
+            this.cItemPoolAdvanced.AutoSize = true;
+            this.cItemPoolAdvanced.Location = new System.Drawing.Point(7, 52);
+            this.cItemPoolAdvanced.Name = "cItemPoolAdvanced";
+            this.cItemPoolAdvanced.Size = new System.Drawing.Size(107, 19);
+            this.cItemPoolAdvanced.TabIndex = 27;
+            this.cItemPoolAdvanced.Text = "Advanced View";
+            this.cItemPoolAdvanced.UseVisualStyleBackColor = true;
+            this.cItemPoolAdvanced.CheckedChanged += new System.EventHandler(this.cItemPoolAdvanced_CheckedChanged);
             // 
-            // cFormItemRestrictionUnlock
+            // pClassicItemPool
             // 
-            this.cFormItemRestrictionUnlock.AutoSize = true;
-            this.cFormItemRestrictionUnlock.Checked = true;
-            this.cFormItemRestrictionUnlock.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cFormItemRestrictionUnlock.Location = new System.Drawing.Point(250, 9);
-            this.cFormItemRestrictionUnlock.Name = "cFormItemRestrictionUnlock";
-            this.cFormItemRestrictionUnlock.Size = new System.Drawing.Size(126, 19);
-            this.cFormItemRestrictionUnlock.TabIndex = 2;
-            this.cFormItemRestrictionUnlock.Text = "Form Items Unlock";
-            this.cFormItemRestrictionUnlock.UseVisualStyleBackColor = true;
+            this.pClassicItemPool.Location = new System.Drawing.Point(7, 77);
+            this.pClassicItemPool.Name = "pClassicItemPool";
+            this.pClassicItemPool.Size = new System.Drawing.Size(895, 281);
+            this.pClassicItemPool.TabIndex = 26;
             // 
-            // lActorMode
+            // lItemPoolText
             // 
-            this.lActorMode.AutoSize = true;
-            this.lActorMode.Location = new System.Drawing.Point(6, 9);
-            this.lActorMode.Name = "lActorMode";
-            this.lActorMode.Size = new System.Drawing.Size(67, 15);
-            this.lActorMode.TabIndex = 1;
-            this.lActorMode.Text = "ActorMode";
+            this.lItemPoolText.AutoSize = true;
+            this.lItemPoolText.Location = new System.Drawing.Point(7, 34);
+            this.lItemPoolText.Name = "lItemPoolText";
+            this.lItemPoolText.Size = new System.Drawing.Size(122, 15);
+            this.lItemPoolText.TabIndex = 25;
+            this.lItemPoolText.Text = "0/0 items randomized";
             // 
-            // cActorMode
+            // bItemPoolEdit
             // 
-            this.cActorMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cActorMode.FormattingEnabled = true;
-            this.cActorMode.Items.AddRange(new object[] {
+            this.bItemPoolEdit.Location = new System.Drawing.Point(827, 3);
+            this.bItemPoolEdit.Name = "bItemPoolEdit";
+            this.bItemPoolEdit.Size = new System.Drawing.Size(75, 25);
+            this.bItemPoolEdit.TabIndex = 24;
+            this.bItemPoolEdit.Text = "Edit";
+            this.bItemPoolEdit.UseVisualStyleBackColor = true;
+            this.bItemPoolEdit.Click += new System.EventHandler(this.bItemPoolEdit_Click);
+            // 
+            // tItemPool
+            // 
+            this.tItemPool.Location = new System.Drawing.Point(7, 4);
+            this.tItemPool.Name = "tItemPool";
+            this.tItemPool.Size = new System.Drawing.Size(814, 23);
+            this.tItemPool.TabIndex = 23;
+            this.tItemPool.TextChanged += new System.EventHandler(this.tItemPool_TextChanged);
+            // 
+            // tableItemPool
+            // 
+            this.tableItemPool.AutoScroll = true;
+            this.tableItemPool.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableItemPool.ColumnCount = 1;
+            this.tableItemPool.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableItemPool.Location = new System.Drawing.Point(3, 160);
+            this.tableItemPool.Name = "tableItemPool";
+            this.tableItemPool.RowCount = 1;
+            this.tableItemPool.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableItemPool.Size = new System.Drawing.Size(904, 198);
+            this.tableItemPool.TabIndex = 22;
+            this.tableItemPool.Visible = false;
+            // 
+            // pLocationCategories
+            // 
+            this.pLocationCategories.Location = new System.Drawing.Point(7, 30);
+            this.pLocationCategories.Name = "pLocationCategories";
+            this.pLocationCategories.Size = new System.Drawing.Size(900, 129);
+            this.pLocationCategories.TabIndex = 28;
+            this.pLocationCategories.Visible = false;
+            // 
+            // tabGimmicks
+            // 
+            this.tabGimmicks.Controls.Add(this.gGimmicksChallenges);
+            this.tabGimmicks.Controls.Add(this.gGimmicksMovement);
+            this.tabGimmicks.Controls.Add(this.gTraps);
+            this.tabGimmicks.Controls.Add(this.gGimmicksClock);
+            this.tabGimmicks.Controls.Add(this.label4);
+            this.tabGimmicks.Controls.Add(this.gGimmicksOther);
+            this.tabGimmicks.Location = new System.Drawing.Point(4, 24);
+            this.tabGimmicks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabGimmicks.Name = "tabGimmicks";
+            this.tabGimmicks.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabGimmicks.Size = new System.Drawing.Size(910, 361);
+            this.tabGimmicks.TabIndex = 3;
+            this.tabGimmicks.Text = "Gimmicks";
+            this.tabGimmicks.UseVisualStyleBackColor = true;
+            // 
+            // gGimmicksChallenges
+            // 
+            this.gGimmicksChallenges.Controls.Add(this.cDeathMode);
+            this.gGimmicksChallenges.Controls.Add(this.lDeathMode);
+            this.gGimmicksChallenges.Controls.Add(this.cMoonCrashFileErase);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromDexihands);
+            this.gGimmicksChallenges.Controls.Add(this.label2);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromGibdosFaster);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageGettingCaught);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromGorons);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromDog);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromVoid);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageWhileShielding);
+            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageOnEpona);
+            this.gGimmicksChallenges.Controls.Add(this.cFewerHealthDrops);
+            this.gGimmicksChallenges.Controls.Add(this.cDType);
+            this.gGimmicksChallenges.Controls.Add(this.lDType);
+            this.gGimmicksChallenges.Controls.Add(this.cByoAmmo);
+            this.gGimmicksChallenges.Controls.Add(this.cDMult);
+            this.gGimmicksChallenges.Controls.Add(this.lDMult);
+            this.gGimmicksChallenges.Location = new System.Drawing.Point(414, 92);
+            this.gGimmicksChallenges.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksChallenges.Name = "gGimmicksChallenges";
+            this.gGimmicksChallenges.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksChallenges.Size = new System.Drawing.Size(290, 259);
+            this.gGimmicksChallenges.TabIndex = 33;
+            this.gGimmicksChallenges.TabStop = false;
+            this.gGimmicksChallenges.Text = "Challenges";
+            // 
+            // cDeathMode
+            // 
+            this.cDeathMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cDeathMode.FormattingEnabled = true;
+            this.cDeathMode.Items.AddRange(new object[] {
             "Default",
-            "Actorizer",
-            "Enemizer",
-            "Enemizer Out For Blood"});
-            this.cActorMode.Location = new System.Drawing.Point(79, 6);
-            this.cActorMode.Name = "cActorMode";
-            this.cActorMode.Size = new System.Drawing.Size(150, 23);
-            this.cActorMode.TabIndex = 0;
+            "Moon Crash",
+            "Reduce Max Hearts"});
+            this.cDeathMode.Location = new System.Drawing.Point(7, 78);
+            this.cDeathMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDeathMode.Name = "cDeathMode";
+            this.cDeathMode.Size = new System.Drawing.Size(129, 23);
+            this.cDeathMode.TabIndex = 37;
             // 
-            // tabShortenCutscenes
+            // lDeathMode
             // 
-            this.tabShortenCutscenes.Controls.Add(this.tShortenCutscenes);
-            this.tabShortenCutscenes.Location = new System.Drawing.Point(4, 24);
-            this.tabShortenCutscenes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabShortenCutscenes.Name = "tabShortenCutscenes";
-            this.tabShortenCutscenes.Size = new System.Drawing.Size(910, 361);
-            this.tabShortenCutscenes.TabIndex = 5;
-            this.tabShortenCutscenes.Text = "Shorten Cutscenes";
-            this.tabShortenCutscenes.UseVisualStyleBackColor = true;
+            this.lDeathMode.AutoSize = true;
+            this.lDeathMode.Location = new System.Drawing.Point(7, 62);
+            this.lDeathMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lDeathMode.Name = "lDeathMode";
+            this.lDeathMode.Size = new System.Drawing.Size(72, 15);
+            this.lDeathMode.TabIndex = 38;
+            this.lDeathMode.Text = "Death mode";
             // 
-            // tShortenCutscenes
+            // cMoonCrashFileErase
             // 
-            this.tShortenCutscenes.Location = new System.Drawing.Point(8, 5);
-            this.tShortenCutscenes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tShortenCutscenes.Name = "tShortenCutscenes";
-            this.tShortenCutscenes.SelectedIndex = 0;
-            this.tShortenCutscenes.Size = new System.Drawing.Size(868, 322);
-            this.tShortenCutscenes.TabIndex = 0;
+            this.cMoonCrashFileErase.AutoSize = true;
+            this.cMoonCrashFileErase.BackColor = System.Drawing.Color.Transparent;
+            this.cMoonCrashFileErase.ForeColor = System.Drawing.Color.Black;
+            this.cMoonCrashFileErase.Location = new System.Drawing.Point(7, 107);
+            this.cMoonCrashFileErase.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMoonCrashFileErase.Name = "cMoonCrashFileErase";
+            this.cMoonCrashFileErase.Size = new System.Drawing.Size(147, 19);
+            this.cMoonCrashFileErase.TabIndex = 36;
+            this.cMoonCrashFileErase.Text = "Moon Crash Erases File";
+            this.cMoonCrashFileErase.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageFromDexihands
+            // 
+            this.cTakeDamageFromDexihands.AutoSize = true;
+            this.cTakeDamageFromDexihands.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromDexihands.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromDexihands.Location = new System.Drawing.Point(153, 233);
+            this.cTakeDamageFromDexihands.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromDexihands.Name = "cTakeDamageFromDexihands";
+            this.cTakeDamageFromDexihands.Size = new System.Drawing.Size(112, 19);
+            this.cTakeDamageFromDexihands.TabIndex = 35;
+            this.cTakeDamageFromDexihands.Text = "From Dexihands";
+            this.cTakeDamageFromDexihands.UseVisualStyleBackColor = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 140);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(126, 15);
+            this.label2.TabIndex = 34;
+            this.label2.Text = "More Damage Sources";
+            // 
+            // cTakeDamageFromGibdosFaster
+            // 
+            this.cTakeDamageFromGibdosFaster.AutoSize = true;
+            this.cTakeDamageFromGibdosFaster.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromGibdosFaster.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromGibdosFaster.Location = new System.Drawing.Point(154, 158);
+            this.cTakeDamageFromGibdosFaster.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromGibdosFaster.Name = "cTakeDamageFromGibdosFaster";
+            this.cTakeDamageFromGibdosFaster.Size = new System.Drawing.Size(128, 19);
+            this.cTakeDamageFromGibdosFaster.TabIndex = 33;
+            this.cTakeDamageFromGibdosFaster.Text = "From Gibdos Faster";
+            this.cTakeDamageFromGibdosFaster.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageGettingCaught
+            // 
+            this.cTakeDamageGettingCaught.AutoSize = true;
+            this.cTakeDamageGettingCaught.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageGettingCaught.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageGettingCaught.Location = new System.Drawing.Point(153, 183);
+            this.cTakeDamageGettingCaught.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageGettingCaught.Name = "cTakeDamageGettingCaught";
+            this.cTakeDamageGettingCaught.Size = new System.Drawing.Size(107, 19);
+            this.cTakeDamageGettingCaught.TabIndex = 32;
+            this.cTakeDamageGettingCaught.Text = "Getting Caught";
+            this.cTakeDamageGettingCaught.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageFromGorons
+            // 
+            this.cTakeDamageFromGorons.AutoSize = true;
+            this.cTakeDamageFromGorons.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromGorons.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromGorons.Location = new System.Drawing.Point(7, 233);
+            this.cTakeDamageFromGorons.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromGorons.Name = "cTakeDamageFromGorons";
+            this.cTakeDamageFromGorons.Size = new System.Drawing.Size(95, 19);
+            this.cTakeDamageFromGorons.TabIndex = 31;
+            this.cTakeDamageFromGorons.Text = "From Gorons";
+            this.cTakeDamageFromGorons.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageFromDog
+            // 
+            this.cTakeDamageFromDog.AutoSize = true;
+            this.cTakeDamageFromDog.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromDog.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromDog.Location = new System.Drawing.Point(153, 208);
+            this.cTakeDamageFromDog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromDog.Name = "cTakeDamageFromDog";
+            this.cTakeDamageFromDog.Size = new System.Drawing.Size(79, 19);
+            this.cTakeDamageFromDog.TabIndex = 30;
+            this.cTakeDamageFromDog.Text = "From Dog";
+            this.cTakeDamageFromDog.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageFromVoid
+            // 
+            this.cTakeDamageFromVoid.AutoSize = true;
+            this.cTakeDamageFromVoid.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageFromVoid.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageFromVoid.Location = new System.Drawing.Point(8, 208);
+            this.cTakeDamageFromVoid.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageFromVoid.Name = "cTakeDamageFromVoid";
+            this.cTakeDamageFromVoid.Size = new System.Drawing.Size(80, 19);
+            this.cTakeDamageFromVoid.TabIndex = 29;
+            this.cTakeDamageFromVoid.Text = "From Void";
+            this.cTakeDamageFromVoid.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageWhileShielding
+            // 
+            this.cTakeDamageWhileShielding.AutoSize = true;
+            this.cTakeDamageWhileShielding.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageWhileShielding.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageWhileShielding.Location = new System.Drawing.Point(8, 183);
+            this.cTakeDamageWhileShielding.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageWhileShielding.Name = "cTakeDamageWhileShielding";
+            this.cTakeDamageWhileShielding.Size = new System.Drawing.Size(108, 19);
+            this.cTakeDamageWhileShielding.TabIndex = 28;
+            this.cTakeDamageWhileShielding.Text = "While Shielding";
+            this.cTakeDamageWhileShielding.UseVisualStyleBackColor = false;
+            // 
+            // cTakeDamageOnEpona
+            // 
+            this.cTakeDamageOnEpona.AutoSize = true;
+            this.cTakeDamageOnEpona.BackColor = System.Drawing.Color.Transparent;
+            this.cTakeDamageOnEpona.ForeColor = System.Drawing.Color.Black;
+            this.cTakeDamageOnEpona.Location = new System.Drawing.Point(8, 158);
+            this.cTakeDamageOnEpona.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTakeDamageOnEpona.Name = "cTakeDamageOnEpona";
+            this.cTakeDamageOnEpona.Size = new System.Drawing.Size(78, 19);
+            this.cTakeDamageOnEpona.TabIndex = 27;
+            this.cTakeDamageOnEpona.Text = "On Epona";
+            this.cTakeDamageOnEpona.UseVisualStyleBackColor = false;
+            // 
+            // cFewerHealthDrops
+            // 
+            this.cFewerHealthDrops.AutoSize = true;
+            this.cFewerHealthDrops.BackColor = System.Drawing.Color.Transparent;
+            this.cFewerHealthDrops.ForeColor = System.Drawing.Color.Black;
+            this.cFewerHealthDrops.Location = new System.Drawing.Point(153, 63);
+            this.cFewerHealthDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFewerHealthDrops.Name = "cFewerHealthDrops";
+            this.cFewerHealthDrops.Size = new System.Drawing.Size(129, 19);
+            this.cFewerHealthDrops.TabIndex = 26;
+            this.cFewerHealthDrops.Text = "Fewer Health Drops";
+            this.cFewerHealthDrops.UseVisualStyleBackColor = false;
+            // 
+            // cDType
+            // 
+            this.cDType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cDType.FormattingEnabled = true;
+            this.cDType.Items.AddRange(new object[] {
+            "Default",
+            "Fire",
+            "Ice",
+            "Shock",
+            "Knockdown",
+            "Random"});
+            this.cDType.Location = new System.Drawing.Point(154, 34);
+            this.cDType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDType.Name = "cDType";
+            this.cDType.Size = new System.Drawing.Size(128, 23);
+            this.cDType.TabIndex = 0;
+            // 
+            // lDType
+            // 
+            this.lDType.AutoSize = true;
+            this.lDType.Location = new System.Drawing.Point(154, 18);
+            this.lDType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lDType.Name = "lDType";
+            this.lDType.Size = new System.Drawing.Size(89, 15);
+            this.lDType.TabIndex = 1;
+            this.lDType.Text = "Damage effects";
+            // 
+            // cByoAmmo
+            // 
+            this.cByoAmmo.AutoSize = true;
+            this.cByoAmmo.BackColor = System.Drawing.Color.Transparent;
+            this.cByoAmmo.ForeColor = System.Drawing.Color.Black;
+            this.cByoAmmo.Location = new System.Drawing.Point(153, 86);
+            this.cByoAmmo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cByoAmmo.Name = "cByoAmmo";
+            this.cByoAmmo.Size = new System.Drawing.Size(89, 19);
+            this.cByoAmmo.TabIndex = 24;
+            this.cByoAmmo.Text = "BYO Ammo";
+            this.cByoAmmo.UseVisualStyleBackColor = false;
+            // 
+            // cDMult
+            // 
+            this.cDMult.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cDMult.FormattingEnabled = true;
+            this.cDMult.Items.AddRange(new object[] {
+            "Default",
+            "2x",
+            "4x",
+            "8x",
+            "1-hit KO",
+            "Doom"});
+            this.cDMult.Location = new System.Drawing.Point(7, 34);
+            this.cDMult.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDMult.Name = "cDMult";
+            this.cDMult.Size = new System.Drawing.Size(129, 23);
+            this.cDMult.TabIndex = 0;
+            // 
+            // lDMult
+            // 
+            this.lDMult.AutoSize = true;
+            this.lDMult.Location = new System.Drawing.Point(7, 18);
+            this.lDMult.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lDMult.Name = "lDMult";
+            this.lDMult.Size = new System.Drawing.Size(85, 15);
+            this.lDMult.TabIndex = 1;
+            this.lDMult.Text = "Damage mode";
+            // 
+            // gGimmicksMovement
+            // 
+            this.gGimmicksMovement.Controls.Add(this.cIronGoron);
+            this.gGimmicksMovement.Controls.Add(this.cClimbMostSurfaces);
+            this.gGimmicksMovement.Controls.Add(this.cHookshotAnySurface);
+            this.gGimmicksMovement.Controls.Add(this.cFloors);
+            this.gGimmicksMovement.Controls.Add(this.lFloors);
+            this.gGimmicksMovement.Controls.Add(this.lGravity);
+            this.gGimmicksMovement.Controls.Add(this.cGravity);
+            this.gGimmicksMovement.Controls.Add(this.cContinuousDekuHopping);
+            this.gGimmicksMovement.Location = new System.Drawing.Point(7, 7);
+            this.gGimmicksMovement.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksMovement.Name = "gGimmicksMovement";
+            this.gGimmicksMovement.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksMovement.Size = new System.Drawing.Size(190, 211);
+            this.gGimmicksMovement.TabIndex = 32;
+            this.gGimmicksMovement.TabStop = false;
+            this.gGimmicksMovement.Text = "Movement";
+            // 
+            // cIronGoron
+            // 
+            this.cIronGoron.AutoSize = true;
+            this.cIronGoron.BackColor = System.Drawing.Color.Transparent;
+            this.cIronGoron.ForeColor = System.Drawing.Color.Black;
+            this.cIronGoron.Location = new System.Drawing.Point(7, 185);
+            this.cIronGoron.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cIronGoron.Name = "cIronGoron";
+            this.cIronGoron.Size = new System.Drawing.Size(83, 19);
+            this.cIronGoron.TabIndex = 29;
+            this.cIronGoron.Text = "Iron Goron";
+            this.cIronGoron.UseVisualStyleBackColor = false;
+            // 
+            // cClimbMostSurfaces
+            // 
+            this.cClimbMostSurfaces.AutoSize = true;
+            this.cClimbMostSurfaces.BackColor = System.Drawing.Color.Transparent;
+            this.cClimbMostSurfaces.ForeColor = System.Drawing.Color.Black;
+            this.cClimbMostSurfaces.Location = new System.Drawing.Point(7, 160);
+            this.cClimbMostSurfaces.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cClimbMostSurfaces.Name = "cClimbMostSurfaces";
+            this.cClimbMostSurfaces.Size = new System.Drawing.Size(135, 19);
+            this.cClimbMostSurfaces.TabIndex = 28;
+            this.cClimbMostSurfaces.Text = "Climb Most Surfaces";
+            this.cClimbMostSurfaces.UseVisualStyleBackColor = false;
+            // 
+            // cHookshotAnySurface
+            // 
+            this.cHookshotAnySurface.AutoSize = true;
+            this.cHookshotAnySurface.BackColor = System.Drawing.Color.Transparent;
+            this.cHookshotAnySurface.ForeColor = System.Drawing.Color.Black;
+            this.cHookshotAnySurface.Location = new System.Drawing.Point(7, 135);
+            this.cHookshotAnySurface.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHookshotAnySurface.Name = "cHookshotAnySurface";
+            this.cHookshotAnySurface.Size = new System.Drawing.Size(144, 19);
+            this.cHookshotAnySurface.TabIndex = 27;
+            this.cHookshotAnySurface.Text = "Hookshot Any Surface";
+            this.cHookshotAnySurface.UseVisualStyleBackColor = false;
+            // 
+            // cFloors
+            // 
+            this.cFloors.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cFloors.FormattingEnabled = true;
+            this.cFloors.Items.AddRange(new object[] {
+            "Default",
+            "Sand",
+            "Ice",
+            "Snow",
+            "Random"});
+            this.cFloors.Location = new System.Drawing.Point(7, 78);
+            this.cFloors.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFloors.Name = "cFloors";
+            this.cFloors.Size = new System.Drawing.Size(176, 23);
+            this.cFloors.TabIndex = 0;
+            // 
+            // lFloors
+            // 
+            this.lFloors.AutoSize = true;
+            this.lFloors.Location = new System.Drawing.Point(7, 62);
+            this.lFloors.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lFloors.Name = "lFloors";
+            this.lFloors.Size = new System.Drawing.Size(65, 15);
+            this.lFloors.TabIndex = 1;
+            this.lFloors.Text = "Floor types";
+            // 
+            // lGravity
+            // 
+            this.lGravity.AutoSize = true;
+            this.lGravity.Location = new System.Drawing.Point(7, 18);
+            this.lGravity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lGravity.Name = "lGravity";
+            this.lGravity.Size = new System.Drawing.Size(87, 15);
+            this.lGravity.TabIndex = 1;
+            this.lGravity.Text = "Gravity / Speed";
+            // 
+            // cGravity
+            // 
+            this.cGravity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cGravity.FormattingEnabled = true;
+            this.cGravity.Items.AddRange(new object[] {
+            "Default",
+            "High speed (many softlocks)",
+            "Super low gravity",
+            "Low gravity",
+            "High gravity"});
+            this.cGravity.Location = new System.Drawing.Point(7, 35);
+            this.cGravity.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cGravity.Name = "cGravity";
+            this.cGravity.Size = new System.Drawing.Size(176, 23);
+            this.cGravity.TabIndex = 0;
+            // 
+            // cContinuousDekuHopping
+            // 
+            this.cContinuousDekuHopping.AutoSize = true;
+            this.cContinuousDekuHopping.BackColor = System.Drawing.Color.Transparent;
+            this.cContinuousDekuHopping.ForeColor = System.Drawing.Color.Black;
+            this.cContinuousDekuHopping.Location = new System.Drawing.Point(7, 110);
+            this.cContinuousDekuHopping.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cContinuousDekuHopping.Name = "cContinuousDekuHopping";
+            this.cContinuousDekuHopping.Size = new System.Drawing.Size(168, 19);
+            this.cContinuousDekuHopping.TabIndex = 26;
+            this.cContinuousDekuHopping.Text = "Continuous Deku Hopping";
+            this.cContinuousDekuHopping.UseVisualStyleBackColor = false;
+            // 
+            // gTraps
+            // 
+            this.gTraps.Controls.Add(this.lTrapWeightings);
+            this.gTraps.Controls.Add(this.lTrapsAppearance);
+            this.gTraps.Controls.Add(this.lTrapAmount);
+            this.gTraps.Controls.Add(this.cTrapAmount);
+            this.gTraps.Controls.Add(this.cTrapsAppearance);
+            this.gTraps.Controls.Add(this.cIceTrapQuirks);
+            this.gTraps.Location = new System.Drawing.Point(205, 92);
+            this.gTraps.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gTraps.Name = "gTraps";
+            this.gTraps.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gTraps.Size = new System.Drawing.Size(201, 259);
+            this.gTraps.TabIndex = 31;
+            this.gTraps.TabStop = false;
+            this.gTraps.Text = "Traps";
+            // 
+            // lTrapWeightings
+            // 
+            this.lTrapWeightings.AutoSize = true;
+            this.lTrapWeightings.Location = new System.Drawing.Point(7, 129);
+            this.lTrapWeightings.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lTrapWeightings.Name = "lTrapWeightings";
+            this.lTrapWeightings.Size = new System.Drawing.Size(92, 15);
+            this.lTrapWeightings.TabIndex = 32;
+            this.lTrapWeightings.Text = "Trap Weightings";
+            // 
+            // lTrapsAppearance
+            // 
+            this.lTrapsAppearance.AutoSize = true;
+            this.lTrapsAppearance.Location = new System.Drawing.Point(7, 62);
+            this.lTrapsAppearance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lTrapsAppearance.Name = "lTrapsAppearance";
+            this.lTrapsAppearance.Size = new System.Drawing.Size(70, 15);
+            this.lTrapsAppearance.TabIndex = 30;
+            this.lTrapsAppearance.Text = "Appearance";
+            // 
+            // lTrapAmount
+            // 
+            this.lTrapAmount.AutoSize = true;
+            this.lTrapAmount.Location = new System.Drawing.Point(7, 18);
+            this.lTrapAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lTrapAmount.Name = "lTrapAmount";
+            this.lTrapAmount.Size = new System.Drawing.Size(76, 15);
+            this.lTrapAmount.TabIndex = 28;
+            this.lTrapAmount.Text = "Trap Amount";
+            // 
+            // cTrapAmount
+            // 
+            this.cTrapAmount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cTrapAmount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cTrapAmount.FormattingEnabled = true;
+            this.cTrapAmount.Items.AddRange(new object[] {
+            "None",
+            "Normal",
+            "Extra",
+            "Mayhem",
+            "Onslaught"});
+            this.cTrapAmount.Location = new System.Drawing.Point(7, 35);
+            this.cTrapAmount.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTrapAmount.Name = "cTrapAmount";
+            this.cTrapAmount.Size = new System.Drawing.Size(186, 23);
+            this.cTrapAmount.TabIndex = 26;
+            // 
+            // cTrapsAppearance
+            // 
+            this.cTrapsAppearance.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cTrapsAppearance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cTrapsAppearance.FormattingEnabled = true;
+            this.cTrapsAppearance.Items.AddRange(new object[] {
+            "Major Items",
+            "Junk Items",
+            "Anything"});
+            this.cTrapsAppearance.Location = new System.Drawing.Point(7, 78);
+            this.cTrapsAppearance.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTrapsAppearance.Name = "cTrapsAppearance";
+            this.cTrapsAppearance.Size = new System.Drawing.Size(186, 23);
+            this.cTrapsAppearance.TabIndex = 27;
+            // 
+            // cIceTrapQuirks
+            // 
+            this.cIceTrapQuirks.AutoSize = true;
+            this.cIceTrapQuirks.BackColor = System.Drawing.Color.Transparent;
+            this.cIceTrapQuirks.ForeColor = System.Drawing.Color.Black;
+            this.cIceTrapQuirks.Location = new System.Drawing.Point(7, 107);
+            this.cIceTrapQuirks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cIceTrapQuirks.Name = "cIceTrapQuirks";
+            this.cIceTrapQuirks.Size = new System.Drawing.Size(98, 19);
+            this.cIceTrapQuirks.TabIndex = 29;
+            this.cIceTrapQuirks.Text = "Enable Quirks";
+            this.cIceTrapQuirks.UseVisualStyleBackColor = false;
+            // 
+            // gGimmicksClock
+            // 
+            this.gGimmicksClock.Controls.Add(this.cAutoInvert);
+            this.gGimmicksClock.Controls.Add(this.lAutoInvert);
+            this.gGimmicksClock.Controls.Add(this.cClockSpeed);
+            this.gGimmicksClock.Controls.Add(this.lClockSpeed);
+            this.gGimmicksClock.Controls.Add(this.cHideClock);
+            this.gGimmicksClock.Location = new System.Drawing.Point(7, 221);
+            this.gGimmicksClock.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksClock.Name = "gGimmicksClock";
+            this.gGimmicksClock.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksClock.Size = new System.Drawing.Size(190, 130);
+            this.gGimmicksClock.TabIndex = 30;
+            this.gGimmicksClock.TabStop = false;
+            this.gGimmicksClock.Text = "Clock";
+            // 
+            // cAutoInvert
+            // 
+            this.cAutoInvert.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cAutoInvert.FormattingEnabled = true;
+            this.cAutoInvert.Items.AddRange(new object[] {
+            "Never",
+            "First Cycle",
+            "Always"});
+            this.cAutoInvert.Location = new System.Drawing.Point(7, 77);
+            this.cAutoInvert.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cAutoInvert.Name = "cAutoInvert";
+            this.cAutoInvert.Size = new System.Drawing.Size(176, 23);
+            this.cAutoInvert.TabIndex = 18;
+            // 
+            // lAutoInvert
+            // 
+            this.lAutoInvert.AutoSize = true;
+            this.lAutoInvert.Location = new System.Drawing.Point(4, 61);
+            this.lAutoInvert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lAutoInvert.Name = "lAutoInvert";
+            this.lAutoInvert.Size = new System.Drawing.Size(68, 15);
+            this.lAutoInvert.TabIndex = 19;
+            this.lAutoInvert.Text = "Auto-invert";
+            // 
+            // cClockSpeed
+            // 
+            this.cClockSpeed.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cClockSpeed.FormattingEnabled = true;
+            this.cClockSpeed.Items.AddRange(new object[] {
+            "Default",
+            "1/3x",
+            "2/3x",
+            "2x",
+            "3x",
+            "6x"});
+            this.cClockSpeed.Location = new System.Drawing.Point(7, 35);
+            this.cClockSpeed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cClockSpeed.Name = "cClockSpeed";
+            this.cClockSpeed.Size = new System.Drawing.Size(176, 23);
+            this.cClockSpeed.TabIndex = 15;
+            // 
+            // lClockSpeed
+            // 
+            this.lClockSpeed.AutoSize = true;
+            this.lClockSpeed.Location = new System.Drawing.Point(4, 19);
+            this.lClockSpeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lClockSpeed.Name = "lClockSpeed";
+            this.lClockSpeed.Size = new System.Drawing.Size(39, 15);
+            this.lClockSpeed.TabIndex = 16;
+            this.lClockSpeed.Text = "Speed";
+            // 
+            // cHideClock
+            // 
+            this.cHideClock.AutoSize = true;
+            this.cHideClock.BackColor = System.Drawing.Color.Transparent;
+            this.cHideClock.ForeColor = System.Drawing.Color.Black;
+            this.cHideClock.Location = new System.Drawing.Point(6, 106);
+            this.cHideClock.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHideClock.Name = "cHideClock";
+            this.cHideClock.Size = new System.Drawing.Size(65, 19);
+            this.cHideClock.TabIndex = 17;
+            this.cHideClock.Text = "Hide UI";
+            this.cHideClock.UseVisualStyleBackColor = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.ForeColor = System.Drawing.Color.Black;
+            this.label4.Location = new System.Drawing.Point(301, 12);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(266, 75);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "WARNING!\r\nMost of these settings are not considered in logic\r\nand some can cause " +
+    "the seed to be unbeatable.\r\nUse at your own risk!\r\nItems marked with * are consi" +
+    "dered in logic.";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gGimmicksOther
+            // 
+            this.gGimmicksOther.Controls.Add(this.cVanillaMoonTrials);
+            this.gGimmicksOther.Controls.Add(this.cBombArrows);
+            this.gGimmicksOther.Controls.Add(this.cGiantMaskAnywhere);
+            this.gGimmicksOther.Controls.Add(this.cInstantTransformations);
+            this.gGimmicksOther.Controls.Add(this.cFreeScarecrow);
+            this.gGimmicksOther.Controls.Add(this.cFDAnywhere);
+            this.gGimmicksOther.Controls.Add(this.cBlastCooldown);
+            this.gGimmicksOther.Controls.Add(this.cUnderwaterOcarina);
+            this.gGimmicksOther.Controls.Add(this.cSunsSong);
+            this.gGimmicksOther.Controls.Add(this.lBlastMask);
+            this.gGimmicksOther.Controls.Add(this.lNutAndStickDrops);
+            this.gGimmicksOther.Controls.Add(this.cNutAndStickDrops);
+            this.gGimmicksOther.Location = new System.Drawing.Point(712, 7);
+            this.gGimmicksOther.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksOther.Name = "gGimmicksOther";
+            this.gGimmicksOther.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGimmicksOther.Size = new System.Drawing.Size(190, 344);
+            this.gGimmicksOther.TabIndex = 34;
+            this.gGimmicksOther.TabStop = false;
+            this.gGimmicksOther.Text = "Other";
+            // 
+            // cVanillaMoonTrials
+            // 
+            this.cVanillaMoonTrials.AutoSize = true;
+            this.cVanillaMoonTrials.BackColor = System.Drawing.Color.Transparent;
+            this.cVanillaMoonTrials.ForeColor = System.Drawing.Color.Black;
+            this.cVanillaMoonTrials.Location = new System.Drawing.Point(7, 285);
+            this.cVanillaMoonTrials.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cVanillaMoonTrials.Name = "cVanillaMoonTrials";
+            this.cVanillaMoonTrials.Size = new System.Drawing.Size(158, 19);
+            this.cVanillaMoonTrials.TabIndex = 30;
+            this.cVanillaMoonTrials.Text = "Vanilla Moon Trial Access";
+            this.cVanillaMoonTrials.UseVisualStyleBackColor = false;
+            // 
+            // cBombArrows
+            // 
+            this.cBombArrows.AutoSize = true;
+            this.cBombArrows.BackColor = System.Drawing.Color.Transparent;
+            this.cBombArrows.ForeColor = System.Drawing.Color.Black;
+            this.cBombArrows.Location = new System.Drawing.Point(7, 260);
+            this.cBombArrows.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cBombArrows.Name = "cBombArrows";
+            this.cBombArrows.Size = new System.Drawing.Size(98, 19);
+            this.cBombArrows.TabIndex = 29;
+            this.cBombArrows.Text = "Bomb Arrows";
+            this.cBombArrows.UseVisualStyleBackColor = false;
+            // 
+            // cGiantMaskAnywhere
+            // 
+            this.cGiantMaskAnywhere.AutoSize = true;
+            this.cGiantMaskAnywhere.BackColor = System.Drawing.Color.Transparent;
+            this.cGiantMaskAnywhere.ForeColor = System.Drawing.Color.Black;
+            this.cGiantMaskAnywhere.Location = new System.Drawing.Point(7, 210);
+            this.cGiantMaskAnywhere.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cGiantMaskAnywhere.Name = "cGiantMaskAnywhere";
+            this.cGiantMaskAnywhere.Size = new System.Drawing.Size(147, 19);
+            this.cGiantMaskAnywhere.TabIndex = 28;
+            this.cGiantMaskAnywhere.Text = "Giant\'s Mask anywhere";
+            this.cGiantMaskAnywhere.UseVisualStyleBackColor = false;
+            // 
+            // cInstantTransformations
+            // 
+            this.cInstantTransformations.AutoSize = true;
+            this.cInstantTransformations.BackColor = System.Drawing.Color.Transparent;
+            this.cInstantTransformations.ForeColor = System.Drawing.Color.Black;
+            this.cInstantTransformations.Location = new System.Drawing.Point(7, 235);
+            this.cInstantTransformations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cInstantTransformations.Name = "cInstantTransformations";
+            this.cInstantTransformations.Size = new System.Drawing.Size(150, 19);
+            this.cInstantTransformations.TabIndex = 28;
+            this.cInstantTransformations.Text = "Instant Transformations";
+            this.cInstantTransformations.UseVisualStyleBackColor = false;
+            // 
+            // cFreeScarecrow
+            // 
+            this.cFreeScarecrow.AutoSize = true;
+            this.cFreeScarecrow.BackColor = System.Drawing.Color.Transparent;
+            this.cFreeScarecrow.ForeColor = System.Drawing.Color.Black;
+            this.cFreeScarecrow.Location = new System.Drawing.Point(7, 160);
+            this.cFreeScarecrow.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFreeScarecrow.Name = "cFreeScarecrow";
+            this.cFreeScarecrow.Size = new System.Drawing.Size(143, 19);
+            this.cFreeScarecrow.TabIndex = 27;
+            this.cFreeScarecrow.Text = "Free Scarecrow\'s Song";
+            this.cFreeScarecrow.UseVisualStyleBackColor = false;
+            // 
+            // cFDAnywhere
+            // 
+            this.cFDAnywhere.AutoSize = true;
+            this.cFDAnywhere.BackColor = System.Drawing.Color.Transparent;
+            this.cFDAnywhere.ForeColor = System.Drawing.Color.Black;
+            this.cFDAnywhere.Location = new System.Drawing.Point(7, 185);
+            this.cFDAnywhere.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFDAnywhere.Name = "cFDAnywhere";
+            this.cFDAnywhere.Size = new System.Drawing.Size(180, 19);
+            this.cFDAnywhere.TabIndex = 23;
+            this.cFDAnywhere.Text = "Fierce Deity\'s Mask anywhere";
+            this.cFDAnywhere.UseVisualStyleBackColor = false;
+            // 
+            // cBlastCooldown
+            // 
+            this.cBlastCooldown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBlastCooldown.FormattingEnabled = true;
+            this.cBlastCooldown.Items.AddRange(new object[] {
+            "Default",
+            "Instant",
+            "Very short",
+            "Short",
+            "Long",
+            "Very Long"});
+            this.cBlastCooldown.Location = new System.Drawing.Point(7, 35);
+            this.cBlastCooldown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cBlastCooldown.Name = "cBlastCooldown";
+            this.cBlastCooldown.Size = new System.Drawing.Size(123, 23);
+            this.cBlastCooldown.TabIndex = 20;
+            // 
+            // cUnderwaterOcarina
+            // 
+            this.cUnderwaterOcarina.AutoSize = true;
+            this.cUnderwaterOcarina.BackColor = System.Drawing.Color.Transparent;
+            this.cUnderwaterOcarina.Location = new System.Drawing.Point(7, 107);
+            this.cUnderwaterOcarina.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cUnderwaterOcarina.Name = "cUnderwaterOcarina";
+            this.cUnderwaterOcarina.Size = new System.Drawing.Size(131, 19);
+            this.cUnderwaterOcarina.TabIndex = 22;
+            this.cUnderwaterOcarina.Text = "Underwater Ocarina";
+            this.cUnderwaterOcarina.UseVisualStyleBackColor = false;
+            // 
+            // cSunsSong
+            // 
+            this.cSunsSong.AutoSize = true;
+            this.cSunsSong.BackColor = System.Drawing.Color.Transparent;
+            this.cSunsSong.ForeColor = System.Drawing.Color.Black;
+            this.cSunsSong.Location = new System.Drawing.Point(7, 133);
+            this.cSunsSong.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSunsSong.Name = "cSunsSong";
+            this.cSunsSong.Size = new System.Drawing.Size(122, 19);
+            this.cSunsSong.TabIndex = 21;
+            this.cSunsSong.Text = "Enable Sun\'s Song";
+            this.cSunsSong.UseVisualStyleBackColor = false;
+            // 
+            // lBlastMask
+            // 
+            this.lBlastMask.AutoSize = true;
+            this.lBlastMask.Location = new System.Drawing.Point(8, 18);
+            this.lBlastMask.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lBlastMask.Name = "lBlastMask";
+            this.lBlastMask.Size = new System.Drawing.Size(121, 15);
+            this.lBlastMask.TabIndex = 19;
+            this.lBlastMask.Text = "Blast Mask Cooldown";
+            // 
+            // lNutAndStickDrops
+            // 
+            this.lNutAndStickDrops.AutoSize = true;
+            this.lNutAndStickDrops.Location = new System.Drawing.Point(8, 62);
+            this.lNutAndStickDrops.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lNutAndStickDrops.Name = "lNutAndStickDrops";
+            this.lNutAndStickDrops.Size = new System.Drawing.Size(112, 15);
+            this.lNutAndStickDrops.TabIndex = 25;
+            this.lNutAndStickDrops.Text = "Nut and Stick Drops";
+            // 
+            // cNutAndStickDrops
+            // 
+            this.cNutAndStickDrops.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cNutAndStickDrops.FormattingEnabled = true;
+            this.cNutAndStickDrops.Items.AddRange(new object[] {
+            "Default",
+            "Light",
+            "Medium",
+            "Extra",
+            "Mayhem"});
+            this.cNutAndStickDrops.Location = new System.Drawing.Point(7, 78);
+            this.cNutAndStickDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cNutAndStickDrops.Name = "cNutAndStickDrops";
+            this.cNutAndStickDrops.Size = new System.Drawing.Size(123, 23);
+            this.cNutAndStickDrops.TabIndex = 26;
             // 
             // tabComfort
             // 
@@ -2236,1239 +2561,40 @@ namespace MMR.UI.Forms
             this.cEasyFrameByFrame.Text = "Easy Frame By Frame";
             this.cEasyFrameByFrame.UseVisualStyleBackColor = true;
             // 
-            // tabGimmicks
-            // 
-            this.tabGimmicks.Controls.Add(this.gGimmicksChallenges);
-            this.tabGimmicks.Controls.Add(this.gGimmicksMovement);
-            this.tabGimmicks.Controls.Add(this.gTraps);
-            this.tabGimmicks.Controls.Add(this.gGimmicksClock);
-            this.tabGimmicks.Controls.Add(this.label4);
-            this.tabGimmicks.Controls.Add(this.gGimmicksOther);
-            this.tabGimmicks.Location = new System.Drawing.Point(4, 24);
-            this.tabGimmicks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabGimmicks.Name = "tabGimmicks";
-            this.tabGimmicks.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabGimmicks.Size = new System.Drawing.Size(910, 361);
-            this.tabGimmicks.TabIndex = 3;
-            this.tabGimmicks.Text = "Gimmicks";
-            this.tabGimmicks.UseVisualStyleBackColor = true;
-            // 
-            // gGimmicksChallenges
-            // 
-            this.gGimmicksChallenges.Controls.Add(this.cDeathMode);
-            this.gGimmicksChallenges.Controls.Add(this.lDeathMode);
-            this.gGimmicksChallenges.Controls.Add(this.cMoonCrashFileErase);
-            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromDexihands);
-            this.gGimmicksChallenges.Controls.Add(this.label2);
-            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromGibdosFaster);
-            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageGettingCaught);
-            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromGorons);
-            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromDog);
-            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageFromVoid);
-            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageWhileShielding);
-            this.gGimmicksChallenges.Controls.Add(this.cTakeDamageOnEpona);
-            this.gGimmicksChallenges.Controls.Add(this.cFewerHealthDrops);
-            this.gGimmicksChallenges.Controls.Add(this.cDType);
-            this.gGimmicksChallenges.Controls.Add(this.lDType);
-            this.gGimmicksChallenges.Controls.Add(this.cByoAmmo);
-            this.gGimmicksChallenges.Controls.Add(this.cDMult);
-            this.gGimmicksChallenges.Controls.Add(this.lDMult);
-            this.gGimmicksChallenges.Location = new System.Drawing.Point(414, 92);
-            this.gGimmicksChallenges.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gGimmicksChallenges.Name = "gGimmicksChallenges";
-            this.gGimmicksChallenges.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gGimmicksChallenges.Size = new System.Drawing.Size(290, 259);
-            this.gGimmicksChallenges.TabIndex = 33;
-            this.gGimmicksChallenges.TabStop = false;
-            this.gGimmicksChallenges.Text = "Challenges";
-            // 
-            // cDeathMode
-            // 
-            this.cDeathMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cDeathMode.FormattingEnabled = true;
-            this.cDeathMode.Items.AddRange(new object[] {
-            "Default",
-            "Moon Crash",
-            "Reduce Max Hearts"});
-            this.cDeathMode.Location = new System.Drawing.Point(7, 78);
-            this.cDeathMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cDeathMode.Name = "cDeathMode";
-            this.cDeathMode.Size = new System.Drawing.Size(129, 23);
-            this.cDeathMode.TabIndex = 37;
-            // 
-            // lDeathMode
-            // 
-            this.lDeathMode.AutoSize = true;
-            this.lDeathMode.Location = new System.Drawing.Point(7, 62);
-            this.lDeathMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lDeathMode.Name = "lDeathMode";
-            this.lDeathMode.Size = new System.Drawing.Size(72, 15);
-            this.lDeathMode.TabIndex = 38;
-            this.lDeathMode.Text = "Death mode";
-            // 
-            // cMoonCrashFileErase
-            // 
-            this.cMoonCrashFileErase.AutoSize = true;
-            this.cMoonCrashFileErase.BackColor = System.Drawing.Color.Transparent;
-            this.cMoonCrashFileErase.ForeColor = System.Drawing.Color.Black;
-            this.cMoonCrashFileErase.Location = new System.Drawing.Point(7, 107);
-            this.cMoonCrashFileErase.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cMoonCrashFileErase.Name = "cMoonCrashFileErase";
-            this.cMoonCrashFileErase.Size = new System.Drawing.Size(147, 19);
-            this.cMoonCrashFileErase.TabIndex = 36;
-            this.cMoonCrashFileErase.Text = "Moon Crash Erases File";
-            this.cMoonCrashFileErase.UseVisualStyleBackColor = false;
-            // 
-            // cTakeDamageFromDexihands
-            // 
-            this.cTakeDamageFromDexihands.AutoSize = true;
-            this.cTakeDamageFromDexihands.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageFromDexihands.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromDexihands.Location = new System.Drawing.Point(153, 233);
-            this.cTakeDamageFromDexihands.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageFromDexihands.Name = "cTakeDamageFromDexihands";
-            this.cTakeDamageFromDexihands.Size = new System.Drawing.Size(112, 19);
-            this.cTakeDamageFromDexihands.TabIndex = 35;
-            this.cTakeDamageFromDexihands.Text = "From Dexihands";
-            this.cTakeDamageFromDexihands.UseVisualStyleBackColor = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 140);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(126, 15);
-            this.label2.TabIndex = 34;
-            this.label2.Text = "More Damage Sources";
-            // 
-            // cTakeDamageFromGibdosFaster
-            // 
-            this.cTakeDamageFromGibdosFaster.AutoSize = true;
-            this.cTakeDamageFromGibdosFaster.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageFromGibdosFaster.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromGibdosFaster.Location = new System.Drawing.Point(154, 158);
-            this.cTakeDamageFromGibdosFaster.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageFromGibdosFaster.Name = "cTakeDamageFromGibdosFaster";
-            this.cTakeDamageFromGibdosFaster.Size = new System.Drawing.Size(128, 19);
-            this.cTakeDamageFromGibdosFaster.TabIndex = 33;
-            this.cTakeDamageFromGibdosFaster.Text = "From Gibdos Faster";
-            this.cTakeDamageFromGibdosFaster.UseVisualStyleBackColor = false;
-            // 
-            // cTakeDamageGettingCaught
-            // 
-            this.cTakeDamageGettingCaught.AutoSize = true;
-            this.cTakeDamageGettingCaught.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageGettingCaught.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageGettingCaught.Location = new System.Drawing.Point(153, 183);
-            this.cTakeDamageGettingCaught.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageGettingCaught.Name = "cTakeDamageGettingCaught";
-            this.cTakeDamageGettingCaught.Size = new System.Drawing.Size(107, 19);
-            this.cTakeDamageGettingCaught.TabIndex = 32;
-            this.cTakeDamageGettingCaught.Text = "Getting Caught";
-            this.cTakeDamageGettingCaught.UseVisualStyleBackColor = false;
-            // 
-            // cTakeDamageFromGorons
-            // 
-            this.cTakeDamageFromGorons.AutoSize = true;
-            this.cTakeDamageFromGorons.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageFromGorons.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromGorons.Location = new System.Drawing.Point(7, 233);
-            this.cTakeDamageFromGorons.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageFromGorons.Name = "cTakeDamageFromGorons";
-            this.cTakeDamageFromGorons.Size = new System.Drawing.Size(95, 19);
-            this.cTakeDamageFromGorons.TabIndex = 31;
-            this.cTakeDamageFromGorons.Text = "From Gorons";
-            this.cTakeDamageFromGorons.UseVisualStyleBackColor = false;
-            // 
-            // cTakeDamageFromDog
-            // 
-            this.cTakeDamageFromDog.AutoSize = true;
-            this.cTakeDamageFromDog.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageFromDog.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromDog.Location = new System.Drawing.Point(153, 208);
-            this.cTakeDamageFromDog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageFromDog.Name = "cTakeDamageFromDog";
-            this.cTakeDamageFromDog.Size = new System.Drawing.Size(79, 19);
-            this.cTakeDamageFromDog.TabIndex = 30;
-            this.cTakeDamageFromDog.Text = "From Dog";
-            this.cTakeDamageFromDog.UseVisualStyleBackColor = false;
-            // 
-            // cTakeDamageFromVoid
-            // 
-            this.cTakeDamageFromVoid.AutoSize = true;
-            this.cTakeDamageFromVoid.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageFromVoid.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageFromVoid.Location = new System.Drawing.Point(8, 208);
-            this.cTakeDamageFromVoid.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageFromVoid.Name = "cTakeDamageFromVoid";
-            this.cTakeDamageFromVoid.Size = new System.Drawing.Size(80, 19);
-            this.cTakeDamageFromVoid.TabIndex = 29;
-            this.cTakeDamageFromVoid.Text = "From Void";
-            this.cTakeDamageFromVoid.UseVisualStyleBackColor = false;
-            // 
-            // cTakeDamageWhileShielding
-            // 
-            this.cTakeDamageWhileShielding.AutoSize = true;
-            this.cTakeDamageWhileShielding.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageWhileShielding.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageWhileShielding.Location = new System.Drawing.Point(8, 183);
-            this.cTakeDamageWhileShielding.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageWhileShielding.Name = "cTakeDamageWhileShielding";
-            this.cTakeDamageWhileShielding.Size = new System.Drawing.Size(108, 19);
-            this.cTakeDamageWhileShielding.TabIndex = 28;
-            this.cTakeDamageWhileShielding.Text = "While Shielding";
-            this.cTakeDamageWhileShielding.UseVisualStyleBackColor = false;
-            // 
-            // cTakeDamageOnEpona
-            // 
-            this.cTakeDamageOnEpona.AutoSize = true;
-            this.cTakeDamageOnEpona.BackColor = System.Drawing.Color.Transparent;
-            this.cTakeDamageOnEpona.ForeColor = System.Drawing.Color.Black;
-            this.cTakeDamageOnEpona.Location = new System.Drawing.Point(8, 158);
-            this.cTakeDamageOnEpona.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTakeDamageOnEpona.Name = "cTakeDamageOnEpona";
-            this.cTakeDamageOnEpona.Size = new System.Drawing.Size(78, 19);
-            this.cTakeDamageOnEpona.TabIndex = 27;
-            this.cTakeDamageOnEpona.Text = "On Epona";
-            this.cTakeDamageOnEpona.UseVisualStyleBackColor = false;
-            // 
-            // cFewerHealthDrops
-            // 
-            this.cFewerHealthDrops.AutoSize = true;
-            this.cFewerHealthDrops.BackColor = System.Drawing.Color.Transparent;
-            this.cFewerHealthDrops.ForeColor = System.Drawing.Color.Black;
-            this.cFewerHealthDrops.Location = new System.Drawing.Point(153, 63);
-            this.cFewerHealthDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cFewerHealthDrops.Name = "cFewerHealthDrops";
-            this.cFewerHealthDrops.Size = new System.Drawing.Size(129, 19);
-            this.cFewerHealthDrops.TabIndex = 26;
-            this.cFewerHealthDrops.Text = "Fewer Health Drops";
-            this.cFewerHealthDrops.UseVisualStyleBackColor = false;
-            // 
-            // cDType
-            // 
-            this.cDType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cDType.FormattingEnabled = true;
-            this.cDType.Items.AddRange(new object[] {
-            "Default",
-            "Fire",
-            "Ice",
-            "Shock",
-            "Knockdown",
-            "Random"});
-            this.cDType.Location = new System.Drawing.Point(154, 34);
-            this.cDType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cDType.Name = "cDType";
-            this.cDType.Size = new System.Drawing.Size(128, 23);
-            this.cDType.TabIndex = 0;
-            // 
-            // lDType
-            // 
-            this.lDType.AutoSize = true;
-            this.lDType.Location = new System.Drawing.Point(154, 18);
-            this.lDType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lDType.Name = "lDType";
-            this.lDType.Size = new System.Drawing.Size(89, 15);
-            this.lDType.TabIndex = 1;
-            this.lDType.Text = "Damage effects";
-            // 
-            // cByoAmmo
-            // 
-            this.cByoAmmo.AutoSize = true;
-            this.cByoAmmo.BackColor = System.Drawing.Color.Transparent;
-            this.cByoAmmo.ForeColor = System.Drawing.Color.Black;
-            this.cByoAmmo.Location = new System.Drawing.Point(153, 86);
-            this.cByoAmmo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cByoAmmo.Name = "cByoAmmo";
-            this.cByoAmmo.Size = new System.Drawing.Size(89, 19);
-            this.cByoAmmo.TabIndex = 24;
-            this.cByoAmmo.Text = "BYO Ammo";
-            this.cByoAmmo.UseVisualStyleBackColor = false;
-            // 
-            // cDMult
-            // 
-            this.cDMult.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cDMult.FormattingEnabled = true;
-            this.cDMult.Items.AddRange(new object[] {
-            "Default",
-            "2x",
-            "4x",
-            "8x",
-            "1-hit KO",
-            "Doom"});
-            this.cDMult.Location = new System.Drawing.Point(7, 34);
-            this.cDMult.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cDMult.Name = "cDMult";
-            this.cDMult.Size = new System.Drawing.Size(129, 23);
-            this.cDMult.TabIndex = 0;
-            // 
-            // lDMult
-            // 
-            this.lDMult.AutoSize = true;
-            this.lDMult.Location = new System.Drawing.Point(7, 18);
-            this.lDMult.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lDMult.Name = "lDMult";
-            this.lDMult.Size = new System.Drawing.Size(85, 15);
-            this.lDMult.TabIndex = 1;
-            this.lDMult.Text = "Damage mode";
-            // 
-            // gGimmicksMovement
-            // 
-            this.gGimmicksMovement.Controls.Add(this.cIronGoron);
-            this.gGimmicksMovement.Controls.Add(this.cClimbMostSurfaces);
-            this.gGimmicksMovement.Controls.Add(this.cHookshotAnySurface);
-            this.gGimmicksMovement.Controls.Add(this.cFloors);
-            this.gGimmicksMovement.Controls.Add(this.lFloors);
-            this.gGimmicksMovement.Controls.Add(this.lGravity);
-            this.gGimmicksMovement.Controls.Add(this.cGravity);
-            this.gGimmicksMovement.Controls.Add(this.cContinuousDekuHopping);
-            this.gGimmicksMovement.Location = new System.Drawing.Point(7, 7);
-            this.gGimmicksMovement.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gGimmicksMovement.Name = "gGimmicksMovement";
-            this.gGimmicksMovement.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gGimmicksMovement.Size = new System.Drawing.Size(190, 211);
-            this.gGimmicksMovement.TabIndex = 32;
-            this.gGimmicksMovement.TabStop = false;
-            this.gGimmicksMovement.Text = "Movement";
-            // 
-            // cIronGoron
-            // 
-            this.cIronGoron.AutoSize = true;
-            this.cIronGoron.BackColor = System.Drawing.Color.Transparent;
-            this.cIronGoron.ForeColor = System.Drawing.Color.Black;
-            this.cIronGoron.Location = new System.Drawing.Point(7, 185);
-            this.cIronGoron.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cIronGoron.Name = "cIronGoron";
-            this.cIronGoron.Size = new System.Drawing.Size(83, 19);
-            this.cIronGoron.TabIndex = 29;
-            this.cIronGoron.Text = "Iron Goron";
-            this.cIronGoron.UseVisualStyleBackColor = false;
-            // 
-            // cClimbMostSurfaces
-            // 
-            this.cClimbMostSurfaces.AutoSize = true;
-            this.cClimbMostSurfaces.BackColor = System.Drawing.Color.Transparent;
-            this.cClimbMostSurfaces.ForeColor = System.Drawing.Color.Black;
-            this.cClimbMostSurfaces.Location = new System.Drawing.Point(7, 160);
-            this.cClimbMostSurfaces.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cClimbMostSurfaces.Name = "cClimbMostSurfaces";
-            this.cClimbMostSurfaces.Size = new System.Drawing.Size(135, 19);
-            this.cClimbMostSurfaces.TabIndex = 28;
-            this.cClimbMostSurfaces.Text = "Climb Most Surfaces";
-            this.cClimbMostSurfaces.UseVisualStyleBackColor = false;
-            // 
-            // cHookshotAnySurface
-            // 
-            this.cHookshotAnySurface.AutoSize = true;
-            this.cHookshotAnySurface.BackColor = System.Drawing.Color.Transparent;
-            this.cHookshotAnySurface.ForeColor = System.Drawing.Color.Black;
-            this.cHookshotAnySurface.Location = new System.Drawing.Point(7, 135);
-            this.cHookshotAnySurface.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cHookshotAnySurface.Name = "cHookshotAnySurface";
-            this.cHookshotAnySurface.Size = new System.Drawing.Size(144, 19);
-            this.cHookshotAnySurface.TabIndex = 27;
-            this.cHookshotAnySurface.Text = "Hookshot Any Surface";
-            this.cHookshotAnySurface.UseVisualStyleBackColor = false;
-            // 
-            // cFloors
-            // 
-            this.cFloors.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cFloors.FormattingEnabled = true;
-            this.cFloors.Items.AddRange(new object[] {
-            "Default",
-            "Sand",
-            "Ice",
-            "Snow",
-            "Random"});
-            this.cFloors.Location = new System.Drawing.Point(7, 78);
-            this.cFloors.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cFloors.Name = "cFloors";
-            this.cFloors.Size = new System.Drawing.Size(176, 23);
-            this.cFloors.TabIndex = 0;
-            // 
-            // lFloors
-            // 
-            this.lFloors.AutoSize = true;
-            this.lFloors.Location = new System.Drawing.Point(7, 62);
-            this.lFloors.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lFloors.Name = "lFloors";
-            this.lFloors.Size = new System.Drawing.Size(65, 15);
-            this.lFloors.TabIndex = 1;
-            this.lFloors.Text = "Floor types";
-            // 
-            // lGravity
-            // 
-            this.lGravity.AutoSize = true;
-            this.lGravity.Location = new System.Drawing.Point(7, 18);
-            this.lGravity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lGravity.Name = "lGravity";
-            this.lGravity.Size = new System.Drawing.Size(87, 15);
-            this.lGravity.TabIndex = 1;
-            this.lGravity.Text = "Gravity / Speed";
-            // 
-            // cGravity
-            // 
-            this.cGravity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cGravity.FormattingEnabled = true;
-            this.cGravity.Items.AddRange(new object[] {
-            "Default",
-            "High speed (many softlocks)",
-            "Super low gravity",
-            "Low gravity",
-            "High gravity"});
-            this.cGravity.Location = new System.Drawing.Point(7, 35);
-            this.cGravity.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cGravity.Name = "cGravity";
-            this.cGravity.Size = new System.Drawing.Size(176, 23);
-            this.cGravity.TabIndex = 0;
-            // 
-            // cContinuousDekuHopping
-            // 
-            this.cContinuousDekuHopping.AutoSize = true;
-            this.cContinuousDekuHopping.BackColor = System.Drawing.Color.Transparent;
-            this.cContinuousDekuHopping.ForeColor = System.Drawing.Color.Black;
-            this.cContinuousDekuHopping.Location = new System.Drawing.Point(7, 110);
-            this.cContinuousDekuHopping.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cContinuousDekuHopping.Name = "cContinuousDekuHopping";
-            this.cContinuousDekuHopping.Size = new System.Drawing.Size(168, 19);
-            this.cContinuousDekuHopping.TabIndex = 26;
-            this.cContinuousDekuHopping.Text = "Continuous Deku Hopping";
-            this.cContinuousDekuHopping.UseVisualStyleBackColor = false;
-            // 
-            // gTraps
-            // 
-            this.gTraps.Controls.Add(this.lTrapWeightings);
-            this.gTraps.Controls.Add(this.lTrapsAppearance);
-            this.gTraps.Controls.Add(this.lTrapAmount);
-            this.gTraps.Controls.Add(this.cTrapAmount);
-            this.gTraps.Controls.Add(this.cTrapsAppearance);
-            this.gTraps.Controls.Add(this.cIceTrapQuirks);
-            this.gTraps.Location = new System.Drawing.Point(205, 92);
-            this.gTraps.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gTraps.Name = "gTraps";
-            this.gTraps.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gTraps.Size = new System.Drawing.Size(201, 259);
-            this.gTraps.TabIndex = 31;
-            this.gTraps.TabStop = false;
-            this.gTraps.Text = "Traps";
-            // 
-            // lTrapWeightings
-            // 
-            this.lTrapWeightings.AutoSize = true;
-            this.lTrapWeightings.Location = new System.Drawing.Point(7, 129);
-            this.lTrapWeightings.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lTrapWeightings.Name = "lTrapWeightings";
-            this.lTrapWeightings.Size = new System.Drawing.Size(92, 15);
-            this.lTrapWeightings.TabIndex = 32;
-            this.lTrapWeightings.Text = "Trap Weightings";
-            // 
-            // lTrapsAppearance
-            // 
-            this.lTrapsAppearance.AutoSize = true;
-            this.lTrapsAppearance.Location = new System.Drawing.Point(7, 62);
-            this.lTrapsAppearance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lTrapsAppearance.Name = "lTrapsAppearance";
-            this.lTrapsAppearance.Size = new System.Drawing.Size(70, 15);
-            this.lTrapsAppearance.TabIndex = 30;
-            this.lTrapsAppearance.Text = "Appearance";
-            // 
-            // lTrapAmount
-            // 
-            this.lTrapAmount.AutoSize = true;
-            this.lTrapAmount.Location = new System.Drawing.Point(7, 18);
-            this.lTrapAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lTrapAmount.Name = "lTrapAmount";
-            this.lTrapAmount.Size = new System.Drawing.Size(76, 15);
-            this.lTrapAmount.TabIndex = 28;
-            this.lTrapAmount.Text = "Trap Amount";
-            // 
-            // cTrapAmount
-            // 
-            this.cTrapAmount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cTrapAmount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cTrapAmount.FormattingEnabled = true;
-            this.cTrapAmount.Items.AddRange(new object[] {
-            "None",
-            "Normal",
-            "Extra",
-            "Mayhem",
-            "Onslaught"});
-            this.cTrapAmount.Location = new System.Drawing.Point(7, 35);
-            this.cTrapAmount.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTrapAmount.Name = "cTrapAmount";
-            this.cTrapAmount.Size = new System.Drawing.Size(186, 23);
-            this.cTrapAmount.TabIndex = 26;
-            // 
-            // cTrapsAppearance
-            // 
-            this.cTrapsAppearance.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cTrapsAppearance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cTrapsAppearance.FormattingEnabled = true;
-            this.cTrapsAppearance.Items.AddRange(new object[] {
-            "Major Items",
-            "Junk Items",
-            "Anything"});
-            this.cTrapsAppearance.Location = new System.Drawing.Point(7, 78);
-            this.cTrapsAppearance.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTrapsAppearance.Name = "cTrapsAppearance";
-            this.cTrapsAppearance.Size = new System.Drawing.Size(186, 23);
-            this.cTrapsAppearance.TabIndex = 27;
-            // 
-            // cIceTrapQuirks
-            // 
-            this.cIceTrapQuirks.AutoSize = true;
-            this.cIceTrapQuirks.BackColor = System.Drawing.Color.Transparent;
-            this.cIceTrapQuirks.ForeColor = System.Drawing.Color.Black;
-            this.cIceTrapQuirks.Location = new System.Drawing.Point(7, 107);
-            this.cIceTrapQuirks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cIceTrapQuirks.Name = "cIceTrapQuirks";
-            this.cIceTrapQuirks.Size = new System.Drawing.Size(98, 19);
-            this.cIceTrapQuirks.TabIndex = 29;
-            this.cIceTrapQuirks.Text = "Enable Quirks";
-            this.cIceTrapQuirks.UseVisualStyleBackColor = false;
-            // 
-            // gGimmicksClock
-            // 
-            this.gGimmicksClock.Controls.Add(this.cAutoInvert);
-            this.gGimmicksClock.Controls.Add(this.lAutoInvert);
-            this.gGimmicksClock.Controls.Add(this.cClockSpeed);
-            this.gGimmicksClock.Controls.Add(this.lClockSpeed);
-            this.gGimmicksClock.Controls.Add(this.cHideClock);
-            this.gGimmicksClock.Location = new System.Drawing.Point(7, 221);
-            this.gGimmicksClock.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gGimmicksClock.Name = "gGimmicksClock";
-            this.gGimmicksClock.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gGimmicksClock.Size = new System.Drawing.Size(190, 130);
-            this.gGimmicksClock.TabIndex = 30;
-            this.gGimmicksClock.TabStop = false;
-            this.gGimmicksClock.Text = "Clock";
-            // 
-            // cAutoInvert
-            // 
-            this.cAutoInvert.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cAutoInvert.FormattingEnabled = true;
-            this.cAutoInvert.Items.AddRange(new object[] {
-            "Never",
-            "First Cycle",
-            "Always"});
-            this.cAutoInvert.Location = new System.Drawing.Point(7, 77);
-            this.cAutoInvert.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cAutoInvert.Name = "cAutoInvert";
-            this.cAutoInvert.Size = new System.Drawing.Size(176, 23);
-            this.cAutoInvert.TabIndex = 18;
-            // 
-            // lAutoInvert
-            // 
-            this.lAutoInvert.AutoSize = true;
-            this.lAutoInvert.Location = new System.Drawing.Point(4, 61);
-            this.lAutoInvert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lAutoInvert.Name = "lAutoInvert";
-            this.lAutoInvert.Size = new System.Drawing.Size(68, 15);
-            this.lAutoInvert.TabIndex = 19;
-            this.lAutoInvert.Text = "Auto-invert";
-            // 
-            // cClockSpeed
-            // 
-            this.cClockSpeed.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cClockSpeed.FormattingEnabled = true;
-            this.cClockSpeed.Items.AddRange(new object[] {
-            "Default",
-            "1/3x",
-            "2/3x",
-            "2x",
-            "3x",
-            "6x"});
-            this.cClockSpeed.Location = new System.Drawing.Point(7, 35);
-            this.cClockSpeed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cClockSpeed.Name = "cClockSpeed";
-            this.cClockSpeed.Size = new System.Drawing.Size(176, 23);
-            this.cClockSpeed.TabIndex = 15;
-            // 
-            // lClockSpeed
-            // 
-            this.lClockSpeed.AutoSize = true;
-            this.lClockSpeed.Location = new System.Drawing.Point(4, 19);
-            this.lClockSpeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lClockSpeed.Name = "lClockSpeed";
-            this.lClockSpeed.Size = new System.Drawing.Size(39, 15);
-            this.lClockSpeed.TabIndex = 16;
-            this.lClockSpeed.Text = "Speed";
-            // 
-            // cHideClock
-            // 
-            this.cHideClock.AutoSize = true;
-            this.cHideClock.BackColor = System.Drawing.Color.Transparent;
-            this.cHideClock.ForeColor = System.Drawing.Color.Black;
-            this.cHideClock.Location = new System.Drawing.Point(6, 106);
-            this.cHideClock.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cHideClock.Name = "cHideClock";
-            this.cHideClock.Size = new System.Drawing.Size(65, 19);
-            this.cHideClock.TabIndex = 17;
-            this.cHideClock.Text = "Hide UI";
-            this.cHideClock.UseVisualStyleBackColor = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(301, 12);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(266, 75);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "WARNING!\r\nMost of these settings are not considered in logic\r\nand some can cause " +
-    "the seed to be unbeatable.\r\nUse at your own risk!\r\nItems marked with * are consi" +
-    "dered in logic.";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // gGimmicksOther
-            // 
-            this.gGimmicksOther.Controls.Add(this.cVanillaMoonTrials);
-            this.gGimmicksOther.Controls.Add(this.cBombArrows);
-            this.gGimmicksOther.Controls.Add(this.cGiantMaskAnywhere);
-            this.gGimmicksOther.Controls.Add(this.cInstantTransformations);
-            this.gGimmicksOther.Controls.Add(this.cFreeScarecrow);
-            this.gGimmicksOther.Controls.Add(this.cFDAnywhere);
-            this.gGimmicksOther.Controls.Add(this.cBlastCooldown);
-            this.gGimmicksOther.Controls.Add(this.cUnderwaterOcarina);
-            this.gGimmicksOther.Controls.Add(this.cSunsSong);
-            this.gGimmicksOther.Controls.Add(this.lBlastMask);
-            this.gGimmicksOther.Controls.Add(this.lNutAndStickDrops);
-            this.gGimmicksOther.Controls.Add(this.cNutAndStickDrops);
-            this.gGimmicksOther.Location = new System.Drawing.Point(712, 7);
-            this.gGimmicksOther.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gGimmicksOther.Name = "gGimmicksOther";
-            this.gGimmicksOther.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gGimmicksOther.Size = new System.Drawing.Size(190, 344);
-            this.gGimmicksOther.TabIndex = 34;
-            this.gGimmicksOther.TabStop = false;
-            this.gGimmicksOther.Text = "Other";
-            // 
-            // cVanillaMoonTrials
-            // 
-            this.cVanillaMoonTrials.AutoSize = true;
-            this.cVanillaMoonTrials.BackColor = System.Drawing.Color.Transparent;
-            this.cVanillaMoonTrials.ForeColor = System.Drawing.Color.Black;
-            this.cVanillaMoonTrials.Location = new System.Drawing.Point(7, 285);
-            this.cVanillaMoonTrials.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cVanillaMoonTrials.Name = "cVanillaMoonTrials";
-            this.cVanillaMoonTrials.Size = new System.Drawing.Size(158, 19);
-            this.cVanillaMoonTrials.TabIndex = 30;
-            this.cVanillaMoonTrials.Text = "Vanilla Moon Trial Access";
-            this.cVanillaMoonTrials.UseVisualStyleBackColor = false;
-            // 
-            // cBombArrows
-            // 
-            this.cBombArrows.AutoSize = true;
-            this.cBombArrows.BackColor = System.Drawing.Color.Transparent;
-            this.cBombArrows.ForeColor = System.Drawing.Color.Black;
-            this.cBombArrows.Location = new System.Drawing.Point(7, 260);
-            this.cBombArrows.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cBombArrows.Name = "cBombArrows";
-            this.cBombArrows.Size = new System.Drawing.Size(98, 19);
-            this.cBombArrows.TabIndex = 29;
-            this.cBombArrows.Text = "Bomb Arrows";
-            this.cBombArrows.UseVisualStyleBackColor = false;
-            // 
-            // cGiantMaskAnywhere
-            // 
-            this.cGiantMaskAnywhere.AutoSize = true;
-            this.cGiantMaskAnywhere.BackColor = System.Drawing.Color.Transparent;
-            this.cGiantMaskAnywhere.ForeColor = System.Drawing.Color.Black;
-            this.cGiantMaskAnywhere.Location = new System.Drawing.Point(7, 210);
-            this.cGiantMaskAnywhere.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cGiantMaskAnywhere.Name = "cGiantMaskAnywhere";
-            this.cGiantMaskAnywhere.Size = new System.Drawing.Size(147, 19);
-            this.cGiantMaskAnywhere.TabIndex = 28;
-            this.cGiantMaskAnywhere.Text = "Giant\'s Mask anywhere";
-            this.cGiantMaskAnywhere.UseVisualStyleBackColor = false;
-            // 
-            // cInstantTransformations
-            // 
-            this.cInstantTransformations.AutoSize = true;
-            this.cInstantTransformations.BackColor = System.Drawing.Color.Transparent;
-            this.cInstantTransformations.ForeColor = System.Drawing.Color.Black;
-            this.cInstantTransformations.Location = new System.Drawing.Point(7, 235);
-            this.cInstantTransformations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cInstantTransformations.Name = "cInstantTransformations";
-            this.cInstantTransformations.Size = new System.Drawing.Size(150, 19);
-            this.cInstantTransformations.TabIndex = 28;
-            this.cInstantTransformations.Text = "Instant Transformations";
-            this.cInstantTransformations.UseVisualStyleBackColor = false;
-            // 
-            // cFreeScarecrow
-            // 
-            this.cFreeScarecrow.AutoSize = true;
-            this.cFreeScarecrow.BackColor = System.Drawing.Color.Transparent;
-            this.cFreeScarecrow.ForeColor = System.Drawing.Color.Black;
-            this.cFreeScarecrow.Location = new System.Drawing.Point(7, 160);
-            this.cFreeScarecrow.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cFreeScarecrow.Name = "cFreeScarecrow";
-            this.cFreeScarecrow.Size = new System.Drawing.Size(143, 19);
-            this.cFreeScarecrow.TabIndex = 27;
-            this.cFreeScarecrow.Text = "Free Scarecrow\'s Song";
-            this.cFreeScarecrow.UseVisualStyleBackColor = false;
-            // 
-            // cFDAnywhere
-            // 
-            this.cFDAnywhere.AutoSize = true;
-            this.cFDAnywhere.BackColor = System.Drawing.Color.Transparent;
-            this.cFDAnywhere.ForeColor = System.Drawing.Color.Black;
-            this.cFDAnywhere.Location = new System.Drawing.Point(7, 185);
-            this.cFDAnywhere.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cFDAnywhere.Name = "cFDAnywhere";
-            this.cFDAnywhere.Size = new System.Drawing.Size(180, 19);
-            this.cFDAnywhere.TabIndex = 23;
-            this.cFDAnywhere.Text = "Fierce Deity\'s Mask anywhere";
-            this.cFDAnywhere.UseVisualStyleBackColor = false;
-            // 
-            // cBlastCooldown
-            // 
-            this.cBlastCooldown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBlastCooldown.FormattingEnabled = true;
-            this.cBlastCooldown.Items.AddRange(new object[] {
-            "Default",
-            "Instant",
-            "Very short",
-            "Short",
-            "Long",
-            "Very Long"});
-            this.cBlastCooldown.Location = new System.Drawing.Point(7, 35);
-            this.cBlastCooldown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cBlastCooldown.Name = "cBlastCooldown";
-            this.cBlastCooldown.Size = new System.Drawing.Size(123, 23);
-            this.cBlastCooldown.TabIndex = 20;
-            // 
-            // cUnderwaterOcarina
-            // 
-            this.cUnderwaterOcarina.AutoSize = true;
-            this.cUnderwaterOcarina.BackColor = System.Drawing.Color.Transparent;
-            this.cUnderwaterOcarina.Location = new System.Drawing.Point(7, 107);
-            this.cUnderwaterOcarina.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cUnderwaterOcarina.Name = "cUnderwaterOcarina";
-            this.cUnderwaterOcarina.Size = new System.Drawing.Size(131, 19);
-            this.cUnderwaterOcarina.TabIndex = 22;
-            this.cUnderwaterOcarina.Text = "Underwater Ocarina";
-            this.cUnderwaterOcarina.UseVisualStyleBackColor = false;
-            // 
-            // cSunsSong
-            // 
-            this.cSunsSong.AutoSize = true;
-            this.cSunsSong.BackColor = System.Drawing.Color.Transparent;
-            this.cSunsSong.ForeColor = System.Drawing.Color.Black;
-            this.cSunsSong.Location = new System.Drawing.Point(7, 133);
-            this.cSunsSong.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cSunsSong.Name = "cSunsSong";
-            this.cSunsSong.Size = new System.Drawing.Size(122, 19);
-            this.cSunsSong.TabIndex = 21;
-            this.cSunsSong.Text = "Enable Sun\'s Song";
-            this.cSunsSong.UseVisualStyleBackColor = false;
-            // 
-            // lBlastMask
-            // 
-            this.lBlastMask.AutoSize = true;
-            this.lBlastMask.Location = new System.Drawing.Point(8, 18);
-            this.lBlastMask.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lBlastMask.Name = "lBlastMask";
-            this.lBlastMask.Size = new System.Drawing.Size(121, 15);
-            this.lBlastMask.TabIndex = 19;
-            this.lBlastMask.Text = "Blast Mask Cooldown";
-            // 
-            // lNutAndStickDrops
-            // 
-            this.lNutAndStickDrops.AutoSize = true;
-            this.lNutAndStickDrops.Location = new System.Drawing.Point(8, 62);
-            this.lNutAndStickDrops.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lNutAndStickDrops.Name = "lNutAndStickDrops";
-            this.lNutAndStickDrops.Size = new System.Drawing.Size(112, 15);
-            this.lNutAndStickDrops.TabIndex = 25;
-            this.lNutAndStickDrops.Text = "Nut and Stick Drops";
-            // 
-            // cNutAndStickDrops
-            // 
-            this.cNutAndStickDrops.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cNutAndStickDrops.FormattingEnabled = true;
-            this.cNutAndStickDrops.Items.AddRange(new object[] {
-            "Default",
-            "Light",
-            "Medium",
-            "Extra",
-            "Mayhem"});
-            this.cNutAndStickDrops.Location = new System.Drawing.Point(7, 78);
-            this.cNutAndStickDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cNutAndStickDrops.Name = "cNutAndStickDrops";
-            this.cNutAndStickDrops.Size = new System.Drawing.Size(123, 23);
-            this.cNutAndStickDrops.TabIndex = 26;
-            // 
-            // tabItemPool
-            // 
-            this.tabItemPool.Controls.Add(this.cItemPoolAdvanced);
-            this.tabItemPool.Controls.Add(this.lItemPoolText);
-            this.tabItemPool.Controls.Add(this.bItemPoolEdit);
-            this.tabItemPool.Controls.Add(this.pClassicItemPool);
-            this.tabItemPool.Controls.Add(this.tItemPool);
-            this.tabItemPool.Controls.Add(this.tableItemPool);
-            this.tabItemPool.Controls.Add(this.pLocationCategories);
-            this.tabItemPool.Location = new System.Drawing.Point(4, 24);
-            this.tabItemPool.Name = "tabItemPool";
-            this.tabItemPool.Size = new System.Drawing.Size(910, 361);
-            this.tabItemPool.TabIndex = 6;
-            this.tabItemPool.Text = "Item Randomization";
-            this.tabItemPool.UseVisualStyleBackColor = true;
-            // 
-            // cItemPoolAdvanced
-            // 
-            this.cItemPoolAdvanced.AutoSize = true;
-            this.cItemPoolAdvanced.Location = new System.Drawing.Point(7, 52);
-            this.cItemPoolAdvanced.Name = "cItemPoolAdvanced";
-            this.cItemPoolAdvanced.Size = new System.Drawing.Size(107, 19);
-            this.cItemPoolAdvanced.TabIndex = 27;
-            this.cItemPoolAdvanced.Text = "Advanced View";
-            this.cItemPoolAdvanced.UseVisualStyleBackColor = true;
-            this.cItemPoolAdvanced.CheckedChanged += new System.EventHandler(this.cItemPoolAdvanced_CheckedChanged);
-            // 
-            // lItemPoolText
-            // 
-            this.lItemPoolText.AutoSize = true;
-            this.lItemPoolText.Location = new System.Drawing.Point(7, 34);
-            this.lItemPoolText.Name = "lItemPoolText";
-            this.lItemPoolText.Size = new System.Drawing.Size(122, 15);
-            this.lItemPoolText.TabIndex = 25;
-            this.lItemPoolText.Text = "0/0 items randomized";
-            // 
-            // bItemPoolEdit
-            // 
-            this.bItemPoolEdit.Location = new System.Drawing.Point(827, 3);
-            this.bItemPoolEdit.Name = "bItemPoolEdit";
-            this.bItemPoolEdit.Size = new System.Drawing.Size(75, 25);
-            this.bItemPoolEdit.TabIndex = 24;
-            this.bItemPoolEdit.Text = "Edit";
-            this.bItemPoolEdit.UseVisualStyleBackColor = true;
-            this.bItemPoolEdit.Click += new System.EventHandler(this.bItemPoolEdit_Click);
-            // 
-            // pClassicItemPool
-            // 
-            this.pClassicItemPool.Location = new System.Drawing.Point(7, 77);
-            this.pClassicItemPool.Name = "pClassicItemPool";
-            this.pClassicItemPool.Size = new System.Drawing.Size(895, 281);
-            this.pClassicItemPool.TabIndex = 26;
-            // 
-            // tItemPool
-            // 
-            this.tItemPool.Location = new System.Drawing.Point(7, 4);
-            this.tItemPool.Name = "tItemPool";
-            this.tItemPool.Size = new System.Drawing.Size(814, 23);
-            this.tItemPool.TabIndex = 23;
-            this.tItemPool.TextChanged += new System.EventHandler(this.tItemPool_TextChanged);
-            // 
-            // tableItemPool
-            // 
-            this.tableItemPool.AutoScroll = true;
-            this.tableItemPool.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableItemPool.ColumnCount = 1;
-            this.tableItemPool.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableItemPool.Location = new System.Drawing.Point(3, 160);
-            this.tableItemPool.Name = "tableItemPool";
-            this.tableItemPool.RowCount = 1;
-            this.tableItemPool.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableItemPool.Size = new System.Drawing.Size(904, 198);
-            this.tableItemPool.TabIndex = 22;
-            this.tableItemPool.Visible = false;
-            // 
-            // pLocationCategories
-            // 
-            this.pLocationCategories.Location = new System.Drawing.Point(7, 30);
-            this.pLocationCategories.Name = "pLocationCategories";
-            this.pLocationCategories.Size = new System.Drawing.Size(900, 129);
-            this.pLocationCategories.TabIndex = 28;
-            this.pLocationCategories.Visible = false;
-            // 
-            // tabMain
-            // 
-            this.tabMain.Controls.Add(this.tOtherCustomizations);
-            this.tabMain.Controls.Add(this.groupBox9);
-            this.tabMain.Controls.Add(this.groupBox6);
-            this.tabMain.Controls.Add(this.groupBox4);
-            this.tabMain.Location = new System.Drawing.Point(4, 24);
-            this.tabMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabMain.Name = "tabMain";
-            this.tabMain.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabMain.Size = new System.Drawing.Size(910, 361);
-            this.tabMain.TabIndex = 0;
-            this.tabMain.Text = "Main Settings";
-            this.tabMain.UseVisualStyleBackColor = true;
-            // 
-            // tOtherCustomizations
-            // 
-            this.tOtherCustomizations.Controls.Add(this.tOtherCustomization);
-            this.tOtherCustomizations.Location = new System.Drawing.Point(7, 195);
-            this.tOtherCustomizations.Name = "tOtherCustomizations";
-            this.tOtherCustomizations.SelectedIndex = 0;
-            this.tOtherCustomizations.Size = new System.Drawing.Size(894, 160);
-            this.tOtherCustomizations.TabIndex = 22;
-            // 
-            // tOtherCustomization
-            // 
-            this.tOtherCustomization.Controls.Add(this.cGibdoRequirements);
-            this.tOtherCustomization.Controls.Add(this.cRequiredBossRemains);
-            this.tOtherCustomization.Controls.Add(this.lRequiredRemains);
-            this.tOtherCustomization.Controls.Add(this.cStartingItems);
-            this.tOtherCustomization.Controls.Add(this.lStartingItems);
-            this.tOtherCustomization.Controls.Add(this.cProgressiveUpgrades);
-            this.tOtherCustomization.Controls.Add(this.cMixSongs);
-            this.tOtherCustomization.Controls.Add(this.cEnemy);
-            this.tOtherCustomization.Location = new System.Drawing.Point(4, 24);
-            this.tOtherCustomization.Name = "tOtherCustomization";
-            this.tOtherCustomization.Padding = new System.Windows.Forms.Padding(3);
-            this.tOtherCustomization.Size = new System.Drawing.Size(886, 132);
-            this.tOtherCustomization.TabIndex = 0;
-            this.tOtherCustomization.Text = "Other";
-            this.tOtherCustomization.UseVisualStyleBackColor = true;
-            // 
-            // cGibdoRequirements
-            // 
-            this.cGibdoRequirements.AutoSize = true;
-            this.cGibdoRequirements.BackColor = System.Drawing.Color.Transparent;
-            this.cGibdoRequirements.ForeColor = System.Drawing.Color.Black;
-            this.cGibdoRequirements.Location = new System.Drawing.Point(193, 11);
-            this.cGibdoRequirements.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cGibdoRequirements.Name = "cGibdoRequirements";
-            this.cGibdoRequirements.Size = new System.Drawing.Size(134, 19);
-            this.cGibdoRequirements.TabIndex = 31;
-            this.cGibdoRequirements.Text = "Gibdo Requirements";
-            this.cGibdoRequirements.UseVisualStyleBackColor = false;
-            // 
-            // cRequiredBossRemains
-            // 
-            this.cRequiredBossRemains.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cRequiredBossRemains.FormattingEnabled = true;
-            this.cRequiredBossRemains.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4 (Default)"});
-            this.cRequiredBossRemains.Location = new System.Drawing.Point(193, 76);
-            this.cRequiredBossRemains.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cRequiredBossRemains.Name = "cRequiredBossRemains";
-            this.cRequiredBossRemains.Size = new System.Drawing.Size(160, 23);
-            this.cRequiredBossRemains.TabIndex = 30;
-            // 
-            // lRequiredRemains
-            // 
-            this.lRequiredRemains.AutoSize = true;
-            this.lRequiredRemains.Location = new System.Drawing.Point(193, 61);
-            this.lRequiredRemains.Name = "lRequiredRemains";
-            this.lRequiredRemains.Size = new System.Drawing.Size(134, 15);
-            this.lRequiredRemains.TabIndex = 29;
-            this.lRequiredRemains.Text = "Boss Remains For Moon";
-            // 
-            // cStartingItems
-            // 
-            this.cStartingItems.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cStartingItems.FormattingEnabled = true;
-            this.cStartingItems.Items.AddRange(new object[] {
-            "None",
-            "Random",
-            "Allow Temporary Items"});
-            this.cStartingItems.Location = new System.Drawing.Point(6, 76);
-            this.cStartingItems.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cStartingItems.Name = "cStartingItems";
-            this.cStartingItems.Size = new System.Drawing.Size(160, 23);
-            this.cStartingItems.TabIndex = 27;
-            // 
-            // lStartingItems
-            // 
-            this.lStartingItems.AutoSize = true;
-            this.lStartingItems.Location = new System.Drawing.Point(6, 61);
-            this.lStartingItems.Name = "lStartingItems";
-            this.lStartingItems.Size = new System.Drawing.Size(80, 15);
-            this.lStartingItems.TabIndex = 22;
-            this.lStartingItems.Text = "Starting Items";
-            // 
-            // cProgressiveUpgrades
-            // 
-            this.cProgressiveUpgrades.AutoSize = true;
-            this.cProgressiveUpgrades.BackColor = System.Drawing.Color.Transparent;
-            this.cProgressiveUpgrades.ForeColor = System.Drawing.Color.Black;
-            this.cProgressiveUpgrades.Location = new System.Drawing.Point(6, 11);
-            this.cProgressiveUpgrades.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cProgressiveUpgrades.Name = "cProgressiveUpgrades";
-            this.cProgressiveUpgrades.Size = new System.Drawing.Size(139, 19);
-            this.cProgressiveUpgrades.TabIndex = 21;
-            this.cProgressiveUpgrades.Text = "Progressive Upgrades";
-            this.cProgressiveUpgrades.UseVisualStyleBackColor = false;
-            // 
-            // cMixSongs
-            // 
-            this.cMixSongs.AutoSize = true;
-            this.cMixSongs.BackColor = System.Drawing.Color.Transparent;
-            this.cMixSongs.ForeColor = System.Drawing.Color.Black;
-            this.cMixSongs.Location = new System.Drawing.Point(6, 36);
-            this.cMixSongs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cMixSongs.Name = "cMixSongs";
-            this.cMixSongs.Size = new System.Drawing.Size(138, 19);
-            this.cMixSongs.TabIndex = 3;
-            this.cMixSongs.Text = "Mix songs with items";
-            this.cMixSongs.UseVisualStyleBackColor = false;
-            // 
-            // cEnemy
-            // 
-            this.cEnemy.AutoSize = true;
-            this.cEnemy.BackColor = System.Drawing.Color.Transparent;
-            this.cEnemy.ForeColor = System.Drawing.Color.Black;
-            this.cEnemy.Location = new System.Drawing.Point(193, 36);
-            this.cEnemy.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cEnemy.Name = "cEnemy";
-            this.cEnemy.Size = new System.Drawing.Size(149, 19);
-            this.cEnemy.TabIndex = 9;
-            this.cEnemy.Text = "Enemies/Actors (BETA!)";
-            this.cEnemy.UseVisualStyleBackColor = false;
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Controls.Add(this.lNumTricksEnabled);
-            this.groupBox9.Controls.Add(this.lItemPlacement);
-            this.groupBox9.Controls.Add(this.cItemPlacement);
-            this.groupBox9.Controls.Add(this.bToggleTricks);
-            this.groupBox9.Controls.Add(this.cMode);
-            this.groupBox9.Controls.Add(this.bLoadLogic);
-            this.groupBox9.Controls.Add(this.lMode);
-            this.groupBox9.Controls.Add(this.tbUserLogic);
-            this.groupBox9.Location = new System.Drawing.Point(7, 7);
-            this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox9.Size = new System.Drawing.Size(444, 172);
-            this.groupBox9.TabIndex = 29;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Generation Settings";
-            // 
-            // lNumTricksEnabled
-            // 
-            this.lNumTricksEnabled.Location = new System.Drawing.Point(96, 22);
-            this.lNumTricksEnabled.Name = "lNumTricksEnabled";
-            this.lNumTricksEnabled.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lNumTricksEnabled.Size = new System.Drawing.Size(271, 18);
-            this.lNumTricksEnabled.TabIndex = 21;
-            this.lNumTricksEnabled.Text = "0 tricks enabled";
-            // 
-            // lItemPlacement
-            // 
-            this.lItemPlacement.AutoSize = true;
-            this.lItemPlacement.BackColor = System.Drawing.Color.Transparent;
-            this.lItemPlacement.ForeColor = System.Drawing.Color.Black;
-            this.lItemPlacement.Location = new System.Drawing.Point(13, 111);
-            this.lItemPlacement.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lItemPlacement.Name = "lItemPlacement";
-            this.lItemPlacement.Size = new System.Drawing.Size(126, 15);
-            this.lItemPlacement.TabIndex = 21;
-            this.lItemPlacement.Text = "Item Placement Order:";
-            // 
-            // cItemPlacement
-            // 
-            this.cItemPlacement.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cItemPlacement.FormattingEnabled = true;
-            this.cItemPlacement.Items.AddRange(new object[] {
-            "Random",
-            "Bespoke",
-            "Classic"});
-            this.cItemPlacement.Location = new System.Drawing.Point(142, 104);
-            this.cItemPlacement.Name = "cItemPlacement";
-            this.cItemPlacement.Size = new System.Drawing.Size(121, 23);
-            this.cItemPlacement.TabIndex = 20;
-            // 
-            // bToggleTricks
-            // 
-            this.bToggleTricks.Location = new System.Drawing.Point(341, 39);
-            this.bToggleTricks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.bToggleTricks.Name = "bToggleTricks";
-            this.bToggleTricks.Size = new System.Drawing.Size(96, 25);
-            this.bToggleTricks.TabIndex = 19;
-            this.bToggleTricks.Text = "Edit Tricks";
-            this.bToggleTricks.UseVisualStyleBackColor = true;
-            this.bToggleTricks.Click += new System.EventHandler(this.bToggleTricks_Click);
-            // 
-            // cMode
-            // 
-            this.cMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cMode.FormattingEnabled = true;
-            this.cMode.Items.AddRange(new object[] {
-            "Casual",
-            "Glitched",
-            "Vanilla Layout",
-            "User Logic",
-            "No Logic"});
-            this.cMode.Location = new System.Drawing.Point(96, 40);
-            this.cMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cMode.Name = "cMode";
-            this.cMode.Size = new System.Drawing.Size(237, 23);
-            this.cMode.TabIndex = 1;
-            this.cMode.SelectedIndexChanged += new System.EventHandler(this.cMode_SelectedIndexChanged);
-            // 
-            // bLoadLogic
-            // 
-            this.bLoadLogic.Location = new System.Drawing.Point(13, 71);
-            this.bLoadLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.bLoadLogic.Name = "bLoadLogic";
-            this.bLoadLogic.Size = new System.Drawing.Size(79, 28);
-            this.bLoadLogic.TabIndex = 17;
-            this.bLoadLogic.Text = "Open Logic";
-            this.bLoadLogic.UseVisualStyleBackColor = true;
-            this.bLoadLogic.Click += new System.EventHandler(this.bLoadLogic_Click);
-            // 
-            // lMode
-            // 
-            this.lMode.AutoSize = true;
-            this.lMode.BackColor = System.Drawing.Color.Transparent;
-            this.lMode.ForeColor = System.Drawing.Color.Black;
-            this.lMode.Location = new System.Drawing.Point(10, 43);
-            this.lMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lMode.Name = "lMode";
-            this.lMode.Size = new System.Drawing.Size(75, 15);
-            this.lMode.TabIndex = 0;
-            this.lMode.Text = "Mode/Logic:";
-            // 
-            // tbUserLogic
-            // 
-            this.tbUserLogic.Location = new System.Drawing.Point(96, 74);
-            this.tbUserLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tbUserLogic.Name = "tbUserLogic";
-            this.tbUserLogic.ReadOnly = true;
-            this.tbUserLogic.Size = new System.Drawing.Size(341, 23);
-            this.tbUserLogic.TabIndex = 18;
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.tJunkLocationsList);
-            this.groupBox6.Controls.Add(this.bJunkLocationsEditor);
-            this.groupBox6.Controls.Add(this.lJunkLocationsAmount);
-            this.groupBox6.Location = new System.Drawing.Point(459, 96);
-            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox6.Size = new System.Drawing.Size(442, 83);
-            this.groupBox6.TabIndex = 28;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Enforce Junk Locations";
-            // 
-            // tJunkLocationsList
-            // 
-            this.tJunkLocationsList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tJunkLocationsList.Location = new System.Drawing.Point(13, 51);
-            this.tJunkLocationsList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tJunkLocationsList.Name = "tJunkLocationsList";
-            this.tJunkLocationsList.Size = new System.Drawing.Size(374, 23);
-            this.tJunkLocationsList.TabIndex = 26;
-            this.tJunkLocationsList.Text = "--";
-            this.tJunkLocationsList.TextChanged += new System.EventHandler(this.tJunkLocationsList_TextChanged);
-            // 
-            // bJunkLocationsEditor
-            // 
-            this.bJunkLocationsEditor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bJunkLocationsEditor.Location = new System.Drawing.Point(384, 50);
-            this.bJunkLocationsEditor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.bJunkLocationsEditor.Name = "bJunkLocationsEditor";
-            this.bJunkLocationsEditor.Size = new System.Drawing.Size(46, 25);
-            this.bJunkLocationsEditor.TabIndex = 26;
-            this.bJunkLocationsEditor.Text = "Edit";
-            this.bJunkLocationsEditor.UseVisualStyleBackColor = true;
-            this.bJunkLocationsEditor.Click += new System.EventHandler(this.bJunkLocationsEditor_Click);
-            // 
-            // lJunkLocationsAmount
-            // 
-            this.lJunkLocationsAmount.AutoSize = true;
-            this.lJunkLocationsAmount.Location = new System.Drawing.Point(10, 28);
-            this.lJunkLocationsAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lJunkLocationsAmount.Name = "lJunkLocationsAmount";
-            this.lJunkLocationsAmount.Size = new System.Drawing.Size(121, 15);
-            this.lJunkLocationsAmount.TabIndex = 27;
-            this.lJunkLocationsAmount.Text = "0/0 locations selected";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.bRandomStartingItems);
-            this.groupBox4.Controls.Add(this.tStartingItemList);
-            this.groupBox4.Controls.Add(this.lCustomStartingItemAmount);
-            this.groupBox4.Controls.Add(this.bStartingItemEditor);
-            this.groupBox4.Location = new System.Drawing.Point(459, 7);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox4.Size = new System.Drawing.Size(442, 83);
-            this.groupBox4.TabIndex = 17;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Extra Starting Items";
-            // 
-            // bRandomStartingItems
-            // 
-            this.bRandomStartingItems.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bRandomStartingItems.Location = new System.Drawing.Point(217, 17);
-            this.bRandomStartingItems.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.bRandomStartingItems.Name = "bRandomStartingItems";
-            this.bRandomStartingItems.Size = new System.Drawing.Size(214, 25);
-            this.bRandomStartingItems.TabIndex = 28;
-            this.bRandomStartingItems.Text = "+ Random Starting Items";
-            this.bRandomStartingItems.UseVisualStyleBackColor = true;
-            this.bRandomStartingItems.Click += new System.EventHandler(this.bRandomStartingItems_Click);
-            // 
-            // tStartingItemList
-            // 
-            this.tStartingItemList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tStartingItemList.Location = new System.Drawing.Point(13, 52);
-            this.tStartingItemList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tStartingItemList.Name = "tStartingItemList";
-            this.tStartingItemList.Size = new System.Drawing.Size(374, 23);
-            this.tStartingItemList.TabIndex = 26;
-            this.tStartingItemList.Text = "--";
-            this.tStartingItemList.TextChanged += new System.EventHandler(this.tStartingItemList_TextChanged);
-            // 
-            // lCustomStartingItemAmount
-            // 
-            this.lCustomStartingItemAmount.AutoSize = true;
-            this.lCustomStartingItemAmount.Location = new System.Drawing.Point(10, 29);
-            this.lCustomStartingItemAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lCustomStartingItemAmount.Name = "lCustomStartingItemAmount";
-            this.lCustomStartingItemAmount.Size = new System.Drawing.Size(102, 15);
-            this.lCustomStartingItemAmount.TabIndex = 27;
-            this.lCustomStartingItemAmount.Text = "0/0 items selected";
-            // 
-            // bStartingItemEditor
-            // 
-            this.bStartingItemEditor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bStartingItemEditor.Location = new System.Drawing.Point(385, 51);
-            this.bStartingItemEditor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.bStartingItemEditor.Name = "bStartingItemEditor";
-            this.bStartingItemEditor.Size = new System.Drawing.Size(46, 25);
-            this.bStartingItemEditor.TabIndex = 26;
-            this.bStartingItemEditor.Text = "Edit";
-            this.bStartingItemEditor.UseVisualStyleBackColor = true;
-            this.bStartingItemEditor.Click += new System.EventHandler(this.bStartingItemEditor_Click);
-            // 
-            // tSettings
-            // 
-            this.tSettings.Controls.Add(this.tabMain);
-            this.tSettings.Controls.Add(this.tabItemPool);
-            this.tSettings.Controls.Add(this.tabGimmicks);
-            this.tSettings.Controls.Add(this.tabComfort);
-            this.tSettings.Controls.Add(this.tabShortenCutscenes);
-            this.tSettings.Controls.Add(this.tabActorizer);
-            this.tSettings.Controls.Add(this.tabCosmetics);
-            this.tSettings.Location = new System.Drawing.Point(4, 28);
-            this.tSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tSettings.Name = "tSettings";
-            this.tSettings.SelectedIndex = 0;
-            this.tSettings.Size = new System.Drawing.Size(918, 389);
-            this.tSettings.TabIndex = 10;
+            // tabShortenCutscenes
+            // 
+            this.tabShortenCutscenes.Controls.Add(this.tShortenCutscenes);
+            this.tabShortenCutscenes.Location = new System.Drawing.Point(4, 24);
+            this.tabShortenCutscenes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabShortenCutscenes.Name = "tabShortenCutscenes";
+            this.tabShortenCutscenes.Size = new System.Drawing.Size(910, 361);
+            this.tabShortenCutscenes.TabIndex = 5;
+            this.tabShortenCutscenes.Text = "Shorten Cutscenes";
+            this.tabShortenCutscenes.UseVisualStyleBackColor = true;
+            // 
+            // tShortenCutscenes
+            // 
+            this.tShortenCutscenes.Location = new System.Drawing.Point(8, 5);
+            this.tShortenCutscenes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tShortenCutscenes.Name = "tShortenCutscenes";
+            this.tShortenCutscenes.SelectedIndex = 0;
+            this.tShortenCutscenes.Size = new System.Drawing.Size(868, 322);
+            this.tShortenCutscenes.TabIndex = 0;
+            // 
+            // tabActorizer
+            // 
+            this.tabActorizer.Controls.Add(this.cFasterCommonFileLoad);
+            this.tabActorizer.Controls.Add(this.cLocationItemRestrictionUnlock);
+            this.tabActorizer.Controls.Add(this.cFormItemRestrictionUnlock);
+            this.tabActorizer.Controls.Add(this.lActorMode);
+            this.tabActorizer.Controls.Add(this.cActorMode);
+            this.tabActorizer.Location = new System.Drawing.Point(4, 24);
+            this.tabActorizer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabActorizer.Name = "tabActorizer";
+            this.tabActorizer.Size = new System.Drawing.Size(910, 361);
+            this.tabActorizer.TabIndex = 5;
+            this.tabActorizer.Text = "Actorizer";
+            this.tabActorizer.UseVisualStyleBackColor = true;
             // 
             // cFasterCommonFileLoad
             // 
@@ -3481,6 +2607,883 @@ namespace MMR.UI.Forms
             this.cFasterCommonFileLoad.TabIndex = 4;
             this.cFasterCommonFileLoad.Text = "Faster Common File Load";
             this.cFasterCommonFileLoad.UseVisualStyleBackColor = true;
+            // 
+            // cLocationItemRestrictionUnlock
+            // 
+            this.cLocationItemRestrictionUnlock.AutoSize = true;
+            this.cLocationItemRestrictionUnlock.Checked = true;
+            this.cLocationItemRestrictionUnlock.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cLocationItemRestrictionUnlock.Location = new System.Drawing.Point(250, 35);
+            this.cLocationItemRestrictionUnlock.Name = "cLocationItemRestrictionUnlock";
+            this.cLocationItemRestrictionUnlock.Size = new System.Drawing.Size(144, 19);
+            this.cLocationItemRestrictionUnlock.TabIndex = 3;
+            this.cLocationItemRestrictionUnlock.Text = "Location Items Unlock";
+            this.cLocationItemRestrictionUnlock.UseVisualStyleBackColor = true;
+            // 
+            // cFormItemRestrictionUnlock
+            // 
+            this.cFormItemRestrictionUnlock.AutoSize = true;
+            this.cFormItemRestrictionUnlock.Checked = true;
+            this.cFormItemRestrictionUnlock.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cFormItemRestrictionUnlock.Location = new System.Drawing.Point(250, 9);
+            this.cFormItemRestrictionUnlock.Name = "cFormItemRestrictionUnlock";
+            this.cFormItemRestrictionUnlock.Size = new System.Drawing.Size(126, 19);
+            this.cFormItemRestrictionUnlock.TabIndex = 2;
+            this.cFormItemRestrictionUnlock.Text = "Form Items Unlock";
+            this.cFormItemRestrictionUnlock.UseVisualStyleBackColor = true;
+            // 
+            // lActorMode
+            // 
+            this.lActorMode.AutoSize = true;
+            this.lActorMode.Location = new System.Drawing.Point(6, 9);
+            this.lActorMode.Name = "lActorMode";
+            this.lActorMode.Size = new System.Drawing.Size(67, 15);
+            this.lActorMode.TabIndex = 1;
+            this.lActorMode.Text = "ActorMode";
+            // 
+            // cActorMode
+            // 
+            this.cActorMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cActorMode.FormattingEnabled = true;
+            this.cActorMode.Items.AddRange(new object[] {
+            "Default",
+            "Actorizer",
+            "Enemizer",
+            "Enemizer Out For Blood"});
+            this.cActorMode.Location = new System.Drawing.Point(79, 6);
+            this.cActorMode.Name = "cActorMode";
+            this.cActorMode.Size = new System.Drawing.Size(150, 23);
+            this.cActorMode.TabIndex = 0;
+            // 
+            // tabCosmetics
+            // 
+            this.tabCosmetics.Controls.Add(this.gCosmeticOther);
+            this.tabCosmetics.Controls.Add(this.gCosmeticMusicSound);
+            this.tabCosmetics.Controls.Add(this.cHUDGroupBox);
+            this.tabCosmetics.Controls.Add(this.tFormCosmetics);
+            this.tabCosmetics.Location = new System.Drawing.Point(4, 24);
+            this.tabCosmetics.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabCosmetics.Name = "tabCosmetics";
+            this.tabCosmetics.Size = new System.Drawing.Size(910, 361);
+            this.tabCosmetics.TabIndex = 4;
+            this.tabCosmetics.Text = "Cosmetics";
+            this.tabCosmetics.UseVisualStyleBackColor = true;
+            // 
+            // gCosmeticOther
+            // 
+            this.gCosmeticOther.Controls.Add(this.cCameraStyle);
+            this.gCosmeticOther.Controls.Add(this.lCameraStyle);
+            this.gCosmeticOther.Controls.Add(this.cRainbowTunic);
+            this.gCosmeticOther.Controls.Add(this.cBombTrapTunicColors);
+            this.gCosmeticOther.Controls.Add(this.cInstantPictobox);
+            this.gCosmeticOther.Controls.Add(this.cTatl);
+            this.gCosmeticOther.Controls.Add(this.lTatl);
+            this.gCosmeticOther.Controls.Add(this.cTargettingStyle);
+            this.gCosmeticOther.Location = new System.Drawing.Point(299, 3);
+            this.gCosmeticOther.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gCosmeticOther.Name = "gCosmeticOther";
+            this.gCosmeticOther.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gCosmeticOther.Size = new System.Drawing.Size(598, 149);
+            this.gCosmeticOther.TabIndex = 47;
+            this.gCosmeticOther.TabStop = false;
+            this.gCosmeticOther.Text = "Other";
+            // 
+            // cCameraStyle
+            // 
+            this.cCameraStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cCameraStyle.FormattingEnabled = true;
+            this.cCameraStyle.Items.AddRange(new object[] {
+            "Default",
+            "Responsive",
+            "Instant"});
+            this.cCameraStyle.Location = new System.Drawing.Point(10, 78);
+            this.cCameraStyle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cCameraStyle.Name = "cCameraStyle";
+            this.cCameraStyle.Size = new System.Drawing.Size(150, 23);
+            this.cCameraStyle.TabIndex = 46;
+            // 
+            // lCameraStyle
+            // 
+            this.lCameraStyle.AutoSize = true;
+            this.lCameraStyle.BackColor = System.Drawing.Color.Transparent;
+            this.lCameraStyle.ForeColor = System.Drawing.Color.Black;
+            this.lCameraStyle.Location = new System.Drawing.Point(7, 63);
+            this.lCameraStyle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lCameraStyle.Name = "lCameraStyle";
+            this.lCameraStyle.Size = new System.Drawing.Size(75, 15);
+            this.lCameraStyle.TabIndex = 45;
+            this.lCameraStyle.Text = "Camera style";
+            // 
+            // cRainbowTunic
+            // 
+            this.cRainbowTunic.AutoSize = true;
+            this.cRainbowTunic.BackColor = System.Drawing.Color.Transparent;
+            this.cRainbowTunic.Location = new System.Drawing.Point(199, 112);
+            this.cRainbowTunic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cRainbowTunic.Name = "cRainbowTunic";
+            this.cRainbowTunic.Size = new System.Drawing.Size(104, 19);
+            this.cRainbowTunic.TabIndex = 44;
+            this.cRainbowTunic.Text = "Rainbow Tunic";
+            this.cRainbowTunic.UseVisualStyleBackColor = false;
+            // 
+            // cBombTrapTunicColors
+            // 
+            this.cBombTrapTunicColors.AutoSize = true;
+            this.cBombTrapTunicColors.BackColor = System.Drawing.Color.Transparent;
+            this.cBombTrapTunicColors.Location = new System.Drawing.Point(199, 37);
+            this.cBombTrapTunicColors.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cBombTrapTunicColors.Name = "cBombTrapTunicColors";
+            this.cBombTrapTunicColors.Size = new System.Drawing.Size(214, 19);
+            this.cBombTrapTunicColors.TabIndex = 43;
+            this.cBombTrapTunicColors.Text = "Bomb Traps Randomize Tunic Color";
+            this.cBombTrapTunicColors.UseVisualStyleBackColor = false;
+            // 
+            // cInstantPictobox
+            // 
+            this.cInstantPictobox.AutoSize = true;
+            this.cInstantPictobox.BackColor = System.Drawing.Color.Transparent;
+            this.cInstantPictobox.Location = new System.Drawing.Point(199, 87);
+            this.cInstantPictobox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cInstantPictobox.Name = "cInstantPictobox";
+            this.cInstantPictobox.Size = new System.Drawing.Size(180, 19);
+            this.cInstantPictobox.TabIndex = 42;
+            this.cInstantPictobox.Text = "Instant Pictobox on Emulator";
+            this.cInstantPictobox.UseVisualStyleBackColor = false;
+            // 
+            // cTatl
+            // 
+            this.cTatl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cTatl.FormattingEnabled = true;
+            this.cTatl.Items.AddRange(new object[] {
+            "Default",
+            "Dark",
+            "Hot",
+            "Cool",
+            "Random",
+            "Rainbow (cycle)"});
+            this.cTatl.Location = new System.Drawing.Point(10, 33);
+            this.cTatl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTatl.Name = "cTatl";
+            this.cTatl.Size = new System.Drawing.Size(150, 23);
+            this.cTatl.TabIndex = 41;
+            // 
+            // lTatl
+            // 
+            this.lTatl.AutoSize = true;
+            this.lTatl.BackColor = System.Drawing.Color.Transparent;
+            this.lTatl.ForeColor = System.Drawing.Color.Black;
+            this.lTatl.Location = new System.Drawing.Point(7, 18);
+            this.lTatl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lTatl.Name = "lTatl";
+            this.lTatl.Size = new System.Drawing.Size(62, 15);
+            this.lTatl.TabIndex = 40;
+            this.lTatl.Text = "Tatl theme";
+            // 
+            // cTargettingStyle
+            // 
+            this.cTargettingStyle.AutoSize = true;
+            this.cTargettingStyle.BackColor = System.Drawing.Color.Transparent;
+            this.cTargettingStyle.Location = new System.Drawing.Point(199, 62);
+            this.cTargettingStyle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTargettingStyle.Name = "cTargettingStyle";
+            this.cTargettingStyle.Size = new System.Drawing.Size(140, 19);
+            this.cTargettingStyle.TabIndex = 37;
+            this.cTargettingStyle.Text = "Default Hold Z-Target";
+            this.cTargettingStyle.UseVisualStyleBackColor = false;
+            // 
+            // gCosmeticMusicSound
+            // 
+            this.gCosmeticMusicSound.Controls.Add(this.cDisableFanfares);
+            this.gCosmeticMusicSound.Controls.Add(this.cMusicTrackNames);
+            this.gCosmeticMusicSound.Controls.Add(this.cRemoveMinorMusic);
+            this.gCosmeticMusicSound.Controls.Add(this.lLuckRoll);
+            this.gCosmeticMusicSound.Controls.Add(this.tLuckRollPercentage);
+            this.gCosmeticMusicSound.Controls.Add(this.lMusic);
+            this.gCosmeticMusicSound.Controls.Add(this.cMusic);
+            this.gCosmeticMusicSound.Controls.Add(this.cSFX);
+            this.gCosmeticMusicSound.Controls.Add(this.cCombatMusicDisable);
+            this.gCosmeticMusicSound.Controls.Add(this.cEnableNightMusic);
+            this.gCosmeticMusicSound.Controls.Add(this.cLowHealthSFXComboBox);
+            this.gCosmeticMusicSound.Controls.Add(this.lLowHealthSFXComboBox);
+            this.gCosmeticMusicSound.Location = new System.Drawing.Point(8, 159);
+            this.gCosmeticMusicSound.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gCosmeticMusicSound.Name = "gCosmeticMusicSound";
+            this.gCosmeticMusicSound.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gCosmeticMusicSound.Size = new System.Drawing.Size(484, 195);
+            this.gCosmeticMusicSound.TabIndex = 46;
+            this.gCosmeticMusicSound.TabStop = false;
+            this.gCosmeticMusicSound.Text = "Music / Sound";
+            // 
+            // cDisableFanfares
+            // 
+            this.cDisableFanfares.AutoSize = true;
+            this.cDisableFanfares.Location = new System.Drawing.Point(154, 76);
+            this.cDisableFanfares.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDisableFanfares.Name = "cDisableFanfares";
+            this.cDisableFanfares.Size = new System.Drawing.Size(111, 19);
+            this.cDisableFanfares.TabIndex = 50;
+            this.cDisableFanfares.Text = "Disable Fanfares";
+            this.cDisableFanfares.UseVisualStyleBackColor = true;
+            // 
+            // cMusicTrackNames
+            // 
+            this.cMusicTrackNames.AutoSize = true;
+            this.cMusicTrackNames.BackColor = System.Drawing.Color.Transparent;
+            this.cMusicTrackNames.ForeColor = System.Drawing.Color.Black;
+            this.cMusicTrackNames.Location = new System.Drawing.Point(154, 50);
+            this.cMusicTrackNames.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMusicTrackNames.Name = "cMusicTrackNames";
+            this.cMusicTrackNames.Size = new System.Drawing.Size(125, 19);
+            this.cMusicTrackNames.TabIndex = 49;
+            this.cMusicTrackNames.Text = "Show Track Names";
+            this.cMusicTrackNames.UseVisualStyleBackColor = false;
+            // 
+            // cRemoveMinorMusic
+            // 
+            this.cRemoveMinorMusic.AutoSize = true;
+            this.cRemoveMinorMusic.BackColor = System.Drawing.Color.Transparent;
+            this.cRemoveMinorMusic.ForeColor = System.Drawing.Color.Black;
+            this.cRemoveMinorMusic.Location = new System.Drawing.Point(154, 23);
+            this.cRemoveMinorMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cRemoveMinorMusic.Name = "cRemoveMinorMusic";
+            this.cRemoveMinorMusic.Size = new System.Drawing.Size(139, 19);
+            this.cRemoveMinorMusic.TabIndex = 48;
+            this.cRemoveMinorMusic.Text = "Remove Minor Music";
+            this.cRemoveMinorMusic.UseVisualStyleBackColor = false;
+            // 
+            // lLuckRoll
+            // 
+            this.lLuckRoll.AutoSize = true;
+            this.lLuckRoll.BackColor = System.Drawing.Color.Transparent;
+            this.lLuckRoll.ForeColor = System.Drawing.Color.Black;
+            this.lLuckRoll.Location = new System.Drawing.Point(154, 99);
+            this.lLuckRoll.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lLuckRoll.Name = "lLuckRoll";
+            this.lLuckRoll.Size = new System.Drawing.Size(119, 15);
+            this.lLuckRoll.TabIndex = 47;
+            this.lLuckRoll.Text = "Luck Roll Chance (%)";
+            // 
+            // tLuckRollPercentage
+            // 
+            this.tLuckRollPercentage.DecimalPlaces = 2;
+            this.tLuckRollPercentage.Location = new System.Drawing.Point(154, 114);
+            this.tLuckRollPercentage.Name = "tLuckRollPercentage";
+            this.tLuckRollPercentage.Size = new System.Drawing.Size(117, 23);
+            this.tLuckRollPercentage.TabIndex = 46;
+            this.tLuckRollPercentage.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tLuckRollPercentage.Value = new decimal(new int[] {
+            333,
+            0,
+            0,
+            131072});
+            // 
+            // lMusic
+            // 
+            this.lMusic.AutoSize = true;
+            this.lMusic.BackColor = System.Drawing.Color.Transparent;
+            this.lMusic.ForeColor = System.Drawing.Color.Black;
+            this.lMusic.Location = new System.Drawing.Point(4, 99);
+            this.lMusic.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lMusic.Name = "lMusic";
+            this.lMusic.Size = new System.Drawing.Size(39, 15);
+            this.lMusic.TabIndex = 43;
+            this.lMusic.Text = "Music";
+            // 
+            // cMusic
+            // 
+            this.cMusic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cMusic.FormattingEnabled = true;
+            this.cMusic.Items.AddRange(new object[] {
+            "Default",
+            "Random",
+            "None"});
+            this.cMusic.Location = new System.Drawing.Point(7, 114);
+            this.cMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMusic.Name = "cMusic";
+            this.cMusic.Size = new System.Drawing.Size(140, 23);
+            this.cMusic.TabIndex = 42;
+            // 
+            // cSFX
+            // 
+            this.cSFX.AutoSize = true;
+            this.cSFX.BackColor = System.Drawing.Color.Transparent;
+            this.cSFX.ForeColor = System.Drawing.Color.Black;
+            this.cSFX.Location = new System.Drawing.Point(7, 23);
+            this.cSFX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSFX.Name = "cSFX";
+            this.cSFX.Size = new System.Drawing.Size(107, 19);
+            this.cSFX.TabIndex = 36;
+            this.cSFX.Text = "Randomize SFX";
+            this.cSFX.UseVisualStyleBackColor = false;
+            // 
+            // cCombatMusicDisable
+            // 
+            this.cCombatMusicDisable.AutoSize = true;
+            this.cCombatMusicDisable.Location = new System.Drawing.Point(7, 76);
+            this.cCombatMusicDisable.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cCombatMusicDisable.Name = "cCombatMusicDisable";
+            this.cCombatMusicDisable.Size = new System.Drawing.Size(145, 19);
+            this.cCombatMusicDisable.TabIndex = 45;
+            this.cCombatMusicDisable.Text = "Disable Combat Music";
+            this.cCombatMusicDisable.UseVisualStyleBackColor = true;
+            // 
+            // cEnableNightMusic
+            // 
+            this.cEnableNightMusic.AutoSize = true;
+            this.cEnableNightMusic.Location = new System.Drawing.Point(7, 50);
+            this.cEnableNightMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cEnableNightMusic.Name = "cEnableNightMusic";
+            this.cEnableNightMusic.Size = new System.Drawing.Size(123, 19);
+            this.cEnableNightMusic.TabIndex = 38;
+            this.cEnableNightMusic.Text = "Enable Night BGM";
+            this.cEnableNightMusic.UseVisualStyleBackColor = true;
+            // 
+            // cLowHealthSFXComboBox
+            // 
+            this.cLowHealthSFXComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cLowHealthSFXComboBox.FormattingEnabled = true;
+            this.cLowHealthSFXComboBox.Location = new System.Drawing.Point(7, 163);
+            this.cLowHealthSFXComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cLowHealthSFXComboBox.Name = "cLowHealthSFXComboBox";
+            this.cLowHealthSFXComboBox.Size = new System.Drawing.Size(140, 23);
+            this.cLowHealthSFXComboBox.TabIndex = 25;
+            // 
+            // lLowHealthSFXComboBox
+            // 
+            this.lLowHealthSFXComboBox.AutoSize = true;
+            this.lLowHealthSFXComboBox.Location = new System.Drawing.Point(4, 142);
+            this.lLowHealthSFXComboBox.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lLowHealthSFXComboBox.Name = "lLowHealthSFXComboBox";
+            this.lLowHealthSFXComboBox.Size = new System.Drawing.Size(89, 15);
+            this.lLowHealthSFXComboBox.TabIndex = 25;
+            this.lLowHealthSFXComboBox.Text = "Low Health SFX";
+            // 
+            // cHUDGroupBox
+            // 
+            this.cHUDGroupBox.Controls.Add(this.cHueShiftMiscUI);
+            this.cHUDGroupBox.Controls.Add(this.cHUDTableLayoutPanel);
+            this.cHUDGroupBox.Location = new System.Drawing.Point(499, 159);
+            this.cHUDGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHUDGroupBox.Name = "cHUDGroupBox";
+            this.cHUDGroupBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHUDGroupBox.Size = new System.Drawing.Size(398, 195);
+            this.cHUDGroupBox.TabIndex = 44;
+            this.cHUDGroupBox.TabStop = false;
+            this.cHUDGroupBox.Text = "HUD";
+            // 
+            // cHueShiftMiscUI
+            // 
+            this.cHueShiftMiscUI.AutoSize = true;
+            this.cHueShiftMiscUI.Location = new System.Drawing.Point(10, 91);
+            this.cHueShiftMiscUI.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHueShiftMiscUI.Name = "cHueShiftMiscUI";
+            this.cHueShiftMiscUI.Size = new System.Drawing.Size(216, 19);
+            this.cHueShiftMiscUI.TabIndex = 1;
+            this.cHueShiftMiscUI.Text = "Randomize Hue of Miscellaneous UI";
+            this.cHueShiftMiscUI.UseVisualStyleBackColor = true;
+            // 
+            // cHUDTableLayoutPanel
+            // 
+            this.cHUDTableLayoutPanel.ColumnCount = 3;
+            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 58F));
+            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
+            this.cHUDTableLayoutPanel.Controls.Add(this.cHUDHeartsComboBox, 1, 0);
+            this.cHUDTableLayoutPanel.Controls.Add(this.cHeartsLabel, 0, 0);
+            this.cHUDTableLayoutPanel.Controls.Add(this.cMagicLabel, 0, 1);
+            this.cHUDTableLayoutPanel.Controls.Add(this.cHUDMagicComboBox, 1, 1);
+            this.cHUDTableLayoutPanel.Controls.Add(this.btn_hud, 2, 0);
+            this.cHUDTableLayoutPanel.Location = new System.Drawing.Point(2, 18);
+            this.cHUDTableLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHUDTableLayoutPanel.Name = "cHUDTableLayoutPanel";
+            this.cHUDTableLayoutPanel.RowCount = 2;
+            this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.cHUDTableLayoutPanel.Size = new System.Drawing.Size(362, 66);
+            this.cHUDTableLayoutPanel.TabIndex = 0;
+            // 
+            // cHUDHeartsComboBox
+            // 
+            this.cHUDHeartsComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cHUDHeartsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cHUDHeartsComboBox.FormattingEnabled = true;
+            this.cHUDHeartsComboBox.Location = new System.Drawing.Point(62, 3);
+            this.cHUDHeartsComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHUDHeartsComboBox.Name = "cHUDHeartsComboBox";
+            this.cHUDHeartsComboBox.Size = new System.Drawing.Size(205, 23);
+            this.cHUDHeartsComboBox.TabIndex = 32;
+            this.cHUDHeartsComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDHeartsComboBox_SelectedIndexChanged);
+            // 
+            // cHeartsLabel
+            // 
+            this.cHeartsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cHeartsLabel.AutoSize = true;
+            this.cHeartsLabel.Location = new System.Drawing.Point(4, 9);
+            this.cHeartsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.cHeartsLabel.Name = "cHeartsLabel";
+            this.cHeartsLabel.Size = new System.Drawing.Size(44, 15);
+            this.cHeartsLabel.TabIndex = 33;
+            this.cHeartsLabel.Text = "Hearts:";
+            // 
+            // cMagicLabel
+            // 
+            this.cMagicLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cMagicLabel.AutoSize = true;
+            this.cMagicLabel.Location = new System.Drawing.Point(4, 42);
+            this.cMagicLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.cMagicLabel.Name = "cMagicLabel";
+            this.cMagicLabel.Size = new System.Drawing.Size(43, 15);
+            this.cMagicLabel.TabIndex = 34;
+            this.cMagicLabel.Text = "Magic:";
+            // 
+            // cHUDMagicComboBox
+            // 
+            this.cHUDMagicComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cHUDMagicComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cHUDMagicComboBox.FormattingEnabled = true;
+            this.cHUDMagicComboBox.Location = new System.Drawing.Point(62, 36);
+            this.cHUDMagicComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHUDMagicComboBox.Name = "cHUDMagicComboBox";
+            this.cHUDMagicComboBox.Size = new System.Drawing.Size(205, 23);
+            this.cHUDMagicComboBox.TabIndex = 35;
+            this.cHUDMagicComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDMagicComboBox_SelectedIndexChanged);
+            // 
+            // btn_hud
+            // 
+            this.btn_hud.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btn_hud.AutoSize = true;
+            this.btn_hud.Location = new System.Drawing.Point(275, 11);
+            this.btn_hud.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btn_hud.Name = "btn_hud";
+            this.cHUDTableLayoutPanel.SetRowSpan(this.btn_hud, 2);
+            this.btn_hud.Size = new System.Drawing.Size(83, 43);
+            this.btn_hud.TabIndex = 31;
+            this.btn_hud.Text = "Customize";
+            this.btn_hud.UseVisualStyleBackColor = true;
+            this.btn_hud.Click += new System.EventHandler(this.btn_hud_Click);
+            // 
+            // tFormCosmetics
+            // 
+            this.tFormCosmetics.Location = new System.Drawing.Point(7, 3);
+            this.tFormCosmetics.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tFormCosmetics.Name = "tFormCosmetics";
+            this.tFormCosmetics.SelectedIndex = 0;
+            this.tFormCosmetics.Size = new System.Drawing.Size(285, 149);
+            this.tFormCosmetics.TabIndex = 39;
+            // 
+            // cDrawHash
+            // 
+            this.cDrawHash.AutoSize = true;
+            this.cDrawHash.BackColor = System.Drawing.Color.Transparent;
+            this.cDrawHash.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cDrawHash.Location = new System.Drawing.Point(132, 74);
+            this.cDrawHash.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDrawHash.Name = "cDrawHash";
+            this.cDrawHash.Size = new System.Drawing.Size(111, 19);
+            this.cDrawHash.TabIndex = 28;
+            this.cDrawHash.Text = "Hash Icons .png";
+            this.cDrawHash.UseVisualStyleBackColor = false;
+            this.cDrawHash.CheckedChanged += new System.EventHandler(this.cDrawHash_CheckedChanged);
+            // 
+            // gGameOutput
+            // 
+            this.gGameOutput.Controls.Add(this.cHTMLLog);
+            this.gGameOutput.Controls.Add(this.cPatch);
+            this.gGameOutput.Controls.Add(this.cDrawHash);
+            this.gGameOutput.Controls.Add(this.cSpoiler);
+            this.gGameOutput.Controls.Add(this.cN64);
+            this.gGameOutput.Controls.Add(this.cVC);
+            this.gGameOutput.Location = new System.Drawing.Point(15, 468);
+            this.gGameOutput.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGameOutput.Name = "gGameOutput";
+            this.gGameOutput.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGameOutput.Size = new System.Drawing.Size(264, 103);
+            this.gGameOutput.TabIndex = 16;
+            this.gGameOutput.TabStop = false;
+            this.gGameOutput.Text = "Outputs";
+            // 
+            // cHTMLLog
+            // 
+            this.cHTMLLog.AutoSize = true;
+            this.cHTMLLog.BackColor = System.Drawing.Color.Transparent;
+            this.cHTMLLog.ForeColor = System.Drawing.Color.Black;
+            this.cHTMLLog.Location = new System.Drawing.Point(132, 48);
+            this.cHTMLLog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHTMLLog.Name = "cHTMLLog";
+            this.cHTMLLog.Size = new System.Drawing.Size(121, 19);
+            this.cHTMLLog.TabIndex = 14;
+            this.cHTMLLog.Text = "Item Tracker .html";
+            this.cHTMLLog.UseVisualStyleBackColor = false;
+            // 
+            // cPatch
+            // 
+            this.cPatch.AutoSize = true;
+            this.cPatch.BackColor = System.Drawing.Color.Transparent;
+            this.cPatch.ForeColor = System.Drawing.Color.Black;
+            this.cPatch.Location = new System.Drawing.Point(19, 74);
+            this.cPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cPatch.Name = "cPatch";
+            this.cPatch.Size = new System.Drawing.Size(88, 19);
+            this.cPatch.TabIndex = 15;
+            this.cPatch.Text = "Patch .mmr";
+            this.cPatch.UseVisualStyleBackColor = false;
+            this.cPatch.CheckedChanged += new System.EventHandler(this.cPatch_CheckedChanged);
+            // 
+            // cSpoiler
+            // 
+            this.cSpoiler.AutoSize = true;
+            this.cSpoiler.BackColor = System.Drawing.Color.Transparent;
+            this.cSpoiler.ForeColor = System.Drawing.Color.Black;
+            this.cSpoiler.Location = new System.Drawing.Point(132, 22);
+            this.cSpoiler.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSpoiler.Name = "cSpoiler";
+            this.cSpoiler.Size = new System.Drawing.Size(102, 19);
+            this.cSpoiler.TabIndex = 8;
+            this.cSpoiler.Text = "Spoiler log .txt";
+            this.cSpoiler.UseVisualStyleBackColor = false;
+            // 
+            // cN64
+            // 
+            this.cN64.AutoSize = true;
+            this.cN64.BackColor = System.Drawing.Color.Transparent;
+            this.cN64.Checked = true;
+            this.cN64.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cN64.ForeColor = System.Drawing.Color.Black;
+            this.cN64.Location = new System.Drawing.Point(19, 21);
+            this.cN64.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cN64.Name = "cN64";
+            this.cN64.Size = new System.Drawing.Size(100, 19);
+            this.cN64.TabIndex = 10;
+            this.cN64.Text = "N64 ROM .z64";
+            this.cN64.UseVisualStyleBackColor = false;
+            // 
+            // cVC
+            // 
+            this.cVC.AutoSize = true;
+            this.cVC.BackColor = System.Drawing.Color.Transparent;
+            this.cVC.ForeColor = System.Drawing.Color.Black;
+            this.cVC.Location = new System.Drawing.Point(19, 47);
+            this.cVC.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cVC.Name = "cVC";
+            this.cVC.Size = new System.Drawing.Size(89, 19);
+            this.cVC.TabIndex = 9;
+            this.cVC.Text = "Wii VC .wad";
+            this.cVC.UseVisualStyleBackColor = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(315, 420);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(277, 15);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "ROM must be Majora\'s Mask (U) ending with \".z64\"";
+            // 
+            // bApplyPatch
+            // 
+            this.bApplyPatch.Location = new System.Drawing.Point(461, 10);
+            this.bApplyPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bApplyPatch.Name = "bApplyPatch";
+            this.bApplyPatch.Size = new System.Drawing.Size(115, 54);
+            this.bApplyPatch.TabIndex = 16;
+            this.bApplyPatch.Text = "Apply Patch";
+            this.bApplyPatch.UseVisualStyleBackColor = true;
+            this.bApplyPatch.Click += new System.EventHandler(this.bApplyPatch_Click);
+            // 
+            // saveROM
+            // 
+            this.saveROM.DefaultExt = "z64";
+            this.saveROM.Filter = "ROM files|*.z64";
+            // 
+            // cTunic
+            // 
+            this.cTunic.Color = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(105)))), ((int)(((byte)(27)))));
+            // 
+            // bRandomise
+            // 
+            this.bRandomise.Location = new System.Drawing.Point(487, 10);
+            this.bRandomise.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bRandomise.Name = "bRandomise";
+            this.bRandomise.Size = new System.Drawing.Size(115, 54);
+            this.bRandomise.TabIndex = 5;
+            this.bRandomise.Text = "Randomize";
+            this.bRandomise.UseVisualStyleBackColor = true;
+            this.bRandomise.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bRandomise_MouseDown);
+            // 
+            // bReroll
+            // 
+            this.bReroll.Location = new System.Drawing.Point(366, 10);
+            this.bReroll.Name = "bReroll";
+            this.bReroll.Size = new System.Drawing.Size(88, 23);
+            this.bReroll.TabIndex = 8;
+            this.bReroll.Text = "Re-Roll Seed";
+            this.bReroll.UseVisualStyleBackColor = true;
+            this.bReroll.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bReroll_MouseDown);
+            // 
+            // saveWad
+            // 
+            this.saveWad.DefaultExt = "wad";
+            this.saveWad.Filter = "VC files|*.wad";
+            // 
+            // mMenu
+            // 
+            this.mMenu.BackColor = System.Drawing.SystemColors.Control;
+            this.mMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.mMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mFile,
+            this.mCustomise,
+            this.toolsToolStripMenuItem,
+            this.mHelp});
+            this.mMenu.Location = new System.Drawing.Point(0, 0);
+            this.mMenu.Name = "mMenu";
+            this.mMenu.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.mMenu.Size = new System.Drawing.Size(922, 24);
+            this.mMenu.TabIndex = 12;
+            this.mMenu.Text = "mMenu";
+            // 
+            // mFile
+            // 
+            this.mFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveSettingsToolStripMenuItem,
+            this.loadSettingsToolStripMenuItem,
+            this.mExit});
+            this.mFile.Name = "mFile";
+            this.mFile.Size = new System.Drawing.Size(37, 20);
+            this.mFile.Text = "File";
+            // 
+            // saveSettingsToolStripMenuItem
+            // 
+            this.saveSettingsToolStripMenuItem.Name = "saveSettingsToolStripMenuItem";
+            this.saveSettingsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.saveSettingsToolStripMenuItem.Text = "Save Settings...";
+            this.saveSettingsToolStripMenuItem.Click += new System.EventHandler(this.SaveSettingsToolStripMenuItem_Click);
+            // 
+            // loadSettingsToolStripMenuItem
+            // 
+            this.loadSettingsToolStripMenuItem.Name = "loadSettingsToolStripMenuItem";
+            this.loadSettingsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.loadSettingsToolStripMenuItem.Text = "Load Settings...";
+            this.loadSettingsToolStripMenuItem.Click += new System.EventHandler(this.LoadSettingsToolStripMenuItem_Click);
+            // 
+            // mExit
+            // 
+            this.mExit.Name = "mExit";
+            this.mExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.mExit.Size = new System.Drawing.Size(154, 22);
+            this.mExit.Text = "Exit";
+            this.mExit.Click += new System.EventHandler(this.mExit_Click);
+            // 
+            // mCustomise
+            // 
+            this.mCustomise.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mDPadConfig});
+            this.mCustomise.Name = "mCustomise";
+            this.mCustomise.Size = new System.Drawing.Size(75, 20);
+            this.mCustomise.Text = "Customize";
+            // 
+            // mDPadConfig
+            // 
+            this.mDPadConfig.Name = "mDPadConfig";
+            this.mDPadConfig.Size = new System.Drawing.Size(184, 22);
+            this.mDPadConfig.Text = "D-Pad Configuration";
+            this.mDPadConfig.Click += new System.EventHandler(this.mDPadConfig_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mLogicEdit});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // mLogicEdit
+            // 
+            this.mLogicEdit.Name = "mLogicEdit";
+            this.mLogicEdit.Size = new System.Drawing.Size(137, 22);
+            this.mLogicEdit.Text = "Logic editor";
+            this.mLogicEdit.Click += new System.EventHandler(this.mLogicEdit_Click);
+            // 
+            // mHelp
+            // 
+            this.mHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mManual,
+            this.mSep1,
+            this.mAbout});
+            this.mHelp.Name = "mHelp";
+            this.mHelp.Size = new System.Drawing.Size(44, 20);
+            this.mHelp.Text = "Help";
+            // 
+            // mManual
+            // 
+            this.mManual.Name = "mManual";
+            this.mManual.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.mManual.Size = new System.Drawing.Size(133, 22);
+            this.mManual.Text = "Manual";
+            this.mManual.Click += new System.EventHandler(this.mManual_Click);
+            // 
+            // mSep1
+            // 
+            this.mSep1.Name = "mSep1";
+            this.mSep1.Size = new System.Drawing.Size(130, 6);
+            // 
+            // mAbout
+            // 
+            this.mAbout.Name = "mAbout";
+            this.mAbout.Size = new System.Drawing.Size(133, 22);
+            this.mAbout.Text = "About";
+            this.mAbout.Click += new System.EventHandler(this.mAbout_Click);
+            // 
+            // openBROM
+            // 
+            this.openBROM.Filter = "ROM files|*.z64;*.v64;*.n64";
+            // 
+            // pProgress
+            // 
+            this.pProgress.Location = new System.Drawing.Point(15, 592);
+            this.pProgress.Margin = new System.Windows.Forms.Padding(2);
+            this.pProgress.Name = "pProgress";
+            this.pProgress.Size = new System.Drawing.Size(892, 22);
+            this.pProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.pProgress.TabIndex = 13;
+            // 
+            // bgWorker
+            // 
+            this.bgWorker.WorkerReportsProgress = true;
+            // 
+            // lStatus
+            // 
+            this.lStatus.AutoSize = true;
+            this.lStatus.BackColor = System.Drawing.Color.Transparent;
+            this.lStatus.Location = new System.Drawing.Point(13, 573);
+            this.lStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lStatus.Name = "lStatus";
+            this.lStatus.Size = new System.Drawing.Size(48, 15);
+            this.lStatus.TabIndex = 13;
+            this.lStatus.Text = "Ready...";
+            // 
+            // tSeed
+            // 
+            this.tSeed.Location = new System.Drawing.Point(90, 10);
+            this.tSeed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tSeed.MaxLength = 10;
+            this.tSeed.Name = "tSeed";
+            this.tSeed.Size = new System.Drawing.Size(269, 23);
+            this.tSeed.TabIndex = 2;
+            this.tSeed.Enter += new System.EventHandler(this.tSeed_Enter);
+            this.tSeed.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tSeed_KeyDown);
+            this.tSeed.Leave += new System.EventHandler(this.tSeed_Leave);
+            // 
+            // lSeed
+            // 
+            this.lSeed.AutoSize = true;
+            this.lSeed.BackColor = System.Drawing.Color.Transparent;
+            this.lSeed.ForeColor = System.Drawing.Color.Black;
+            this.lSeed.Location = new System.Drawing.Point(4, 14);
+            this.lSeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lSeed.Name = "lSeed";
+            this.lSeed.Size = new System.Drawing.Size(82, 15);
+            this.lSeed.TabIndex = 3;
+            this.lSeed.Text = "Random seed:";
+            // 
+            // cDummy
+            // 
+            this.cDummy.AutoSize = true;
+            this.cDummy.Enabled = false;
+            this.cDummy.Location = new System.Drawing.Point(684, 582);
+            this.cDummy.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDummy.Name = "cDummy";
+            this.cDummy.Size = new System.Drawing.Size(83, 19);
+            this.cDummy.TabIndex = 9;
+            this.cDummy.Text = "checkBox1";
+            this.cDummy.UseVisualStyleBackColor = true;
+            this.cDummy.Visible = false;
+            // 
+            // openPatch
+            // 
+            this.openPatch.Filter = "MMR Patch files|*.mmr";
+            // 
+            // ttOutput
+            // 
+            this.ttOutput.Controls.Add(this.tpOutputSettings);
+            this.ttOutput.Controls.Add(this.tpPatchSettings);
+            this.ttOutput.Location = new System.Drawing.Point(289, 470);
+            this.ttOutput.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.ttOutput.Name = "ttOutput";
+            this.ttOutput.SelectedIndex = 0;
+            this.ttOutput.Size = new System.Drawing.Size(620, 103);
+            this.ttOutput.TabIndex = 15;
+            this.ttOutput.SelectedIndexChanged += new System.EventHandler(this.ttOutput_Changed);
+            // 
+            // tpOutputSettings
+            // 
+            this.tpOutputSettings.Controls.Add(this.bReroll);
+            this.tpOutputSettings.Controls.Add(this.bRandomise);
+            this.tpOutputSettings.Controls.Add(this.tSeed);
+            this.tpOutputSettings.Controls.Add(this.lSeed);
+            this.tpOutputSettings.Location = new System.Drawing.Point(4, 24);
+            this.tpOutputSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tpOutputSettings.Name = "tpOutputSettings";
+            this.tpOutputSettings.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tpOutputSettings.Size = new System.Drawing.Size(612, 75);
+            this.tpOutputSettings.TabIndex = 0;
+            this.tpOutputSettings.Text = "Generate New Seed";
+            this.tpOutputSettings.UseVisualStyleBackColor = true;
+            // 
+            // tpPatchSettings
+            // 
+            this.tpPatchSettings.Controls.Add(this.lPatchVersion);
+            this.tpPatchSettings.Controls.Add(this.tPatch);
+            this.tpPatchSettings.Controls.Add(this.bApplyPatch);
+            this.tpPatchSettings.Controls.Add(this.bLoadPatch);
+            this.tpPatchSettings.Location = new System.Drawing.Point(4, 24);
+            this.tpPatchSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tpPatchSettings.Name = "tpPatchSettings";
+            this.tpPatchSettings.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tpPatchSettings.Size = new System.Drawing.Size(612, 75);
+            this.tpPatchSettings.TabIndex = 1;
+            this.tpPatchSettings.Text = "Generate From Patch File";
+            this.tpPatchSettings.UseVisualStyleBackColor = true;
+            // 
+            // lPatchVersion
+            // 
+            this.lPatchVersion.AutoSize = true;
+            this.lPatchVersion.Location = new System.Drawing.Point(133, 15);
+            this.lPatchVersion.Name = "lPatchVersion";
+            this.lPatchVersion.Size = new System.Drawing.Size(280, 15);
+            this.lPatchVersion.TabIndex = 18;
+            this.lPatchVersion.Text = "Patch must be .mmr file generated by MMR v0.0.0.x";
+            // 
+            // tPatch
+            // 
+            this.tPatch.Location = new System.Drawing.Point(7, 40);
+            this.tPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tPatch.Name = "tPatch";
+            this.tPatch.ReadOnly = true;
+            this.tPatch.Size = new System.Drawing.Size(446, 23);
+            this.tPatch.TabIndex = 17;
+            // 
+            // bLoadPatch
+            // 
+            this.bLoadPatch.Location = new System.Drawing.Point(6, 7);
+            this.bLoadPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bLoadPatch.Name = "bLoadPatch";
+            this.bLoadPatch.Size = new System.Drawing.Size(120, 30);
+            this.bLoadPatch.TabIndex = 16;
+            this.bLoadPatch.Text = "Load Patch...";
+            this.bLoadPatch.UseVisualStyleBackColor = true;
+            this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
+            // 
+            // bSkip
+            // 
+            this.bSkip.Location = new System.Drawing.Point(834, 591);
+            this.bSkip.Name = "bSkip";
+            this.bSkip.Size = new System.Drawing.Size(75, 23);
+            this.bSkip.TabIndex = 17;
+            this.bSkip.Text = "Skip";
+            this.bSkip.UseVisualStyleBackColor = true;
+            this.bSkip.Visible = false;
+            this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
             // MainForm
             // 
@@ -3506,28 +3509,31 @@ namespace MMR.UI.Forms
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Load += new System.EventHandler(this.mmrMain_Load);
-            this.gGameOutput.ResumeLayout(false);
-            this.gGameOutput.PerformLayout();
-            this.mMenu.ResumeLayout(false);
-            this.mMenu.PerformLayout();
-            this.ttOutput.ResumeLayout(false);
-            this.tpOutputSettings.ResumeLayout(false);
-            this.tpOutputSettings.PerformLayout();
-            this.tpPatchSettings.ResumeLayout(false);
-            this.tpPatchSettings.PerformLayout();
-            this.tabCosmetics.ResumeLayout(false);
-            this.gCosmeticOther.ResumeLayout(false);
-            this.gCosmeticOther.PerformLayout();
-            this.gCosmeticMusicSound.ResumeLayout(false);
-            this.gCosmeticMusicSound.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tLuckRollPercentage)).EndInit();
-            this.cHUDGroupBox.ResumeLayout(false);
-            this.cHUDGroupBox.PerformLayout();
-            this.cHUDTableLayoutPanel.ResumeLayout(false);
-            this.cHUDTableLayoutPanel.PerformLayout();
-            this.tabActorizer.ResumeLayout(false);
-            this.tabActorizer.PerformLayout();
-            this.tabShortenCutscenes.ResumeLayout(false);
+            this.tSettings.ResumeLayout(false);
+            this.tabMain.ResumeLayout(false);
+            this.tOtherCustomizations.ResumeLayout(false);
+            this.tOtherCustomization.ResumeLayout(false);
+            this.tOtherCustomization.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.tabItemPool.ResumeLayout(false);
+            this.tabItemPool.PerformLayout();
+            this.tabGimmicks.ResumeLayout(false);
+            this.tabGimmicks.PerformLayout();
+            this.gGimmicksChallenges.ResumeLayout(false);
+            this.gGimmicksChallenges.PerformLayout();
+            this.gGimmicksMovement.ResumeLayout(false);
+            this.gGimmicksMovement.PerformLayout();
+            this.gTraps.ResumeLayout(false);
+            this.gTraps.PerformLayout();
+            this.gGimmicksClock.ResumeLayout(false);
+            this.gGimmicksClock.PerformLayout();
+            this.gGimmicksOther.ResumeLayout(false);
+            this.gGimmicksOther.PerformLayout();
             this.tabComfort.ResumeLayout(false);
             this.gHintsGeneral.ResumeLayout(false);
             this.gHintsGeneral.PerformLayout();
@@ -3548,31 +3554,28 @@ namespace MMR.UI.Forms
             this.groupBox8.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            this.tabGimmicks.ResumeLayout(false);
-            this.tabGimmicks.PerformLayout();
-            this.gGimmicksChallenges.ResumeLayout(false);
-            this.gGimmicksChallenges.PerformLayout();
-            this.gGimmicksMovement.ResumeLayout(false);
-            this.gGimmicksMovement.PerformLayout();
-            this.gTraps.ResumeLayout(false);
-            this.gTraps.PerformLayout();
-            this.gGimmicksClock.ResumeLayout(false);
-            this.gGimmicksClock.PerformLayout();
-            this.gGimmicksOther.ResumeLayout(false);
-            this.gGimmicksOther.PerformLayout();
-            this.tabItemPool.ResumeLayout(false);
-            this.tabItemPool.PerformLayout();
-            this.tabMain.ResumeLayout(false);
-            this.tOtherCustomizations.ResumeLayout(false);
-            this.tOtherCustomization.ResumeLayout(false);
-            this.tOtherCustomization.PerformLayout();
-            this.groupBox9.ResumeLayout(false);
-            this.groupBox9.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.tSettings.ResumeLayout(false);
+            this.tabShortenCutscenes.ResumeLayout(false);
+            this.tabActorizer.ResumeLayout(false);
+            this.tabActorizer.PerformLayout();
+            this.tabCosmetics.ResumeLayout(false);
+            this.gCosmeticOther.ResumeLayout(false);
+            this.gCosmeticOther.PerformLayout();
+            this.gCosmeticMusicSound.ResumeLayout(false);
+            this.gCosmeticMusicSound.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tLuckRollPercentage)).EndInit();
+            this.cHUDGroupBox.ResumeLayout(false);
+            this.cHUDGroupBox.PerformLayout();
+            this.cHUDTableLayoutPanel.ResumeLayout(false);
+            this.cHUDTableLayoutPanel.PerformLayout();
+            this.gGameOutput.ResumeLayout(false);
+            this.gGameOutput.PerformLayout();
+            this.mMenu.ResumeLayout(false);
+            this.mMenu.PerformLayout();
+            this.ttOutput.ResumeLayout(false);
+            this.tpOutputSettings.ResumeLayout(false);
+            this.tpOutputSettings.PerformLayout();
+            this.tpPatchSettings.ResumeLayout(false);
+            this.tpPatchSettings.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3586,13 +3589,28 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.OpenFileDialog openLogic;
         private System.Windows.Forms.OpenFileDialog loadSettings;
         private System.Windows.Forms.TextBox tROMName;
+        private System.Windows.Forms.ComboBox cMode;
+        private System.Windows.Forms.Label lMode;
         private System.Windows.Forms.SaveFileDialog saveROM;
         private System.Windows.Forms.SaveFileDialog saveSettings;
+        private System.Windows.Forms.ComboBox cLink;
+        private System.Windows.Forms.Label lLink;
+        private System.Windows.Forms.CheckBox cMixSongs;
         private System.Windows.Forms.ColorDialog cEnergy;
         private System.Windows.Forms.ColorDialog cTunic;
         private System.Windows.Forms.Button bRandomise;
+        private System.Windows.Forms.TabControl tSettings;
+        private System.Windows.Forms.TabPage tabMain;
+        private System.Windows.Forms.TabPage tabComfort;
+        private System.Windows.Forms.Label lFloors;
+        private System.Windows.Forms.Label lGravity;
+        private System.Windows.Forms.Label lDType;
+        private System.Windows.Forms.Label lDMult;
+        private System.Windows.Forms.ComboBox cFloors;
+        private System.Windows.Forms.ComboBox cDType;
+        private System.Windows.Forms.ComboBox cDMult;
+        private System.Windows.Forms.ComboBox cGravity;
         private System.Windows.Forms.Button bReroll;
-        private System.Windows.Forms.CheckBox cSoS;
         private System.Windows.Forms.SaveFileDialog saveWad;
         private System.Windows.Forms.CheckBox cVC;
         private System.Windows.Forms.CheckBox cN64;
@@ -3612,6 +3630,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label lSeed;
         private System.Windows.Forms.CheckBox cDummy;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox cFreeHints;
         private System.Windows.Forms.CheckBox cPatch;
         private System.Windows.Forms.Button bApplyPatch;
         private System.Windows.Forms.TabControl ttOutput;
@@ -3619,109 +3639,183 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.TabPage tpPatchSettings;
         private System.Windows.Forms.TextBox tPatch;
         private System.Windows.Forms.Button bLoadPatch;
+        private System.Windows.Forms.CheckBox cClearHints;
+        private System.Windows.Forms.Label lClockSpeed;
+        private System.Windows.Forms.Label lNutAndStickDrops;
+        private System.Windows.Forms.ComboBox cNutAndStickDrops;
+        private System.Windows.Forms.ComboBox cClockSpeed;
+        private System.Windows.Forms.CheckBox cHideClock;
+        private System.Windows.Forms.Label lGossip;
+        private System.Windows.Forms.ComboBox cGossipHints;
+        private System.Windows.Forms.CheckBox cShopAppearance;
         private System.Windows.Forms.GroupBox gGameOutput;
+        private System.Windows.Forms.TextBox tbUserLogic;
+        private System.Windows.Forms.Button bLoadLogic;
+        private System.Windows.Forms.ComboBox cBlastCooldown;
+        private System.Windows.Forms.Label lBlastMask;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button bStartingItemEditor;
+        private System.Windows.Forms.TextBox tStartingItemList;
+        private System.Windows.Forms.Label lCustomStartingItemAmount;
+        private System.Windows.Forms.CheckBox cGoodDogRaceRNG;
+        private System.Windows.Forms.CheckBox cFasterLabFish;
+        private System.Windows.Forms.CheckBox cGoodDampeRNG;
+        private System.Windows.Forms.CheckBox cSkipBeaver;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label lJunkLocationsAmount;
+        private System.Windows.Forms.Button bJunkLocationsEditor;
+        private System.Windows.Forms.TextBox tJunkLocationsList;
         private System.Windows.Forms.ToolStripMenuItem mDPadConfig;
+        private System.Windows.Forms.CheckBox cSunsSong;
         private System.Windows.Forms.ToolStripMenuItem saveSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadSettingsToolStripMenuItem;
+        private System.Windows.Forms.CheckBox cUnderwaterOcarina;
         private System.Windows.Forms.CheckBox cDrawHash;
+        private System.Windows.Forms.CheckBox cDisableCritWiggle;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.GroupBox gHints;
+        private System.Windows.Forms.TabPage tabGimmicks;
         private System.Windows.Forms.CheckBox cHTMLLog;
         private System.Windows.Forms.CheckBox cSpoiler;
+        private System.Windows.Forms.GroupBox gSpeedUps;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mLogicEdit;
-        private System.Windows.Forms.Button bSkip;
-        private System.Windows.Forms.Label lPatchVersion;
-        private System.Windows.Forms.TabPage tabCosmetics;
-        private System.Windows.Forms.GroupBox gCosmeticOther;
-        private System.Windows.Forms.ComboBox cCameraStyle;
-        private System.Windows.Forms.Label lCameraStyle;
-        private System.Windows.Forms.CheckBox cRainbowTunic;
-        private System.Windows.Forms.CheckBox cBombTrapTunicColors;
-        private System.Windows.Forms.CheckBox cInstantPictobox;
-        private System.Windows.Forms.ComboBox cTatl;
-        private System.Windows.Forms.Label lTatl;
-        private System.Windows.Forms.CheckBox cTargettingStyle;
-        private System.Windows.Forms.GroupBox gCosmeticMusicSound;
-        private System.Windows.Forms.CheckBox cDisableFanfares;
-        private System.Windows.Forms.CheckBox cMusicTrackNames;
-        private System.Windows.Forms.CheckBox cRemoveMinorMusic;
-        private System.Windows.Forms.Label lLuckRoll;
-        private System.Windows.Forms.NumericUpDown tLuckRollPercentage;
-        private System.Windows.Forms.Label lMusic;
-        private System.Windows.Forms.ComboBox cMusic;
-        private System.Windows.Forms.CheckBox cSFX;
-        private System.Windows.Forms.CheckBox cCombatMusicDisable;
         private System.Windows.Forms.CheckBox cEnableNightMusic;
+        private System.Windows.Forms.CheckBox cFDAnywhere;
+        private System.Windows.Forms.CheckBox cFasterBank;
         private System.Windows.Forms.ComboBox cLowHealthSFXComboBox;
         private System.Windows.Forms.Label lLowHealthSFXComboBox;
+        private System.Windows.Forms.Button bToggleTricks;
+        private System.Windows.Forms.CheckBox cByoAmmo;
+        private System.Windows.Forms.CheckBox cContinuousDekuHopping;
+        private System.Windows.Forms.CheckBox cProgressiveUpgrades;
+        private System.Windows.Forms.Label lTrapAmount;
+        private System.Windows.Forms.ComboBox cTrapsAppearance;
+        private System.Windows.Forms.ComboBox cTrapAmount;
+        private System.Windows.Forms.CheckBox cIceTrapQuirks;
+        private System.Windows.Forms.TabPage tabCosmetics;
+        private System.Windows.Forms.CheckBox cSFX;
+        private System.Windows.Forms.CheckBox cTargettingStyle;
+        private System.Windows.Forms.Label lTatl;
         private System.Windows.Forms.GroupBox cHUDGroupBox;
-        private System.Windows.Forms.CheckBox cHueShiftMiscUI;
         private System.Windows.Forms.TableLayoutPanel cHUDTableLayoutPanel;
         private System.Windows.Forms.ComboBox cHUDHeartsComboBox;
         private System.Windows.Forms.Label cHeartsLabel;
         private System.Windows.Forms.Label cMagicLabel;
         private System.Windows.Forms.ComboBox cHUDMagicComboBox;
         private System.Windows.Forms.Button btn_hud;
+        private System.Windows.Forms.Label lMusic;
+        private System.Windows.Forms.CheckBox cCombatMusicDisable;
+        private System.Windows.Forms.ComboBox cTatl;
+        private System.Windows.Forms.ComboBox cMusic;
         private System.Windows.Forms.TabControl tFormCosmetics;
+        private System.Windows.Forms.CheckBox cHueShiftMiscUI;
+        private System.Windows.Forms.GroupBox gCosmeticOther;
+        private System.Windows.Forms.GroupBox gCosmeticMusicSound;
         private System.Windows.Forms.TabPage tabActorizer;
         private System.Windows.Forms.ComboBox cActorMode;
         private System.Windows.Forms.TabPage tabShortenCutscenes;
         private System.Windows.Forms.TabControl tShortenCutscenes;
-        private System.Windows.Forms.TabPage tabComfort;
-        private System.Windows.Forms.GroupBox gHintsGeneral;
-        private System.Windows.Forms.CheckBox cFairyAndSkullHints;
-        private System.Windows.Forms.CheckBox cRemainsHint;
-        private System.Windows.Forms.CheckBox cOathHint;
-        private System.Windows.Forms.Button bCustomizeHintPriorities;
-        private System.Windows.Forms.CheckBox cHintImportance;
-        private System.Windows.Forms.CheckBox cMixGaroWithGossip;
-        private System.Windows.Forms.GroupBox gGaroHints;
-        private System.Windows.Forms.CheckBox cImportanceCountGaro;
-        private System.Windows.Forms.CheckBox cFreeGaroHints;
-        private System.Windows.Forms.CheckBox cCustomGaroWoth;
-        private System.Windows.Forms.NumericUpDown nMaxGaroCT;
-        private System.Windows.Forms.Label lGaroHints;
-        private System.Windows.Forms.NumericUpDown nMaxGaroFoolish;
-        private System.Windows.Forms.ComboBox cGaroHint;
-        private System.Windows.Forms.NumericUpDown nMaxGaroWotH;
-        private System.Windows.Forms.CheckBox cClearGaroHints;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.GroupBox gSpeedUps;
-        private System.Windows.Forms.Label lRequiredZoraEggs;
-        private System.Windows.Forms.NumericUpDown nRequiredZoraEggs;
-        private System.Windows.Forms.CheckBox cSpeedupBabyCucco;
+        private System.Windows.Forms.GroupBox gGimmicksOther;
+        private System.Windows.Forms.GroupBox gGimmicksChallenges;
+        private System.Windows.Forms.GroupBox gGimmicksMovement;
+        private System.Windows.Forms.GroupBox gTraps;
+        private System.Windows.Forms.Label lTrapsAppearance;
+        private System.Windows.Forms.GroupBox gGimmicksClock;
+        private System.Windows.Forms.TabControl tOtherCustomizations;
+        private System.Windows.Forms.TabPage tOtherCustomization;
+        private System.Windows.Forms.TabPage tabItemPool;
+        private System.Windows.Forms.TableLayoutPanel tableItemPool;
+        private System.Windows.Forms.Button bItemPoolEdit;
+        private System.Windows.Forms.TextBox tItemPool;
+        private System.Windows.Forms.Label lItemPoolText;
+        private System.Windows.Forms.ComboBox cStartingItems;
+        private System.Windows.Forms.Label lStartingItems;
+        private System.Windows.Forms.CheckBox cInstantPictobox;
+        private System.Windows.Forms.CheckBox cHookshotAnySurface;
+        private System.Windows.Forms.CheckBox cClimbMostSurfaces;
+        private System.Windows.Forms.CheckBox cFreeScarecrow;
         private System.Windows.Forms.CheckBox cDoubleArcheryRewards;
-        private System.Windows.Forms.CheckBox cFasterBank;
-        private System.Windows.Forms.CheckBox cSkipBeaver;
-        private System.Windows.Forms.CheckBox cFasterLabFish;
-        private System.Windows.Forms.CheckBox cGoodDogRaceRNG;
-        private System.Windows.Forms.CheckBox cGoodDampeRNG;
-        private System.Windows.Forms.GroupBox gHints;
-        private System.Windows.Forms.CheckBox cImportanceCount;
-        private System.Windows.Forms.CheckBox cCustomGossipWoth;
-        private System.Windows.Forms.NumericUpDown nMaxGossipCT;
-        private System.Windows.Forms.NumericUpDown nMaxGossipFoolish;
+        private System.Windows.Forms.ComboBox cAutoInvert;
+        private System.Windows.Forms.Label lAutoInvert;
+        private System.Windows.Forms.Panel pClassicItemPool;
+        private System.Windows.Forms.CheckBox cItemPoolAdvanced;
+        private System.Windows.Forms.Panel pLocationCategories;
+        private System.Windows.Forms.GroupBox gGaroHints;
+        private System.Windows.Forms.Label lGaroHints;
+        private System.Windows.Forms.ComboBox cGaroHint;
+        private System.Windows.Forms.CheckBox cMixGaroWithGossip;
+        private System.Windows.Forms.CheckBox cClearGaroHints;
+        private System.Windows.Forms.GroupBox gHintsGeneral;
+        private System.Windows.Forms.CheckBox cHintImportance;
         private System.Windows.Forms.NumericUpDown nMaxGossipWotH;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lGossipWothConfig;
-        private System.Windows.Forms.Label lGossip;
-        private System.Windows.Forms.ComboBox cGossipHints;
-        private System.Windows.Forms.CheckBox cFreeHints;
-        private System.Windows.Forms.CheckBox cClearHints;
-        private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.Label lLink;
-        private System.Windows.Forms.ComboBox cLink;
-        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.NumericUpDown nMaxGaroCT;
+        private System.Windows.Forms.NumericUpDown nMaxGaroFoolish;
+        private System.Windows.Forms.NumericUpDown nMaxGaroWotH;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown nMaxGossipCT;
+        private System.Windows.Forms.NumericUpDown nMaxGossipFoolish;
+        private System.Windows.Forms.CheckBox cCustomGaroWoth;
+        private System.Windows.Forms.CheckBox cCustomGossipWoth;
+        private System.Windows.Forms.Button bCustomizeHintPriorities;
+        private System.Windows.Forms.CheckBox cFreeGaroHints;
+        private System.Windows.Forms.Label lLuckRoll;
+        private System.Windows.Forms.NumericUpDown tLuckRollPercentage;
+        private System.Windows.Forms.Button bSkip;
+        private System.Windows.Forms.ComboBox cItemPlacement;
+        private System.Windows.Forms.Label lItemPlacement;
+        private System.Windows.Forms.Label lNumTricksEnabled;
+        private System.Windows.Forms.CheckBox cSpeedupBabyCucco;
+        private System.Windows.Forms.Label lChestGame;
+        private System.Windows.Forms.ComboBox cChestGameMinimap;
+        private System.Windows.Forms.Label lTrapWeightings;
+        private System.Windows.Forms.CheckBox cRainbowTunic;
+        private System.Windows.Forms.CheckBox cBombTrapTunicColors;
+        private System.Windows.Forms.CheckBox cInstantTransformations;
+        private System.Windows.Forms.CheckBox cBombArrows;
+        private System.Windows.Forms.CheckBox cRemoveMinorMusic;
+        private System.Windows.Forms.ComboBox cRequiredBossRemains;
+        private System.Windows.Forms.Label lRequiredRemains;
+        private System.Windows.Forms.CheckBox cMusicTrackNames;
+        private System.Windows.Forms.CheckBox cDisableFanfares;
+        private System.Windows.Forms.CheckBox cGiantMaskAnywhere;
+        private System.Windows.Forms.CheckBox cFewerHealthDrops;
+        private System.Windows.Forms.CheckBox cIronGoron;
+        private System.Windows.Forms.CheckBox cVanillaMoonTrials;
+        private System.Windows.Forms.CheckBox cTakeDamageOnEpona;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox cTakeDamageFromGibdosFaster;
+        private System.Windows.Forms.CheckBox cTakeDamageGettingCaught;
+        private System.Windows.Forms.CheckBox cTakeDamageFromGorons;
+        private System.Windows.Forms.CheckBox cTakeDamageFromDog;
+        private System.Windows.Forms.CheckBox cTakeDamageFromVoid;
+        private System.Windows.Forms.CheckBox cTakeDamageWhileShielding;
+        private System.Windows.Forms.CheckBox cTakeDamageFromDexihands;
+        private System.Windows.Forms.CheckBox cOathHint;
+        private System.Windows.Forms.CheckBox cRemainsHint;
+        private System.Windows.Forms.CheckBox cFairyAndSkullHints;
+        private System.Windows.Forms.CheckBox cImportanceCountGaro;
+        private System.Windows.Forms.CheckBox cImportanceCount;
+        private System.Windows.Forms.CheckBox cMoonCrashFileErase;
+        private System.Windows.Forms.ComboBox cCameraStyle;
+        private System.Windows.Forms.Label lCameraStyle;
+        private System.Windows.Forms.ComboBox cDeathMode;
+        private System.Windows.Forms.Label lDeathMode;
+        private System.Windows.Forms.CheckBox cGibdoRequirements;
+        private System.Windows.Forms.Label lPatchVersion;
         private System.Windows.Forms.CheckBox cMinorDropSparkle;
         private System.Windows.Forms.CheckBox cAddKegDrops;
         private System.Windows.Forms.CheckBox cGossipsTolerant;
         private System.Windows.Forms.CheckBox cQuestItemKeep;
         private System.Windows.Forms.CheckBox cUpdateNpcText;
         private System.Windows.Forms.CheckBox cAddBombchuDrops;
-        private System.Windows.Forms.Label lChestGame;
-        private System.Windows.Forms.ComboBox cChestGameMinimap;
         private System.Windows.Forms.CheckBox cSaferGlitches;
         private System.Windows.Forms.CheckBox cSkulltulaTokenSounds;
         private System.Windows.Forms.CheckBox cFairyMaskShimmer;
@@ -3736,111 +3830,19 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cFreestanding;
         private System.Windows.Forms.CheckBox cFastPush;
         private System.Windows.Forms.CheckBox cQText;
-        private System.Windows.Forms.CheckBox cShopAppearance;
         private System.Windows.Forms.CheckBox cEponaSword;
         private System.Windows.Forms.CheckBox cUpdateChests;
-        private System.Windows.Forms.CheckBox cDisableCritWiggle;
         private System.Windows.Forms.CheckBox cQuestItemStorage;
         private System.Windows.Forms.CheckBox cNoDowngrades;
         private System.Windows.Forms.CheckBox cEasyFrameByFrame;
-        private System.Windows.Forms.TabPage tabGimmicks;
-        private System.Windows.Forms.GroupBox gGimmicksChallenges;
-        private System.Windows.Forms.ComboBox cDeathMode;
-        private System.Windows.Forms.Label lDeathMode;
-        private System.Windows.Forms.CheckBox cMoonCrashFileErase;
-        private System.Windows.Forms.CheckBox cTakeDamageFromDexihands;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckBox cTakeDamageFromGibdosFaster;
-        private System.Windows.Forms.CheckBox cTakeDamageGettingCaught;
-        private System.Windows.Forms.CheckBox cTakeDamageFromGorons;
-        private System.Windows.Forms.CheckBox cTakeDamageFromDog;
-        private System.Windows.Forms.CheckBox cTakeDamageFromVoid;
-        private System.Windows.Forms.CheckBox cTakeDamageWhileShielding;
-        private System.Windows.Forms.CheckBox cTakeDamageOnEpona;
-        private System.Windows.Forms.CheckBox cFewerHealthDrops;
-        private System.Windows.Forms.ComboBox cDType;
-        private System.Windows.Forms.Label lDType;
-        private System.Windows.Forms.CheckBox cByoAmmo;
-        private System.Windows.Forms.ComboBox cDMult;
-        private System.Windows.Forms.Label lDMult;
-        private System.Windows.Forms.GroupBox gGimmicksMovement;
-        private System.Windows.Forms.CheckBox cIronGoron;
-        private System.Windows.Forms.CheckBox cClimbMostSurfaces;
-        private System.Windows.Forms.CheckBox cHookshotAnySurface;
-        private System.Windows.Forms.ComboBox cFloors;
-        private System.Windows.Forms.Label lFloors;
-        private System.Windows.Forms.Label lGravity;
-        private System.Windows.Forms.ComboBox cGravity;
-        private System.Windows.Forms.CheckBox cContinuousDekuHopping;
-        private System.Windows.Forms.GroupBox gTraps;
-        private System.Windows.Forms.Label lTrapWeightings;
-        private System.Windows.Forms.Label lTrapsAppearance;
-        private System.Windows.Forms.Label lTrapAmount;
-        private System.Windows.Forms.ComboBox cTrapAmount;
-        private System.Windows.Forms.ComboBox cTrapsAppearance;
-        private System.Windows.Forms.CheckBox cIceTrapQuirks;
-        private System.Windows.Forms.GroupBox gGimmicksClock;
-        private System.Windows.Forms.ComboBox cAutoInvert;
-        private System.Windows.Forms.Label lAutoInvert;
-        private System.Windows.Forms.ComboBox cClockSpeed;
-        private System.Windows.Forms.Label lClockSpeed;
-        private System.Windows.Forms.CheckBox cHideClock;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.GroupBox gGimmicksOther;
-        private System.Windows.Forms.CheckBox cVanillaMoonTrials;
-        private System.Windows.Forms.CheckBox cBombArrows;
-        private System.Windows.Forms.CheckBox cGiantMaskAnywhere;
-        private System.Windows.Forms.CheckBox cInstantTransformations;
-        private System.Windows.Forms.CheckBox cFreeScarecrow;
-        private System.Windows.Forms.CheckBox cFDAnywhere;
-        private System.Windows.Forms.ComboBox cBlastCooldown;
-        private System.Windows.Forms.CheckBox cUnderwaterOcarina;
-        private System.Windows.Forms.CheckBox cSunsSong;
-        private System.Windows.Forms.Label lBlastMask;
-        private System.Windows.Forms.Label lNutAndStickDrops;
-        private System.Windows.Forms.ComboBox cNutAndStickDrops;
-        private System.Windows.Forms.TabPage tabItemPool;
-        private System.Windows.Forms.CheckBox cItemPoolAdvanced;
-        private System.Windows.Forms.Label lItemPoolText;
-        private System.Windows.Forms.Button bItemPoolEdit;
-        private System.Windows.Forms.Panel pClassicItemPool;
-        private System.Windows.Forms.TextBox tItemPool;
-        private System.Windows.Forms.TableLayoutPanel tableItemPool;
-        private System.Windows.Forms.Panel pLocationCategories;
-        private System.Windows.Forms.TabPage tabMain;
-        private System.Windows.Forms.TabControl tOtherCustomizations;
-        private System.Windows.Forms.TabPage tOtherCustomization;
-        private System.Windows.Forms.CheckBox cGibdoRequirements;
-        private System.Windows.Forms.ComboBox cRequiredBossRemains;
-        private System.Windows.Forms.Label lRequiredRemains;
-        private System.Windows.Forms.ComboBox cStartingItems;
-        private System.Windows.Forms.Label lStartingItems;
-        private System.Windows.Forms.CheckBox cProgressiveUpgrades;
-        private System.Windows.Forms.CheckBox cMixSongs;
         private System.Windows.Forms.CheckBox cEnemy;
-        private System.Windows.Forms.GroupBox groupBox9;
-        private System.Windows.Forms.Label lNumTricksEnabled;
-        private System.Windows.Forms.Label lItemPlacement;
-        private System.Windows.Forms.ComboBox cItemPlacement;
-        private System.Windows.Forms.Button bToggleTricks;
-        private System.Windows.Forms.ComboBox cMode;
-        private System.Windows.Forms.Button bLoadLogic;
-        private System.Windows.Forms.Label lMode;
-        private System.Windows.Forms.TextBox tbUserLogic;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.TextBox tJunkLocationsList;
-        private System.Windows.Forms.Button bJunkLocationsEditor;
-        private System.Windows.Forms.Label lJunkLocationsAmount;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button bRandomStartingItems;
-        private System.Windows.Forms.TextBox tStartingItemList;
-        private System.Windows.Forms.Label lCustomStartingItemAmount;
-        private System.Windows.Forms.Button bStartingItemEditor;
-        private System.Windows.Forms.TabControl tSettings;
         private System.Windows.Forms.Label lActorMode;
         private System.Windows.Forms.CheckBox cLocationItemRestrictionUnlock;
         private System.Windows.Forms.CheckBox cFormItemRestrictionUnlock;
         private System.Windows.Forms.CheckBox cFasterCommonFileLoad;
+        private System.Windows.Forms.Label lRequiredZoraEggs;
+        private System.Windows.Forms.NumericUpDown nRequiredZoraEggs;
+        private System.Windows.Forms.Button bRandomStartingItems;
     }
 }
 

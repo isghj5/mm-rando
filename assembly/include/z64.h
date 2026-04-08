@@ -1010,6 +1010,11 @@ typedef struct {
 } SequenceContext2; // size = 0x2
 // TODO rename the other SequenceContext to something more appropriate
 
+typedef struct FrameAdvanceContext {
+    /* 0x0 */ s32 enabled;
+    /* 0x4 */ s32 timer;
+} FrameAdvanceContext; // size = 0x8
+
 struct GlobalContext {
     /* 0x00000 */ GameState state;
     /* 0x000A4 */ s16 sceneNum;
@@ -1024,8 +1029,7 @@ struct GlobalContext {
     /* 0x00812 */ s16 unk812;
     /* 0x00814 */ SequenceContext2 sequenceCtx;
     /* 0x00818 */ LightingContext lightCtx;
-    /* 0x00828 */ u32 unk828;
-    /* 0x0082C */ UNK_TYPE1 pad82C[0x4];
+    /* 0x00828 */ FrameAdvanceContext frameAdvCtx;
     /* 0x00830 */ CollisionContext colCtx;
     /* 0x01CA0 */ ActorContext actorCtx;
     /* 0x01F24 */ CutsceneContext csCtx;

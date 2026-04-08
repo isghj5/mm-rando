@@ -895,7 +895,7 @@
             this.tSettingExpression.Name = "tSettingExpression";
             this.tSettingExpression.Size = new System.Drawing.Size(274, 23);
             this.tSettingExpression.TabIndex = 14;
-            this.tSettingExpression.Text = "(e.g. settings.RandomizeEnemies == false)";
+            this.tSettingExpression.Text = "(e.g. settings.Character != Character.AdultLink)";
             this.tSettingExpression.TextChanged += new System.EventHandler(this.tSettingExpression_TextChanged);
             this.tSettingExpression.Enter += new System.EventHandler(this.tSettingExpression_Enter);
             this.tSettingExpression.Leave += new System.EventHandler(this.tSettingExpression_Leave);

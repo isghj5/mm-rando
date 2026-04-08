@@ -567,7 +567,7 @@ namespace MMR.UI.Forms
         private const string DEFAULT_TRICK_TOOLTIP = "(optional tooltip)";
         private const string DEFAULT_CATEGORY_TOOLTIP = "(optional category)";
         private const string DEFAULT_TRICK_URL = "(optional YouTube link)";
-        private const string DEFAULT_SETTING_EXPRESSION = "(e.g. settings.RandomizeEnemies == false)";
+        private const string DEFAULT_SETTING_EXPRESSION = "(e.g. settings.Character != Character.AdultLink)";
 
         private void tTrickDescription_TextChanged(object sender, EventArgs e)
         {

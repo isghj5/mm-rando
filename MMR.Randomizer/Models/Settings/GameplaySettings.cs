@@ -452,12 +452,6 @@ namespace MMR.Randomizer.Models.Settings
         [Description("Enable songs being placed among items in the randomization pool.")]
         public bool AddSongs { get; set; }
 
-        /// <summary>
-        /// (Beta) Randomize enemies
-        /// </summary>
-        [Description("Enable randomization of enemies. May cause softlocks in some circumstances, use at your own risk.")]
-        public bool RandomizeEnemies { get; set; }
-
         [Description("Enable randomization of Gibdo requirements. They can request ammo, bottle contents, quest and trade items, photos and masks.")]
         public bool RandomizeGibdoRequirements { get; set; }
 
@@ -482,6 +476,8 @@ namespace MMR.Randomizer.Models.Settings
         public VictoryMode VictoryMode { get; set; }
 
         public EntranceMode EntranceMode { get; set; }
+
+        public EnemyMode EnemyMode { get; set; }
 
 
         /// <summary>

@@ -308,6 +308,7 @@ namespace MMR.Randomizer.Asm
         public bool TakeDamageFromVoid { get; set; }
         public bool OceanTokensRandomized { get; set; }
         public bool MoonCrashFileErase { get; set; }
+        public bool HyperEnemies { get;set; }
 
         public MiscFlags()
         {
@@ -363,6 +364,7 @@ namespace MMR.Randomizer.Asm
             TakeDamageFromVoid = bitUnpacker.ReadBool();
             OceanTokensRandomized = bitUnpacker.ReadBool();
             MoonCrashFileErase = bitUnpacker.ReadBool();
+            HyperEnemies = bitUnpacker.ReadBool();
         }
 
         /// <summary>
@@ -410,6 +412,7 @@ namespace MMR.Randomizer.Asm
             bitPacker.Write(TakeDamageFromVoid);
             bitPacker.Write(OceanTokensRandomized);
             bitPacker.Write(MoonCrashFileErase);
+            bitPacker.Write(HyperEnemies);
             return bitPacker.ToByteArray(4);
         }
     }
@@ -733,6 +736,8 @@ namespace MMR.Randomizer.Asm
             this.Flags.FairyChests = settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly);
 
             this.Flags.OceanTokensRandomized = settings.FairyAndSkullHint && settings.CustomItemList.Any(ItemUtils.OceanSkulltulaTokens().Contains);
+
+            this.Flags.HyperEnemies = settings.EnemyMode.HasFlag(EnemyMode.Hyper);
 
             this.DrawFlags.DrawDonGeroMask = MaskConfigUtils.DonGeroGoronDrawMask;
             this.DrawFlags.DrawPostmanHat = MaskConfigUtils.PostmanDrawHat;

@@ -1643,6 +1643,7 @@ namespace MMR.Randomizer
 
         private void WriteEnemies()
         {
+            //if (_randomized.Settings.EnemyMode.HasFlag(EnemyMode.Randomized))
             if (_randomized.Settings.ActorMode != ActorMode.Default)
             {
                 Enemies.ShuffleEnemies();
@@ -6371,7 +6372,7 @@ namespace MMR.Randomizer
 
         private void CheckEnemizerFreeGaroHints()
         {
-            if (_randomized.Settings.FreeGaroHints && _randomized.Settings.RandomizeEnemies) // bandaid
+            if (_randomized.Settings.FreeGaroHints && _randomized.Settings.ActorMode != ActorMode.Default) // bandaid
             {
                 throw new Exception("Free garo hints and this version of Enemizer/Actorizer is broken, disable one");
             } // */

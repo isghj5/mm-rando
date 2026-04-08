@@ -127,6 +127,7 @@
           "settings": [
             "GameplaySettings.ItemPlacement",
             "GameplaySettings.RandomStartingItemGroups",
+            "GameplaySettings.EnemyMode",
             "GameplaySettings.EntranceMode",
             "GameplaySettings.BossKeyMode",
             "GameplaySettings.SmallKeyMode",
@@ -142,7 +143,6 @@
             "GameplaySettings.ProgressiveUpgrades",
             "GameplaySettings.RandomizeGibdoRequirements",
             "GameplaySettings.AddSongs",
-            "GameplaySettings.RandomizeEnemies",
             "GameplaySettings.StartingItemMode",
             "Web.RandomStartingItemGroups"
           ]

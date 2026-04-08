@@ -1,5 +1,5 @@
 {
-  "Version": 30,
+  "Version": 31,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -35936,7 +35936,7 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false,
-      "SettingExpression": "!settings.RandomizeEnemies"
+      "SettingExpression": "!settings.EnemyMode.HasFlag(EnemyMode.Randomized)"
     },
     {
       "Id": "SettingNotRandomizedItemGreatBayBossKey",
