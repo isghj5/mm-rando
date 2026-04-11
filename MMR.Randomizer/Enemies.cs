@@ -696,8 +696,6 @@ namespace MMR.Randomizer
 
             EnableAllCreditsCutScenes();
 
-            EnableAllFormItems(); // let players use items in odd places to fight new nemanies
-
         }
 
         public static void EnemizerItemFixes()
@@ -742,14 +740,12 @@ namespace MMR.Randomizer
             {
                 // dnf, just got burried in todo list
             }
-           
+
         }
 
-        private static void EnableAllFormItems()
+        public static void EnableAllFormItems()
         {
-            if ( ! _randomized.Settings.FormsItemRestrictionUnlocked) return;
-
-            /// let deku nut
+            /// "why can't deku use deku nuts?"
 
             const int FORM_FD = 0; // let me use enum as int without a cast and I'll use it
             const int FORM_GORON = 1;
@@ -773,7 +769,7 @@ namespace MMR.Randomizer
                 i++;
             }
 
-            // however there are some that are broken/bugged and should never be used
+            // however there are some that are broken/bugged and should be disabled until fixed
             for (int form = FORM_FD; form < FORM_CHILD; form++) // dont overwrite regular link which is form 5
             {
                 // hookshot item is 0xF ( _can_ crash, cause unknown, pj64 doesnt crash so I cant even debug it)
@@ -799,7 +795,6 @@ namespace MMR.Randomizer
 
             // I don't know why zfg cares so much about child kegging
             codeFile[startLoc + (FORM_CHILD * formDataWidth) + 0x0C] = 0x00;
-
         }
 
         public static void DisableAllLocationRestrictions()
@@ -1947,6 +1942,26 @@ namespace MMR.Randomizer
 
         }
 
+        private static void AddExtraOtherThingsIfEmpty(SceneEnemizerData thisSceneData, StringBuilder log)
+        {
+            // someone is complaining about never not having enough arrows
+            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.OceanSpiderHouse)
+            {
+                var emptyActors = thisSceneData.Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.Empty);
+                // issue: Oldvariant type fails for clay pots here because they are _dungeon pots_ which are in a different list and never got merged
+                var oshFreeActors = emptyActors.FindAll(act =>  act.OldActorEnum == GameObjects.Actor.ClayPot || act.OldVariantIsType(GameObjects.ActorType.Ground));
+                if (oshFreeActors.Count > 0)
+                {
+                    // if we have at least one free actor that oculd be placed on the ground we should totally make it a arrow pot
+                    var randomOsFreePot = oshFreeActors[_seedRNG.Next(oshFreeActors.Count())];
+                    // 741E is vanilla arrow dropper here
+                    randomOsFreePot.ChangeActor(GameObjects.Actor.ClayPot, vars: 0x711E, modifyOld: true);
+                    log.AppendLine($" ++ Adding extra pot for arrows [{randomOsFreePot.OldName}][{randomOsFreePot.Room}][{randomOsFreePot.RoomActorIndex}] ");
+                }
+
+            }
+        }
+
         private static void SetZerothAndFourthDayFlagsForAllActors(SceneEnemizerData thisSceneData)
         {
             for (int i = 0; i < thisSceneData.Actors.Count; i++){
@@ -2016,7 +2031,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.AnjusGrandmaCredits)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.BuisnessScrub, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.SoftSoilAndBeans, GameObjects.Actor.PunchableStoneTowerPillars)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.Freezard)) continue;
+                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.StalchildHintGiver)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DoggyRacetrack, GameObjects.Actor.ClayPot, GameObjects.Actor.BedroomPostman)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.SkeleKnight)) continue;
 
@@ -3410,6 +3425,7 @@ namespace MMR.Randomizer
             EnsureOnlyOneKankyo(thisSceneData);
             FixKaizokuType(thisSceneData);
             ForceWaterCeilingSpawnerInGBT(thisSceneData); // todo move to late fixes
+            AddExtraOtherThingsIfEmpty(thisSceneData, flagLog);
             SetZerothAndFourthDayFlagsForAllActors(thisSceneData);
             // the following modify Variant which can confuse typing system
             FixPathingVars(thisSceneData); // any patrolling types need their vars fixed
@@ -3532,10 +3548,6 @@ namespace MMR.Randomizer
 
                 EnemizerLateFixes(); // fix IF randomized
                 //LowerEnemiesResourceLoad();
-                if (_randomized.Settings.LocationsItemRestrictionUnlocked)
-                {
-                    DisableAllLocationRestrictions();  //experimental
-                }
 
                 // write the final time and version last
                 using (StreamWriter sw = new StreamWriter(_outputSettings.OutputROMFilename + "_EnemizerLog.txt", append: true))

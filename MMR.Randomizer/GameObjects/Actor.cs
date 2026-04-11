@@ -1667,7 +1667,8 @@ namespace MMR.Randomizer.GameObjects
         )]
         [UnkillableAllVariants]
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)]
-        [TreasureFlagsPlacement(mask: 0x1F, shift: 0)] // 0x3FC
+        // this flag is only used for skulltula pots, we should ignore
+        // [TreasureFlagsPlacement(mask: 0x1F, shift: 9)] // 0x3FC
         ClayPot = 0x82, // Obj_Tsubo
 
         Empty83 = 0x83,
@@ -4978,7 +4979,7 @@ namespace MMR.Randomizer.GameObjects
         //[ForbidFromScene(Scene.TreasureChestShop)]
         // switch flags
         // manually sunsets switch 5, sets 5 separate switches based on player form, but I think these are all as a result of willing the game
-        [RemovalChance(95), PlacementWeight(45)]
+        [RemovalChance(95), PlacementWeight(35)]
         Takaraya = 0x1C1, // En_Takaraya, "Bombchu girl"
 
         [ActorizerEnabled]
@@ -6343,7 +6344,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(513)]
         [ObjectListIndex(0x20E)]
         [DynaAttributes(12, 8)]
-        [FlyingToGroundHeightAdjustment(50)]
+        [FlyingToGroundHeightAdjustment(30)]
         [FlyingVariants(0x0)]
         [GroundVariants(0x0)]
         [WaterTopVariants(0x0)]
@@ -7589,7 +7590,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x129)]
         [GroundVariants(5)]
         [UnkillableAllVariants]
-        [PlacementWeight(50)]
+        [PlacementWeight(25)]
         Secretary = 0x290, // En_Recepgirl, Receptionist
 
         [EnemizerEnabled]

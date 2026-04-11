@@ -1650,6 +1650,17 @@ namespace MMR.Randomizer
 
                 Enemizer.ActorInjection.UpdateActorOverlayTable();
             }
+
+            // should probably be in a better place, but for now this is actorizer branch only, this is a safe place to not merge conflict
+            if (_randomized.Settings.LocationsItemRestrictionUnlocked)
+            {
+                Enemies.DisableAllLocationRestrictions();
+            }
+
+            if (_randomized.Settings.LocationsItemRestrictionUnlocked)
+            { 
+                Enemies.EnableAllFormItems(); // let players use items in odd places to fight new nemanies
+            }
         }
 
         private void MakeItRain()
