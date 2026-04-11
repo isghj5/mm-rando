@@ -215,9 +215,11 @@ namespace MMR.UI.Forms
             this.tabShortenCutscenes = new System.Windows.Forms.TabPage();
             this.tShortenCutscenes = new System.Windows.Forms.TabControl();
             this.tabActorizer = new System.Windows.Forms.TabPage();
+            this.lActorizerDisclaimer = new System.Windows.Forms.Label();
             this.cFasterCommonFileLoad = new System.Windows.Forms.CheckBox();
             this.cLocationItemRestrictionUnlock = new System.Windows.Forms.CheckBox();
             this.cFormItemRestrictionUnlock = new System.Windows.Forms.CheckBox();
+            this.cHyperEnemies = new System.Windows.Forms.CheckBox();
             this.lActorMode = new System.Windows.Forms.Label();
             this.cActorMode = new System.Windows.Forms.ComboBox();
             this.tabCosmetics = new System.Windows.Forms.TabPage();
@@ -2568,6 +2570,8 @@ namespace MMR.UI.Forms
             // 
             // tabActorizer
             // 
+            this.tabActorizer.Controls.Add(this.cHyperEnemies);
+            this.tabActorizer.Controls.Add(this.lActorizerDisclaimer);
             this.tabActorizer.Controls.Add(this.cFasterCommonFileLoad);
             this.tabActorizer.Controls.Add(this.cLocationItemRestrictionUnlock);
             this.tabActorizer.Controls.Add(this.cFormItemRestrictionUnlock);
@@ -2580,6 +2584,16 @@ namespace MMR.UI.Forms
             this.tabActorizer.TabIndex = 5;
             this.tabActorizer.Text = "Actorizer";
             this.tabActorizer.UseVisualStyleBackColor = true;
+            // 
+            // lActorizerDisclaimer
+            // 
+            this.lActorizerDisclaimer.AutoSize = true;
+            this.lActorizerDisclaimer.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lActorizerDisclaimer.Location = new System.Drawing.Point(185, 307);
+            this.lActorizerDisclaimer.Name = "lActorizerDisclaimer";
+            this.lActorizerDisclaimer.Size = new System.Drawing.Size(507, 37);
+            this.lActorizerDisclaimer.TabIndex = 5;
+            this.lActorizerDisclaimer.Text = "WARNING: Actorizer is still in developent.";
             // 
             // cFasterCommonFileLoad
             // 
@@ -3470,6 +3484,17 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
+            // cHyperEnemies
+            // 
+            this.cHyperEnemies.AutoSize = true;
+            this.cHyperEnemies.Location = new System.Drawing.Point(6, 35);
+            this.cHyperEnemies.Name = "cHyperEnemies";
+            this.cHyperEnemies.Size = new System.Drawing.Size(135, 19);
+            this.cHyperEnemies.TabIndex = 6;
+            this.cHyperEnemies.Text = "Hyper Enemies";
+            this.cHyperEnemies.UseVisualStyleBackColor = true;
+            this.cHyperEnemies.CheckedChanged += new System.EventHandler(this.cHyperEnemies_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3827,6 +3852,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label lRequiredZoraEggs;
         private System.Windows.Forms.NumericUpDown nRequiredZoraEggs;
         private System.Windows.Forms.Button bRandomStartingItems;
+        private System.Windows.Forms.Label lActorizerDisclaimer;
+        private System.Windows.Forms.CheckBox cHyperEnemies;
     }
 }
 

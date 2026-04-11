@@ -853,6 +853,22 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => propertyInfo.SetValue(_configuration.GameplaySettings.ShortenCutsceneSettings, newValue));
         }
 
+        private void cHyperEnemies_CheckedChanged(object sender, EventArgs e)
+        {
+            // EnemyMode was turned into a bit field, for now just do this
+            var checkBox = (CheckBox)sender;
+            if (checkBox.Checked)
+            {
+                _configuration.GameplaySettings.EnemyMode = EnemyMode.Hyper;
+            }
+            else
+            {
+                _configuration.GameplaySettings.EnemyMode = EnemyMode.Default;
+            }
+
+            UpdateSingleSetting(null);
+        }
+
         private void InitializeTransformationFormSettings()
         {
             foreach (var form in Enum.GetValues<TransformationForm>())
@@ -1627,9 +1643,9 @@ namespace MMR.UI.Forms
             nMaxGaroFoolish.Value = _configuration.GameplaySettings.OverrideNumberOfNonRequiredGaroHints ?? 2;
             nMaxGaroCT.Value = _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGaroHints ?? 0;
 
-            cCustomGossipWoth.Checked = _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints.HasValue
-                || _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints.HasValue
-                || _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGossipHints.HasValue;
+            cCustomGossipWoth.Checked = _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints.HasValue;
+            // Hyper Enemies checkbox sync - simplified to only check EnemyMode.Hyper now that actorMode handles actor/enemizer
+            cHyperEnemies.Checked = _configuration.GameplaySettings.EnemyMode == EnemyMode.Hyper;
 
             cCustomGaroWoth.Checked = _configuration.GameplaySettings.OverrideNumberOfRequiredGaroHints.HasValue
                 || _configuration.GameplaySettings.OverrideNumberOfNonRequiredGaroHints.HasValue
