@@ -3741,11 +3741,6 @@ namespace MMR.Randomizer
                     {
                         Parallel.ForEach(importantLocations.Where(location => location.Entrance() == null).ToList(), po, (location, state) =>
                         {
-                            var item = ItemList.First(io => io.NewLocation == (location.MainLocation() ?? location)).Item;
-                            if (!ItemUtils.CanBeRequired(item))
-                            {
-                                return;
-                            }
                             var checkedLocationsCopy = checkedLocations.ToDictionary(x => x.Key, x => x.Value);
                             var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.OtherCredits, logicForRequiredItems, cts: cts, checkedLocations: checkedLocationsCopy, exclude: location);
                             if (checkPaths != null)

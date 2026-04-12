@@ -175,6 +175,7 @@
     {
       "Id": "ItemPictobox",
       "RequiredItems": [
+	    "InteriorWoodsOfMystery",
         "Any Healing Potion"
       ],
       "ConditionalItems": [],
@@ -3566,7 +3567,7 @@
       "Id": "InteriorSwordsmanSchool",
       "RequiredItems": [],
       "ConditionalItems": [],
-      "TimeNeeded": "None",
+      "TimeNeeded": "Night3",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false

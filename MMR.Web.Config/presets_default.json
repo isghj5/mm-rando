@@ -1235,7 +1235,8 @@
       "Pinnacle Rock without Seahorse",
       "Run Through Poisoned Water",
       "WFT 2nd Floor With Hookshot",
-      "Deku Palace Bean Skip"
+      "Deku Palace Bean Skip",
+      "Climb Stone Tower with One Transformation"
     ],
     "GameplaySettings.CustomStartingItemListString": "2007f-e0ffc1ff-83ff0000--1fbfe-d800020-",
     "GameplaySettings.CustomJunkLocationsString": "600-----40000--------------------3000-9b4f5b6f-effcb77c---fe0000-200206---441124d-81de0ec0-7c4e2280-921e0080",
@@ -1346,7 +1347,7 @@
     "GameplaySettings.MinorDropSparkle": false,
     "GameplaySettings.SaferGlitches": true,
     "GameplaySettings.EasyFrameByFrame": false,
-    "GameplaySettings.ChestGameMinimap": "Off",
+    "GameplaySettings.ChestGameMinimap": "Minimal",
     "GameplaySettings.UpdateShopAppearance": true,
     "GameplaySettings.UpdateChests": true,
     "GameplaySettings.UpdateWorldModels": true,

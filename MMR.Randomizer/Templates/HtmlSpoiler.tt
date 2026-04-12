@@ -118,7 +118,7 @@
 <# } #>
 <# if (spoiler.Entrances.Any()) { 
 #>
-<h2>Dungeon Entrance Replacements</h2>
+<h2>Entrances</h2>
 <table border="1" class="item-replacements">
     <tr>
         <th>Entrance</th>

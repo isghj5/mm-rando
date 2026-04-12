@@ -30,6 +30,7 @@ export class MMRGuiDetailedConfigWindowComponent implements OnInit, OnDestroy {
 
   tiers: DetailedConfigTier[] = [];
   nextTierId: number = 1;
+  validationError: string = '';
 
   // Default tooltip for hint priorities
   hintPrioritiesTooltip: string = `Note: this list will be used exclusively if any locations are added.<br>
@@ -298,6 +299,13 @@ Amount must be ≤ items selected in the group.`;
       this.ref.close(result);
       return;
     }
+
+    const invalidTier = this.tiers.find(t => !t.items || t.items.length === 0 || !t.amount || t.amount <= 0);
+    if (invalidTier) {
+      this.validationError = 'Each group must have at least one item and an amount greater than 0.';
+      return;
+    }
+    this.validationError = '';
 
     const randomStartingItemGroups = this.tiers.map(t => ({
       Items: t.items,

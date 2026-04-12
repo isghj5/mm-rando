@@ -59,6 +59,7 @@
     </div>
   </nb-card-body>
   <nb-card-footer>
+    <div *ngIf="validationError" style="color: red; margin-bottom: 8px; text-align: right;">{{ validationError }}</div>
     <div class="footer-buttons" style="display:flex; justify-content:flex-end; gap:18px; margin:18px 0 6px 0;">
       <button nbButton status="danger" (click)="cancelDialog()" style="padding:8px 24px;">Cancel</button>
       <button nbButton status="primary" (click)="confirmDialog()" style="padding:8px 24px;">Save</button>

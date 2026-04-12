@@ -87,9 +87,9 @@ namespace MMR.Randomizer.Templates
  } 
  if (spoiler.Entrances.Any()) { 
 
-            this.Write("<h2>Dungeon Entrance Replacements</h2>\r\n<table border=\"1\" class=\"item-replacement" +
-                    "s\">\r\n    <tr>\r\n        <th>Entrance</th>\r\n        <th></th>\r\n        <th>New Des" +
-                    "tination</th>\r\n    </tr>\r\n");
+            this.Write("<h2>Entrances</h2>\r\n<table border=\"1\" class=\"item-replacements\">\r\n    <tr>\r\n     " +
+                    "   <th>Entrance</th>\r\n        <th></th>\r\n        <th>New Destination</th>\r\n    <" +
+                    "/tr>\r\n");
          foreach (var dungeonEntrance in spoiler.Entrances) {
             this.Write("    <tr data-id=\"");
             this.Write(this.ToStringHelper.ToStringWithCulture(dungeonEntrance.DestinationId));
