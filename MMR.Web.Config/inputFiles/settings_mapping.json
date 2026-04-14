@@ -341,6 +341,26 @@
       ]
     },
     {
+      "name": "actorizer_tab",
+      "text": "Actorizer",
+      "app_type": [ "generator" ],
+      "hide_when_disabled": true,
+      "sections": [
+        {
+          "name": "actorizer_section",
+          "text": "Actorizer Options",
+          "col_span": 4,
+          "row_span": [ 2, 2, 2 ],
+          "settings": [
+            "GameplaySettings.ActorMode",
+            "GameplaySettings.FormsItemRestrictionUnlocked",
+            "GameplaySettings.LocationsItemRestrictionUnlocked",
+            "GameplaySettings.FasterCommonFileLoad"
+          ]
+        }
+      ]
+    },
+    {
       "name": "cosmetics_tab",
       "text": "Cosmetics",
       "app_type": [ "generator", "patcher" ],
