@@ -47,8 +47,25 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x83F0, 0x27F5)] // TODO finish checking the rest of possible variations
         // 0x7F4 is the bright yellow light of the graveyard smash
         // 0x7FF is cyan/blue flames of road to ikana, FE is goron graveyard blue,
-        // 83F0 is dampe house candle
-        [GroundVariants(0x7F4, 0x7FE)]
+        // 0x7F3 is a green color
+        [GroundVariants(
+            0x07F4, // generic fire
+            0x07F5, // inn fire
+            0x07F7, 0x07FA, 0x07F6, 0x07F8, 0x0068, 0x07FD, 0x07FB, // deku playground
+            0x47F4, // cutscene map?? next to skull kid?
+            0x27F5, // sewer?
+            0x1824, // forge
+            0x182C, // forge
+            0x0FF5, // deku king chamber
+            0x275F, // ECT
+            0x07FE // unk
+            //0x83F0 // is candle flame
+        )]
+        [FlyingVariants(
+            0x07FE, // goron grave
+            0x07FF // ikana canyon
+        )]
+        [PlacementWeight(40), RemovalChance(20)]
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.Woodfall)]
         Flame = 0x4, // En_Light
@@ -217,6 +234,7 @@ namespace MMR.Randomizer.GameObjects
         )]
         [CreditsBlockedVariants(0x8000, 0x8002, 0x8003)] // invisble
         [VariantsWithRoomMax(max: 3, variant: 0, 0x8000, 0x4, 0x8004, 0x2, 0x8002)]
+        [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)] // they like fire in this game
         [FlyingToGroundHeightAdjustment(150)]
         [PlacementWeight(90)]
         Keese = 0xC, // En_Firefly
@@ -358,11 +376,12 @@ namespace MMR.Randomizer.GameObjects
         [FileID(58)]
         [ObjectListIndex(0x17)]
         [GroundVariants(0)]
-        [CeilingVariants(0)] // because thats cannon
+        [CeilingVariants(0x77)] // non-vanilla, but in cannon they spawn in the ceiling
         [DifficultAllVariants]
         [VariantsWithRoomMax(max: 2, variant: 0)]
+        [VariantsWithRoomMax(max: 1, variant: 0x77)]
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)] // cutscene softlock on hms
-        //[ForbidFromScene(Scene.SecretShrine)] // issue: spawn is too high, needs to be lowered
+        [AlignedCompanionActor(Flame, CompanionAlignment.InFront, ourVariant: -1, variant: 0x7F4)] // they like fire in this game
         Dinofos = 0x19, // En_Dinofos
 
         // Used in snowhead and gorman race
@@ -712,11 +731,13 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1AF0)]
         [FileID(82)]
         [ObjectListIndex(0x51)]
-        [GroundVariants(0)]
+        [GroundVariants(0)] // vanilla is zero, in the MMRA the new version that also spawns a fire is version 1
+        [VariantsWithRoomMax(max:0, variant:0)]
         [CreditsBlockedAllVariants] // inivible until player gets close, so invible for credits
         [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)]
-        [AlignedCompanionActor(Flame, CompanionAlignment.OnTop, ourVariant: -1,
-            variant: 0x7F4)] // I'll just put this over with the rest of the fire
+        // changed to auto-spawn on MMRA
+        //[AlignedCompanionActor(Flame, CompanionAlignment.OnTop, ourVariant: -1,
+        //    variant: 0x7F4)] // I'll just put this over with the rest of the fire
         [AlignedCompanionActor(TreasureChest, CompanionAlignment.InFront, ourVariant: -1, variant:
             0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579, 0x561E, 0x5C79, 0x5991, 0x5B58,
             0x5080, 0x50CA, 0x50A1, 0x0AFB, 0x099C)]
@@ -2145,9 +2166,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0001)]
         Obj_Blockstop = 0xA0, // Obj_Blockstop
 
+        // his actual shadow, not shadow link
         [FileID(148)]
         [ObjectListIndex(0001)]
-        ShadowLink = 0xA1, // En_Sda
+        LinkShadow = 0xA1, // En_Sda
 
         // in MM this is NOT arwing, its a multi-use bomb effect actor
         // multiple explosion visual effects, light arrows, stuff like that
@@ -2599,12 +2621,15 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         [FlyingToGroundHeightAdjustment(275)]
-        // TODO go through all of these and recheck now that we can modify the height correctly
-        [EnemizerScenesPlacementBlock(//Scene.DekuPalace,
+        [EnemizerScenesPlacementBlock(
+            //Scene.DekuPalace,
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
-            Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanRaceTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
-            Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, // Scene.ZoraHall,
-            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
+            // Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanRaceTrack, Scene.RoadToIkana, Scene.IkanaCastle,
+            Scene.BeneathGraveyard,
+            Scene.SwampSpiderHouse, Scene.OceanSpiderHouse,
+            Scene.GoronShrine, Scene.DekuShrine, // Scene.ZoraHall,
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple,
+            //Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
             Scene.StockPotInn, Scene.TradingPost, Scene.MayorsResidence, Scene.MilkBar,
             Scene.BeneathTheWell//,
             /* Scene.IkanaGraveyard, Scene.StoneTower */)] // dyna crash
@@ -2950,6 +2975,7 @@ namespace MMR.Randomizer.GameObjects
             0x0032 // 0x32: sitting around the fire
         )]
         [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)] // they like fire in this game
+        [AlignedCompanionActor(Flame, CompanionAlignment.InFront, ourVariant: -1, variant: 0x7F4)] // they like fire in this game
         [ForbidFromScene(Scene.IkanaGraveyard, Scene.OceanSpiderHouse)]
         [UnkillableAllVariants]
         Stalchild = 0xED, // En_Skb
@@ -3102,7 +3128,6 @@ namespace MMR.Randomizer.GameObjects
 
         EmptyFB = 0xFB,
 
-        // todo randomize just so palace has more actors
         [ActorizerEnabled]
         [FileID(233)]
         [ObjectListIndex(0x2)]
@@ -3419,7 +3444,8 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x7E00)]
         //[PathingVariants(0x0)] // dont trust this anymore, wait for actor fix
         // 0 is vanessa, 1 is orange
-        [CompanionActor(Flame, ourVariant: 0, 0x7FE)] // blue flames
+        //[CompanionActor(Flame, ourVariant: 0, 0x7FE)] // blue flames
+        [CompanionActor(Flame, ourVariant: 0, 0x7FD)] // ???
         // todo find slightly off color flames
         [PathingTypeVarsPlacement(mask: 0x7E00, shift: 9)] // still valid with injected actor
         [OnlyOneActorPerRoom] // not sure if I need this, but with companions..
