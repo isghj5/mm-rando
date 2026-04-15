@@ -938,17 +938,19 @@ namespace MMR.Randomizer.Models.Settings
         #endregion
 
 
-
         /// <summary>
         /// Modifies the damage value when Link is damaged
         /// </summary>
         [Description("Select an actor mode.\n Actorizer randomizes all NPCs and enemies togther into one pool.\n Enemizer only randomizes enemies. \n Out For Blood removes NPCs and repalces them with enemies, making the world more hostile.")]
         public ActorMode ActorMode { get; set; }
 
+        [Description("Unlocks the abilty for the player to use more items in certain forms. \n Example: Deku link can use stick, Goron link can use bombs. \n Not all items are enabled because some are broken and haven't been fixed yet.")]
         public bool FormsItemRestrictionUnlocked { get; set; }
 
+        [Description("Suspends the law limiting link from using his sword and other weapons inside city buildings. Also allows soaring in deeper caves.")]
         public bool LocationsItemRestrictionUnlocked { get; set; }
 
+        [Description("Speeds up some game loading of certain items by skipping their compression, allowing them to load without being decompressed on the fly. \n The biggest effect is on the pause menu opening and closing. More noticable on emulator. \n Turn off if the pause menu is moving too fast interferering with trick muscle memory.")]
         public bool FasterCommonFileLoad { get; set; }
     }
 }
