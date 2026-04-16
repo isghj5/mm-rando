@@ -268,12 +268,11 @@ namespace MMR.Randomizer
                     {
                         var importantItem = ObjectIsCheckBlocked(scene.SceneEnum, targetActor.ActorEnum, targetActor.OldVariant);
                         if (importantItem != null)
-                            if (importantItem != null)
-                            {
-                                thisSceneData.Log.AppendLine($" tallgrass r[{targetActor.Room}]v[{targetActor.OldVariant}]" +
-                                    $" replacement blocked by [{(int)importantItem}]");
-                                return false;
-                            }
+                        {
+                            thisSceneData.Log.AppendLine($" tallgrass r[{targetActor.Room}]v[{targetActor.OldVariant}]" +
+                                $" replacement blocked by [{(int)importantItem}]");
+                            return false;
+                        }
 
                         FixActorLastSecond(targetActor, targetActor.OldActorEnum, mapIndex, actorIndex);
                         targetActor.Variants.AddRange(tallGrassFieldObjectVariants);
@@ -327,7 +326,7 @@ namespace MMR.Randomizer
                 for (int actorIndex = 0; actorIndex < scene.Maps[mapIndex].Actors.Count; ++actorIndex) // (var mapActor in scene.Maps[mapIndex].Actors)
                 {
                     var mapActor = scene.Maps[mapIndex].Actors[actorIndex];
-                    var matchingEnemy = VanillaEnemyList.Find(act => act == mapActor.OldActorEnum);
+                    GameObjects.Actor matchingEnemy = VanillaEnemyList.Find(act => act == mapActor.OldActorEnum);
                     if (matchingEnemy > 0)
                     {
                         // note: injected actor data is added later, this happens before injection
@@ -346,7 +345,7 @@ namespace MMR.Randomizer
                         }
 
                         var itemRestriction = ObjectIsCheckBlocked(scene.SceneEnum, mapActor.ActorEnum, mapActor.OldVariant);
-                        if (itemRestriction != null )
+                        if (itemRestriction != null)
                         {
 
                             #if DEBUG
@@ -360,8 +359,21 @@ namespace MMR.Randomizer
                             continue;
                         }
 
-                        if (listOfAcceptableVariants.Contains(mapActor.OldVariant)) // regular actors
+                        if (mapActor.OldActorEnum == GameObjects.Actor.TreasureChest) // regular actors
                         {
+                            // special case:
+                            // treassure chests will have non-vanilla variants already randomized because of itemizer
+                            //  but we already have an object check for items above, or scene restrictions above, that's good enough,
+
+
+                            FixActorLastSecond(mapActor, matchingEnemy, mapIndex, actorIndex);
+                            mapActor.OldVariant = 0xFFFF; // actorizer needs the actor to be a parameter we can identify as valid, or it freaks out deep in candidate search
+                            sceneEnemyList.Add(mapActor);
+
+                        }
+                        else if (listOfAcceptableVariants.Contains(mapActor.OldVariant)) // regular actors
+                        {
+
                             FixActorLastSecond(mapActor, matchingEnemy, mapIndex, actorIndex);
 
                             sceneEnemyList.Add(mapActor);
@@ -3308,6 +3320,7 @@ namespace MMR.Randomizer
                     #if DEBUG
                     var original_object = VanillaEnemyList.Find(act => act.ObjectIndex() == thisSceneData.ChosenReplacementObjects[objectIndex].OldV);
                     var object_actor = VanillaEnemyList.Find(act => act.ObjectIndex() == chosenObject);
+                    var all_matching_actors = thisSceneData.ActorsPerObject[objectIndex];
                     #endif
                     Debug.Assert(subMatches.Count > 0);
 
@@ -3537,9 +3550,10 @@ namespace MMR.Randomizer
                 Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
 
                 Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
-                //foreach (var scene in newSceneList) // sequential for debugging only
-                // ( debugger is too stupid, if you catch a breakpoint and then tell it to move to a new location, it can catch on a _different_ thread)
                 {
+                //foreach (var scene in newSceneList) // sequential for debugging only
+                //  ( debugger is too stupid, if you catch a breakpoint and then tell it to move to a new location, it can catch on a _different_ thread)
+
                     SwapSceneEnemies(scene, seed);
                 });
                 //}
