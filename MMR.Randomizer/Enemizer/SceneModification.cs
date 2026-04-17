@@ -17,9 +17,9 @@ namespace MMR.Randomizer.Enemizer
         /// <summary>
         /// Moves the deku baba in southern swamp
         ///   why? beacuse they are positioned in the elbow and its visually jarring when they spawn/despawn on room swap
-        ///   its already noticable in vanilla, but with mixed enemy rando it can cause whole new enemies to pop in and out
+        ///   its already noticeable in vanilla, but with mixed enemy rando it can cause whole new enemies to pop in and out
         /// </summary>
-        public static void FixSouthernSwampDekuBaba()
+        public static void FixSouthernSwampDekuBaba(Random rng)
         {
             Scene southernswampScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthernSwamp.FileID());
 
@@ -53,15 +53,23 @@ namespace MMR.Randomizer.Enemizer
             clearSwampScene.Maps[2].Actors[2].Position = new vec16(3001, 8, -1070);
             clearSwampScene.Maps[2].Actors[3].Position = new vec16(4288, 11, -1312);
 
-            //if (rng.Next() % 100 >= 50) // chance of watersurface vs waterbottom
+            var octarok = southernswampScene.Maps[0].Actors[3];
+            if (rng.Next() % 100 >= 50) // chance of watersurface vs waterbottom
             {
                 // move the southern swamp octorok to the surface 
-                southernswampScene.Maps[0].Actors[3].Position.y = 0; // set to water height
+                octarok.Position.y = 0; // set to water height
             }
-            //else
+            else
             {
-                // leave on the bottom but change the type
-                // TODO add chance of floor bottom instead
+                // leave on the bottom but change actor type to a water bottom actor
+                octarok.ChangeActor(GameObjects.Actor.LikeLike, vars: 0, modifyOld: true);
+                octarok.OldName = octarok.Name = "Octarok(Floor)";
+                // have to update the objects too
+                foreach (var map in southernswampScene.Maps)
+                {
+                    var objectLoc = map.Objects.FindIndex(obj => obj == GameObjects.Actor.Octarok.ObjectIndex());
+                    map.Objects[objectLoc] = GameObjects.Actor.LikeLike.ObjectIndex();
+                }
             }
         }
 
@@ -139,7 +147,7 @@ namespace MMR.Randomizer.Enemizer
 
         private static void FixTerminaFieldActorPosRot()
         {
-            ///   some of the Eeno and Eeever spawns in north termina field is too high above the ground, 
+            ///   some of the Eeno and Leever spawns in north termina field is too high above the ground, 
             ///    we never notice because it falls to the ground before we can get there normally
             ///    but if its a stationary enemy, like a dekubaba, it hovers in the air
 
@@ -755,7 +763,7 @@ namespace MMR.Randomizer.Enemizer
 
         private static void RandomizeMonkeyActors()
         {
-            /// randomizing monkeys can be annoying, needs finangaling
+            /// randomizing monkeys can be annoying, change positions so replacemnets dont block or instantly hit player
 
             if (!Enemies.VanillaEnemyList.Contains(GameObjects.Actor.Monkey)) return;
 
@@ -852,8 +860,7 @@ namespace MMR.Randomizer.Enemizer
 
             var snowheadScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Snowhead.FileID());
             var snowheadWinter = snowheadScene.Maps[0];
-            //snowheadScene.Maps[0].Objects[8] = GameObjects.Actor.LargeSnowball.ObjectIndex(); // previously treasure chest, stupid
-            snowheadWinter.Objects[3] = GameObjects.Actor.LargeSnowball.ObjectIndex(); // unused stalagtite icicle, stupid
+            snowheadWinter.Objects[3] = GameObjects.Actor.LargeSnowball.ObjectIndex(); // unused stalagtite icicle
             // TODO randomize the unused iceicle and clay pot too
             // TODO 25% chance of goro-iwa randomization too
             var snowheadSpring = snowheadScene.Maps[1];
@@ -910,7 +917,7 @@ namespace MMR.Randomizer.Enemizer
             //   the water drip and tall grass objects are always shuffled around but they are always loaded
             //   real bombchu, dinofos exist in three rooms
             //   dekubaba exists in main room and a sub-room
-            // having moved up two objects from every room, we should count 5 and 6 as new allways-loaded slots
+            // having moved up two objects from every room, we should count 5 and 6 as new always-loaded slots
 
             // 5 and 6 objects
             var alwaysGroundObject = PopObject(possibleGroundActors);
@@ -1174,8 +1181,6 @@ namespace MMR.Randomizer.Enemizer
             /// Skullfish can be summoned by an actor EnEncount1
             /// this can make the cape seem even more empty if we completely remove the skullfish
             /// should I change it to a regular skullfish for detection, or should I add a skullfish object
-
-            // while I wait for chat, going to change one object instead
 
             var zoracapeScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.ZoraCape.FileID());
 
@@ -1491,12 +1496,12 @@ namespace MMR.Randomizer.Enemizer
         }
         private static void SplitSnowheadTempleBo()
         {
-            /// the bo in sht are in two locations: floor in the entrance and hanging from the ceiling,
-            /// this is an issue because there are almost none that are dual type
+            /// the bo in SHT are in two locations: floor in the entrance and hanging from the ceiling,
+            /// this is an issue because there are almost no candidates that are dual type
             /// split the two into different enemies for better type control
 
             var shtScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SnowheadTemple.FileID());
-            var boActors = shtScene.Maps[8].Actors;
+            var boActors = shtScene.Maps[8].Actors; // thankfully they are easilly split per room
 
             foreach (var actor in boActors)
             {
@@ -1708,7 +1713,7 @@ namespace MMR.Randomizer.Enemizer
                 winterVillage.Maps[0].Actors[57].Position.y = -15; // floating a bit in the air, lower to ground
                 // note: if we need to add the ghost back in, the scene is using 13 objects so we can add one more back in
 
-                // now that darmani ghost is gone, lets re=use the actor for secret grotto
+                // now that darmani ghost is gone, lets reuse the actor for secret grotto
                 var newGrotto = winterVillage.Maps[0].Actors[2];
                 newGrotto.ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[rng.Next(randomGrotto.Count)] & 0xFCFF, modifyOld: true);
                 newGrotto.Position = new vec16(504, 365, 800);
@@ -2504,7 +2509,7 @@ namespace MMR.Randomizer.Enemizer
             FixSouthernSwampLensBehavior();
             FixSouthernSwampGossipStoneObjectPlacement();
 
-            FixSouthernSwampDekuBaba();
+            FixSouthernSwampDekuBaba(rng);
             FixRoadToSouthernSwampBadBat();
 
             if (ACTORSENABLED)
@@ -2613,7 +2618,6 @@ namespace MMR.Randomizer.Enemizer
             {
                 var cariageHorse = romaniRanchScene.Maps[0].Actors[34];
                 //cariageHorse.Variants[0] = 0x0; // same as termina field, which doesnt have cremia on it
-                //cariageHorse.ChangeActor(GameObjects.Actor.Dog, vars: 0x3FF); // this DOES NOTHING its too late the actor has already been written idiot
                 var ranchRoom0Data = RomData.MMFileList[GameObjects.Scene.RomaniRanch.FileID() + 1].Data; // 1327
                 //have to erase this actor directly
                 ranchRoom0Data[0x2A4] = 0xFF; // this works, although would be cool if we could just change type
@@ -2736,7 +2740,7 @@ namespace MMR.Randomizer.Enemizer
 
                 var roadToMountainsScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PathToMountainVillage.FileID());
                 // some winter snowballs are sitting on top of each other, they should be moved
-                // snowballs 24 and 48 are dupllicates, sitting on top of each other, move them so they arent
+                // snowballs 24 and 48 are duplicates, sitting on top of each other, move them so they arent
                 roadToMountainsScene.Maps[0].Actors[48].Position.z = 6227;
                 ActorUtils.FlattenPitchRoll(roadToMountainsScene.Maps[0].Actors[48]);
                 // snowball 29 and 32 are on top of each other
@@ -3020,7 +3024,7 @@ namespace MMR.Randomizer.Enemizer
             /// if Kafei is randomized, his default placements are silly, move them to be more natural
             var southClockTown = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.SouthClockTown);
             var sctKafei = southClockTown.Maps[0].Actors[2];
-            if (sctKafei.ActorEnum != GameObjects.Actor.Kafei) // changed
+            if (sctKafei.ActorEnum != GameObjects.Actor.Kafei)
             {
                 // move to the bench so hes not lurking out of sight behind the laundry room area
                 sctKafei.Position = new vec16(-615, 16, 425);
@@ -3030,7 +3034,7 @@ namespace MMR.Randomizer.Enemizer
 
             var eastClockTown = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.EastClockTown);
             var ectKafei = eastClockTown.Maps[0].Actors[2];
-            if (ectKafei.ActorEnum != GameObjects.Actor.Kafei) // changed
+            if (ectKafei.ActorEnum != GameObjects.Actor.Kafei)
             {
                 // sitting just outside of town door, move inwards a bit
                 ectKafei.Position = new vec16(1475, 60, -747);
@@ -3040,7 +3044,7 @@ namespace MMR.Randomizer.Enemizer
 
             var laundryPool = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.LaundryPool);
             var lpKafei = laundryPool.Maps[0].Actors[9];
-            if (lpKafei.ActorEnum != GameObjects.Actor.Kafei) // changed
+            if (lpKafei.ActorEnum != GameObjects.Actor.Kafei)
             {
                 // sitting beyond the path back to SCT, move to bridge
                 lpKafei.Position = new vec16(-2080, -95, 582);
@@ -3049,7 +3053,7 @@ namespace MMR.Randomizer.Enemizer
 
             var ikanaCanyon = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.IkanaCanyon);
             var ikanaKafei = ikanaCanyon.Maps[4].Actors[9];
-            if (ikanaKafei.ActorEnum != GameObjects.Actor.Kafei) // changed
+            if (ikanaKafei.ActorEnum != GameObjects.Actor.Kafei)
             {
                 // move to his favorite rock
                 ikanaKafei.Position = new vec16(2523, -160, 5080);

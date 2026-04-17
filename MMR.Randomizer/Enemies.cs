@@ -393,7 +393,7 @@ namespace MMR.Randomizer
                             var itemRestriction = ObjectIsCheckBlocked(scene.SceneEnum, mapActor.ActorEnum, mapActor.OldVariant);
                             var chanceOfRandomization = (_randomized.Settings.LogicMode == LogicMode.NoLogic) ? (90) : (60);
                             var randomRoll = thisSceneData.RNG.Next(100);
-                            // if common scoopable actor, some are allowed but not all, for now lets make it random
+                            // if common scoopable actor, some are allowed but not all, let's randomize some but not all
                             if (itemRestriction != null && (commonScoopableActors.Contains(mapActor.OldActorEnum)
                                 && itemRestriction.ToString().Contains("BottleCatch")
                                 && randomRoll < chanceOfRandomization))
@@ -756,7 +756,7 @@ namespace MMR.Randomizer
 
             var codeFile = RomData.MMFileList[31].Data;
             var startLoc = 0x11C950; // offset to gPlayerFormItemRestrictions
-            var endLoc = 0x11CB90; // this is wrong, includes some padding
+            var endLoc = 0x11CB90; // this is wrong, includes some padding intentionally
             var formDataWidth = 0x72; // item bytes per form (yes each restriction is a byte not a bit, what a waste...)
 
             // start by enable everything
@@ -777,7 +777,7 @@ namespace MMR.Randomizer
                 // bow item is 0x0 (buggy behavior that isn't useful)
                 codeFile[startLoc + (form * formDataWidth) + 0x1] = 0x00;
                 // elemental arrows are different items
-                codeFile[startLoc + (form * formDataWidth) + 0x4A] = 0x00; // 2 3 and 4 arent valid here for some reason
+                codeFile[startLoc + (form * formDataWidth) + 0x4A] = 0x00;
                 codeFile[startLoc + (form * formDataWidth) + 0x4B] = 0x00;
                 codeFile[startLoc + (form * formDataWidth) + 0x4C] = 0x00;
             }
@@ -1126,10 +1126,6 @@ namespace MMR.Randomizer
 
             void TrimSmaller(List<List<Actor>> shrinkTargets, List<List<Actor>> markForFinished)
             {
-                // we want to randomize the list so that its not always the same order we remove actors by category, in case we have repeats
-                //shrinkTargets = shrinkTargets.OrderBy(x => thisSceneData.RNG.Next()).ToList();
-                // until such a time as we can detect (actor A exists in both lists and was removed earlier) this is a bit pre-mature, we always remove one from all lists for now
-
                 // remove one from all of the list of lists
                 for (int l = 0; l < shrinkTargets.Count; l++)
                 {
@@ -1245,7 +1241,9 @@ namespace MMR.Randomizer
                 var dayActorList = thisSceneData.Actors.Intersect(map.day.oldActorList).ToList();
                 var dayUniqueList = dayActorList.GroupBy(elem => elem.ActorEnum).Select(group => group.First()).ToList();
                 dayUniqueList.RemoveAll(u => u.ActorEnum == GameObjects.Actor.Empty);
-                var debugSpots = dayActorList.FindAll(act => act.OldActorEnum == GameObjects.Actor.HitSpot || act.OldActorEnum == GameObjects.Actor.WallTalkSpot);
+                #if DEBUG
+                var _all_spots = dayActorList.FindAll(act => act.OldActorEnum == GameObjects.Actor.HitSpot || act.OldActorEnum == GameObjects.Actor.WallTalkSpot);
+                #endif
                 for (int a = 0; a < dayUniqueList.Count; a++)
                 {
                     var uniqueActor = new List<Actor> { dayUniqueList[a] };
@@ -1461,8 +1459,6 @@ namespace MMR.Randomizer
                 if (replacementCandidates.Count == 0) // did not find any cheap object actors
                 {
                     /// lets try actors that have lots of copies, those can sometimes have too many
-                    //var sortedGroups = firstRestrictions.OrderBy(x => x).GroupBy(x => x.ActorEnum);
-                    //List<List<Actor>> bucketSortedList = sortedGroups.Select(g => g.ToList()).ToList(); // not working and I dont know this system enough to get it working, screw it writing it manually
                     List<(int type, int count)> bucketList = new List<(int type, int count)>();
                     foreach (var actor in firstRestrictions)
                     {
@@ -1582,7 +1578,6 @@ namespace MMR.Randomizer
                 }
 
                 // lower swimming off the surface
-                var waterVariants = testActor.GetWaterVariants();
                 if (testActor.CurrentVariantIsType(GameObjects.ActorType.Water) &&
                     testActor.OldVariantIsType(GameObjects.ActorType.WaterTop)) 
                 {
@@ -1593,7 +1588,6 @@ namespace MMR.Randomizer
                 }
 
                 // raise swimming off the floor
-                //var waterVariants = testActor.ActorEnum.GetAttribute<WaterVariantsAttribute>();
                 if (testActor.CurrentVariantIsType(GameObjects.ActorType.Water) &&
                     testActor.OldVariantIsType(GameObjects.ActorType.WaterBottom)) 
                 {
@@ -1944,7 +1938,8 @@ namespace MMR.Randomizer
 
         private static void AddExtraOtherThingsIfEmpty(SceneEnemizerData thisSceneData, StringBuilder log)
         {
-            // someone is complaining about never not having enough arrows
+            /// someone is complaining about never not having enough arrows
+
             if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.OceanSpiderHouse)
             {
                 var emptyActors = thisSceneData.Actors.FindAll(act => act.ActorEnum == GameObjects.Actor.Empty);
@@ -1954,7 +1949,7 @@ namespace MMR.Randomizer
                 {
                     // if we have at least one free actor that oculd be placed on the ground we should totally make it a arrow pot
                     var randomOsFreePot = oshFreeActors[_seedRNG.Next(oshFreeActors.Count())];
-                    // 741E is vanilla arrow dropper here
+                    // 741E is vanilla arrow droping pot
                     randomOsFreePot.ChangeActor(GameObjects.Actor.ClayPot, vars: 0x711E, modifyOld: true);
                     log.AppendLine($" ++ Adding extra pot for arrows [{randomOsFreePot.OldName}][{randomOsFreePot.Room}][{randomOsFreePot.RoomActorIndex}] ");
                 }
@@ -2145,66 +2140,46 @@ namespace MMR.Randomizer
 
         public static void ShuffleStandaloneActors(SceneEnemizerData thisSceneData)
         {
-            /// this is the same as above but for the actors that previously did not have an object,
+            /// this is the same as ShuffleActors but for the actors that previously did not have an object,
             /// so they can use ANY object require actor, or free actors
 
             var StandaloneActors = thisSceneData.StandaloneActors; // slots
 
             if (StandaloneActors == null) throw new Exception("StandaloneActors busted");
 
-            // we need to split this per-room so we can can get a slimmer candidate list? maybe that can wait until its working optimize later
-
-            // we need to generate a candidate list for all actors without an object just like regular? if we want blocking sensitivity yeah
             // sort the list of special actors into list of per type
             var allStandaloneActorsPerEnum = new List<List<Actor>>(); // same index for both, this is a list of all actors per type
             var allCandidatesPerStandalone = new List<List<Actor>>(); // all candidates for the type replacement
             var uniqueStandaloneActorTypes = thisSceneData.StandaloneActors.Select(act => act.OldActorEnum).Distinct().ToList();
-            if (uniqueStandaloneActorTypes == null) throw new Exception("unique free actors busted");
+
             for ( int a = 0; a < uniqueStandaloneActorTypes.Count; a++)
             {
                 var actorType = uniqueStandaloneActorTypes[a];
                 var allActorInstances = thisSceneData.StandaloneActors.FindAll(act => act.OldActorEnum == actorType);
                 allStandaloneActorsPerEnum.Add(allActorInstances);
 
-                // this is ripped and modified from GenerateActorCandidates
-                //var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(act => act.ObjectIndex() == thisSceneData.Objects[objectIndex]);
                 var objectHasBlockingSensitivity = allActorInstances.Any(actor => actor.Blockable == false);
                 // get a list of matching actors that can fit in the place of the previous actor
                 // assumed that we will never have a fairy dropping object-less actor, those were only enemies
                 // issue: this doesnt account for which room we are in, this pool is roomless in consideration
                 var newCandiateList = GetMatchPool(thisSceneData, allActorInstances, containsFairyDroppingEnemy:false, objectHasBlockingSensitivity);
 
-
-                //allCandidatesPerStandalone.Add(newCandiateList);
-
                 for (int actorIndex = 0; actorIndex < allActorInstances.Count(); actorIndex++)
                 {
                     var oldActor = allActorInstances[actorIndex];
-                    var oldActorRoomObjects = thisSceneData.AllObjects[oldActor.Room];
                     // since we know there is another check later, lets remove room limits from this consideration entirely
-                    //var actorsPerRoomCount = allActorInstances.FindAll(act => act.Room == oldActor.Room).Count();
 
-                    // get the objects for this room
-                    // quickly grab the candidates for the available objects
-
-                    // ZZZ
-                    // TODO this is terribly broken, does not consider type or blocking restrictions
+                    // quickly populate a candidate list from the list of available actors from free objects
+                    var oldActorRoomObjects = thisSceneData.AllObjects[oldActor.Room];
                     var candidatesPerActor = new List<Actor>();
                     for (int o = 0; o < oldActorRoomObjects.Count; o++)
                     {
                         var obj = oldActorRoomObjects[o];
-                        var oldList = thisSceneData.AcceptableCandidates; // debug
-                        //var actorsForThisObject = thisSceneData.AcceptableCandidates.FindAll(act => act.ObjectId == obj); // waay too permissive
+                        #if DEBUG
+                        var _oldList = thisSceneData.AcceptableCandidates;
+                        #endif
                         var actorsForThisObject = newCandiateList.FindAll(act => act.ObjectId == obj);
-                        // todo check if the replacment is banned on a per actor bassis
-
-                        // assume not possible for free actors for now // TODO once we start splitting actor lists this is dangerous
-                        //var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(act => act.ObjectIndex() == thisSceneData.Objects[objectIndex]);
-                        //var objectHasBlockingSensitivity = currentTargetActors.Any(actor => actor.Blockable == false);
-                        // get a list of matching actors that can fit in the place of the previous actor
-                        //var specificCandidateList = GetMatchPool(thisSceneData, thisSceneData.ActorsPerObject[objectIndex], containsFairyDroppingEnemy:false, objectHasBlockingSensitivity);
-                        // except we already did this above? should we limit to one?
-
+                        
                         candidatesPerActor.AddRange(actorsForThisObject.ToList());
                     }
                     candidatesPerActor.AddRange(thisSceneData.SceneFreeActors.ToList());
@@ -2222,8 +2197,7 @@ namespace MMR.Randomizer
                         }
                     }
 
-                    if (trimmedCandidates.Count == 0)
-                        continue;
+                    if (trimmedCandidates.Count == 0) continue;
 
                     Debug.Assert(trimmedCandidates.Count > 1); // == 1, means our testing is super limiting (usually broken)
 
@@ -3164,7 +3138,6 @@ namespace MMR.Randomizer
             thisSceneData.Objects = GetSceneEnemyObjects(thisSceneData);
             if (thisSceneData.Objects.Count == 0)
                 return;
-            //var sceneObjectLimit = SceneUtils.GetSceneObjectBankSize(scene.SceneEnum); // er, this isnt used here anymore, why did intelesense not tell me?
             WriteOutput(" time to read scene objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
             WriteOutput("=========================================================================");
@@ -3289,16 +3262,14 @@ namespace MMR.Randomizer
                 if (objectOverflowCheck > 0){
                     WriteOutput($"---- bogo REJECTED: obj pre-check failed (size:{objectOverflowCheck}): [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
                     objectTooLargeCount++;
-                    continue; // not enough space, continue
+                    continue; // not enough space, retry bogo
                 } else {
                     WriteOutput($" pre-checking object size: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
                 }
 
-                // for each object, attempt to change actors 
                 for (int objectIndex = 0; objectIndex < thisSceneData.ChosenReplacementObjects.Count; objectIndex++)
                 {
-                    // todo consider attempting to make this multithreaded at this upper level
-                    //   issues: we would need to do a final actor trim pass after (edit: we do this now anyway, we still need an accurate type read)
+                    /// because some actors share objects, and object list is a bigger limit than actor list, we randomize actors by focusing on objects
 
                     var knownChangedActorList = new List<Actor>();
                     var chosenObject = thisSceneData.ChosenReplacementObjects[objectIndex].ChosenV;
@@ -3335,20 +3306,10 @@ namespace MMR.Randomizer
                     WriteOutput($" exit sandalone randomize: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
                 }
 
-                // this no longer works after object re-write, can just lead to rando thinking it has more objects than it does
-                // for now, disable this and test without. I dont think it is needed anymore, now that we shuffle the available candidiates every x cycles
-                //if (loopsCount >= 100)
-                //{
-                // if we are taking a really long time to find replacements, remove a couple optional actors/objects
-                //CullOptionalActors(scene, thisSceneData.ChosenReplacementObjects, loopsCount);
-                //WriteOutput(" cull optionals: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
-                //}
-
                 // set objects and actors for isSizeAcceptable to use, and our debugging output
                 thisSceneData.ActorCollection.SetNewActors(scene, thisSceneData.AllObjects ); // 30~70ms for this? hmm
 
                 WriteOutput($" set for size check: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
-
 
                 // dyna overflow is a common crash concern, here we need to check if we overflow and shrink the dyna actor count
                 var dynaLog = new StringBuilder();
@@ -3361,7 +3322,6 @@ namespace MMR.Randomizer
 
                     var dynaTrimSuccess = TrimDynaActors(thisSceneData, dynaLog);
                 }
-
                 WriteOutput($" set for dyna trim: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
                 // we need to do one last actor limit pass because we didnt keep track of limits and may have re-added more earlier during trimming
@@ -3373,11 +3333,11 @@ namespace MMR.Randomizer
 
                 WriteOutput($" set after second setnewactors for final data test: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
-                if (thisSceneData.ActorCollection.isSizeAcceptable(bogoLog)) // SUCCESS
+                if (thisSceneData.ActorCollection.isSizeAcceptable(bogoLog))
                 {
+                    // RANDOMIZATION SUCCESSFUL
                     WriteOutput($" after isSizeAcceptable: [{GET_TIME(bogoStartTime)}ms][{GET_TIME(thisSceneData.StartTime)}ms]", bogoLog);
 
-                    //thisSceneData.Log.Append(objectReplacementLog);
                     thisSceneData.Log.Append(dynaLog);
                     break; // done, break loop
                 }

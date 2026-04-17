@@ -153,25 +153,6 @@ namespace MMR.Randomizer.Enemizer
             ReadWriteUtils.Arr_WriteU32(cuccoChickData, 0x30, 0x10000005); // BGEZ -> B (branch always)
         }
 
-        public static void FixStreamSfxVolume()
-        {
-            /// EnStream is an unused actor leftover from OOT
-            ///   it is the swirling water vortexes that if you swim into you will void out in OOT: Water Temple
-            /// However this actor has a flaw: it calls a function to play a swirling water sfx
-            ///   but it uses the wrong function to play the sfx, it plays the same volume from any distance which is really annoying
-            /// so here we change it back to the default sfx function almost all actors use to fix it
-            /// we are lucky that the old and new function takes the same parameters, so we can change just the jal
-            ///   decomp tells me there are no other changes needed to swap them
-
-            // except I now use a custom mmra actor to replace this so that they match water height, this now hits the wrong spot
-
-            //if (!ReplacementListContains(GameObjects.Actor.En_Stream)) return;
-
-            var streamFid = GameObjects.Actor.En_Stream.FileListIndex();
-            RomUtils.CheckCompressed(streamFid);
-            var streamData = RomData.MMFileList[streamFid].Data;
-            ReadWriteUtils.Arr_WriteU32(streamData, 0x39C, 0x0C02E3B2); // jal func_800B8FE8() -> Actor_PlaySfxAtPos()
-        }
 
         private static void FixBomberKidsGameFinishWarp()
         {
@@ -264,7 +245,7 @@ namespace MMR.Randomizer.Enemizer
             RomUtils.CheckCompressed(ishiFid);
             var ishiData = RomData.MMFileList[ishiFid].Data;
             ReadWriteUtils.Arr_WriteU32(ishiData, Dest: 0x12CC, val: 0x00000000); // JAL (Actor_SetSwitchFlag) -> NOP
-            // there is code to stop the boulder from dropping random good shit, we should have that
+            // there is code to stop the boulder from dropping random good shit, remove
             ReadWriteUtils.Arr_WriteU32(ishiData, Dest: 0x8CC, val: 0x00000000); // BNEZ (If ! ishi param & 1) -> NOP
         }
 
