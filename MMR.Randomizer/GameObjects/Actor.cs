@@ -697,7 +697,7 @@ namespace MMR.Randomizer.GameObjects
         //Scene.SouthClockTown
         [ForbidFromScene(Scene.WoodfallTemple,
             Scene.SouthernSwamp, Scene.SouthernSwampClear, // kinda important for entering the swamp spiderhouse
-            Scene.DekuShrine, // TODO re-enable if we get all of the check list fleshed out, but people use this for weirdshot
+            //Scene.DekuShrine, // disabled we have redundant object enabled
             Scene.WestClockTown, //Scene.SouthernSwampClear,
             Scene.WoodfallTemple, // assumed the giant flower in the middle needs the object even if all of hte other uses could be elimnated
             Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayCoast,

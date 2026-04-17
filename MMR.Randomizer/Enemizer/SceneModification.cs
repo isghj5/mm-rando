@@ -145,6 +145,24 @@ namespace MMR.Randomizer.Enemizer
             aboveCowGrottoFlower.OldVariant = aboveCowGrottoFlower.Variants[0] = 0x0077;
         }
 
+        private static void DuplicateObjectForTorchInButlerRace()
+        {
+            /// the butler race area seems to have a completely unnecessary extra object: deku palace guard
+            /// going to try replacing it with torches so we can randomize the torches
+
+            var dekuShrineScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuShrine.FileID());
+
+            foreach (var map in dekuShrineScene.Maps)
+            {
+                var objLoc = map.Objects.FindIndex(obj => obj == GameObjects.Actor.DekuPatrolGuard.ObjectIndex());
+                map.Objects[objLoc] = GameObjects.Actor.Torch.ObjectIndex();
+            }
+
+            // gotta change the torch variant to non-vanilla so actorizer doesnt touch it
+            var torch = dekuShrineScene.Maps[0].Actors[19]; // 0x287F default vars
+            torch.OldVariant = 0x28FF; // setting group to 1 insted of zero is the best I think I can do here? it doesnt crash kz
+        }
+
         private static void FixTerminaFieldActorPosRot()
         {
             ///   some of the Eeno and Leever spawns in north termina field is too high above the ground, 
@@ -2529,6 +2547,7 @@ namespace MMR.Randomizer.Enemizer
                 RotateTalkSpotsAndHitSpots();
                 NudgeFlyingEnemiesForTingle();
                 DistinguishLogicRequiredDekuFlowers();
+                DuplicateObjectForTorchInButlerRace();
 
                 // tweaks to add actorizer variety
                 RandomlySwapOutZoraBandMember(rng);
