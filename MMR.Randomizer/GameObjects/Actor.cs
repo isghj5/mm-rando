@@ -2239,6 +2239,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         //[ForbidFromScene(Scene.CuccoShack)] // logic should work here..
         [AlignedCompanionActor(GrassRockCluster, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x702, 0xC02, 0x802, 0x902, 0x0402, 0x1F02)]
+        [PlacementWeight(70)]
         Grog = 0xA6, // En_Hs
 
         [ActorizerEnabled]
