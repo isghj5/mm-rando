@@ -2796,6 +2796,16 @@ namespace MMR.Randomizer.Enemizer
                 }
                 SceneUtils.UpdateScene(oceanspiderhouseScene);
 
+                var curiosistyShopScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.CuriosityShop.FileID());
+                var kafeiInShop = curiosistyShopScene.Maps[1].Actors[1];
+                if (kafeiInShop.ActorEnum != GameObjects.Actor.Kafei)
+                {
+                    kafeiInShop.Position = new vec16(-189, 21, -425);
+                    // does he need rotation?
+                }
+                SceneUtils.UpdateScene(curiosistyShopScene);
+
+
             }
 
             FixEvanRotationIfRandomized();
