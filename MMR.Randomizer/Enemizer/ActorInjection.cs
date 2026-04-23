@@ -12,6 +12,9 @@ using MMR.Common.Extensions;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Utils;
 
+using ActorEnum = MMR.Randomizer.GameObjects.Actor;
+using ActorInst = MMR.Randomizer.Models.Rom.Actor;
+
 namespace MMR.Randomizer.Enemizer
 {
     /// <summary>
@@ -60,7 +63,7 @@ namespace MMR.Randomizer.Enemizer
         public static InjectedActor ParseMMRAMeta(string metaFile)
         {
             /// every MMRA comes with one meta file per bin, this contains metadata
-            var vanillaActors = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList();
+            var vanillaActors = Enum.GetValues(typeof(ActorEnum)).Cast<ActorEnum>().ToList();
             var newInjectedActor = new InjectedActor();
 
             foreach (var line in metaFile.Split('\n'))
@@ -244,7 +247,7 @@ namespace MMR.Randomizer.Enemizer
             // decomp lets us more easily modify actors now
             // for now, until cat/zoey figure out how to directly integrate the projects
             //   I will, instead, compile with decomp, and then extract the binaries and inject here
-            // MMRA files: Majora Mask Rando Actor files, just zip files that contain binaries and extras later
+            // MMRA files: Majora Mask Rando ActorInst files, just zip files that contain binaries and extras later
             // ideas for extras: notes to tell rando where sound effects are to be replaced
             // function pointers to interconnect the code
 
@@ -314,7 +317,7 @@ namespace MMR.Randomizer.Enemizer
                             if (copyOvlFileSearch != null)
                             {
                                 throw new Exception("\n\n" +
-                                    "ERROR (Actor Inject):\n" +
+                                    "ERROR (ActorInst Inject):\n" +
                                     " Two separate actor files are trying to overwrite the same file.\n" +
                                     "File 1: " + injectedActor.filename + "\n" +
                                     "File 2: " + copyOvlFileSearch.filename + "\n\n" +
@@ -353,7 +356,7 @@ namespace MMR.Randomizer.Enemizer
                             // we have to add the changes to our list of actors we are going to use in enemizer/actorizer
                             // behavior now differs between replacement actors and brand new
                             var replacementEnemySearch = Enemies.ReplacementCandidateList.Find(act => act.ActorId == injectedActor.ActorId);
-                            //var replacementListSearch = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList().Find(act => (int) act == injectedActor.ActorId);
+                            //var replacementListSearch = Enum.GetValues(typeof(ActorEnum)).Cast<ActorEnum>().ToList().Find(act => (int) act == injectedActor.ActorId);
                             if (replacementEnemySearch != null) // previous actor
                             {
                                 replacementEnemySearch.UpdateActor(injectedActor);
@@ -367,7 +370,7 @@ namespace MMR.Randomizer.Enemizer
                             } // */
                             else
                             {
-                                replacementEnemySearch = new Actor(injectedActor, Path.GetFileName(filePath));
+                                replacementEnemySearch = new ActorInst(injectedActor, Path.GetFileName(filePath));
                                 Enemies.ReplacementCandidateList.Add(replacementEnemySearch);
                             }
 
@@ -376,7 +379,7 @@ namespace MMR.Randomizer.Enemizer
                                 var freeCandidateSearch = Enemies.FreeCandidateList.Find(act => act.ActorId == injectedActor.ActorId);
                                 if (freeCandidateSearch == null)
                                 {
-                                    Enemies.FreeCandidateList.Add(new Actor(injectedActor, filename));
+                                    Enemies.FreeCandidateList.Add(new ActorInst(injectedActor, filename));
                                 }
                                 else
                                 {
@@ -539,9 +542,9 @@ namespace MMR.Randomizer.Enemizer
             int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
 
             // generate a list of actors sorted by fid
-            var actorList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList();
-            actorList.Remove(GameObjects.Actor.Empty);
-            actorList.Remove(GameObjects.Actor.NULL);
+            var actorList = Enum.GetValues(typeof(ActorEnum)).Cast<ActorEnum>().ToList();
+            actorList.Remove(ActorEnum.Empty);
+            actorList.Remove(ActorEnum.NULL);
             actorList.RemoveAll(act => act.FileListIndex() < 38);
             var fidSortedActors = actorList.OrderBy(x => x.FileListIndex()).ToList();
 
@@ -635,11 +638,11 @@ namespace MMR.Randomizer.Enemizer
         public static void InjectNewActors()
         {
             /// this might get merged back in with scan, and/or the pieces get moved back here
-            /// we need to build an Actor from our injected actor, and finish injected actor conversions
+            /// we need to build an ActorInst from our injected actor, and finish injected actor conversions
 
             if (Enemies.InjectedActors.Count == 0) return;
 
-            var freeOverlaySlots = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
+            var freeOverlaySlots = Enum.GetValues(typeof(ActorEnum)).Cast<ActorEnum>()
                         .Where(act => act.ToString().Contains("Empty")).ToList();
 
             // in case DMA is restricted, start with a list of known bunk files
@@ -649,16 +652,16 @@ namespace MMR.Randomizer.Enemizer
                 // but MMR might use them, do not
                 // 1538, 1539, 1540, 1541, 1542, 1543, 1544, 1545, 1546, 1547, 1548, 1549, 1550, 1551,
                 // unused actors or objects:
-                GameObjects.Actor.UnusedClockTowerSpotlight.FileListIndex(),
-                GameObjects.Actor.Obj_Ocarinalift.FileListIndex(),
-                GameObjects.Actor.UnusedStoneTowerPlatform.FileListIndex(),
-                GameObjects.Actor.Unused_En_Boj_01.FileListIndex(),  // empty actors with nothing in them
-                GameObjects.Actor.Unused_En_Boj_02.FileListIndex(),
-                GameObjects.Actor.Unused_En_Boj_03.FileListIndex(),
-                GameObjects.Actor.En_Boj_04.FileListIndex(),
-                GameObjects.Actor.En_Boj_05.FileListIndex(),
-                //GameObjects.Actor.En_Stream.FileListIndex(), // is this really unused? we now use it in actorizer
-                GameObjects.Actor.SariaSongOcarinaEffects.FileListIndex(), // should be lower down as we might need to use it later
+                ActorEnum.UnusedClockTowerSpotlight.FileListIndex(),
+                ActorEnum.Obj_Ocarinalift.FileListIndex(),
+                ActorEnum.UnusedStoneTowerPlatform.FileListIndex(),
+                ActorEnum.Unused_En_Boj_01.FileListIndex(),  // empty actors with nothing in them
+                ActorEnum.Unused_En_Boj_02.FileListIndex(),
+                ActorEnum.Unused_En_Boj_03.FileListIndex(),
+                ActorEnum.En_Boj_04.FileListIndex(),
+                ActorEnum.En_Boj_05.FileListIndex(),
+                //ActorEnum.En_Stream.FileListIndex(), // is this really unused? we now use it in actorizer
+                ActorEnum.SariaSongOcarinaEffects.FileListIndex(), // should be lower down as we might need to use it later
                 806, // OoT potion shop man (the first object, not the updated one they used in their unused actor)
                 692, // OoT Child zelda (the first object, not the updated one they used in their 3 minute cutscene actor)
             };
@@ -682,7 +685,7 @@ namespace MMR.Randomizer.Enemizer
 
             // note: this code does not work and is not reached, this is for brand new actors that dont have vanilla files
             // which is currently and always had been broken [dec/2023]
-            foreach (var injectedActor in Enemies.InjectedActors.FindAll(act => act.ActorId == (int)GameObjects.Actor.NULL))
+            foreach (var injectedActor in Enemies.InjectedActors.FindAll(act => act.ActorId == (int)ActorEnum.NULL))
             {
                 /// brand new actors, not replacement
                 if (injectedActor.buildVramStart == 0)
@@ -707,7 +710,7 @@ namespace MMR.Randomizer.Enemizer
                 var newActorName = filenameSplit[filenameSplit.Length - 1];
 
                 RomData.MMFileList[newFileID] = file;
-                Enemies.ReplacementCandidateList.Add(new Actor(injectedActor, newActorName));
+                Enemies.ReplacementCandidateList.Add(new ActorInst(injectedActor, newActorName));
 
                 // TODO inject objects too, for actors that have custom objects
 
