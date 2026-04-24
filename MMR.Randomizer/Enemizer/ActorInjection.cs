@@ -312,16 +312,19 @@ namespace MMR.Randomizer.Enemizer
                             var injectedActor = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
                             injectedActor.filename = filePath; // debugging
 
-                            // check for duplicate actor
-                            var copyOvlFileSearch = Enemies.InjectedActors.Find(act => act.fileID == injectedActor.fileID);
-                            if (copyOvlFileSearch != null)
+                            if (injectedActor.fileID != 0) 
                             {
-                                throw new Exception("\n\n" +
-                                    "ERROR (ActorInst Inject):\n" +
-                                    " Two separate actor files are trying to overwrite the same file.\n" +
-                                    "File 1: " + injectedActor.filename + "\n" +
-                                    "File 2: " + copyOvlFileSearch.filename + "\n\n" +
-                                    "Please remove one before building another seed.\n");
+                                // check for duplicate actor
+                                var copyOvlFileSearch = Enemies.InjectedActors.Find(act => act.fileID == injectedActor.fileID);
+                                if (copyOvlFileSearch != null)
+                                {
+                                    throw new Exception("\n\n" +
+                                        "ERROR (Actor Inject):\n" +
+                                        " Two separate actor files are trying to overwrite the same file.\n" +
+                                        "File 1: " + injectedActor.filename + "\n" +
+                                        "File 2: " + copyOvlFileSearch.filename + "\n\n" +
+                                        "Please remove one before building another seed.\n");
+                                }
                             }
 
                             // we need to inject actors if we find them
@@ -683,8 +686,7 @@ namespace MMR.Randomizer.Enemizer
             }
 
 
-            // note: this code does not work and is not reached, this is for brand new actors that dont have vanilla files
-            // which is currently and always had been broken [dec/2023]
+            // note: this code wasn't working 2023, might be working again 2026 after years of inactivity, needs testing
             foreach (var injectedActor in Enemies.InjectedActors.FindAll(act => act.ActorId == (int)ActorEnum.NULL))
             {
                 /// brand new actors, not replacement
@@ -701,7 +703,9 @@ namespace MMR.Randomizer.Enemizer
                 var file = RomData.MMFileList[newFileID];
                 file.Data = injectedActor.overlayBin;
                 file.WasEdited = true;
-                file.IsCompressed = true; // assumption: all actors are compressed
+                //file.IsCompressed = true; // assumption: all actors are compressed
+                file.IsCompressed = false; // leaving true was removed under suspicion of injected actor breaking
+                file.Cmp_End = 0x0;
 
                 // update actor ID in overlay init vars, now that we know the new actor ID value
                 ReadWriteUtils.Arr_WriteU16(file.Data, (int)injectedActor.initVarsLocation, (ushort)injectedActor.ActorId);
