@@ -211,14 +211,14 @@ namespace MMR.Randomizer
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool ReplacementListContains(ActorInst actor)
+        public static bool ReplacementListContains(ActorEnum actor)
         {
             return ReplacementCandidateList.Find(act => act.ActorEnum == actor) != null;
         }
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ReplacementListRemove(List<ActorInst> replaceList, ActorInst actor)
+        public static void ReplacementListRemove(List<ActorInst> replaceList, ActorEnum actor)
         {
             // might be an easier one liner but this could get used a lot
             var removeActor = replaceList.Find(act => act.ActorEnum == actor);
@@ -239,7 +239,7 @@ namespace MMR.Randomizer
             var scene = thisSceneData.Scene;
             var log = thisSceneData.Log;
 
-            void FixActorLastSecond(ActorInst mapActor, ActorInst matchingEnemy, int mapIndex, int actorIndex)
+            void FixActorLastSecond(ActorInst mapActor, ActorEnum matchingEnemy, int mapIndex, int actorIndex)
             {
                 // since not all actors are usable, save doing some of this work only for actors we actually want to modify
                 // do this only after we know this is an actor we want
@@ -454,7 +454,7 @@ namespace MMR.Randomizer
         // todo move to actorutils
         // TODO rename to ACTOR is check blocked, as we will soon need to do this for actors not whole actor objects
         // for now its just the objectlessactors, checkrestricted
-        public static GameObjects.Item? ObjectIsCheckBlocked(GameObjects.Scene sceneEnum, ActorInst testActor, int variant = -1)
+        public static GameObjects.Item? ObjectIsCheckBlocked(GameObjects.Scene sceneEnum, ActorEnum testActor, int variant = -1)
         {
             /// checks if randomizing the actor would interfere with getting access to a check
             /// and then checks if the item is junk, before allowing randimization
@@ -634,7 +634,7 @@ namespace MMR.Randomizer
                     ActorInst matchingEnemy = thisSceneData.Actors.Find(act => act.ObjectId == obj);
                     if (matchingEnemy == null) continue;
 
-                    ActorInst matchingEnum = matchingEnemy.ActorEnum;
+                    ActorEnum matchingEnum = matchingEnemy.ActorEnum;
                     if (matchingEnum > 0                                                         // exists in the list of enemies we want to change
                        && !matchingEnum.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
@@ -1987,7 +1987,7 @@ namespace MMR.Randomizer
                 //////////////////////////////////////////////////////
                 #if DEBUG
 
-                bool TestHardSetObject(GameObjects.Scene targetScene, ActorInst target, ActorInst replacement)
+                bool TestHardSetObject(GameObjects.Scene targetScene, ActorEnum target, ActorEnum replacement)
                 {
                     if (thisSceneData.Scene.File == targetScene.FileID() && thisSceneData.Objects[objectIndex] == target.ObjectIndex())
                     {
