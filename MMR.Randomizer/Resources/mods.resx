@@ -382,6 +382,9 @@
   <data name="movement_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\movement-4;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="picto_actor_detect_fix" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\picto-actor-detect-fix.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="postman_testing" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\postman-testing;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
