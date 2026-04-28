@@ -1529,5 +1529,18 @@ namespace MMR.Randomizer.Resources {
                 return ((byte[])(obj));
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] picto_actor_detection_fix
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("picto-actor-detect-fix", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+
     }
 }
