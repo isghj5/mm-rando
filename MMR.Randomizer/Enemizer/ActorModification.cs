@@ -278,6 +278,19 @@ namespace MMR.Randomizer.Enemizer
             ReadWriteUtils.Arr_WriteU32(dragonflyData, Dest: 0x2498, val: 0x10000018); // <irrelevant code> -> Jump to 24E4
         }
 
+        private static void FixShellBladeCollider()
+        {
+            // Shell blade, the clam enemy from OOT water temple, only shows up in one place in MM
+            // this actor, in it's update function, checks if the player is swimming before checking the colliders, which means on land it cannot attack you
+            // this code does not exist in OOT
+
+            var sbFid = GameObjects.Actor.Shellblade.FileListIndex();
+            RomUtils.CheckCompressed(sbFid);
+            var dragonflyData = RomData.MMFileList[sbFid].Data;
+            // null the branch
+            ReadWriteUtils.Arr_WriteU32(dragonflyData, Dest: 0xCC4, val: 0x00000000); // BGZ (past the code we want) -> NOP
+        }
+
 
         public static void ModifyActors()
         {
@@ -296,6 +309,7 @@ namespace MMR.Randomizer.Enemizer
             FixSilverIshi();
             FixBabaShadows();
             FixDragonFlyShadows();
+            FixShellBladeCollider();
         }
     }
 }

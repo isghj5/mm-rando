@@ -1294,9 +1294,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0xF00)]
         [FileID(106)]
         [ObjectListIndex(0x8E)]
+        // params: there are none, it's free realestate
         // works on ground too but cannot add ground without ground enemies showing up in fish tank
         // there is a bug sometimes on ground it loses its collider (in a small scene)
-        //[GroundVariants]
+        [GroundVariants(1)]
         [WaterBottomVariants(0)]
         Shellblade = 0x64, // En_Sb
 
