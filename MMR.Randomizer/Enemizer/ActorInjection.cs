@@ -56,6 +56,7 @@ namespace MMR.Randomizer.Enemizer
         public byte[] overlayBin;
         public uint overlayBinLen;
         public string filename = ""; // debugging
+        public bool isNewActor = false;
     }
 
     class ActorInjection
@@ -625,6 +626,13 @@ namespace MMR.Randomizer.Enemizer
                     ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0C, newVRAMEnd);
                     ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newProfileAddr);
 
+                    // new actors need allocType set to NORMAL (0), otherwise it retains whatever value
+                    // was in the empty slot from the original ROM which may be incorrect
+                    if (injectedActor.isNewActor)
+                    {
+                        ReadWriteUtils.Arr_WriteU16(actorOvlTblData, entryLoc + 0x1C, 0);
+                    }
+
                     previousLastVRAMEnd = newVRAMEnd + (newVRAMEnd % 0x10); // not sure if dma padding matters here
                     RomData.MMFileList[fileID] = file;
 
@@ -723,6 +731,7 @@ namespace MMR.Randomizer.Enemizer
                 Enemies.ReplacementCandidateList.Add(new ActorInst(injectedActor, newActorName));
 
                 log.WriteLine($"New actor [{injectedActor.filename}] injected at actorId [0x{injectedActor.ActorId.ToString("X")}] fid [{injectedActor.fileID}]");
+                injectedActor.isNewActor = true;
 
                 // TODO inject objects too, for actors that have custom objects
 
