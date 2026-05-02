@@ -3471,8 +3471,17 @@ namespace MMR.Randomizer
             {
                 DateTime enemizerStartTime = DateTime.Now;
 
+                int seed = _randomized.Seed; // order of scene shuffle is up to the cpu scheduler, to keep these matching the seed, set them all to start at the same value
+
                 ActorInjection.ScanForMMRA(directory: "actors", _randomized.Settings);
-                ActorInjection.InjectNewActors();
+                using (StreamWriter log = new StreamWriter(_outputSettings.OutputROMFilename + "_EnemizerLog.txt", append: true))
+                {
+                    log.Write("Enemizer version: Isghj's Actorizer Test 97.3\n");
+                    log.Write("seed: [ " + seed + " ]");
+
+                    ActorInjection.InjectNewActors(log);
+                    log.Write(_syncedLog.ToString());
+                }
 
                 // for dingus that want moonwarp, re-enable dekupalace
                 var SceneSkip = new GameObjects.Scene[] { //};
@@ -3493,8 +3502,6 @@ namespace MMR.Randomizer
                     newSceneList.Remove(item);
                     newSceneList.Insert(0, item);
                 }
-                //int seed = random.Next(); // order is up to the cpu scheduler, to keep these matching the seed, set them all to start at the same value
-                int seed = _randomized.Seed;
 
                 var previousThreadPriority = Thread.CurrentThread.Priority;
                 Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
@@ -3525,8 +3532,6 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 97.3\n");
-                    sw.Write("seed: [ " + seed + " ]");
                 }
             }
             catch (Exception e)

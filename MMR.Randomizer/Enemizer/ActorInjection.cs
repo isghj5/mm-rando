@@ -491,7 +491,7 @@ namespace MMR.Randomizer.Enemizer
 
                     relocEntryLoc += 4; // another
                 }
-                else if (commandType == 0x4 /* R_MIPS_24 */) // JAL function calls
+                else if (commandType == 0x4 /* R_MIPS_26 */) // JAL function calls
                 {
                     int jalLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
                     uint jal = ReadWriteUtils.Arr_ReadU32(file.Data, jalLoc) & 0x00FFFFFF;
@@ -638,7 +638,7 @@ namespace MMR.Randomizer.Enemizer
             }// end Foreach overlay in overlaylist
         } // end UpdateOverlayTable
 
-        public static void InjectNewActors()
+        public static void InjectNewActors(StreamWriter log)
         {
             /// this might get merged back in with scan, and/or the pieces get moved back here
             /// we need to build an ActorInst from our injected actor, and finish injected actor conversions
@@ -655,18 +655,24 @@ namespace MMR.Randomizer.Enemizer
                 // but MMR might use them, do not
                 // 1538, 1539, 1540, 1541, 1542, 1543, 1544, 1545, 1546, 1547, 1548, 1549, 1550, 1551,
                 // unused actors or objects:
-                ActorEnum.UnusedClockTowerSpotlight.FileListIndex(),
-                ActorEnum.Obj_Ocarinalift.FileListIndex(),
-                ActorEnum.UnusedStoneTowerPlatform.FileListIndex(),
+                //ActorEnum.UnusedClockTowerSpotlight.FileListIndex(),
+                //ActorEnum.Obj_Ocarinalift.FileListIndex(),
+                //ActorEnum.UnusedStoneTowerPlatform.FileListIndex(),
                 ActorEnum.Unused_En_Boj_01.FileListIndex(),  // empty actors with nothing in them
                 ActorEnum.Unused_En_Boj_02.FileListIndex(),
                 ActorEnum.Unused_En_Boj_03.FileListIndex(),
-                ActorEnum.En_Boj_04.FileListIndex(),
-                ActorEnum.En_Boj_05.FileListIndex(),
-                //ActorEnum.En_Stream.FileListIndex(), // is this really unused? we now use it in actorizer
-                ActorEnum.SariaSongOcarinaEffects.FileListIndex(), // should be lower down as we might need to use it later
+                //ActorEnum.En_Boj_04.FileListIndex(), // future grotto spawner
+                //ActorEnum.En_Boj_05.FileListIndex(),
+                
+                //ActorEnum.SariaSongOcarinaEffects.FileListIndex(), // should be lower down as we might need to use it later
                 806, // OoT potion shop man (the first object, not the updated one they used in their unused actor)
                 692, // OoT Child zelda (the first object, not the updated one they used in their 3 minute cutscene actor)
+
+                // using lost woods for debugging, same crash, it doesn't seem to be file collision
+                //GameObjects.Scene.LostWoods.FileID(), // testing, we know these are useless in rando, and they will never be loaded in termina field where the known crash is
+                //GameObjects.Scene.LostWoods.FileID() + 1,
+                //GameObjects.Scene.LostWoods.FileID() + 2,
+                //GameObjects.Scene.LostWoods.FileID() + 3,
             };
 
             int GetUnusedFileID(InjectedActor injActor)
@@ -715,6 +721,8 @@ namespace MMR.Randomizer.Enemizer
 
                 RomData.MMFileList[newFileID] = file;
                 Enemies.ReplacementCandidateList.Add(new ActorInst(injectedActor, newActorName));
+
+                log.WriteLine($"New actor [{injectedActor.filename}] injected at actorId [0x{injectedActor.ActorId.ToString("X")}] fid [{injectedActor.fileID}]");
 
                 // TODO inject objects too, for actors that have custom objects
 
