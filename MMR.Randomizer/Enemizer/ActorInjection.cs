@@ -35,8 +35,8 @@ namespace MMR.Randomizer.Enemizer
 
         // if all new actor, we meed to know where the old vram start was when we shift VRAM for the actor
         public uint buildVramStart = 0;
-        // init vars are located somewhere in .data, we want to know where exactly because its hard coded in overlay table
-        public uint initVarsLocation = 0;
+        // profile data is located somewhere in .data, we want to know where exactly because its hard coded in overlay table
+        public uint ProfileLocation = 0;
 
         // TODO make this match regular actors??
         public List<int> groundVariants = new List<int>();
@@ -195,9 +195,9 @@ namespace MMR.Randomizer.Enemizer
 
                 var uvalue = Convert.ToUInt32(valueStr, fromBase: 16);
 
-                if (command == "initvars_offset")
+                if (command == "initvars_offset") // the old name for the profile section, leave alone until I have time to fix for every file
                 {
-                    newInjectedActor.initVarsLocation = uvalue;
+                    newInjectedActor.ProfileLocation = uvalue;
                 }
                 else if (command == "vram_start")
                 {
@@ -209,11 +209,11 @@ namespace MMR.Randomizer.Enemizer
             var actorGameObj = vanillaActors.Find(act => act.FileListIndex() == newInjectedActor.fileID);
             if (actorGameObj != 0)
             {
-                var initVarsAttr = actorGameObj.GetAttribute<ActorInitVarOffsetAttribute>();
-                if (initVarsAttr != null) // had one before, change now
+                var profileAttr = actorGameObj.GetAttribute<ActorProfileOffsetAttribute>();
+                if (profileAttr != null) // had one before, change now
                 {
                     // untested, might not work
-                    initVarsAttr.Offset = (int)newInjectedActor.initVarsLocation;
+                    profileAttr.Offset = (int) newInjectedActor.ProfileLocation;
                 }
             }
 
@@ -618,12 +618,12 @@ namespace MMR.Randomizer.Enemizer
                     // all the pointers and vram locations in the file need to be updated too
                     UpdateOverlayVRAMReloc(file, sectionOffsets, newVRAMOffset);
 
-                    uint newInitVarAddr = newVRAMStart + injectedActor.initVarsLocation;
+                    uint newProfileAddr = newVRAMStart + injectedActor.ProfileLocation;
 
                     // write the VRAM sections of the overlay table entry
                     ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x08, newVRAMStart);
                     ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0C, newVRAMEnd);
-                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newInitVarAddr);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newProfileAddr);
 
                     previousLastVRAMEnd = newVRAMEnd + (newVRAMEnd % 0x10); // not sure if dma padding matters here
                     RomData.MMFileList[fileID] = file;
@@ -713,8 +713,8 @@ namespace MMR.Randomizer.Enemizer
                 file.IsCompressed = false; // leaving true was removed under suspicion of injected actor breaking
                 file.Cmp_End = 0x0;
 
-                // update actor ID in overlay init vars, now that we know the new actor ID value
-                ReadWriteUtils.Arr_WriteU16(file.Data, (int)injectedActor.initVarsLocation, (ushort)injectedActor.ActorId);
+                // update actor ID in overlay profile, now that we know the new actor ID value
+                ReadWriteUtils.Arr_WriteU16(file.Data, (int)injectedActor.ProfileLocation, (ushort)injectedActor.ActorId);
 
                 var filenameSplit = injectedActor.filename.Split("\\");
                 var newActorName = filenameSplit[filenameSplit.Length - 1];
