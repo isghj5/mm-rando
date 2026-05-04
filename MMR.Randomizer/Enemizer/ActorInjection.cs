@@ -461,8 +461,8 @@ namespace MMR.Randomizer.Enemizer
 
                 if (commandType == 0x5 /* R_MIPS_HI16 */ && commandTypeLookahead == 0x6) // LUI/ADDIU combo
                 {
-                    int luiLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
-                    int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
+                    int luiLoc = sectionOffset + (((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc)) & 0x00FFFFFF);
+                    int addiuLoc = sectionOffset + (((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF);
 
                     // addu treats the last two bytes of our pointer as signed
                     // to fix this, the LUI command is given a carry over bit to fix it, we need to read and write knowing this
@@ -486,7 +486,7 @@ namespace MMR.Randomizer.Enemizer
                 }
                 else if (commandType == 0x6 /* R_MIPS_LO16 */) // another ADDIU after the first combo 
                 {
-                    int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
+                    int addiuLoc = sectionOffset + (((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF);
                     ushort adduPart = (ushort)(pointer & 0xFFFF);
                     ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
 
@@ -494,7 +494,7 @@ namespace MMR.Randomizer.Enemizer
                 }
                 else if (commandType == 0x4 /* R_MIPS_26 */) // JAL function calls
                 {
-                    int jalLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
+                    int jalLoc = sectionOffset + (((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc)) & 0x00FFFFFF);
                     uint jal = ReadWriteUtils.Arr_ReadU32(file.Data, jalLoc) & 0x00FFFFFF;
                     uint shiftedJal = jal << 2;
                     shiftedJal += newVRAMOffset;
@@ -505,7 +505,7 @@ namespace MMR.Randomizer.Enemizer
                 }
                 else if (commandType == 0x2 /* R_MIPS_32 */) // Hard pointer (init/destroy/update/draw pointers can be here, also actual ptr in rodata)
                 {
-                    int ptrLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
+                    int ptrLoc = sectionOffset + (((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc)) & 0x00FFFFFF);
                     uint ptrValue = ReadWriteUtils.Arr_ReadU32(file.Data, ptrLoc);
                     ptrValue += newVRAMOffset;
                     ReadWriteUtils.Arr_WriteU32(file.Data, ptrLoc, ptrValue);
@@ -598,13 +598,17 @@ namespace MMR.Randomizer.Enemizer
                     // the table pointer at the end is an offset from the end, we need to swap it
                     int tableOffset = (int)(file.Data.Length - fileTableEndOffset);
 
-                    // the section table only contains section sizes, we need to walk it to know the offsets
+                    // the section table contains section sizes: textSize, dataSize, rodataSize, bssSize
+                    // we need to walk it to know the offsets of each section within the overlay
                     var sectionOffsets = new int[4];
-                    sectionOffsets[0] = 0; // text (always at the start for our overlay system)
-                    sectionOffsets[1] = sectionOffsets[0] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 0); // data
-                    sectionOffsets[2] = sectionOffsets[1] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 4); // rodata
-                    var bssSize = (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 8);
-                    sectionOffsets[3] = sectionOffsets[2] + bssSize;
+                    var textSize = (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 0);
+                    var dataSize = (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 4);
+                    var rodataSize = (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 8);
+                    var bssSize = (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 12);
+                    sectionOffsets[0] = 0; // text starts at 0
+                    sectionOffsets[1] = textSize; // data starts after text
+                    sectionOffsets[2] = textSize + dataSize; // rodata starts after text + data
+                    sectionOffsets[3] = textSize + dataSize + rodataSize; // bss starts after text + data + rodata
 
                     // have to move the overlay vram location assume its bigger
                     // calculate the new VRAM and offset for our new overlay VRAM location
