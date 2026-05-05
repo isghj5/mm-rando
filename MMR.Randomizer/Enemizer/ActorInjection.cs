@@ -507,6 +507,10 @@ namespace MMR.Randomizer.Enemizer
                 {
                     int ptrLoc = sectionOffset + (((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc)) & 0x00FFFFFF);
                     uint ptrValue = ReadWriteUtils.Arr_ReadU32(file.Data, ptrLoc);
+                    if ((ptrValue & 0x0F000000) != 0) { // decomp checks for this, but it should never trigger
+                        throw new Exception($"Invalid reloc R_MIPS_32 value: [{ptrValue}]");
+                    }
+
                     ptrValue += newVRAMOffset;
                     ReadWriteUtils.Arr_WriteU32(file.Data, ptrLoc, ptrValue);
 
@@ -522,21 +526,21 @@ namespace MMR.Randomizer.Enemizer
 
         public static void UpdateActorOverlayTable()
         {
-            // this is called from romutils.cs right before we build the rom
+            /// every actor has an entry in a table that specifies hardcoded VRAM/VROM locations (decomp: ActorOverlay type)
             /// if overlays have grown, we need to modify their overlay table to use the right values for the new files
             /// every time you move an overlay you need to relocate the vram addresses, so instead of shifting all of them
             ///  we just move the new larger files to the end and leave a hole behind for now
 
             // TODO can we _detect_ this value by looking at rando is already doing?
             // 0x80C260A0 <- known last vanilla vram value
-            const uint theEndOfTakenVRAM = 0x80D00000; // changed to make it visually obvious this is a new actor
-            // can't even remember why I raised it
             //const uint theEndOfTakenVRAM = 0x80CA0000; // TODO change back to lower
+            const uint theEndOfTakenVRAM = 0x80D00000; // changed to make it visually obvious this is a new actor
+
             //const int theEndOfTakenVROM = 0x03100000; // 0x02EE7XXX <- actual
             // maybe if I set it longer away I can skip the extra samples getting corrupted, probably not
             //const int theEndOfTakenVROM = 0x03400000; // stable, was used for like 30 actorizer versions
-            const int theEndOfTakenVROM = 0x05000000; // stable, was used for like 30 actorizer versions
             // WARNING: 0x03880000 is above us, which is Rebbacus's overlay file that was moved, we need to keep that in mind
+            const int theEndOfTakenVROM = 0x05000000; // changed just so I can very visibly notice them in the overlay table
 
             int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
             RomUtils.CheckCompressed(actorOvlTblFID);
@@ -689,22 +693,19 @@ namespace MMR.Randomizer.Enemizer
 
             int GetUnusedFileID(InjectedActor injActor)
             {
-                if (freeFileSlots.Count > 0)
-                {
+                if (freeFileSlots.Count > 0) {
                     var f = freeFileSlots[0];
                     freeFileSlots.RemoveAt(0);
                     return f;
                 }
-                else // we have run out of known free file slots to use
-                {
-                    // back up, its broken though
-                    //return RomUtils.AppendFile(injActor.overlayBin)
-                    throw new Exception("We have run out of actors space to inject, please disable an actor in /actors");
+                else { // we have run out of known free file slots to use
+                
+                    throw new Exception("We have run out of actors space to inject, please disable an actor in /actors"); // todo: change to stop instead of error
                 }
             }
 
 
-            // note: this code wasn't working 2023, might be working again 2026 after years of inactivity, needs testing
+            // note: this code wasn't working 2023
             foreach (var injectedActor in Enemies.InjectedActors.FindAll(act => act.ActorId == (int)ActorEnum.NULL))
             {
                 /// brand new actors, not replacement
@@ -713,16 +714,17 @@ namespace MMR.Randomizer.Enemizer
                     throw new Exception("new actor missing starting vram:\n " + injectedActor.filename);
                 }
 
+                injectedActor.ActorId = (int)freeOverlaySlots[0]; // currently linear, always starts with 0x13
+                freeOverlaySlots.RemoveAt(0);
+
                 var newFileID = GetUnusedFileID(injectedActor); // todo change this back into hardcoded, its a static rom
                 //var newFileID = RomUtils.AppendFile(injectedActor.overlayBin); // broken, wants to put our actor outside of romspace
                 injectedActor.fileID = newFileID;
-                injectedActor.ActorId = (int)freeOverlaySlots[0];
-                freeOverlaySlots.RemoveAt(0);
                 var file = RomData.MMFileList[newFileID];
                 file.Data = injectedActor.overlayBin;
                 file.WasEdited = true;
                 //file.IsCompressed = true; // assumption: all actors are compressed
-                file.IsCompressed = false; // leaving true was removed under suspicion of injected actor breaking
+                file.IsCompressed = false; // leaving true was removed under suspicion of injected actor breaking, after testing no difference
                 file.Cmp_End = 0x0;
 
                 // update actor ID in overlay profile, now that we know the new actor ID value
