@@ -450,7 +450,7 @@ namespace MMR.Randomizer.Enemizer
 
             // Register-based matching for HI16/LO16 pairs (matches decomp luiRefs/luiVals)
             // rt register of LUI instruction indexes into these arrays
-            var luiValues = new ushort[32];
+            var luiValues = new uint[32];
             var luiLocs   = new int[32]; // track which reloc entry each HI16 came from
             while (relocEntryLoc < relocEntryEndLoc)
             {
@@ -488,7 +488,7 @@ namespace MMR.Randomizer.Enemizer
                     // rt register is bits 16-20 of the LUI instruction
                     int rtReg = (int)((relocWord >> 0x10) & 0x1F);
                     // Store the LUI's immediate value indexed by rt register
-                    luiValues[rtReg] = (ushort)(relocWord >> 16);
+                    luiValues[rtReg] = relocWord;
                     luiLocs[rtReg] = luiLoc;
                     relocEntryLoc += 4;
                 }
@@ -498,13 +498,13 @@ namespace MMR.Randomizer.Enemizer
                     // rs register is bits 21-25 of the ADDIU instruction
                     int rsReg = (int)((relocWord >> 0x15) & 0x1F);
                     // Retrieve the matching LUI by rs register
-                    ushort oldLuiData = luiValues[rsReg];
-                    var oldLuiLoc = luiLocs[rsReg];
-                    int addiuImm = ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2); // is this the right spot?
+                    uint oldLuiData = luiValues[rsReg];
+                    // decomp uses locs to get values? do we even need locs?
+                    short addiuImm = ReadWriteUtils.Arr_ReadS16(file.Data, addiuLoc + 2); // is this the right spot?
 
                     // Combine HI16 + LO16 into full address, shift, split back
-                    uint compareAddr = ((uint)oldLuiLoc << 0x10) + (uint)(addiuImm);
-                    if ((compareAddr & 0x0F000000) == 0) // decomp thinks there could be invalid addresses?
+                    uint compareAddr = (oldLuiData << 0x10) + (uint)(addiuImm);
+                    if ((compareAddr & 0x0F000000) == 0) // block segmented addresses
                     {
                         uint fullAddr = ((uint)oldLuiData << 0x10) + (uint)(addiuImm) + newVRAMOffset;
 
