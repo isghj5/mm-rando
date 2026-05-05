@@ -450,8 +450,8 @@ namespace MMR.Randomizer.Enemizer
 
             // Register-based matching for HI16/LO16 pairs (matches decomp luiRefs/luiVals)
             // rt register of LUI instruction indexes into these arrays
-            var luiValues = new uint[32];
-            var luiLocs   = new int[32]; // track which reloc entry each HI16 came from
+            var luiValues = new uint[32]; // the lui reloc instruction
+            var luiLocs   = new int[32]; // track which reloc entry each HI16 came from to update in LO16
             while (relocEntryLoc < relocEntryEndLoc)
             {
                 var relocWord = ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc);
@@ -464,7 +464,7 @@ namespace MMR.Randomizer.Enemizer
                     int ptrLoc = sectionOffset + (int)(relocWord & 0x00FFFFFF);
                     uint ptrValue = ReadWriteUtils.Arr_ReadU32(file.Data, ptrLoc);
                     if ((ptrValue & 0x0F000000) != 0) { // decomp checks for this, but it should never trigger IMO
-                        throw new Exception($"Invalid reloc R_MIPS_32 value: [{ptrValue}]");
+                        throw new Exception($"Invalid reloc R_MIPS_32 value: [{ptrValue}]"); // so far does not ever trigger, but I want to catch it if it ever does
                     }
 
                     ptrValue += newVRAMOffset;
@@ -484,11 +484,12 @@ namespace MMR.Randomizer.Enemizer
                 }
                 else if (commandType == 0x5 /* R_MIPS_HI16 */) // LUI
                 {
-                    int luiLoc = sectionOffset + ((int)relocWord & 0x00FFFFFF);
+                    int luiLoc = sectionOffset + ((int)relocWord & 0x00FFFFFF); // decomp uses pointers to dat, we use offsets
                     // rt register is bits 16-20 of the LUI instruction
                     int rtReg = (int)((relocWord >> 0x10) & 0x1F);
                     // Store the LUI's immediate value indexed by rt register
-                    luiValues[rtReg] = relocWord;
+                    // luiRefs[(*relocDataP >> 0x10) & 0x1F] = relocDataP; // where relocDataP is a pointer to the data, we are saving the reloc not the lui data
+                    luiValues[rtReg] = ReadWriteUtils.Arr_ReadU32(file.Data, luiLoc);
                     luiLocs[rtReg] = luiLoc;
                     relocEntryLoc += 4;
                 }
@@ -498,16 +499,22 @@ namespace MMR.Randomizer.Enemizer
                     // rs register is bits 21-25 of the ADDIU instruction
                     int rsReg = (int)((relocWord >> 0x15) & 0x1F);
                     // Retrieve the matching LUI by rs register
-                    uint oldLuiData = luiValues[rsReg];
-                    // decomp uses locs to get values? do we even need locs?
-                    short addiuImm = ReadWriteUtils.Arr_ReadS16(file.Data, addiuLoc + 2); // is this the right spot?
+                    uint oldLuiData = luiValues[rsReg]; // *regValP
+                    //luiValues[rsReg];
+                    ushort addiuLowerHalf = ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2); // (s16)*relocDataP
 
-                    // Combine HI16 + LO16 into full address, shift, split back
-                    uint compareAddr = (oldLuiData << 0x10) + (uint)(addiuImm);
+                    // decomp: lui data for segment check with *luiInstRef, that's just the same value as the luiValue right? Does it change?
+                    var previousLuiLoc = luiLocs[rsReg];
+                    uint luiLookupData = ReadWriteUtils.Arr_ReadU32(file.Data, previousLuiLoc); // *luiInstRef
+                    //uint compareAddr = (luiLookupData << 0x10) + (uint)(addiuLowerHalf);
+                    uint compareAddr = (oldLuiData << 0x10) + (uint)(int)(addiuLowerHalf);
+                    // decomp looks up the lui data by using *luiInstRef, that's just the same value as the luiValue right?
                     if ((compareAddr & 0x0F000000) == 0) // block segmented addresses
                     {
-                        uint fullAddr = ((uint)oldLuiData << 0x10) + (uint)(addiuImm) + newVRAMOffset;
+                        // Combine HI16 + LO16 into full address
+                        uint fullAddr = ((uint)oldLuiData << 0x10) + (uint)(int)(addiuLowerHalf) + newVRAMOffset;
 
+                        // split back into parts
                         int isLoNeg = (fullAddr & 0x8000) != 0 ? 1 : 0;
                         ushort luiPart = (ushort)((fullAddr >> 0x10) + isLoNeg);
                         ushort adduPart = (ushort)(fullAddr & 0xFFFF);
