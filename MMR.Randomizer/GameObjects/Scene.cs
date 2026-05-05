@@ -709,6 +709,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.WoodenBarrel, // also the wooden blocking platform, which blocks climbing
             Actor.HookshotWallAndPillar, // can block climbing TODO fix in the code since this is silly
             Actor.BronzeBoulder, // doesn't stay in spot, falls to floor, blocks climbing start
+            Actor.RegularIceBlock, // any size is an issue
             Actor.SpiderWeb)] // TODO would be cool if we could allow this if the item was junk, or logic require fire arrows
         [EnemizerSceneEnemyReplacementBlock(Actor.MushroomCloud, // moved to the side of the tree
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator // could block the tree (through the tree
