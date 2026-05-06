@@ -430,12 +430,15 @@ namespace MMR.Randomizer.Enemizer
             } // for each mmra end
         }
 
+
         public static void UpdateOverlayVRAMReloc(MMFile file, int[] sectionOffsets, uint newVRAMOffset)
         {
             /// Reloc: overlay c code is compiled with VRAM addresses already baked in,
             ///  these get adjusted when the overlay is loaded into RAM, to match the RAM locations
             ///  but when we inject this new overlay we move its VRAM to a different place, so its wrong
             ///  so now, we must re-apply the VRAM addresses so when the game shifts them into RAM it will have the correct values
+
+            // this is the old version, works with overwritting actors only
 
             var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
             // the table pointer at the end is an offset from the end, we need to swap it
@@ -459,7 +462,35 @@ namespace MMR.Randomizer.Enemizer
                 var commandType = (file.Data[relocEntryLoc] & 0xF);
                 var commandTypeLookahead = (file.Data[relocEntryLoc + 4] & 0xF); // double command for LUI/ADDIU
 
-                if (commandType == 0x5 /* R_MIPS_HI16 */ && commandTypeLookahead == 0x6) // LUI/ADDIU combo
+                if (commandType == 0x2 /* R_MIPS_32 */) // Hard pointer (init/destroy/update/draw pointers can be here, also actual ptr in rodata)
+                {
+                    int ptrLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
+                    uint ptrValue = ReadWriteUtils.Arr_ReadU32(file.Data, ptrLoc);
+                    ptrValue += newVRAMOffset;
+                    ReadWriteUtils.Arr_WriteU32(file.Data, ptrLoc, ptrValue);
+
+                    relocEntryLoc += 4;
+                }
+                else if (commandType == 0x6 /* R_MIPS_LO16 */) // another ADDIU after the first combo 
+                {
+                    int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
+                    ushort adduPart = (ushort)(pointer & 0xFFFF);
+                    ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
+
+                    relocEntryLoc += 4; // another
+                }
+                else if (commandType == 0x4 /* R_MIPS_24 */) // JAL function calls
+                {
+                    int jalLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
+                    uint jal = ReadWriteUtils.Arr_ReadU32(file.Data, jalLoc) & 0x00FFFFFF;
+                    uint shiftedJal = jal << 2;
+                    shiftedJal += newVRAMOffset;
+                    shiftedJal = shiftedJal >> 2;
+                    ReadWriteUtils.Arr_WriteU32(file.Data, jalLoc, 0x0C000000 | shiftedJal);
+
+                    relocEntryLoc += 4;
+                }
+                else if(commandType == 0x5 /* R_MIPS_HI16 */ && commandTypeLookahead == 0x6) // LUI/ADDIU combo
                 {
                     int luiLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
                     int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
@@ -484,34 +515,7 @@ namespace MMR.Randomizer.Enemizer
 
                     relocEntryLoc += 8;
                 }
-                else if (commandType == 0x6 /* R_MIPS_LO16 */) // another ADDIU after the first combo 
-                {
-                    int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
-                    ushort adduPart = (ushort)(pointer & 0xFFFF);
-                    ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
 
-                    relocEntryLoc += 4; // another
-                }
-                else if (commandType == 0x4 /* R_MIPS_24 */) // JAL function calls
-                {
-                    int jalLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
-                    uint jal = ReadWriteUtils.Arr_ReadU32(file.Data, jalLoc) & 0x00FFFFFF;
-                    uint shiftedJal = jal << 2;
-                    shiftedJal += newVRAMOffset;
-                    shiftedJal = shiftedJal >> 2;
-                    ReadWriteUtils.Arr_WriteU32(file.Data, jalLoc, 0x0C000000 | shiftedJal);
-
-                    relocEntryLoc += 4;
-                }
-                else if (commandType == 0x2 /* R_MIPS_32 */) // Hard pointer (init/destroy/update/draw pointers can be here, also actual ptr in rodata)
-                {
-                    int ptrLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
-                    uint ptrValue = ReadWriteUtils.Arr_ReadU32(file.Data, ptrLoc);
-                    ptrValue += newVRAMOffset;
-                    ReadWriteUtils.Arr_WriteU32(file.Data, ptrLoc, ptrValue);
-
-                    relocEntryLoc += 4;
-                }
                 else // unknown command? supposidly Z64 only uses these four although it could support more
                 {
                     throw new Exception($"UpdateOverlayVRAMReloc: unknown reloc overlayEntry value:\n" +
@@ -520,12 +524,8 @@ namespace MMR.Randomizer.Enemizer
             } // end while (we havent reached the end of reloc)
         } // end UpdateOverlayVRAMReloc
 
-        public static void UpdateOverlayVRAMRewrite(MMFile file, int[] sectionOffsets, uint newVRAMOffset)
+        public static void UpdateOverlayVRAMRelocRewrite(MMFile file, int[] sectionOffsets, uint newVRAMOffset)
         {
-            /// Reloc: overlay c code is compiled with VRAM addresses already baked in,
-            ///  these get adjusted when the overlay is loaded into RAM, to match the RAM locations
-            ///  but when we inject this new overlay we move its VRAM to a different place, so its wrong
-            ///  so now, we must re-apply the VRAM addresses so when the game shifts them into RAM it will have the correct values
             //  this is attempting to mirror Overlay_Relocate in MM decomp
 
             var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
@@ -540,8 +540,9 @@ namespace MMR.Randomizer.Enemizer
 
             // Register-based matching for HI16/LO16 pairs (matches decomp luiRefs/luiVals)
             // rt register of LUI instruction indexes into these arrays
-            var luiValues = new uint[32]; // the lui reloc instruction
-            var luiLocs   = new int[32]; // track which reloc entry each HI16 came from to update in LO16
+            var luiValues = new uint[32]; // the lui instruction raw, for pulling data from later
+            // decomp uses pointers, we use offsets (C vs C#)
+            var luiLocs   = new int[32]; // track which lui (by location) each HI16 came from to update in LO16
             while (relocEntryLoc < relocEntryEndLoc)
             {
                 var relocWord = ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc);
@@ -554,7 +555,7 @@ namespace MMR.Randomizer.Enemizer
                     int ptrLoc = sectionOffset + (int)(relocWord & 0x00FFFFFF);
                     uint ptrValue = ReadWriteUtils.Arr_ReadU32(file.Data, ptrLoc);
                     if ((ptrValue & 0x0F000000) != 0) { // decomp checks for this, but it should never trigger IMO
-                        throw new Exception($"Invalid reloc R_MIPS_32 value: [{ptrValue}]"); // so far does not ever trigger, but I want to catch it if it ever does
+                        throw new Exception($"Invalid reloc R_MIPS_32 value: [{ptrValue}]"); // no trigger yet, want to catch if it does (curious), so exception
                     }
 
                     ptrValue += newVRAMOffset;
@@ -574,38 +575,35 @@ namespace MMR.Randomizer.Enemizer
                 }
                 else if (commandType == 0x5 /* R_MIPS_HI16 */) // LUI
                 {
-                    int luiLoc = sectionOffset + ((int)relocWord & 0x00FFFFFF); // decomp uses pointers to dat, we use offsets
+                    var luiLoc = (int)relocWord & 0x00FFFFFF;
                     // rt register is bits 16-20 of the LUI instruction
                     int rtReg = (int)((relocWord >> 0x10) & 0x1F);
                     // Store the LUI's immediate value indexed by rt register
-                    // luiRefs[(*relocDataP >> 0x10) & 0x1F] = relocDataP; // where relocDataP is a pointer to the data, we are saving the reloc not the lui data
-                    luiValues[rtReg] = ReadWriteUtils.Arr_ReadU32(file.Data, luiLoc);
+                    luiValues[rtReg] = ReadWriteUtils.Arr_ReadU32(file.Data, sectionOffset + luiLoc);
                     luiLocs[rtReg] = luiLoc;
                     relocEntryLoc += 4;
                 }
                 else if (commandType == 0x6 /* R_MIPS_LO16 */) // ADDIU
                 {
+                    // decomp grabs lui data from two separate locations, one from the *regValP and one from the data in the pointer from *luiInstRef
+                    // specific reasons not known, maybe the data at pointer ws already modified, keeping intact
                     int addiuLoc = sectionOffset + ((int)(relocWord & 0x00FFFFFF));
                     // rs register is bits 21-25 of the ADDIU instruction
                     int rsReg = (int)((relocWord >> 0x15) & 0x1F);
                     // Retrieve the matching LUI by rs register
                     uint oldLuiData = luiValues[rsReg]; // *regValP
-                    //luiValues[rsReg];
                     ushort addiuLowerHalf = ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2); // (s16)*relocDataP
 
-                    // decomp: lui data for segment check with *luiInstRef, that's just the same value as the luiValue right? Does it change?
                     var previousLuiLoc = luiLocs[rsReg];
-                    uint luiLookupData = ReadWriteUtils.Arr_ReadU32(file.Data, previousLuiLoc); // *luiInstRef
+                    uint luiLookupData = ReadWriteUtils.Arr_ReadU32(file.Data, sectionOffset + previousLuiLoc); // *luiInstRef
                     uint expressionCheck = (luiLookupData << 0x10) + (uint)(addiuLowerHalf);
-                    //uint expressionCheck = (oldLuiData << 0x10) + (uint)(int)(addiuLowerHalf); // still crashes
-                    // decomp looks up the lui data by using *luiInstRef, that's just the same value as the luiValue right?
                     if ((expressionCheck & 0x0F000000) == 0) // block segmented addresses
                     {
                         // Combine HI16 + LO16 into full address
                         uint relocatedAddress = ((uint)oldLuiData << 0x10) + (uint)(int)(addiuLowerHalf) + newVRAMOffset;
 
                         // split back into parts
-                        int isLoNeg = (relocatedAddress & 0x8000) != 0 ? 1 : 0;
+                        int isLoNeg = (relocatedAddress & 0x8000) != 0 ? 1 : 0; // binary quirk, we sign flag needs to be added back
                         ushort luiPart = (ushort)((relocatedAddress >> 0x10) + isLoNeg);
                         ushort adduPart = (ushort)(relocatedAddress & 0xFFFF);
                         ReadWriteUtils.Arr_WriteU16(file.Data, luiLocs[rsReg] + 2, luiPart);
@@ -615,7 +613,7 @@ namespace MMR.Randomizer.Enemizer
                 }
             } // end while
                     
-        } // end UpdateOverlayVRAMReloc
+        } // end UpdateOverlayVRAMRelocRewrite
 
         public static void UpdateActorOverlayTable()
         {
@@ -718,7 +716,7 @@ namespace MMR.Randomizer.Enemizer
                     var newVRAMOffset = newVRAMStart - oldVRAMStart;
 
                     // all the pointers and vram locations in the file need to be updated too
-                    UpdateOverlayVRAMReloc(file, sectionOffsets, newVRAMOffset);
+                    UpdateOverlayVRAMRelocRewrite(file, sectionOffsets, newVRAMOffset);
 
                     uint newProfileAddr = newVRAMStart + injectedActor.ProfileLocation;
 
