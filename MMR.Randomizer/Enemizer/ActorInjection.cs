@@ -436,6 +436,96 @@ namespace MMR.Randomizer.Enemizer
             ///  these get adjusted when the overlay is loaded into RAM, to match the RAM locations
             ///  but when we inject this new overlay we move its VRAM to a different place, so its wrong
             ///  so now, we must re-apply the VRAM addresses so when the game shifts them into RAM it will have the correct values
+
+            var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
+            // the table pointer at the end is an offset from the end, we need to swap it
+            int tableOffset = (int)(file.Data.Length - relocSize);
+            int relocEntryCountLocation = (int)(tableOffset + (4 * 4)); // first four ints are section sizes
+
+            uint relocEntryCount = ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryCountLocation);
+            var relocEntryLoc = relocEntryCountLocation + 4; // first overlayEntry immediately after reloc count
+            var relocEntryEndLoc = relocEntryLoc + (relocEntryCount * 4);
+            // traverse the whole relocation section, parse the changes, apply
+
+            uint pointer = 0; // save outside of loop incase of multiple combos
+
+            while (relocEntryLoc < relocEntryEndLoc)
+            {
+                // each overlayEntry in reloc is one nibble of shifted section, one nible of type, and 3 bytes of address
+                // text section starts at 1 not 0
+                var section = ((file.Data[relocEntryLoc] & 0xC0) >> 6) - 1;
+                var sectionOffset = sectionOffsets[section];
+
+                var commandType = (file.Data[relocEntryLoc] & 0xF);
+                var commandTypeLookahead = (file.Data[relocEntryLoc + 4] & 0xF); // double command for LUI/ADDIU
+
+                if (commandType == 0x5 /* R_MIPS_HI16 */ && commandTypeLookahead == 0x6) // LUI/ADDIU combo
+                {
+                    int luiLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
+                    int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
+
+                    // addu treats the last two bytes of our pointer as signed
+                    // to fix this, the LUI command is given a carry over bit to fix it, we need to read and write knowing this
+                    // combine the halves from asm back into one pointer
+                    pointer = 0;
+                    pointer = ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2));
+                    int LUIDecr = ((pointer & 0xFFFF) > 0x8000) ? 1 : 0;
+                    uint oldLuiData = ReadWriteUtils.Arr_ReadU16(file.Data, luiLoc + 2);
+                    pointer |= ((uint)(oldLuiData - LUIDecr) << 16);
+
+                    pointer += newVRAMOffset;
+
+                    // separate the pointer again into halves and put back
+                    int LUIIncr = ((pointer & 0xFFFF) > 0x8000) ? 1 : 0; // if the lower half is too big we have to add one to LUI
+                    ushort luiPart = (ushort)(((pointer & 0xFFFF0000) >> 16) + LUIIncr);
+                    ushort adduPart = (ushort)(pointer & 0xFFFF);
+                    ReadWriteUtils.Arr_WriteU16(file.Data, luiLoc + 2, luiPart);
+                    ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
+
+                    relocEntryLoc += 8;
+                }
+                else if (commandType == 0x6 /* R_MIPS_LO16 */) // another ADDIU after the first combo 
+                {
+                    int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
+                    ushort adduPart = (ushort)(pointer & 0xFFFF);
+                    ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
+
+                    relocEntryLoc += 4; // another
+                }
+                else if (commandType == 0x4 /* R_MIPS_24 */) // JAL function calls
+                {
+                    int jalLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
+                    uint jal = ReadWriteUtils.Arr_ReadU32(file.Data, jalLoc) & 0x00FFFFFF;
+                    uint shiftedJal = jal << 2;
+                    shiftedJal += newVRAMOffset;
+                    shiftedJal = shiftedJal >> 2;
+                    ReadWriteUtils.Arr_WriteU32(file.Data, jalLoc, 0x0C000000 | shiftedJal);
+
+                    relocEntryLoc += 4;
+                }
+                else if (commandType == 0x2 /* R_MIPS_32 */) // Hard pointer (init/destroy/update/draw pointers can be here, also actual ptr in rodata)
+                {
+                    int ptrLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
+                    uint ptrValue = ReadWriteUtils.Arr_ReadU32(file.Data, ptrLoc);
+                    ptrValue += newVRAMOffset;
+                    ReadWriteUtils.Arr_WriteU32(file.Data, ptrLoc, ptrValue);
+
+                    relocEntryLoc += 4;
+                }
+                else // unknown command? supposidly Z64 only uses these four although it could support more
+                {
+                    throw new Exception($"UpdateOverlayVRAMReloc: unknown reloc overlayEntry value:\n" +
+                        $" {ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc).ToString("X")}");
+                }
+            } // end while (we havent reached the end of reloc)
+        } // end UpdateOverlayVRAMReloc
+
+        public static void UpdateOverlayVRAMRewrite(MMFile file, int[] sectionOffsets, uint newVRAMOffset)
+        {
+            /// Reloc: overlay c code is compiled with VRAM addresses already baked in,
+            ///  these get adjusted when the overlay is loaded into RAM, to match the RAM locations
+            ///  but when we inject this new overlay we move its VRAM to a different place, so its wrong
+            ///  so now, we must re-apply the VRAM addresses so when the game shifts them into RAM it will have the correct values
             //  this is attempting to mirror Overlay_Relocate in MM decomp
 
             var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
@@ -506,18 +596,18 @@ namespace MMR.Randomizer.Enemizer
                     // decomp: lui data for segment check with *luiInstRef, that's just the same value as the luiValue right? Does it change?
                     var previousLuiLoc = luiLocs[rsReg];
                     uint luiLookupData = ReadWriteUtils.Arr_ReadU32(file.Data, previousLuiLoc); // *luiInstRef
-                    //uint compareAddr = (luiLookupData << 0x10) + (uint)(addiuLowerHalf);
-                    uint compareAddr = (oldLuiData << 0x10) + (uint)(int)(addiuLowerHalf);
+                    uint expressionCheck = (luiLookupData << 0x10) + (uint)(addiuLowerHalf);
+                    //uint expressionCheck = (oldLuiData << 0x10) + (uint)(int)(addiuLowerHalf); // still crashes
                     // decomp looks up the lui data by using *luiInstRef, that's just the same value as the luiValue right?
-                    if ((compareAddr & 0x0F000000) == 0) // block segmented addresses
+                    if ((expressionCheck & 0x0F000000) == 0) // block segmented addresses
                     {
                         // Combine HI16 + LO16 into full address
-                        uint fullAddr = ((uint)oldLuiData << 0x10) + (uint)(int)(addiuLowerHalf) + newVRAMOffset;
+                        uint relocatedAddress = ((uint)oldLuiData << 0x10) + (uint)(int)(addiuLowerHalf) + newVRAMOffset;
 
                         // split back into parts
-                        int isLoNeg = (fullAddr & 0x8000) != 0 ? 1 : 0;
-                        ushort luiPart = (ushort)((fullAddr >> 0x10) + isLoNeg);
-                        ushort adduPart = (ushort)(fullAddr & 0xFFFF);
+                        int isLoNeg = (relocatedAddress & 0x8000) != 0 ? 1 : 0;
+                        ushort luiPart = (ushort)((relocatedAddress >> 0x10) + isLoNeg);
+                        ushort adduPart = (ushort)(relocatedAddress & 0xFFFF);
                         ReadWriteUtils.Arr_WriteU16(file.Data, luiLocs[rsReg] + 2, luiPart);
                         ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
                     }
