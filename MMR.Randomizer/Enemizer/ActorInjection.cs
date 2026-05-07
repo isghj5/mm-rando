@@ -568,14 +568,14 @@ namespace MMR.Randomizer.Enemizer
                     int jalLoc = sectionOffset + (int)(relocWord & 0x00FFFFFF);
                     uint jal = ReadWriteUtils.Arr_ReadU32(file.Data, jalLoc) & 0x00FFFFFF;
                     uint shiftedJal = jal << 2;
-                    shiftedJal += newVRAMOffset;
+                    shiftedJal = (shiftedJal + newVRAMOffset) & 0x0FFFFFFFF;
                     shiftedJal = shiftedJal >> 2;
                     ReadWriteUtils.Arr_WriteU32(file.Data, jalLoc, 0x0C000000 | shiftedJal);
                     relocEntryLoc += 4;
                 }
                 else if (commandType == 0x5 /* R_MIPS_HI16 */) // LUI
                 {
-                    var luiLoc = sectionOffset + (int)relocWord & 0x00FFFFFF;
+                    var luiLoc = sectionOffset + (int)(relocWord & 0x00FFFFFF);
                     uint luiInst = ReadWriteUtils.Arr_ReadU32(file.Data, luiLoc);
 
                     // rt register is bits 16-20 of the LUI instruction
@@ -589,7 +589,7 @@ namespace MMR.Randomizer.Enemizer
                 {
                     // decomp grabs lui data from two separate locations, one from the *regValP and one from the data in the pointer from *luiInstRef
                     // specific reasons not known, maybe the data at pointer ws already modified, keeping intact
-                    int addiuLoc = sectionOffset + ((int)(relocWord & 0x00FFFFFF));
+                    int addiuLoc = sectionOffset + (int)(relocWord & 0x00FFFFFF);
                     uint addiuInst = ReadWriteUtils.Arr_ReadU32(file.Data, addiuLoc);
                     // rs register is bits 21-25 of the ADDIU instruction
                     int rsReg = (int)((addiuInst >> 0x15) & 0x1F);
@@ -599,12 +599,15 @@ namespace MMR.Randomizer.Enemizer
 
                     var previousLuiLoc = luiLocs[rsReg];
                     uint luiLookupData = ReadWriteUtils.Arr_ReadU32(file.Data, previousLuiLoc); // *luiInstRef
-                    uint expressionCheck = (luiLookupData << 0x10) + (uint)(addiuLowerHalf);
+                    int expressionCheck = (int)((luiLookupData << 0x10) + (int)(short)addiuLowerHalf);
                     if ((expressionCheck & 0x0F000000) == 0) // block segmented addresses
                     {
                         // Combine HI16 + LO16 into full address
-                        var shiftedLuiData = (uint)oldLuiData << 0x10;
-                        uint relocatedAddress = (((uint)oldLuiData << 0x10) & 0xFFFF0000) + (uint)(int)(addiuLowerHalf) + newVRAMOffset;
+                        var _SHIFTED = (uint)oldLuiData << 0x10; // debug
+                        uint _PARTIAL = (((uint)oldLuiData << 0x10) & 0xFFFF0000) + (uint)(int)(addiuLowerHalf); // debug
+                        System.Diagnostics.Debug.Assert(expressionCheck != _PARTIAL + newVRAMOffset);
+
+                        uint relocatedAddress = ((((uint)oldLuiData << 0x10) & 0xFFFF0000) | (uint)(int)(addiuLowerHalf)) + newVRAMOffset;
 
                         // split back into parts
                         int isLoNeg = (relocatedAddress & 0x8000) != 0 ? 1 : 0; // binary quirk, we sign flag needs to be added back
