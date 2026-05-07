@@ -437,6 +437,7 @@ namespace MMR.Randomizer.Enemizer
             ///  these get adjusted when the overlay is loaded into RAM, to match the RAM locations
             ///  but when we inject this new overlay we move its VRAM to a different place, so its wrong
             ///  so now, we must re-apply the VRAM addresses so when the game shifts them into RAM it will have the correct values
+            ///  newVRAMOffset is the difference between the old and new, delta
 
             // this is the old version, works with overwritting actors only
 
@@ -597,20 +598,23 @@ namespace MMR.Randomizer.Enemizer
                     uint oldLuiData = luiValues[rsReg]; // *regValP
                     ushort addiuLowerHalf = ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2); // (s16)*relocDataP
 
-                    var previousLuiLoc = luiLocs[rsReg];
-                    uint luiLookupData = ReadWriteUtils.Arr_ReadU32(file.Data, previousLuiLoc); // *luiInstRef
-                    int expressionCheck = (int)((luiLookupData << 0x10) + (int)(short)addiuLowerHalf);
+                    //var previousLuiLoc = luiLocs[rsReg];
+                    //uint luiLookupData = ReadWriteUtils.Arr_ReadU32(file.Data, previousLuiLoc); // *luiInstRef
+                    uint luiDecr = (uint)(((addiuLowerHalf & 0xFFFF) > 0x8000) ? 1 : 0);  // this isn't in decomp, but I needed it for old version
+                    //var shiftedLui = (luiLookupData - luiDecr) << 0x10; // matches decomp
+                    //var shiftedLui = (oldLuiData - luiDecr) << 0x10; // gets us a different error alltogether?
+                    var shiftedLui = oldLuiData  << 0x10; // maybe we really dont need it
+                    int expressionCheck = (int)(shiftedLui | (int)(short)addiuLowerHalf);
                     if ((expressionCheck & 0x0F000000) == 0) // block segmented addresses
                     {
                         // Combine HI16 + LO16 into full address
-                        var _SHIFTED = (uint)oldLuiData << 0x10; // debug
-                        uint _PARTIAL = (((uint)oldLuiData << 0x10) & 0xFFFF0000) + (uint)(int)(addiuLowerHalf); // debug
-                        System.Diagnostics.Debug.Assert(expressionCheck != _PARTIAL + newVRAMOffset);
-
-                        uint relocatedAddress = ((((uint)oldLuiData << 0x10) & 0xFFFF0000) | (uint)(int)(addiuLowerHalf)) + newVRAMOffset;
+                        uint debug_PARTIAL = shiftedLui  | (uint)(int)(addiuLowerHalf); // debug
+                        System.Diagnostics.Debug.Assert(expressionCheck != debug_PARTIAL + newVRAMOffset); // sure sems like they are alwasy the same, has never triggered
+                        uint relocatedAddress = (shiftedLui | (uint)(int)(addiuLowerHalf)) + newVRAMOffset; // using decomp
+                        //uint relocatedAddress = expressionCheck + newVRAMOffset; // this should work if they really are always the same
 
                         // split back into parts
-                        int isLoNeg = (relocatedAddress & 0x8000) != 0 ? 1 : 0; // binary quirk, we sign flag needs to be added back
+                        int isLoNeg = ((relocatedAddress & 0xFFFF) > 0x8000) ? 1 : 0; // binary quirk, we sign flag needs to be added back
                         ushort luiPart = (ushort)((relocatedAddress >> 0x10) + isLoNeg);
                         ushort adduPart = (ushort)(relocatedAddress & 0xFFFF);
                         ReadWriteUtils.Arr_WriteU16(file.Data, luiLocs[rsReg] + 2, luiPart);
