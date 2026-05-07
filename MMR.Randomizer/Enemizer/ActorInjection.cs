@@ -479,7 +479,7 @@ namespace MMR.Randomizer.Enemizer
 
                     relocEntryLoc += 4; // another
                 }
-                else if (commandType == 0x4 /* R_MIPS_24 */) // JAL function calls
+                else if (commandType == 0x4 /* R_MIPS_26 */) // JAL function calls
                 {
                     int jalLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
                     uint jal = ReadWriteUtils.Arr_ReadU32(file.Data, jalLoc) & 0x00FFFFFF;
@@ -575,11 +575,13 @@ namespace MMR.Randomizer.Enemizer
                 }
                 else if (commandType == 0x5 /* R_MIPS_HI16 */) // LUI
                 {
-                    var luiLoc = (int)relocWord & 0x00FFFFFF;
+                    var luiLoc = sectionOffset + (int)relocWord & 0x00FFFFFF;
+                    uint luiInst = ReadWriteUtils.Arr_ReadU32(file.Data, luiLoc);
+
                     // rt register is bits 16-20 of the LUI instruction
-                    int rtReg = (int)((relocWord >> 0x10) & 0x1F);
-                    // Store the LUI's immediate value indexed by rt register
-                    luiValues[rtReg] = ReadWriteUtils.Arr_ReadU32(file.Data, sectionOffset + luiLoc);
+                    int rtReg = (int)((luiInst >> 0x10) & 0x1F);
+                    // Store the LUI's instruction indexed by rt register
+                    luiValues[rtReg] = luiInst;
                     luiLocs[rtReg] = luiLoc;
                     relocEntryLoc += 4;
                 }
@@ -588,19 +590,21 @@ namespace MMR.Randomizer.Enemizer
                     // decomp grabs lui data from two separate locations, one from the *regValP and one from the data in the pointer from *luiInstRef
                     // specific reasons not known, maybe the data at pointer ws already modified, keeping intact
                     int addiuLoc = sectionOffset + ((int)(relocWord & 0x00FFFFFF));
+                    uint addiuInst = ReadWriteUtils.Arr_ReadU32(file.Data, addiuLoc);
                     // rs register is bits 21-25 of the ADDIU instruction
-                    int rsReg = (int)((relocWord >> 0x15) & 0x1F);
+                    int rsReg = (int)((addiuInst >> 0x15) & 0x1F);
                     // Retrieve the matching LUI by rs register
                     uint oldLuiData = luiValues[rsReg]; // *regValP
                     ushort addiuLowerHalf = ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2); // (s16)*relocDataP
 
                     var previousLuiLoc = luiLocs[rsReg];
-                    uint luiLookupData = ReadWriteUtils.Arr_ReadU32(file.Data, sectionOffset + previousLuiLoc); // *luiInstRef
+                    uint luiLookupData = ReadWriteUtils.Arr_ReadU32(file.Data, previousLuiLoc); // *luiInstRef
                     uint expressionCheck = (luiLookupData << 0x10) + (uint)(addiuLowerHalf);
                     if ((expressionCheck & 0x0F000000) == 0) // block segmented addresses
                     {
                         // Combine HI16 + LO16 into full address
-                        uint relocatedAddress = ((uint)oldLuiData << 0x10) + (uint)(int)(addiuLowerHalf) + newVRAMOffset;
+                        var shiftedLuiData = (uint)oldLuiData << 0x10;
+                        uint relocatedAddress = (((uint)oldLuiData << 0x10) & 0xFFFF0000) + (uint)(int)(addiuLowerHalf) + newVRAMOffset;
 
                         // split back into parts
                         int isLoNeg = (relocatedAddress & 0x8000) != 0 ? 1 : 0; // binary quirk, we sign flag needs to be added back
