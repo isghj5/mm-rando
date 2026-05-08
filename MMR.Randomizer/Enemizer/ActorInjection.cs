@@ -596,7 +596,7 @@ namespace MMR.Randomizer.Enemizer
                     int rsReg = (int)((addiuInst >> 0x15) & 0x1F);
                     // Retrieve the matching LUI by rs register
                     uint oldLuiData = luiValues[rsReg]; // *regValP
-                    ushort addiuLowerHalf = ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2); // (s16)*relocDataP
+                    uint addiuLowerHalf = ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2); // (s16)*relocDataP
 
                     //var previousLuiLoc = luiLocs[rsReg];
                     //uint luiLookupData = ReadWriteUtils.Arr_ReadU32(file.Data, previousLuiLoc); // *luiInstRef
@@ -604,13 +604,13 @@ namespace MMR.Randomizer.Enemizer
                     //var shiftedLui = (luiLookupData - luiDecr) << 0x10; // matches decomp
                     //var shiftedLui = (oldLuiData - luiDecr) << 0x10; // gets us a different error alltogether?
                     var shiftedLui = oldLuiData  << 0x10; // maybe we really dont need it
-                    int expressionCheck = (int)(shiftedLui | (int)(short)addiuLowerHalf);
+                    int expressionCheck = (int)(shiftedLui + addiuLowerHalf);
                     if ((expressionCheck & 0x0F000000) == 0) // block segmented addresses
                     {
                         // Combine HI16 + LO16 into full address
-                        uint debug_PARTIAL = shiftedLui  | (uint)(int)(addiuLowerHalf); // debug
+                        uint debug_PARTIAL = shiftedLui  | addiuLowerHalf; // debug
                         System.Diagnostics.Debug.Assert(expressionCheck != debug_PARTIAL + newVRAMOffset); // sure sems like they are alwasy the same, has never triggered
-                        uint relocatedAddress = (shiftedLui | (uint)(int)(addiuLowerHalf)) + newVRAMOffset; // using decomp
+                        uint relocatedAddress = (shiftedLui | addiuLowerHalf) + newVRAMOffset; // using decomp
                         //uint relocatedAddress = expressionCheck + newVRAMOffset; // this should work if they really are always the same
 
                         // split back into parts
