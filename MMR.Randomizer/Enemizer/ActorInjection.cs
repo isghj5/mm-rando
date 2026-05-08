@@ -434,7 +434,8 @@ namespace MMR.Randomizer.Enemizer
 
         public static void UpdateOverlayVRAMReloc(MMFile file, int[] sectionOffsets, uint newVRAMOffset)
         {
-            // this is the old version, works with overwritting actors only
+            // this is the old version, works with all overwritten actors, but not new ones
+            // rewritten below because it was a possible reason for new actors not working.
 
             var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
             // the table pointer at the end is an offset from the end, we need to swap it
@@ -466,14 +467,6 @@ namespace MMR.Randomizer.Enemizer
                     ReadWriteUtils.Arr_WriteU32(file.Data, ptrLoc, ptrValue);
 
                     relocEntryLoc += 4;
-                }
-                else if (commandType == 0x6 /* R_MIPS_LO16 */) // another ADDIU after the first combo 
-                {
-                    int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
-                    ushort adduPart = (ushort)(pointer & 0xFFFF);
-                    ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
-
-                    relocEntryLoc += 4; // another
                 }
                 else if (commandType == 0x4 /* R_MIPS_26 */) // JAL function calls
                 {
@@ -511,9 +504,17 @@ namespace MMR.Randomizer.Enemizer
 
                     relocEntryLoc += 8;
                 }
-
-                else // unknown command? supposidly Z64 only uses these four although it could support more
+                else if (commandType == 0x6 /* R_MIPS_LO16 */) // another ADDIU after the first combo
                 {
+                    // sometimes there are multiple, often in the delay slot of a jump IDO will put a copy of an instruction rather than a nop
+                    int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
+                    ushort adduPart = (ushort)(pointer & 0xFFFF);
+                    ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
+
+                    relocEntryLoc += 4; // another
+                }
+                else // unknown command? supposidly Z64 only uses these four although it could support more
+                {    // this never fired, IDO doesn't ever seem to ommit any, so long as we stick with using IDO and not GNU this shouldn't happen
                     throw new Exception($"UpdateOverlayVRAMReloc: unknown reloc overlayEntry value:\n" +
                         $" {ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc).ToString("X")}");
                 }
@@ -615,7 +616,7 @@ namespace MMR.Randomizer.Enemizer
                         ReadWriteUtils.Arr_WriteU16(file.Data, luiLocs[rsReg] + 2, luiPart);
                         ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
 
-                        //if (expressionCheck > 0x8092FF60 && expressionCheck < 0x80950000) {
+                        //if (expressionCheck > 0x8092FF60 && expressionCheck < 0x80950000) { // debug data collection
                             //Debug.WriteLine($" for old location [{expressionCheck.ToString("X")}] \ " +
                             //    $"we chose new addr [{relocatedAddress.ToString("X")}] isLoNeg: [{isLoNeg}] luipart: [{luiPart.ToString("X")}]");
                         //}
