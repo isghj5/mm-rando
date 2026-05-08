@@ -14,6 +14,7 @@ using MMR.Randomizer.Utils;
 
 using ActorEnum = MMR.Randomizer.GameObjects.Actor;
 using ActorInst = MMR.Randomizer.Models.Rom.Actor;
+using System.Diagnostics;
 
 namespace MMR.Randomizer.Enemizer
 {
@@ -433,12 +434,6 @@ namespace MMR.Randomizer.Enemizer
 
         public static void UpdateOverlayVRAMReloc(MMFile file, int[] sectionOffsets, uint newVRAMOffset)
         {
-            /// Reloc: overlay c code is compiled with VRAM addresses already baked in,
-            ///  these get adjusted when the overlay is loaded into RAM, to match the RAM locations
-            ///  but when we inject this new overlay we move its VRAM to a different place, so its wrong
-            ///  so now, we must re-apply the VRAM addresses so when the game shifts them into RAM it will have the correct values
-            ///  newVRAMOffset is the difference between the old and new, delta
-
             // this is the old version, works with overwritting actors only
 
             var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
@@ -527,6 +522,12 @@ namespace MMR.Randomizer.Enemizer
 
         public static void UpdateOverlayVRAMRelocRewrite(MMFile file, int[] sectionOffsets, uint newVRAMOffset)
         {
+            /// Reloc: overlay c code is compiled with VRAM addresses already baked in,
+            ///  these get adjusted when the overlay is loaded into RAM, to match the RAM locations
+            ///  but when we inject this new overlay we move its VRAM to a different place, so its wrong
+            ///  so now, we must re-apply the VRAM addresses so when the game shifts them into RAM it will have the correct values
+            ///  newVRAMOffset is the difference between the old and new, delta
+
             //  this is attempting to mirror Overlay_Relocate in MM decomp
 
             var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
@@ -561,8 +562,6 @@ namespace MMR.Randomizer.Enemizer
 
                     ptrValue += newVRAMOffset;
                     ReadWriteUtils.Arr_WriteU32(file.Data, ptrLoc, ptrValue);
-
-                    relocEntryLoc += 4;
                 }
                 else if (commandType == 0x4 /* R_MIPS_26 */) // JAL function calls
                 {
@@ -572,7 +571,6 @@ namespace MMR.Randomizer.Enemizer
                     shiftedJal = (shiftedJal + newVRAMOffset) & 0x0FFFFFFFF;
                     shiftedJal = shiftedJal >> 2;
                     ReadWriteUtils.Arr_WriteU32(file.Data, jalLoc, 0x0C000000 | shiftedJal);
-                    relocEntryLoc += 4;
                 }
                 else if (commandType == 0x5 /* R_MIPS_HI16 */) // LUI
                 {
@@ -584,7 +582,6 @@ namespace MMR.Randomizer.Enemizer
                     // Store the LUI's instruction indexed by rt register
                     luiValues[rtReg] = luiInst;
                     luiLocs[rtReg] = luiLoc;
-                    relocEntryLoc += 4;
                 }
                 else if (commandType == 0x6 /* R_MIPS_LO16 */) // ADDIU
                 {
@@ -595,33 +592,36 @@ namespace MMR.Randomizer.Enemizer
                     // rs register is bits 21-25 of the ADDIU instruction
                     int rsReg = (int)((addiuInst >> 0x15) & 0x1F);
                     // Retrieve the matching LUI by rs register
-                    uint oldLuiData = luiValues[rsReg]; // *regValP
+                    // uint oldLuiData = luiValues[rsReg]; // *regValP, currently unused
                     uint addiuLowerHalf = ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2); // (s16)*relocDataP
 
-                    //var previousLuiLoc = luiLocs[rsReg];
-                    //uint luiLookupData = ReadWriteUtils.Arr_ReadU32(file.Data, previousLuiLoc); // *luiInstRef
+                    var previousLuiLoc = luiLocs[rsReg];
+                    uint luiLookupData = ReadWriteUtils.Arr_ReadU32(file.Data, previousLuiLoc); // *luiInstRef, matches decomp
                     uint luiDecr = (uint)(((addiuLowerHalf & 0xFFFF) > 0x8000) ? 1 : 0);  // this isn't in decomp, but I needed it for old version
-                    //var shiftedLui = (luiLookupData - luiDecr) << 0x10; // matches decomp
-                    //var shiftedLui = (oldLuiData - luiDecr) << 0x10; // gets us a different error alltogether?
-                    var shiftedLui = oldLuiData  << 0x10; // maybe we really dont need it
+                    var shiftedLui = (luiLookupData - luiDecr) << 0x10; // but why is decr required? is it because we need to undo what the build process did?
+                    //var shiftedLui = oldLuiData  << 0x10; // crash: LUI is usually +1 (0x10000) too big
                     int expressionCheck = (int)(shiftedLui + addiuLowerHalf);
                     if ((expressionCheck & 0x0F000000) == 0) // block segmented addresses
                     {
                         // Combine HI16 + LO16 into full address
-                        uint debug_PARTIAL = shiftedLui  | addiuLowerHalf; // debug
+                        uint debug_PARTIAL = shiftedLui + addiuLowerHalf; // debug
                         System.Diagnostics.Debug.Assert(expressionCheck != debug_PARTIAL + newVRAMOffset); // sure sems like they are alwasy the same, has never triggered
-                        uint relocatedAddress = (shiftedLui | addiuLowerHalf) + newVRAMOffset; // using decomp
-                        //uint relocatedAddress = expressionCheck + newVRAMOffset; // this should work if they really are always the same
+                        uint relocatedAddress = (shiftedLui + addiuLowerHalf) + newVRAMOffset; // using decomp
 
                         // split back into parts
-                        int isLoNeg = ((relocatedAddress & 0xFFFF) > 0x8000) ? 1 : 0; // binary quirk, we sign flag needs to be added back
+                        uint isLoNeg = (uint)(((relocatedAddress & 0xFFFF) & 0x8000) != 0 ? 1 : 0); // binary quirk, we sign flag needs to be added back
                         ushort luiPart = (ushort)((relocatedAddress >> 0x10) + isLoNeg);
                         ushort adduPart = (ushort)(relocatedAddress & 0xFFFF);
                         ReadWriteUtils.Arr_WriteU16(file.Data, luiLocs[rsReg] + 2, luiPart);
                         ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
+
+                        //if (expressionCheck > 0x8092FF60 && expressionCheck < 0x80950000) {
+                            //Debug.WriteLine($" for old location [{expressionCheck.ToString("X")}] \ " +
+                            //    $"we chose new addr [{relocatedAddress.ToString("X")}] isLoNeg: [{isLoNeg}] luipart: [{luiPart.ToString("X")}]");
+                        //}
                     }
-                    relocEntryLoc += 4;
                 }
+                relocEntryLoc += 4;
             } // end while
                     
         } // end UpdateOverlayVRAMRelocRewrite
