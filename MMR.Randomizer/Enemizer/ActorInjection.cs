@@ -412,10 +412,11 @@ namespace MMR.Randomizer.Enemizer
                                 RomData.MMFileList[newFID].WasEdited = true;
                                 RomData.MMFileList[newFID].IsReadOnly = true;
                                 // injectedActor.overlayBin = overlayData; // we dont save bin if its a previous file
+
+                                // wait isnt this bad? we dont compress the actor again? is this just a work around?
+                                RomData.MMFileList[newFID].IsCompressed = false;
                             }
 
-                            // wait isnt this bad? we dont compress the actor again? is this just a work around?
-                            RomData.MMFileList[newFID].IsCompressed = false;
 
                         } // foreach bin entry
 

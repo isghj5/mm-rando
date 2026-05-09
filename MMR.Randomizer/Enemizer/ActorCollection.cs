@@ -29,8 +29,7 @@ namespace MMR.Randomizer.Enemizer
             /// values per day/night
 
             oldActorList = actorList;
-            //var distinctActors = actorList.Select(act => act).DistinctBy(act => act);
-            var distinctActors = actorList.DistinctBy(act => act);
+            var distinctActors = actorList.DistinctBy(act => act.ActorId);
             OverlayRamSize = distinctActors.Select(x => ActorUtils.GetOvlCodeRamSize(x.ActorId)).Sum();
             ActorInstanceSum = actorList.Select(act => act.ActorId)
                                         .Select(act => ActorUtils.GetOvlInstanceRamSize(act, Enemies.InjectedActors)).Sum();
