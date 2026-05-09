@@ -169,7 +169,7 @@ namespace MMR.Randomizer.Enemizer
                     var newDynaValuePair = valueStr.Split(",").ToList();
                     var intBase = newDynaValuePair[0].Contains("0x") ? 16 : 10;
                     newInjectedActor.DynaLoad.poly = Convert.ToInt32(newDynaValuePair[0].Trim(), intBase);
-                    intBase = newDynaValuePair[0].Contains("0x") ? 16 : 10;
+                    intBase = newDynaValuePair[1].Contains("0x") ? 16 : 10;
                     newInjectedActor.DynaLoad.vert = Convert.ToInt32(newDynaValuePair[1].Trim(), intBase);
                     continue;
                 }

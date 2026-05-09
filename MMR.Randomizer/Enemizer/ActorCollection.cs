@@ -67,19 +67,19 @@ namespace MMR.Randomizer.Enemizer
             // scenes can have special scene objects, which arent included in actor objects
             if (s.SpecialObject == Scene.SceneSpecialObject.FieldKeep)
             {
-                this.ObjectRamSize += 0x9290; // field keep object
                 this.ObjectList.Append(0x2);
+                this.ObjectRamSize += 0x9290; // field keep object
                 /// I still dont know why epona sometimes spawns before the objects from scene are loaded, assumption its field
                 if (s.SceneEnum != GameObjects.Scene.IkanaCanyon)
                 {
-                    this.ObjectRamSize += 0xE4F0; // epona
                     this.ObjectList.Append(0x7D);
+                    this.ObjectRamSize += 0xE4F0; // epona
                 }
             }
             else if (s.SpecialObject == Scene.SceneSpecialObject.DungeonKeep)
             {
-                this.ObjectRamSize += 0x23280;
                 this.ObjectList.Append(0x3);
+                this.ObjectRamSize += 0x23280;
             }
         }
     } // end BaseEnemiesCollection
@@ -344,7 +344,7 @@ namespace MMR.Randomizer.Enemizer
                 }
 
                 var dayVertDiff = this.newMapList[map].day.DynaVertSize - this.oldMapList[map].day.DynaVertSize;
-                if (dayVertDiff > dynaHeadroomAttr.Polygon)
+                if (dayVertDiff > dynaHeadroomAttr.Verticies)
                 {
                     return $"map [{map}] day vert: [{dayVertDiff}]";
                 }
@@ -356,7 +356,7 @@ namespace MMR.Randomizer.Enemizer
                 }
 
                 var nightVertDiff = this.newMapList[map].night.DynaVertSize - this.oldMapList[map].night.DynaVertSize;
-                if (nightVertDiff > dynaHeadroomAttr.Polygon)
+                if (nightVertDiff > dynaHeadroomAttr.Verticies)
                 {
                     return $"map [{map}] day vert: [{nightVertDiff}]";
                 }
