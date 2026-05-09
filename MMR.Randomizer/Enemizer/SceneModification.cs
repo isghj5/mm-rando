@@ -233,10 +233,10 @@ namespace MMR.Randomizer.Enemizer
             var firstBush = tradingPost.Maps[0].Actors[2]; // first right bush
             firstBush.ChangeYRotation(80);
 
-            var secondBush = tradingPost.Maps[0].Actors[2]; // next to table to fish case
+            var secondBush = tradingPost.Maps[0].Actors[4]; // next to table to fish case
             secondBush.ChangeYRotation(90);
 
-            var thirdBush = tradingPost.Maps[0].Actors[2]; // behind table should be facing table
+            var thirdBush = tradingPost.Maps[0].Actors[5]; // behind table should be facing table
             thirdBush.ChangeYRotation(210);
 
             var tradingPostPot = tradingPost.Maps[0].Actors[8];
@@ -1695,6 +1695,7 @@ namespace MMR.Randomizer.Enemizer
                 bo.OldVariant = bo.Variants[0] = 0xFA00;
             }
 
+            // Spider gosip grotto: the spider object is needed for the small spider in the web and the skulltula in the air
             // the object list for this scene is 3, so there is space for another object without expanding the scene
             // lets re-use the other ceiling actor object in the spider grotto so we can have some more variety
             var jGrottoRoomData = RomData.MMFileList[GameObjects.Scene.Grottos.FileID() + 8].Data;
@@ -2978,8 +2979,8 @@ namespace MMR.Randomizer.Enemizer
                 SceneUtils.UpdateScene(milkbar);
             }
 
-            var milkbarGorman = milkbar.Maps[0].Actors[12];
-            if (milkbarGorman.ActorEnum != GameObjects.Actor.PostMan)
+            var milkbarGorman = milkbar.Maps[0].Actors[7];
+            if (milkbarGorman.ActorEnum != GameObjects.Actor.Gorman)
             {
                 milkbarGorman.Position = new vec16(57, 2, -87); // move next to the bar
                 // turn slightly right to face bar
@@ -3067,7 +3068,7 @@ namespace MMR.Randomizer.Enemizer
             {
                 // sitting just outside of town door, move inwards a bit
                 ectKafei.Position = new vec16(1475, 60, -747);
-                ectKafei.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: sctKafei.Rotation.y);
+                ectKafei.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: ectKafei.Rotation.y);
                 SceneUtils.UpdateScene(eastClockTown);
             }
 
