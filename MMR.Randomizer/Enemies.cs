@@ -1183,6 +1183,7 @@ namespace MMR.Randomizer
 
             void TrimPass(List<List<ActorInst>> shrinkTargets)
             {
+                if (shrinkTargets == null) return;
                 while (shrinkTargets.Count > 0)
                 {
                     var markForFinished = new List<List<ActorInst>>();
