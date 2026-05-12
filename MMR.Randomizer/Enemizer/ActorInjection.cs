@@ -432,10 +432,10 @@ namespace MMR.Randomizer.Enemizer
         }
 
 
-        public static void UpdateOverlayVRAMReloc(MMFile file, int[] sectionOffsets, uint newVRAMOffset)
+        public static void UpdateOverlayVRAMRelocOld(MMFile file, int[] sectionOffsets, uint newVRAMOffset)
         {
             // this is the old version, works with all overwritten actors, but not new ones
-            // rewritten below because it was a possible reason for new actors not working.
+            // rewritten below because it was a possible reason for new actors not working, leaving here for reference until mkystery resolved
 
             var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
             // the table pointer at the end is an offset from the end, we need to swap it
@@ -445,7 +445,6 @@ namespace MMR.Randomizer.Enemizer
             uint relocEntryCount = ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryCountLocation);
             var relocEntryLoc = relocEntryCountLocation + 4; // first overlayEntry immediately after reloc count
             var relocEntryEndLoc = relocEntryLoc + (relocEntryCount * 4);
-            // traverse the whole relocation section, parse the changes, apply
 
             uint pointer = 0; // save outside of loop incase of multiple combos
 
@@ -506,15 +505,15 @@ namespace MMR.Randomizer.Enemizer
                 }
                 else if (commandType == 0x6 /* R_MIPS_LO16 */) // another ADDIU after the first combo
                 {
-                    // sometimes there are multiple, often in the delay slot of a jump IDO will put a copy of an instruction rather than a nop
+                    // sometimes there are multiple, in the delay slot of a jump IDO will put a copy of an instruction rather than a nop
                     int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
                     ushort adduPart = (ushort)(pointer & 0xFFFF);
                     ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
 
-                    relocEntryLoc += 4; // another
+                    relocEntryLoc += 4;
                 }
                 else // unknown command? supposidly Z64 only uses these four although it could support more
-                {    // this never fired, IDO doesn't ever seem to ommit any, so long as we stick with using IDO and not GNU this shouldn't happen
+                {    // this never fired, IDO doesn't ever seem to ommit any, so long as we stick with using IDO, and not GNU, this shouldn't happen
                     throw new Exception($"UpdateOverlayVRAMReloc: unknown reloc overlayEntry value:\n" +
                         $" {ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc).ToString("X")}");
                 }
@@ -529,7 +528,7 @@ namespace MMR.Randomizer.Enemizer
             ///  so now, we must re-apply the VRAM addresses so when the game shifts them into RAM it will have the correct values
             ///  newVRAMOffset is the difference between the old and new, delta
 
-            //  this is attempting to mirror Overlay_Relocate in MM decomp
+            //  this is attempting to mirror Overlay_Relocate in MM decomp more closely than the old alg
 
             var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
             // the table pointer at the end is an offset from the end, we need to swap it
@@ -558,11 +557,14 @@ namespace MMR.Randomizer.Enemizer
                     int ptrLoc = sectionOffset + (int)(relocWord & 0x00FFFFFF);
                     uint ptrValue = ReadWriteUtils.Arr_ReadU32(file.Data, ptrLoc);
                     if ((ptrValue & 0x0F000000) != 0) { // decomp checks for this, but it should never trigger IMO
-                        throw new Exception($"Invalid reloc R_MIPS_32 value: [{ptrValue}]"); // no trigger yet, want to catch if it does (curious), so exception
+                        throw new Exception($"Invalid reloc R_MIPS_32 value: [{ptrValue}]"); // no trigger yet, want to catch if it does (curious)
                     }
 
                     ptrValue += newVRAMOffset;
                     ReadWriteUtils.Arr_WriteU32(file.Data, ptrLoc, ptrValue);
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"R_MIPS_32: ptrLoc=0x{ptrLoc:X8} oldVal=0x{ptrValue:X8} newVal=0x{(ptrValue + newVRAMOffset):X8}");
                 }
                 else if (commandType == 0x4 /* R_MIPS_26 */) // JAL function calls
                 {
@@ -593,21 +595,21 @@ namespace MMR.Randomizer.Enemizer
                     // rs register is bits 21-25 of the ADDIU instruction
                     int rsReg = (int)((addiuInst >> 0x15) & 0x1F);
                     // Retrieve the matching LUI by rs register
-                    // uint oldLuiData = luiValues[rsReg]; // *regValP, currently unused
+                    uint oldLuiInstructionFromValue = luiValues[rsReg]; // *regValP, currently unused
                     uint addiuLowerHalf = ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2); // (s16)*relocDataP
 
                     var previousLuiLoc = luiLocs[rsReg];
                     uint luiLookupData = ReadWriteUtils.Arr_ReadU32(file.Data, previousLuiLoc); // *luiInstRef, matches decomp
                     uint luiDecr = (uint)(((addiuLowerHalf & 0xFFFF) > 0x8000) ? 1 : 0);  // this isn't in decomp, but I needed it for old version
-                    var shiftedLui = (luiLookupData - luiDecr) << 0x10; // but why is decr required? is it because we need to undo what the build process did?
-                    //var shiftedLui = oldLuiData  << 0x10; // crash: LUI is usually +1 (0x10000) too big
-                    int expressionCheck = (int)(shiftedLui + addiuLowerHalf);
-                    if ((expressionCheck & 0x0F000000) == 0) // block segmented addresses
+                    var shiftedLuiRef = (luiLookupData - luiDecr) << 0x10; // but why is decr required? is it because we need to undo what the build process did?
+                    var shiftedLuiValue = (oldLuiInstructionFromValue - luiDecr) << 0x10;
+                    int expressionCheck = (int)(shiftedLuiRef + addiuLowerHalf);
+                    if ((expressionCheck & 0x0F000000) == 0) // block segmented addresses from modification
                     {
                         // Combine HI16 + LO16 into full address
-                        uint debug_PARTIAL = shiftedLui + addiuLowerHalf; // debug
-                        System.Diagnostics.Debug.Assert(expressionCheck != debug_PARTIAL + newVRAMOffset); // sure sems like they are alwasy the same, has never triggered
-                        uint relocatedAddress = (shiftedLui + addiuLowerHalf) + newVRAMOffset; // using decomp
+                        uint debug_PARTIAL = shiftedLuiValue + addiuLowerHalf;
+                        System.Diagnostics.Debug.Assert(expressionCheck != debug_PARTIAL + newVRAMOffset); // has never triggered
+                        uint relocatedAddress = (shiftedLuiValue + addiuLowerHalf) + newVRAMOffset; // using decomp
 
                         // split back into parts
                         uint isLoNeg = (uint)(((relocatedAddress & 0xFFFF) & 0x8000) != 0 ? 1 : 0); // binary quirk, we sign flag needs to be added back
@@ -616,10 +618,11 @@ namespace MMR.Randomizer.Enemizer
                         ReadWriteUtils.Arr_WriteU16(file.Data, luiLocs[rsReg] + 2, luiPart);
                         ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
 
-                        //if (expressionCheck > 0x8092FF60 && expressionCheck < 0x80950000) { // debug data collection
-                            //Debug.WriteLine($" for old location [{expressionCheck.ToString("X")}] \ " +
-                            //    $"we chose new addr [{relocatedAddress.ToString("X")}] isLoNeg: [{isLoNeg}] luipart: [{luiPart.ToString("X")}]");
-                        //}
+                        System.Diagnostics.Debug.WriteLine(
+                            $"LO16: rsReg={rsReg} luiLoc=0x{luiLocs[rsReg]:X8} ptrLoc=0x{addiuLoc:X8} " +
+                            $"oldLuiVal=0x{oldLuiInstructionFromValue:X8} luiFromMem=0x{luiLookupData:X8} " +
+                            $"addiuLower=0x{addiuLowerHalf:X4} expressionCheck=0x{expressionCheck:X8} " +
+                            $"relocatedAddr=0x{relocatedAddress:X8} luiPart=0x{luiPart:X4} adduPart=0x{adduPart:X4}");
                     }
                 }
                 relocEntryLoc += 4;

@@ -4761,7 +4761,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 6, variant: 0x0)]
         [UnkillableAllVariants]
         [ForbidFromScene(Scene.RomaniRanch)] // dont replace actual romani balloons
-        [EnemizerScenesPlacementBlock(Scene.TerminaField)] // long draw distance means they can overflow actor spawn
+        [EnemizerScenesPlacementBlock(Scene.TerminaField)] // long draw distance means they can overflow actor spawn, TODO is this still valid? we could lower in modified actor if not in ranch too
         PoeBalloon = 0x1A6, // En_Po_Fusen
 
         // some type of wooden door
