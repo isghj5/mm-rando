@@ -3418,7 +3418,7 @@ namespace MMR.Randomizer
             thisSceneData.Log.Append(bogoLog);
             WriteOutput("####################################################### ");
 
-            CheckForHardToFindBugsPre(thisSceneData);
+            CheckForHardToFindBugsPost(thisSceneData);
 
             // realign all scene companion actors
             MoveAlignedCompanionActors(thisSceneData);
