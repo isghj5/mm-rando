@@ -2026,7 +2026,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, ActorEnum.Leever, ActorEnum.UnusedSpikeFence)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, ActorEnum.Leever, ActorEnum.UnusedSpikeFence)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, ActorEnum.BuisnessScrub, ActorEnum.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, ActorEnum.SoftSoilAndBeans, ActorEnum.PunchableStoneTowerPillars)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, ActorEnum.Peahat, ActorEnum.BetaVampireGirl)) continue;
@@ -2905,6 +2905,26 @@ namespace MMR.Randomizer
 
 #endregion
 
+        private static void UpdateNewActorId(SceneEnemizerData thisSceneData)
+        {
+            // for new actors, they have no actorID at start, it gets assigned to their injected actor
+            // I'm not sure yet if updating their actor ID would cause issues earlier, so for now we update it last
+
+            for(int a = 0; a < thisSceneData.Actors.Count(); a++)
+            {
+                var actor = thisSceneData.Actors[a];
+
+                if (actor.InjectedActor != null && actor.ActorId == 0)
+                {
+                    actor.ActorId = actor.InjectedActor.ActorId;
+                }
+
+            }
+
+        }
+
+
+
         private static void HandleUniqueSceneSpecialObjectBehaviors(SceneEnemizerData thisSceneData)
         {
             AddAniObjectIfTerminaFieldTree(thisSceneData);
@@ -3418,6 +3438,8 @@ namespace MMR.Randomizer
             WriteOutput("####################################################### ");
 
             CheckForHardToFindBugsPost(thisSceneData);
+
+            UpdateNewActorId(thisSceneData);
 
             // realign all scene companion actors
             MoveAlignedCompanionActors(thisSceneData);

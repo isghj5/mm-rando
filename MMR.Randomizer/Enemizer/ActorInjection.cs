@@ -820,10 +820,12 @@ namespace MMR.Randomizer.Enemizer
                     throw new Exception("new actor missing starting vram:\n " + injectedActor.filename);
                 }
 
+                // pick out new actorID
+                // TODO randomize this
                 injectedActor.ActorId = (int)freeOverlaySlots[0]; // currently linear, always starts with 0x13
                 freeOverlaySlots.RemoveAt(0);
 
-                var newFileID = GetUnusedFileID(injectedActor); // todo change this back into hardcoded, its a static rom
+                var newFileID = GetUnusedFileID(injectedActor);
                 //var newFileID = RomUtils.AppendFile(injectedActor.overlayBin); // broken, wants to put our actor outside of romspace
                 injectedActor.fileID = newFileID;
                 var file = RomData.MMFileList[newFileID];
@@ -834,6 +836,7 @@ namespace MMR.Randomizer.Enemizer
                 file.Cmp_End = 0x0;
 
                 // update actor ID in overlay profile, now that we know the new actor ID value
+                //var oldId = ReadWriteUtils.Arr_ReadU16(file.Data, (int)injectedActor.ProfileLocation, (ushort)injectedActor.ActorId);
                 ReadWriteUtils.Arr_WriteU16(file.Data, (int)injectedActor.ProfileLocation, (ushort)injectedActor.ActorId);
 
                 var filenameSplit = injectedActor.filename.Split("\\");
