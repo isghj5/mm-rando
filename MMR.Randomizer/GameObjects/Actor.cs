@@ -2833,6 +2833,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.BeneathGraveyard,
             Scene.RoadToSouthernSwamp,
             Scene.TradingPost,
+            Scene.MountainSmithy, Scene.LotteryShop, Scene.TownShootingGallery, Scene.TreasureChestShop, Scene.HoneyDarling, Scene.SwordsmansSchool,
             Scene.MountainVillageSpring, Scene.RanchBuildings)] // crash because not enough paths
         Dog = 0xE2, // En_Dg
 

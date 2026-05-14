@@ -1183,6 +1183,7 @@ namespace MMR.Randomizer
 
             void TrimPass(List<List<ActorInst>> shrinkTargets)
             {
+                if (shrinkTargets == null) return;
                 while (shrinkTargets.Count > 0)
                 {
                     var markForFinished = new List<List<ActorInst>>();
@@ -3505,8 +3506,8 @@ namespace MMR.Randomizer
                 ActorInjection.ScanForMMRA(directory: "actors", _randomized.Settings);
                 using (StreamWriter log = new StreamWriter(_outputSettings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
-                    log.Write("Enemizer version: Isghj's Actorizer Test 97.3\n");
-                    log.Write("seed: [ " + seed + " ]");
+                    log.Write("Enemizer version: Isghj's Actorizer Test 99.0\n");
+                    log.Write("seed: [ " + seed + " ]\n");
 
                     ActorInjection.InjectNewActors(_seedRNG, log);
                     log.Write(_syncedLog.ToString());

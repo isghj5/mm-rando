@@ -171,7 +171,7 @@ namespace MMR.Randomizer.Enemizer
                     var newDynaValuePair = valueStr.Split(",").ToList();
                     var intBase = newDynaValuePair[0].Contains("0x") ? 16 : 10;
                     newInjectedActor.DynaLoad.poly = Convert.ToInt32(newDynaValuePair[0].Trim(), intBase);
-                    intBase = newDynaValuePair[0].Contains("0x") ? 16 : 10;
+                    intBase = newDynaValuePair[1].Contains("0x") ? 16 : 10;
                     newInjectedActor.DynaLoad.vert = Convert.ToInt32(newDynaValuePair[1].Trim(), intBase);
                     continue;
                 }
@@ -414,10 +414,11 @@ namespace MMR.Randomizer.Enemizer
                                 RomData.MMFileList[newFID].WasEdited = true;
                                 RomData.MMFileList[newFID].IsReadOnly = true;
                                 // injectedActor.overlayBin = overlayData; // we dont save bin if its a previous file
+
+                                // wait isnt this bad? we dont compress the actor again? is this just a work around?
+                                RomData.MMFileList[newFID].IsCompressed = false;
                             }
 
-                            // wait isnt this bad? we dont compress the actor again? is this just a work around?
-                            RomData.MMFileList[newFID].IsCompressed = false;
 
                         } // foreach bin entry
 

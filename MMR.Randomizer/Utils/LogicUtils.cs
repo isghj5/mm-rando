@@ -219,13 +219,18 @@ namespace MMR.Randomizer.Utils
             }
             var locationLogic = itemLogic[(int)location];
             var io = itemsByLocation[location];
+            var timeToCheck = locationLogic.TimeSetup;
+            if (timeToCheck == (int)TimeOfDay.None)
+            {
+                timeToCheck = locationLogic.TimeAvailable;
+            }
             if (ItemUtils.IsLogicallyJunk(io.Item))
             {
                 timeAvailable = (int)TimeOfDay.All;
             }
-            else if ((io.Item.IsTemporary() || location.IsFake()) && timeAvailable < locationLogic.TimeAvailable)
+            else if ((io.Item.IsTemporary() || location.IsFake()) && timeAvailable < timeToCheck)
             {
-                timeAvailable &= locationLogic.TimeAvailable;
+                timeAvailable &= timeToCheck;
                 if (timeAvailable == 0)
                 {
                     return null;
@@ -233,7 +238,7 @@ namespace MMR.Randomizer.Utils
             }
             else
             {
-                timeAvailable = locationLogic.TimeAvailable;
+                timeAvailable = timeToCheck;
             }
             var required = new List<Item>();
             var important = new List<Item>();

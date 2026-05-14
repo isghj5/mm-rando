@@ -106,8 +106,9 @@ namespace MMR.Randomizer.Enemizer
             RomUtils.CheckCompressed(fireflyFid);
             var fireflyData = RomData.MMFileList[fireflyFid].Data;
 
+            // andi $t3, $t2, 0x7FFF
             fireflyData[0xC6] = 0x00; // 0x7F -> 00
-            fireflyData[0xC6] = 0x0F; // 0xFF -> 0F
+            fireflyData[0xC7] = 0x0F; // 0xFF -> 0F
         }
 
 
@@ -286,9 +287,9 @@ namespace MMR.Randomizer.Enemizer
 
             var sbFid = GameObjects.Actor.Shellblade.FileListIndex();
             RomUtils.CheckCompressed(sbFid);
-            var dragonflyData = RomData.MMFileList[sbFid].Data;
+            var shellBladeData = RomData.MMFileList[sbFid].Data;
             // null the branch
-            ReadWriteUtils.Arr_WriteU32(dragonflyData, Dest: 0xCC4, val: 0x00000000); // BGZ (past the code we want) -> NOP
+            ReadWriteUtils.Arr_WriteU32(shellBladeData, Dest: 0xCC4, val: 0x00000000); // BGZ (past the code we want) -> NOP
         }
 
 
