@@ -596,6 +596,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x33)]
         // 350, 300 was fine 
         [DynaHeadroom(350, 300)]  // limit not found
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RegularZora,
+                        Actor.UnusedStoneTowerStoneElevator)] // too big can block things
         ZoraHall = 0x30,
 
         [FileID(1324)]
