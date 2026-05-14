@@ -3290,7 +3290,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.PinnacleRock//, // super annoying warping the player all the way back
             /*Scene.StoneTower, Scene.SouthernSwamp, Scene.SouthernSwampClear */)] // dyna crash possible
         [AlignedCompanionActor(GrassRockCluster, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x702, 0xC02, 0x802, 0x902, 0x0402, 0x1F02)]
-        [PlacementWeight(50)]
+        [PlacementWeight(40)]
         Mimi = 0x111, // En_Bu
 
         //[EnemizerEnabled] //crash
@@ -3769,7 +3769,7 @@ namespace MMR.Randomizer.GameObjects
         // Dm_Sa was saria in OOT but in MM its an unused skullkid prototype
         [FileID(295)]
         [ObjectListIndex(0x192)]
-        BrokenSkullkid = 0x149, // Dm_Sa
+        UnusedBrokenSkullkid = 0x149, // Dm_Sa
 
         [EnemizerEnabled]
         [ActorProfileOffset(0x2D30)]
@@ -3798,7 +3798,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(298)]
         [ObjectListIndex(0x16D)]
-        UnusedClockTowerSpotlight = 0x14C, // Obj_Toudai
+        Unused_ClockTowerSpotlight = 0x14C, // Obj_Toudai
 
         [FileID(299)]
         [ObjectListIndex(0x16D)]
@@ -4063,7 +4063,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(324)]
         [ObjectListIndex(0x189)]
         [UnkillableAllVariants]
-        En_Dnb = 0x167, // En_Dnb
+        Unused_EnDnb = 0x167, // En_Dnb
 
         [FileID(325)]
         [ObjectListIndex(0x224)]
@@ -4121,7 +4121,7 @@ namespace MMR.Randomizer.GameObjects
 
         Empty16B = 0x16B,
 
-        // completely unused actor
+        // completely unused actor, a metal spiked fence too tall for epona
         [ActorizerEnabled]
         [FileID(328)]
         [ObjectListIndex(0x17E)]

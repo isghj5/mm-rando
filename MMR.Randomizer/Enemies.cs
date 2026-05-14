@@ -3508,7 +3508,7 @@ namespace MMR.Randomizer
                     log.Write("Enemizer version: Isghj's Actorizer Test 97.3\n");
                     log.Write("seed: [ " + seed + " ]");
 
-                    ActorInjection.InjectNewActors(log);
+                    ActorInjection.InjectNewActors(_seedRNG, log);
                     log.Write(_syncedLog.ToString());
                 }
 
