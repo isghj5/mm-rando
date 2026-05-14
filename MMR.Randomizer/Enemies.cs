@@ -62,7 +62,7 @@ namespace MMR.Randomizer
         private static Mutex _LogMutex = new Mutex();
         private static bool ACTORSENABLED;
         private static Random _seedRNG;
-        private static Models.RandomizedResult _randomized;
+        private static Models.RandomizedResult _randomized; // we can get other settings from this
         private static OutputSettings _outputSettings;
         private static CosmeticSettings _cosmeticSettings;
         private static StringBuilder _syncedLog;
@@ -3064,6 +3064,13 @@ namespace MMR.Randomizer
                 // random coin toss, remove one
                 var targetActorEnum = (thisSceneData.RNG.Next() % 2 == 1) ? (ActorEnum.GaboraBlacksmith) : (ActorEnum.Zubora);
                 thisSceneData.AcceptableCandidates.RemoveAll(a => a.ActorEnum == targetActorEnum);
+            }
+
+            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.Grottos && _randomized.Settings.EntranceMode.HasFlag(EntranceMode.Grottos))
+            {
+                // we currently have a problem with actorizer grottos within grottos, they can take you to weird places, I think this is an entrando issue
+                var doorAna = thisSceneData.SceneFreeActors.Find(act => act.ActorEnum == ActorEnum.GrottoHole);
+                thisSceneData.SceneFreeActors.Remove(doorAna);
             }
         }
 
