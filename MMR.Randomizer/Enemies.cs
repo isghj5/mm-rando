@@ -2648,6 +2648,14 @@ namespace MMR.Randomizer
                 convertedList.Add(sceneFreeActors[a].CopyActor());
             }
 
+            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.Grottos && _randomized.Settings.EntranceMode.HasFlag(EntranceMode.Grottos))
+            {
+                // we currently have a problem with actorizer grottos within grottos, they can take you to weird places, I think this is an entrando issue
+                var doorAnaSearch = sceneFreeActors.Find(act => act.ActorEnum == ActorEnum.GrottoHole);
+                if (doorAnaSearch != null)
+                    sceneFreeActors.Remove(doorAnaSearch);
+            }
+
             thisSceneData.SceneFreeActors = sceneFreeActors;
             return;
         }
@@ -3066,14 +3074,6 @@ namespace MMR.Randomizer
                 var targetActorEnum = (thisSceneData.RNG.Next() % 2 == 1) ? (ActorEnum.GaboraBlacksmith) : (ActorEnum.Zubora);
                 thisSceneData.AcceptableCandidates.RemoveAll(a => a.ActorEnum == targetActorEnum);
             }
-
-            if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.Grottos && _randomized.Settings.EntranceMode.HasFlag(EntranceMode.Grottos))
-            {
-                // we currently have a problem with actorizer grottos within grottos, they can take you to weird places, I think this is an entrando issue
-                var doorAnaSearch = thisSceneData.SceneFreeActors.Find(act => act.ActorEnum == ActorEnum.GrottoHole);
-                if (doorAnaSearch != null)
-                  thisSceneData.SceneFreeActors.Remove(doorAnaSearch);
-            }
         }
 
         [System.Diagnostics.DebuggerDisplay("{Scene.SceneEnum.ToString()}")]
@@ -3196,6 +3196,8 @@ namespace MMR.Randomizer
 
             WriteOutput(" time to finish removing unnecessary objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
+            GetSceneFreeActors(thisSceneData);
+
             TrimSceneAcceptableCandidateList(thisSceneData);
 
             // we want to check for actor types that contain fairies per-scene for speed
@@ -3208,9 +3210,6 @@ namespace MMR.Randomizer
             // keeping track of RAM space usage is getting ugly, try some OO to clean it up
             thisSceneData.ActorCollection = new ActorsCollection(scene);
             WriteOutput(" time to separate map/time actors: " + GET_TIME(thisSceneData.StartTime) + "ms");
-
-            GetSceneFreeActors(thisSceneData);
-
 
             CheckForHardToFindBugsPre(thisSceneData);
 
