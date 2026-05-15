@@ -152,7 +152,7 @@ namespace MMR.Randomizer.Enemizer
 
         public List<List<Actor>> GenerateShrinkableDynaList()
         {
-            List<List<Actor>> shrinkableActorList = null;
+            List<List<Actor>> shrinkableActorList = new List<List<Actor>>();
 
             for (int m = 0; m < this.newMapList.Count; m++)
             {

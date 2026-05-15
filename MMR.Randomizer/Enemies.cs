@@ -3070,8 +3070,9 @@ namespace MMR.Randomizer
             if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.Grottos && _randomized.Settings.EntranceMode.HasFlag(EntranceMode.Grottos))
             {
                 // we currently have a problem with actorizer grottos within grottos, they can take you to weird places, I think this is an entrando issue
-                var doorAna = thisSceneData.SceneFreeActors.Find(act => act.ActorEnum == ActorEnum.GrottoHole);
-                thisSceneData.SceneFreeActors.Remove(doorAna);
+                var doorAnaSearch = thisSceneData.SceneFreeActors.Find(act => act.ActorEnum == ActorEnum.GrottoHole);
+                if (doorAnaSearch != null)
+                  thisSceneData.SceneFreeActors.Remove(doorAnaSearch);
             }
         }
 
