@@ -467,8 +467,8 @@ namespace MMR.Randomizer.GameObjects
         [DynaHeadroom(64, 64)]  // low default to start
         [EnemizerSceneEnemyReplacementBlock(Actor.Scarecrow,
             Actor.ClocktowerGearsAndOrgan)] // can block the stairs
-        [EnemizerSceneEnemyReplacementBlock(Actor.Torch,
-            Actor.DeathArmos)] // might be too much
+        [EnemizerSceneEnemyReplacementBlock(Actor.ClayPot,
+            Actor.Dexihand)] // can block climbing the ladder
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)] // replacements can block the whole tunnel
         AstralObservatory = 0x26, // and sewer leading to it
 

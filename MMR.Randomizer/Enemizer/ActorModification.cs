@@ -36,6 +36,8 @@ namespace MMR.Randomizer.Enemizer
             // ReadWriteUtils.Arr_WriteU32(scarecrowFile, 0x1100, 0x00000000); // NOP the ActorCutscene_SetIntentToPlay
 
             // UNFINISHED: TODO keep going, I think I have to change one of the function straight to digging away and skip dialogue because that function is long
+
+            // TODO now that we have new actors working, just fix as a new actor, so much easier than manually re-writing asm
         }
 
         private static void ExtendGrottoDirectIndexByte()
@@ -292,6 +294,31 @@ namespace MMR.Randomizer.Enemizer
             ReadWriteUtils.Arr_WriteU32(shellBladeData, Dest: 0xCC4, val: 0x00000000); // BGZ (past the code we want) -> NOP
         }
 
+        private static void FixDexihandDamage()
+        {
+            // dexihand takes no damage from a lot of different attacks on land
+            // because in vanilla you only fight them underwater
+            // this is un-immersive on land
+
+            var dexihandFID = GameObjects.Actor.Dexihand.FileListIndex();
+            RomUtils.CheckCompressed(dexihandFID);
+            var dexihandData = RomData.MMFileList[dexihandFID].Data;
+            // damage table offset is 0x2104, every entry is one byte, with the upper nibble being effect
+            var damageTableOffset = 0x2104;
+            // default damage is 1 with no effect, `0x01`
+            //dexihandData[damageTableOffset + 0x1] = 0x1; // stick
+            dexihandData[damageTableOffset + 0x0] = 0x1; // nuts was requested
+            dexihandData[damageTableOffset + 0x2] = 0x1; // horse trample
+            dexihandData[damageTableOffset + 0x9] = 0x1; // sword, if you can get lucky enough to hit before getting grabbed you deserve it
+            dexihandData[damageTableOffset + 0xA] = 0x1; // goron pound
+            dexihandData[damageTableOffset + 0xC] = 0x1; // ice arrow (there is no ice effect)
+            dexihandData[damageTableOffset + 0xD] = 0x1; // light arrow (there is no light effect or drop)
+            dexihandData[damageTableOffset + 0xE] = 0x1; // goron spike
+            dexihandData[damageTableOffset + 0xF] = 0x1; // deku spin, if you can hit before he grabs with such small reach that should be fine
+            dexihandData[damageTableOffset + 0x12] = 0x1; // deku flower launch, again, rare but should count it can kill lots
+            dexihandData[damageTableOffset + 0x19] = 0x1; // spinattack
+        }
+
 
         public static void ModifyActors()
         {
@@ -311,6 +338,7 @@ namespace MMR.Randomizer.Enemizer
             FixBabaShadows();
             FixDragonFlyShadows();
             FixShellBladeCollider();
+            FixDexihandDamage();
         }
     }
 }
