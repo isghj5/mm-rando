@@ -1619,12 +1619,30 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.IgosDuIkanasLair, variant: ActorConst.ANY_VARIANT,
             Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot1, Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot2, Item.CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot3,
             Item.CollectableIgosDuIkanaSLairPreBossRoomPot1, Item.CollectableIgosDuIkanaSLairPreBossRoomPot2, Item.CollectableIgosDuIkanaSLairPreBossRoomPot3)]
-        [CheckRestricted(Scene.StoneTower, variant: ActorConst.ANY_VARIANT, // NOT DUNGEON
-            Item.CollectableStoneTowerPot1, Item.CollectableStoneTowerPot2, Item.CollectableStoneTowerPot3, Item.CollectableStoneTowerPot4, Item.CollectableStoneTowerPot5,
-            Item.CollectableStoneTowerPot6, Item.CollectableStoneTowerPot7, Item.CollectableStoneTowerPot8, Item.CollectableStoneTowerPot9, Item.CollectableStoneTowerPot10,
-            Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
+        //[CheckRestricted(Scene.StoneTower, variant: ActorConst.ANY_VARIANT, // NOT DUNGEON
+        //   Item.CollectableStoneTowerPot1, Item.CollectableStoneTowerPot2, Item.CollectableStoneTowerPot3, Item.CollectableStoneTowerPot4, Item.CollectableStoneTowerPot5,
+        //   Item.CollectableStoneTowerPot6, Item.CollectableStoneTowerPot7, Item.CollectableStoneTowerPot8, Item.CollectableStoneTowerPot9, Item.CollectableStoneTowerPot10,
+        //   Item.CollectableStoneTowerPot11, Item.CollectableStoneTowerPot12, Item.CollectableStoneTowerPot13, Item.CollectableStoneTowerPot14)]
+        // in category order
+        [CheckRestricted(Scene.StoneTower, variant: 0x5F1E, Item.CollectableStoneTowerPot1)] // upper scarecrow 1
+        [CheckRestricted(Scene.StoneTower, variant: 0x671E, Item.CollectableStoneTowerPot2)] // upper scarecrow 2
+        [CheckRestricted(Scene.StoneTower, variant: 0x5D0E, Item.CollectableStoneTowerPot8)] // upper scarecrow 3
+        [CheckRestricted(Scene.StoneTower, variant: 0x630E, Item.CollectableStoneTowerPot9)] // upper scarecrow 4
+        [CheckRestricted(Scene.StoneTower, variant: 0x5910, Item.CollectableStoneTowerPot13)] // upper scarecrow 5
+        [CheckRestricted(Scene.StoneTower, variant: 0x410E, Item.CollectableStoneTowerPot6)] // lower scarecrow 1
+        [CheckRestricted(Scene.StoneTower, variant: 0x450E, Item.CollectableStoneTowerPot7)] // lower scarecrow 2
+        [CheckRestricted(Scene.StoneTower, variant: 0x690E, Item.CollectableStoneTowerPot10)] // lower scarecrow 3
+        [CheckRestricted(Scene.StoneTower, variant: 0x4710, Item.CollectableStoneTowerPot11)] // lower scarecrow 4
+        [CheckRestricted(Scene.StoneTower, variant: 0x4B10, Item.CollectableStoneTowerPot12)] // lower scarecrow 5
+        [CheckRestricted(Scene.StoneTower, variant: 0x750F, Item.CollectableStoneTowerPot3)] // owl pot (far left)
+        [CheckRestricted(Scene.StoneTower, variant: 0x6F15, Item.CollectableStoneTowerPot4)] // owl pot 2 (second from left)
+        [CheckRestricted(Scene.StoneTower, variant: 0x711F, Item.CollectableStoneTowerPot5)] // owl pot 3 (second from right)
+        [CheckRestricted(Scene.StoneTower, variant: 0x7310, Item.CollectableStoneTowerPot14)] // owl pot 4 (fairy)
+        //[CheckRestricted(Scene.InvertedStoneTower, variant: ActorConst.ANY_VARIANT, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot2, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3)]
+        [CheckRestricted(Scene.InvertedStoneTower, variant: 0x7515, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot1)] // top right
+        [CheckRestricted(Scene.InvertedStoneTower, variant: 0x710F, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot2)] // bottom right
+        [CheckRestricted(Scene.InvertedStoneTower, variant: 0x7310, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3)] // center
         // cannot randomize temple pots yet, uses dungeon keep objects, this will come later
-        [CheckRestricted(Scene.InvertedStoneTower, variant: ActorConst.ANY_VARIANT, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot1, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot2, Item.CollectableStoneTowerInvertedStoneTowerFlippedPot3)]
         [CheckRestricted(Scene.StoneTowerTemple, variant: ActorConst.ANY_VARIANT, Item.CollectableStoneTowerTempleInvertedWizzrobeRoomPot1)]
         [CheckRestricted(Scene.SecretShrine, variant: 0xF81E, Item.CollectableSecretShrineMainRoomPot1)]
         [CheckRestricted(Scene.SecretShrine, variant: 0xFA1E, Item.CollectableSecretShrineMainRoomPot2)]
