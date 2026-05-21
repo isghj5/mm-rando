@@ -42,7 +42,7 @@ namespace MMR.Randomizer.GameObjects
 
         //[EnemizerEnabled] // we dont want as an actual actor, we want as a companion
         [FileID(42)]
-        [ObjectListIndex(Object.GameplayKeep)] // gameplay_keep obj 1
+        [ObjectListIndex(Object.GameplayKeep)]
         // 0x83F0 is tiny candle light
         //[GroundVariants(0x83F0, 0x27F5)] // TODO finish checking the rest of possible variations
         // 0x7F4 is the bright yellow light of the graveyard smash
@@ -272,7 +272,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         [FileID(53)]
-        [ObjectListIndex(Object.GameplayKeep)] // gameplay_keep obj 1
+        [ObjectListIndex(Object.GameplayKeep)]
         // TODO find more, there are a lot of params here
         // 4 is group of fairies out of a fountain, 6 is spawned by 4
         //   4 has been removed because its unlikely to make sense for the location, and if its in TF it might contribute hard to TFG
@@ -446,7 +446,7 @@ namespace MMR.Randomizer.GameObjects
 
         //[ActorizerEnabled] // disabled for now because crash if leaving grotto into scene with ben
         [FileID(65)]
-        [ObjectListIndex(Object.GameplayKeep)] // gameplay_keep obj 1
+        [ObjectListIndex(Object.GameplayKeep)]
         [GroundVariants(0)] // 0 is ben
         [UnkillableAllVariants]
         // Ben seems to be cursed, if you enter a scene with him from a grotto it can crash (~90% chance?) 
@@ -527,7 +527,6 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         // FILE MISSING (always loaded)
-        //[ObjectListIndex(Object.Kanban)] // the spreadsheet thinks this is free but I dont think so, think its a multi-object like tsubo
         [ObjectListIndex(Object.GameplayKeep)]
         [ActorInstanceSize(0x1A8)]
         // 0xFF00 is text ID space
@@ -843,7 +842,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(91)]
         [ActorInstanceSize(0x1650)]
         [ActorInitVarOffset(0x1F78)]
-        [ObjectListIndex(Object.GameplayKeep)]// gameplay_keep obj 1
+        [ObjectListIndex(Object.GameplayKeep)]
         // variety 01 in giants crashes if placed in goron shrine
         // variety 02 in moon, spawns a lighter version of 00, less particles, no whole chains
         // concerned that having 0 AND 2 would crash, like 0 and snow
@@ -934,7 +933,7 @@ namespace MMR.Randomizer.GameObjects
 
         [EnemizerEnabled]
         [FileID(95)]
-        [ObjectListIndex(Object.GameplayKeep)] // gameplay_keep obj 1
+        [ObjectListIndex(Object.GameplayKeep)]
         [CheckRestricted(Scene.TerminaField, variant: 0x2324,
             Item.CollectableTerminaFieldButterflyFairy1,
             Item.HeartPiecePeahat // leave as a visible aid for finding the grotto
@@ -1052,7 +1051,7 @@ namespace MMR.Randomizer.GameObjects
         GoldSkulltula = 0x50, // En_Sw "Skullwalltulla"
 
         //[ActorizerEnabled] // wont snow with obj 1 or 0x1D8 might need weathertag
-        [ObjectListIndex(Object.GameplayKeep)] // gameplay_keep 1
+        [ObjectListIndex(Object.GameplayKeep)]
         [FileID(97)]
         // 0 is rain, but something else controls the rain counter not this actor
         // 2 is the murk from the ocean, but full time
@@ -2519,7 +2518,7 @@ namespace MMR.Randomizer.GameObjects
 
         //[ActorizerEnabled] // behavior is weird, hard to randomly place anywhere
         [FileID(164)]
-        [ObjectListIndex(Object.GameplayKeep)] // gamplaykeep obj 1
+        [ObjectListIndex(Object.GameplayKeep)]
         [GroundVariants(1)] // neither 0 nor 1 work
         [UnkillableAllVariants]
         RockSirloin = 0xB9, // En_Mm
@@ -2527,7 +2526,7 @@ namespace MMR.Randomizer.GameObjects
         EmptyBA = 0xBA,
         EmptyBB = 0xBB,
 
-        [ObjectListIndex(Object.GameplayKeep)] // gamplay_keep obj 1
+        [ObjectListIndex(Object.GameplayKeep)]
         [FileID(165)]
         // variants: 607 is the rain in road to southern swamp, which gets rainier as you approach swamp and dry toward termina field
         //  same for milk road, both are right next to the entrance that becomes more rainy
@@ -5226,7 +5225,7 @@ namespace MMR.Randomizer.GameObjects
         DekuPlayGroundGameRupee = 0x1D2, // En_Gamelupy
 
         [FileID(428)]
-        [ObjectListIndex(Object.GameplayKeep)] // what?
+        [ObjectListIndex(Object.GameplayKeep)] // what? TODO look into this
         [DynaAttributes(12, 8)]
         DampeHouseElevator = 0x1D3, // Bg_Danpei_Movebg
 
@@ -7783,7 +7782,7 @@ namespace MMR.Randomizer.GameObjects
 
         //[ActorizerEnabled] // did not spawn
         [FileID(638)]
-        [ObjectListIndex(Object.Bh)] // OBJECT_BH (was 0x2A7 typo - used actor ID instead of object ID)
+        [ObjectListIndex(Object.Bh)]
         [FlyingVariants(0xF)] // these might be pathing actors
         [UnkillableAllVariants]
         MoonBirdsBrown = 0x2A7, // En_Bh
