@@ -269,7 +269,6 @@ namespace MMR.Randomizer.Enemizer
                 if (filePath.Contains("SafeBoat.mmra")
                  || filePath.Contains("FairySpot.mmra") // is missing a variant, and was not working, not even sure what it was doing, TODo
                  || filePath.Contains("BabaIsLoaded.mmra") // talk locking, lost the code, have to disable because no time to rewrite
-                 || filePath.Contains("HairyGrog.mmra") // my code overrites zoeys item changes, I can't fix without breaking my code for enemies
                  || filePath.Contains("Dinofos"))
                 {
                     //throw new Exception("SafeBoat.mmra no longer works in actorizer 1.16, \n remove the file from MMR/actors and start a new seed.");
@@ -665,6 +664,10 @@ namespace MMR.Randomizer.Enemizer
                 // TODO: where does actorid get set for new inject (whihc is currently busted)
                 var ActorId = injectedActor.ActorId;
                 var fileID = injectedActor.fileID;
+                if (fileID == 0)
+                {
+                    throw new Exception($"FileZero error: [{injectedActor.filename}]");
+                }
                 MMFile file = RomData.MMFileList[fileID];
 
                 try
