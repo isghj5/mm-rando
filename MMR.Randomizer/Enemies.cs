@@ -610,8 +610,17 @@ namespace MMR.Randomizer
                     return GameObjects.Item.OtherKillMajora;
                 }
             }
-            // todo: add happy mask salesman
+            // todo: add happy mask salesman, except I like the guy
 
+            if (testActor == ActorEnum.Monkey && sceneEnum == GameObjects.Scene.SouthernSwamp)
+            {
+                if (_randomized.Settings.RandomizeGibdoRequirements == true)
+                {
+                    var isMonkeyPictureUsed = _randomized.GibdoRequirements.Any(item => item.ItemRequired == GameObjects.GibdoRequirement.GibdoRequirementItem.PhotoOfAMonkey);
+                    if (isMonkeyPictureUsed)
+                        return GameObjects.Item.OtherKillMajora;
+                }
+            }
 
             return null;
         }
