@@ -3519,14 +3519,6 @@ namespace MMR.Randomizer
 
                 EnemizerLateFixes(); // fix IF randomized
 
-                if (VanillaEnemyList.Contains(ActorEnum.Monkey))
-                {
-                    // if we randomize the monkey, then we cannot get pictures of the monkey anywhere
-                    // the vanilla game code in z_snap checks if the scene is swouthern swamp poisoned, if not the monkey picture doesn't count
-                    var pictoFix = Resources.mods.picto_actor_detect_fix.ToArray();
-                    ResourceUtils.ApplyHack(pictoFix);
-                }
-
                 // write the final time and version last
                 using (StreamWriter sw = new StreamWriter(_outputSettings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
