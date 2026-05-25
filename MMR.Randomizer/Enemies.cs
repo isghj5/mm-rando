@@ -903,9 +903,16 @@ namespace MMR.Randomizer
                 // rotate darmani grave to face forward, for some reason the actor is rotated 180
                 if (testActor.ChangedToNewActor(ActorEnum.DarmaniGrave))
                 {
-                    testActor.ChangeYRotation(180); // pitch rotation down a bit
+                    testActor.ChangeYRotation((testActor.Rotation.y + 180) % 360);
                 }
 
+                if (testActor.ActorEnum == ActorEnum.PuzzleBlock)
+                {
+                    testActor.ChangeXRotation(100); // dist is 60 * X? we can never pull more than 4 in any direction for some reason
+                    testActor.ChangeZRotation(6); // pullable in all directions
+                    // change the flag so they get read as literal
+                    testActor.ActorIdFlags |= (0x4000 | 0x2000);
+                }
 
             }
         }
@@ -2036,12 +2043,12 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, ActorEnum.Leever, ActorEnum.Dexihand)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, ActorEnum.Leever, ActorEnum.PuzzleBlock)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, ActorEnum.BuisnessScrub, ActorEnum.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, ActorEnum.SoftSoilAndBeans, ActorEnum.PunchableStoneTowerPillars)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, ActorEnum.Peahat, ActorEnum.BetaVampireGirl)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DoggyRacetrack, ActorEnum.ClayPot, ActorEnum.BedroomPostman)) continue;
-                if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, ActorEnum.HappyMaskSalesman, ActorEnum.Monkey)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, ActorEnum.HappyMaskSalesman, ActorEnum.Monkey)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, ActorEnum.RegularZora, ActorEnum.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.OceanSpiderHouse, ActorEnum.Seth1, ActorEnum.BeanSeller)) continue;
@@ -3534,7 +3541,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 99.0\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 99.1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

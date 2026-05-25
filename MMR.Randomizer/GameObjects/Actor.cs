@@ -2705,9 +2705,10 @@ namespace MMR.Randomizer.GameObjects
         Scarecrow = 0xCA, // En_Kakasi
 
         // these are the push blocks in pirates fortress interior
+        // spawner: spawns ACTOR_OBJ_OSHIHIKI
         // 0x85, 0x107
         [FileID(173)]
-        [ObjectListIndex(0x1)]
+        [ObjectListIndex(0x1)] // this spawns an actor that needs dagenon keep
         //[SwitchFlagsPlacement(size: 0x7F, shift: 0)] // this actor can have switch flags on zrotation, but not used in vanilla
         [TreasureFlagsPlacement(mask: 0x1F, shift: 2)]
         PushableBlockSwitchFlagsHandler = 0xCB, // Obj_Makeoshihiki
@@ -3173,16 +3174,19 @@ namespace MMR.Randomizer.GameObjects
         // puzzle block used in sakon's hideout I think
         [ActorizerEnabled]
         [FileID(237)]
-        [ObjectListIndex(0x3)] // double object, the other one is object_secom (sakons hideout)
+        //[ObjectListIndex(0x3)] // double object, the other one is object_secom (sakons hideout)
+        [ObjectListIndex(0x23C)] // double object, lets use the dedicated object more fun
         // params: 1000 uses alt object instead of dangeon, 0x700 determins minor color, 0x7F is switch flag
-        // rotz is used as a unknown param
-        [GroundVariants(0x000, 0x100, 0x200, 0x300, 0x400, 0x500, 0x600, 0x700)]
-        [WaterBottomVariants(0x000, 0x100, 0x200, 0x300, 0x400, 0x500, 0x600, 0x700)]
-        [SwitchFlagsPlacement(size: 0x7F, shift: 0)]
-        //[OnlyOneActorPerRoom]
-        [VariantsWithRoomMax(max: 1, variant: 0x000, 0x100, 0x200, 0x300, 0x400, 0x500, 0x600, 0x700)]
+        // Rotation X/Z are parameters: they set the distance you can push it from home and the directions you can use
+        //   both are being set manually in Enemies.cs::FixSpecificActorRotations
+        [GroundVariants(0x107F, 0x117F, 0x127F, 0x137F, 0x147F, 0x157F, 0x167F, 0x177F)]
+        [WaterBottomVariants(0x107F, 0x117F, 0x127F, 0x137F, 0x147F, 0x157F, 0x167F, 0x177F)]
+        //[SwitchFlagsPlacement(size: 0x7F, shift: 0)] // while it has a switch flag system, it is unused, just set max and ignore
+        [VariantsWithRoomMax(max: 3, variant: 0x107F, 0x117F, 0x127F, 0x137F, 0x147F, 0x157F, 0x167F, 0x177F)]
         [BlockingVariantsAll]
         [UnkillableAllVariants]
+        [DynaAttributes(20,13)]
+        [ForbidFromScene(Scene.SakonsHideout)] // maybe one day we will add although it might make it too easy
         [PlacementWeight(30)] // boring: its just a block
         PuzzleBlock = 0x102, // Obj_Pzlblock
 
