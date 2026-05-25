@@ -1,4 +1,5 @@
 ﻿using System;
+using MMR.Randomizer.GameObjects;
 
 namespace MMR.Randomizer.Attributes.Actor
 {
@@ -9,11 +10,17 @@ namespace MMR.Randomizer.Attributes.Actor
         ///    the game has one list for objects, this is where the actor lives in the list in vanilla
         /// </summary>
 
-        public int Index { get; }
+        public int Index => (int)ObjectValue;
+        public GameObjects.Object ObjectValue { get; }
 
-        public ObjectListIndexAttribute(int index)
+        public ObjectListIndexAttribute(GameObjects.Object obj)
         {
-            Index = index;
+            ObjectValue = obj;
+        }
+
+        public ObjectListIndexAttribute(int objInt)
+        {
+            ObjectValue = (GameObjects.Object) objInt;
         }
 
     }
