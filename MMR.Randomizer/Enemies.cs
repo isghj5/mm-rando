@@ -610,8 +610,17 @@ namespace MMR.Randomizer
                     return GameObjects.Item.OtherKillMajora;
                 }
             }
-            // todo: add happy mask salesman
+            // todo: add happy mask salesman, except I like the guy
 
+            if (testActor == ActorEnum.Monkey && sceneEnum == GameObjects.Scene.SouthernSwamp)
+            {
+                if (_randomized.Settings.RandomizeGibdoRequirements == true)
+                {
+                    var isMonkeyPictureUsed = _randomized.GibdoRequirements.Any(item => item.ItemRequired == GameObjects.GibdoRequirement.GibdoRequirementItem.PhotoOfAMonkey);
+                    if (isMonkeyPictureUsed)
+                        return GameObjects.Item.OtherKillMajora;
+                }
+            }
 
             return null;
         }
@@ -894,9 +903,16 @@ namespace MMR.Randomizer
                 // rotate darmani grave to face forward, for some reason the actor is rotated 180
                 if (testActor.ChangedToNewActor(ActorEnum.DarmaniGrave))
                 {
-                    testActor.ChangeYRotation(180); // pitch rotation down a bit
+                    testActor.ChangeYRotation((testActor.Rotation.y + 180) % 360);
                 }
 
+                if (testActor.ActorEnum == ActorEnum.PuzzleBlock)
+                {
+                    testActor.ChangeXRotation(100); // dist is 60 * X? we can never pull more than 4 in any direction for some reason
+                    testActor.ChangeZRotation(6); // pullable in all directions
+                    // change the flag so they get read as literal
+                    testActor.ActorIdFlags |= (0x4000 | 0x2000);
+                }
 
             }
         }
@@ -3548,20 +3564,14 @@ namespace MMR.Randomizer
 
                 EnemizerLateFixes(); // fix IF randomized
 
-                if (VanillaEnemyList.Contains(ActorEnum.Monkey))
-                {
-                    // if we randomize the monkey, then we cannot get pictures of the monkey anywhere
-                    // the vanilla game code in z_snap checks if the scene is swouthern swamp poisoned, if not the monkey picture doesn't count
-                    var pictoFix = Resources.mods.picto_actor_detect_fix.ToArray();
-                    ResourceUtils.ApplyHack(pictoFix);
-                }
-
                 // write the final time and version last
                 using (StreamWriter sw = new StreamWriter(_outputSettings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 99.1\n");
+                    sw.Write("seed: [ " + seed + " ]");
                 }
             }
             catch (Exception e)
