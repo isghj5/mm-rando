@@ -920,7 +920,7 @@ namespace MMR.Randomizer
 
                 if (testActor.ActorEnum == ActorEnum.PuzzleBlock)
                 {
-                    testActor.ChangeXRotation(100); // dist is 60 * X? we can never pull more than 4 in any direction for some reason
+                    testActor.ChangeXRotation(0xF); // dist is 60 * X? we can never pull more than 4 in any direction for some reason
                     testActor.ChangeZRotation(6); // pullable in all directions
                     // change the flag so they get read as literal
                     testActor.ActorIdFlags |= (0x4000 | 0x2000);
