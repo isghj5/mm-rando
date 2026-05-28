@@ -7030,11 +7030,13 @@ namespace MMR.Randomizer.GameObjects
             Item.CollectableEastClockTownHitTag7, Item.CollectableEastClockTownHitTag8, Item.CollectableEastClockTownHitTag9,
             Item.ChestEastClockTownSilverRupee
         )]
+        // what are params? maybe 0xFE00 is irrelevant and we can add some ground variaties
         [WallVariants(
             0xFE00, // zora band poster
             0xFE01, // construction recruitment poster
             0xFE02, // unk ect
             0xFE03, // treasure chest game poster
+            0xFE04, // kafeis journal
             0xFE05, // stockpot inn 1
             0xFE06, // soldier recruitment poster
             0xFE07, // laundry pool bell
@@ -7055,9 +7057,11 @@ namespace MMR.Randomizer.GameObjects
             0xFE15, // town archery sign
             0xFE18  // bank poster
         )]
+        //[GroundVariants(
+        //)]
         [RemovalChance(50)]
         [UnkillableAllVariants]
-        WallTalkSpot = 0x261, // En_Talk
+        TalkSpot = 0x261, // En_Talk
 
         [ActorizerEnabled]
         [FileID(569)]
