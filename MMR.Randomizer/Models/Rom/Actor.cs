@@ -771,17 +771,20 @@ namespace MMR.Randomizer.Models.Rom
         }
 
 
-        public int GetPlacementWeight(int baseline = 100)
+        public int GetPlacementWeight()
         {
             /// returns a weight for a given actor to be placed in a scene
+
+            if (this.InjectedActor != null && this.InjectedActor.PlacementWeight != 100)
+            {
+                return this.InjectedActor.PlacementWeight;
+            }
 
             var weightAttribute = this.ActorEnum.GetAttribute<PlacementWeight>();
             if (weightAttribute != null)
             {
                 return weightAttribute.Weight;
             }
-
-            // if baseline is not 100, adjust values to 100
 
             return 100; // default percent: 100%
         }

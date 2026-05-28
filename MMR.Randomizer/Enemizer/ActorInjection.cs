@@ -38,6 +38,7 @@ namespace MMR.Randomizer.Enemizer
         public uint buildVramStart = 0;
         // profile data is located somewhere in .data, we want to know where exactly because its hard coded in overlay table
         public uint ProfileLocation = 0;
+        public int PlacementWeight = 100;
 
         // TODO make this match regular actors??
         public List<int> groundVariants = new List<int>();
@@ -176,7 +177,7 @@ namespace MMR.Randomizer.Enemizer
                     continue;
                 }
 
-
+                // Single DEC input
                 var value = Convert.ToInt32(valueStr, fromBase: 16);
                 if (command == "actor_id")
                 {
@@ -194,9 +195,14 @@ namespace MMR.Randomizer.Enemizer
                 {
                     newInjectedActor.ObjectFid = Convert.ToInt32(valueStr, fromBase: 10);
                 }
+                else if (command == "placement_weight")
+                {
+                    newInjectedActor.PlacementWeight = Convert.ToInt32(valueStr, fromBase: 10);
+                }
 
+
+                // HEX input
                 var uvalue = Convert.ToUInt32(valueStr, fromBase: 16);
-
                 if (command == "initvars_offset") // the old name for the profile section, leave alone until I have time to fix for every file
                 {
                     newInjectedActor.ProfileLocation = uvalue;
