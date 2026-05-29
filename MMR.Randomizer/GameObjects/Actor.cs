@@ -84,11 +84,61 @@ namespace MMR.Randomizer.GameObjects
         [FileID(44)]
         [ObjectListIndex(Object.Box)]
         [DynaAttributes(12, 8)]
-        [CheckRestricted(Scene.RoadToIkana, variant: ActorConst.ANY_VARIANT, // 0x5080,
-            Item.ChestToIkanaRedRupee)]
+        [CheckRestricted(Scene.SouthClockTown, variant: ActorConst.ANY_VARIANT, Item.ChestSouthClockTownPurpleRupee, Item.ChestSouthClockTownRedRupee)]
         [CheckRestricted(Scene.EastClockTown, variant: ActorConst.ANY_VARIANT, // 0x50CA,
             Item.ChestEastClockTownSilverRupee)]
-        [CheckRestricted(Scene.SouthClockTown, variant: ActorConst.ANY_VARIANT, Item.ChestSouthClockTownPurpleRupee, Item.ChestSouthClockTownRedRupee)]
+        [CheckRestricted(Scene.StockPotInn, variant: ActorConst.ANY_VARIANT,
+            Item.ChestInnGuestRoom, Item.ChestInnStaffRoom)]
+        [CheckRestricted(Scene.AstralObservatory, variant: ActorConst.ANY_VARIANT,
+            Item.ChestBomberHideoutSilverRupee)]
+        [CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT,
+            Item.ChestTerminaStumpRedRupee, Item.ChestTerminaGrassRedRupee, Item.ChestTerminaUnderwaterRedRupee)]
+        [CheckRestricted(Scene.Woodfall, variant: ActorConst.ANY_VARIANT,
+            Item.ChestWoodfallBlueRupee, Item.ChestWoodfallRedRupee)]
+        [CheckRestricted(Scene.DoggyRacetrack, variant: ActorConst.ANY_VARIANT,
+            Item.ChestDogRacePurpleRupee)]
+        [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT,
+            Item.ChestMountainVillage)]
+        [CheckRestricted(Scene.TwinIslands, variant: ActorConst.ANY_VARIANT,
+            Item.HeartPieceTwinIslandsChest, Item.ChestToGoronVillageRedRupee)]
+        [CheckRestricted(Scene.TwinIslandsSpring, variant: ActorConst.ANY_VARIANT,
+            Item.HeartPieceTwinIslandsChest, Item.ChestToGoronVillageRedRupee)]
+        [CheckRestricted(Scene.ZoraCape, variant: ActorConst.ANY_VARIANT,
+            Item.ChestGreatBayCapeUnderwater, Item.ChestGreatBayCapeLedge1, Item.ChestGreatBayCapeLedge2)]
+        [CheckRestricted(Scene.PinnacleRock, variant: ActorConst.ANY_VARIANT,
+            Item.ChestPinacleRockRedRupee1, Item.ChestPinacleRockRedRupee2)]
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: ActorConst.ANY_VARIANT,
+            Item.HeartPieceOceanSpiderHouse)]
+        [CheckRestricted(Scene.PiratesFortressExterior, variant: ActorConst.ANY_VARIANT,
+            Item.ChestPiratesFortressEntranceRedRupee1, Item.ChestPiratesFortressEntranceRedRupee2, Item.ChestPiratesFortressEntranceRedRupee3)]
+        // if we ever wanted to mess with per-room, this would be one
+        [CheckRestricted(Scene.PiratesFortressRooms, variant: ActorConst.ANY_VARIANT,
+            // guarded by three of them
+            Item.ChestInsidePiratesFortressGuardSilverRupee,
+            // sewer locked room
+            Item.ChestInsidePiratesFortressHeartPieceRoomBlueRupee, Item.ChestInsidePiratesFortressHeartPieceRoomRedRupee,
+            // sewer zora entrance
+            Item.ChestInsidePiratesFortressMazeRedRupee,
+            Item.ItemHookshot,
+            // desbreskos tank
+            Item.ChestInsidePiratesFortressTankRedRupee
+            )]
+        [CheckRestricted(Scene.PiratesFortress, variant: ActorConst.ANY_VARIANT,
+            Item.ChestPiratesFortressRedRupee1, Item.ChestPiratesFortressRedRupee2)]
+        [CheckRestricted(Scene.RoadToIkana, variant: ActorConst.ANY_VARIANT, // 0x5080,
+            Item.ChestToIkanaRedRupee)]
+        [CheckRestricted(Scene.IkanaGraveyard, variant: ActorConst.ANY_VARIANT,
+            Item.MaskCaptainHat)]
+        [CheckRestricted(Scene.BeneathGraveyard, variant: ActorConst.ANY_VARIANT,
+            Item.ChestBadBatsGrottoPurpleRupee, Item.HeartPieceKnuckle)]
+        [CheckRestricted(Scene.DampesHouse, variant: ActorConst.ANY_VARIANT,
+            Item.ItemBottleDampe)]
+        // TODO dungeons, tired for tonigght
+        [CheckRestricted(Scene.InvertedStoneTower, variant: ActorConst.ANY_VARIANT,
+            Item.ChestInvertedStoneTowerSilverRupee, Item.ChestInvertedStoneTowerBombchu10, Item. ChestInvertedStoneTowerBean)]
+        //[CheckRestricted(Scene.SecretShrine, variant: ActorConst.ANY_VARIANT, // 0x5080,
+        //    Item.)]
+
         // these three are from inverted stone tower, however when placed in TF, 2/3 were invisible chests
         // switch flags are on z rotation
         // type: 0x7 seems to be enemy clear, also type 1, 0x5 is woodentype, 0xC is switch activated
@@ -98,8 +148,6 @@ namespace MMR.Randomizer.GameObjects
         // size: 0 small wooden, 1 small gold, 2 large gold, 3 boss key
         // appearance; 0 always present, 1 invisible, 2 appears when room is clear, 3 appears when switch is set
         // 5 becomes small gold hidden, 
-
-
         [GroundVariants(0x57BE, 0x59DD, 0x56BF,  0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, //0x5A1E,
             0x5080, // road to ikana
@@ -109,7 +157,11 @@ namespace MMR.Randomizer.GameObjects
             //0x9180, //0x1180, // grave, issue
             //0x5FDE, // issue chest
             //0xBAEE, // Invisible with switch activation, this one should be rare (0x10--(large gold) + 0x--11(spawn on switch clear))
-            0x0AFB, 0x099C)] // two free, the rest are gold invisible
+            0x6080, // invisible spring chest
+            0x0AFB, 0x099C,
+            0xFFFF, // fake, used as indicator we are manually replacing it
+            0x8AC0 // goron trial, used as a bounce
+        )] // two free, the rest are gold invisible
         [WaterBottomVariants(0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, //0x5A1E,
             0xBA1E, // switch activated
@@ -121,7 +173,8 @@ namespace MMR.Randomizer.GameObjects
             0x0AFB, 0x099C // brown, harder to see in perpheral vision, not invisible
         )]
         [VariantsWithRoomMax(max: 0,
-            0x5080 // road to ikana
+            0xFFFF//, // fake, used as indicator we are manually replacing it
+            //0x5080 // road to ikana
         )]
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: -1, variant: 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         [AlignedCompanionActor(Bombiwa, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x807F, 0x8004, 0x8002,
@@ -145,15 +198,22 @@ namespace MMR.Randomizer.GameObjects
         //    variant: 0x3F5F)] // can place around chests
         //[AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
         //    variant: 2, 9)] // fairies around chests make sense, just not a full fairy fountain
-        [ForbidFromScene(Scene.InvertedStoneTower,
-            Scene.TerminaField, Scene.PiratesFortressRooms, Scene.PiratesFortress, Scene.PiratesFortressExterior, Scene.TwinIslandsSpring,
-            Scene.SouthClockTown, Scene.EastClockTown, Scene.RoadToIkana, // DO NOT RANDOMIZE: itemizer changes params, can fuck with replacement actor
-            Scene.Woodfall)]
+        //[ForbidFromScene(Scene.InvertedStoneTower,
+        //    Scene.TerminaField, Scene.PiratesFortressRooms, Scene.PiratesFortress, Scene.PiratesFortressExterior, Scene.TwinIslandsSpring,
+        //    Scene.SouthClockTown, Scene.EastClockTown, Scene.RoadToIkana, // DO NOT RANDOMIZE: itemizer changes params, can fuck with replacement actor
+        //    Scene.Woodfall)]
+        [ForbidFromScene(
+            Scene.Grottos, // don't even want to think of en_torch
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
+            Scene.SecretShrine,
+            Scene.LinkTrial, // maybe too lame coming here late
+            Scene.GoronTrial // used as a goron rolling bounce mechanic
+        )]
         [SwitchFlagsPlacement(size: 0x7F, shift: 0), SwitchFlagsPlacementZRot]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
-        [EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
-            Scene.StoneTower)]
-        [PlacementWeight(45)]
+        //[EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
+        //    Scene.StoneTower)]
+        [PlacementWeight(65)] // boosted for testing, but needs to be lowered because lots of scenes have existing box objects
         TreasureChest = 0x6, // En_Box
 
         // TODO dumb ass you forgot to finish this actor
