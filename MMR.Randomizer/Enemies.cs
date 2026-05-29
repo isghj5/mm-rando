@@ -1262,7 +1262,7 @@ namespace MMR.Randomizer
                 var dayUniqueList = dayActorList.GroupBy(elem => elem.ActorEnum).Select(group => group.First()).ToList();
                 dayUniqueList.RemoveAll(u => u.ActorEnum == ActorEnum.Empty);
                 #if DEBUG
-                var _all_spots = dayActorList.FindAll(act => act.OldActorEnum == ActorEnum.HitSpot || act.OldActorEnum == ActorEnum.WallTalkSpot);
+                var _all_spots = dayActorList.FindAll(act => act.OldActorEnum == ActorEnum.HitSpot || act.OldActorEnum == ActorEnum.TalkSpot);
                 #endif
                 for (int a = 0; a < dayUniqueList.Count; a++)
                 {

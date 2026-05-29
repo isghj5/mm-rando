@@ -1139,7 +1139,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.GaroMaster)] // if spawning in sct partial, can fall through the floor and dissapear but leave their annoying music
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Postbox,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // Flying can block the roof leading to the chest
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.WallTalkSpot,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.TalkSpot,
             Actor.WoodenBarrel)] // this is also the wooden planks blocking pirates fortress, dyna, block jumping
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.HitSpot,
             Actor.WoodenBarrel)] // this is also the wooden planks blocking pirates fortress, dyna, block jumping
