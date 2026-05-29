@@ -765,7 +765,7 @@ namespace MMR.Randomizer.Enemizer
         } // end UpdateOverlayTable
 
         // list of files we know of that we can freely overwrite
-        private static List<int> freeFileSlots = new List<int>
+        private static List<int> FreeFileSlots = new List<int>
         {
             // these files at the end of the vanilla DMA are unused in U0
             // but MMR might use them, assume they are unavailable: 1538 - 1551
@@ -815,7 +815,8 @@ namespace MMR.Randomizer.Enemizer
                         .Where(act => act.ToString().Contains("Empty")).ToList();
 
             // in case DMA is restricted, start with a list of known bunk files
-            
+
+            var freeFileSlots = FreeFileSlots.ToList(); // copy for now
 
             int GetUnusedFileID(InjectedActor injActor)
             {
@@ -844,7 +845,7 @@ namespace MMR.Randomizer.Enemizer
 
                 // pick new file ID
                 var newFileID = GetUnusedFileID(injectedActor);
-                if (newFileID == -1)
+                if (newFileID <= 0)
                     break; // we are out of file slots
                 injectedActor.fileID = newFileID;
 
