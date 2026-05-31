@@ -483,8 +483,7 @@
         ],
         [
           "Hot Spring Water in Mountains",
-          "SettingNotRandomizedBottleCatchHotSpringWater",
-          "SettingNotEntranceModeSimpleInteriors"
+          "SettingNotRandomizedBottleCatchHotSpringWater"
         ]
       ],
       "TimeNeeded": "None",
@@ -511,8 +510,7 @@
         ],
         [
           "Hot Spring Water in Mountains",
-          "SettingNotRandomizedBottleCatchHotSpringWater",
-          "SettingNotEntranceModeSimpleInteriors"
+          "SettingNotRandomizedBottleCatchHotSpringWater"
         ]
       ],
       "TimeNeeded": "None",
@@ -24174,9 +24172,8 @@
           "Play Song of Soaring"
         ],
         [
-          "BottleCatchHotSpringWater",
-          "SettingNotRandomizedBottleCatchHotSpringWater",
-          "Hot Spring Water in Mountains"
+          "Hot Spring Water in Mountains",
+          "SettingNotRandomizedBottleCatchHotSpringWater"
         ],
         [
           "Use Fire Arrow"
@@ -24199,9 +24196,8 @@
           "Play Song of Soaring"
         ],
         [
-          "BottleCatchHotSpringWater",
-          "SettingNotRandomizedBottleCatchHotSpringWater",
-          "Hot Spring Water in Mountains"
+          "Hot Spring Water in Mountains",
+          "SettingNotRandomizedBottleCatchHotSpringWater"
         ],
         [
           "Use Fire Arrow"
@@ -29980,7 +29976,8 @@
       "RequiredItems": [
         "AreaNorthAccess",
         "MaskGoron",
-        "OtherAnyBottle"
+        "OtherAnyBottle",
+        "SettingNotEntranceModeSimpleInteriors"
       ],
       "ConditionalItems": [
         [

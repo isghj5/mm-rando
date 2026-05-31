@@ -36,7 +36,7 @@ namespace MMR.Randomizer.Utils
             #if DEBUG
             string settingstring = $"{setting} + DEBUG BUILD\x00";
             #else
-            string settingstring = $"{setting} + Isghj's Actorizer Test 97.3\x00";
+            string settingstring = $"{setting} + Isghj's Actorizer Alpha 99.0A7\x00";
             #endif
             int f = GetFileIndexForWriting(veraddr);
             var file = RomData.MMFileList[f];
@@ -265,10 +265,10 @@ namespace MMR.Randomizer.Utils
             Parallel.ForEach(sortedCompressibleFiles.AsParallel().AsOrdered(), file =>
             {
                 //var yazTime = DateTime.Now;
-#if DEBUG
+                #if DEBUG
                 var decompressed_size = file.End - file.Addr;
                 var compressed_size = file.Cmp_End - file.Cmp_Addr;
-#endif
+                #endif
                 file.Data = Yaz.EncodeAndCopy(file.Data);
                 file.WasEdited = false;
                 //Debug.WriteLine($" size: [{file.Data.Length}] time to complete compression : [{(DateTime.Now).Subtract(yazTime).TotalMilliseconds} (ms)]");
@@ -351,6 +351,17 @@ namespace MMR.Randomizer.Utils
         public static byte[] BuildROM(OutputSettings settings)
         {
 
+            // debug todo remove
+            if (settings.OutputVC == false)// this doesnt include everdrive
+            {
+                foreach (var file in RomData.MMFileList)
+                {
+                    if (file.WasEdited)
+                    {
+                        file.IsCompressed = false;
+                    }
+                }
+            }
 
             CompressMMFiles();
 

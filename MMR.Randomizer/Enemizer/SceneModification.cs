@@ -1108,6 +1108,21 @@ namespace MMR.Randomizer.Enemizer
             }
         }
 
+        private static void ReplaceStonetowerFunenObject()
+        {
+            // stone tower (exterior) has an unused object: object_funen (0x161)
+            // now that actorizer can inject actors, we want some unused object/actor file slots to inject actors into,
+            // we need this object to be removed from the two scenes that still load it
+
+            var stonetowerScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.StoneTower.FileID());
+
+            stonetowerScene.Maps[0].Objects[2] = GameObjects.Actor.ClayPot.ObjectIndex();
+
+            var stonetowerInvertedScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.InvertedStoneTower.FileID());
+
+            stonetowerInvertedScene.Maps[0].Objects[2] = GameObjects.Actor.ClayPot.ObjectIndex();
+        }
+
 
         private static void EnableDampeHouseWallMaster()
         {
@@ -2543,6 +2558,7 @@ namespace MMR.Randomizer.Enemizer
                 SwapSwampSpiderhouseRock();
                 EnableSethSwampSpiderhouse();
                 RepositionClockTownActors();
+                ReplaceStonetowerFunenObject();
 
                 // tweaking actor spawns to improve actorizer actor compatibility
                 RotateTalkSpotsAndHitSpots();

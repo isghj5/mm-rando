@@ -29,8 +29,7 @@ namespace MMR.Randomizer.Enemizer
             /// values per day/night
 
             oldActorList = actorList;
-            //var distinctActors = actorList.Select(act => act).DistinctBy(act => act);
-            var distinctActors = actorList.DistinctBy(act => act);
+            var distinctActors = actorList.DistinctBy(act => act.ActorId);
             OverlayRamSize = distinctActors.Select(x => ActorUtils.GetOvlCodeRamSize(x.ActorId)).Sum();
             ActorInstanceSum = actorList.Select(act => act.ActorId)
                                         .Select(act => ActorUtils.GetOvlInstanceRamSize(act, Enemies.InjectedActors)).Sum();
@@ -135,11 +134,11 @@ namespace MMR.Randomizer.Enemizer
             }
         }
 
-        // init for new replacements
-        // this doesnt set actors anywhere tho, just objects, misnomer?
-        //public void SetNewActors(Scene scene, List<ValueSwap> newObjChanges)
         public void SetNewActors(Scene scene, List<List<int>> newObjects)
         {
+            // init for new replacements
+            // this doesnt set actors anywhere tho, just objects, misnomer?
+
             this.newMapList = new List<MapEnemiesCollection>();
             // I like foreach better but its waaaay slower
             for (int m = 0; m < scene.Maps.Count; ++m)
@@ -153,7 +152,7 @@ namespace MMR.Randomizer.Enemizer
 
         public List<List<Actor>> GenerateShrinkableDynaList()
         {
-            var shrinkableActorList = new List<List<Actor>>();
+            List<List<Actor>> shrinkableActorList = new List<List<Actor>>();
 
             for (int m = 0; m < this.newMapList.Count; m++)
             {
@@ -162,11 +161,11 @@ namespace MMR.Randomizer.Enemizer
                 // compare headroom to actual
                 if (isDynaOverLoaded(map.day, this.oldMapList[m].day, m))
                 {
-                    buildDynaShrinkableListPerMap(shrinkableActorList, map.day.oldActorList);
+                    shrinkableActorList = buildDynaShrinkableListPerMap(map.day.oldActorList);
                 }
                 if (isDynaOverLoaded(map.night, this.oldMapList[m].night, m))
                 {
-                    buildDynaShrinkableListPerMap(shrinkableActorList, map.night.oldActorList);
+                    shrinkableActorList = buildDynaShrinkableListPerMap(map.night.oldActorList);
                 }
             }
 
@@ -185,29 +184,19 @@ namespace MMR.Randomizer.Enemizer
             return false; // not considered dyna limited
         }
 
-        private void buildDynaShrinkableListPerMap(List<List<Actor>> shrinkableActorList, List<Actor> actorList)
+        private List<List<Actor>> buildDynaShrinkableListPerMap(List<Actor> actorList)
         {
-            // per night or day
+            // this is run per night or day
 
-            var uniqueActors = new HashSet<int>();
-            for (int a = 0; a < actorList.Count; a++) // I can use this old list right? it should be pointers to the same actors
-            {
-                var actor = actorList[a];
-                // if actor is dyna
-                if (actor.DynaLoad.poly > 0 && ((int)actor.OldActorEnum != actor.ActorId))
-                    uniqueActors.Add(actor.ActorId);
-            }
-            foreach (var actorId in uniqueActors) // can't use for here because of hashset limitation
-            {
-                var grouped = actorList.FindAll(a => a.ActorId == actorId && ((int)a.OldActorEnum != a.ActorId));
-                if (grouped.Count > 1)
-                {
-                    // test if this is an area that is dyna overloaded
-
-                    // if so, add to list
-                    shrinkableActorList.Add(grouped);
-                }
-            }
+            // generate a list of groups of actors, such that every list has only actors of the same ID
+            // IE: list 1 is elevators, list 2 is deku flowers
+            // we trim all groups that only have one actor, as those are not trimable
+            return actorList
+                        .Where(a => a.DynaLoad.poly > 0 && (int)a.OldActorEnum != a.ActorId)
+                        .GroupBy(a => a.ActorId)
+                        .Where(g => g.Count() > 1)
+                        .Select(g => g.ToList())
+                        .ToList();
         }
 
         private bool testDynaSize()

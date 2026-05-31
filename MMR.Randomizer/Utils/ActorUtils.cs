@@ -115,11 +115,11 @@ namespace MMR.Randomizer.Utils
                 // no check compressed: user has to submit uncompressed actor binary
                 if (injectedActor.overlayBin != null) // new actor: read from binary
                 {
-                    return ReadWriteUtils.Arr_ReadU16(injectedActor.overlayBin, (int)injectedActor.initVarsLocation + 0xE);
+                    return ReadWriteUtils.Arr_ReadU16(injectedActor.overlayBin, (int)injectedActor.ProfileLocation + 0xE);
                 }
                 else // old actor replaced: we already overwrote the old binary, but use new data offsets
                 {
-                    return ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[injectedActor.fileID].Data, (int)injectedActor.initVarsLocation + 0xE);
+                    return ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[injectedActor.fileID].Data, (int)injectedActor.ProfileLocation + 0xE);
                 }
             }
 
@@ -152,13 +152,13 @@ namespace MMR.Randomizer.Utils
 
             // we have some of them hardcoded, if that exists return that instead because scanning files sucks
             var actor = (GameObjects.Actor)actorOvlTblIndex;
-            var actorAttr = actor.GetAttribute<ActorInitVarOffsetAttribute>();
+            var actorAttr = actor.GetAttribute<ActorProfileOffsetAttribute>();
             if (actorAttr != null)
             {
                 return actorAttr.Offset;
             }
 
-            // just look it up in the actor overlay table, initvars - vram start is the offset
+            // just look it up in the actor overlay table, profile - vram start is the offset
             var actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
             // dont need to check for compression, code has been un-compressed for ages
             int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
@@ -432,13 +432,13 @@ namespace MMR.Randomizer.Utils
 
         public static void DisableCombatMusicOnEnemy(GameObjects.Actor actor)
         {
-            int actorInitVarRomAddr = actor.GetAttribute<ActorInitVarOffsetAttribute>().Offset;
+            int actorProfileRomAddr = actor.GetAttribute<ActorProfileOffsetAttribute>().Offset;
             /// each enemy actor has actor init variables, 
             /// if they have combat music is determined if a flag is set in the seventh byte
             /// disabling combat music means disabling this bit for most enemies
             int actorFileID = actor.FileListIndex();
             RomUtils.CheckCompressed(actorFileID);
-            int actorFlagLocation = (actorInitVarRomAddr + 7);
+            int actorFlagLocation = (actorProfileRomAddr + 7);
             byte flagByte = RomData.MMFileList[actorFileID].Data[actorFlagLocation];
             RomData.MMFileList[actorFileID].Data[actorFlagLocation] = (byte)(flagByte & 0xFB);
 

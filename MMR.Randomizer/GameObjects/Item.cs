@@ -1,6 +1,5 @@
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Attributes.Entrance;
-using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.GameObjects
@@ -1805,51 +1804,61 @@ namespace MMR.Randomizer.GameObjects
         ShopItemZoraRedPotion,
 
         //bottle catch
+        [Temporary]
         [ItemName("Bottle: Fairy"), LocationName("Bottle: Fairy"), Region(Region.BottleCatch)]
         [GossipLocationHint("a wandering healer"), GossipItemHint("a winged friend", "a healer")]
         [GetBottleItemIndices(0x00, 0x0D), ItemPool(ItemCategory.ScoopedItems, LocationCategory.Scoops, ClassicCategory.CaughtBottleContents)]
         BottleCatchFairy,
 
+        [Temporary]
         [ItemName("Bottle: Deku Princess"), LocationName("Bottle: Deku Princess"), Region(Region.BottleCatch)]
         [GossipLocationHint("a captured royal", "an imprisoned daughter"), GossipItemHint("a princess", "a woodland royal")]
         [GetBottleItemIndices(0x08), ItemPool(ItemCategory.ScoopedItems, LocationCategory.Scoops, ClassicCategory.CaughtBottleContents)]
         BottleCatchPrincess,
 
+        [Temporary]
         [ItemName("Bottle: Fish"), LocationName("Bottle: Fish"), Region(Region.BottleCatch)]
         [GossipLocationHint("a swimming creature", "a water dweller"), GossipItemHint("something fresh")]
         [GetBottleItemIndices(0x01), ItemPool(ItemCategory.ScoopedItems, LocationCategory.Scoops, ClassicCategory.CaughtBottleContents)]
         BottleCatchFish,
 
+        [Temporary]
         [ItemName("Bottle: Bug"), LocationName("Bottle: Bug"), Region(Region.BottleCatch)]
         [GossipLocationHint("an insect", "a scuttling creature"), GossipItemHint("an insect", "a scuttling creature")]
         [GetBottleItemIndices(0x02, 0x03), ItemPool(ItemCategory.ScoopedItems, LocationCategory.Scoops, ClassicCategory.CaughtBottleContents)]
         BottleCatchBug,
 
+        [Temporary]
         [ItemName("Bottle: Poe"), LocationName("Bottle: Poe"), Region(Region.BottleCatch)]
         [GossipLocationHint("a wandering ghost"), GossipItemHint("a captured spirit")]
         [GetBottleItemIndices(0x0B), ItemPool(ItemCategory.ScoopedItems, LocationCategory.Scoops, ClassicCategory.CaughtBottleContents)]
         BottleCatchPoe,
 
+        [Temporary]
         [ItemName("Bottle: Big Poe"), LocationName("Bottle: Big Poe"), Region(Region.BottleCatch)]
         [GossipLocationHint("a huge ghost"), GossipItemHint("a captured spirit")]
         [GetBottleItemIndices(0x0C), ItemPool(ItemCategory.ScoopedItems, LocationCategory.Scoops, ClassicCategory.CaughtBottleContents)]
         BottleCatchBigPoe,
 
+        [Temporary]
         [ItemName("Bottle: Spring Water"), LocationName("Bottle: Spring Water"), Region(Region.BottleCatch)]
         [GossipLocationHint("a common liquid"), GossipItemHint("a common liquid", "a fresh drink")]
         [GetBottleItemIndices(0x04), ItemPool(ItemCategory.ScoopedItems, LocationCategory.Scoops, ClassicCategory.CaughtBottleContents)]
         BottleCatchSpringWater,
 
+        [Temporary]
         [ItemName("Bottle: Hot Spring Water"), LocationName("Bottle: Hot Spring Water"), Region(Region.BottleCatch)]
         [GossipLocationHint("a hot liquid", "a boiling liquid"), GossipItemHint("a boiling liquid", "a hot liquid")]
         [GetBottleItemIndices(0x05, 0x06), ItemPool(ItemCategory.ScoopedItems, LocationCategory.Scoops, ClassicCategory.CaughtBottleContents)]
         BottleCatchHotSpringWater,
 
+        [Temporary]
         [ItemName("Bottle: Zora Egg"), LocationName("Bottle: Zora Egg"), Region(Region.BottleCatch)]
         [GossipLocationHint("a lost child"), GossipItemHint("a lost child")]
         [GetBottleItemIndices(0x07), ItemPool(ItemCategory.ScoopedItems, LocationCategory.Scoops, ClassicCategory.CaughtBottleContents)]
         BottleCatchEgg,
 
+        [Temporary]
         [ItemName("Bottle: Mushroom"), LocationName("Bottle: Mushroom"), Region(Region.BottleCatch)]
         [GossipLocationHint("a strange fungus"), GossipItemHint("a strange fungus")]
         [GetBottleItemIndices(0x0A), ItemPool(ItemCategory.ScoopedItems, LocationCategory.Scoops, ClassicCategory.CaughtBottleContents)]
@@ -3330,7 +3339,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Lower Right Bubble"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Pre-Boss Lower Right Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3339,7 +3348,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Entrance Fairy"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Entrance Fairy"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3348,7 +3357,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Upper Left Bubble"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Pre-Boss Upper Left Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3357,7 +3366,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Pillar Bubble"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Pre-Boss Pillar Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3366,7 +3375,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Deku Baba"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Deku Baba"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3375,7 +3384,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Poison Water Bubble"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Poison Water Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3384,7 +3393,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Main Room Bubble"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Main Room Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3393,7 +3402,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Skulltula"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Skulltula"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3402,7 +3411,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Upper Right Bubble"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Pre-Boss Upper Right Bubble"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3411,7 +3420,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Main Room Switch"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Main Room Switch"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x021FB000 + 0x28A, ChestAttribute.AppearanceType.AppearsSwitch)]
@@ -3420,7 +3429,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Entrance Platform"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Entrance Platform"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02204000 + 0x23A, ChestAttribute.AppearanceType.Normal)]
@@ -3429,7 +3438,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Dark Room"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Dark Room"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x0222E000 + 0x1AA, ChestAttribute.AppearanceType.AppearsClear)]
@@ -3438,7 +3447,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Jar Fairy"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Jar Fairy"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3447,7 +3456,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Bridge Room Hive"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Bridge Room Hive"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3456,7 +3465,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE88, 0x01, true)]
-        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Platform Room Hive"), Region(Region.WoodfallTemple)]
+        [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Temple Platform Room Hive"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3465,7 +3474,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Snow Room Bubble"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Snow Room Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3474,7 +3483,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Ceiling Bubble"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Ceiling Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3483,7 +3492,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Dinolfos 1"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Dinolfos 1"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3492,7 +3501,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Bridge Room Ledge Bubble"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Bridge Room Ledge Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3501,7 +3510,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Bridge Room Pillar Bubble"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Bridge Room Pillar Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3510,7 +3519,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Dinolfos 2"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Dinolfos 2"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3519,7 +3528,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Map Room Fairy"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Map Room Fairy"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3528,7 +3537,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Map Room Ledge"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Map Room Ledge"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02346000 + 0x12A, ChestAttribute.AppearanceType.Normal)]
@@ -3537,7 +3546,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Basement"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Basement"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x0230C000 + 0x56A, ChestAttribute.AppearanceType.AppearsSwitch)]
@@ -3546,7 +3555,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Twin Block"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Twin Block"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02306000 + 0x11A, ChestAttribute.AppearanceType.AppearsSwitch)]
@@ -3555,7 +3564,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Icicle Room Wall"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Icicle Room Wall"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x0233A000 + 0x22A, ChestAttribute.AppearanceType.Normal)]
@@ -3564,7 +3573,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Main Room Wall"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Main Room Wall"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x0230C000 + 0x58A, ChestAttribute.AppearanceType.Normal)]
@@ -3573,7 +3582,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Pillar Freezards"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Pillar Freezards"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x0232E000 + 0x20A, ChestAttribute.AppearanceType.AppearsClear)]
@@ -3582,7 +3591,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Ice Puzzle"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Ice Puzzle"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x022F2000 + 0x1AA, ChestAttribute.AppearanceType.AppearsSwitch)]
@@ -3591,7 +3600,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE89, 0x01, true)]
-        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Crate"), Region(Region.SnowheadTemple)]
+        [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Temple Crate"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3600,7 +3609,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Skulltula"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Skulltula"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3609,7 +3618,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Pre-Boss Room Underwater Bubble"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Pre-Boss Room Underwater Bubble"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3618,7 +3627,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Water Control Room Underwater Bubble"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Water Control Room Underwater Bubble"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3627,7 +3636,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Pre-Boss Room Bubble"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Pre-Boss Room Bubble"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3638,7 +3647,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Waterwheel Room Upper"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Waterwheel Room Upper"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02940000 + 0x23A, ChestAttribute.AppearanceType.Normal)]
@@ -3647,7 +3656,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Green Valve"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Green Valve"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02959000 + 0x18E, ChestAttribute.AppearanceType.Normal)]
@@ -3656,7 +3665,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Seesaw Room"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Seesaw Room"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02945000 + 0x24A, ChestAttribute.AppearanceType.Normal)]
@@ -3665,7 +3674,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Waterwheel Room Lower"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Waterwheel Room Lower"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02940000 + 0x24A, ChestAttribute.AppearanceType.Normal)]
@@ -3674,7 +3683,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Entrance Torches"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Entrance Torches"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02962000 + 0x1F2, ChestAttribute.AppearanceType.AppearsSwitch)]
@@ -3683,7 +3692,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Bio Babas"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Bio Babas"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02911000 + 0xDA, ChestAttribute.AppearanceType.AppearsClear)]
@@ -3692,7 +3701,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Underwater Barrel"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Underwater Barrel"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3701,7 +3710,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Whirlpool Jar"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Whirlpool Jar"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3710,7 +3719,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Whirlpool Barrel"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Whirlpool Barrel"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3719,7 +3728,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Dexihands Jar"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Dexihands Jar"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3728,7 +3737,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8A, 0x01, true)]
-        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Ledge Jar"), Region(Region.GreatBayTemple)]
+        [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Temple Ledge Jar"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3737,7 +3746,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Mirror Sun Block"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Temple Mirror Sun Block"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02119000 + 0x282, ChestAttribute.AppearanceType.Normal, 0x0218B000 + 0x8A)]
@@ -3746,7 +3755,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Eyegore"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Temple Eyegore"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x020F1000 + 0x1A2, ChestAttribute.AppearanceType.AppearsSwitch, 0x02164000 + 0x17E)]
@@ -3755,7 +3764,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Lava Room Fire Ring"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Temple Lava Room Fire Ring"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02122000 + 0x1F6, ChestAttribute.AppearanceType.Normal, 0x02191000 + 0x7A)]
@@ -3764,7 +3773,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Updraft Fire Ring"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Inverted Stone Tower Temple Updraft Fire Ring"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02104000 + 0x252, ChestAttribute.AppearanceType.AppearsSwitch, 0x02177000 + 0x29E)]
@@ -3773,7 +3782,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Mirror Sun Switch"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Temple Mirror Sun Switch"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02119000 + 0x272, ChestAttribute.AppearanceType.AppearsSwitch, 0x0218B000 + 0x7A)]
@@ -3782,7 +3791,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Entrance Sun Switch"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Inverted Stone Tower Temple Entrance Sun Switch"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x020E2000 + 0x162, ChestAttribute.AppearanceType.AppearsSwitch, 0x02156000 + 0xFA)]
@@ -3791,7 +3800,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Wizzrobe"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Inverted Stone Tower Temple Wizzrobe"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x0210F000 + 0x1F2, ChestAttribute.AppearanceType.AppearsSwitch, 0x02182000 + 0x1EE)]
@@ -3800,7 +3809,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Death Armos"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Inverted Stone Tower Temple Death Armos"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x020E2000 + 0x172, ChestAttribute.AppearanceType.AppearsSwitch, 0x02156000 + 0x10A)]
@@ -3809,7 +3818,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Updraft Frozen Eye"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Inverted Stone Tower Temple Updraft Frozen Eye"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02104000 + 0x262, ChestAttribute.AppearanceType.AppearsSwitch, 0x02177000 + 0x2AE)]
@@ -3818,7 +3827,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Thin Bridge"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Temple Thin Bridge"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x0211D000 + 0x1E2, ChestAttribute.AppearanceType.AppearsSwitch, 0x0218C000 + 0x25E)]
@@ -3827,7 +3836,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Basement Ledge"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Temple Basement Ledge"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x0210F000 + 0x212, ChestAttribute.AppearanceType.Normal, 0x02182000 + 0x20E)]
@@ -3836,7 +3845,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Statue Eye"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Temple Statue Eye"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x020E2000 + 0x182, ChestAttribute.AppearanceType.AppearsSwitch, 0x02156000 + 0x11A)]
@@ -3845,7 +3854,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Underwater"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Temple Underwater"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02104000 + 0x272, ChestAttribute.AppearanceType.AppearsSwitch, 0x02177000 + 0x2BE)]
@@ -3854,7 +3863,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Bridge Crystal"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Temple Bridge Crystal"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x020F1000 + 0x1B2, ChestAttribute.AppearanceType.AppearsSwitch, 0x02164000 + 0x18E)]
@@ -3863,7 +3872,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ModelVisible(nameof(GameplaySettings.UpdateWorldModels), true)]
         [StartingItem(0xC5CE8B, 0x01, true)]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Lava Room Ledge"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Temple Lava Room Ledge"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02122000 + 0x206, ChestAttribute.AppearanceType.Normal, 0x02191000 + 0x8A)]

@@ -467,8 +467,8 @@ namespace MMR.Randomizer.GameObjects
         [DynaHeadroom(64, 64)]  // low default to start
         [EnemizerSceneEnemyReplacementBlock(Actor.Scarecrow,
             Actor.ClocktowerGearsAndOrgan)] // can block the stairs
-        [EnemizerSceneEnemyReplacementBlock(Actor.Torch,
-            Actor.DeathArmos)] // might be too much
+        [EnemizerSceneEnemyReplacementBlock(Actor.ClayPot,
+            Actor.Dexihand)] // can block climbing the ladder
         [EnemizerSceneBlockSensitive(Actor.Torch, -1)] // replacements can block the whole tunnel
         AstralObservatory = 0x26, // and sewer leading to it
 
@@ -596,6 +596,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x33)]
         // 350, 300 was fine 
         [DynaHeadroom(350, 300)]  // limit not found
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RegularZora,
+                        Actor.UnusedStoneTowerStoneElevator)] // too big can block things
         ZoraHall = 0x30,
 
         [FileID(1324)]
@@ -938,7 +940,8 @@ namespace MMR.Randomizer.GameObjects
         // one swlift, 0x1C/0x10: works
         // one swlift, 3 cuttable ivy, 0x22/0x1C, works
         // two swlift was fine?? how did I even get crashes previously??
-        [DynaHeadroom(34, 32)]
+        // we got a crash with 24,16
+        [DynaHeadroom(12,12)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Keese,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the whole assension
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,

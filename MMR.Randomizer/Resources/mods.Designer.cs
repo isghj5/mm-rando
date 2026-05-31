@@ -943,16 +943,6 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] picto_actor_detect_fix {
-            get {
-                object obj = ResourceManager.GetObject("picto_actor_detect_fix", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] postman_testing {
             get {
                 object obj = ResourceManager.GetObject("postman_testing", resourceCulture);
