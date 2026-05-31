@@ -1274,7 +1274,7 @@ namespace MMR.Randomizer
                 var dayUniqueList = dayActorList.GroupBy(elem => elem.ActorEnum).Select(group => group.First()).ToList();
                 dayUniqueList.RemoveAll(u => u.ActorEnum == ActorEnum.Empty);
                 #if DEBUG
-                var _all_spots = dayActorList.FindAll(act => act.OldActorEnum == ActorEnum.HitSpot || act.OldActorEnum == ActorEnum.TalkSpot);
+                var _all_spots = dayActorList.FindAll(act => act.OldActorEnum == ActorEnum.HitSpot || act.OldActorEnum == ActorEnum.WallTalkSpot);
                 #endif
                 for (int a = 0; a < dayUniqueList.Count; a++)
                 {
@@ -2055,12 +2055,12 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, ActorEnum.Leever, ActorEnum.PuzzleBlock)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, ActorEnum.Leever, ActorEnum.Dexihand)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, ActorEnum.BuisnessScrub, ActorEnum.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, ActorEnum.SoftSoilAndBeans, ActorEnum.PunchableStoneTowerPillars)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, ActorEnum.Peahat, ActorEnum.BetaVampireGirl)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DoggyRacetrack, ActorEnum.ClayPot, ActorEnum.BedroomPostman)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, ActorEnum.HappyMaskSalesman, ActorEnum.Monkey)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, ActorEnum.HappyMaskSalesman, ActorEnum.UnusedSpikeFence)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, ActorEnum.RegularZora, ActorEnum.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.OceanSpiderHouse, ActorEnum.Seth1, ActorEnum.BeanSeller)) continue;
@@ -2942,6 +2942,26 @@ namespace MMR.Randomizer
 
 #endregion
 
+        private static void UpdateNewActorId(SceneEnemizerData thisSceneData)
+        {
+            // for new actors, they have no actorID at start, it gets assigned to their injected actor
+            // I'm not sure yet if updating their actor ID would cause issues earlier, so for now we update it last
+
+            for(int a = 0; a < thisSceneData.Actors.Count(); a++)
+            {
+                var actor = thisSceneData.Actors[a];
+
+                if (actor.InjectedActor != null && actor.ActorId == 0)
+                {
+                    actor.ActorId = actor.InjectedActor.ActorId;
+                }
+
+            }
+
+        }
+
+
+
         private static void HandleUniqueSceneSpecialObjectBehaviors(SceneEnemizerData thisSceneData)
         {
             AddAniObjectIfTerminaFieldTree(thisSceneData);
@@ -3456,6 +3476,8 @@ namespace MMR.Randomizer
 
             CheckForHardToFindBugsPost(thisSceneData);
 
+            UpdateNewActorId(thisSceneData);
+
             // realign all scene companion actors
             MoveAlignedCompanionActors(thisSceneData);
 
@@ -3508,8 +3530,17 @@ namespace MMR.Randomizer
             {
                 DateTime enemizerStartTime = DateTime.Now;
 
+                int seed = _randomized.Seed; // order of scene shuffle is up to the cpu scheduler, to keep these matching the seed, set them all to start at the same value
+
                 ActorInjection.ScanForMMRA(directory: "actors", _randomized.Settings);
-                ActorInjection.InjectNewActors();
+                using (StreamWriter log = new StreamWriter(_outputSettings.OutputROMFilename + "_EnemizerLog.txt", append: true))
+                {
+                    log.Write("Enemizer version: Isghj's Actorizer Test 99.1A1\n");
+                    log.Write("seed: [ " + seed + " ]\n");
+
+                    ActorInjection.InjectNewActors(_seedRNG, log);
+                    log.Write(_syncedLog.ToString());
+                }
 
                 // for dingus that want moonwarp, re-enable dekupalace
                 var SceneSkip = new GameObjects.Scene[] { //};
@@ -3530,8 +3561,6 @@ namespace MMR.Randomizer
                     newSceneList.Remove(item);
                     newSceneList.Insert(0, item);
                 }
-                //int seed = random.Next(); // order is up to the cpu scheduler, to keep these matching the seed, set them all to start at the same value
-                int seed = _randomized.Seed;
 
                 var previousThreadPriority = Thread.CurrentThread.Priority;
                 Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
@@ -3555,7 +3584,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 99.1\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 99.1A1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

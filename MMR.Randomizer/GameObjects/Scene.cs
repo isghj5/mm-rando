@@ -940,7 +940,8 @@ namespace MMR.Randomizer.GameObjects
         // one swlift, 0x1C/0x10: works
         // one swlift, 3 cuttable ivy, 0x22/0x1C, works
         // two swlift was fine?? how did I even get crashes previously??
-        [DynaHeadroom(12, 12)]
+        // we got a crash with 24,16
+        [DynaHeadroom(12,12)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Keese,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the whole assension
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
@@ -1139,7 +1140,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.GaroMaster)] // if spawning in sct partial, can fall through the floor and dissapear but leave their annoying music
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Postbox,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // Flying can block the roof leading to the chest
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.TalkSpot,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.WallTalkSpot,
             Actor.WoodenBarrel)] // this is also the wooden planks blocking pirates fortress, dyna, block jumping
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.HitSpot,
             Actor.WoodenBarrel)] // this is also the wooden planks blocking pirates fortress, dyna, block jumping

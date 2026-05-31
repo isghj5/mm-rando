@@ -18,5 +18,10 @@ namespace MMR.Randomizer.Attributes.Actor
             ObjectValue = obj;
         }
 
+        public ObjectListIndexAttribute(int objInt)
+        {
+            ObjectValue = (GameObjects.Object) objInt;
+        }
+
     }
 }

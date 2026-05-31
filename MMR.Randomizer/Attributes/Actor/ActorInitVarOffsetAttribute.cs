@@ -2,7 +2,7 @@
 
 namespace MMR.Randomizer.Attributes.Actor
 {
-    public class ActorInitVarOffsetAttribute : Attribute
+    public class ActorProfileOffsetAttribute : Attribute
     {
         /// <summary>
         ///  this is the actor init variable offset 
@@ -12,7 +12,7 @@ namespace MMR.Randomizer.Attributes.Actor
 
         public int Offset { get; set; }
 
-        public ActorInitVarOffsetAttribute(int offset)
+        public ActorProfileOffsetAttribute(int offset)
         {
             Offset = offset;
         }
