@@ -6766,7 +6766,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(
             0xFE01, 
             // 0xFE02,//, // cutscene version (mikau's healing)
-            0xFE0F // both in a cutscene scene and in the milkbar cutscene
+            0xFE0F // regular in room, both in a cutscene scene and in the milkbar cutscene
         )]
         [WaterBottomVariants(0xFE02, // dark cutscene version, perfect for dark water bottom shinanigans
             0xF)] // also, do not put regular variant as water our typing system is dumb, doesnt know which is which
