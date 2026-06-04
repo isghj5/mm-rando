@@ -3554,9 +3554,9 @@ namespace MMR.Randomizer
 
                 // if using parallel, move biggest scenes to the front so that we dont get stuck waiting at the end for one big scene with multiple dead cores idle
                 // LIFO, biggest scenes at the back of this list of big scenes
-                // this should be all scenes that took > 500ms on Isghj's computer during alpha ~dec 2020
-                //  this is old, should be re-evaluated with different code
-                foreach (var sceneIndex in new int[]{ 1442, 1353, 1258, 1358, 1449, 1291, 1224,  1522, 1388, 1165, 1421, 1431, 1241, 1222, 1330, 1208, 1451, 1332, 1446, 1310 }){
+                int[] reverseProblemSceneList = new int[] { 1466, 1442, 1459, 1165, 1304, 1332, 1326, 1353, 1258, 1190, 1173, 1388, 1446, 1208, 1175, 1522, 1241, 1369, 1330, 1310 }; 
+                foreach (var sceneIndex in reverseProblemSceneList)
+                {
                     var item = newSceneList.Find(scene => scene.File == sceneIndex);
                     newSceneList.Remove(item);
                     newSceneList.Insert(0, item);
@@ -3565,13 +3565,12 @@ namespace MMR.Randomizer
                 var previousThreadPriority = Thread.CurrentThread.Priority;
                 Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
 
-                Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
-                {
-                //foreach (var scene in newSceneList) // sequential for debugging only
-                //  ( debugger is too stupid, if you catch a breakpoint and then tell it to move to a new location, it can catch on a _different_ thread)
-
+                Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene => {
                     SwapSceneEnemies(scene, seed);
                 });
+                //foreach (var scene in newSceneList) // sequential for debugging only
+                //  ( debugger is too stupid, if you catch a breakpoint and then tell it to move to a new location, it can catch on a _different_ thread)
+                //    SwapSceneEnemies(scene, seed);
                 //}
 
                 Thread.CurrentThread.Priority = previousThreadPriority;
