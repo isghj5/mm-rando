@@ -25,6 +25,7 @@ using MMR.Randomizer.Enemizer;
 // todo rename this actorutils.cs and move to MMR.Randomizer/Utils/
 
 using ActorEnum = MMR.Randomizer.GameObjects.Actor;
+using ObjectEnum = MMR.Randomizer.GameObjects.Object;
 using ActorInst = MMR.Randomizer.Models.Rom.Actor;
 
 
@@ -2577,7 +2578,7 @@ namespace MMR.Randomizer
                             // consideration: if the object list order changes, the scene load hickups, but so long as wel always replace first...
                             // we dont want the first we want to remove the last, as removing the first introduces more object list re-loads
                             var lastIndex = objList.FindLastIndex(obj => obj == uniqueObj);
-                            objList[lastIndex] = Object.SmallestObj;
+                            objList[lastIndex] = (int) ObjectEnum.SmallestObj;
                         }
                     }
                 }
@@ -2977,7 +2978,7 @@ namespace MMR.Randomizer
                     ActorEnum.HappyMaskSalesman.ObjectIndex()
                 };
 
-                var newObject = Object.SmallestObj;
+                var newObject = (int) ObjectEnum.SmallestObj;
                 if (thisSceneData.RNG.Next() % 10 > 5) // chance of fixed rare/random actor
                 {
                     newObject = freeObjList[thisSceneData.RNG.Next() % (freeObjList.Count - 1)];
