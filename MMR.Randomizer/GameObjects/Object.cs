@@ -617,6 +617,11 @@ namespace MMR.Randomizer.GameObjects
         [FileID(781)]  // object_gm
         Gm = 0x0F3,
 
+        /// <summary>
+        /// Smallest vanilla object (0x10 size), used as placeholder for duplicate object removal.
+        /// </summary>
+        SmallestObj = 0x0F3,
+
         [FileID(782)]  // object_ms
         Ms = 0x0F4,
 

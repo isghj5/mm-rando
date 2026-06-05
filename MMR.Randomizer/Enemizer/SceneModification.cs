@@ -3,6 +3,7 @@ using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Models.Vectors;
 using MMR.Randomizer.Utils;
+using ObjectEnum = MMR.Randomizer.GameObjects.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -560,7 +561,7 @@ namespace MMR.Randomizer.Enemizer
                 var poeIndex = room.Objects.FindIndex(obj => obj == GameObjects.Actor.Poe.ObjectIndex());
                 if (poeIndex > 0)
                 {
-                    room.Objects[poeIndex] = Enemies.SMALLEST_OBJ;
+                    room.Objects[poeIndex] = ObjectEnum.SmallestObj;
                 }
             }
         }
@@ -668,9 +669,9 @@ namespace MMR.Randomizer.Enemizer
             {
                 var bombshopMan = bombShopScene.Maps[0].Actors[0];
                 bombshopMan.Position = new vec16(198, -30, -15); // his vanilla position is behind the rocked on the left, cannot see his replacement actor at all
-                bombShopScene.Maps[0].Objects[1] = Enemies.SMALLEST_OBJ; // chu
-                bombShopScene.Maps[0].Objects[2] = Enemies.SMALLEST_OBJ; // bomb
-                bombShopScene.Maps[0].Objects[4] = Enemies.SMALLEST_OBJ; // bombbag
+                bombShopScene.Maps[0].Objects[1] = ObjectEnum.SmallestObj; // chu
+                bombShopScene.Maps[0].Objects[2] = ObjectEnum.SmallestObj; // bomb
+                bombShopScene.Maps[0].Objects[4] = ObjectEnum.SmallestObj; // bombbag
             }
 
             var zoraShopScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.ZoraHallRooms.FileID());
@@ -679,9 +680,9 @@ namespace MMR.Randomizer.Enemizer
             {
                 zoraShopScene.Maps[4].Objects[1] = GameObjects.Actor.ShopSeller.ObjectIndex(); // main object
                 // unused shop objects, shrink to give us more space
-                zoraShopScene.Maps[4].Objects[2] = Enemies.SMALLEST_OBJ; // arrows
-                zoraShopScene.Maps[4].Objects[3] = Enemies.SMALLEST_OBJ; // potions
-                zoraShopScene.Maps[4].Objects[5] = Enemies.SMALLEST_OBJ; // shield
+                zoraShopScene.Maps[4].Objects[2] = ObjectEnum.SmallestObj; // arrows
+                zoraShopScene.Maps[4].Objects[3] = ObjectEnum.SmallestObj; // potions
+                zoraShopScene.Maps[4].Objects[5] = ObjectEnum.SmallestObj; // shield
             }
 
             var goronShopScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GoronShop.FileID());
@@ -689,9 +690,9 @@ namespace MMR.Randomizer.Enemizer
             if (isGoronShopObjectRestricted == null)
             {
                 goronShopScene.Maps[0].Objects[1] = GameObjects.Actor.ShopSeller.ObjectIndex();
-                goronShopScene.Maps[0].Objects[2] = Enemies.SMALLEST_OBJ; // arrows
-                goronShopScene.Maps[0].Objects[3] = Enemies.SMALLEST_OBJ; // potion
-                goronShopScene.Maps[0].Objects[4] = Enemies.SMALLEST_OBJ; // bombs
+                goronShopScene.Maps[0].Objects[2] = ObjectEnum.SmallestObj; // arrows
+                goronShopScene.Maps[0].Objects[3] = ObjectEnum.SmallestObj; // potion
+                goronShopScene.Maps[0].Objects[4] = ObjectEnum.SmallestObj; // bombs
             }
 
         }
@@ -1381,9 +1382,9 @@ namespace MMR.Randomizer.Enemizer
 
             // since we're changing objects and that will reload the whole list both ways anyway,
             //   might as well shrink it to reduce chances of overflow
-            gekkoRoom.Objects[14] = Enemies.SMALLEST_OBJ; // previously: bo
-            gekkoRoom.Objects[15] = Enemies.SMALLEST_OBJ; // previously: dragonfly
-            gekkoRoom.Objects[16] = Enemies.SMALLEST_OBJ; // previously: skulltula
+            gekkoRoom.Objects[14] = ObjectEnum.SmallestObj; // previously: bo
+            gekkoRoom.Objects[15] = ObjectEnum.SmallestObj; // previously: dragonfly
+            gekkoRoom.Objects[16] = ObjectEnum.SmallestObj; // previously: skulltula
         }
 
 
@@ -1868,15 +1869,15 @@ namespace MMR.Randomizer.Enemizer
             // can we remove an object from ikana to increase object budget to have more stuff?
             var ikanaScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaCanyon.FileID());
             // nobody follows kafei its fine to remove his object from the main room
-            ikanaScene.Maps[0].Objects[10] = SMALLEST_OBJ; // kafei
-            ikanaScene.Maps[0].Objects[13] = SMALLEST_OBJ; // piece of heart, used in the east side but not here, we dont need here
-            ikanaScene.Maps[0].Objects[18] = SMALLEST_OBJ; // flying scrub ( dont think it matters remove it from this area for most people)
+            ikanaScene.Maps[0].Objects[10] = ObjectEnum.SmallestObj; // kafei
+            ikanaScene.Maps[0].Objects[13] = ObjectEnum.SmallestObj; // piece of heart, used in the east side but not here, we dont need here
+            ikanaScene.Maps[0].Objects[18] = ObjectEnum.SmallestObj; // flying scrub ( dont think it matters remove it from this area for most people)
             // */
 
             // if we remove the woodfall object from terminafield, we have more space for noticible actors and not a static backdrop woodfall
             // so far this has been here over a month and nobody has noticed I removed woodfall lol
             var tfScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TerminaField.FileID());
-            tfScene.Maps[0].Objects[0] = Enemies.SMALLEST_OBJ;
+            tfScene.Maps[0].Objects[0] = ObjectEnum.SmallestObj;
 
             // HEAVY BOMB
             // you idiot, this is both kegs and regular bombs, you need to set the flag for just kegs with a code change or bombs are heavy too
@@ -2662,8 +2663,8 @@ namespace MMR.Randomizer.Enemizer
                 //ranchRoom0Data[0x2B3] = 0x0;
 
                 // now that the cariage is gone we should try to remove the objects to make space for other things in the scene
-                ReadWriteUtils.Arr_WriteU16(ranchRoom0Data, 0x74, Enemies.SMALLEST_OBJ); // carriage
-                ReadWriteUtils.Arr_WriteU16(ranchRoom0Data, 0x72, Enemies.SMALLEST_OBJ); // object_ha is the donkey the cart uses
+                ReadWriteUtils.Arr_WriteU16(ranchRoom0Data, 0x74, ObjectEnum.SmallestObj); // carriage
+                ReadWriteUtils.Arr_WriteU16(ranchRoom0Data, 0x72, ObjectEnum.SmallestObj); // object_ha is the donkey the cart uses
             }
 
             var terminaField = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TerminaField.FileID());

@@ -30,30 +30,9 @@ using ActorInst = MMR.Randomizer.Models.Rom.Actor;
 
 namespace MMR.Randomizer
 {
-    [System.Diagnostics.DebuggerDisplay("{OldV} -> {NewV}")]
-    public class ValueSwap
-    {
-        /// <summary>
-        ///  This class exists to keep track of objects we swap in the object list
-        /// </summary>
-        public int OldV;
-        public int NewV;
-        public int ChosenV; // Copy of NewV, first pass result, but we might change NewV to something else if duplicate
-
-        public ValueSwap(){ }
-
-        public ValueSwap(int oldV, int newV)
-        {
-            this.OldV = oldV;
-            this.NewV = this.ChosenV = newV;
-        }
-
-    }
-
     public class Enemies
     {
         public static List<InjectedActor> InjectedActors = new List<InjectedActor>();
-        public const int SMALLEST_OBJ = 0xF3; // 0x10 size, smallest vanilla object I could find
 
         public static List<ActorEnum> VanillaEnemyList { get; set; }
         public static List<ActorInst> ReplacementCandidateList { get; set; }
@@ -2561,7 +2540,7 @@ namespace MMR.Randomizer
         public static List<List<int>> TrimObjectList(SceneEnemizerData thisSceneData, StringBuilder log)
         {
             /// this function generates our enemizer chosenReplacementObjectsPerMap from our chosenReplacementObjects
-            ///   also trims duplicate objects, replacing them with SMALLEST_OBJ
+            ///   also trims duplicate objects, replacing them with Object.SmallestObj
 
             var replacedObjects = new List<int>();
             var objectsPerMap = new List<List<int>>();
@@ -2598,7 +2577,7 @@ namespace MMR.Randomizer
                             // consideration: if the object list order changes, the scene load hickups, but so long as wel always replace first...
                             // we dont want the first we want to remove the last, as removing the first introduces more object list re-loads
                             var lastIndex = objList.FindLastIndex(obj => obj == uniqueObj);
-                            objList[lastIndex] = SMALLEST_OBJ;
+                            objList[lastIndex] = Object.SmallestObj;
                         }
                     }
                 }
@@ -2998,7 +2977,7 @@ namespace MMR.Randomizer
                     ActorEnum.HappyMaskSalesman.ObjectIndex()
                 };
 
-                var newObject = SMALLEST_OBJ;
+                var newObject = Object.SmallestObj;
                 if (thisSceneData.RNG.Next() % 10 > 5) // chance of fixed rare/random actor
                 {
                     newObject = freeObjList[thisSceneData.RNG.Next() % (freeObjList.Count - 1)];
