@@ -297,13 +297,14 @@ namespace MMR.Randomizer.GameObjects
         [FairyDroppingEnemies(roomNumber: 5, actorNumber: 22)] // east wing, beehive:22
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Dinofos, // weak enemies are kinda lame here
             Actor.Leever, Actor.ChuChu, Actor.DekuBabaWithered,
-            Actor.Hiploop)] // dies instantly in the waterer:
+            Actor.Hiploop)] // dies instantly in the water
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper,
             Actor.Hiploop)] // dies instantly in the water
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula,
-            Actor.BigPoe)] // I think this was an issue? other than being annoying I mean
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.HoneyComb,
-            Actor.BigPoe)] // we've gotten a crash beacuse param changed, type change to zero, but we dont know why
+        // I think I fixed these, this was a cutscene issue
+        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula,
+        //    Actor.BigPoe)] // I think this was an issue? other than being annoying I mean
+        //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.HoneyComb,
+        //    Actor.BigPoe)] // we've gotten a crash beacuse param changed, type change to zero, but we dont know why
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo,
             Actor.GibdoWell, Actor.DeathArmos, // Rarely Killable
             Actor.StalchildSpawner, // oob
@@ -311,6 +312,8 @@ namespace MMR.Randomizer.GameObjects
             /*Actor.RegularIceBlock, Actor.Bombiwa, Actor.ClocktowerGearsAndOrgan */)] // blocking
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DragonFly,
             Actor.GiantBeee)] // issue being that the one that spins around and doesnt agro hard requires a ranged weapon because the spawn is so high
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DekuBaba,
+            Actor.StalchildSpawner)] // cannot drop fairy because its a spawner, the fairy cannot grab hold of an enemy
         [EnemizerSceneBlockSensitive(Actor.MothSwarm, -1)] // blocks torch in hana room
         [EnemizerSceneBlockSensitive(Actor.Bo, -1)]
         [EnemizerSceneBlockSensitive(Actor.CuttableIvyWall, -1)] // leads to butler and all of the items out there

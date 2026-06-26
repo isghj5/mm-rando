@@ -2764,9 +2764,9 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x3200, 0x2D00, 0x0F00, 0x1E00,
             1, 0x2800, 0x11D)]
         [WaterBottomVariants(0x11)] // non vanilla, but 0xFE param space is unused, so we can mark this
-        [VariantsWithRoomMax(max: 5, variant: 1)]
+        //[VariantsWithRoomMax(max: 5, variant: 1)]
         // below ground is kinda boring..., we want above ground placement only
-        [VariantsWithRoomMax(max: 0, variant: 0x11D, 0x0F00, 0x2800, 0x2D00, 0x3200, 0x1E00)]
+        [VariantsWithRoomMax(max: 0, variant: 0x11D, 0x0F00, 0x2800, 0x2D00, 0x3200, 0x1E00, 1)]
         // except I'm okay with a few of them because then the player might stumble on one pulling out an ocarina
         // turns out if the player is glitching with ocarina items it can softlock
         //[VariantsWithRoomMax(max: 1, variant: 0x3200, 0x1E00)]
