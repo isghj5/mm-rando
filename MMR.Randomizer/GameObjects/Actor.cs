@@ -1334,7 +1334,7 @@ namespace MMR.Randomizer.GameObjects
         // empty actor, does nothing
         [FileID(103)]
         [ObjectListIndex(Object.EfcStarField)]
-        En_Fire_Rock = 0x60, // En_Fire_Rock
+        EmptyFireRock = 0x60, // En_Fire_Rock
 
         [FileID(104)]
         [ObjectListIndex(Object.CtowerRot)]

@@ -530,6 +530,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot,
             Actor.HappyMaskSalesman, Actor.IronKnuckle, Actor.CutsceneZelda, Actor.ClayPot, Actor.RomaniYts, Actor.GoronElder)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bombiwa,
+            Actor.ReDead, Actor.GibdoWell, // can hardlock the player as they enter the grotto by grabbing them
             Actor.LikeLike)] // can grab you as you LEAVE and hardlock the game
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BugsFishButterfly, // peahat grotto butterfly
             Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform)] // can cover the peahat grotto
@@ -655,8 +656,9 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x38)]
         // 132,88 was working fine
         [DynaHeadroom(132, 100)] // limit not found
-        [EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa,
-                    Actor.LikeLike)] // can hard lock if the player leaves and gets instant-grabbed, TODO consider making a likelike that has a switch flag
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bombiwa,
+            Actor.ReDead, Actor.GibdoWell, // can hardlock the player as they enter the grotto by grabbing them
+            Actor.LikeLike)] // can grab you as you LEAVE and hardlock the game
         [EnemizerSceneBlockSensitive(Actor.LikeLike, -1)]
         ZoraCape = 0x35,
 
@@ -916,6 +918,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x53)]
         [DynaHeadroom(220, 250)] // poly:246 was crashing +10
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bombiwa,
+            Actor.ReDead, Actor.GibdoWell, // can hardlock the player as they enter the grotto by grabbing them
             Actor.LikeLike)] // can instant grab you on exit
         RoadToIkana = 0x50,
 
@@ -1184,6 +1187,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SquareSign,
             Actor.LikeLike, // exit loop
             Actor.PirateColonel, // cutscene lock as you leave
+            Actor.ReDead, Actor.GibdoWell, // can hardlock the player as they enter the grotto by grabbing them
             Actor.Beamos)] // can one shot the player as they leave the grotto with 1 heart
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.UglyTree,
             Actor.OwlStatue)] // can hide the grass weirdly
