@@ -3449,6 +3449,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(256)]
         [ObjectListIndex(Object.GameplayKeep)]
+        [EnemizerScenesPlacementBlock(Scene.TwinIslands)] // killing them can break the ice hardlock for some reason TODO figure it out instead
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 0)]
         StalchildSpawner = 0x11B, // En_Encount4
 
