@@ -422,6 +422,7 @@ namespace MMR.Randomizer.GameObjects
             0xFFFF, // great bay coast
             2)] // lab
         [VariantsWithRoomMax(max: 0, variant: 0)]
+        [ForbidFromScene(Scene.BeneathTheWell)]
         [UnkillableAllVariants]
         Fish = 0x17, // En_Fish
 
@@ -1039,9 +1040,10 @@ namespace MMR.Randomizer.GameObjects
             0x3322, // astral obser
             0x6322
         )]
-        [UnkillableAllVariants]
         [FlyingToGroundHeightAdjustment(100)]
         [VariantsWithRoomMax(max: 2, 0x3323, 0x2324, 0x4324)]
+        [ForbidFromScene(Scene.BeneathTheWell)]
+        [UnkillableAllVariants]
         BugsFishButterfly = 0x4F, // Obj_Mure // includes bugs and fish and butterflies
 
         [EnemizerEnabled]
