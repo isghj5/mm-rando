@@ -2742,7 +2742,7 @@ namespace MMR.Randomizer
                             {
                                 // if the varient limit has not been reached
                                 var variantMax = testEnemy.VariantMaxCountPerRoom(variant);
-                                var variantCount = enemiesInRoom.Count(act => act.OldVariant == variant);
+                                var variantCount = enemiesInRoom.Count(act => act.Variants[0] == variant || act.OldVariant == variant);
                                 if (variantCount < variantMax)
                                 {
                                     acceptableVariants.Add(variant);
