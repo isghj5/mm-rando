@@ -874,7 +874,7 @@ namespace MMR.Randomizer.GameObjects
             //Scene.Snowhead, Scene.GoronVillage,
             Scene.DekuShrine//, //Scene.StoneTower
         )]
-        [RemovalChance(25), PlacementWeight(90)]
+        [RemovalChance(25), PlacementWeight(0)] // we want only the new one
         Gomess = 0x43, // En_Death 🤘
 
         [FileID(88)]
