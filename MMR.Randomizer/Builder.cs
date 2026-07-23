@@ -33,15 +33,17 @@ namespace MMR.Randomizer
     public class Builder
     {
         private RandomizedResult _randomized;
+        private GameplaySettings _gameplaySettings;
         private CosmeticSettings _cosmeticSettings;
         private WebSettings _webSettings;
         private ExtendedObjects _extendedObjects;
         private List<MessageEntry> _extraMessages;
         private Dictionary<int, ItemGraphic> _graphicOverrides;
 
-        public Builder(RandomizedResult randomized, CosmeticSettings cosmeticSettings, WebSettings webSettings = null)
+        public Builder(RandomizedResult randomized, GameplaySettings gameplaySettings, CosmeticSettings cosmeticSettings, WebSettings webSettings = null)
         {
             _randomized = randomized;
+            _gameplaySettings = gameplaySettings;
             _cosmeticSettings = cosmeticSettings;
             _webSettings = webSettings;
             _extendedObjects = null;
@@ -7142,7 +7144,7 @@ namespace MMR.Randomizer
             {
                 progressReporter.ReportProgress(75, "Building ROM...");
 
-                RomUtils.SetFilesToRemainDecompressed(outputSettings, _randomized.Settings);
+                RomUtils.SetFilesToRemainDecompressed(outputSettings, _gameplaySettings);
 
                 byte[] ROM = null;
                 if (outputSettings.GenerateROM)
