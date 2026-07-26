@@ -213,6 +213,9 @@ namespace MMR.Randomizer.GameObjects
             28, // vars: 0x7F3F base of ladder
             27 // vars: 0x7F3F at the door, blocking actors here can block the whole entrance
         )]
+        [EnemizerSceneBlockSensitive(Actor.WoodenBarrel, // near the top north entrance
+            8 // near the top entrance, blocks the bridge
+        )]
         PiratesFortress = 0x11, // Pirates fortress interior, the center yard, not the rooms
 
         [FileID(1173)]
