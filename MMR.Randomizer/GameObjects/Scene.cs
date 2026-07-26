@@ -311,6 +311,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo,
             Actor.GibdoWell, Actor.DeathArmos, // Rarely Killable
             Actor.StalchildSpawner, // oob
+            Actor.Shabom, // oob
             Actor.Keese // can bug out and fly out-of-bounds, difficult to kill
             /*Actor.RegularIceBlock, Actor.Bombiwa, Actor.ClocktowerGearsAndOrgan */)] // blocking
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DragonFly,
