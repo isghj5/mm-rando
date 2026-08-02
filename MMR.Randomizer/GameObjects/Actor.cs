@@ -5712,8 +5712,9 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         [FileID(461)]
+
         [ObjectListIndex(Object.Zoraegg)]
-        [CheckRestricted(Item.BottleCatchEgg)]
+        [CheckRestricted(Item.SongNewWaveBossaNova, Item.BottleCatchEgg)]
         // 2000 is hookshot room, 1A00 is twin barrel, 0x1E00 is barrel room, 1C00 is last room
         // the three at pinnacle rock are 0x1400, 0x1600, 0x1800
         // 0 loaded fine, what happens if we load smaller values? can we have 3 or more?
