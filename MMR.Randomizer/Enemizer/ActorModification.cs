@@ -292,6 +292,15 @@ namespace MMR.Randomizer.Enemizer
             var shellBladeData = RomData.MMFileList[sbFid].Data;
             // null the branch
             ReadWriteUtils.Arr_WriteU32(shellBladeData, Dest: 0xCC4, val: 0x00000000); // BGZ (past the code we want) -> NOP
+
+            // while we are here, there are attacks that don't work, we want to modify them.
+            var damagetableAddr = 0xF4C;
+            // not sure what F effect is but all of the vanilla damage has it
+            shellBladeData[damagetableAddr +  8] = 0xF1; // goron punch
+            shellBladeData[damagetableAddr +  9] = 0xF1; // sword
+            shellBladeData[damagetableAddr + 24] = 0xF1; // spinattack
+            shellBladeData[damagetableAddr + 25] = 0xF1; // sword beam
+
         }
 
         private static void FixDexihandDamage()

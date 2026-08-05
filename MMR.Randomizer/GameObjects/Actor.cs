@@ -1359,8 +1359,8 @@ namespace MMR.Randomizer.GameObjects
         // params: there are none, it's free realestate
         // works on ground too but cannot add ground without ground enemies showing up in fish tank
         // there is a bug sometimes on ground it loses its collider (in a small scene)
-        [GroundVariants(1)]
-        [WaterBottomVariants(0)]
+        [GroundVariants(1)] // because params are irrelevant, mark ground version with different number
+        [WaterBottomVariants(0)] // vanilla
         Shellblade = 0x64, // En_Sb
 
         // miniboss
