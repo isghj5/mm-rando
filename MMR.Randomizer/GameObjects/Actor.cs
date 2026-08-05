@@ -206,7 +206,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.Grottos, // don't even want to think of en_torch
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple, 
             Scene.SecretShrine,
-            Scene.BeneathGraveyard, // when you kill all the enemies and the chest doesn't spawn it just confuses users
+            Scene.DampesHouse, Scene.BeneathGraveyard, // when you kill all the enemies and the chest doesn't spawn it just confuses users
             Scene.LinkTrial, // maybe too lame coming here late
             Scene.GoronTrial // used as a goron rolling bounce mechanic
         )]
