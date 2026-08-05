@@ -204,8 +204,9 @@ namespace MMR.Randomizer.GameObjects
         //    Scene.Woodfall)]
         [ForbidFromScene(
             Scene.Grottos, // don't even want to think of en_torch
-            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple, 
             Scene.SecretShrine,
+            Scene.BeneathGraveyard, // when you kill all the enemies and the chest doesn't spawn it just confuses users
             Scene.LinkTrial, // maybe too lame coming here late
             Scene.GoronTrial // used as a goron rolling bounce mechanic
         )]
@@ -213,7 +214,7 @@ namespace MMR.Randomizer.GameObjects
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
         //[EnemizerScenesPlacementBlock(Scene.IkanaGraveyard, Scene.SouthernSwamp, Scene.SouthernSwampClear, // asummed dyna crash
         //    Scene.StoneTower)]
-        [PlacementWeight(65)] // boosted for testing, but needs to be lowered because lots of scenes have existing box objects
+        [PlacementWeight(60)] // boosted for testing, but needs to be lowered because lots of scenes have existing box objects
         TreasureChest = 0x6, // En_Box
 
         // TODO dumb ass you forgot to finish this actor
@@ -5563,10 +5564,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x378)]
         [FileID(446)]
         [ObjectListIndex(Object.Snowman)]
+        // params:
+        // 0x00FF is type (1 is big), 0xFF00 is attack range
         [GroundVariants(0xFF00, 0xFF01, 0, 1)]
         [DifficultVariants(1, 0xF001)]
         [VariantsWithRoomMax(max: 1, variant: 1, 0xF001)] // limit the bigger one
-        [PlacementWeight(100)]
+        [PlacementWeight(90)]
         Eeno = 0x1E6, // En_Snowman
 
         // gold skull bonk detector
