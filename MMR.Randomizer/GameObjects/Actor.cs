@@ -4345,7 +4345,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingToGroundHeightAdjustment(150)]
         //[ForbidFromScene(Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
         //[EnemizerScenesPlacementBlock(Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
-        [PlacementWeight(75)]
+        [PlacementWeight(80)]
         Tingle = 0x176, // En_Bal
 
         [ActorizerEnabled]

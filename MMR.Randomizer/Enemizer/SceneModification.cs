@@ -127,8 +127,8 @@ namespace MMR.Randomizer.Enemizer
             lilypad.Position.x = 615; // move lilypad over
             lilypad.Position.z = -495;
 
-            var coastScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GreatBayCoast.FileID());
-            coastScene.Maps[0].Actors[17].Position.z = 3033; // edge the guay over the land just a bit
+            var capeScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.ZoraCape.FileID());
+            capeScene.Maps[0].Actors[17].Position.z = 3033; // edge the guay over the land just a bit
 
             // to prevent him from falling to abyss
             var snowheadKeese = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Snowhead.FileID()).Maps[0].Actors[0];
