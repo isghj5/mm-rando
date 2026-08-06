@@ -6945,7 +6945,7 @@ namespace MMR.Randomizer
                 WriteEntrances();
 
                 progressReporter.ReportProgress(66, "Reading Enemies ...");
-                CheckEnemizerFreeGaroHints();
+                //CheckEnemizerFreeGaroHints(); // testing
                 ReadEnemies(outputSettings);
 
                 progressReporter.ReportProgress(67, "Writing cutscenes...");

@@ -356,4 +356,5 @@ MigrationBackup/
 .DS_Store
 assembly/build/symbols.asm
 
+docs
 .swp

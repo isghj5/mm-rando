@@ -2055,7 +2055,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, ActorEnum.Leever, ActorEnum.Gomess)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, ActorEnum.Leever, ActorEnum.)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, ActorEnum.BuisnessScrub, ActorEnum.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, ActorEnum.SoftSoilAndBeans, ActorEnum.PunchableStoneTowerPillars)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, ActorEnum.Peahat, ActorEnum.BetaVampireGirl)) continue;
@@ -2069,7 +2069,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, ActorEnum.En_Owl, ActorEnum.UnusedStoneTowerStoneElevator)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, ActorEnum.Kafei, ActorEnum.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GoronShrine, ActorEnum.Torch, ActorEnum.LostWoodsCutsceneTrees)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, ActorEnum.CeilingSpawner, ActorEnum.Dexihand)) continue;
+                if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, ActorEnum.ClayPot, ActorEnum.Eeno)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, ActorEnum.Gorman, ActorEnum.HookshotWallAndPillar)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PoeHut, ActorEnum.SpiritHouseOwner, ActorEnum.PirateColonel)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, ActorEnum.SquareSign, ActorEnum.Carpenter)) continue;
@@ -3536,7 +3536,7 @@ namespace MMR.Randomizer
                 ActorInjection.ScanForMMRA(directory: "actors", _randomized.Settings);
                 using (StreamWriter log = new StreamWriter(_outputSettings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
-                    log.Write("Enemizer version: Isghj's Actorizer Test 100.0A3\n");
+                    log.Write("Enemizer version: Isghj's Actorizer Test 100.0A4\n");
                     log.Write("seed: [ " + seed + " ]\n");
 
                     ActorInjection.InjectNewActors(_seedRNG, log);
@@ -3584,7 +3584,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 100.0A3\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 100.0A4\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

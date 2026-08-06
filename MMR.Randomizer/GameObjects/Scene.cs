@@ -1037,6 +1037,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1466)]
         [SceneInternalId(0x61)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PostMan,
+            Actor.LikeLike, // with hyper enemies it can grab you instantly
             Actor.PirateColonel, // assumed: can grab the player while transitioning and break
             Actor.WoodfallTempleWoodenFlower // so big it goes through the door into the thing
             )]
@@ -1058,9 +1059,9 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RosaSisters,
         //    Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.LightBlock,
         //   Actor.Eyegore)]
-        [EnemizerSceneBlockSensitive(Actor.RosaSisters, -1)]
-        [EnemizerSceneBlockSensitive(Actor.MysteryHand, -1)]
-        [EnemizerSceneBlockSensitive(Actor.PostMan, -1)]
+        [EnemizerSceneBlockSensitive(Actor.MysteryHand, -1)] // replacement can clip into stairs
+        [EnemizerSceneBlockSensitive(Actor.RosaSisters, -1)] // staircase
+        [EnemizerSceneBlockSensitive(Actor.PostMan, -1)] // can block the hallway
         StockPotInn = 0x5E,
 
         [FileID(1472)]
