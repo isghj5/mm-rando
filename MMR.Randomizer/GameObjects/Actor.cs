@@ -7023,19 +7023,31 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(size: 0x7F, shift: 0)]
         STTBombableFloor = 0x255, // Bg_Ikana_Bombwall
 
-        // TODO ceiling type?
+        [ActorizerEnabled]
         [FileID(557)]
         [ObjectListIndex(Object.IkanaObj)]
-        [SwitchFlagsPlacement(size: 0x7F, shift: 0)] // turn on and off the light?
+        // only param is switch flags
+        [FlyingVariants(0x8)]
+        [CeilingVariants(0x100)]
+        [SwitchFlagsPlacement(SwitchTrigger.Receives, size: 0x7F, shift: 0)] // turn on and off the light?
+        // placement weight
+        [RemovalChance(0)]
         STTLargeLightRay = 0x256, // Bg_Ikana_Ray
         
         [FileID(558)]
         [ObjectListIndex(Object.IkanaObj)]
         STTMetalDoor = 0x257, // Bg_Ikana_Shutter
-        
+
+        [ActorizerEnabled]
         [FileID(559)]
         [ObjectListIndex(Object.HakaObj)]
-        [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 0)] // break
+        // params: switch flags only, masked so top nibble is free
+        [GroundVariants(0x1)]
+        [WallVariants(0x100)]
+        [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 0)]
+        [BlockingVariantsAll]
+        [RemovalChance(3)]
+        [PlacementWeight(10)]
         Bg_Haka_Bombwall = 0x258, // Bg_Haka_Bombwall
         
         [FileID(560)]
@@ -7688,14 +7700,21 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(Object.Kitan)]
         Keaton = 0x28C, // En_Kitan
 
-        // huh? are these both the ceiling?
+        [ActorizerEnabled]
         [FileID(612)]
         [ObjectListIndex(Object.AstrObj)]
+        // params:  switch flags only, top 0xFF00 is ignored
+        [GroundVariants(0)]
+        [WallVariants(0x100)] // no vanilla, want to see if it shows up on walls
         [SwitchFlagsPlacement(size: 0x7F, shift: 0)]
-        IkanaCastleCheckeredCeiling = 0x28D, // Bg_Astr_Bombwall
-        
+        [RemovalChance(3)] // rare proc
+        [PlacementWeight(10)]
+        [BlockingVariantsAll]
+        AstralSewerBombWall = 0x28D, // Bg_Astr_Bombwall
+
         [FileID(613)]
         [ObjectListIndex(Object.IkninsideObj)]
+        [GroundVariants(0x60)] // actor is on ground, ceiling must be hardcoded
         [SwitchFlagsPlacement(size: 0x7F, shift: 0)]
         HotCheckeredCeiling = 0x28E, // Bg_Iknin_Susceil
         
