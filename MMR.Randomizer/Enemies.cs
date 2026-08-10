@@ -912,6 +912,11 @@ namespace MMR.Randomizer
 
                 }
 
+                if (testActor.ActorEnum == ActorEnum.Cow && testActor.CurrentVariantIsType(GameObjects.ActorType.Ceiling))
+                {
+                    testActor.ChangeXRotation(90);
+                }
+
                 // rotate darmani grave to face forward, for some reason the actor is rotated 180
                 if (testActor.ChangedToNewActor(ActorEnum.DarmaniGrave))
                 {
