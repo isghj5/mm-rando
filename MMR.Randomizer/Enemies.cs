@@ -507,7 +507,7 @@ namespace MMR.Randomizer
             }
 
             // special edge cases for actors that would be hard to enum auto because of variants or scenes
-            // TODO replace these eventually
+            // TODO replace these eventually or at least separate into distinct functions
 
             if (testActor == ActorEnum.Tingle)
             {
@@ -632,6 +632,11 @@ namespace MMR.Randomizer
                     if (isMonkeyPictureUsed)
                         return GameObjects.Item.OtherKillMajora;
                 }
+            }
+
+            if (testActor == ActorEnum.Shikashi && _randomized.Settings.LogicMode == LogicMode.NoLogic)
+            {
+                return GameObjects.Item.OtherKillMajora;
             }
 
             return null;
@@ -2961,12 +2966,8 @@ namespace MMR.Randomizer
                 {
                     actor.ActorId = actor.InjectedActor.ActorId;
                 }
-
             }
-
         }
-
-
 
         private static void HandleUniqueSceneSpecialObjectBehaviors(SceneEnemizerData thisSceneData)
         {

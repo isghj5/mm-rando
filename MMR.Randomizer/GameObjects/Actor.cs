@@ -6598,7 +6598,7 @@ namespace MMR.Randomizer.GameObjects
         [PlacementWeight(5)] // silly and broken, leave as rare spawn
         Toto = 0x234, // En_Toto // manager zora band member
 
-        [EnemizerEnabled] // does not spawn outside of ikana
+        [EnemizerEnabled]
         [ActorProfileOffset(0x2CA0)]  // combat music disable does not work
         [FileID(524)]
         [ObjectListIndex(Object.Rd)]
