@@ -645,7 +645,8 @@ namespace MMR.Randomizer.GameObjects
         // ^- this might be old, pre-realization that our counting is off
         // 342poly crashes room 1
         [DynaHeadroom(350, 300, room: 0)] // limit not found
-        [DynaHeadroom(250, 250, room: 1)] // 342, X was too big, limit not found (annoying to test)
+        [DynaHeadroom(250, 250, room: 1)] // [342, X] was too big, limit not found (annoying to test)
+        [DynaHeadroom(350, 300, room: 2)] // [418, X] was too big, limit not found (annoying to test)
         //[DynaHeadroom(16,12, room:0)] // we know 16/12 is safe, that might be too conservative
         [EnemizerSceneBlockSensitive(Actor.SquareSign,
             150, // vars: 0x21, too close to fisherman door
