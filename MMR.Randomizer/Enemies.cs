@@ -2037,7 +2037,9 @@ namespace MMR.Randomizer
                             ChosenV = replacement.ObjectIndex()
                         });
                         var cullCheck = thisSceneData.AcceptableCandidates.Find(act => act.ActorEnum == replacement);
-                        if (cullCheck == null) // was weight excluded, need to re-add to test
+                        var injectedCanidate = InjectedActors.Find(act => act.ObjectId == target.ObjectIndex());
+                        if (injectedCanidate == null // no new actor uses this object
+                            && cullCheck == null) // and the old actor is missing, it must have been weight excluded, add again for testing
                         {
                             var newActor = ReplacementCandidateList.Find(act => act.ActorEnum == replacement);
                             Debug.Assert(newActor != null); // cannot find actor, enemizer?
@@ -2064,6 +2066,8 @@ namespace MMR.Randomizer
                     }
                     return false;
                 }
+
+                // bug: if the main actor is set to never spawn, and you use this for a new injected actor, the main actor will be added to the list
 
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, ActorEnum.Leever, ActorEnum.)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, ActorEnum.BuisnessScrub, ActorEnum.BeanSeller)) continue;
