@@ -193,6 +193,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1171)]
         [SceneInternalId(0x14)]
+        [DynaHeadroom(400,400)] // 476 crashed (credits)
         // TODO come up with a way to make sure that one spot isn't blocking without hardcoding
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PatrollingPirate,
             //Actor.RegularIceBlock // should be covered by block sensitive now
