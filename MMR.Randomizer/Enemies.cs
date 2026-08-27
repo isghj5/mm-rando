@@ -3546,7 +3546,7 @@ namespace MMR.Randomizer
                 ActorInjection.ScanForMMRA(directory: "actors", _randomized.Settings);
                 using (StreamWriter log = new StreamWriter(_outputSettings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
-                    log.Write("Enemizer version: Isghj's Actorizer Test 100.0A4\n");
+                    log.Write("Enemizer version: Isghj's Actorizer Test 100.0A5\n");
                     log.Write("seed: [ " + seed + " ]\n");
 
                     ActorInjection.InjectNewActors(_seedRNG, log);
@@ -3594,7 +3594,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 100.0A4\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 100.0A5\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
