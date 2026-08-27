@@ -3771,7 +3771,11 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(SwitchTrigger.Sends, size: 0x7F, shift: 8)] // this SETS but does not read, is it passing info to a door?
         [UnkillableAllVariants]
         [CreditsBlockedAllVariants] // too big
-        [EnemizerScenesPlacementBlock(Scene.WoodsOfMystery, Scene.DekuPalace, Scene.StockPotInn, Scene.Grottos)]
+        [EnemizerScenesPlacementBlock(Scene.WoodsOfMystery, Scene.DekuPalace,
+            Scene.StockPotInn,
+            Scene.DekuPlayground,
+            Scene.Grottos
+        )]
         WoodfallTempleWoodenFlower = 0x13D, // Bg_Numa_Hana
 
         [ActorizerEnabled] // big object, collector flag, boring actor
