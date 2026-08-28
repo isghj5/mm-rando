@@ -94,7 +94,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT,
             Item.ChestTerminaStumpRedRupee, Item.ChestTerminaGrassRedRupee, Item.ChestTerminaUnderwaterRedRupee)]
         [CheckRestricted(Scene.Woodfall, variant: ActorConst.ANY_VARIANT,
-            Item.ChestWoodfallBlueRupee, Item.ChestWoodfallRedRupee)]
+            Item.ChestWoodfallBlueRupee, Item.ChestWoodfallRedRupee, Item.HeartPieceWoodFallChest)]
         [CheckRestricted(Scene.DoggyRacetrack, variant: ActorConst.ANY_VARIANT,
             Item.ChestDogRacePurpleRupee)]
         [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT,
