@@ -415,6 +415,7 @@ namespace MMR.Randomizer.GameObjects
         //    Actor.Tijo, Actor.Bombiwa, Actor.Bumper)] // blocking a chest
         [EnemizerSceneBlockSensitive(Actor.ZoraEgg, Item.ChestInsidePiratesFortressTankRedRupee)]
         [EnemizerSceneBlockSensitive(Actor.WoodenBarrel, -1)] // in the cage room, can block the ability to hit the switch to leave
+        [EnemizerSceneBlockSensitive(Actor.Armos, -1)] // in the underwater maze wooden panels are using armos as fake actor replacement to separate from barels, can block the ability to reach the pushblocks
         [EnemizerSceneBlockSensitive(Actor.PatrollingPirate, -1)] // large ice block could block the hookshot room
         [EnemizerSceneBlockSensitive(Actor.SpikedMine, -1)] // really large ice block can block the whole tunnel
         PiratesFortressRooms = 0x20, // tag: Sewer

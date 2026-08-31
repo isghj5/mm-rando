@@ -6516,7 +6516,9 @@ namespace MMR.Randomizer.GameObjects
             0x8710, 0x8711)] // 16 is flexible, 17 is big fairy
         [WallVariants(0xFF)] // 0x80 + 0x7F (max switch flag)
         // issue here being these are walls, water is the most accurate replacement
-        [WaterVariants(0x80, 0x81, 0x91 // 0x80 is a flag for the breakable wooden walls
+        [WaterVariants(
+            0x0080, 0x0081, // pirates sewer
+            0x91 // 0x80 is a flag for the breakable wooden walls
         )]
         [VariantsWithRoomMax(max: 0, variant: 0x80, 0x81, 0x91)] // do not place these
         [AlignedCompanionActor(GoldSkulltula, CompanionAlignment.OnTop, ourVariant: -1, variant:

@@ -2075,7 +2075,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, ActorEnum.Peahat, ActorEnum.BetaVampireGirl)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DoggyRacetrack, ActorEnum.ClayPot, ActorEnum.BedroomPostman)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, ActorEnum.HappyMaskSalesman, ActorEnum.Evan)) continue;
-                if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, ActorEnum.ChuChu, ActorEnum.Gomess)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, ActorEnum.ChuChu, ActorEnum.Gomess)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, ActorEnum.RegularZora, ActorEnum.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.OceanSpiderHouse, ActorEnum.Seth1, ActorEnum.BeanSeller)) continue;
@@ -2083,14 +2083,14 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwampClear, ActorEnum.En_Owl, ActorEnum.UnusedStoneTowerStoneElevator)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.CuriosityShop, ActorEnum.Kafei, ActorEnum.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GoronShrine, ActorEnum.Torch, ActorEnum.LostWoodsCutsceneTrees)) continue;
-                if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, ActorEnum.ClayPot, ActorEnum.Eeno)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.BeneathGraveyard, ActorEnum.ClayPot, ActorEnum.Eeno)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.StockPotInn, ActorEnum.Gorman, ActorEnum.HookshotWallAndPillar)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PoeHut, ActorEnum.SpiritHouseOwner, ActorEnum.PirateColonel)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, ActorEnum.SquareSign, ActorEnum.Carpenter)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, ActorEnum.SwimmingZora, ActorEnum.LabFish)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuPalace, ActorEnum.Torch, ActorEnum.BeanSeller)) continue;
 
-                if (TestHardSetObject(GameObjects.Scene.SPOT00, ActorEnum.Evan, ActorEnum.IronKnuckle)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.SPOT00, ActorEnum.Evan, ActorEnum.IronKnuckle)) continue;
                 #endif
                 #endregion
 

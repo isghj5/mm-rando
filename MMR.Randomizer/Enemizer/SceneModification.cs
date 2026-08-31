@@ -1226,7 +1226,7 @@ namespace MMR.Randomizer.Enemizer
 
         
 
-        private static void AddExtraObjectToPiratesInterior(bool ACTORSENABLED, Random rng)
+        private static void AddExtraObjectToPiratesCourtyard(bool ACTORSENABLED, Random rng)
         {
             /// With enemizer/actorizer pirates interior is actually kinda dry and boring
             /// the scene has 11 objects, we can add another object to the scene to give actorizer some more free-object actors it can place
@@ -1304,6 +1304,56 @@ namespace MMR.Randomizer.Enemizer
                 RandomlyShufflePirateFortressActors(introRoomActorsToShuffle);
             }
         }
+        public static void SplitPirateSewerMines()
+        {
+            /// The mines in the pirate fort sewer are dual type, in room 10/11 they are underwater mines,
+            /// in room 9 there are ceiling hanging mines
+            /// right now, actorizer cannot handle them properly in this form (we get water types in the air or air types in the water)
+            /// we need to split into two separate actors and two separate objects
+            /// turning the ceiling mines into fake skulltula (ceiling type) and changing the object in that room to match
+
+            var sewerScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PiratesFortressRooms.FileID());
+            var actors = sewerScene.Maps[9].Actors;
+
+            foreach (var actor in actors)
+            {
+                if (actor.ActorEnum == GameObjects.Actor.SpikedMine)
+                {
+                    actor.ChangeActor(GameObjects.Actor.SkulltulaDummy, 0, modifyOld: true);
+                    actor.OldName = actor.Name = "HangingMine";
+                }
+            }
+
+            sewerScene.Maps[9].Objects[5] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
+        }
+
+        public static void ReplaceSewerTaruObject()
+        {
+            /// Obj_Taru is a dual actor, it is both the wooden barrels and the wooden bonk panels
+            /// in the sewer they get used for both, one is for the barels which count as ground actors
+            /// and one is for the panels in the first undewater maze room
+            /// we need to split them up because we are getting ground types underwater or water types in the barrel replacments
+            /// replacing the actual wooden barrel object is more risky, we could shuffle objects around in a way that breaks an actor beacuse the barrel is so early in the list
+            /// instead let's replace the heart object, used for the POH, that doesn't get used by us at all, and certainly not at this first room
+
+            var sewerScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PiratesFortressRooms.FileID());
+            var actors = sewerScene.Maps[12].Actors;
+
+            foreach (var actor in actors)
+            {
+                if (actor.ActorEnum == GameObjects.Actor.WoodenBarrel)
+                {
+                    var dyna = actor.DynaLoad;
+                    // fake replacement: underwater armos (armos not in the scene at all yet)
+                    actor.ChangeActor(GameObjects.Actor.Armos, 0x777, modifyOld: true);
+                    actor.OldName = actor.Name = "WoodenPlank";
+                    actor.DynaLoad = dyna;
+                }
+            }
+
+            sewerScene.Maps[12].Objects[7] = GameObjects.Actor.Armos.ObjectIndex();
+        }
+
 
         private static void SwapCreditsCremia()
         {
@@ -1405,29 +1455,6 @@ namespace MMR.Randomizer.Enemizer
             var lensGrottoRoom = grottoScene.Maps[5];
             lensGrottoRoom.Objects[2] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
             lensGrottoRoom.Actors[3].ChangeActor(GameObjects.Actor.SkulltulaDummy, vars: 0, modifyOld: true);
-        }
-
-        public static void SplitPirateSewerMines()
-        {
-            /// The mines in the pirate fort sewer are dual type, in room 10/11 they are underwater mines,
-            /// in room 9 there are ceiling hanging mines
-            /// right now, actorizer cannot handle them properly in this form (we get water types in the air or air types in the water)
-            /// we need to split into two separate actors and two separate objects
-            /// turning the ceiling mines into fake skulltula (ceiling type) and changing the object in that room to match
-
-            var sewerScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PiratesFortressRooms.FileID());
-            var actors = sewerScene.Maps[9].Actors;
-
-            foreach (var actor in actors)
-            {
-                if (actor.ActorEnum == GameObjects.Actor.SpikedMine)
-                {
-                    actor.ChangeActor(GameObjects.Actor.SkulltulaDummy, 0, modifyOld: true);
-                    actor.OldName = actor.Name = "HangingMine";
-                }
-            }
-
-            sewerScene.Maps[9].Objects[5] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
         }
 
         private static void SwapSwampSpiderhouseRock()
@@ -2555,6 +2582,7 @@ namespace MMR.Randomizer.Enemizer
                 SwapPiratesFortressBgBreakwall();
                 SwapShopActors();
                 SplitPirateSewerMines();
+                ReplaceSewerTaruObject();
                 SwapSwampSpiderhouseRock();
                 EnableSethSwampSpiderhouse();
                 RepositionClockTownActors();
@@ -2604,7 +2632,7 @@ namespace MMR.Randomizer.Enemizer
             FixDekuPalaceReceptionGuards();
             FixSwordSchoolPotRandomization();
             SplitSnowheadTempleBo();
-            AddExtraObjectToPiratesInterior(ACTORSENABLED, rng);
+            AddExtraObjectToPiratesCourtyard(ACTORSENABLED, rng);
             ExpandGoronShineObjects();
             ExpandGoronRaceObjects();
             FixWoodfallTempleGekkoMiniboss();

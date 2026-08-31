@@ -270,8 +270,11 @@ namespace MMR.Randomizer.Enemizer
             }
         }
 
-        private static void PrepareJunkRedRupee()
+        private static void PrepareJunkRedRupee(LogicMode logic)
         {
+            // if vanilla itemlist is null
+            if (logic == LogicMode.Vanilla) return;
+
             var redRupees = _randomizedResult.ItemList.FindAll(itemObj => itemObj.Item.ItemCategory() == GameObjects.ItemCategory.RedRupees).Select(itemObj => itemObj.Item).ToList();
             redRupees.Remove(GameObjects.Item.CollectableIkanaGraveyardDay2Bats1);
             ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.RedRupees].AddRange(redRupees);
@@ -332,7 +335,7 @@ namespace MMR.Randomizer.Enemizer
             }
 
             PrepareJunkHeartPieces(); // no-logic only
-            PrepareJunkRedRupee(); // crimson rupee counts as junk in IsJunk(), and thats stupid and not fair, dedicated function to work around
+            PrepareJunkRedRupee(_randomizedResult.Settings.LogicMode); // crimson rupee counts as junk in IsJunk(), and thats stupid and not fair, dedicated function to work around
             PrepareJunkScoopList(allSphereItems);
             PrepareJunkNotebookEntries(allSphereItems);
             // bug: because these lists are generated in linear, fairies dont know if spiders are junk
