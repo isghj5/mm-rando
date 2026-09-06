@@ -408,6 +408,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.WoodfallTempleWoodenFlower, // can void warp the player on entrance
             Actor.ClocktowerGearsAndOrgan)] // can block the player into the wall
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.WoodenBarrel,
+            Actor.DekuFlower, // can block the item under the barrel visually
             Actor.Mimi, Actor.TreasureChest)] // can block the player into the wall
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ZoraEgg,
             Actor.Evan)] // can block the treasurechest
