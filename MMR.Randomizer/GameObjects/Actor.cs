@@ -7052,6 +7052,7 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(0x100)]
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 0)]
         [BlockingVariantsAll]
+        [UnkillableAllVariants]
         [RemovalChance(3)]
         [PlacementWeight(10)]
         Bg_Haka_Bombwall = 0x258, // Bg_Haka_Bombwall
@@ -7699,7 +7700,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 7, 0x0, 0x1)]
         [UnkillableAllVariants]
         [PlacementWeight(30)]
-        Milkjar = 0x28B, // Obj_Milk_Bin // tag:bottle
+        Milkjar = 0x28B, // Obj_Milk_Bin // tag:bottle, jug
 
         // spawned by the grass itself, no point actorizing as it dissapears if the player is not wearing the mask I think
         [FileID(611)]
@@ -7716,6 +7717,7 @@ namespace MMR.Randomizer.GameObjects
         [RemovalChance(3)] // rare proc
         [PlacementWeight(10)]
         [BlockingVariantsAll]
+        [UnkillableAllVariants]
         AstralSewerBombWall = 0x28D, // Bg_Astr_Bombwall
 
         [FileID(613)]
