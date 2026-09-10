@@ -46,6 +46,7 @@ namespace MMR.Randomizer.Models.Rom
         public int ActorSize; // todo
         public int ObjectSize; // read by enemizer at scene actor reading
         public (int poly, int vert) DynaLoad =  (0, 0);  // dyna load per actor, can be overwritten by injected actor
+        public (int size, int shift, SwitchTrigger flagType, SwitchFlagStorage storage)? SwitchFlags = null;
         public int Room;           // the room the actor is in in the scene
         public int RoomActorIndex; // the actor index of the room the actor is in
         public vec16 Position = new vec16();
@@ -97,6 +98,25 @@ namespace MMR.Randomizer.Models.Rom
                 this.DynaLoad.vert = dynaProperties.Verticies;
             }
 
+            var switchFlagsAttr = actor.GetAttribute<SwitchFlagsPlacementAttribute>();
+            if (switchFlagsAttr != null && switchFlagsAttr.flagType != SwitchTrigger.DoNotUse)
+            {
+                var storage = SwitchFlagStorage.Params;
+                if (actor.GetAttribute<SwitchFlagsPlacementZRotAttribute>() != null)
+                    storage = SwitchFlagStorage.ZRotation;
+                else if (actor.GetAttribute<SwitchFlagsPlacementXRotAttribute>() != null)
+                    storage = SwitchFlagStorage.XRotation;
+                this.SwitchFlags = (switchFlagsAttr.Size, switchFlagsAttr.Shift, switchFlagsAttr.flagType, storage);
+            }
+            else if (actor.GetAttribute<SwitchFlagsPlacementXRotAttribute>() != null)
+            {
+                this.SwitchFlags = (0x7F, 7, SwitchTrigger.Death, SwitchFlagStorage.XRotation);
+            }
+            else if (actor.GetAttribute<SwitchFlagsPlacementZRotAttribute>() != null)
+            {
+                this.SwitchFlags = (0x7F, 7, SwitchTrigger.Death, SwitchFlagStorage.ZRotation);
+            }
+
             // missing injected actor stuff
             if (injectedData != null)
                 this.UpdateActor(injectedData);
@@ -133,7 +153,12 @@ namespace MMR.Randomizer.Models.Rom
             this.UnplaceableVariants = this.ActorEnum.GetUnPlacableVariants();
             this.OnlyOnePerRoom = injected.onlyOnePerRoom;
             this.InjectedActor = injected;
-            
+
+            if (injected.SwitchFlags.size != -1)
+            {
+                this.SwitchFlags = (injected.SwitchFlags.size, injected.SwitchFlags.shift, injected.SwitchFlags.flagType, SwitchFlagStorage.Params);
+            }
+
             var dynaProperties = this.ActorEnum.GetAttribute<DynaAttributes>();
             if (dynaProperties != null)
             {
@@ -141,6 +166,7 @@ namespace MMR.Randomizer.Models.Rom
                 this.DynaLoad.vert = dynaProperties.Verticies;
             }
 
+            // todo does this need to be here or can we do the same thing we did for switch flags?
             if (injected.DynaLoad.poly != -1) // custom new dyna
             {
                 this.DynaLoad.poly = injected.DynaLoad.poly;
@@ -149,7 +175,6 @@ namespace MMR.Randomizer.Models.Rom
             {
                 this.DynaLoad.vert = injected.DynaLoad.vert;
             }
-
         }
 
         public static List<List<int>> BuildVariantList(GameObjects.Actor actor)
@@ -240,6 +265,7 @@ namespace MMR.Randomizer.Models.Rom
             newActor.UnplaceableVariants = this.UnplaceableVariants;
 
             newActor.DynaLoad = this.DynaLoad;
+            newActor.SwitchFlags = this.SwitchFlags;
 
             return newActor;
         }
@@ -334,6 +360,7 @@ namespace MMR.Randomizer.Models.Rom
             if (otherActor.InjectedActor != null)
                 this.UpdateActor(otherActor.InjectedActor);
 
+            this.SwitchFlags = otherActor.SwitchFlags;
             this.VariantsWithRoomMax = otherActor.VariantsWithRoomMax.ToList();
         }
 
@@ -368,6 +395,11 @@ namespace MMR.Randomizer.Models.Rom
             if (injectedActor.DynaLoad.vert != -1)
             {
                 this.DynaLoad.vert = injectedActor.DynaLoad.vert;
+            }
+
+            if (injectedActor.SwitchFlags.size != -1)
+            {
+                this.SwitchFlags = (injectedActor.SwitchFlags.size, injectedActor.SwitchFlags.shift, injectedActor.SwitchFlags.flagType, SwitchFlagStorage.Params);
             }
 
             void AddToSpecificSubtype(ActorType type, List<int> newList)

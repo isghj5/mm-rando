@@ -33,6 +33,7 @@ namespace MMR.Randomizer.Enemizer
         public int fileID = 0;
         public int ObjectFid = 0;
         public (int poly, int vert) DynaLoad = (-1, -1); // Does the actor use the dyna system, which is a limited buffer size we cannot overflow
+        public (int size, int shift, SwitchTrigger flagType) SwitchFlags = (-1, -1, SwitchTrigger.Sends); // Does the actor use switch flags in the params
 
         // if all new actor, we meed to know where the old vram start was when we shift VRAM for the actor
         public uint buildVramStart = 0;
@@ -176,6 +177,19 @@ namespace MMR.Randomizer.Enemizer
                     newInjectedActor.DynaLoad.vert = Convert.ToInt32(newDynaValuePair[1].Trim(), intBase);
                     continue;
                 }
+                if (command == "switch_flags")
+                {
+                    var switchFlagData = valueStr.Split(",").ToList();
+                    newInjectedActor.SwitchFlags.size = Convert.ToInt32(switchFlagData[0].Trim(), 16);
+                    newInjectedActor.SwitchFlags.shift = Convert.ToInt32(switchFlagData[1].Trim(), 10);
+                    if (switchFlagData.Count > 2)
+                    {
+                        newInjectedActor.SwitchFlags.flagType = (SwitchTrigger)Convert.ToInt32(switchFlagData[2].Trim(), 10);
+                    }
+
+                    continue;
+                }
+
 
                 // Single DEC input
                 var value = Convert.ToInt32(valueStr, fromBase: 16);
@@ -365,19 +379,12 @@ namespace MMR.Randomizer.Enemizer
 
                             // we have to add the changes to our list of actors we are going to use in enemizer/actorizer
                             // behavior now differs between replacement actors and brand new
-                            var replacementEnemySearch = Enemies.ReplacementCandidateList.Find(act => act.ActorId == injectedActor.ActorId);
+                            var replacementEnemySearch = Enemies.ReplacementCandidateList.Find(act =>   act.ActorId == injectedActor.ActorId);
                             //var replacementListSearch = Enum.GetValues(typeof(ActorEnum)).Cast<ActorEnum>().ToList().Find(act => (int) act == injectedActor.ActorId);
-                            if (replacementEnemySearch != null) // previous actor
+                            if (injectedActor.ActorId != 0x0 && replacementEnemySearch != null) // previous actor
                             {
                                 replacementEnemySearch.UpdateActor(injectedActor);
                             }
-                            //else (injectedActor.)
-                            /* else if (injectedActor.fileID != 0)
-                            {
-                                // sometimes we want to inject an actor that wont be used by actorizer/enemizer,
-                                // so it wont be in the list above, but its not marked as a new actor either
-                                replacementEnemySearch = null;
-                            } // */
                             else
                             {
                                 replacementEnemySearch = new ActorInst(injectedActor, Path.GetFileName(filePath));

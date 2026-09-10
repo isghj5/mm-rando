@@ -432,20 +432,20 @@ namespace MMR.Randomizer
                                 #endif
 
                                 log.AppendLine($" in scene [{scene.SceneEnum}]m[{mapIndex}]r[{mapActor.RoomActorIndex}]v[{mapActor.OldVariant.ToString("X4")}]" +
-                                    $" actor: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}] was " + itemText);
+                                    $" actor: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.Name}] was " + itemText);
                                 continue;
                             }
 
                             if ( ! matchingStandaloneActor.SortedVariants.Any(subArray => subArray.Contains(mapActor.OldVariant)))
                             {
-                                log.AppendLine($" in scene [{scene.SceneEnum}][{mapIndex}] standalone was skipped over: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}]");
+                                log.AppendLine($" in scene [{scene.SceneEnum}][{mapIndex}] standalone was skipped over: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.Name}]");
                                 continue; // non valid
                             }
 
                             var replacementChance = matchingStandaloneActor.GetRemovalChance();
                             if (randomRoll > replacementChance)
                             {
-                                log.AppendLine($" in scene [{scene.SceneEnum}][{mapIndex}] standalone was randomly ignored: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.ActorEnum}]");
+                                log.AppendLine($" in scene [{scene.SceneEnum}][{mapIndex}] standalone was randomly ignored: [0x{mapActor.OldVariant.ToString("X4")}][{mapActor.Name}]");
                                 continue; // blocked by roll
                             }
 
@@ -1746,11 +1746,11 @@ namespace MMR.Randomizer
             for (int i = thisSceneData.Actors.Count - 1; i >= 0; i--) // reverse should let us use remoteat which should be faster
             {
                 var actor = thisSceneData.Actors[i];
-                var attr = actor.ActorEnum.GetAttribute<SwitchFlagsPlacementAttribute>();
-                if (attr == null)
+                if (actor.SwitchFlags == null)
                 {
                     actorsWithSwitchFlags.RemoveAt(i);
-                } else if (attr.flagType == SwitchTrigger.Sends || attr.flagType == SwitchTrigger.SendsAndRecieves)
+                }
+                else if (actor.SwitchFlags.Value.flagType == SwitchTrigger.Sends || actor.SwitchFlags.Value.flagType == SwitchTrigger.SendsAndRecieves)
                 {
                     actorsWithSendFlags.Add(actor);
                 }
@@ -1802,18 +1802,16 @@ namespace MMR.Randomizer
             List<(ActorInst act, int flag)> recievesList = new List<(ActorInst act, int flag)> { };
             for (int actorIndex = 0; actorIndex < actorsWithSwitchFlags.Count; actorIndex++) {
                 var actor = actorsWithSwitchFlags[actorIndex];
-                var attr = actor.ActorEnum.GetAttribute<SwitchFlagsPlacementAttribute>();
                 var thisRoomHiddenChestFlag = switchChestFlags[actor.Room];
                 if (thisRoomHiddenChestFlag != -1) { continue; } // chest takes priority
 
-                    // have to have attribute by here, its not null, I'm not checking for cosmic radiation damage
-                if (attr.flagType == SwitchTrigger.Receives || attr.flagType == SwitchTrigger.SendsAndRecieves)
+                if (actor.SwitchFlags.Value.flagType == SwitchTrigger.Receives || actor.SwitchFlags.Value.flagType == SwitchTrigger.SendsAndRecieves)
                 {
                     var newSwitch = usableSwitches[0];
 
                     ActorUtils.SetActorSwitchFlags(actor, (short)newSwitch);
                     usableSwitches.RemoveAt(0);
-                    log.AppendLine($" ++ i[{actorIndex}][{actor.ActorEnum}] had recieve flag modified to [{newSwitch}] ++");
+                    log.AppendLine($" ++ i[{actorIndex}][{actor.Name}] had recieve flag modified to [{newSwitch}] ++");
 
                     recievesList.Add((actor, newSwitch));
                     actorsWithSwitchFlags.Remove(actor);
@@ -1823,7 +1821,6 @@ namespace MMR.Randomizer
             for (int actorIndex = 0; actorIndex < actorsWithSwitchFlags.Count; actorIndex++)
             {
                 var actor = actorsWithSwitchFlags[actorIndex];
-                var switchFlagsAttr = actor.ActorEnum.GetAttribute<SwitchFlagsPlacementAttribute>();
                 var switchFlags = ActorUtils.GetActorSwitchFlags(actor, (short)actor.Variants[0]);
 
                 if (usableSwitches.Count == 0) // we ran out, recreate list
@@ -1831,22 +1828,23 @@ namespace MMR.Randomizer
                     CreateUsableSwitchesList();
                 }
 
-                if (switchFlagsAttr.flagType == SwitchTrigger.Sends || switchFlagsAttr.flagType == SwitchTrigger.SendsAndRecieves) {
+                if (actor.SwitchFlags.Value.flagType == SwitchTrigger.Sends || actor.SwitchFlags.Value.flagType == SwitchTrigger.SendsAndRecieves)
+                {
                     var thisRoomHiddenChestFlag = switchChestFlags[actor.Room];
-                    if (thisRoomHiddenChestFlag != -1) 
+                    if (thisRoomHiddenChestFlag != -1)
                     {
                         // if there is a chest we want all switches to activate,
                         // because its rare and we dont want the player to miss it because only one switch activates it
                         ActorUtils.SetActorSwitchFlags(actor, (short)thisRoomHiddenChestFlag);
-                        log.AppendLine($" ++ Chest trigger actor set: [{actor.ActorEnum}]r[{actor.Room}]v[{actor.Variants[0].ToString("X4")}], at spawn [{actor.RoomActorIndex}] ++");
+                        log.AppendLine($" ++ Chest trigger actor set: [{actor.Name}]r[{actor.Room}]v[{actor.Variants[0].ToString("X4")}], at spawn [{actor.RoomActorIndex}] ++");
                         continue;
                     }
                     else if (recievesList.Count() > 0) // other receive flag actors exist, yes I know this should be merged, but chest is important
                     {
                         var randomRecieveSwitchFlagActor = recievesList[thisSceneData.RNG.Next(recievesList.Count())];
                         ActorUtils.SetActorSwitchFlags(actor, (short) randomRecieveSwitchFlagActor.flag);
-                        log.AppendLine($" ++ Send trigger actor set: [{actor.ActorEnum}]r[{actor.Room}]v[{actor.Variants[0].ToString("X4")}], at spawn [{actor.RoomActorIndex}] ++");
-                        log.AppendLine($"   ++ to target actor : [{randomRecieveSwitchFlagActor.act.ActorEnum}]r[{randomRecieveSwitchFlagActor.act.Room}]v[{randomRecieveSwitchFlagActor.act.Variants[0].ToString("X4")}], at spawn [{randomRecieveSwitchFlagActor.act.RoomActorIndex}] ++");
+                        log.AppendLine($" ++ Send trigger actor set: [{actor.Name}]r[{actor.Room}]v[{actor.Variants[0].ToString("X4")}], at spawn [{actor.RoomActorIndex}] ++");
+                        log.AppendLine($"   ++ to target actor : [{randomRecieveSwitchFlagActor.act.Name}]r[{randomRecieveSwitchFlagActor.act.Room}]v[{randomRecieveSwitchFlagActor.act.Variants[0].ToString("X4")}], at spawn [{randomRecieveSwitchFlagActor.act.RoomActorIndex}] ++");
                         continue;
                     }
                 }
@@ -1854,14 +1852,14 @@ namespace MMR.Randomizer
                 if (usableSwitches.Contains(switchFlags)) // not detected in vanilla, leave as is and claim
                 {
                     usableSwitches.Remove(switchFlags);
-                    log.AppendLine($" = i[{actor.RoomActorIndex}][{actor.ActorEnum}] had switch flags which were not detect as used, and claimed switch [{switchFlags}]=");
+                    log.AppendLine($" = i[{actor.RoomActorIndex}][{actor.Name}] had switch flags which were not detect as used, and claimed switch [{switchFlags}]=");
                 }
                 else // we have switch flag and we have a collision, we need to change it
                 {
                     var newSwitch = usableSwitches[0];
                     ActorUtils.SetActorSwitchFlags(actor, (short) newSwitch);
                     usableSwitches.RemoveAt(0);
-                    log.AppendLine($" + i[{actor.RoomActorIndex}][{actor.ActorEnum}] had switch flags modified to [{newSwitch}] to avoid conflicts with others +");
+                    log.AppendLine($" + i[{actor.RoomActorIndex}][{actor.Name}] had switch flags modified to [{newSwitch}] +");
                 }
             }
         }
@@ -1912,7 +1910,7 @@ namespace MMR.Randomizer
                 if (usableTreasureFlags.Contains(treasureFlags))
                 {
                     usableTreasureFlags.Remove(treasureFlags);
-                    log.AppendLine($" +++ [{actor.RoomActorIndex}][{actor.ActorEnum}] had treasure flags that didn't collide, leaving alone with switch [{treasureFlags}] +++");
+                    log.AppendLine($" +++ [{actor.RoomActorIndex}][{actor.Name}] had treasure flags that didn't collide, leaving alone with switch [{treasureFlags}] +++");
 
                 }
                 else // we have switch flag and we have a collision, we need to change it
@@ -1920,7 +1918,7 @@ namespace MMR.Randomizer
                     var newSwitch = usableTreasureFlags[0];
                     ActorUtils.SetActorTreasureFlags(actor, (short)newSwitch);
                     usableTreasureFlags.Remove(newSwitch);
-                    log.AppendLine($" +++ [{actor.RoomActorIndex}][{actor.ActorEnum}] had treasure flags modified to [{newSwitch}] +++");
+                    log.AppendLine($" +++ [{actor.RoomActorIndex}][{actor.Name}] had treasure flags modified to [{newSwitch}] +++");
                 }
             }
         }

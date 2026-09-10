@@ -11,6 +11,13 @@ namespace MMR.Randomizer.Attributes.Actor
         Death
     }
 
+    public enum SwitchFlagStorage
+    {
+        Params,
+        XRotation,
+        ZRotation
+    }
+
     /// <summary>
     ///  Placement of Switch flags (0x80) in an Actor's X Rotation
     /// </summary>
