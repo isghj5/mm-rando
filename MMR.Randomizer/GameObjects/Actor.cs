@@ -3391,7 +3391,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x2243)]
         Garo = 0x113, // En_Jso
 
-        [ActorizerEnabled] // unused callaping bridge
+        // tag: chocolate
+        [ActorizerEnabled] // unused collapsing bridge
         [FileID(249)]
         [ObjectListIndex(Object.DLift)]
         [DynaAttributes(12, 8)]
@@ -3402,7 +3403,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(
             Scene.HoneyDarling, // crush loop
             Scene.TradingPost)]  // might block door?
-        [PlacementWeight(40)] // waaay too common
+        [PlacementWeight(15)] // waaay too common
         UnusedFallingBridge = 0x114, // Obj_Chikuwa
 
         // TODO would not spawn because I mistyped the ID try again
