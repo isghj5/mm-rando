@@ -58,6 +58,9 @@ namespace MMR.Randomizer.Enemizer
         // should only be stored here if new actor
         public byte[] overlayBin;
         public uint overlayBinLen;
+        // object binary data for object injection
+        public byte[] objectBin;
+        public uint objectBinLen;
         public string filename = ""; // debugging
         public bool isNewActor = false;
     }
@@ -277,11 +280,7 @@ namespace MMR.Randomizer.Enemizer
             // if actorizer is off, we need to not read any of these
             if (settings.ActorMode == ActorMode.Default) return; // right now actorizer/enemizer is the only system that uses this
 
-            uint END_VANILLA_OBJ_SEGMENT = 0x01E5E600;
-
             Enemies.InjectedActors.Clear(); // from last gen
-            var codeFile = RomData.MMFileList[31].Data;
-            var objectTableOffset = 0x11CC80;
 
             foreach (string filePath in GenerateMMRAFileList(directory))
             {
@@ -349,30 +348,23 @@ namespace MMR.Randomizer.Enemizer
                             }
 
                             // we need to inject actors if we find them
-                            // TODO move this to a "load all objects" separate function where we rank them by size
-                            // so we can re-use some old spots instead of just extending
-                            // NOTE: this does not work
-                            /* var objectFileEntry = zip.GetEntry(filename + ".object");
+                            // check for an associated object file to inject
+                            var objectFileEntry = zip.GetEntry(filename + ".object");
                             if (objectFileEntry != null) // object included
                             {
-                                newBinLen = ((int)objectFileEntry.Length) + ((int)objectFileEntry.Length % 0x10); // dma padding
-                                var objectData = new byte[newBinLen];
+                                var objectData = new byte[objectFileEntry.Length];
                                 objectFileEntry.Open().Read(objectData, 0, objectData.Length);
 
-                                RomData.MMFileList[injectedActor.ObjectFid].Data = objectData;
-                                RomData.MMFileList[injectedActor.ObjectFid].WasEdited = true;
+                                injectedActor.objectBin = objectData;
+                                injectedActor.objectBinLen = (uint)objectData.Length;
 
-                                // we need to update the object table with the size of the new object
-                                uint newSegmentROMStart = END_VANILLA_OBJ_SEGMENT;
-                                uint newSegmentROMEnd = newSegmentROMStart + (uint) objectData.Length;
-                                if (newSegmentROMEnd > 0x02000000)
+                                if (injectedActor.ObjectId == 0)
                                 {
-                                    throw new Exception("Object segment overflow, reduce your actors that use custom objects");
+                                    throw new Exception($"Object file found for [{binFile.Name}] but obj_id is not set in the meta file.");
                                 }
-                                END_VANILLA_OBJ_SEGMENT = newSegmentROMEnd;
-                                ReadWriteUtils.Arr_WriteU32(codeFile, (objectTableOffset + (2 * 4 * injectedActor.ObjectId)), newSegmentROMStart);
-                                ReadWriteUtils.Arr_WriteU32(codeFile, (objectTableOffset + (2 * 4 * injectedActor.ObjectId + 4)), newSegmentROMEnd);
-                            } // */
+
+                                ObjUtils.InsertObj(objectData, injectedActor.ObjectId);
+                            }
 
 
                             Enemies.InjectedActors.Add(injectedActor);
