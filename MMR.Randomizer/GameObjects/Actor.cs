@@ -142,11 +142,11 @@ namespace MMR.Randomizer.GameObjects
         // these three are from inverted stone tower, however when placed in TF, 2/3 were invisible chests
         // switch flags are on z rotation
         // type: 0x7 seems to be enemy clear, also type 1, 0x5 is woodentype, 0xC is switch activated
-        // 0xF000 is type, 0x001F are chest flags, 0x0FE0 would be the item then
+        // 0xF000 is type, 0x001F are chest flags, 0x0FE0 would be the item then, switch flags on Z rot
         // Zoey changed how typ works, its now two separate nibles:
         // ss aa
-        // size: 0 small wooden, 1 small gold, 2 large gold, 3 boss key
-        // appearance; 0 always present, 1 invisible, 2 appears when room is clear, 3 appears when switch is set
+        // size: 00 small wooden, 01 small gold, 10 large gold, 11 boss key
+        // appearance; 0 always present, 01 invisible, 10 appears when room is clear, 11 appears when switch is set
         // 5 becomes small gold hidden, 
         [GroundVariants(0x57BE, 0x59DD, 0x56BF,  0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, //0x5A1E,
@@ -850,6 +850,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [BlockingVariantsAll]
         // cannot put in dungeons, requires field keep
+        // todo are we sure all of them require fieldkeep?
         [EnemizerScenesPlacementBlock(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.IkanaCastle, Scene.PiratesFortress, Scene.PiratesFortressRooms, Scene.PiratesFortressExterior, Scene.PoeHut, Scene.MarineLab, Scene.GoronRacetrack,
           Scene.DekuTrial, Scene.GoronTrial, Scene.ZoraTrial, Scene.LinkTrial, Scene.SecretShrine,
           Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
@@ -3773,7 +3774,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [CreditsBlockedAllVariants] // too big
         [EnemizerScenesPlacementBlock(Scene.WoodsOfMystery, Scene.DekuPalace,
-            Scene.StockPotInn,
+            Scene.StockPotInn, Scene.RanchBuildings,
             Scene.DekuPlayground,
             Scene.Grottos
         )]
@@ -7397,6 +7398,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(586)]
         [ObjectListIndex(Object.IkanaObj)]
         [DynaAttributes(22,16)] // PER SEGMENT, we re-calculate before dyna test
+        // params: switch flags and block count tall
         // 0xF is segment count -1
         [GroundVariants(
             0x550A, // taaaalll
@@ -7407,7 +7409,9 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 3, variant: 0x4404)]
         [VariantsWithRoomMax(max: 1, variant: 0x550A)]
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 8)]
-        [ForbidFromScene(Scene.StoneTowerTemple)]
+        [ForbidFromScene(Scene.StoneTowerTemple)] // dont remove from vanilla location, do we need 
+        [AlignedCompanionActor(TreasureChest, CompanionAlignment.Above, ourVariant: -1, variant: -1)]
+        //[AlignedCompanionActor(DekuFlower, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x017F)]
         [BlockingVariantsAll]
         [UnkillableAllVariants]
         [PlacementWeight(50)]
