@@ -496,9 +496,12 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // too close to grotto
             Actor.Dexihand)] // if it grabs you as you fall into a grotto hole it can hardlock
         [EnemizerSceneEnemyReplacementBlock(Actor.Monkey,
+            Actor.RegularIceBlock, // large one can block the door
             Actor.PalaceGuardDeku)] // if placed behind regular guards, they will pop up to look at you and the other guards will also rise
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BronzeBoulder,
             Actor.GrottoHole)] // third one in the west side can get exit blocked by teh floating platform
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.MadShrub,
+            Actor.ClocktowerGearsAndOrgan)] // third one in the west side can get exit blocked by teh floating platform
         [EnemizerSceneEnemyReplacementBlock(Actor.SquareSign,
             Actor.En_Ani, Actor.GaboraBlacksmith, Actor.BomberHideoutGuard, // their talk box is so big they can dialogue block the flower to go back to top of flowers
             Actor.Takaraya, Actor.Secretary, Actor.DekuKing, Actor.InjuredKoume, Actor.GoronElder, Actor.GoronKid, Actor.MadamAroma,
@@ -507,8 +510,9 @@ namespace MMR.Randomizer.GameObjects
         )]
         //[EnemizerSceneEnemyReplacementBlock(Actor.Bombiwa,
         //    Actor.ClocktowerGearsAndOrgan)] // likely dynacrash if other actors have them too
-        [EnemizerSceneBlockSensitive(Actor.Torch, -1)] // ? bean grotto?
-        [EnemizerSceneBlockSensitive(Actor.Monkey, -1)] // giant ice block, unused stone stuff at least
+        [EnemizerSceneBlockSensitive(Actor.Torch, -1)] // can block bean grotto
+        //[EnemizerSceneBlockSensitive(Actor.Monkey, -1)] // giant ice block, unused stone stuff at least
+        [EnemizerSceneBlockSensitive(Actor.MadShrub, -1)]
         DekuPalace = 0x28,
 
         [FileID(1308)]
