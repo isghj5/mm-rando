@@ -4544,7 +4544,7 @@ namespace MMR.Randomizer.GameObjects
         // TODO need to start removing these and start labeling them
         [ForbidFromScene(Scene.SouthernSwamp, Scene.Woodfall, Scene.DekuPalace, Scene.WoodfallTemple, Scene.OdolwasLair,
             Scene.GoronVillage, Scene.IkanaCanyon,
-            Scene.DekuPlayground, Scene.SwampSpiderHouse, Scene.DekuTrial,
+            Scene.DekuPlayground, Scene.SwampSpiderHouse, Scene.DekuTrial, Scene.BeforeThePortalToTermina,
             Scene.InvertedStoneTowerTemple, Scene.DekuPalace,
             Scene.StoneTowerTemple, Scene.GoronVillageSpring, Scene.GoronVillage,
             Scene.EastClockTown, Scene.IkanaCastle, Scene.SnowheadTemple)] // Scene.NorthClockTown, ???

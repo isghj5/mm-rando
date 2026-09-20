@@ -285,10 +285,11 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x19)]
         ClockTowerRoof = 0x16,
 
+        // tag: // preclocktown
         [FileID(1205)]
         [SceneInternalId(0x1A)]
         [ActorizerSceneCreditsActor(Actor.ButlersSon)]
-        BeforeThePortalToTermina = 0x17,
+        BeforeThePortalToTermina = 0x17, // Z2_OPENINGDAN
 
         [FileID(1208)]
         [SceneInternalId(0x1B)]
