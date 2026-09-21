@@ -351,18 +351,6 @@ namespace MMR.Randomizer.Utils
         public static byte[] BuildROM(OutputSettings settings)
         {
 
-            // debug todo remove
-            if (settings.OutputVC == false)// this doesnt include everdrive
-            {
-                foreach (var file in RomData.MMFileList)
-                {
-                    if (file.WasEdited)
-                    {
-                        file.IsCompressed = false;
-                    }
-                }
-            }
-
             CompressMMFiles();
 
             byte[] ROM = new byte[0x2000000];
