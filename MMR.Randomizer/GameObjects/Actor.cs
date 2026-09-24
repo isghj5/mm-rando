@@ -3706,6 +3706,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0xB78)]
         [CheckRestricted(Scene.MountainVillage, variant: 0x7F84, check: Item.MaskDonGero)] // share object with the sirloin goron
         [CheckRestricted(Scene.MountainVillage, variant: 0x7F94, check: Item.MaskDonGero)] // share object with the sirloin goron
+        [CheckRestricted(Scene.GoronVillageSpring, variant: 0x8, check: Item.ItemBottleGoronRace,
+           Item.CollectableGoronRacetrackPot1, Item.CollectableGoronRacetrackPot2, Item.CollectableGoronRacetrackPot3, Item.CollectableGoronRacetrackPot4, Item.CollectableGoronRacetrackPot5,Item.CollectableGoronRacetrackPot6, Item.CollectableGoronRacetrackPot7, Item.CollectableGoronRacetrackPot8, Item.CollectableGoronRacetrackPot9, Item.CollectableGoronRacetrackPot10, Item.CollectableGoronRacetrackPot11, Item.CollectableGoronRacetrackPot12, Item.CollectableGoronRacetrackPot13, Item.CollectableGoronRacetrackPot14, Item.CollectableGoronRacetrackPot15, Item.CollectableGoronRacetrackPot16, Item.CollectableGoronRacetrackPot17, Item.CollectableGoronRacetrackPot18, Item.CollectableGoronRacetrackPot19, Item.CollectableGoronRacetrackPot20, Item.CollectableGoronRacetrackPot21, Item.CollectableGoronRacetrackPot22, Item.CollectableGoronRacetrackPot23, Item.CollectableGoronRacetrackPot24, Item.CollectableGoronRacetrackPot25, Item.CollectableGoronRacetrackPot26, Item.CollectableGoronRacetrackPot27, Item.CollectableGoronRacetrackPot28, Item.CollectableGoronRacetrackPot29, Item.CollectableGoronRacetrackPot30,
+            Item.SongLullabyIntro, Item.ShopItemGoronArrow10, Item.ShopItemGoronBomb10, Item.ShopItemGoronRedPotion, Item.MaskDonGero // we can't guarentee you dont need the goron mask to get in
+        )]
         // 8 is smithy goron; blocked because he is too big
         // 7F85: standing outside of shop (complaining about noise)
         // racetrack gorons
@@ -3731,8 +3735,9 @@ namespace MMR.Randomizer.GameObjects
             0x283, // opens door winter, crashes day 2/3 because pathing type for snowball
             0x7F82, 0x7F92)] // crash? reason unknown
         [UnkillableAllVariants]
-        [ForbidFromScene(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy by accident
+        //[ForbidFromScene(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy by accident
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: -1, variant: 0xFF44, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
+        //[RemovalChance(5)] // because we want this only for keg goron, think this needs to be hardcoded
         GoGoron = 0x138, // En_Go
 
         Empty139 = 0x139,

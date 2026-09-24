@@ -1999,12 +1999,30 @@ namespace MMR.Randomizer
 
         private static void SetZerothAndFourthDayFlagsForAllActors(SceneEnemizerData thisSceneData)
         {
+            // developers left in fourth day but didn't set spawn for most actors, we want to make sure if there is a spawn that it works on fourth day
+            // todo consider moving this to scene modification
+
             for (int i = 0; i < thisSceneData.Actors.Count; i++){
                 var act = thisSceneData.Actors[i];
 
                 ActorUtils.SetActorSpawnTimeFor04Day(act);
             }
         }
+
+        private static void RandomChanceOfVisibleSecretGrotto(SceneEnemizerData thisSceneData)
+        {
+            // almost nobody finds jgrottos because they are secret, lets give them a rare proc
+
+            var newGrottos = thisSceneData.Actors.FindAll(act => act.ActorId == (int) ActorEnum.GrottoHole); // hidden grottos are type 2
+            var newInvisGrottos = newGrottos.FindAll(act =>((act.Variants[0] & 0x300) >> 8) == 2); // hidden grottos are type 2
+            if (newInvisGrottos.Count > 0 && thisSceneData.RNG.Next(100) <= 50) // rare proc is 3% until I get around to allowing users to change it
+            {
+                var selectionChoice = newInvisGrottos[thisSceneData.RNG.Next(newInvisGrottos.Count)];
+                selectionChoice.Variants[0] &= ~0x300; // remove type, turning it into regular grotto with 0xX0XX typing
+            }
+        }
+
+
 
         public static void ShuffleObjects(SceneEnemizerData thisSceneData)
         {
@@ -3456,11 +3474,12 @@ namespace MMR.Randomizer
             ForceWaterCeilingSpawnerInGBT(thisSceneData); // todo move to late fixes
             AddExtraOtherThingsIfEmpty(thisSceneData, flagLog);
             SetZerothAndFourthDayFlagsForAllActors(thisSceneData);
+            RandomChanceOfVisibleSecretGrotto(thisSceneData);
             // the following modify Variant which can confuse typing system
             FixPathingVars(thisSceneData); // any patrolling types need their vars fixed
             FixKickoutEnemyVars(thisSceneData); // and same with the two actors that have kickout addresses
             FixTreasureFlagVars(thisSceneData, flagLog);
-            FixSwitchFlagVars(thisSceneData, flagLog); // swapped to be even lower 86
+            FixSwitchFlagVars(thisSceneData, flagLog);
 
             // print debug actor locations
             WriteOutput("####################################################### ");
@@ -3544,7 +3563,7 @@ namespace MMR.Randomizer
                 ActorInjection.ScanForMMRA(directory: "actors", _randomized.Settings);
                 using (StreamWriter log = new StreamWriter(_outputSettings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
-                    log.Write("Enemizer version: Isghj's Actorizer Test 100.0\n");
+                    log.Write("Enemizer version: Isghj's Actorizer Test 100.1\n");
                     log.Write("seed: [ " + seed + " ]\n");
 
                     ActorInjection.InjectNewActors(_seedRNG, log);
@@ -3592,7 +3611,7 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write(_syncedLog.ToString());
-                    sw.Write("Enemizer version: Isghj's Actorizer Test 100.0\n");
+                    sw.Write("Enemizer version: Isghj's Actorizer Test 100.1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
