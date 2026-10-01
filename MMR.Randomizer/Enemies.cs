@@ -835,7 +835,7 @@ namespace MMR.Randomizer
             var sceneSkipList = new List<int> { (int)GameObjects.Scene.ClockTowerRoof, (int)GameObjects.Scene.SwordsmansSchool };
 
             var witchShopScene = RomData.SceneList.Find(s => s.SceneEnum == GameObjects.Scene.PotionShop);
-            if (witchShopScene.Maps[0].Actors[0].ActorEnum == ActorEnum.ShopKeepKotake)
+            if (witchShopScene != null && witchShopScene.Maps[0].Actors[0].ActorEnum == ActorEnum.ShopKeepKotake)
             {
                 // if the player gives bottle as FD it can overwrite ocarina
                 sceneSkipList.Add((int)GameObjects.Scene.PotionShop);
@@ -844,6 +844,7 @@ namespace MMR.Randomizer
             /// player item restrictions is a unique list in the code file (z_parameter)
             //var restrictionTableVRAMStart = 0x801BF6C0; // 0xC55C00 -> DC4 // offset: 119C00
             var tableOffset = 0x119C00;
+            RomUtils.CheckCompressed(31); // webui sometimes throws index out of bounds error, assumed issue is codefile is still not decompressed
             var codeFile = RomData.MMFileList[31].Data;
             while (tableOffset < 0x119DC4)
             {
