@@ -269,13 +269,14 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.DeathArmos, -1)] // can block the maze
         [ClearEnemyPuzzleRooms(4)] // wizrobe room is a clear all room
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Poe,
-           Actor.Bo)] // they just fall down to the "floor" and its awkward
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator,
+            Actor.Bo)] // they just fall down to the "floor" and its awkward
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DeathArmos,
             Actor.PatrollingPirate)] // casual, causes a need for stone mask to procede through the temple
         //[EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.CeilingSpawner,
         //   Actor.Shabom)] // can clip through the ceiling becoming impossible to attack
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ClayPot, // these are up above the area when fighing lava ceiling wizrobe
-           Actor.Poe, Actor.Armos,
+            Actor.Poe, Actor.Armos,
             //Actor.Freezard, Actor.Deatharmos, // loud enough you can aleast know they are there
             Actor.DekuBaba, Actor.DeathArmos, Actor.Beamos,
             Actor.Bo, Actor.ChuChu, Actor.Leever)] // don't automatically agro, so its hard to reach them
