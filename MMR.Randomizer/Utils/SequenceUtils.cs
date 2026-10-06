@@ -53,6 +53,8 @@ namespace MMR.Randomizer.Utils
 
         public static MD5 md5lib; // used for zip
 
+        public static bool muteMusic = false; // can't access cosmetic settings in RomUtils
+
 
         public static void ResetBudget()
         {
@@ -1689,7 +1691,7 @@ namespace MMR.Randomizer.Utils
             ///   since we cannot know where those samples are on the rom until A) the soundbank is written, and B) the sample file is written
             ///   because the pointer is an offset of the soundbank rom location, and both can shift in BuildRom()
 
-            if (RomData.InstrumentSetList == null)
+            if (RomData.InstrumentSetList == null || SequenceUtils.muteMusic)
             {
                 return;
             }

@@ -195,8 +195,12 @@ namespace MMR.Randomizer
             if (_cosmeticSettings.Music == Music.None)
             {
                 /// mute all music by setting their master volume to zero
+
+                SequenceUtils.muteMusic = true;
+
                 // Traverse the audioseq index table to get the locations of all sequences
                 // the audioseq index table is not its own file, its buried within the code file, we need the offset to the table
+
                 var codeFile = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.SeqTable)];
                 var audioseqIndexTable = codeFile.Data;
                 int audioseqIndexTableAddr = Addresses.SeqTable - codeFile.Addr;
