@@ -2410,7 +2410,7 @@ namespace MMR.Randomizer.GameObjects
         [PerchingVariants(0xF18B, // southern swamp // and clear swamp??? he was there??
             0xF000,
             0xF180,
-            0x2102, 0x1102, 0x0102)] // three different days of goron village
+            0x2102, 0x1102, 0x0102)] // three different days of goron village for three separate paths to drop feathers
         // type: 1 is unused monkey text, broken, 3 is soaring hint, 2 is lens cave, 30 is falling feathers I think
         [GroundVariants(0xF180, // soaring hint version, works without path sweet
             0xF000)] // just sits there and stares at you, neat
@@ -3710,12 +3710,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0xB78)]
         [CheckRestricted(Scene.MountainVillage, variant: 0x7F84, check: Item.MaskDonGero)] // share object with the sirloin goron
         [CheckRestricted(Scene.MountainVillage, variant: 0x7F94, check: Item.MaskDonGero)] // share object with the sirloin goron
-        [CheckRestricted(Scene.GoronVillageSpring, variant: 0x8, check:
-            Item.SongLullabyIntro, Item.ShopItemGoronArrow10, Item.ShopItemGoronBomb10, Item.ShopItemGoronRedPotion, Item.MaskDonGero // we can't guarentee you dont need the goron mask to get in
+        [CheckRestricted(Scene.GoronVillage, variant: 0x283, check:
+            Item.SongLullabyIntro, Item.MaskDonGero // we can't guarentee you dont need the goron mask to get in
         )]
-        [CheckRestricted(Scene.GoronVillage, variant: 0x8, check:
-            Item.SongLullabyIntro, Item.ShopItemGoronArrow10, Item.ShopItemGoronBomb10, Item.ShopItemGoronRedPotion, Item.MaskDonGero // we can't guarentee you dont need the goron mask to get in
-        )]
+        [GatesEntrance(Item.InteriorGoronShop, 0x283)]
         [GatesEntrance(Item.InteriorGoronRacetrack, 0x8)]
         // 8 is smithy goron; blocked because he is too big
         // 7F85: standing outside of shop (complaining about noise)
@@ -3745,7 +3743,7 @@ namespace MMR.Randomizer.GameObjects
         //[ForbidFromScene(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy by accident
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: -1, variant: 0xFF44, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         //[RemovalChance(5)] // because we want this only for keg goron, think this needs to be hardcoded
-        GoGoron = 0x138, // En_Go, tag: gorongo
+        GoGoron = 0x138, // En_Go, tag: GoronGo
 
         Empty139 = 0x139,
 

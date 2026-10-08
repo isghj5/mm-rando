@@ -898,12 +898,26 @@ namespace MMR.Randomizer.Enemizer
             var mountainVillageScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MountainVillage.FileID());
             mountainVillageScene.Maps[0].Objects[8] = GameObjects.Actor.LargeSnowball.ObjectIndex(); // wolfos
 
-            // goron village
+            // vanilla goron village winter objects:
+            // 0: goron, 1:owl, 2: floating blue platforms
+            // 3: shrine door, 4: snowball, 5: darmani ghost
+            // 6: scrub, 7:square signpost, 8:heart piece
+            // 9: scarecrow, 10: wooden crate, 11:tektite
+
+            // goron village  
             var goronVillageScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GoronVillage.FileID());
             // this is a test, not sure if we can really do this
             goronVillageScene.Maps[0].Objects[8] = GameObjects.Actor.LargeSnowball.ObjectIndex(); // previously heart piece
             goronVillageScene.Maps[1].Objects[8] = GameObjects.Actor.LargeSnowball.ObjectIndex(); // previously heart piece (bigsmoth room, likey have to match
+
+            // we want to be able to separate the gorons for the keg and for opening the door too
+            // todo move this to a separate function
+
+            goronVillageScene.Maps[0].Objects[10] = GameObjects.Actor.GoGoron.ObjectIndex(); // previously wooden crate, which is only in room 1
+            goronVillageScene.Maps[1].Objects[11] = GameObjects.Actor.GoGoron.ObjectIndex(); // previously tektite, which is from snowballs, only in room 0
         }
+
+
 
         private static void RearangeSecretShrineObjects(bool ACTORSENABLED, Random rng)
         {
