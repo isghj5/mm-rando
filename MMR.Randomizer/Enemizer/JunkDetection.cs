@@ -286,33 +286,22 @@ namespace MMR.Randomizer.Enemizer
 
         private static void PrepareJunkMapAndCompass()
         {
-            // this does not work, without me knowing when they are junk or not TODO
-            /// if the player does not get hints from these, they should count as junk, but dont know if thats a setting I can look up
+            // shelved until I can get it working
+        }
 
-            if (_randomizedResult.Settings.LogicMode == LogicMode.Vanilla
-                || _randomizedResult.Settings.LogicMode == LogicMode.Casual)
-            {
-                return;
-            }
+        public static void PrepareJunkMilk(LogicMode logic, List<ItemLocationPair> allSphereItems)
+        {
+            /// milk is complicated, needs its own logic
+            
+            if (logic == LogicMode.NoLogic) return; // milk can be required in no logic because of milkshot, don't remove
 
-            // with 2.0, entrando, these settings values no longer exist, don't know how to change them, for now just disable this and assume all compass/map are not-junk
-            /* 
-            if (_randomizedResult.Settings.RandomizeBossRooms == false)
-            {
-                var compass = _randomizedResult.ItemList.FindAll(itemObj => itemObj.Item.ItemCategory() == GameObjects.ItemCategory.Navigation
-                                                                    && itemObj.Item.ToString().Contains("Compass"))
-                                                  .Select(itemObj => itemObj.Item).ToList();
-                ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.Navigation].AddRange(compass);
-            }
+            var allSphereAsItems = allSphereItems.Select(u => u.Location).ToList();
+            var allMilk = _randomizedResult.ItemList.FindAll(item => item.Item.ClassicCategory() == GameObjects.ClassicCategory.CowMilk).Select(u => u.Item).ToList();
+            var allUnimportantMilk = allMilk.FindAll(milk => ! allSphereAsItems.Contains(milk.ToString()));
 
-            if (_randomizedResult.Settings.RandomizeDungeonEntrances == false)
-            {
-                var maps = _randomizedResult.ItemList.FindAll(itemObj => itemObj.Item.ItemCategory() == GameObjects.ItemCategory.Navigation
-                                                                    && itemObj.Item.ToString().Contains("Map"))
-                                                  .Select(itemObj => itemObj.Item).ToList();
-                ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.Navigation].AddRange(maps);
-            }
-            // */
+            ActorizerKnownJunkItems[(int)GameObjects.ItemCategory.Milk].AddRange(allUnimportantMilk);
+            if (allMilk.Count == allUnimportantMilk.Count)
+                ActorizerKnownJunkCategories.Add(GameObjects.ItemCategory.Milk); // not that uncommon with casual item selections
         }
 
         public static void PrepareJunkItems(Models.RandomizedResult settings)
@@ -346,6 +335,7 @@ namespace MMR.Randomizer.Enemizer
             //   which is often ignored, spiders are not
             PrepareJunkStrayFairies(allSphereItems);
             PrepareJunkSpiderTokens(allSphereItems);
+            PrepareJunkMilk(_randomizedResult.Settings.LogicMode, allSphereItems);
             // all transformation and non-transofrmation mask <- already not considered junk
             // all boss remains <- already not considered junk
 
