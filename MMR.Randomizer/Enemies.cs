@@ -347,7 +347,7 @@ namespace MMR.Randomizer
                             continue;
                         }
 
-                        var itemRestriction = ObjectIsCheckBlocked(scene.SceneEnum, mapActor.ActorEnum, mapActor.OldVariant);
+                        var itemRestriction = ObjectIsCheckBlocked(scene.SceneEnum, mapActor.ActorEnum, mapActor.OldVariant, log);
                         if (itemRestriction != null)
                         {
 
@@ -466,7 +466,7 @@ namespace MMR.Randomizer
         // todo move to actorutils
         // TODO rename to ACTOR is check blocked, as we will soon need to do this for actors not whole actor objects
         // for now its just the objectlessactors, checkrestricted
-        public static GameObjects.Item? ObjectIsCheckBlocked(GameObjects.Scene sceneEnum, ActorEnum testActor, int variant = -1)
+        public static GameObjects.Item? ObjectIsCheckBlocked(GameObjects.Scene sceneEnum, ActorEnum testActor, int variant = -1, StringBuilder? log = null)
         {
             /// checks if randomizing the actor would interfere with getting access to a check
             /// and then checks if the item is junk, before allowing randimization
@@ -503,6 +503,24 @@ namespace MMR.Randomizer
                         }
                     }
 
+                }
+            }
+
+            // entrance-randomizer aware: if this actor gates an entrance, keep it when a non-junk item
+            // is currently placed behind that entrance. (The hardcoded CheckRestricted locations above
+            // become unreliable under entrando, since the entrance's destination
+            // Runs in all modes: with entrando off the cave still always holds its item.)
+            var gatesEntranceAttr = testActor.GetAttributes<GatesEntranceAttribute>();
+            if (gatesEntranceAttr != null)
+            {
+                foreach (var gate in gatesEntranceAttr)
+                {
+                    var (blockingItem, destination) = JunkDetection.FirstNonJunkItemInEntrance(gate.Entrance);
+                    if (blockingItem != null)
+                    {
+                        log?.AppendLine($"  [GatesEntrance] door [{gate.Entrance}] -> [{destination}] (non-junk item behind, keeping actor)");
+                        return blockingItem; // keep the actor: a non-junk item is behind its entrance
+                    }
                 }
             }
 

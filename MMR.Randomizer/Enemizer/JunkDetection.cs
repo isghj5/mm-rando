@@ -5,6 +5,9 @@ using System.Linq;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
+using MMR.Randomizer.Attributes;
+using MMR.Randomizer.Utils;
+using MMR.Common.Extensions;
 
 namespace MMR.Randomizer.Enemizer
 {
@@ -393,6 +396,24 @@ namespace MMR.Randomizer.Enemizer
                 return true;
 
             return false;
+        }
+
+        public static (GameObjects.Item? Item, GameObjects.Item? Destination) FirstNonJunkItemInEntrance(GameObjects.Item entrance)
+        {
+            /// search and return the first non-junk item placed behind the given entrance
+            /// Unshuffled -> the door leads to its own region (fall back to self).
+            var destination = _randomizedResult.ItemList.FirstOrDefault(io => io.NewLocation == entrance)?.Item ?? entrance;
+            foreach (var check in ItemUtils.AllLocations())
+            {
+                if (check.GetAttribute<RegionAttribute>()?.Reference != destination)
+                    continue;
+
+                var itemInCheck = _randomizedResult.ItemList.Single(item => item.NewLocation != null && item.NewLocation == check).Item;
+                if (!IsActorizerJunk(itemInCheck))
+                    return (itemInCheck, destination);
+            }
+
+            return (null, destination);
         }
 
     }

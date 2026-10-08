@@ -4389,8 +4389,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(339)]
         [ObjectListIndex(Object.Driftice)]
         [DynaAttributes(22, 13)]
+        [GatesEntrance(Item.InteriorGoronGraveyard)]
         // this is not enough: this does NOT take into account scoop sanity
-        [CheckRestricted(scene: Scene.MountainVillage, variant: ActorConst.ANY_VARIANT, check: Item.MaskGoron,
+        /* [CheckRestricted(scene: Scene.MountainVillage, variant: ActorConst.ANY_VARIANT, check: Item.MaskGoron,
             Item.CollectableMountainVillageWinterSmallSnowball3, Item.CollectableMountainVillageWinterSmallSnowball4,
             Item.BottleCatchHotSpringWater)]
         // */
@@ -5081,8 +5082,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(411)]
         [ObjectListIndex(Object.Visiblock)]
         [DynaAttributes(10, 8)]
-        // can't do this here, entrando makes this complicated
-        //[CheckRestricted(Scene.GoronVillage, variant: ActorConst.ANY_VARIANT, Item.ItemLens, Item.ChestLensCaveRedRupee, Item.ChestLensCavePurpleRupee)]
+        // the platforms gate the lens-cave entrance; keep them when a non-junk item is behind the cave
+        // (entrada-aware: FirstNonJunkItemInEntrance reads where the cave currently leads, not the vanilla lens)
+        [GatesEntrance(Item.InteriorLensCave)]
         [CheckRestricted(Scene.PathToSnowhead, variant: ActorConst.ANY_VARIANT, Item.HeartPieceToSnowhead)]
         [CheckRestricted(Scene.IkanaCastle, variant: ActorConst.ANY_VARIANT, Item.SongElegy,
             Item.CollectableAncientCastleOfIkana1FWestStaircasePot1, Item.CollectableAncientCastleOfIkanaFireCeilingRoomPot1,
@@ -5092,7 +5094,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x0)]
         [VariantsWithRoomMax(max: 0, variant: 0x0)] // invisible, not even seen just looks empty, unless I can move actors to sit ontop of them or something
         [UnkillableAllVariants]
-        [ForbidFromScene(Scene.GoronVillage)] // until we get entrando item detection working
+        //[ForbidFromScene(Scene.GoronVillage)] // until we get entrando item detection working
         FlyingLensCaveIcePlatforms = 0x1C0, // Obj_Visiblock
 
         [ActorizerEnabled]
