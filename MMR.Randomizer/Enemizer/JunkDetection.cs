@@ -293,7 +293,7 @@ namespace MMR.Randomizer.Enemizer
         {
             /// milk is complicated, needs its own logic
             
-            if (logic == LogicMode.NoLogic) return; // milk can be required in no logic because of milkshot, don't remove
+            if (logic == LogicMode.NoLogic || logic == LogicMode.Glitched) return; // milk can be required in no logic because of milkshot, don't remove
 
             var allSphereAsItems = allSphereItems.Select(u => u.Location).ToList();
             var allMilk = _randomizedResult.ItemList.FindAll(item => item.Item.ClassicCategory() == GameObjects.ClassicCategory.CowMilk).Select(u => u.Item).ToList();
