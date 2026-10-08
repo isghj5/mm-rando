@@ -2291,6 +2291,17 @@ namespace MMR.Randomizer.Enemizer
 
         }
 
+        private static void ModifyHamashiVariantForActorizer()
+        {
+            /// the road to ikana bronze boulder leads to an item, but all versions have the same params
+            /// we need to modify to make clean which is which, so we are changing this one
+
+            var roadtoikanaSceneActors = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.RoadToIkana.FileID()).Maps[0].Actors;
+            var bronzeBoulder = roadtoikanaSceneActors[5];
+
+            bronzeBoulder.OldVariant = bronzeBoulder.Variants[0] = 0x1FF; // where 0xFF was vanilla, 0x7F is the switchflag param, and 0xXX00 is unused so we can change it
+        }
+
         private static void RandomizePinnacleRockSigns()
         {
             /// these signs use gameplay_keep, so there is no Object to associate with them
@@ -2607,6 +2618,7 @@ namespace MMR.Randomizer.Enemizer
                 SwapCreditsCremia();
                 ChangeIkanaCanyonCreditsActors(rng);
                 SwapGreatFairies(result, rng);
+                ModifyHamashiVariantForActorizer();
             }
 
             // changing enemy variants for enemizer to work

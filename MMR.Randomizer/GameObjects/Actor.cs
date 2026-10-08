@@ -2052,9 +2052,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(137)]
         [ObjectListIndex(Object.Bombiwa)]
-        // funny enough, not dynapoly
-        [CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT,
-            check: Item.HeartPieceTerminaGossipStones, Item.HeartPieceZoraGrotto, Item.CollectableGrottosOceanHeartPieceGrottoBeehive1, Item.CollectableGrottosOceanGossipStonesButterflyFairy1)]
+        [GatesEntrance(Item.GrottoBioBaba), GatesEntrance(Item.GrottoGossipMountain)]
+        //[CheckRestricted(Scene.TerminaField, variant: ActorConst.ANY_VARIANT,
+        //    check: Item.HeartPieceTerminaGossipStones, Item.HeartPieceZoraGrotto, Item.CollectableGrottosOceanHeartPieceGrottoBeehive1, Item.CollectableGrottosOceanGossipStonesButterflyFairy1)]
         [CheckRestricted(Scene.Grottos, variant: ActorConst.ANY_VARIANT,//0x118,
             check: Item.ChestHotSpringGrottoRedRupee, Item.ChestLensCavePurpleRupee)] // hot spring grotto
         // dont think per variant is working for multiple per room yet once it is these should be split
@@ -3217,12 +3217,16 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(233)]
         [ObjectListIndex(Object.GameplayFieldKeep)]
-        [CheckRestricted(Scene.RoadToIkana, variant: ActorConst.ANY_VARIANT, Item.ChestToIkanaGrotto)]
+        //[CheckRestricted(Scene.RoadToIkana, variant: ActorConst.ANY_VARIANT, Item.ChestToIkanaGrotto)]
+        [GatesEntrance(Item.GrottoGenericRoadToIkana, 0x1FF)]
         [CheckRestricted(Scene.MountainVillageSpring, variant: ActorConst.ANY_VARIANT,
             Item.CollectableMountainVillageWinterMountainVillageSpringItem1)] // stair item, rocks under the stairs
-        // parameters unknown
+        // 0x7F is switch flag placement
+        [GroundVariants(
+            0x1FF, // new road to ikana variant for identification
+            0xFF // vanilla
+        )]
         [WaterBottomVariants(0)]
-        [GroundVariants(0xFF)]
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 0)]
         [BlockingVariantsAll]
         [PlacementWeight(65)] // bit boring
@@ -3706,14 +3710,13 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0xB78)]
         [CheckRestricted(Scene.MountainVillage, variant: 0x7F84, check: Item.MaskDonGero)] // share object with the sirloin goron
         [CheckRestricted(Scene.MountainVillage, variant: 0x7F94, check: Item.MaskDonGero)] // share object with the sirloin goron
-        [CheckRestricted(Scene.GoronVillageSpring, variant: 0x8, check: Item.ItemBottleGoronRace,
-           Item.CollectableGoronRacetrackPot1, Item.CollectableGoronRacetrackPot2, Item.CollectableGoronRacetrackPot3, Item.CollectableGoronRacetrackPot4, Item.CollectableGoronRacetrackPot5, Item.CollectableGoronRacetrackPot6, Item.CollectableGoronRacetrackPot7, Item.CollectableGoronRacetrackPot8, Item.CollectableGoronRacetrackPot9, Item.CollectableGoronRacetrackPot10, Item.CollectableGoronRacetrackPot11, Item.CollectableGoronRacetrackPot12, Item.CollectableGoronRacetrackPot13, Item.CollectableGoronRacetrackPot14, Item.CollectableGoronRacetrackPot15, Item.CollectableGoronRacetrackPot16, Item.CollectableGoronRacetrackPot17, Item.CollectableGoronRacetrackPot18, Item.CollectableGoronRacetrackPot19, Item.CollectableGoronRacetrackPot20, Item.CollectableGoronRacetrackPot21, Item.CollectableGoronRacetrackPot22, Item.CollectableGoronRacetrackPot23, Item.CollectableGoronRacetrackPot24, Item.CollectableGoronRacetrackPot25, Item.CollectableGoronRacetrackPot26, Item.CollectableGoronRacetrackPot27, Item.CollectableGoronRacetrackPot28, Item.CollectableGoronRacetrackPot29, Item.CollectableGoronRacetrackPot30,
+        [CheckRestricted(Scene.GoronVillageSpring, variant: 0x8, check:
             Item.SongLullabyIntro, Item.ShopItemGoronArrow10, Item.ShopItemGoronBomb10, Item.ShopItemGoronRedPotion, Item.MaskDonGero // we can't guarentee you dont need the goron mask to get in
         )]
-        [CheckRestricted(Scene.GoronVillage, variant: 0x8, check: Item.ItemBottleGoronRace,
-           Item.CollectableGoronRacetrackPot1, Item.CollectableGoronRacetrackPot2, Item.CollectableGoronRacetrackPot3, Item.CollectableGoronRacetrackPot4, Item.CollectableGoronRacetrackPot5, Item.CollectableGoronRacetrackPot6, Item.CollectableGoronRacetrackPot7, Item.CollectableGoronRacetrackPot8, Item.CollectableGoronRacetrackPot9, Item.CollectableGoronRacetrackPot10, Item.CollectableGoronRacetrackPot11, Item.CollectableGoronRacetrackPot12, Item.CollectableGoronRacetrackPot13, Item.CollectableGoronRacetrackPot14, Item.CollectableGoronRacetrackPot15, Item.CollectableGoronRacetrackPot16, Item.CollectableGoronRacetrackPot17, Item.CollectableGoronRacetrackPot18, Item.CollectableGoronRacetrackPot19, Item.CollectableGoronRacetrackPot20, Item.CollectableGoronRacetrackPot21, Item.CollectableGoronRacetrackPot22, Item.CollectableGoronRacetrackPot23, Item.CollectableGoronRacetrackPot24, Item.CollectableGoronRacetrackPot25, Item.CollectableGoronRacetrackPot26, Item.CollectableGoronRacetrackPot27, Item.CollectableGoronRacetrackPot28, Item.CollectableGoronRacetrackPot29, Item.CollectableGoronRacetrackPot30,
+        [CheckRestricted(Scene.GoronVillage, variant: 0x8, check:
             Item.SongLullabyIntro, Item.ShopItemGoronArrow10, Item.ShopItemGoronBomb10, Item.ShopItemGoronRedPotion, Item.MaskDonGero // we can't guarentee you dont need the goron mask to get in
         )]
+        [GatesEntrance(Item.InteriorGoronRacetrack, 0x8)]
         // 8 is smithy goron; blocked because he is too big
         // 7F85: standing outside of shop (complaining about noise)
         // racetrack gorons
@@ -3742,7 +3745,7 @@ namespace MMR.Randomizer.GameObjects
         //[ForbidFromScene(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy by accident
         [AlignedCompanionActor(RegularIceBlock, CompanionAlignment.OnTop, ourVariant: -1, variant: 0xFF44, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         //[RemovalChance(5)] // because we want this only for keg goron, think this needs to be hardcoded
-        GoGoron = 0x138, // En_Go
+        GoGoron = 0x138, // En_Go, tag: gorongo
 
         Empty139 = 0x139,
 
@@ -4237,6 +4240,9 @@ namespace MMR.Randomizer.GameObjects
         UnusedSpikeFence = 0x16C, // Bg_Keikoku_Saku
 
         // too big to go most places, doesn't have texture on backend so thats weird
+        // todo make this a low chance, needs all of ranch stuff though
+        [GatesEntrance(Item.InteriorGoronRacetrack, variant: 0x14)]
+        //[GatesEntrance(Item.Ranch , variant: 0x101)] this doesn't exist in entrando yet
         [FileID(329)]
         [ObjectListIndex(Object.Bombiwa)]
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 0)]

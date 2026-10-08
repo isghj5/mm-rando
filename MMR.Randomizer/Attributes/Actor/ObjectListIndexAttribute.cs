@@ -6,8 +6,10 @@ namespace MMR.Randomizer.Attributes.Actor
     class ObjectListIndexAttribute : Attribute
     {
         /// <summary>
-        ///  this is the object list index 
-        ///    the game has one list for objects, this is where the actor lives in the list in vanilla
+        ///  this is the object list index
+        ///    reminder: In this game's developer terminology, an "object" is a blob of 3d/2d model assets
+        ///      models, animations, collision data, textures, etc
+        ///    the game has one sequential list for objects, this value represents an index of that list
         /// </summary>
 
         public int Index => (int)ObjectValue;
