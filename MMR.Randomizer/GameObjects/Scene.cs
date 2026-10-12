@@ -909,8 +909,10 @@ namespace MMR.Randomizer.GameObjects
         // one user got a crash with only ~430
         [DynaHeadroom(300, 300)] 
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SmallSnowball,
+            Actor.Keese, Actor.BadBat, Actor.Guay,// can make climbing up the wall challenging
             Actor.RealBombchu, Actor.Snapper, Actor.Beamos)] // can hit you as you are climbing up blocking assension
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GoGoron,
+            Actor.Keese, Actor.BadBat, Actor.Guay,// can make climbing up the wall challenging
             Actor.RealBombchu)] // can hit you as you are climbing up blocking assension
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.PottedPlant,
             Actor.ClocktowerGearsAndOrgan)] // can block the door (during the day only but thats still annoying)
