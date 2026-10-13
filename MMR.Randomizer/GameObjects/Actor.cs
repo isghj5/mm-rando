@@ -258,7 +258,7 @@ namespace MMR.Randomizer.GameObjects
         [DifficultAllVariants]
         [RespawningVariants(variant: 0x0081)] // if they fly away after melt they might not come down (bug), so treat as not logically killable
         [CreditsBlockedVariants(variant: 0x0001)] // inivible until player gets close, so invible for credits
-        [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0xFF, shift: 8)] // used for what?
+        [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0xFF, shift: 8)]
         //[EnemizerScenesPlacementBlock(Scene.TerminaField)] // temporary, melting them can unmelt the north ice block, but why
         WallMaster = 0xA, // En_Wallmas
 
@@ -4882,7 +4882,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.MundaneItemPictographContestRedRupee)]
         [WaterBottomVariants(0, 1, 6)] // vanilla their spawn is at the bottom of the swamp
         [WaterTopVariants(7)] // but if you put them in water they work for water surface, with a weak swimming animation
-        [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0xFF, shift: 0)] // technically its all of params, but maybe in the future we want a byte for something else
+        [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 0)] // technically its all of params, but maybe in the future we want a byte for something else
         [OnlyOneActorPerRoom]
         //[VariantsWithRoomMax(max: 2, variant: 0, 1, 6)]
         //[VariantsWithRoomMax(max: 5, variant: 7)]
@@ -5538,10 +5538,11 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(Object.GameplayKeep)]
         Unused_EnTagObj = 0x1E1, // En_Tag_Obj
 
+        // todo it would be funny
         [FileID(443)]
         [ObjectListIndex(Object.Dhouse)]
         [SwitchFlagsPlacement(size: 0x7F, shift: 0)]
-        DinnerPlateProp = 0x1E2, // Obj_Dhouse
+        DampeHouseBridge = 0x1E2, // Obj_Dhouse
 
         [ActorizerEnabled]
         [FileID(444)]

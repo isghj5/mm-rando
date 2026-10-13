@@ -4,7 +4,7 @@ namespace MMR.Randomizer.Attributes.Actor
 {
     public enum SwitchTrigger
     {
-        DoNotUse = 0,
+        DoNotUse = 0, // cannnot use for triggering
         Sends,
         Receives,
         SendsAndRecieves,

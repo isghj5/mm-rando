@@ -329,7 +329,12 @@ namespace MMR.Randomizer
                 for (int actorIndex = 0; actorIndex < scene.Maps[mapIndex].Actors.Count; ++actorIndex) // (var mapActor in scene.Maps[mapIndex].Actors)
                 {
                     var mapActor = scene.Maps[mapIndex].Actors[actorIndex];
-                    GameObjects.Actor matchingEnemy = VanillaEnemyList.Find(act => act == mapActor.OldActorEnum);
+
+                    // all actors need switch flags listed, even if not randomized
+                    mapActor.PopulateSwitchFlags();
+                    mapActor.OldSwitchFlag = ActorUtils.GetActorSwitchFlags(mapActor);
+
+                    ActorEnum matchingEnemy = VanillaEnemyList.Find(act => act == mapActor.OldActorEnum);
                     if (matchingEnemy > 0)
                     {
                         // note: injected actor data is added later, this happens before injection
@@ -1695,6 +1700,7 @@ namespace MMR.Randomizer
         {
             /// New actors can have switch flags, these are normally tailored to the scene so new actors could step on vanilla actors
 
+            log.AppendLine("---------------------------------------------------------");
 
             List<int> claimedSwitchFlags = new List<int>();
             for (int mapIndex = 0; mapIndex < thisSceneData.Scene.Maps.Count; ++mapIndex)
@@ -1702,15 +1708,19 @@ namespace MMR.Randomizer
                 for (int actorNumber = 0; actorNumber < thisSceneData.Scene.Maps[mapIndex].Actors.Count; ++actorNumber)
                 {
                     var mapActor = thisSceneData.Scene.Maps[mapIndex].Actors[actorNumber];
-                    var flags = ActorUtils.GetActorSwitchFlags(mapActor, (short)mapActor.OldVariant);
-                    if (flags >= 0)
+                    if (thisSceneData.Actors.Contains(mapActor)) continue; // we don't care about actors we are removing anyway, only the left over vanilla actor flags matter to us
+
+                    var flags = mapActor.OldSwitchFlag;
+                    if (flags >= 0 && flags < 0x7F) // 7F is often considered the max switch flag and ignored by the actor code
                     {
                         claimedSwitchFlags.Add(flags);
+                        log.AppendLine($" - act [{mapActor.OldName}] had switch flag [{flags}]");
+                        if (mapActor.OldActorEnum == ActorEnum.DekuRaceDoor) // special case, two flags used per door
+                            claimedSwitchFlags.Add(flags + 1);
                     }
-
                 }
             }
-            //claimedSwitchFlags.Add(123); // debug
+
             if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.Grottos)
             {
                 // grotto have an extra list of switch flags:
@@ -1736,7 +1746,8 @@ namespace MMR.Randomizer
             for (int doorNumber = 0; doorNumber < thisSceneData.Scene.Doors.Count; ++doorNumber)
             {
                 var sceneDoor = thisSceneData.Scene.Doors[doorNumber];
-                var flags = ActorUtils.GetActorSwitchFlags(sceneDoor, (short)sceneDoor.OldVariant);
+                sceneDoor.PopulateSwitchFlags();
+                var flags = ActorUtils.GetActorSwitchFlags(sceneDoor);
                 if (flags >= 0)
                 {
                     claimedSwitchFlags.Add(flags);
@@ -1758,6 +1769,8 @@ namespace MMR.Randomizer
             }
 
             CreateUsableSwitchesList();
+
+            log.AppendLine($"Switch flags previously used: [{claimedSwitchFlags.Count}]");
 
             // generate switch flag actors
             var actorsWithSwitchFlags = thisSceneData.Actors.ToList();
@@ -1840,7 +1853,7 @@ namespace MMR.Randomizer
             for (int actorIndex = 0; actorIndex < actorsWithSwitchFlags.Count; actorIndex++)
             {
                 var actor = actorsWithSwitchFlags[actorIndex];
-                var switchFlags = ActorUtils.GetActorSwitchFlags(actor, (short)actor.Variants[0]);
+                //var switchFlags = ActorUtils.GetActorSwitchFlags(actor);
 
                 if (usableSwitches.Count == 0) // we ran out, recreate list
                 {
@@ -1868,18 +1881,10 @@ namespace MMR.Randomizer
                     }
                 }
 
-                if (usableSwitches.Contains(switchFlags)) // not detected in vanilla, leave as is and claim
-                {
-                    usableSwitches.Remove(switchFlags);
-                    log.AppendLine($" = i[{actor.RoomActorIndex}][{actor.Name}] had switch flags which were not detect as used, and claimed switch [{switchFlags}]=");
-                }
-                else // we have switch flag and we have a collision, we need to change it
-                {
-                    var newSwitch = usableSwitches[0];
-                    ActorUtils.SetActorSwitchFlags(actor, (short) newSwitch);
-                    usableSwitches.RemoveAt(0);
-                    log.AppendLine($" + i[{actor.RoomActorIndex}][{actor.Name}] had switch flags modified to [{newSwitch}] +");
-                }
+                var newSwitch = usableSwitches[0];
+                ActorUtils.SetActorSwitchFlags(actor, (short) newSwitch);
+                usableSwitches.RemoveAt(0);
+                log.AppendLine($" + i[{actor.RoomActorIndex}][{actor.Name}] swapped switch flags to [{newSwitch.ToString("X")}] +");
             }
         }
 
@@ -3612,13 +3617,15 @@ namespace MMR.Randomizer
                 var previousThreadPriority = Thread.CurrentThread.Priority;
                 Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
 
+                // /*
                 Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene => {
                     SwapSceneEnemies(scene, seed);
-                });
-                //foreach (var scene in newSceneList) // sequential for debugging only
-                //  ( debugger is too stupid, if you catch a breakpoint and then tell it to move to a new location, it can catch on a _different_ thread)
-                //    SwapSceneEnemies(scene, seed);
-                //}
+                }); // */
+                /*
+                foreach (var scene in newSceneList) {
+                    // debugger is too stupid, if you catch a breakpoint and then tell it to move to a new location, it can catch on a _different_ thread, so keep this to debug
+                    SwapSceneEnemies(scene, seed);
+                } // */
 
                 Thread.CurrentThread.Priority = previousThreadPriority;
 

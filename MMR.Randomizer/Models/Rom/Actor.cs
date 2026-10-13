@@ -46,7 +46,9 @@ namespace MMR.Randomizer.Models.Rom
         public int ActorSize; // todo
         public int ObjectSize; // read by enemizer at scene actor reading
         public (int poly, int vert) DynaLoad =  (0, 0);  // dyna load per actor, can be overwritten by injected actor
+        // warning: this switch flags is current actor, not old actor
         public (int size, int shift, SwitchTrigger flagType, SwitchFlagStorage storage)? SwitchFlags = null;
+        public short OldSwitchFlag = -1;
         public int Room;           // the room the actor is in in the scene
         public int RoomActorIndex; // the actor index of the room the actor is in
         public vec16 Position = new vec16();
@@ -71,6 +73,36 @@ namespace MMR.Randomizer.Models.Rom
 
         // TODO we should consolidate all of this actor constructor/update code
 
+        public void PopulateSwitchFlags(GameObjects.Actor? actor = null)
+        {
+            if (actor == null) actor = this.ActorEnum;
+
+            var switchFlagsAttr = actor.GetAttribute<SwitchFlagsPlacementAttribute>();
+            if (switchFlagsAttr == null) return;
+
+            if (switchFlagsAttr.flagType != SwitchTrigger.DoNotUse)
+            {
+                var storage = SwitchFlagStorage.Params;
+                if (actor.GetAttribute<SwitchFlagsPlacementZRotAttribute>() != null)
+                    storage = SwitchFlagStorage.ZRotation;
+                else if (actor.GetAttribute<SwitchFlagsPlacementXRotAttribute>() != null)
+                    storage = SwitchFlagStorage.XRotation;
+                this.SwitchFlags = (switchFlagsAttr.Size, switchFlagsAttr.Shift, switchFlagsAttr.flagType, storage);
+            }
+            else if (actor.GetAttribute<SwitchFlagsPlacementXRotAttribute>() != null)
+            {
+                this.SwitchFlags = (0x7F, 7, SwitchTrigger.Death, SwitchFlagStorage.XRotation);
+            }
+            else if (actor.GetAttribute<SwitchFlagsPlacementZRotAttribute>() != null)
+            {
+                this.SwitchFlags = (0x7F, 7, SwitchTrigger.Death, SwitchFlagStorage.ZRotation);
+            }
+            else // type: SwitchTrigger.DoNotUse
+            {
+                this.SwitchFlags = (switchFlagsAttr.Size, switchFlagsAttr.Shift, SwitchTrigger.DoNotUse, SwitchFlagStorage.Params);
+            }
+        }
+
         public Actor(GameObjects.Actor actor, InjectedActor injectedData = null)
         {
             // converted from enum, used for building replacement candidate actors
@@ -92,30 +124,13 @@ namespace MMR.Randomizer.Models.Rom
             this.UnplaceableVariants = actor.GetUnPlacableVariants();
 
             var dynaProperties = actor.GetAttribute<DynaAttributes>();
-            if (dynaProperties != null)
+            if (dynaProperties != null) 
             {
                 this.DynaLoad.poly = dynaProperties.Polygons;
                 this.DynaLoad.vert = dynaProperties.Verticies;
             }
 
-            var switchFlagsAttr = actor.GetAttribute<SwitchFlagsPlacementAttribute>();
-            if (switchFlagsAttr != null && switchFlagsAttr.flagType != SwitchTrigger.DoNotUse)
-            {
-                var storage = SwitchFlagStorage.Params;
-                if (actor.GetAttribute<SwitchFlagsPlacementZRotAttribute>() != null)
-                    storage = SwitchFlagStorage.ZRotation;
-                else if (actor.GetAttribute<SwitchFlagsPlacementXRotAttribute>() != null)
-                    storage = SwitchFlagStorage.XRotation;
-                this.SwitchFlags = (switchFlagsAttr.Size, switchFlagsAttr.Shift, switchFlagsAttr.flagType, storage);
-            }
-            else if (actor.GetAttribute<SwitchFlagsPlacementXRotAttribute>() != null)
-            {
-                this.SwitchFlags = (0x7F, 7, SwitchTrigger.Death, SwitchFlagStorage.XRotation);
-            }
-            else if (actor.GetAttribute<SwitchFlagsPlacementZRotAttribute>() != null)
-            {
-                this.SwitchFlags = (0x7F, 7, SwitchTrigger.Death, SwitchFlagStorage.ZRotation);
-            }
+            PopulateSwitchFlags(actor);
 
             // missing injected actor stuff
             if (injectedData != null)

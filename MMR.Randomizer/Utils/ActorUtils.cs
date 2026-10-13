@@ -240,7 +240,8 @@ namespace MMR.Randomizer.Utils
         /// <param name="actor"> the whole actor</param>
         /// <param name="variant"> specify new or old variant</param>
         /// <returns> -1 if no switch flags, otherwise the flags</returns>
-        public static short GetActorSwitchFlags(Actor actor, short variant)
+        // todo move this to the actor code, it doesn't need to be in utils
+        public static short GetActorSwitchFlags(Actor actor)
         {
             if (actor.SwitchFlags == null)
             {
@@ -258,7 +259,7 @@ namespace MMR.Randomizer.Utils
                 return (short)(actor.Rotation.z >> 7);
             }
 
-            return (short)((variant >> shift) & size);
+            return (short)((actor.Variants[0] >> shift) & size);
         }
 
         public static void SetActorSwitchFlags(Actor actor, short switchFlags)
