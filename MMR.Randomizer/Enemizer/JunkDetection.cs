@@ -393,11 +393,9 @@ namespace MMR.Randomizer.Enemizer
             /// search and return the first non-junk item placed behind the given entrance
             /// Unshuffled -> the door leads to its own region (fall back to self).
             var destination = _randomizedResult.ItemList.FirstOrDefault(io => io.NewLocation == entrance)?.Item ?? entrance;
-            foreach (var check in ItemUtils.AllLocations())
+            var items = ItemUtils.AllLocations().Where(i => i.GetAttribute<RegionAttribute>()?.Reference != destination).ToList();
+            foreach (var check in items)
             {
-                if (check.GetAttribute<RegionAttribute>()?.Reference != destination)
-                    continue;
-
                 var itemInCheck = _randomizedResult.ItemList.Single(item => item.NewLocation != null && item.NewLocation == check).Item;
                 if (!IsActorizerJunk(itemInCheck))
                     return (itemInCheck, destination);

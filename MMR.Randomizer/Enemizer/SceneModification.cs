@@ -915,6 +915,8 @@ namespace MMR.Randomizer.Enemizer
 
             goronVillageScene.Maps[0].Objects[10] = GameObjects.Actor.GoGoron.ObjectIndex(); // previously wooden crate, which is only in room 1
             goronVillageScene.Maps[1].Objects[11] = GameObjects.Actor.GoGoron.ObjectIndex(); // previously tektite, which is from snowballs, only in room 0
+
+            goronVillageScene.Maps[1].Actors[1].OldName = goronVillageScene.Maps[1].Actors[1].Name = "KegGoron";
         }
 
 

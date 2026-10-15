@@ -3714,7 +3714,6 @@ namespace MMR.Randomizer.GameObjects
             Item.SongLullabyIntro, Item.MaskDonGero // we can't guarentee you dont need the goron mask to get in
         )]
         [GatesEntrance(Item.InteriorGoronShop, 0x283)]
-        [GatesEntrance(Item.InteriorGoronRacetrack, 0x8)]
         // 8 is smithy goron; blocked because he is too big
         // 7F85: standing outside of shop (complaining about noise)
         // racetrack gorons
@@ -6182,8 +6181,12 @@ namespace MMR.Randomizer.GameObjects
         // currently, actorizer adds a second snowball object so all snowball actors can stay behind, including him
         // his object is never randomized
         [CheckRestricted(Scene.TwinIslands, variant: ActorConst.ANY_VARIANT, Item.SongLullabyIntro)]
+        [GatesEntrance(Item.InteriorGoronRacetrack, 0x2)]
         // cutscene version is not reachable, in hardcode it checks for spot00 and layer7
-        [GroundVariants(1)] // spring time not trapped at all
+        [GroundVariants(
+            1, // spring time not trapped at all
+            2 // fake, keg goron trickery
+        )] 
         [PathingVariants(0)] // trapped in ice version
         [PathingTypeVarsPlacement(mask: 0x3F, shift:10)] // 0xFC00
         [OnlyOneActorPerRoom]
@@ -6195,6 +6198,9 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(GoronSGoro, CompanionAlignment.InFront, ourVariant: -1, variant: 0x1E0, 1, 2, 9)]
         [PlacementWeight(80)]
         GoronElder = 0x213, // En_Jg
+
+        // here is where you need to be
+
 
         //[ActorizerEnabled]
         [FileID(491)]
