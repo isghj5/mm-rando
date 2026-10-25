@@ -84,6 +84,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(44)]
         [ObjectListIndex(Object.Box)]
         [DynaAttributes(12, 8)]
+        [CheckRestricted(Scene.BeforeThePortalToTermina, variant: ActorConst.ANY_VARIANT, Item.ChestPreClocktownDekuNut)]
         [CheckRestricted(Scene.SouthClockTown, variant: ActorConst.ANY_VARIANT, Item.ChestSouthClockTownPurpleRupee, Item.ChestSouthClockTownRedRupee)]
         [CheckRestricted(Scene.EastClockTown, variant: ActorConst.ANY_VARIANT, // 0x50CA,
             Item.ChestEastClockTownSilverRupee)]
@@ -136,9 +137,6 @@ namespace MMR.Randomizer.GameObjects
         // TODO dungeons, tired for tonigght
         [CheckRestricted(Scene.InvertedStoneTower, variant: ActorConst.ANY_VARIANT,
             Item.ChestInvertedStoneTowerSilverRupee, Item.ChestInvertedStoneTowerBombchu10, Item. ChestInvertedStoneTowerBean)]
-        //[CheckRestricted(Scene.SecretShrine, variant: ActorConst.ANY_VARIANT, // 0x5080,
-        //    Item.)]
-
         // these three are from inverted stone tower, however when placed in TF, 2/3 were invisible chests
         // switch flags are on z rotation
         // type: 0x7 seems to be enemy clear, also type 1, 0x5 is woodentype, 0xC is switch activated
