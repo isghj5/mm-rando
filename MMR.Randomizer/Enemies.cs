@@ -2453,7 +2453,7 @@ namespace MMR.Randomizer
                     else if (oldActor.Blockable == false)
                     {
                         if (newEnemy.ActorEnum.GetAttribute<BlockingVariantsAll>() != null) {
-                            continue;
+                            continue; // all blocking, ignore this actor
                         }
                         else
                         {

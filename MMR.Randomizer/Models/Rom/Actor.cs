@@ -787,6 +787,10 @@ namespace MMR.Randomizer.Models.Rom
             {
                 this.Variants = this.Variants.Where(var => ! blockingTypeVariants.Variants.Contains(var)).ToList();
             }
+            if (this.InjectedActor != null && this.InjectedActor.blockingVariants.Count > 0)
+            {
+                this.Variants = this.Variants.Where(var => !this.InjectedActor.blockingVariants.Contains(var)).ToList();
+            }
 
             return this.Variants;
         }

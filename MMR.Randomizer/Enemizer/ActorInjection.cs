@@ -50,6 +50,7 @@ namespace MMR.Randomizer.Enemizer
         public List<int> perchingVariants = new List<int>();
         public List<int> wallVariants = new List<int>();
         public List<int> respawningVariants = new List<int>();
+        public List<int> blockingVariants = new List<int>();
         // variants with max
         public List<VariantsWithRoomMax> limitedVariants = new List<VariantsWithRoomMax>();
         public UnkillableAllVariantsAttribute unkillableAttr = null;
@@ -161,6 +162,16 @@ namespace MMR.Randomizer.Enemizer
                     newInjectedActor.respawningVariants = newRespawningVariantsShort;
                     continue;
                 }
+                if (command == "blocking_variants")
+                {
+                    var newBlockingVariants = valueStr.Split(",").ToList();
+                    var newBlockingVariantsShort = newBlockingVariants.Select(variant => Convert.ToInt32(variant.Trim(), 16)).ToList();
+
+                    newInjectedActor.blockingVariants = newBlockingVariantsShort;
+                    continue;
+                }
+
+
 
                 if (command == "variant_with_max")
                 {
