@@ -819,9 +819,15 @@ namespace MMR.Randomizer.GameObjects
         [RespawningAllVariants]
         BlueBubble = 0x3E, // En_Bb
 
+        [ActorizerEnabled]
         [FileID(85)]
         [ObjectListIndex(Object.KeikokuObj)]
-        Bg_Keikoku_Spr = 0x3F, // Bg_Keikoku_Spr
+        [GroundVariants(0)] // no parameters
+        [WaterBottomVariants(0)] // sure why not
+        [VariantsWithRoomMax(max: 10, variant:0)]
+        [PlacementWeight(5)] // boring, for now give them a limit, todo move to mmra so users can remove if they are too boring
+        [UnkillableAllVariants]
+        UnusedKeikokuWaterFountain = 0x3F, // Bg_Keikoku_Spr
 
         Empty40 = 0x40,
 

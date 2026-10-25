@@ -801,6 +801,9 @@ namespace MMR.Randomizer.Enemizer
             //ActorEnum.En_Boj_04.FileListIndex(), // future grotto spawner
             ActorEnum.En_Boj_05.FileListIndex(),
 
+            ActorEnum.UnusedSpikeFence.FileListIndex(), // turned into a MMRA so optional
+            // ActorEnum.UnusedSpikeFence.ObjectIndex(), cannot, multi-actor object, includes woodfall in the background, and the unsused water fountains
+
             ActorEnum.SariaSongOcarinaEffects.FileListIndex(), // should be lower down as we might need to use it later
 
             // if we had enough popular injected actors, we could start swapping out unused unpopular actors:
