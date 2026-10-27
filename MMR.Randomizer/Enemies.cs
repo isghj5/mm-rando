@@ -2115,7 +2115,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, ActorEnum.Peahat, ActorEnum.BetaVampireGirl)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DoggyRacetrack, ActorEnum.ClayPot, ActorEnum.BedroomPostman)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ClockTowerInterior, ActorEnum.HappyMaskSalesman, ActorEnum.Evan)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, ActorEnum.ChuChu, ActorEnum.Gomess)) continue;
+                if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, ActorEnum.BadBat, ActorEnum.PoeSisters)) continue;
 
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, ActorEnum.RegularZora, ActorEnum.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.OceanSpiderHouse, ActorEnum.Seth1, ActorEnum.BeanSeller)) continue;
@@ -2985,7 +2985,7 @@ namespace MMR.Randomizer
                             "Moved companion: [" + randomCompanion.Variants[0].ToString("X4")
                             + "][" + randomCompanion.ActorEnum.ToString()
                             + "] to actor: [" + mainActor.ActorEnum.ToString()
-                            + "][" + randomCompanion.Variants[0].ToString("X4")
+                            + "][" + mainActor.Variants[0].ToString("X4")
                             + "] at cords: [" + randomCompanion.Position.x + ","
                                             + randomCompanion.Position.y + ","
                                             + randomCompanion.Position.z + "]");
@@ -3464,17 +3464,13 @@ namespace MMR.Randomizer
             ////////////////////////////////////////////
             ///////   DEBUGGING: force an actor  ///////
             ////////////////////////////////////////////
-            if (scene.SceneEnum == GameObjects.Scene.Grottos) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.IkanaGraveyard) // force specific actor/variant for debugging
             {
                 // if you want to force object here, use ChosenReplacementObjectsPerMap
 
-                //thisSceneData.Actors[35].ChangeActor(ActorEnum.En_Invisible_Ruppe, vars: 0x01D0); // hitspot
+                //thisSceneData.Actors[33].ChangeActor(ActorEnum.IshiRock, vars: 0xF824); // rock
+                //thisSceneData.Actors[37].ChangeActor(ActorEnum.GrottoHole, vars: 0x7000); // grotto
                 //var target = thisSceneData.Scene.Maps[0].Actors[23];
-                // 23 to 25
-                //target.ChangeActor(ActorEnum.ObjSwitch, vars: 0x7C14); // crashes
-                //target.ChangeActor(ActorEnum.ObjSwitch, vars: 0x7C04); // 2 also crashes
-                //thisSceneData.Scene.Maps[13].Actors[0].ChangeActor(ActorEnum.ReDead, vars: 0x7804);
-                //thisSceneData.Scene.Maps[13].Actors[3].ChangeActor(ActorEnum.ReDead, vars: 0xF7FE);
             }
             /////////////////////////////
             #endif

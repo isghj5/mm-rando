@@ -2694,7 +2694,7 @@ namespace MMR.Randomizer.Enemizer
             /// if ossan in trading post was randomized we want to move one of them, as there are two of the, assumed for late night
             var tradingpostScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TradingPost.FileID());
             var secondOssan = tradingpostScene.Maps[0].Actors[1];
-            if (secondOssan.ActorEnum != GameObjects.Actor.TradingPostShop)
+            if (secondOssan.ActorEnum != GameObjects.Actor.TradingPostShop && !secondOssan.previouslyMovedCompanion)
             {
                 secondOssan.Position = new vec16(-35, 25, -154);
                 SceneUtils.UpdateScene(tradingpostScene);
@@ -2724,7 +2724,7 @@ namespace MMR.Randomizer.Enemizer
 
             var terminaField = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TerminaField.FileID());
             var terminaFieldScopeNuts = terminaField.Maps[0].Actors[210]; // buisness scrub
-            if (terminaFieldScopeNuts.ActorEnum != GameObjects.Actor.FlyingFieldScrub)
+            if (terminaFieldScopeNuts.ActorEnum != GameObjects.Actor.FlyingFieldScrub && !terminaFieldScopeNuts.previouslyMovedCompanion)
             {
                 terminaFieldScopeNuts.Position = new vec16(780, 760, 615); // move closer to the edge of ect so the player can see it
             }
@@ -2732,14 +2732,16 @@ namespace MMR.Randomizer.Enemizer
             var terminaFieldWestGossipBombiwa = terminaField.Maps[0].Actors[198];
             if (terminaFieldWestGossipBombiwa.ActorEnum != GameObjects.Actor.Bombiwa) // assumption: currently both have to be randomized at the same time
             {
-                terminaFieldWestGossipBombiwa.Position.z = -1727; // move back from sitting right on top of the grotto
-                terminaField.Maps[0].Actors[199].Position.z = -642; // move back from sitting right on top of the grotto
+                if (!terminaFieldWestGossipBombiwa.previouslyMovedCompanion)
+                    terminaFieldWestGossipBombiwa.Position.z = -1727; // move back from sitting right on top of the grotto
+                if (!terminaField.Maps[0].Actors[199].previouslyMovedCompanion)
+                    terminaField.Maps[0].Actors[199].Position.z = -642; // move back from sitting right on top of the grotto
             }
             SceneUtils.UpdateScene(terminaField);
 
             var roadToIkanaCanyonScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.RoadToIkana.FileID());
             var roadToIkanaRedHamishi = roadToIkanaCanyonScene.Maps[0].Actors[5];
-            if (roadToIkanaRedHamishi.ActorEnum != GameObjects.Actor.BronzeBoulder) // assumption: currently both have to be randomized at the same time
+            if (roadToIkanaRedHamishi.ActorEnum != GameObjects.Actor.BronzeBoulder && !roadToIkanaRedHamishi.previouslyMovedCompanion) // assumption: currently both have to be randomized at the same time
             {
                 roadToIkanaRedHamishi.Position.z = -413; // move back from sitting right on top of the grotto
                 // TODO change rotation?
@@ -2748,13 +2750,13 @@ namespace MMR.Randomizer.Enemizer
 
             var snowheadTempleScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SnowheadTemple.FileID());
             var snowheadTempleFireArrowWiz = snowheadTempleScene.Maps[6].Actors[0];
-            if (snowheadTempleFireArrowWiz.ActorEnum != GameObjects.Actor.Wizrobe)
+            if (snowheadTempleFireArrowWiz.ActorEnum != GameObjects.Actor.Wizrobe && !snowheadTempleFireArrowWiz.previouslyMovedCompanion)
             {
                 snowheadTempleFireArrowWiz.Position.x = -1300; // move back to center of the room, not sure why this guy is so close to the door normally
             }
             // if snowhead temple wizrobe the second is randomized, his spawn is in a bad spot for enemizer
             var snowheadSecondWizrobe = snowheadTempleScene.Maps[12].Actors[0];
-            if (snowheadSecondWizrobe.ActorEnum != GameObjects.Actor.Wizrobe)
+            if (snowheadSecondWizrobe.ActorEnum != GameObjects.Actor.Wizrobe && !snowheadSecondWizrobe.previouslyMovedCompanion)
             {
                 snowheadSecondWizrobe.Position = new vec16(1377, 1800, 0); // moved to other size of room, not next to the door
             }
@@ -2765,7 +2767,7 @@ namespace MMR.Randomizer.Enemizer
             if (capeHpLikelike.ActorEnum != GameObjects.Actor.LikeLike)
             {
                 var newUnkillableVariants = capeHpLikelike.ActorEnum.UnkillableVariants();
-                if (newUnkillableVariants != null && newUnkillableVariants.Contains(capeHpLikelike.Variants[0]))
+                if (newUnkillableVariants != null && newUnkillableVariants.Contains(capeHpLikelike.Variants[0]) && !capeHpLikelike.previouslyMovedCompanion)
                 {
                     capeHpLikelike.Position.z = 4405; // move back from sitting on hp
                 }
@@ -2778,7 +2780,7 @@ namespace MMR.Randomizer.Enemizer
                 if (capeGrottoBombiwa.ActorEnum != GameObjects.Actor.Bombiwa)
                 {
                     var newUnkillableVariants = capeGrottoBombiwa.ActorEnum.UnkillableVariants();
-                    if (newUnkillableVariants != null && newUnkillableVariants.Contains(capeGrottoBombiwa.Variants[0]))
+                    if (newUnkillableVariants != null && newUnkillableVariants.Contains(capeGrottoBombiwa.Variants[0]) && !capeGrottoBombiwa.previouslyMovedCompanion)
                     {
                         capeGrottoBombiwa.Position.x = -463; // move to the left somewhat, worried its not pointed at the hole but not sure its worth the bother
                         capeGrottoBombiwa.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: capeGrottoBombiwa.Rotation.y);
@@ -2788,7 +2790,7 @@ namespace MMR.Randomizer.Enemizer
 
                 var ikanaGraveyardScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaGraveyard.FileID());
                 var graveyardGrottoRockCircle = ikanaGraveyardScene.Maps[1].Actors[44];
-                if (graveyardGrottoRockCircle.ActorEnum != GameObjects.Actor.GrassRockCluster)
+                if (graveyardGrottoRockCircle.ActorEnum != GameObjects.Actor.GrassRockCluster && !graveyardGrottoRockCircle.previouslyMovedCompanion)
                 {
                     graveyardGrottoRockCircle.Position.z = -1877; // move back from sitting right on top of the grotto
                 }
@@ -2806,7 +2808,7 @@ namespace MMR.Randomizer.Enemizer
                     ActorUtils.SetActorSpawnTimeFlags(milkbarPostman);
                 } // */
                 var milkbarGorman = milkbarScene.Maps[0].Actors[7];
-                if (milkbarGorman.ActorEnum != GameObjects.Actor.Gorman)
+                if (milkbarGorman.ActorEnum != GameObjects.Actor.Gorman && !milkbarGorman.previouslyMovedCompanion)
                 {
                     milkbarGorman.Position = new vec16(61, 0, -162);
                 }
@@ -2815,7 +2817,7 @@ namespace MMR.Randomizer.Enemizer
                 var nctScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.NorthClockTown.FileID());
                 var nctHP = nctScene.Maps[0].Actors[4];
                 var nctUglyTree = nctScene.Maps[0].Actors[7];
-                if (nctUglyTree.ActorEnum != GameObjects.Actor.UglyTree)
+                if (nctUglyTree.ActorEnum != GameObjects.Actor.UglyTree && !nctHP.previouslyMovedCompanion)
                 {
                     nctHP.Position = new vec16(141, 375, -2336); // moved to post
                 }
@@ -2824,7 +2826,7 @@ namespace MMR.Randomizer.Enemizer
                 var ikanaCastleScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaCastle.FileID());
                 var ceilingSkulltula1 = ikanaCastleScene.Maps[4].Actors[0];
                 var killableVariants = ceilingSkulltula1.ActorEnum.KillableVariants();
-                if (killableVariants == null || killableVariants.Count == 0)
+                if ((killableVariants == null || killableVariants.Count == 0) && !ceilingSkulltula1.previouslyMovedCompanion)
                 {
                     ceilingSkulltula1.Position = new vec16(979, -1038, -2203); // moved left and up
                 }
@@ -2833,26 +2835,42 @@ namespace MMR.Randomizer.Enemizer
                 var roadToMountainsScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PathToMountainVillage.FileID());
                 // some winter snowballs are sitting on top of each other, they should be moved
                 // snowballs 24 and 48 are duplicates, sitting on top of each other, move them so they arent
-                roadToMountainsScene.Maps[0].Actors[48].Position.z = 6227;
-                ActorUtils.FlattenPitchRoll(roadToMountainsScene.Maps[0].Actors[48]);
+                var sb48 = roadToMountainsScene.Maps[0].Actors[48];
+                if (!sb48.previouslyMovedCompanion)
+                {
+                    sb48.Position.z = 6227;
+                    ActorUtils.FlattenPitchRoll(sb48);
+                }
                 // snowball 29 and 32 are on top of each other
-                roadToMountainsScene.Maps[0].Actors[32].Position.x = 568;
-                roadToMountainsScene.Maps[0].Actors[32].Position.z = 6418;
-                ActorUtils.FlattenPitchRoll(roadToMountainsScene.Maps[0].Actors[32]);
+                var sb32 = roadToMountainsScene.Maps[0].Actors[32];
+                if (!sb32.previouslyMovedCompanion)
+                {
+                    sb32.Position.x = 568;
+                    sb32.Position.z = 6418;
+                    ActorUtils.FlattenPitchRoll(sb32);
+                }
                 // snowball 28 and 30 are on top of each other
-                roadToMountainsScene.Maps[0].Actors[30].Position.x = 1790;
-                roadToMountainsScene.Maps[0].Actors[30].Position.z = 6841;
-                ActorUtils.FlattenPitchRoll(roadToMountainsScene.Maps[0].Actors[30]);
+                var sb30 = roadToMountainsScene.Maps[0].Actors[30];
+                if (!sb30.previouslyMovedCompanion)
+                {
+                    sb30.Position.x = 1790;
+                    sb30.Position.z = 6841;
+                    ActorUtils.FlattenPitchRoll(sb30);
+                }
                 // snowball 26 and 44 are on top of each other
-                roadToMountainsScene.Maps[0].Actors[44].Position.x = 2000;
-                roadToMountainsScene.Maps[0].Actors[44].Position.z = 6612;
-                ActorUtils.FlattenPitchRoll(roadToMountainsScene.Maps[0].Actors[44]);
+                var sb44 = roadToMountainsScene.Maps[0].Actors[44];
+                if (!sb44.previouslyMovedCompanion)
+                {
+                    sb44.Position.x = 2000;
+                    sb44.Position.z = 6612;
+                    ActorUtils.FlattenPitchRoll(sb44);
+                }
                 SceneUtils.UpdateScene(roadToMountainsScene);
 
                 var stockpotInnScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.StockPotInn.FileID());
                 stockpotInnScene.Maps[4].Actors[4].ChangeYRotation(270); // mushroom was facing the right wall
                 var mailmanActor = stockpotInnScene.Maps[0].Actors[22];
-                if (mailmanActor.ActorEnum != GameObjects.Actor.PostMan)
+                if (mailmanActor.ActorEnum != GameObjects.Actor.PostMan && !mailmanActor.previouslyMovedCompanion)
                 {
                     mailmanActor.Position = new vec16(185, 0, 107); // moved in front of anju, surely that wont be a problem
                     mailmanActor.ChangeYRotation(270); // turn to face left towards anju
@@ -2861,7 +2879,7 @@ namespace MMR.Randomizer.Enemizer
 
                 var oceanspiderhouseScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.OceanSpiderHouse.FileID());
                 var oshSeth = oceanspiderhouseScene.Maps[0].Actors[2];
-                if (oshSeth.ActorEnum != GameObjects.Actor.Seth1)
+                if (oshSeth.ActorEnum != GameObjects.Actor.Seth1 && !oshSeth.previouslyMovedCompanion)
                 {
                     oshSeth.Position.x = -113;
                     oshSeth.Position.z = 325;
@@ -2871,7 +2889,7 @@ namespace MMR.Randomizer.Enemizer
 
                 var curiosistyShopScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.CuriosityShop.FileID());
                 var kafeiInShop = curiosistyShopScene.Maps[1].Actors[1];
-                if (kafeiInShop.ActorEnum != GameObjects.Actor.Kafei)
+                if (kafeiInShop.ActorEnum != GameObjects.Actor.Kafei && !kafeiInShop.previouslyMovedCompanion)
                 {
                     kafeiInShop.Position = new vec16(-189, 21, -425);
                     // does he need rotation?
