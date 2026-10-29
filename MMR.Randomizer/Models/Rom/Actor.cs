@@ -54,6 +54,9 @@ namespace MMR.Randomizer.Models.Rom
         public vec16 Position = new vec16();
         public vec16 Rotation = new vec16();
 
+        // rotation as read from the ROM; ChangeActor restores this on every replacement so bogo re-rolls can't inherit rotation leaked from a previous iteration
+        public vec16 OldRotation = new vec16();
+
         public List<GameObjects.Scene> SceneExclude = new List<GameObjects.Scene>();
 
         //public int sceneID; // do we still need this?
@@ -242,6 +245,7 @@ namespace MMR.Randomizer.Models.Rom
             newActor.OldObjectId = this.OldObjectId;
             newActor.ObjectSize = this.ObjectSize;
             newActor.Rotation = this.Rotation;
+            newActor.OldRotation = new vec16(this.OldRotation.x, this.OldRotation.y, this.OldRotation.z);
 
             newActor.SceneExclude = this.SceneExclude;
             newActor.BlockedScenes = this.BlockedScenes;
@@ -310,6 +314,9 @@ namespace MMR.Randomizer.Models.Rom
             this.ActorId     = (int)newActorType;
             this.ObjectId    = newActorType.ObjectIndex();
 
+            // always inherit the original spawn rotation; rotation set by a previous bogo iteration (eg: grotto rotation) must not leak into the new occupant
+            this.Rotation = new vec16(this.OldRotation.x, this.OldRotation.y, this.OldRotation.z);
+
             if (modifyOld)
             {
                 this.OldVariant     = vars;
@@ -361,6 +368,9 @@ namespace MMR.Randomizer.Models.Rom
             this.Name           = otherActor.Name;
             this.ActorId        = otherActor.ActorId;
             this.ObjectId       = otherActor.ObjectId;
+
+            // always inherit the original spawn rotation; rotation set by a previous bogo iteration (eg: grotto rotation) must not leak into the new occupant
+            this.Rotation = new vec16(this.OldRotation.x, this.OldRotation.y, this.OldRotation.z);
             //this.SortedVariants    = otherActor.SortedVariants; // other parts of the rando assume this is static
 
             if (vars != -1)

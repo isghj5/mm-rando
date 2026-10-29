@@ -1,4 +1,5 @@
 ﻿using MMR.Randomizer.Models.Rom;
+using MMR.Randomizer.Models.Vectors;
 using System.Collections.Generic;
 using System.Linq;
 using MMR.Randomizer.Extensions;
@@ -383,6 +384,7 @@ namespace MMR.Randomizer.Utils
                 a.Rotation.x = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 8);
                 a.Rotation.y = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 10);
                 a.Rotation.z = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 12);
+                a.OldRotation = new vec16(a.Rotation.x, a.Rotation.y, a.Rotation.z); // captured once at read time; ChangeActor resets Rotation back to this on every replacement
                 a.SetVariants(new List<int> { ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 14) });
                 a.OldVariant = a.Variants[0];
                 //a.sceneID = RomData.SceneList[sceneID].Number;
@@ -424,6 +426,7 @@ namespace MMR.Randomizer.Utils
                 a.Rotation.x = 0; // doors can't be x/z rotated I guess, they need the data space for other things
                 a.Rotation.y = (short)ReadWriteUtils.Arr_ReadU16(Scene, doorOffset + 12);
                 a.Rotation.z = 0;
+                a.OldRotation = new vec16(a.Rotation.x, a.Rotation.y, a.Rotation.z);
                 a.SetVariants(new List<int> { ReadWriteUtils.Arr_ReadU16(Scene, doorOffset + 14) });
                 a.OldVariant = a.Variants[0];
 
