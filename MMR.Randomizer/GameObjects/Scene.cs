@@ -1205,6 +1205,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.LikeLike, // exit loop
             Actor.PirateColonel, // cutscene lock as you leave
             Actor.ReDead, Actor.GibdoWell, // can hardlock the player as they enter the grotto by grabbing them
+            Actor.Peahat, // the mini hats can instant snipe you (few heart start)
             Actor.Beamos)] // can one shot the player as they leave the grotto with 1 heart
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.UglyTree,
             Actor.OwlStatue)] // can hide the grass weirdly
