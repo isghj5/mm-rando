@@ -7067,6 +7067,7 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(SwitchTrigger.Receives, size: 0x7F, shift: 0)] // turn on and off the light?
         // placement weight
         [RemovalChance(0)]
+        [UnkillableAllVariants]
         STTLargeLightRay = 0x256, // Bg_Ikana_Ray
         
         [FileID(558)]
