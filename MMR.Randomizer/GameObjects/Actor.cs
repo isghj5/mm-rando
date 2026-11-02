@@ -1535,6 +1535,7 @@ namespace MMR.Randomizer.GameObjects
         // TODO test in race
         [ForbidFromScene(Scene.RomaniRanch)] // might be needed for game
         [RemovalChance(5), PlacementWeight(5)] // boring
+        [DynaAttributes(10,8)]
         HorseJumpingFence = 0x7C, // Bg_Umajump
 
         [FileID(122)]
