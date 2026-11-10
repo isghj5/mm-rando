@@ -206,6 +206,9 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bg_Breakwall,
             Actor.UnusedStoneTowerPlatform // so long, and at the right angle, can block the center ladder
         )]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.LargeWoodenCrate,
+            Actor.UnusedStoneTowerPlatform // one of them can block the ladder
+        )]
         [EnemizerSceneBlockSensitive(Actor.PatrollingPirate,
             22, // vars: 0x14EA bottom of ladder
             23, // vars: 0x18EA bridge to chest room
