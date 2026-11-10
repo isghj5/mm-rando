@@ -764,8 +764,8 @@ namespace MMR.Randomizer
             {
                 try { 
                     // manually check if restrictions apply
-                    if (JunkDetection.IsActorizerCheckJunk(GameObjects.Item.ItemTerminaGrottoCowMilk1) && JunkDetection.IsActorizerJunk(GameObjects.Item.ItemTerminaGrottoCowMilk2)
-                        && JunkDetection.IsActorizerJunk(GameObjects.Item.ItemCoastGrottoCowMilk1) && JunkDetection.IsActorizerJunk(GameObjects.Item.ItemCoastGrottoCowMilk2))
+                    if (JunkDetection.IsActorizerCheckJunk(GameObjects.Item.ItemTerminaGrottoCowMilk1) && JunkDetection.IsActorizerCheckJunk(GameObjects.Item.ItemTerminaGrottoCowMilk2)
+                        && JunkDetection.IsActorizerCheckJunk(GameObjects.Item.ItemCoastGrottoCowMilk1) && JunkDetection.IsActorizerCheckJunk(GameObjects.Item.ItemCoastGrottoCowMilk2))
                     {
                         cow1.ChangeActor(ActorEnum.Cow, vars: 0, modifyOld: true);
                         cow2.ChangeActor(ActorEnum.Cow, vars: 0, modifyOld: true);
