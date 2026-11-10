@@ -431,6 +431,10 @@ namespace MMR.Randomizer.Enemizer
                 //var secondTorch = mountainVillageSpring.Maps[0].Actors[13];
                 //secondTorch.Rotation.y = ActorUtils.MergeRotationAndFlags(180, secondTorch.Rotation.y);
                 //secondTorch.Position.z -= 50;
+
+                var sttScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.StoneTowerTemple.FileID());
+                var sttBeamos = sttScene.Maps[1].Actors[11];
+                sttBeamos.ChangeYRotation(0); // its naturally rotated to face the block, which can cause long actors to clip into the chest
             }
         }
 
