@@ -6419,7 +6419,6 @@ namespace MMR.Randomizer.GameObjects
              Scene.Woodfall, Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.MountainVillage, Scene.MountainVillageSpring, Scene.Snowhead,
              Scene.GreatBayCoast, Scene.ZoraCape, Scene.IkanaCanyon, Scene.StoneTower, Scene.InvertedStoneTower)]
         [PlacementWeight(70)]
-        //[EnemizerScenesPlacementBlock(Scene.IkanaGraveyard)] // assumed dyna overflow
         OwlStatue = 0x223, // Obj_Warpstone
 
         [ActorizerEnabled]
@@ -7068,6 +7067,7 @@ namespace MMR.Randomizer.GameObjects
         // placement weight
         [RemovalChance(0)]
         [UnkillableAllVariants]
+        [ForbidFromScene(Scene.InvertedStoneTowerTemple)]
         STTLargeLightRay = 0x256, // Bg_Ikana_Ray
         
         [FileID(558)]
@@ -7079,7 +7079,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(Object.HakaObj)]
         // params: switch flags only, masked so top nibble is free
         [GroundVariants(0x1)]
-        [WallVariants(0x100)]
+        [WallVariants(0x100)] // non vanilla
         [SwitchFlagsPlacement(SwitchTrigger.Death, size: 0x7F, shift: 0)]
         [BlockingVariantsAll]
         [UnkillableAllVariants]
