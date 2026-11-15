@@ -3326,7 +3326,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(Object.Grasshopper)]
         [FlyingVariants(0, 2, 3)]
         [DifficultAllVariants]
-        [VariantsWithRoomMax(max: 2, 0, 2, 3)]
+        [VariantsWithRoomMax(max: 2, variant: 0, 2, 3)]
         [FlyingToGroundHeightAdjustment(150)]
         DragonFly = 0x109, // En_Grasshopper
 

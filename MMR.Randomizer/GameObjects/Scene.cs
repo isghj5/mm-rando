@@ -220,7 +220,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneBlockSensitive(Actor.WoodenBarrel, // near the top north entrance
             8 // near the top entrance, blocks the bridge
         )]
-        PiratesFortress = 0x11, // Pirates fortress interior, the center yard, not the rooms
+        PiratesFortress = 0x11, // Z2_KAIZOKU Pirates fortress interior, the center yard, not the rooms
 
         [FileID(1173)]
         [SceneInternalId(0x15)]

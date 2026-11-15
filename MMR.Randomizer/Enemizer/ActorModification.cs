@@ -267,20 +267,6 @@ namespace MMR.Randomizer.Enemizer
             ReadWriteUtils.Arr_WriteU32(babaData, Dest: 0xB34, val: 0x10000024); // <irrelevant code> -> Jump to 0xBC8 (beginning of register re-load)
         }
 
-        private static void FixDragonFlyShadows()
-        {
-            /// Same as Bba above, this shadow draw function is both broken and expensive on the graphics engine
-            /// this is the source of the lag for this actor, dubbed "Lag-on-fly"
-            /// note: this was moved to a MMRA file (and a regular shadow was re-added),
-            ///   left here incase they play without the actor file
-
-            var dragonflyFid = GameObjects.Actor.DragonFly.FileListIndex();
-            RomUtils.CheckCompressed(dragonflyFid);
-            var dragonflyData = RomData.MMFileList[dragonflyFid].Data;
-            // similar to baba, we see a loop followed by a finishing function, we want to skip both in the main draw function
-            ReadWriteUtils.Arr_WriteU32(dragonflyData, Dest: 0x2498, val: 0x10000018); // <irrelevant code> -> Jump to 24E4
-        }
-
         private static void FixShellBladeCollider()
         {
             // Shell blade, the clam enemy from OOT water temple, only shows up in one place in MM
@@ -345,7 +331,6 @@ namespace MMR.Randomizer.Enemizer
             AllowGuruGuruOutside();
             FixSilverIshi();
             FixBabaShadows();
-            FixDragonFlyShadows();
             FixShellBladeCollider();
             FixDexihandDamage();
         }
